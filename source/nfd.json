@@ -1,0 +1,53 @@
+
+{
+	"pageTitle":{
+		"image"		:{
+			"src"	:	["icon(waterdrop100).png"]
+		},
+		"title"		: {
+			"text"	:	["NFD資格取得コース"]
+		},
+		"summary"	: {
+			"text"	:	["日本フラワーデザイナー協会が認定する民間の資格としては最もポピュラーな資格です。生花をターゲットにしており、カリキュラムに沿って初級者から上級者、講師資格まで取得可能です。"]
+		}
+	},
+
+	"courseGuide":{
+		"summary" :{
+			"text": "コース案内"
+		},
+		"firstStage":{
+			"stage":{
+				"text"	:	["NFD1級"]
+			},
+			"times":{
+				"text"	:	["全40単位"]
+			},
+			"price":{
+				"text"	:	["3,000 円／回"]
+			}
+		},
+		"secondStage":{
+			"stage":{
+				"text"	:	["NFD2級"]
+			},
+			"times":{
+				"text"	:	["全40単位"]
+			},
+			"price":{
+				"text"	:	["3,000 円／回"]
+			}
+		},
+		"thirdStage":{
+			"stage":{
+				"text"	:	["NFD3級"]
+			},
+			"times":{
+				"text"	:	["全40単位"]
+			},
+			"price":{
+				"text"	:	["3,000 円／回"]
+			}
+		}
+	}
+}

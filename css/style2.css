@@ -1,0 +1,1016 @@
+@CHARSET "UTF-8";
+
+/* 通常のレイアウト。 */
+
+/* 文字コードをUTF-8に指定 */
+@charset "utf-8";
+/* リセットCSS */
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich-clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+    /* font-familyを指定 */
+	font-family:Meiryo, メイリオ, 'Lucida Grande',
+ 	'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3',
+ 	sans-serif;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section { 
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000; 
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;   
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+ul li {
+	list-style: none;
+}
+
+/* ここまでリセットCSS */
+
+/* clearfix */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+/* ここまでclearfix */
+
+/* 各タグの基本設定 */
+/* 
+ * セレクタ:h1,h2,h3,h4,h5
+ * 概要   :見出した具
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+h1,h2,h3,h4,h5{
+	font-weight: normal;	/* 個別に指定しなければフォントを太字にしない。 */
+}
+
+/* 
+ * セレクタ:body
+ * 概要   :ページ全体。
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+body{
+	background:	white;	/* 背景色を白にする。 */
+}
+/* 
+ * セレクタ:
+ * 概要   :
+ * 作成者 :T.M
+ * 作成日 :2015.02.
+ */
+{
+	: ;			/*  */
+}
+@media only screen and (min-width: 651px) {
+/* 
+ * セレクタ:#container
+ * 概要   :画面の幅に合わせて伸縮する、最上階層のdivタグ
+ * 作成者 :T.M
+ * 作成日 :2015.02.02
+ */
+#container{
+	width: 60%;			/* 横幅を画面一杯に広げる */
+	background: inherit;	/* bodyの背景色を継承する。 */
+	margin: 0 auto;
+}
+
+/* ヘッダー領域。 */
+/* 
+ * セレクタ:header
+ * 概要   :ヘッダー領域のタグ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+*/ 
+/*header{
+	width: 100%;			/* 幅をcontainer一杯に広げる。 */
+	/*min-width: 800px;		/* 最低幅を.mainと同様に幅を800pxに設定する。 */
+	/*margin: 0px auto 3px;	/* 横位置を中心に寄せる。画面上端との間に間隔を空ける。 */
+	/*background: inherit;	/* containerの背景色を継承する。 */
+	/*box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4);	/* トップメニュー下に陰影をつける。 */
+	 /*position: fixed;*/	/* ヘッダーを固定する。 */
+	/*z-index: 1;			/* 重なり順を指定する。 */
+	/*top		:	0;		/* 上から0の座標に配置する。 */
+	/*left	:	0;		/* 左から0の座標に配置する。 */		
+/*}*/
+
+
+/* ガイド領域 */
+/* 
+ * セレクタ:.gides
+ * 概要   :様々な案内情報を掲載するヘッダー内の領域。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gides{
+	width		:	800px;		/* 幅をメインコンテンツと合わせる。 */
+	height		:	50px;		/* この領域の高さを設定する。 */
+	margin		: 0 auto;		/* 中央に揃える。 */
+	padding		:	10px 0;		/* 上下15pxのpaddingを指定する。左右には最低限のpaddingを指定する。 */
+	font-size	: 	0px;		/* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
+}
+/* 
+ * セレクタ:.gides > *
+ * 概要   :ガイド領域直下の要素。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gides > *{
+	display			:	inline-block;	/* インラインブロック表示にし、横に並べる。 */
+	font-size		:	10px;			/* フォントサイズを指定し直す。 */
+	vertical-align	:	middle;			/* 高さを行の中心に揃える。 */
+	margin-left		:	3px;			/* 統一して左に3pxのmarginを挿入する。 */
+}
+/* 
+ * セレクタ:.gides > div:first-child
+ * 概要   :ガイド領域直下の一番目のdivタグ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+/* .gides > div:first-child{
+	margin-left: 5px;	左に最低限の間隔を空ける。
+} */
+/* 
+ * セレクタ:.gide_f_a_school
+ * 概要   :フラワーアレンジメントスクールのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_f_a_school{
+	height: inherit;	/* gidesの高さを継承する。 */
+	width: 165px;		/* 正方形の画像2個分＋αの幅を取る。 */
+}
+
+/* 
+ * セレクタ:.gide_f_a_school img
+ * 概要   :f_a_schoolのアイコン画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_f_a_school img{
+	height: inherit;	/* 外枠の高さを継承する。 */
+	width: 50px;		/* 正方形のサイズになるように幅を指定する。 */
+	float: left;		/* この要素を左によせ、段組みレイアウトにする。 */
+}
+
+/* 
+ * セレクタ:.gide_f_a_school p
+ * 概要   :f_a_schoolのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_f_a_school p{
+	font-size	: 12px;		/* フォントサイズを指定する。 */
+	display		: block;	/* インラインブロック表示にする。 */
+	margin-top	: 4px;		/* 上に少々の間隔を取る。 */
+	text-indent	: 5px;		/* 先頭にインデントを入れる。 */
+}
+
+/* 
+ * セレクタ:.gide_tel
+ * 概要   :電話窓口のガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel{
+	height: inherit;	/* 高さを継承する。 */
+	width: 250px;		/* 電話番号をしっかり表示するため、幅を確保する。 */
+}
+
+/* 
+ * セレクタ:.gide_tel img
+ * 概要   :.telのアイコン画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel img{
+	height: inherit;	/* 外枠の高さを継承する。 */
+	width: 50px;		/* 正方形のサイズになるように幅を指定する。 */
+	float: left;		/* 左に寄せる。 */
+}
+
+/* 
+ * セレクタ:.gide_tel p
+ * 概要   :.gide_telのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel p{
+	display: block;	/* ブロック要素として扱う。 */
+}
+
+/* 
+ * セレクタ:.gide_tel .p1
+ * 概要   :.gide_telのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel .p1{
+	font-size: 11px;	/* フォントサイズを指定する。3行で50pxを超えないようにする。 */
+	margin-top:	4px;	/* 上に軽い空白を与える。 */
+	color:	#777;		/* 灰色のフォントにする。 */
+}
+
+/* 
+ * セレクタ:.gide_tel .p2
+ * 概要   :.gide_telのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel .p2{
+	font-size: 15px;	/* フォントサイズを指定する。3行で50pxを超えないようにする。 */
+	color:	limegreen;	/* 淡い緑のフォントにする。 */
+	margin: 3px 0;		/* 上下に適正な間隔を空ける。 */
+}
+
+/* 
+ * セレクタ:.gide_tel .p3
+ * 概要   :.gide_telのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_tel .p3{
+	font-size: 10px;	/* フォントサイズを指定する。3行で50pxを超えないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_mail
+ * 概要   :.メールのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_mail{
+	width: 50px;		/* 幅を50pxにする。 */
+	height: inherit;	/* ガイド領域の高さに合わせる。 */
+}
+
+/* 
+ * セレクタ:.gide_mail img
+ * 概要   :.メールのガイドの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_mail img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_access
+ * 概要   :.アクセスのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_access{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_access img
+ * 概要   :アクセスの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_access img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_trial
+ * 概要   :体験レッスンのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_trial{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_trial img
+ * 概要   :体験レッスンの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_trial img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_blog
+ * 概要   :ブログのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_blog{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_blog img
+ * 概要   :ブログの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_blog img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_facebook
+ * 概要   :facebookのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_facebook{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_facebook img
+ * 概要   :ブログの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_facebook img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_twitter
+ * 概要   :ブログのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_twitter{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_twitter img
+ * 概要   :ブログの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_twitter img{
+	width: inherit;	/* 幅を継承する。 */
+	height: auto;	/* 高さを自動調整し、ストレッチしないようにする。 */
+}
+
+/* 
+ * セレクタ:.gide_sns
+ * 概要   :.SNSサイトのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_sns{
+	width: 22px;		/* 幅を22pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_sns .facebook
+ * 概要   :Facebookの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_sns .facebook{
+	width: inherit;	/* 幅を継承する。 */
+	height: 22px;	/* 高さを22pxに指定する。 */
+	margin-bottom: 6px;	/* 下部に6pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
+}
+
+/* 
+ * セレクタ:.gide_sns .twitter_tweet
+ * 概要   :Twitterのツイートの画像。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_sns .twitter_tweet{
+	width: inherit;	/* 幅を継承する。 */
+	height: 22px;	/* 高さを22pxに指定する。 */
+}
+
+/* 
+ * セレクタ:.gide_login
+ * 概要   :ログインのガイド。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_login{
+	width: 50px;		/* 幅を50pxに設定する。 */
+	height: inherit;	/* 高さをガイド領域から継承する。 */
+}
+
+/* 
+ * セレクタ:.gide_login .login
+ * 概要   :ログインのボタン。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.gide_login .login{
+	width: inherit;	/* 幅を継承する。 */
+	height: 22px;	/* 高さを22pxに指定する。 */
+}
+
+
+/* ここまでガイド領域。 */
+/* 
+ * セレクタ:.top_menu
+ * 概要   :ヘッダー領域内のトップメニュー。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.top_menu{
+	width		:	800px;		/* 幅をメインコンテンツと合わせる。 */
+	height		:	45px;		/* この領域の高さを設定する。 */
+	margin		: 0 auto;		/* 中央に揃える。 */
+	font-size	: 	0px;		/* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
+}
+
+/* 
+ * セレクタ:.top_menu .button
+ * 概要   :トップメニューのボタン。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.top_menu .button{
+	width:			12.5%;			/* 1/8の幅に設定する。 */
+	height: 		100%;			/* 外枠に高さを合わせる。 */
+	display:		inline-block;	/* インラインブロック表示にする。 */
+	font-size:		14px;			/*  インラインブロックで並べるため、フォントサイズを指定する。 */
+	box-sizing:		border-box;		/* 自身の幅をpadding、border込みで計算する。 */
+	text-align:		center;			/* 文字を中心に寄せる。 */
+	vertical-align:	middle;			/* 文字の位置を中心に揃える。 */
+}
+
+/* 
+ * セレクタ:.top_menu .button:active
+ * 概要   :トップメニューのボタンが押されたときの変化。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.top_menu .button:active{
+	margin-bottom: -5px;	/* 下に自分の高さの1/4だけずれる。 */
+}
+
+/* 
+ * セレクタ:.top_menu .button
+ * 概要   :トップメニューのボタンのリンク。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.top_menu .button a{
+	width:		100%;	/* 幅をボタン全体に合わせる。 */
+	height: 	100%;	/* 高さをボタン全体に合わせる。 */
+	display:	block;	/* ブロック表示を行う。 */
+	color: 		#000;	/* フォントカラーを黒にする。 */
+}
+
+/* 
+ * セレクタ:.top_menu .button
+ * 概要   :トップメニューのボタンのリンク。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.top_menu .button p{
+	margin-top:	21px;	/* 中心に寄せるのに必要なだけの上marginを挿入する。 */
+	font-size:	16px;	/* 妥当なフォントサイズを指定する。 */
+	display:	inline-block;	/* インラインブロック表示を行う。 */
+}
+
+
+/* ここまでヘッダー領域。 */
+
+/* コンテンツ領域。 */
+/* 
+ * セレクタ:.main
+ * 概要   :コンテンツ領域。
+ * 作成者 :T.M
+ * 作成日 :2015.02.02
+ */
+.main{
+	width: 		100%;		/* コンテンツ幅を800pxにする。 */
+	margin: 0 auto 0;		/* 横位置を中心に寄せる。 */
+	background: inherit;	/* containerの背景色を継承する。 */
+	position: relative;		/* 相対位置の要素にする。 */
+	z-index:	0;			/* 重なり順の優先順位を低くする。 */
+}
+
+/* 
+ * セレクタ:.main.toppage
+ * 概要   :トップページのコンテンツ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.main.toppage{
+	height: 772px;			/* トップページ用の画像の高さに合わせた領域を形成する。 */
+	background-image: url("../image/top(800).png");	/* 背景画像をセットする。 */
+	background-repeat: no-repeat;	/* 背景画像の表示を繰り返さない。 */
+}
+
+/* 
+ * セレクタ:.wrapper_upper
+ * 概要   :コンテンツを挟み込む画像。上部。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.wrapper_upper{
+	width: inherit;			/* コンテンツ領域の幅を継承する。 */
+	height: auto;			/* 画像サイズに合わせて高さを自動調整する。 */
+}
+
+/* 
+ * セレクタ:.wrapper_lower
+ * 概要   :コンテンツを挟み込む画像。下部。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.wrapper_lower{
+	width: inherit;			/* コンテンツ領域の幅を継承する。 */
+	height: auto;			/* 画像サイズに合わせて高さを自動調整する。 */
+}
+
+/* 
+ * セレクタ:.content
+ * 概要   :コンテンツページの内容表示領域。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.content{
+	width: inherit;			/* .mainの幅を継承する。 */
+}
+
+/* 
+ * セレクタ:
+ * 概要   :
+ * 作成者 :T.M
+ * 作成日 :2015.02.
+ */
+{
+	: ;			/*  */
+}
+
+/* 
+ * セレクタ:
+ * 概要   :
+ * 作成者 :T.M
+ * 作成日 :2015.02.
+ */
+{
+	: ;			/*  */
+}
+
+
+/* ここまでコンテンツ領域。 */
+
+/* フッター領域。 */
+/* 
+ * セレクタ:footer
+ * 概要   :フッター領域のタグ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+footer{
+	width: 100%;				/* 他のcontainer直下要素と同じ幅にする。 */
+	margin: -30px auto 0;		/* 横位置を中心に寄せる。また、ネガティブマージンを設定して上にずらす。 */
+	text-align: right;			/* 横位置を右に寄せる。 */
+	background: transparent;	/* 背景を透過色に設定する。 */
+	position:	relative;		/* 相対位置の要素にする。 */
+	z-index:	0;				/* 重なり順を指定する。 */
+}
+/* 
+ * セレクタ:copyright
+ * 概要   :フッター領域のコピーライト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.copyright{
+	display: inline-block;		/* インラインブロック表示にする。 */
+	font-size: 12px;			/* フォントサイズを指定する。 */
+	background: inherit;		/* 背景を継承する。 */	
+}
+
+/* ここまでフッター領域。 */
+
+/* 
+ * セレクタ:#title
+ * 概要   :タイトル領域
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+.title{
+	width: 90%;			/* 幅を800pxにする。100%に設定しても無効なので、固定値を使う。 */
+	vertical-align: middle;	/* 内包する要素の高さを中心に揃える。 */
+	box-sizing:		border-box;		/* サイズの計算にpaddingと枠線を加える。 */
+	margin-botttom:	20px;	
+}
+
+/* 
+ * セレクタ:.title img
+ * 概要   :タイトルの画像
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.title img{
+	width: 	100px;			/* 幅100px */
+	height: 100px;			/* 高100px */
+	margin: 0 5px 0 5px;	/* 左右に5pxのmarginを配置する。 */
+	box-sizing:		border-box;		/* サイズの計算にpaddingと枠線を加える。 */
+	background: #FFF;		/* 仮の背景色を指定する。 */
+	float:left;				/* 左に寄せる。 */
+}
+
+/* 
+ * セレクタ:.title h1
+ * 概要   :タイトルの文字
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.title h1{
+	width:			80%;			/* 余った幅いっぱいに横幅を取る。 */
+	height:			auto;			/* 高さを自動調整する。 */
+	font-size:		22px;			/* フォントサイズを25pxに指定する。 */
+	box-sizing:		border-box;		/* サイズの計算にpaddingと枠線を加える。 */
+	text-align:		center;			/* 文字を中央に寄せる。 */
+	margin:			18px auto 15px;	/* 詰めすぎるとバランスが悪いので、marginでずらす。 */
+	
+}
+
+/* 
+ * セレクタ:.title .summary
+ * 概要   :概要。
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.title .summary{
+	width: 		80%;		/* 幅を60%に設定する。 */
+	height: 	auto;		/* 高さを自動調整する。 */
+	font-size:	16px;		/* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
+	margin: 0 auto;			/* 中央に寄せる。 */
+}
+
+
+/* 
+ * セレクタ:.detail
+ * 概要   :記事の詳細部分。tableタグに利用する。
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+.detail{
+	width:	80%;		/* contentより少々小さくする。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
+	font-size: 16px;	/* フォントサイズを任意で指定する。 */
+	text-align: left;	/* 文字を左に詰める。 */
+	background: #FFF;		/* 仮の背景色を指定する。 */
+}
+
+
+/* 
+ * セレクタ:.detail th
+ * 概要   : テーブルの見出し部分。
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+.detail th{
+	width: 30%;		/* 幅を内容セルより小さくする。 */
+}
+
+/* 
+ * セレクタ:.detail td
+ * 概要   : テーブルのセル部分。
+ * 作成者 :T.M
+ * 作成日 :2015.02.03
+ */
+.detail td{
+	width: 35%;		/* セルの幅を設定する。見出し1個、内容セルが2個という構成となる。 */
+}
+
+/* 
+ * セレクタ:.showcase
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
+ * 作成者 :T.M
+ * 作成日 :2015.02.04
+ */
+.showcase{
+	width: 750px;		/* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
+	height:	110px;		/* 高さを110pxに指定する。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.showcase img
+ * 概要   :カルーセルの画像
+ * 作成者 :T.M
+ * 作成日 :2015.02.05
+ */
+.showcase img{
+	width: auto;	/* を自動調整。 */
+	height: 100px;	/* 高さ100px。 */
+}
+
+
+
+/* ヘッダー領域。 */
+
+/* 
+ * セレクタ:footer
+ * 概要   :ヘッダーのタグ。
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+header{
+	width: 800px;		/* 横幅を800pxにする。 */
+	margin: 0 auto;		/* 横位置を中心に寄せる。 */
+}
+
+
+.foot_gallery {
+	margin: 40px 0; 
+}
+
+/* 
+ * セレクタ:.foot_gallery　img
+ * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.foot_gallery img{
+	height: 150px;	/* 高さを200pxにする */
+	width:	150px;	/* 幅を200pxにする */
+
+}
+
+
+/* 
+ * セレクタ:.courseGuide
+ * 概要   :コース案内についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.courseGuide {
+	margin-top: 20px;	/* 上から20px余白を空ける */
+	width:	70%;		/* コース案内テーブル全体の幅を70%にする */
+	float: left;		/* 左回りに回り込みできるようにする */
+}
+
+/* 
+ * セレクタ:.courseGuide caption
+ * 概要   :コース案内の概要についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.courseGuide caption {
+	font-weight: bold;	/* フォントを太くする */
+	text-align: left;	/* 文字を左寄せにする */
+	font-size: 23px;	/* フォントサイズを23pxにする */
+}
+
+/* 
+ * セレクタ:.courseGuide tr, .courseGuide th, 
+ * 概要   :コース案内のレコードについてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.courseGuide th, .courseGuide td {
+	padding: 30px;		/* 幅を30px広げる */
+	font-size: 21px;	/* フォントサイズを21pxにする */
+}
+
+/* 
+ * セレクタ:.lessonSchedule
+ * 概要   :レッスンスケジュール(時間割)についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule  {
+	margin-top: 20px;	/* 上から余白を20pxとる */
+	width:	30%;		/* レッスンスケジュールテーブル全体の幅を30%にする */
+	float: right;		/* 右回りに回り込みする */
+}
+
+
+/* 
+ * セレクタ:.lessonSchedule th 
+ * 概要   :レッスンスケジュールのレコードについてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule th {
+	padding: 0 10px 30px 10px;	/* 左から0、10px、30px、10px、広げる */
+	font-size: 21px;			/* フォントサイズを21pxにする */
+	font-weight: normal;		/* 文字の太さを普通にする */
+}
+
+/* 
+ * セレクタ:.lessonSchedule caption
+ * 概要   :レッスンスケジュールの概要についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule caption {
+	margin-bottom: 30px;	/* 下向きに30px余白をとる */
+	font-weight: bold;		/* 文字の太さを太くする */
+	font-size: 23px; 		/* フォントのサイズを23pxにする */
+}
+
+/* 
+ * セレクタ:.foot_gallery
+ * 概要   :ギャラリー画像を表示するエリアについてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.foot_gallery {
+	clear: both;	/* 回り込みを無効にする */
+}
+
+/* 
+ * セレクタ:.commonText 
+ * 概要   :特徴についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.commonText li {
+	padding: 2px;	/* 上下に30pxの余白をとる */
+}
+
+/* 
+ * セレクタ:.salesPoint 
+ * 概要   :特徴についてのスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.salesPoint {
+	margin: 30px 0;	/* 上下に30pxの余白をとる */
+}
+
+/* 
+ * セレクタ:.salesPoint li
+ * 概要   :特徴についてそれぞれの項目のスタイル
+ * 作成者 :T.Y
+ * 作成日 :2015.02.09
+ */
+.salesPoint li {
+	padding: 5px;	/* 5px要素を広げる */
+}
+
+
+.memberRule {
+	margin-bottom: 50px;
+}
+
+.specialGuide {
+	width: 52%;
+	padding: 10px;
+	margin: 40px 0;
+	float: left;
+}
+
+.specialGuide  caption{
+	padding: 10px 0;
+	text-align: left;
+	font-weight: bold;
+	font-size: 18px;
+}
+.specialGuide th, .specialGuide td {
+	width: 50%;
+	padding: 10px;
+	font-size: 15px;
+	text-align: left;
+}
+
+.calendar {
+	margin-top: 80px;
+	width: 47%;
+	font-size: 20px;
+	float: right;
+}
+
+/*  */
+}
+@media only screen and (max-width: 650px) {
+	
+	#container {
+		width: 94%;
+		margin: 0 auto;
+		font-size: 9px;
+	}
+
+	header {
+	width: 100%;		/* 横幅を800pxにする。 */
+	height: ;
+	margin: 0 auto;		/* 横位置を中心に寄せる。 */
+	}
+	.foot_gallery img {
+		width: 100px;
+		height: 100px; 
+	}
+}

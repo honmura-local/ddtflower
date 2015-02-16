@@ -1,0 +1,33 @@
+<!-- DDTFlowersトップページのメニューの検証です。 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DDT Flowers</title>
+<!-- jQueryの本体を読み込む。 -->
+<script src="js/jquery-1.11.0.min.js"></script>
+<!-- JavaScriptのコードを記述する。 -->
+<script>
+// ドキュメント配置後の処理。
+$(document).ready(function(){
+/* 	var fs = WScript.CreateObject("Scripting.FileSystemObject");
+
+	// 読み込み
+	var file2 = fs.OpenTextFile("text.txt", 1);
+	var str = file2.ReadLine();
+	WScript.Echo(str);
+	file2.Close();
+ */
+ $.ajax({
+	 url:"text.txt",
+	 dataType:'text',
+	 success:function(text){
+		 alert(text);
+	 }
+ })
+ });
+</script>
+</head>
+<body>
+</body>
+</html>

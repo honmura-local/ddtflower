@@ -1,0 +1,75 @@
+{
+	"pageTitle":{
+		"image"		:{
+			"src"	:	["icon(butterfly).png"]
+		},
+		"title"		: {
+			"text"	:	["体験レッスン"]
+		},
+		"summary"	: {
+			"text"	:	["興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"]
+		}
+	},
+
+	"specialGuide":{
+		"summary" :{
+			"text": "体験レッスン案内"
+		},
+		"category":{
+			"item":{
+				"text"	:	["カテゴリ"]
+			},
+			"content":{
+				"text"	:	["花・ガーデニング・環境"]
+			}
+		},
+		"doKnow":{
+			"item":{
+				"text"	:	["できること・わかること"]
+			},
+			"content":{
+				"text"	:	["プリザーブドフラワー"]
+			}
+		},
+		"cost":{
+			"item":{
+				"text"	:	["費用"]
+			},
+			"content":{
+				"text"	:	["3,800円"]
+			}
+		},
+		"times":{
+			"item":{
+				"text"	:	["回数"]
+			},
+			"content":{
+				"text"	:	["1回"]
+			}
+		},
+		"hour":{
+			"item":{
+				"text"	:	["1回あたりの時間"]
+			},
+			"content":{
+				"text"	:	["90分"]
+			}
+		},
+		"target":{
+			"item":{
+				"text"	:	["対象者"]
+			},
+			"content":{
+				"text"	:	["初めての方&nbsp;癒されたい方&nbsp;趣味を見つけたい方&nbsp;どなたでも大歓迎"]
+			}
+		},
+		"bring":{
+			"item":{
+				"text"	:	["持ち物・その他"]
+			},
+			"content":{
+				"text"	:	["お持ち帰り用の袋をご持参下さい"]
+			}
+		}
+	}
+}

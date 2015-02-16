@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+
+/* 
+ * セレクタ:#toppage_menu
+ * 概要   :トップページのメニュー。
+ * 作成者 :T.M
+ * 作成日 :2015.02.02
+ */
+#toppage_menu{
+	height: 	100%;		/* コンテンツの高さ一杯にトップページのメニュー領域を広げる。 */
+	width: 		37.5%;		/* メニューの幅を指定する。 */
+	background: #482b16;		/* 試験的に背景色を灰色にする。 */
+	opacity:	0.7;
+	position: 	absolute;	/* 位置を絶対位置で指定する。 */
+	top:		0;			/* 親要素の上端から0の位置に配置する。 */
+	right:		0;			/* 親要素の右端から0の座標に配置する。この位置は表示状態の位置である。 */
+	z-index:	50;			/* 絶対位置指定要素の重なりの優先順位を高めにしておく。 */
+}
+
+/* 
+ * セレクタ:#toppage_menu .menu_button
+ * 概要   :トップページのメニューのボタン。
+ * 作成者 :T.M
+ * 作成日 :2015.02.02
+ */
+#toppage_menu .menu_button{
+	height: 	90px;		/* 現状8個のボタンがあるので、8等分サイズにする。 */
+	width: 		100%;		/* 幅をメニュー領域に合わせる。 */
+	text-align: left;		/* 文字を中心に寄せる。 */
+	background: inherit;	/* 親の背景色を継承する。 */
+	opacity:	0.7;
+	display:	table;		/* テーブルのレイアウトを利用する。子要素となるaタグの高さを中心に揃えるためのもの。 */
+}
+
+/* 
+ * セレクタ:#toppage_menu .menu_button a
+ * 概要   :トップページのメニューのボタンの画像タグ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.04
+ */
+#toppage_menu .menu_button a img{
+	height			: 	60px;		/* 高さを外枠に合わせる。 */
+	width			:	60px;		/* 幅を高さに合わせて伸縮させる。 */
+	vertical-align	:	middle;		/* 高さを中心に揃える。 */	
+	display			: inline-block;	/* テーブルのセルとしてのレイアウトを行う。 */
+}
+
+/* 
+ * セレクタ:#toppage_menu .menu_button a
+ * 概要   :トップページのメニューのボタン。
+ * 作成者 :T.M
+ * 作成日 :2015.02.04
+ */
+#toppage_menu .menu_button a{
+	padding: 15px 10px;
+	display: inline-block;
+	text-align: left;
+	vertical-align:middle;
+	text-decoration: none;
+}
+
+/* 
+ * セレクタ:#toppage_menu .menu_button a
+ * 概要   :トップページのメニューのボタンの画像タグ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.04
+ */
+#toppage_menu .menu_button a span{
+	display			: inline;	/* テーブルのセルとしてのレイアウトを行う。 */
+	padding-left: 20px;	/* 左にある画像との間に間隔を空ける。 */
+}
+/* 
+ * セレクタ:#toppage_menu .menu_button a > span > p
+ * 概要   :トップページのメニューのボタンのテキスト。
+ * 作成者 :T.M
+ * 作成日 :2015.02.04
+ */
+#toppage_menu .menu_button a > span > p{
+	display: inline;	/* インライン要素として扱う。 */
+	text-decoration: none;
+}
+
+
+
+/* 
+ * セレクタ:.overray
+ * 概要   :オーバーレイ。
+ * 作成者 :T.M
+ * 作成日 :2015.02.02
+ */
+.overray{
+	height: 	100%;					/* 画面いっぱいにオーバーレイを広げる。 */
+	width: 		100%;					/* 画面いっぱいにオーバーレイを広げる。 */
+	background: rgba(33,33,33,0.6);		/* 透過した灰色を背景色に指定する。 */
+	position: 	absolute;				/* 絶対位置で配置する。 */
+	top: 		0;						/* 画面上端から表示する。 */
+	left: 		0;						/* 画面左端から表示する。 */
+	z-index: 	10;						/* 絶対位置指定要素の重なりの優先順位を低めにしておく。 */
+}
+
