@@ -14,7 +14,7 @@
 
 	"courseGuide":{
 		"summary" :{
-			"text": "コース案内"
+			"text": ["コース案内"]
 		},
 		"firstStage":{
 			"stage":{

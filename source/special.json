@@ -20,7 +20,7 @@
 	
 	{
 		"class":"specialGuide",
-		"text": "体験レッスン案内",
+		"text": ["体験レッスン案内"],
 		"array":[
 			{
 				"class":"category",
