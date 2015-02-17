@@ -4,8 +4,7 @@
 		"array":[
 			{
 				"class":"image",
-				"src":["icon(butterfly).png"],
-				"width":["100"]
+				"src":["icon(butterfly).png"]
 			},
 			{
 				"class":"title",
@@ -20,35 +19,42 @@
 	
 	{
 		"class":"specialGuide",
-		"text": ["体験レッスン案内"],
 		"array":[
 			{
-				"class":"category",
-				"text":["カテゴリ", "花・ガーデニング・環境"]
+				"class":"summary",
+				"text": ["体験レッスン案内"]
 			},
 			{
-				"class":"doKnow",
-				"text":["できること・わかること", "プリザーブドフラワー"]
-			},
-			{
-				"class":"cost",
-				"text":["費用", "3,800円"]
-			},
-			{
-				"class":"times",
-				"text":["回数", "1回"]
-			},
-			{
-				"class":"hour",
-				"text":["1回あたりの時間", "90分"]
-			},
-			{
-				"class":"target",
-				"text":["対象者", "初めての方&nbsp;癒されたい方&nbsp;趣味を見つけたい方&nbsp;どなたでも大歓迎"]
-			},
-			{
-				"class":"bring",
-				"text":["持ち物・その他", "お持ち帰り用の袋をご持参下さい"]
+				"array":[
+					{
+						"class":"category",
+						"text":["カテゴリ", "花・ガーデニング・環境"]
+					},
+					{
+						"class":"doKnow",
+						"text":["できること・わかること", "プリザーブドフラワー"]
+					},
+					{
+						"class":"cost",
+						"text":["費用", "3,800円"]
+					},
+					{
+						"class":"times",
+						"text":["回数", "1回"]
+					},
+					{
+						"class":"hour",
+						"text":["1回あたりの時間", "90分"]
+					},
+					{
+						"class":"target",
+						"text":["対象者", "初めての方&nbsp;癒されたい方&nbsp;趣味を見つけたい方&nbsp;どなたでも大歓迎"]
+					},
+					{
+						"class":"bring",
+						"text":["持ち物・その他", "お持ち帰り用の袋をご持参下さい"]
+					}
+				]	
 			}
 		]
 	}

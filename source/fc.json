@@ -4,8 +4,7 @@
 		"array":[
 			{
 				"class":"image",
-				"src":["icon(leaf2)"],
-				"width":["100"]
+				"src":["icon(leaf2)"]
 			},
 			{
 				"class":"title",
@@ -19,19 +18,26 @@
 	},
 	{
 		"class":"courseGuide",
-		"text":["コース案内"],
 		"array":[
 			{
-				"class":"firstStage",
-				"text":["1stステージ", "全16単位", "6,000 円／回"]
+				"class":"summary",
+				"text":["コース案内"]
 			},
 			{
-				"class":"secondStage",
-				"text":["2ndステージ", "全16単位", "7,000 円／回"]
-			},
-			{
-				"class":"thirdStage",
-				"text":["教育実習", "全48単位", "500 &nbsp;&nbsp;円／回"]
+				"array":[
+					{
+						"class":"firstStage",
+						"text":["1stステージ", "全16単位", "6,000 円／回"]
+					},
+					{
+						"class":"secondStage",
+						"text":["2ndステージ", "全16単位", "7,000 円／回"]
+					},
+					{
+						"class":"thirdStage",
+						"text":["教育実習", "全48単位", "500 &nbsp;&nbsp;円／回"]
+					}
+				]
 			}
 		]
 	}
