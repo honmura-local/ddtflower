@@ -29,11 +29,60 @@
 <script type="text/javascript" src="js/functions.js"></script>
 <!-- 関数一覧にしたjsファイルを読み込む -->
 <script type="text/javascript" src="js/createTag.js"></script>
-
-
 <!-- container -->
 <div id="container">
-	<div id="head"><img src="image/main(header800).png"></div>
+		<!-- ヘッダー領域。 -->
+	<header>
+		<!-- ガイド領域。 -->
+		<div class="gides">
+			<!-- フラワーアレンジメントスクール -->
+			<div class="gide_f_a_school">
+				<!-- お花アイコン -->
+				<img src="image/icon(logo50).png"></img>
+				<!-- 「フラワーアレンジメントスクール」のテキスト。 -->
+				<p>フラワー</p>
+				<p>アレンジメント</p>
+				<p>スクール</p>
+			</div>
+			<div class="gide_tel">
+				<img src="image/icon(tell).png">
+				<p class="p1">お問い合せ</p>
+				<p class="p2">03-6413-1225</p>
+				<p class="p3">(対応時間 11:00 〜 20:00)</p>
+			</div>
+			<div class="gide_mail link_gide">
+				<img src="image/icon(mail).png">
+			</div>
+			<div class="gide_access link_gide">
+				<img src="image/icon(accessl).png">
+			</div>
+			<div class="gide_trial link_gide">
+				<a href="experience.html"><img src="image/icon(experience).png"></a>
+			</div>
+			<div class="gide_blog link_gide">
+				<img src="image/icon(blog50).png">
+			</div>
+			<div class="gide_sns">
+				<img class="facebook link_gide" src="image/icon(facebook).png">
+				<img class="twitter_tweet link_gide" src="image/icon(titter22).png">
+			</div>
+			<div class="gide_login link_gide">
+				<img class="login" src="image/icon(login22-60).png">
+			</div>
+		</div>
+		<ul class="top_menu">
+				<li class="button"><a href="preserved.html" title="プリザーブドフラワー"><p>プリザ</p></a></li>
+				<li class="button"><a href="fresh.html" title="フレッシュフラワー"><p>生花</p></a></li>
+				<li class="button"><a href="nfd.html" title="NFD資格取得"><p>NFD</p></a></li>
+				<li class="button"><a href="national.html" title="国家認定資格取得"><p>国家</p></a></li>
+				<li class="button"><a href="bridal.html"><p>ブライダル</p></a></li>
+				<li class="button"><a href="franchise.html" title="フランチャイズ"><p>FC</p></a></li>
+				<li class="button"><a href="gallery.html"><p>ギャラリー</p></a></li>
+				<li class="button"><a href="voice.html"><p>生徒さんの声</p></a></li>
+		</ul>
+	</header>
+
+	<header><img src="image/main(header800).png"></header>
 	<!-- トップページのコンテンツのタグ。 -->
 	<div class="main">
 		<div class="pageTitle">
@@ -222,13 +271,9 @@
 	</table>
 
 	</div>
-	<footer><img src="image/main(footer800).png"></footer>
+	<footer><img src="image/main(footer800).png"><span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span></footer>
 </div>
-<!--
-<footer>
-	<span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span>
-</footer>
--->
+
 <script>
 //createHeader();
 //createFooter();
