@@ -227,7 +227,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gidef_a_school{
+.gide_f_a_school{
     height: inherit;    /* gidesの高さを継承する。 */
     width: 165px;       /* 正方形の画像2個分＋αの幅を取る。 */
 }
