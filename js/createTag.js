@@ -10,7 +10,7 @@ function jsonToTag(){
 	// 取り扱うDOMの属性名の表の配列。コピーして何度も使うのでOriginalという名を付ける。
 	this.argArrayOriginal = ['class', 'id', 'name', 'src','height', 'width',
 	                 'colspan','rowspan','href','alt', 'action', 'method',
-	                 'title','type','value'];
+	                 'title','type','value', 'action', 'cols', 'rows', 'required', 'checked'];
 	// DOMの属性名の表の配列を格納する配列。確認するごとに対応する配列の要素を消していく。
 	this.parentArgArray = [];
 
@@ -106,17 +106,17 @@ function jsonToTag(){
 		// キーに対応するJSONの連想配列を取得する。
 		var curdom = this.getDom(key);
 		// カレントのDOMと開始時のDOMを同じにする。
-//		var startdom = curdom;
+		var startdom = curdom;
 		// タグのルート部分をrootdomに保存する。
-//		var rootdom = curdom;
+		var rootdom = curdom;
 		// parentArgArrayを初期化する。
 		this.getKeyFirst();
 		
 		// ループ開始時に連想配列を取得する。ループするごとに連想配列のポインタを次へ進め、全て走査し終えれば終了する。
 		for(var curkey = this.getMap(key); curkey != null; curkey = this.getKeyNext(curkey)){
-			
+
 			// 現在指すタグのクラスからDOMを取得し、curdomに代入する。
-			curdom = $('.' + curkey["class"] , this.dom);
+			curdom = $('.' + curkey["class"] , this.dom).attributes[0];
 			
 			// DOMが取得できなかったら
 			if(curdom.length <= 0){
@@ -127,7 +127,7 @@ function jsonToTag(){
 			}
 			
 			// 現在指すDOMがクラスであれば
-			if( "class"){
+			if(curdom.name == "class"){
 
 				// DOMの位置を動かす。
 				startdom = $(curkey["class"]);
@@ -136,10 +136,7 @@ function jsonToTag(){
 				if('text' in curkey){
 					// テキストを追加する。
 					startdom = this.setTagText(startdom, curkey['text']);
-				} 
-				// 現在のキーの属性名配列からclassの要素を消す。
-//				this.parentArgArray[this.parentArgArray.length - 1].splice[0,1];
-//				startdom = this.traverseDom(startdom);
+				}
 			// 現在指すDOMがクラス以外であれば
 			} else {
 				// 属性値をセットする。
@@ -353,71 +350,6 @@ function jsonToTag(){
 		return retKey;
 	}
 	
-	/* 
-	 * 関数名:this.mapLength = function(map)
-	 * 概要  :連想配列の要素数をカウントして返す。
-	 * 引数  :Object map
-	 * 返却値  :int
-	 * 作成者:T.M
-	 * 作成日:2015.02.16
-	 */
-	this.mapLength = function(map){
-		// カウント用変数を用意する。
-		var count = 0;
-		// 引数に取った連想配列のキーを順次取り出す。
-		for(key in map){
-			// カウンターを1つ回す。
-			count++; 
-		}
-		
-		// カウントを返す。
-		return count;
-	}
-	
-	/* 
-	 * 関数名:this.traverseDom = function(dom)
-	 * 概要  :DOMを次に進める。
-	 * 引数  :jQuery dom
-	 * 返却値  :jQuery
-	 * 作成者:T.M
-	 * 作成日:2015.02.16
-	 * 変更者:T.M
-	 * 変更日:2015.02.17
-	 * 内容  :箇条書き時のDOMの移動を追記しました。
-	 */
-	this.traverseDom = function(dom){
-		// 返却値となるdomの変数を宣言
-		var retdom;
-		
-		console.log($('.' + dom.attr('class') + ' > th,.'
-				+ dom.attr('class') +' >td,.'+ dom.attr('class') + ' > li', this.dom).length);
-		
-		// domが子要素を持っていてかつ、箇条書きまたは、一度に複数書き込むタイプのDOMではなければ
-		if($('.' + dom.attr('class') + ' > th,.'
-				+ dom.attr('class') +' >td,.'+ dom.attr('class') + ' > li', this.dom).length <= 0
-				&& dom.children().length > 0){
-			// タグを子要素に移動する。
-			retdom = $(':first-child', dom);
-		// domに弟要素があれば、または箇条書き、または一度に複数書き込むタイプのDOMであれば
-		} else if(dom.next() != null){
-			// 処理対象のDOMを弟要素に切り替える。
-			retdom = dom.next();
-		// domに親ががあれば
-		} else if(dom.parent() != null){
-			// domの親の弟要素に移る。
-			retdom = dom.parent();
-//		} else if(dom.parent().next() != null){
-//			// domの親の弟要素に移る。
-//			retdom = dom.parent().next();
-		// DOMがなくなったら
-		} else {
-			// domにnullを入れる。
-			retdom = null;
-		}
-		
-		// retdomを返す。
-		return retdom;
-	}
 
 	/* 
 	 * 関数名:this.mapLength = function(map)
