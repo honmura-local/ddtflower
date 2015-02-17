@@ -1,0 +1,249 @@
+<!-- DDTFlowersトップページのメニューの検証です。 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DDTFlowers</title>
+<!-- メインのCSSファイルを読み込む。 -->
+<link type="text/css" href="css/style.css" rel="stylesheet">
+<!-- jqueryUIのcssを読み込む -->
+<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+<!-- slickのCSSを読み込む。 -->
+<link type="text/css" href="css/slick.css" rel="stylesheet">
+<!-- fancyboxのCSSを読み込む。 -->
+<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
+
+<!-- jQueryの本体を読み込む。 -->
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<!-- jQueryUIを読み込む。 -->
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- カルーセルのギャラリー生成プラグイン「Slick」の本体を読み込む。 -->
+<script type="text/javascript" src="js/slick.min.js" ></script>
+<!-- クリックした画像をピックアップ表示するためのjQueryプラグイン「fancybox」の本体を読み込む。 -->
+<script type="text/javascript" src="js/source/jquery.fancybox.js" ></script>
+<!-- 関数一覧にしたjsファイルを読み込む -->
+<script type="text/javascript" src="js/functions.js"></script>
+</head>
+<body>
+<!-- container -->
+<div id="container">
+	<div id="head"><img src="image/main(w800上飾り).png"></div>
+	<!-- トップページのコンテンツのタグ。 -->
+	<div class="main">
+		<div class="pageTitle">
+			<h1 class="title">体験レッスン</h1>
+			<img src="image/icon(butterfly).png" >
+			<h2 class="summary">興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。</h2>
+		</div>
+
+		<!-- コース案内テーブル -->
+		<table class="specialGuide">
+		<!-- テーブルの概要 -->
+		<caption class="summary">体験レッスン案内</caption>
+		<!-- 1行目 -->
+		<tr class="category">
+			<!-- 行の見出し -->
+			<th class="item">カテゴリ</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">花・ガーデニング・環境</td>
+			<!-- 3つ目のカラムの内容 -->
+		</tr>
+		<!-- 2行目 -->
+		<tr class="doKnow">
+			<!-- 行の見出し -->
+			<th class="item">できること・わかること</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">プリザーブドフラワー</td>
+		</tr>
+		<!-- 3行目 -->
+		<tr class="cost">
+			<!-- 行の見出し -->
+			<th class="item">費用</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">3,800円</td>
+		</tr>
+		<!-- 4行目 -->
+		<tr class="times">
+			<!-- 行の見出し -->
+			<th class="item">回数</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">1回</td>
+		</tr>
+		<!-- 5行目 -->
+		<tr class="hour">
+			<!-- 行の見出し -->
+			<th class="item">1回あたりの時間</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">90分</td>
+		</tr>
+		<!-- 6行目 -->
+		<tr class="target">
+			<!-- 行の見出し -->
+			<th class="item">対象者</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">初めての方&nbsp;癒されたい方&nbsp;趣味を見つけたい方&nbsp;どなたでも大歓迎</td>
+		</tr>
+		<!-- 7行目 -->
+		<tr class="bring">
+			<!-- 行の見出し -->
+			<th class="item">持ち物・その他</th>
+			<!-- 2つ目のカラムの内容 -->
+			<td class="content">お持ち帰り用の袋をご持参下さい</td>
+		</tr>
+	</table>
+
+	<div class="calendar"></div>
+
+<!-- 共通リスト項目 -->
+<table class="commonText">
+	<!-- テーブルの概要 -->
+	<caption class="summary">共通</caption>
+	<!-- 項目一覧 -->
+	<!-- 1行目 -->
+	<tr class="commonTextList">
+		<td>・月何回でも受講可能です。</td>
+	</tr>
+	<!-- 2行目 -->
+	<tr class="commonTextList">
+		<td>・１カ月に２回以上ご来校の場合、受講料を１０００円オフします。</td>
+	</tr>
+	<!-- 3行目 -->
+	<tr class="commonTextList">
+		<td>・１カ月に４回以上ご来校の場合、受講料を無料とします。</td>
+	</tr>
+	<!-- 4行目 -->
+	<tr class="commonTextList">
+		<td>・プリザ・生花コース修了後、本校認定のディプロマを発行します。</td>
+	</tr>
+	<!-- 5行目 -->
+	<tr class="commonTextList">
+		<td>・NFD、国家資格取得コースの花材費は別途となります。</td>
+	</tr>
+	<!-- 6行目 -->
+	<tr class="commonTextList">
+		<td>・異なるコースから生花、プリザへのスポット受講が可能です。</td>
+	</tr>
+</table>
+
+<!-- カルーセルの写真ギャラリー。JavaScriptで画像のタグを追加していく。 -->
+<div class="foot_gallery"></div>
+
+<!-- 特徴のリスト項目 -->
+<table class="salesPoint">
+	<!-- テーブルの概要 -->
+	<caption class="summary">特徴</caption>
+	<!-- 項目一覧 -->
+	<!-- 1行目 -->
+	<tr class="salesPointList">
+		<td>・インターネット対応のレッスン予約システムを無料にて提供します。</td>
+	</tr>
+	<!-- 2行目 -->
+	<tr class="salesPointList">
+		<td>・花材はマージンなし、配送料のみにて準備します。</td>
+	</tr>
+	<!-- 3行目 -->
+	<tr class="salesPointList">
+		<td>・受講料のロイヤリティーは５％。</td>
+	</tr>
+	<!-- 4行目 -->
+	<tr class="salesPointList">
+		<td>・年間ロイヤリティーは５万円。</td>
+	</tr>
+	<!-- 5行目 -->
+	<tr class="salesPointList">
+		<td>・他フランチャイズ店の生徒さんもレッスン可能です。登録店へのロイヤリティー３５％が発生します。</td>
+	</tr>
+	<!-- 6行目 -->
+	<tr class="salesPointList">
+		<td>・本校、他コース（プリザ、生花、NFD、国家）の受講が半額で受けられます。もちろん資格取得可能です。</td>
+	</tr>
+	</table>
+
+	<!-- 会員規約のリスト項目 -->
+	<table class="memberRule">
+	<!-- テーブルの概要 -->
+	<caption class="summary">会員規約</caption>
+	<!-- 項目一覧 -->
+	<!-- 1行目 -->
+	<tr class="memberRuleList">
+		<td>・お支払い：都度払い前金制です。現金により次回分を事前にお支払い頂きます。</td>
+	</tr>
+	<!-- 2行目 -->
+	<tr class="memberRuleList">
+		<td>・ご予約：予約指定日のプリザは3日前まで、生花は7日前までにインターネットもしくは電話によりご予約出来ます。</td>
+	</tr>
+	<!-- 3行目 -->
+	<tr class="memberRuleList">
+		<td>・キャンセル：ご予約日のプリザは３日、生花は７日以上前までにキャンセル可能です。</td>
+	</tr>
+	<!-- 4行目 -->
+	<tr class="memberRuleList">
+		<td>・振替え：上記、予約、キャンセル規定に沿い振替え自由です。</td>
+	</tr>
+	<!-- 5行目 -->
+	<tr class="memberRuleList">
+		<td>・前金：最終受講日から３か月間受講がなかった場合、経過日から１カ月毎に５００円を前金から引かせて頂きます。</td>
+	</tr>
+	<!-- 6行目 -->
+	<tr class="memberRuleList">
+		<td>・退会：随時、退会可能です。退会時、前金の残金は返金されます。</td>
+	</tr>
+	<!-- 7行目 -->
+	<tr class="memberRuleList">
+		<td>・＊NFDおよび国家は生花に含みます。</td>
+	</tr>
+	</table>
+
+	</div>
+	<footer><img src="image/main(w800下飾り).png"></footer>
+</div>
+<!--
+<footer>
+	<span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span>
+</footer>
+-->
+<script>
+jQuery(function($){
+    $.datepicker.regional['ja'] = {
+        closeText: '閉じる',
+        prevText: '<前',
+        nextText: '次>',
+        currentText: '今日',
+        monthNames: ['1月','2月','3月','4月','5月','6月',
+        '7月','8月','9月','10月','11月','12月'],
+        monthNamesShort: ['1月','2月','3月','4月','5月','6月',
+        '7月','8月','9月','10月','11月','12月'],
+        dayNames: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'],
+        dayNamesShort: ['日','月','火','水','木','金','土'],
+        dayNamesMin: ['日','月','火','水','木','金','土'],
+        weekHeader: '週',
+        dateFormat: 'yy/mm/dd',
+        firstDay: 0,
+        isRTL: false,
+        showMonthAfterYear: true,
+        yearSuffix: '年'};
+    $.datepicker.setDefaults($.datepicker.regional['ja']);
+});
+
+$(function() {
+	$('.calendar').datepicker();
+});
+// createHeader();
+// createFooter();
+// createTitle(4);
+//createTableCourseGuide(0);
+//createLessonSchedule();
+
+//createScrollPictures();
+//createPointGuide(共通);
+//createPointGuide(特徴);
+//createPointGuide(会員規約);
+
+// createTableSpecialGuide(1);
+//createCalendar();
+//createScrollPictures();
+createPictures();
+// createPointGuide();
+</script>
+</body>
+</html>
