@@ -8,11 +8,11 @@ function jsonToTag(){
 	// jsonの層を下る際に、親を記録していくための配列。
 	this.parentKeyArray = [];
 	// 取り扱うDOMの属性名の表の配列。コピーして何度も使うのでOriginalという名を付ける。
-	this.argArrayOriginal = ['class', 'text', 'id', 'name', 'height', 'width',
-	                 'colspan','rowspan','href','src','alt',
+	this.argArrayOriginal = ['class', 'id', 'name', 'src','height', 'width',
+	                 'colspan','rowspan','href','alt', 'action', 'method',
 	                 'title','type','value'];
-	// DOMの属性名の表の配列。確認するごとに対応する要素を消していく。
-	this.argArray = argArrayOriginal.concat;
+	// DOMの属性名の表の配列を格納する配列。確認するごとに対応する配列の要素を消していく。
+	this.parentArgArray = [];
 
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
@@ -56,7 +56,7 @@ function jsonToTag(){
 			this.json = $.extend(tmp,this.json);
 		}
 	};
-	
+
 	/* 
 	 * 関数名:this.getDomFile = function((domPath))
 	 * 概要  :JSONファイルを取得して返す。
@@ -106,20 +106,20 @@ function jsonToTag(){
 		// キーに対応するJSONの連想配列を取得する。
 		var curdom = this.getDom(key);
 		// カレントのDOMと開始時のDOMを同じにする。
-		var startdom = curdom;
+//		var startdom = curdom;
 		// タグのルート部分をrootdomに保存する。
-		var rootdom = curdom;
+//		var rootdom = curdom;
+		// parentArgArrayを初期化する。
+		this.getKeyFirst();
 		
 		// ループ開始時に連想配列を取得する。ループするごとに連想配列のポインタを次へ進め、全て走査し終えれば終了する。
-		for(var curkey = this.getMap(key); curkey != null; curkey = this.getNextKey(curkey)){
+		for(var curkey = this.getMap(key); curkey != null; curkey = this.getKeyNext(curkey)){
 			
 			// 現在指すタグのクラスからDOMを取得し、curdomに代入する。
-			curdom = $('.' + startdom.attr("class") +'[' + this.argArrayOriginal[this.argArrayOriginal.length 
-			                                               		              - this.parentArgArray[this.parentArgArray.length - 1].length] + ']', this.dom);
+			curdom = $('.' + curkey["class"] , this.dom);
 			
-			// DOMが取得できなかったら、またはキーがクラス名でなければ
-			if(curdom.length <= 0 && $('.' + startdom.attr('class'), this.dom).has(':not(.' + this.argArrayOriginal[this.argArrayOriginal.length 
-			                                                                                  		              - this.parentArgArray[this.parentArgArray.length - 1].length] + ')').length <= 0){
+			// DOMが取得できなかったら
+			if(curdom.length <= 0){
 				// 異常値をrefに代入する。
 				ref = 0;
 				// ループを終える。
@@ -127,11 +127,19 @@ function jsonToTag(){
 			}
 			
 			// 現在指すDOMがクラスであれば
-			if(curdom.length <= 0){
-				// テキストを追加する。
-				this.setTagText(startdom, curkey[1]['text']);
-				// DOMの位置を次に進める。
-				this.traverseDom(startdom);
+			if( "class"){
+
+				// DOMの位置を動かす。
+				startdom = $(curkey["class"]);
+				
+				// curkeyにテキストがあれば
+				if('text' in curkey){
+					// テキストを追加する。
+					startdom = this.setTagText(startdom, curkey['text']);
+				} 
+				// 現在のキーの属性名配列からclassの要素を消す。
+//				this.parentArgArray[this.parentArgArray.length - 1].splice[0,1];
+//				startdom = this.traverseDom(startdom);
 			// 現在指すDOMがクラス以外であれば
 			} else {
 				// 属性値をセットする。
@@ -142,7 +150,7 @@ function jsonToTag(){
 		// タグをmainのタグに追加する。
 		$(".main").append(rootdom);
 	};
-	
+
 	/* 
 	 * 関数名:this.getMap = function(key)
 	 * 概要  :JSON連想配列の最上階層からキーに対応した値を取り出す。
@@ -164,10 +172,14 @@ function jsonToTag(){
 				break;
 			}
 		}
+		
+		// parentArgArrayに初期値を加える。
+		this.parentArgArray[0] = this.argArrayOriginal.concat();
+		
 		// retArrayを返す。
 		return retArray;
 	};
-	
+
 	/* 
 	 * 関数名:this.getDom = function(key)
 	 * 概要  :キーに対応するHTMLのパーツを返す。
@@ -180,22 +192,36 @@ function jsonToTag(){
 		// メンバのHTMLからキーに対応した要素を取り出し返す。
 		return $('[class="' + key +'"]', this.dom);
 	};
-	
-	
+
 	/* 
 	 * 関数名:this.setTagText = function(startDom,text)
 	 * 概要  :タグにテキストをセットする。
-	 * 引数  :jQuery startdom, String text
-	 * 返却値  :なし
+	 * 引数  :jQuery startdom, Array text
+	 * 返却値  :jQuery
 	 * 作成者:T.M
 	 * 作成日:2015.02.13
 	 */
 	this.setTagText = function(startDom,text){
 		// textがあれば
 		if(text !== void(0)){
-			// タグにテキストを書き込む。
-			startDom.append(text);
+			// textが要素数2以上であれば
+			if(text.length > 1){
+				// 同じクラスを持つ要素に順次テキストを流し込んでいく。
+				$('.'+startDom.attr("class") +' > th,td,li', this.dom).each(function(i){
+					// テキストを順番に流し込んでいく。
+					$(this).append(text[i]);
+				});
+				// startDomの位置を最後の要素にずらす。
+				startDom = $('.' + startDom.attr('class') + ':last');
+			// そうでなければ
+			} else {
+				// タグにテキストを書き込む。
+				startDom.append(text);
+			}
 		}
+		
+		// startDomを返す。
+		return startDom;
 	};
 	
 	/* 
@@ -207,10 +233,25 @@ function jsonToTag(){
 	 * 作成日:2015.02.13
 	 */
 	this.setAttrText = function(startdom, key){
+		// キーの値が配列であれば
+		if(key[argArrayOriginal[this.argArrayOriginal.length 
+             		              - this.parentArgArray[this.parentArgArray.length - 1].length]].isArray()){
+			// startdomのクラスの要素を走査する。
+			startdom.each(function(i){
+				// startdomの要素に対し、キーの値の配列の属性値を順番にセットしていく。
+				$(this).attr(argArrayOriginal[this.argArrayOriginal.length 
+	                    		              - this.parentArgArray[this.parentArgArray.length - 1].length],
+	                    		              key[argArrayOriginal[this.argArrayOriginal.length 
+	                                            		              - this.parentArgArray[this.parentArgArray.length - 1].length]][i])
+			});
+		// キーの値が単一の値であれば
+		} else {
 		// タグに現在指すDOMのノードの属性値をセットする。
-		startdom.attr(this.argArrayOriginal[this.argArrayOriginal.length 
-		              - this.parentArgArray[this.parentArgArray.length - 1].length],
-		              key);
+		startdom.attr(argArrayOriginal[this.argArrayOriginal.length 
+                    		              - this.parentArgArray[this.parentArgArray.length - 1].length],
+		              key[argArrayOriginal[this.argArrayOriginal.length 
+                        		              - this.parentArgArray[this.parentArgArray.length - 1].length]]);
+		}
 	};
 
 	/* 
@@ -227,27 +268,26 @@ function jsonToTag(){
 	this.getKeyNext = function(key){
 		// 子か弟がいる限りループする
 		for(;key;){
-			// 子がいれば
+			// 子がいれば、加えて箇条書きでなければ
 			if('array' in key){
 				// 子キーが配列であれば
 				if(key["array"].length){
 					// カレントkeyを親として保存する。
-					this.parentKeyArray.put(key);
-					//属性格納配列を初期値に戻す。
-					this.parentArgArray.put(getYoungerFirst());
+					this.parentKeyArray.push(key);
+					//属性格納配列の配列に新たに属性格納配列を加える。
+					this.parentArgArray.push(this.getYoungerFirst());
 					// 子を取得する。
 					key = key["array"][0];
 
 					// 子の属性格納配列用意する。
 					// argArrayを作る。
 					
-					
 					// ループを抜ける。
 					break;
 				}
 			}
 			// 弟がいれば
-			if(key = getKeyYoungerNext(key)){
+			if(key = this.getYoungerNext(key)){
 				// ループを抜ける。
 				break;
 			}
@@ -260,7 +300,7 @@ function jsonToTag(){
 				this.parentArgArray.splice(-1,1);
 				
 				// 弟がいるならば弟のキーを返し、無い場合はnullを返す。
-				key = getKeyYoungerNext(key);
+				key = this.getYoungerNext(key);
 			}
 		}
 		
@@ -293,14 +333,15 @@ function jsonToTag(){
 		// 返却値を格納する変数retkeyを宣言、nullで初期化する。
 		var retKey = null;
 		// 最後尾の親のargArrayの参照をargArrayに渡す。
-		var argArray = this.parentArgArray[parentArgArray.length - 1];
+		var argArray = this.parentArgArray[this.parentArgArray.length - 1];
 		
 		// 属性格納配列がある限りループ
-		for(var i = 0; argArray.length; i++){
+		for(var i = 0; i < argArray.length; i++){
 			// keyにargArrayに該当する値がある
-			if(key[argArray[i]] !== void[0]){
+			if(argArray[i] in key){
 				// keyを返す。
-				retkey = key[argArray[i]];
+				retKey = key;
+//				retKey = key[argArray[i]];
 				// argArrayから該当する要素を削除する。
 				argArray.splice(i,1);
 				// ループを抜ける
@@ -340,23 +381,34 @@ function jsonToTag(){
 	 * 返却値  :jQuery
 	 * 作成者:T.M
 	 * 作成日:2015.02.16
+	 * 変更者:T.M
+	 * 変更日:2015.02.17
+	 * 内容  :箇条書き時のDOMの移動を追記しました。
 	 */
 	this.traverseDom = function(dom){
 		// 返却値となるdomの変数を宣言
 		var retdom;
 		
-		// domが子要素を持っている
-		if(dom.children().length > 0){
+		console.log($('.' + dom.attr('class') + ' > th,.'
+				+ dom.attr('class') +' >td,.'+ dom.attr('class') + ' > li', this.dom).length);
+		
+		// domが子要素を持っていてかつ、箇条書きまたは、一度に複数書き込むタイプのDOMではなければ
+		if($('.' + dom.attr('class') + ' > th,.'
+				+ dom.attr('class') +' >td,.'+ dom.attr('class') + ' > li', this.dom).length <= 0
+				&& dom.children().length > 0){
 			// タグを子要素に移動する。
 			retdom = $(':first-child', dom);
-		// domに弟要素があれば
+		// domに弟要素があれば、または箇条書き、または一度に複数書き込むタイプのDOMであれば
 		} else if(dom.next() != null){
 			// 処理対象のDOMを弟要素に切り替える。
 			retdom = dom.next();
-		// domの親に弟要素があれば
-		} else if(dom.parent().next() != null){
+		// domに親ががあれば
+		} else if(dom.parent() != null){
 			// domの親の弟要素に移る。
-			retdom = dom.parent().next();
+			retdom = dom.parent();
+//		} else if(dom.parent().next() != null){
+//			// domの親の弟要素に移る。
+//			retdom = dom.parent().next();
 		// DOMがなくなったら
 		} else {
 			// domにnullを入れる。
