@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>プリザーブドフラワーコース</title>
+<!-- メインのCSSファイルを読み込む。 -->
+<link type="text/css" href="css/style.css" rel="stylesheet">
+<!-- jqueryUIのcssを読み込む -->
+<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+<!-- slickのCSSを読み込む。 -->
+<link type="text/css" href="css/slick.css" rel="stylesheet">
+<!-- fancyboxのCSSを読み込む。 -->
+<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
+
+<!-- jQueryの本体を読み込む。 -->
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<!-- jQueryUIを読み込む。 -->
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- カルーセルのギャラリー生成プラグイン「Slick」の本体を読み込む。 -->
+<script type="text/javascript" src="js/slick.min.js" ></script>
+<!-- クリックした画像をピックアップ表示するためのjQueryプラグイン「fancybox」の本体を読み込む。 -->
+<script type="text/javascript" src="js/source/jquery.fancybox.js" ></script>
+<!-- サイト全体のレイアウト調整用JSファイル。 -->
+<script src="js/flowersstylefix.js"></script>
+<!-- マウスオーバーで要素を透過するプラグイン -->
+<script src="js/functionFilter.js"></script>
+
+<!-- 関数一覧にしたjsファイルを読み込む -->
+<script type="text/javascript" src="js/functions.js"></script>
+<!-- 関数一覧にしたjsファイルを読み込む -->
+<script type="text/javascript" src="js/createTag.js"></script>
+<script>
+//ドキュメント配備後
+$(document).ready(function(){
+	// aタグの要素にマウスオーバーのフィルターを配置する。
+	functionFilter('a,.link_gide');
+	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+	fixYCoordinate('header', 'header:eq(1)');
+	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+	fixXCoordinateOnScroll('header')
+});
+
+</script>
+
+</head>
+<!-- container -->
+<div id="container">
+		<!-- ヘッダー領域。 -->
+	<header>
+		<!-- ガイド領域。 -->
+		<div class="gides">
+			<!-- フラワーアレンジメントスクール -->
+			<div class="gide_f_a_school">
+				<!-- お花アイコン -->
+				<img src="image/icon(logo50).png"></img>
+				<!-- 「フラワーアレンジメントスクール」のテキスト。 -->
+				<p>フラワー</p>
+				<p>アレンジメント</p>
+				<p>スクール</p>
+			</div>
+			<div class="gide_tel">
+				<img src="image/icon(tell).png">
+				<p class="p1">お問い合せ</p>
+				<p class="p2">03-6413-1225</p>
+				<p class="p3">(対応時間 11:00 〜 20:00)</p>
+			</div>
+			<div class="gide_mail link_gide">
+				<img src="image/icon(mail).png">
+			</div>
+			<div class="gide_access link_gide">
+				<img src="image/icon(accessl).png">
+			</div>
+			<div class="gide_trial link_gide">
+				<a href="contact.html">
+					<img src="image/icon(mail).png">
+				</a>
+			</div>
+			<div class="gide_blog link_gide">
+				<img src="image/icon(blog50).png">
+			</div>
+			<div class="gide_sns">
+				<img class="facebook link_gide" src="image/icon(facebook).png">
+				<img class="twitter_tweet link_gide" src="image/icon(titter22).png">
+			</div>
+			<div class="gide_login link_gide">
+				<img class="login" src="image/icon(login22-60).png">
+			</div>
+		</div>
+		<ul class="top_menu">
+				<li class="button"><a href="preserved.html" title="プリザーブドフラワー"><p>プリザ</p></a></li>
+				<li class="button"><a href="fresh.html" title="フレッシュフラワー"><p>生花</p></a></li>
+				<li class="button"><a href="nfd.html" title="NFD資格取得"><p>NFD</p></a></li>
+				<li class="button"><a href="national.html" title="国家認定資格取得"><p>国家</p></a></li>
+				<li class="button"><a href="bridal.html"><p>ブライダル</p></a></li>
+				<li class="button"><a href="franchise.html" title="フランチャイズ"><p>FC</p></a></li>
+				<li class="button"><a href="gallery.html"><p>ギャラリー</p></a></li>
+				<li class="button"><a href="voice.html"><p>生徒さんの声</p></a></li>
+		</ul>
+	</header>
+
+	<header><img src="image/main(header800).png"></header>
+	<!-- トップページのコンテンツのタグ。 -->
+	<div class="main">
+		<div class="pageTitle">
+			<h1 class="title">お問い合わせフォーム</h1>
+			<img src="image/icon(clover).png" >
+			<h2 class="summary"></h2>
+		</div>
+		<!-- お問い合わせフォーム。 -->
+		<form class="contactForm" action="postmail/postmail.cgi" method="post" >
+			<!-- 問い合わせフォームのパーツ領域 -->
+			<dl class="formBody">
+		    	<!-- 氏名 -->
+				<dt class="name">
+		        	<!-- 項目名 -->
+		        	<span class="formContent">氏名</span>
+		        	<!-- 必須入力の印「*」 -->
+		        	<span class="textRed">*</span>
+		        	<!-- ルビ -->
+		        	<span class="formRuby">Name</span>
+		        </dt>
+		        <!-- 氏名を入力するテキストボックス -->
+		        <dd class="nameTextBox">
+		        	<!-- テキストボックス。 -->
+		        	<input type="text" class="textBox1" name="name" size="40" required="">
+		        </dd>
+		        <!-- 性別 -->
+				<dt class="sex">
+		        	<!-- 項目名 -->
+		        	<span class="formContent">性別</span>
+		        	<!-- 必須入力の印「*」 -->
+		        	<span class="textRed">*</span>
+		        	<!-- ルビ -->
+		        	<span class="formRuby">sex</span>
+		        </dt>
+		        <!-- 性別を選択するラジオボタン -->
+		        <dd class="sexRadioButton">
+		        	<!-- 性別のラジオボタンとラベル。女、男の順。 -->
+		        	<input class="sexRadioButtonFemale" type="radio" name="sex" value="女" checked=""><label class="sexRadioButtonFemaleLabel">女</label>
+		            <input class="sexRadioButtonMale" type="radio" name="sex" value=""><label class="sexRadioButtonMaleLabel">男</label>
+		        </dd>
+		        <!-- メールアドレス -->
+		        <dt class="eMail">
+		        	<!-- 項目名 -->
+		        	<span class="formContent">メールアドレス</span>
+		        	<!-- 必須入力の印「*」 -->
+		        	<span class="textRed">*</span>
+		        	<!-- ルビ -->
+		        	<span class="formRuby">E-mail</span>
+		        </dt>
+		        <!-- メールアドレスを入力するテキストボックス -->
+		        <dd class="eMailTextBox">
+		        	<!-- テキストボックス。 -->
+		        	<input type="email" class="textBox2" name="eMail" size="40" required="">
+		        </dd>
+		        <!-- 問い合わせ内容 -->
+				<dt class="content">
+		        	<!-- 項目名 -->
+		        	<span class="formContent">問い合わせ内容</span>
+		        	<!-- 必須入力の印「*」 -->
+		        	<span class="textRed">*</span>
+		        	<!-- ルビ -->
+		        	<span class="formRuby">content</span>
+		        </dt>
+		        <!-- 問い合わせ内容欄 -->
+		        <dd class="">
+		        	<!-- テキストエリア -->
+		        	<textarea class="contentTextArea" name="content" cols="40" rows="10" required=""></textarea>
+		        </dd>
+		    </dl>
+		    <!-- 送信ボタン。 -->
+		    <button type="submit" class="submitButton">送信内容の確認</button>
+		</form>	
+	</div>
+	<footer><img src="image/main(footer800).png"><span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span></footer>
+</div>
+
+<script>
+</script>
+</body>
+</html>

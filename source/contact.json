@@ -1,0 +1,137 @@
+[
+    {
+        "class": "pageTitle",
+        "array": [
+            {
+                "class": "image",
+                "src": [
+                    "icon(leaf2)"
+                ]
+            },
+            {
+                "class": "title",
+                "text": [
+                    "お問い合わせフォーム"
+                ]
+            },
+            {
+                "class": "summary",
+                "text": [
+                    ""
+                ]
+            }
+        ]
+    },
+    {
+        "class": "contactForm",
+        "action": "postmail/postmail.cgi",
+        "method": "post",
+        "array": [
+            {
+                "class": "formBody",
+                "array": [
+                    {
+                        "class": "name",
+                        "text": [
+                            "氏名",
+                            "*",
+                            "Name"
+                        ]
+                    },
+                    {
+                        "class": "nameTextBox",
+                        "array": [
+                            {
+                                "class": "textBox1",
+                                "type": "text",
+                                "name": "name",
+                                "size": "40",
+                                "required": ""
+                            }
+                        ]
+                    },
+                    {
+                        "class": "sex",
+                        "text": [
+                            "性別",
+                            "*",
+                            "sex"
+                        ]
+                    },
+                    {
+                        "class": "sexRadioButton",
+                        "array": [
+                            {
+                                "class": "sexRadioButtonFemale",
+                                "type": "radio",
+                                "name": "sex",
+                                "value": "女",
+                                "checked": ""
+                            },
+                            {
+                                "class": "sexRadioButtonFemaleLabel",
+                                "text": [
+                                    "女"
+                                ]
+                            },
+                            {
+                                "class": "sexRadioButtonMale",
+                                "type": "radio",
+                                "name": "sex",
+                                "value": "男"
+                            },
+                            {
+                                "class": "sexRadioButtonMaleLabel",
+                                "text": [
+                                    "男"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "class": "eMail",
+                        "text": [
+                            "メールアドレス",
+                            "*",
+                            "E-mail"
+                        ]
+                    },
+                    {
+                        "class": "eMailTextBox",
+                        "array": [
+                            {
+                                "class": "textBox2",
+                                "type": "email",
+                                "name": "eMail",
+                                "size": "40",
+                                "required": ""
+                            }
+                        ]
+                    },
+                    {
+                        "class": "content",
+                        "text": [
+                            "問い合わせ内容",
+                            "*",
+                            "content"
+                        ]
+                    },
+                    {
+                        "class": "contentTextArea",
+                        "name": "content",
+                        "cols": "40",
+                        "rows": "10",
+                        "required": ""
+                    }
+                ]
+            },
+            {
+                "class": "submitButton",
+                "type": "submit",
+                "text": [
+                    "送信内容の確認"
+                ]
+            }
+        ]
+    }
+]
