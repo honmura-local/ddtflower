@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"lessonSchedule":{
 		"summary": {
@@ -38,6 +39,43 @@
 			},
 			"hour"		: {
 				"text"	:["19:00 ～ 21:00"]
+=======
+[
+	{
+		"class"	:"lessonSchedule",
+		"array":[
+			{
+				"class":"summary",
+				"text": ["レッスンスケジュール"]	
+			},
+			{
+				"array":[
+					{
+						"class":"week",
+						"text":["月曜日～日曜日"]
+					},
+					{
+						"class":"firstPeriod",
+						"text":["1時限目", "11:00 ～ 13:00"]
+					},
+					{
+						"class":"secondPeriod",
+						"text":["2時限目", "14:00 ～ 16:00"]
+					},
+					{
+						"class":"thirdPeriod",
+						"text":["3時限目", "16:30 ～ 18:30"]
+					},
+					{
+						"class":"fourthPeriod",
+						"text":["4時限目", "19:00 ～ 21:00"]
+					},
+					{
+						"class":"fourthHalfPeriod",
+						"text":["4.5時限目", "19:30 ～ 21:30"]
+					}
+				]
+>>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
 			}
 		},
 		"fourthHalfPeriod":{
@@ -49,6 +87,7 @@
 			}
 		}
 	},
+<<<<<<< HEAD
 
 	"commonText":{
 		"summary": {
@@ -111,5 +150,121 @@
 				"＊NFDおよび国家は生花に含みます。"
 			]
 		}
+=======
+	{
+		"class":"commonText",
+		"array":[
+			{
+				"class":"summary",
+				"text":"共通"
+			},
+			{
+				"array":[
+					{
+						"class":"commonTextList",
+						"td":["月何回でも受講可能です。"]
+					},
+					{
+						"class":"commonTextList",
+						"td":["１カ月に２回以上ご来校の場合、受講料を１０００円オフします。"]
+					},
+					{
+						"class":"commonTextList",
+						"td":["１カ月に４回以上ご来校の場合、受講料を無料とします。"]
+					},
+					{
+						"class":"commonTextList",
+						"td":["プリザ・生花コース修了後、本校認定のディプロマを発行します。"]
+					},
+					{
+						"class":"commonTextList",
+						"td":["NFD、国家資格取得コースの花材費は別途となります。"]
+					},
+					{
+						"class":"commonTextList",
+						"td":["異なるコースから生花、プリザへのスポット受講が可能です。"]
+					}
+				]
+			}
+		]
+	},
+	{
+		"class":"salesPoint",
+		"array":[
+			{
+				"class":"summary",
+				"text":["特徴"]
+			},
+			{
+				"array":[
+					{				
+						"class":"salesPointList",
+						"td":["インターネット対応のレッスン予約システムを無料にて提供します。"]
+					},
+					{				
+						"class":"salesPointList",
+						"td":["花材はマージンなし、配送料のみにて準備します。"]
+					},
+					{				
+						"class":"salesPointList",
+						"td":["受講料のロイヤリティーは５％。"]
+					},
+					{				
+						"class":"salesPointList",
+						"td":["年間ロイヤリティーは５万円。"]
+					},
+					{				
+						"class":"salesPointList",
+						"td":["他フランチャイズ店の生徒さんもレッスン可能です。登録店へのロイヤリティー３５％が発生します。"]
+					},
+					{				
+						"class":"salesPointList",
+						"td":["本校、他コース（プリザ、生花、NFD、国家）の受講が半額で受けられます。もちろん資格取得可能です。"]
+					}
+				]
+			}
+		]
+	},
+	{
+		"class":"memberRule",
+		"array":[
+			{
+				"class":"summary",
+				"text":"会員規約"
+			},
+			{
+				"array":[
+					{
+						"class":"memberRuleList",
+						"td":["お支払い：都度払い前金制です。現金により次回分を事前にお支払い頂きます。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["ご予約：予約指定日のプリザは3日前まで、生花は7日前までにインターネットもしくは電話によりご予約出来ます。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["キャンセル：ご予約日のプリザは３日、生花は７日以上前までにキャンセル可能です。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["振替え：上記、予約、キャンセル規定に沿い振替え自由です。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["前金：最終受講日から３か月間受講がなかった場合、経過日から１カ月毎に５００円を前金から引かせて頂きます。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["退会：随時、退会可能です。退会時、前金の残金は返金されます。"]
+					},
+					{
+						"class":"memberRuleList",
+						"td":["＊NFDおよび国家は生花に含みます。"]
+					}
+				]
+			}
+		]
+>>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
 	}
 }

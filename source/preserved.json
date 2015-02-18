@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
 	"pageTitle":{
 		"width":"100",
@@ -19,6 +20,15 @@
 		"firstStage":{
 			"stage"	:{
 				"text"	:	["1stステージ"]
+=======
+[
+	{
+		"class"	:"pageTitle",
+		"array":[
+			{
+				"class":"image",
+				"src":["icon(tulip).png"]
+>>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
 			},
 			"times":{
 				"text"	:	["全12回"]
@@ -26,6 +36,7 @@
 			"price":{
 				"text"	:	["6,000 円／回"]
 			}
+<<<<<<< HEAD
 		},
 		"secondStage":{
 			"stage":{
@@ -51,3 +62,33 @@
 		}
 	}
 }
+=======
+		]
+	},
+	{
+		"class":"courseGuide",
+		"array":[
+			{
+				"class":"summary",
+				"text":["コース案内"]
+			},
+			{
+				"array":[
+					{
+						"class":"firstStage",
+						"text":["1stステージ", "全12回", "6,000 円／回"]
+					},
+					{
+						"class":"secondStage",
+						"text":["2ndステージ", "全12回", "6,000 円／回"]
+					},
+					{
+						"class":"thirdStage",
+						"text":["3rdステージ", "全12回", "6,000 円／回"]
+					}
+				]
+			}
+		]	
+	}
+]
+>>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
