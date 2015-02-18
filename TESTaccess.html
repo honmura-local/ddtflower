@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DDTFlowers/プリザーブドフラワー</title>
+<title>DDTFlowers</title>
 <!-- メインのCSSファイルを読み込む。 -->
 <link type="text/css" href="css/style.css" rel="stylesheet">
 <!-- jqueryUIのcssを読み込む -->
@@ -30,7 +30,9 @@
 <!-- container -->
 <div id="container">
 	<!-- トップページのコンテンツのタグ。 -->
-	<div class="main"></div>
+	<div class="main">
+
+	</div>
 </div>
 <!--
 <footer>
@@ -41,10 +43,11 @@
 <script>
 var creator = new jsonToTag();
 
-creator.getJsonFile('source/contact.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getJsonFile('source/access.json');		// ファイルのデータをjsonを用いて持ってくる
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-creator.createTag('pageTitle');			// タイトル領域を作る
+creator.createTag('pageTitle');					// タイトルを作る。
+creator.createTag('contactForm');				// フォーム領域を作る
 </script>
 </body>
 </html>

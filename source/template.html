@@ -243,50 +243,89 @@
 	<tr class="memberRuleList">
 		<td></td>
 	</tr>
+</table>
 
+<!-- お問い合わせフォーム。 -->
 <form class="contactForm" action="" method="" >
+	<!-- 問い合わせフォームのパーツ領域 -->
 	<dl class="formBody">
     	<!-- 氏名 -->
 		<dt class="name">
-        	<span class="formcontent"><span class="text-red"></span></span>
-        	<span class="formruby"></span>
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
         </dt>
         <!-- 氏名を入力するテキストボックス -->
         <dd class="nameTextBox">
+        	<!-- テキストボックス。 -->
         	<input type="" class="textBox1" name="" size="" required="">
         </dd>
         <!-- 性別 -->
 		<dt class="sex">
-        	<span class="formcontent">性別<span class="text-red">*</span></span>
-        	<span class="formruby">sex</span>
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
         </dt>
         <!-- 性別を選択するラジオボタン -->
         <dd class="sexRadioButton">
-        	<input class="sexRadioButtonFemale" type="radio" name="sex" value="" checked=""><label class="sexRadioButtonFemaleLabel"></label>
-            <input class="sexRadioButtonMale" type="radio" name="sex" value=""><label class="sexRadioButtonMaleLabel"></label>
+        	<!-- 性別のラジオボタンとラベル。女、男の順。 -->
+        	<input class="sexRadioButtonFemale" type="" name="" value="" checked=""><label class="sexRadioButtonFemaleLabel"></label>
+            <input class="sexRadioButtonMale" type="" name="" value=""><label class="sexRadioButtonMaleLabel"></label>
         </dd>
-                <!-- メールアドレス -->
+        <!-- メールアドレス -->
         <dt class="eMail">
-        	<span class="formcontent"><span class="text-red"></span></span>
-        	<span class="formruby"></span>
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
         </dt>
         <!-- メールアドレスを入力するテキストボックス -->
         <dd class="eMailTextBox">
+        	<!-- テキストボックス。 -->
         	<input type="" class="textBox2" name="" size="" required="">
         </dd>
+        <!-- 問い合わせ内容 -->
 		<dt class="content">
-        	<span class="formcontent"><span class="text-red"></span></span>
-        	<span class="formruby"></span>
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
         </dt>
-        <dd class="">
-        	<textarea class="contentTextArea" name="" cols="" rows="" required=""></textarea>
+        <!-- 問い合わせ内容欄 -->
+        <dd class="contentTextArea">
+        	<!-- テキストエリア -->
+        	<textarea class="textArea1" name="" cols="" rows="" required=""></textarea>
         </dd>
     </dl>
-    <button type="" class="submitButton">送信内容の確認</button>
+    <!-- 送信ボタン。 -->
+    <button type="" class="submitButton"></button>
 </form>	
-	
-	
-</table>
+
+<!-- アクセス情報一覧 -->
+<div class="accessInfo">
+	<!-- 郵便番号、住所、電話番号の順番 -->
+	<span class="postal"></span>
+	<span class="address"></span>
+	<span class="tel"></span>
+</div>
+
+<!-- スクールのGoogleMap -->
+<div class="accessMap">
+	<!-- GoogleMapのインラインフレーム。 -->
+	<iframe class="baseMap" height="" width="" frameborder="" scrolling="" marginheight="" marginwidth="" src="">
+	</iframe>		
+</div>
+
 </div>
 </body>
 </html>

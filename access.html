@@ -71,12 +71,12 @@ $(document).ready(function(){
 				</a>
 			</div>
 			<div class="gide_access link_gide">
-				<img src="image/icon(accessl).png">
+				<a href="access.html">
+					<img src="image/icon(accessl).png">
+				</a>
 			</div>
 			<div class="gide_trial link_gide">
-				<a href="experience.html">
-					<img src="image/icon(experience).png">
-				</a>
+				<a href="experience.html"><img src="image/icon(experience).png"></a>
 			</div>
 			<div class="gide_blog link_gide">
 				<img src="image/icon(blog50).png">
@@ -105,75 +105,24 @@ $(document).ready(function(){
 	<!-- トップページのコンテンツのタグ。 -->
 	<div class="main">
 		<div class="pageTitle">
-			<h1 class="title">お問い合わせフォーム</h1>
+			<h1 class="title">アクセス</h1>
 			<img src="image/icon(clover).png" >
-			<h2 class="summary"></h2>
+			<h2 class="summary">&#010;&#010;&#010;&#010;</h2>
 		</div>
-		<!-- お問い合わせフォーム。 -->
-		<form class="contactForm" action="postmail/postmail.cgi" method="post" >
-			<!-- 問い合わせフォームのパーツ領域 -->
-			<dl class="formBody">
-		    	<!-- 氏名 -->
-				<dt class="name">
-		        	<!-- 項目名 -->
-		        	<span class="formContent">氏名</span>
-		        	<!-- 必須入力の印「*」 -->
-		        	<span class="textRed">*</span>
-		        	<!-- ルビ -->
-		        	<span class="formRuby">Name</span>
-		        </dt>
-		        <!-- 氏名を入力するテキストボックス -->
-		        <dd class="nameTextBox">
-		        	<!-- テキストボックス。 -->
-		        	<input type="text" class="textBox1" name="name" size="40" required="">
-		        </dd>
-		        <!-- 性別 -->
-				<dt class="sex">
-		        	<!-- 項目名 -->
-		        	<span class="formContent">性別</span>
-		        	<!-- 必須入力の印「*」 -->
-		        	<span class="textRed">*</span>
-		        	<!-- ルビ -->
-		        	<span class="formRuby">sex</span>
-		        </dt>
-		        <!-- 性別を選択するラジオボタン -->
-		        <dd class="sexRadioButton">
-		        	<!-- 性別のラジオボタンとラベル。女、男の順。 -->
-		        	<input class="sexRadioButtonFemale" type="radio" name="sex" value="女" checked=""><label class="sexRadioButtonFemaleLabel">女</label>
-		            <input class="sexRadioButtonMale" type="radio" name="sex" value=""><label class="sexRadioButtonMaleLabel">男</label>
-		        </dd>
-		        <!-- メールアドレス -->
-		        <dt class="eMail">
-		        	<!-- 項目名 -->
-		        	<span class="formContent">メールアドレス</span>
-		        	<!-- 必須入力の印「*」 -->
-		        	<span class="textRed">*</span>
-		        	<!-- ルビ -->
-		        	<span class="formRuby">E-mail</span>
-		        </dt>
-		        <!-- メールアドレスを入力するテキストボックス -->
-		        <dd class="eMailTextBox">
-		        	<!-- テキストボックス。 -->
-		        	<input type="email" class="textBox2" name="eMail" size="40" required="">
-		        </dd>
-		        <!-- 問い合わせ内容 -->
-				<dt class="content">
-		        	<!-- 項目名 -->
-		        	<span class="formContent">問い合わせ内容</span>
-		        	<!-- 必須入力の印「*」 -->
-		        	<span class="textRed">*</span>
-		        	<!-- ルビ -->
-		        	<span class="formRuby">content</span>
-		        </dt>
-		        <!-- 問い合わせ内容欄 -->
-		        <dd class="">
-		        	<!-- テキストエリア -->
-		        	<textarea class="contentTextArea" name="content" cols="40" rows="10" required=""></textarea>
-		        </dd>
-		    </dl>
-		    <!-- 送信ボタン。 -->
-		    <button type="submit" class="submitButton">送信内容の確認</button>
-		</form>	
+		<!-- アクセス情報一覧 -->
+		<div class="accessInfo">
+			<!-- 郵便番号、住所、電話番号の順番 -->
+			<span class="postal">〒160-0022</span>
+			<span class="address">東京都新宿区新宿2-12-1 アコードビル4階</span>
+			<span class="tel">Tel. 03-6413-1225</span>
+		</div>
+		<!-- スクールのGoogleMap -->
+		<div class="accessMap">
+			<!-- GoogleMapのインラインフレーム。 -->
+			<iframe class="baseMap" frameborder="0" scrolling="no" marginheight="0" 
+			marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=ja&amp;geocode=&amp;q=%E3%82%A2%E3%82%B3%E3%83%BC%E3%83%89%E3%83%93%E3%83%AB&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=44.928295,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=%E6%97%A5%E6%9C%AC,+%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%96%B0%E5%AE%BF%E5%8C%BA%E6%96%B0%E5%AE%BF%EF%BC%92%E4%B8%81%E7%9B%AE%EF%BC%91%EF%BC%92%E2%88%92%EF%BC%94+%E3%82%A2%E3%82%B3%E3%83%BC%E3%83%89%E3%83%93%E3%83%AB&amp;ll=35.690581,139.699500&amp;spn=0.01131,0.01929&amp;t=m&amp;&amp;output=embed&amp;z=16">
+			</iframe>		
+		</div>
 	</div>
 	<footer><img src="image/main(footer800).png"><span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span></footer>
 </div>
