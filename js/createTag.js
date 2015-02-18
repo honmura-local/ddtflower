@@ -13,6 +13,8 @@ function jsonToTag(){
 	                 'title','type','value', 'action', 'cols', 'rows', 'required', 'checked'];
 	// DOMの属性名の表の配列を格納する配列。確認するごとに対応する配列の要素を消していく。
 	this.parentArgArray = [];
+	
+	// 
 
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
@@ -104,22 +106,35 @@ function jsonToTag(){
 	this.createTag = function(key){
 		
 		// キーに対応するJSONの連想配列を取得する。
-		var curdom = this.getDom(key);
-		// カレントのDOMと開始時のDOMを同じにする。
-		var startdom = curdom;
-		// タグのルート部分をrootdomに保存する。
-		var rootdom = curdom;
+		var curAttribute = this.getDom(key);
+		// DOMの先頭をセットする。
+		var startdom = curAttribute;
+		// タグのルート部分をrootdomに保存する。作成したHTMLのパーツを実際に追加するのに使う。
+		var rootdom = curAttribute;
 		// parentArgArrayを初期化する。
 		this.getKeyFirst();
 		
 		// ループ開始時に連想配列を取得する。ループするごとに連想配列のポインタを次へ進め、全て走査し終えれば終了する。
 		for(var curkey = this.getMap(key); curkey != null; curkey = this.getKeyNext(curkey)){
-
-			// 現在指すタグのクラスからDOMを取得し、curdomに代入する。
-			curdom = $('.' + curkey["class"] , this.dom).attributes[0];
+			
+			// 始めのキー名を保存する変数を宣言する。
+			var keyname = "";
+			
+			// for文で先頭のキーの文字列を取得する。
+			for(keyname in curkey){
+				
+				// キーを配列に順次格納する。
+				if(keyname != null){
+					// ループを抜ける。
+					break;
+				}
+			}
+			
+			// 現在指すタグのクラスからDOMを取得し、curAttributeに代入する。
+			curAttribute = $(startdom).getAttributeNode(keyname);
 			
 			// DOMが取得できなかったら
-			if(curdom.length <= 0){
+			if(curAttribute.length <= 0){
 				// 異常値をrefに代入する。
 				ref = 0;
 				// ループを終える。
@@ -127,10 +142,10 @@ function jsonToTag(){
 			}
 			
 			// 現在指すDOMがクラスであれば
-			if(curdom.name == "class"){
+			if(curAttribute.name == "class"){
 
 				// DOMの位置を動かす。
-				startdom = $(curkey["class"]);
+				startdom = $('.' + curkey["class"]);
 				
 				// curkeyにテキストがあれば
 				if('text' in curkey){
