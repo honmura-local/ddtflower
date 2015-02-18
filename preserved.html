@@ -29,6 +29,20 @@
 <script type="text/javascript" src="js/functions.js"></script>
 <!-- 関数一覧にしたjsファイルを読み込む -->
 <script type="text/javascript" src="js/createTag.js"></script>
+<script>
+//ドキュメント配備後
+$(document).ready(function(){
+	// aタグの要素にマウスオーバーのフィルターを配置する。
+	functionFilter('a,.link_gide');
+	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+	fixYCoordinate('header', 'header:eq(1)');
+	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+	fixXCoordinateOnScroll('header')
+});
+
+</script>
+
+</head>
 <!-- container -->
 <div id="container">
 		<!-- ヘッダー領域。 -->
