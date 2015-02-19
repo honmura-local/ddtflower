@@ -775,7 +775,7 @@ function getInitData(path, continues){
 	// 返却値を格納する変数を宣言、0で初期化する。
 	var returns = 0;
 	// for文で規定回数通信するか、通信成功するまで通信を繰り返す。
-	for (var i = 0; i < continues && returns; i++){
+	for (var i = 0; i < continues && returns == 0; i++){
 		// Ajax通信を行いファイルを取得する。
 		returns = getJSONFile(path);
 	}
@@ -817,5 +817,253 @@ function getJSONFile(path){
 	return returns;
 }
 
+/* 
+ * 関数名:createLoginDialog()
+ * 概要  :ログインダイアログを生成する。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.02.18
+ */
+function createLoginDialog(){
+	
+	// ダイアログの本体となるdivタグを生成する。(createTag利用時にはこのコードは必要なし。)
+	$('body').append($('<div></div>')
+			//ログインダイアログのクラスを付加する。
+				.addClass('loginDialog')
+				//ラベルタグを追加する。
+				.append($('<label></label>')
+					// ユーザ名ラベルのクラスを追加する。
+					.addClass('userNameLabel')
+					// ユーザ名のテキストを追加する。
+					.text('ユーザ名')
+				)
+				// ユーザ名入力欄を追加する。
+				.append($('<input>')
+					//ユーザ名のクラスを追加する。
+					.addClass('userName')
+					// テキストボックスのtypeと識別名userNameを追加する。
+					.attr({
+						'type':'text',
+						'name':'userName'
+					})
+				)
+				// ラベルタグを追加する。
+				.append($('<label></label>')
+					// パスワードラベルのクラスを追加する。
+					.addClass('passwordLabel')
+					//パスワードのテキストを追加する。
+					.text('パスワード')
+				)
+				//パスワード入力欄を追加する。
+				.append($('<input>')
+						//パスワードのクラスを追加する。
+						.addClass('password')
+						// テキストボックスのtypeと識別名passwordを追加する。
+						.attr({
+							'type':'text',
+							'name':'password'
+						})
+				)
+	);
+	// 生成したdivタグをjQuery UIのダイアログにする。
+	$('.loginDialog').dialog({
+		// 幅を設定する。
+		width			: '320px',
+		// 幅を設定する。
+		title			: 'ログイン',
+		// ダイアログを生成と同時に開く。
+		autoOpen		: true,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		// モーダルダイアログとして生成する。
+		modal			: true,
+		// リサイズしない。
+		resizable		: false, 
+		// 作成完了時のコールバック関数。
+		create:function(event, ui){
+			//文字サイズを小さめにする。
+			$(this).next().css('font-size', '0.5em');
+		},
+		// 位置を指定する。
+		position:{
+			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+			my:'center center',
+			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+			at:'center center',
+			// ウィンドウをダイアログを配置する位置の基準に指定する。
+			of:window
+		},
+		// ボタンの生成と設定を行う。
+		buttons:[
+			         {
+			        	 // OKボタンのテキスト。
+			        	 text:'ログイン',
+			        	 // ボタン押下時の処理を記述する。
+			        	 click:function(event, ui){
+			        		 // 必須入力項目が皆入力済みであれば
+			        		 if($('input.userName' ,this).val() != ''
+			        			 &&  $('input.userName' ,this).val() != ''){
+			        			 
+			        			 //通信の返却値を格納する変数を宣言する。
+			        			 var transResult = {"result":false};
+			        			 // ajax通信を行いサーバにユーザ情報を送る。
+			        			 $.ajax({
+			        				 //ログイン認証のPHPにデータを送信する。
+//			        				url:"loginauth.php",
+			        				url:location.href,
+			        				//ユーザ名とパスワードをPHPに送信する。
+			        				data:{'userName':$('input.userName' ,this).val(),
+			        					'password':$('input.password' ,this).val()},
+			        				//JSONで結果を返してもらう。
+//			        				dataType:'JSON',
+			        				dataType:'HTML',
+			        				//同期通信を行う。
+			        				async:false,
+			        				//通信成功時の処理
+			        				success:function(json){
+			        					// 通信結果のデータをtransResultに格納する。
+			        					transResult = {"result":"true","user":"testuser","userName":"user"};
+//			        					transResult = json;
+			        				},
+			        				//通信失敗時の処理
+			        				error:function(){
+			        					//エラーログを出す。
+			        					console.log(errorMessages[0]);
+			        				}
+			        				
+			        			 });
+			        			// 通信が成功していたら
+			        			 if(transResult["result"]){
+			        				// ユーザ情報の取得に成功していたら
+			        				 if('user' in transResult){
+			        					//クッキーにユーザ情報を格納する。
+			        					 document.cookie = 'user='+transResult["user"];
+			        					 document.cookie = 'userName='+transResult["userName"];
+						        		 // ダイアログを消去する。
+						        		 $(this).dialog('destroy').remove();
+						        		 //画面を更新する。
+						        		 location.reload();
+			        				 } else {
+			        					 // 認証失敗のメッセージを出す。
+			        					 alert(errorMessages[1]);
+			        				 }
+			        			//通信に失敗していたら。 
+			        			 } else {
+			        			//通信エラーのメッセージを出す。
+		        				alert(errorMessages[2]);
+			        			}
+			        		//空欄に入力するようにメッセージを出す。
+			        		 } else {
+			        			 alert(errorMessages[3]);
+			        		 }
+			        	 }
+			         },
+			         {
+			        	 // キャンセルボタンのテキスト。
+			        	 text:'Cancel',
+			        	 // ボタン押下時の処理を記述する。
+			        	 click:function(event, ui){
+			        		 // ダイアログを消去する。
+			        		 $(this).dialog('destroy').remove();
+			        	 }
+			         }
+		         ]
+	});
+}
+
+/* 
+ * 関数名:checkLogin()
+ * 概要  :ログイン状態をチェックする。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.02.18
+ */
+function checkLogin(){
+	// ログインしているか否かの結果を返すための変数を用意する。
+	var result = false;
+	// クッキーを連想配列で取得する。
+	var cookies = GetCookies();
+	//ログイン中であれば
+	if('user' in cookies && cookies['user'] != ""){
+		// ログインボタンをログアウトボタンに差し替える。
+		$('.login').removeClass('login')
+					.addClass('logout')
+					.attr('src', 'image/icon(logout22-60).png');
+		//ログアウトボタンの下にユーザ名を表示する。
+		$('.logout')
+					// spanタグを追加する。
+					.after($('<span></span>')
+							// ユーザ名のクラスを設定する。
+							.addClass('userName')
+							//cookieからユーザ名を取り出し表示する。
+							.text(cookies['userName'] + '様')
+							)
+					// spanタグを追加する。
+					.after($('<span></span>')
+							// ユーザ名のクラスを設定する。
+							.addClass('welcome')
+							//cookieからユーザ名を取り出し表示する。
+							.text('ようこそ')
+							)
+					;
+		// ログアウトのイベントを定義する。
+		$(document).on('click', '.logout', function(){
+			// ユーザのクッキーを削除してログアウトする。
+			deleteCookie('user');
+			deleteCookie('userName');
+			//画面を更新する。
+   		 	location.reload();
+		});
+		
+		// ログインしている状態であるという結果を変数に格納する。
+		result = true;
+	}
+	
+	// ログイン状態を返す。
+	return result;
+}
+
+//クッキーの削除。http://javascript.eweb-design.com/1404_dc.htmlより。
+function deleteCookie(cookieName) {
+  cName = cookieName + "="; // 削除するクッキー名
+  dTime = new Date();
+  dTime.setYear(dTime.getYear() - 1);
+  document.cookie = cName + ";expires=" + dTime.toGMTString();
+}
+
+/* クッキーを連想配列で取得する関数。http://so-zou.jp/web-app/tech/programming/javascript/cookie/#no5より。 */
+function GetCookies()
+{
+    var result = new Array();
+
+    var allcookies = document.cookie;
+    if( allcookies != '' )
+    {
+        var cookies = allcookies.split( '; ' );
+
+        for( var i = 0; i < cookies.length; i++ )
+        {
+            var cookie = cookies[ i ].split( '=' );
+
+            // クッキーの名前をキーとして 配列に追加する
+            result[ cookie[ 0 ] ] = decodeURIComponent( cookie[ 1 ] );
+        }
+    }
+
+    return result;
+}
+//エラーメッセージの配列。
+var errorMessages = [
+'failed to connect',
+'ユーザ認証に失敗しました。ユーザ名、またはパスワードを確認してください。',
+'サーバとの通信に失敗しました。時間を置いて再度お試しください。',
+'ユーザ名、パスワード、または両方が空欄になっています。'
+];
+
+
+
+
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
-var init = getInitData("source/init.json");
+var init = getInitData("source/init.json", 100);

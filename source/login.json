@@ -1,0 +1,29 @@
+[
+    {
+        "class": "loginDialog",
+        "array": [
+            {
+                "class": "userNameLabel",
+                "text": [
+                    "ユーザ名"
+                ]
+            },
+            {
+                "class": "userName",
+                "type": "text",
+                "name": "userName"
+            },
+            {
+                "class": "passwordLabel",
+                "text": [
+                    "パスワード"
+                ]
+            },
+            {
+                "class": "password",
+                "type": "text",
+                "name": "password"
+            }
+        ]
+   }
+]
