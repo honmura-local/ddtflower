@@ -39,12 +39,17 @@
 -->
 
 <script>
-var creator = new jsonToTag();
+var creator = new createTag();
 
-creator.getJsonFile('source/contact.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getJsonFile('source/preserved.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-creator.createTag('pageTitle');			// タイトル領域を作る
+creator.outputTag('pageTitle');					// タイトル領域を作る
+creator.outputTag('courseGuide');				// コース案内テーブルを作る
+creator.outputTag('lessonSchedule');			//レッスンスケジュールテーブル
+creator.outputTag('commonText');				//共通リストテーブルを作る
+creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
+creator.outputTag('footGallery');				// ギャラリー画像を作る
 </script>
 </body>
 </html>
