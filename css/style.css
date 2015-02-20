@@ -126,6 +126,10 @@ input, select {
 .cf {
     *zoom: 1;
 }
+
+a:hover {
+    opacity: 0.5;
+}
 /* ここまでclearfix */
 
 /* 各タグの基本設定 */
@@ -168,13 +172,14 @@ body{
 
 /* ! 関数で作られたのヘッダーとの重複が起きるため、一時的にセレクタを分割します。
     こちらは2番目のヘッダーであるというセレクタにします。 02/10
+   ! headerクラスを作りました 02/20
 /* 
- * セレクタ:header
+ * セレクタ:.header
  * 概要   :ヘッダー領域のタグ。
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-header:nth-child(1){
+.header{
     width: 100%;            /* 幅をcontainer一杯に広げる。 */
     min-width: 800px;       /* 最低幅を.mainと同様に幅を800pxに設定する。 */
     margin: 0px auto 3px;   /* 横位置を中心に寄せる。画面上端との間に間隔を空ける。 */
@@ -227,7 +232,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_f_a_school{
+.gideFASchool{
     height: inherit;    /* gidesの高さを継承する。 */
     width: 165px;       /* 正方形の画像2個分＋αの幅を取る。 */
 }
@@ -238,7 +243,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_f_a_school img{
+.gideFASchool img{
     height: inherit;    /* 外枠の高さを継承する。 */
     width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
     float: left;        /* この要素を左によせ、段組みレイアウトにする。 */
@@ -250,7 +255,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_f_a_school p{
+.gideFASchool p{
     font-size   : 12px;     /* フォントサイズを指定する。 */
     display     : block;    /* インラインブロック表示にする。 */
     margin-top  : 4px;      /* 上に少々の間隔を取る。 */
@@ -263,7 +268,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel{
+.gideTel{
     height: inherit;    /* 高さを継承する。 */
     width: 250px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
 }
@@ -274,7 +279,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel img{
+.gideTel img{
     height: inherit;    /* 外枠の高さを継承する。 */
     width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
     float: left;        /* 左に寄せる。 */
@@ -286,7 +291,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel p{
+.gideTel p{
     display: block; /* ブロック要素として扱う。 */
 }
 
@@ -296,7 +301,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel .p1{
+.gideTel .p1{
     font-size: 11px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     margin-top: 4px;    /* 上に軽い空白を与える。 */
     color:  #777;       /* 灰色のフォントにする。 */
@@ -308,7 +313,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel .p2{
+.gideTel .p2{
     font-size: 15px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     color:  limegreen;  /* 淡い緑のフォントにする。 */
     margin: 3px 0;      /* 上下に適正な間隔を空ける。 */
@@ -320,7 +325,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_tel .p3{
+.gideTel .p3{
     font-size: 10px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
 }
 
@@ -330,7 +335,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_mail{
+.gideMail{
     width: 50px;        /* 幅を50pxにする。 */
     height: inherit;    /* ガイド領域の高さに合わせる。 */
 }
@@ -341,7 +346,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_mail img{
+.gideMail img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -352,7 +357,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_access{
+.gideAccess{
     width: 50px;        /* 幅を50pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -363,7 +368,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_access img{
+.gideAccess img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -374,7 +379,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_trial{
+.gideTrial{
     width: 50px;        /* 幅を50pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -385,7 +390,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_trial img{
+.gideTrial img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -396,7 +401,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_blog{
+.gideBlog{
     width: 50px;        /* 幅を50pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -407,7 +412,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_blog img{
+.gideBlog img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -418,7 +423,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_facebook{
+.gideFacebook{
     width: 50px;        /* 幅を50pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -429,7 +434,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_facebook img{
+.gideFacebook img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -440,7 +445,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_twitter{
+.gideTwitter{
     width: 50px;        /* 幅を50pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -451,7 +456,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_twitter img{
+.gideTwitter img{
     width: inherit; /* 幅を継承する。 */
     height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
 }
@@ -462,7 +467,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_sns{
+.gideSns{
     width: 22px;        /* 幅を22pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -473,7 +478,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_sns .facebook{
+.gideSns .facebook{
     width: inherit; /* 幅を継承する。 */
     height: 22px;   /* 高さを22pxに指定する。 */
     margin-bottom: 6px; /* 下部に6pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
@@ -485,7 +490,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.gide_sns .twitter_tweet{
+.gideSns .twitter{
     width: inherit; /* 幅を継承する。 */
     height: 22px;   /* 高さを22pxに指定する。 */
 }
@@ -499,7 +504,7 @@ header:nth-child(1){
  * 変更日 :2015.02.19
  * 内容   :ログイン名表示のため幅を調整しました。50px → 100px
  */
-.gide_login{
+.gideLogin{
     width: 100px;        /* 幅を100pxに設定する。 */
     height: inherit;    /* 高さをガイド領域から継承する。 */
 }
@@ -513,7 +518,7 @@ header:nth-child(1){
  * 変更日 :2015.02.19
  * 内容   :親要素に合わせて画像サイズが引き延ばされないように変更しました。
  */
-.gide_login .login{
+.gideLogin .login{
     width: auto;	 /* 画像自身の幅を指定する。 */
 }
 
@@ -523,7 +528,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.19
  */
-.gide_login .welcome{
+.gideLogin .welcome{
     display: block; /* ブロック要素となる。 */
 }
 
@@ -533,7 +538,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.19
  */
-.gide_login .userName{
+.gideLogin .userName{
     display: block; /* ブロック要素となる。 */
 }
 
@@ -545,7 +550,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.top_menu{
+.topMenu{
     width       :   800px;      /* 幅をメインコンテンツと合わせる。 */
     height      :   45px;       /* この領域の高さを設定する。 */
     margin      : 0 auto;       /* 中央に揃える。 */
@@ -558,7 +563,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.top_menu .button{
+.topMenu li{
     width:          12.5%;          /* 1/8の幅に設定する。 */
     height:         100%;           /* 外枠に高さを合わせる。 */
     display:        inline-block;   /* インラインブロック表示にする。 */
@@ -574,7 +579,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.top_menu .button:hover,.button:active{
+.topMenu li:hover, .topMenu li:active{
     background: #EEE;   /* ボタンの背景色を薄い灰色にする。 */
 }
 
@@ -584,7 +589,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.top_menu .button a{
+.topMenu li a{
     width:      100%;   /* 幅をボタン全体に合わせる。 */
     height:     100%;   /* 高さをボタン全体に合わせる。 */
     display:    block;  /* ブロック表示を行う。 */
@@ -597,7 +602,7 @@ header:nth-child(1){
  * 作成者 :T.M
  * 作成日 :2015.02.05
  */
-.top_menu .button p{
+.topMenu li p{
     margin-top: 18px;   /* 中心に寄せるのに必要なだけの上marginを挿入する。 */
     font-size:  16px;   /* 妥当なフォントサイズを指定する。 */
     display:    inline-block;   /* インラインブロック表示を行う。 */
@@ -762,12 +767,12 @@ footer{
 }
 
 /* 
- * セレクタ:.foot_gallery
+ * セレクタ:.footGallery
  * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
  * 作成者 :T.M
  * 作成日 :2015.02.04
  */
-.foot_gallery{
+.footGallery{
     width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
     height: 110px;      /* 高さを110pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
@@ -780,18 +785,10 @@ footer{
  * 作成者 :T.Y
  * 作成日 :2015.02.09
  */
-.foot_gallery img{
+.footGallery img{
     height: auto;  /* 高さを自動にする */
     width:  180px;  /* 幅を200pxにする */
 }
-
-
-#head{
-    width: 800px;
-    margin: 0 auto; 
-}
-
-
 
 /* 体験レッスン */
 
@@ -1321,14 +1318,14 @@ footer{
     こちらは2番目のヘッダーであるというセレクタにします。 02/10
  */
 /* 
- * セレクタ:header
+ * セレクタ:.headImage
  * 概要   :ヘッダーのタグ。
  * 作成者 :T.Y
  * 作成日 :2015.02.09
  */
-header:nth-child(2){
+.headImage{
     width: 800px;       /* 横幅を800pxにする。 */
-    margin: 0 auto;     /* 横位置を中心に寄せる。 */ 
+    margin-top: 120px;  /* 上から150px余白をとる */ 
 }
 
 /* 問い合わせページ */
@@ -1571,18 +1568,18 @@ header:nth-child(2){
      * 作成者 :T.Y
      * 作成日 :2015.02.16
      */
-    header {
+    .headImage {
     width: 100%;        /* 横幅を100%にする。 */
     margin: 0 auto;     /* 中央揃えにする */
     }
 
     /* 
-     * セレクタ:header img
+     * セレクタ:headImage img
      * 概要   :スマホ用ヘッダー画像のスタイル
      * 作成者 :T.Y
      * 作成日 :2015.02.16
      */
-    header img {
+    .headImage img {
         width: 100%;    /* 画像の幅を100%にする */
         height auto;    /* 高さを自動で合わせる */
     }
@@ -1632,22 +1629,22 @@ header:nth-child(2){
     }
 
     /* 
-     * セレクタ:.foot_gallery
+     * セレクタ:.footGallery
      * 概要   :スマホ用写真ギャラリーのスタイル
      * 作成者 :T.Y
      * 作成日 :2015.02.16
      */
-    .foot_gallery {
+    .footGallery {
         margin-left: 15px;            /* 15px右に寄せる */
     }
 
     /* 
-     * セレクタ:.foot_gallery img
+     * セレクタ:.footGallery img
      * 概要   :スマホ用写真ギャラリーのスタイル
      * 作成者 :T.Y
      * 作成日 :2015.02.16
      */
-    .foot_gallery img {
+    .footGallery img {
         width: 100px;            /* 幅を60pxにする */
         height: auto;           /* 高さを自動にする */
     }
@@ -1796,19 +1793,14 @@ header:nth-child(2){
     }
 
     /* 
-     * セレクタ:footerimg
+     * セレクタ:.footImage img
      * 概要   :スマホ用フッター画像のスタイル
      * 作成者 :T.Y
      * 作成日 :2015.02.16
      */
-    footer img {
+    .footImage img {
         width: 100%;        /* 幅を100%にする */
         height: auto;       /* 高さを自動にする */
-    }
-
-    #head img{
-        width: 100%;
-        height: auto;
     }
     
 /* 問い合わせページ */
@@ -1998,6 +1990,16 @@ header:nth-child(2){
 .baseMap {
 	width: 100%;		/* 幅を外枠に合わせる。 */
 	height: 400px;		/* 高さを指定する。 */
+}
+
+/* 
+ * セレクタ:.copyright
+ * 概要   :コピーライトのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.20
+ */
+.copyright {
+    font-size: 8px;      /* 文字サイズを7pxにする */
 }
 /* ここまでアクセスページ */    
 }/* スマホ用のcssの終わり */
