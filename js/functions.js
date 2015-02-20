@@ -596,11 +596,15 @@ function createDateArray(dateText){
 
 	// 選択した日付を1つの文字列から配列に変換する。
 	var date = dateText.split('/');
+	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により不要になりました。
 	// 配列内の日付の並びが年月日になっていないので、並びを修正した配列を整数に直した上でtrueDateに格納する。
-	var trueDate = [parseInt(date[2]), parseInt(date[0]), parseInt(date[1])];
-	
+//	var trueDate = [parseInt(date[2]), parseInt(date[0]), parseInt(date[1])];
+
+	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により、trueDateではなくdateを返すことになりました。
 	// trueDateを返す。
-	return trueDate;
+	return date;
+	// trueDateを返す。
+//	return trueDate;
 }
 
 /*

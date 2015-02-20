@@ -49,27 +49,27 @@ function putText(json){
 			addChildrenText(key, value);
 		} else {
 			// その要素のにテキストを追加する。
-			addCElemText(key, value);
+			addElemText(key, value);
 		}
 	});
 }
 
 /* 
- * 関数名:addChildText(className, value)
+ * 関数名:addChildrenText(className, value)
  * 概要  :引数に指定した要素の子要素にテキストを追加する。
  * 引数  :String className,array value
  * 返却値  :なし
  */
-function addChildText(className, value){
+function addChildrenText(className, value){
 	
 	// classNameから要素を取得して$elemsに格納する。
 	var $elems = $('.' + className);
 	// for文でclassNameに対応する要素全てを走査する。
-	for(var i = 0; i < elems.length; i++){
+	for(var i = 0; i < $elems.length; i++){
 		// 対象のクラスの要素の空の子要素を走査する。
 		$('.'+ className +' *:empty').each(function(j){
 			// 該当する要素にvalueから取得した値を格納する。
-			$this.text(value[i][j]);
+			$(this).text(value[i][j]);
 		});
 	}
 }
@@ -85,7 +85,7 @@ function addElemText(className, value){
 	// 対象のクラスの要素の空の子要素を走査する。
 	$('.'+ className).each(function(i){
 		// 該当する要素にJSONの配列から取得した値を格納する。
-		$this.text(value[0][i]);
+		$(this).text(value[0][i]);
 	});
 }
 
@@ -104,7 +104,7 @@ function getJSONArray(contentName){
 	// Ajaxでサーバ上からJSONを持ってくる。
 	$.ajax({
 		// コンテンツ名からJSONファイルを特定して取得する。
-		url: 'source' + contentName + '.json',
+		url: 'source/' + contentName + '.json',
 		// JSONデータを取得してパースする。
 		dataType: 'JSON',
 		// ページ読み込み時の処理なので同期通信を行う。
@@ -138,7 +138,7 @@ function createReservedData(reservedData){
 	// reservedDataに選択作品のデータを格納する。
 	reservedData['construct'] = $('input[name="radioButtonSpecialConstruct"]:checked').val();
 	// reservedDataに選択した時限のデータを格納する。
-	reservedData['construct'] = $('input[name="radioButtonSpecialSchedule"]:checked').val();
+	reservedData['schedule'] = $('input[name="radioButtonSpecialSchedule"]:checked').val();
 	// 選択した予備日程の曜日を配列で取得してreservedDataに格納する。
 	reservedData['weekDay'] = getCheckBoxValue('weekDay');
 	// 選択した予備日程の週を配列で取得してreservedDataに格納する。
@@ -334,15 +334,10 @@ function createReservedSummary(){
 function createRadioButtonSpecialConstruct(json){
 	// jsonから作品に関する情報の配列を取得する。
 	var constructs = json['radioButtonSpecialConstruct'];
-	// ダイアログのjQueryオブジェクトを変数に格納して生成の手間を省く。
-	var $dialog = $('.specialReservedDialog')
 	
 	// ダイアログに作品選択ラジオボタン群を格納するテーブルを追加する。
 	createChooseTable('radioButtonSpecialConstruct', '作品');
 
-	// テーブルのjQueryオブジェクトを変数に格納して、ループ内での生成の手間を省く。
-	var $table = $('.radioButtonSpecialConstruct');
-	
 	// このfor文の1つ目のif文の除数で1行に表示する作品数を決める。
 	// 作品名が不定であることを考慮し、デフォルトでは2にセットしておく。
 	var constructColumns = 2;
@@ -366,9 +361,6 @@ function createRadioButtonSpecialSchedule(json){
 	// ダイアログに作品選択ラジオボタン群を格納するテーブルを追加する。
 	createChooseTable('radioButtonSpecialSchedule', '時限');
 
-	// テーブルのjQueryオブジェクトを変数に格納して、ループ内での生成の手間を省く。
-	var $table = $('.radioButtonSpecialSchedule');
-	
 	// ラジオボタンを作成する。
 	createRadioButton('radioButtonSpecialSchedule', json, 1);
 }
@@ -391,8 +383,9 @@ function createSubInfo(){
 	// 1〜4週目のテキストを配列に格納する。
 	var weekNumbers = ['1週', '2週', '3週', '4週'];
 	
-	createCheckBox('可能曜日', 'weekDay', weekDays);
-	createCheckBox('可能週', 'weekNumber', weekNumbers);
+	// 可能曜日、可能週のチェックボックスを作る。
+	createCheckBox('可能曜日', 'weekDay', weekDays,'subInfo');
+	createCheckBox('可能週', 'weekNumber', weekNumbers,'subInfo');
 }
 
 /* 
@@ -446,6 +439,9 @@ function createRadioButton(className, json, columns){
  */
 function insertRadioButton(className, array, columns){
 	
+	//classNameからテーブルのjQueryオブジェクトを取得する。
+	$table = $('.' + className);
+	
 	// for文で配列の1要素につき、1つのラベルとラジオボタンのセットのパーツを作る。
 	for(var i = 0; i < array.length; i++){
 		
@@ -466,24 +462,27 @@ function insertRadioButton(className, array, columns){
 							// name属性をセットしてグループ化する。
 							name:className,
 							// 項目名を値としてセットする。
-							value:jsonArray[i]
+							value:array[i]
 						})
 				)
 		)
 		// 項目名をセットする。
-		.append($('<td></td>').text(jsonArray[i]));
+		.append($('<td></td>').text(array[i]));
 	}
 }
 
 /* 
- * 関数名:createCheckBox(headText, className, array)
+ * 関数名:createCheckBox(headText, className, array, table)
  * 概要  :チェックボックス群を作成する。
- * 引数  :String headText, String className, Array array
+ * 引数  :String headText, String className, Array array, String table
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
  */
-function createCheckBox(headText, className, array){
+function createCheckBox(headText, className, array, table){
+	
+	//チェックボックスを追加する対象のテーブルのjQueryオブジェクトを取得する。
+	$table = $('.' + table);
 	
 	// 1行に格納するtdタグのセルの制限数を設定する。
 	var tdLimit = 4;
@@ -498,17 +497,17 @@ function createCheckBox(headText, className, array){
 				);
 	
 	// 実際にチェックボックスを作成、挿入する関数をコールする。
-	insertCheckBox(headText, className, array, tdLimit);
+	insertCheckBox(headText, className, array, tdLimit, $table);
 }
 /* 
- * 関数名:insertCheckBox(headText, className, array, tdLimit)
+ * 関数名:insertCheckBox(headText, className, array, tdLimit, $table)
  * 概要  :チェックボックス群を作成し、挿入する。
- * 引数  :String headText, String className, Array array, int tdLimit
+ * 引数  :String headText, String className, Array array, int tdLimit, jQuery $table
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.11
  */
-function insertCheckBox(headText, className, array, tdLimit){
+function insertCheckBox(headText, className, array, tdLimit, $table){
 	
 	// for文で配列の1要素につき、1つのラベルとチェックボックスまたはラジオボタンのセットのパーツを作る。
 	for(var i = 0; i < array.length; i++){
@@ -522,7 +521,7 @@ function insertCheckBox(headText, className, array, tdLimit){
 							// inputタグの使い道を決める属性を追加する。
 							type: 'checkbox',
 							// name属性をセットしてグループ化する。
-							name:name,
+							name:className,
 							// 配列の要素を値としてセットする。
 							value:array[i]
 						})
@@ -560,7 +559,7 @@ function sendReservedData(reservedData){
 		// 帰ってきたメッセージをダイアログで表示する。
 		alert(isSuccess);
 		// ダイアログを消す。
-		removeReservedDialogs();
+		removeReservedDialogs($('.reservedDialog .ui-dialog-content'));
 	} else {
 		// 時間を空けてもう一度実行してもらうようメッセージのダイアログを出す。
 		alert("通信に失敗しました。時間をあけてもう一度お試しください。");
@@ -580,8 +579,9 @@ function sendData(reservedData){
 	var returns = 0;
 	// ajax通信で予約データをサーバに送信する。
 	$.ajax({
-		// 予約データ保存用のPHPにデータを送信する。
-		url: init["sendReservedPhp"],
+		// 予約データ保存用のPHPにデータを送信する。2015.02.19現在該当PHPが無いため自身のURLに送信しています。
+		url: location.href,
+//		url: init["sendReservedPhp"],
 //		 url: 'correctReserved.php',
 		// テキストデータを返してもらう。
 		dataType: 'text',
@@ -591,8 +591,9 @@ function sendData(reservedData){
 		data: {"reserved":reservedData},
 		// 通信成功時の処理。
 		success:function(text){
-			// returnsに帰ってきたテキストを代入する。
-			returns = text;
+			// returnsに帰ってきたテキストを代入する。2015.02.19現在ではテスト用のテキストを返す。
+			//returns = text;
+			returns = "ご予約希望を承りました。追ってメールでの返信をいたします。";
 		}
 	});
 	
@@ -625,7 +626,7 @@ function moveToPrevDialog(current){
  */
 function removeReservedDialogs(dialogs){
 	// 引数のダイアログの配列を走査する。
-	$.each(dialogs, function(){
+	dialogs.each(function(){
 		// ダイアログを消去する。
 		$(this).dialog('destroy').remove();
 	});
@@ -784,6 +785,9 @@ function getInitData(path, continues){
 	if(!(returns)){
 		alert('初期化ファイルの取得に失敗しました。');
 	}
+	
+	// 取得したデータを返す。
+	return returns;
 }
 
 /* 
