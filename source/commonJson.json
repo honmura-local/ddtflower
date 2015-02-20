@@ -42,14 +42,13 @@
 		},
 		"fourthHalfPeriod":{
 			"period"	: {
-				"text"	:"4.5時限目"
+				"text"	:["4.5時限目"]
 			},
 			"hour"		: {
-				"text"	:"19:00 ～ 21:00"
+				"text"	:["19:00 ～ 21:00"]
 			}
 		}
 	},
-
 	"commonText":{
 		"summary": {
 			"text"	:	"共通"
@@ -66,18 +65,6 @@
 			] 
 		}		    
 	},
- 	"footGallery": {
-	 	"img1": {
-	 		"src"	: "a.png"
-	 	},
-	 	"img2": {
-	 		"src"	: "b.png"
-	 	},
-	 	"img3": {
-	 		"src"	: "c.png"
-	 	}
- 	},
-
 	"salesPoint": {
 		"summary": {
 			"text"	:	"特徴"

@@ -1,14 +1,13 @@
-<<<<<<< HEAD
 {
 	"pageTitle":{
 		"image"		:{
-			"src"	:	["icon(butterfly).png"]
+			"src"	:	"image/icon(butterfly).png"
 		},
 		"title"		: {
-			"text"	:	["国家認定資格取得コース"]
+			"text"	:	"国家認定資格取得コース"
 		},
 		"summary"	: {
-			"text"	:	["国が認定している唯一のフラワーアレンジメント国家資格です。本校では３級から１級まで取得可能です。２級以上の難易度は高めですが、その分ステータスも高く頑張る価値は十分です。"]
+			"text"	:	"国が認定している唯一のフラワーアレンジメント国家資格です。本校では３級から１級まで取得可能です。２級以上の難易度は高めですが、その分ステータスも高く頑張る価値は十分です。"
 		}
 	},
 
@@ -18,71 +17,35 @@
 		},
 		"firstStage":{
 			"stage":{
-				"text"	:	["1stステージ"]
-=======
-[
-	{
-		"class"	:"pageTitle",
-		"array":[
-			{
-				"class":"image",
-				"src":["icon(butterfly).png"]
->>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
+				"text"	:	"未定"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"未定"
 			},
 			"price":{
-				"text"	:	["4,200 円／回"]
+				"text"	:	"未定"
 			}
-<<<<<<< HEAD
 		},
 		"secondStage":{
 			"stage":{
-				"text"	:	["2stステージ"]
+				"text"	:	"未定"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"未定"
 			},
 			"price":{
-				"text"	:	["5,000 円／回"]
+				"text"	:	"未定"
 			}
 		},
 		"thirdStage":{
 			"stage":{
-				"text"	:	["3stステージ"]
+				"text"	:	"未定"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"未定"
 			},
 			"price":{
-				"text"	:	["6,000 円／回"]
-=======
-		]
-	},
-	{
-		"class":"courseGuide",
-		"array":[
-			{
-				"class":"summary",
-				"text":["コース案内"]
-			},
-			{
-			"array":[
-					{
-						"class":"firstStage",
-						"text":["1stステージ", "全16単位", "4,200 円／回"]
-					},
-					{
-						"class":"secondStage",
-						"text":["2ndステージ", "全16単位", "5,000 円／回"]
-					},
-					{
-						"class":"thirdStage",
-						"text":["3rdステージ", "全48単位", "5,00 円／回"]
-					}
-				]
->>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
+				"text"	:	"未定"
 			}
 		}
 	}

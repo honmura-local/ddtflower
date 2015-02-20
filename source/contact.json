@@ -1,142 +1,111 @@
-[
-    {
-        "class": "pageTitle",
-        "array": [
-            {
-                "class": "image",
-                "src": [
-                    "icon(leaf2)"
-                ]
-            },
-            {
-                "class": "title",
-                "text": [
-                    "お問い合わせフォーム"
-                ]
-            },
-            {
-                "class": "summary",
-                "text": [
-                    ""
-                ]
-            }
-        ]
+{
+    "pageTitle":{
+        "image":{
+            "src"   :"image/icon(leaf2).png"
+        },
+        "title"     : {
+            "text"  :   "お問い合わせフォーム"
+        },
+        "summary"   : {
+            "text"  :   ""
+        }
     },
-    {
-        "class": "contactForm",
-        "action": "postmail/postmail.cgi",
+    "contactForm":{
+        "action":"postmail/postmail.cgi",
         "method": "post",
-        "array": [
-            {
-                "class": "formBody",
-                "array": [
-                    {
-                        "class": "name",
-                        "text": [
-                            "氏名",
-                            "*",
-                            "Name"
-                        ]
-                    },
-                    {
-                        "class": "nameTextBox",
-                        "array": [
-                            {
-                                "class": "textBox1",
-                                "type": "text",
-                                "name": "name",
-                                "size": "40",
-                                "required": ""
-                            }
-                        ]
-                    },
-                    {
-                        "class": "sex",
-                        "text": [
-                            "性別",
-                            "*",
-                            "sex"
-                        ]
-                    },
-                    {
-                        "class": "sexRadioButton",
-                        "array": [
-                            {
-                                "class": "sexRadioButtonFemale",
-                                "type": "radio",
-                                "name": "sex",
-                                "value": "女",
-                                "checked": ""
-                            },
-                            {
-                                "class": "sexRadioButtonFemaleLabel",
-                                "text": [
-                                    "女"
-                                ]
-                            },
-                            {
-                                "class": "sexRadioButtonMale",
-                                "type": "radio",
-                                "name": "sex",
-                                "value": "男"
-                            },
-                            {
-                                "class": "sexRadioButtonMaleLabel",
-                                "text": [
-                                    "男"
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "class": "eMail",
-                        "text": [
-                            "メールアドレス",
-                            "*",
-                            "E-mail"
-                        ]
-                    },
-                    {
-                        "class": "eMailTextBox",
-                        "array": [
-                            {
-                                "class": "textBox2",
-                                "type": "email",
-                                "name": "eMail",
-                                "size": "40",
-                                "required": ""
-                            }
-                        ]
-                    },
-                    {
-                        "class": "content",
-                        "text": [
-                            "問い合わせ内容",
-                            "*",
-                            "content"
-                        ]
-                    },
-                    {
-                        "class": "contentTextArea",
-                        "array":[
-                        	{
-		                        "class": "textArea1",
-		                        "name": "content",
-		                        "cols": "40",
-		                        "rows": "10",
-		                        "required": ""
-                        	}
-                        ]
-                    }
-                ]
+        "formBody":{
+            "name":{
+                "formContent":{
+                    "text":"氏名"
+                },
+                "textRed":{
+                    "text":"*"
+                },
+                "formRuby":{
+                    "texr":"Name"
+                }
             },
-            {
-                "class": "submitButton",
+            "nameTextBox":{
+                "textBox1":{
+                    "type":"text",
+                    "name":"name",
+                    "size":"40",
+                    "required":""
+                }
+            },
+            "sex":{
+                "formContent":{
+                    "text":"性別"
+                },
+                "textRed":{
+                    "text":"*"
+                },
+                "formRuby":{
+                    "texr":"Sex"
+                }
+            },
+            "sexRadioButton":{
+                "sexRadioButtonFemale":{
+                    "type": "radio",
+                    "name": "sex",
+                    "value": "女",
+                    "checked": ""
+                },
+                "sexRadioButtonFemaleLabel":{
+                    "text": "女"
+                },
+                "sexRadioButtonMale":{
+                    "type": "radio",
+                    "name": "sex",
+                    "value": "男"
+                },
+                "sexRadioButtonMaleLabel":{
+                    "text":"男"
+                }
+            },
+            "eMail":{
+                "formContent":{
+                    "text":"メールアドレス"
+                },
+                "textRed":{
+                    "text":"*"
+                },
+                "formRuby":{
+                    "text":"E-mail"
+                }
+                
+            },
+            "eMailTextBox":{
+                "textBox2":{
+                    "type": "email",
+                    "name": "eMail",
+                    "size": "40",
+                    "required": ""
+                }
+            },
+            "content":{
+                "formContent":{
+                    "text":"問い合わせ内容"
+                },
+                "textRed":{
+                    "text":"*"
+                },
+                "formRuby":{
+                    "text":"content"
+                }
+            },
+            "contentTextArea":{
+                "textArea1":{
+                    "name": "content",
+                    "cols": "40",
+                    "rows": "10",
+                    "required": ""
+                }
+            },
+            "submitButton":{
                 "type": "submit",
-                "text": [
-                    "送信内容の確認"
-                ]
+                "text": "送信内容の確認"
             }
-        ]
+        }
     }
-]
+}

@@ -1,6 +1,5 @@
 {
 	"pageTitle":{
-		"width":"100",
 		"image":{
 			"src"	:"image/icon(tulip).png"
 		},
@@ -29,7 +28,7 @@
 		},
 		"secondStage":{
 			"stage":{
-				"text"	:	"2stステージ"
+				"text"	:	"2ndステージ"
 			},
 			"times":{
 				"text"	:	"全12回"
@@ -40,7 +39,7 @@
 		},
 		"thirdStage":{
 			"stage":{
-				"text"	:	"3stステージ"
+				"text"	:	"3rdステージ"
 			},
 			"times":{
 				"text"	:	"全12回"
