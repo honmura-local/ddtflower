@@ -44,11 +44,17 @@ function createCalendar () {
  * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
  * 作成日:2015.02.05
  * 作成者:T.Y
+ * 変更日:2015.02.22
+ * 変更者:T.Masuda
+ * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
  */
 function functionFilter (filterTarget) {
+  // URLからファイル名を取得する。
+  currentLocation = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
   // jqueryの記述の始まり
   $(function() {
-    $(filterTarget)                         // 引数に対して、透過度を調整する
+	//現在表示中のページのボタン以外に対して
+    $(filterTarget).filter(':not([href$="' + currentLocation + '"])')
         .mouseenter(function() {            // 引数の要素にマウスを乗せた時の処理
             $(this).css("opacity", 0.5);    // 引数の要素の透過度を0.5にする
         })
@@ -56,6 +62,19 @@ function functionFilter (filterTarget) {
             $(this).css("opacity", 1);      // 引数の要素の透過度を戻す
         });
   });// jqueryの記述の終わり
+  
+  // URLからファイル名を取得する。
+	var contentName = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
+  
+	// 現在のページのボタンの枠に対して
+	$('.topMenu li:has(a[href$="' + currentLocation + '"])').css({
+		background: "#EEE"   	/* ボタンの背景色を薄い灰色にする。 */
+	});
+	//現在のページのボタンに対して
+	$('.topMenu a[href$="' + currentLocation + '"]').css({
+		opacity: "0.5"   	/* 文字を透過する。 */
+	});
+  
 }
 
 
