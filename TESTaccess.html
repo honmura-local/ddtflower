@@ -41,13 +41,14 @@
 -->
 
 <script>
-var creator = new jsonToTag();
+var creator = new createTag();
 
 creator.getJsonFile('source/access.json');		// ファイルのデータをjsonを用いて持ってくる
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-creator.createTag('pageTitle');					// タイトルを作る。
-creator.createTag('contactForm');				// フォーム領域を作る
+creator.outputTag('pageTitle');					// タイトルを作る。
+creator.outputTag('accessInfo');				// アクセス情報のコンテンツを作る。
+creator.outputTag('accessMap');					// アクセスのマップを作る。
 </script>
 </body>
 </html>

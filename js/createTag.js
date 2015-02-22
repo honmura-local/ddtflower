@@ -123,9 +123,8 @@ function createTag(){
 	this.createTag = function(curMapNode, curDomNode){
 		//curDomNodeが-1(初回コール時)であれば
 		if(curDomNode == -1){
-			var mapNodeKey = curMapNode;				//次のステップでmapNodeの中身が変わってDOMが取得できなくなるので保存する。
+			curDomNode = this.getDomNode(curMapNode);	//DOMの先頭を取得する。
 			curMapNode = this.getMapNode(curMapNode);	//マップの先頭を取得する。
-			curDomNode = this.getDomNode(mapNodeKey);	//DOMの先頭を取得する。
 		}
 		
 		//マップ、DOMが取得できていなかったら
@@ -169,7 +168,7 @@ function createTag(){
 	};
 	
 	/* 
-	 * 関数名:this.getMap = function(key)
+	 * 関数名:this.getMapNode = function(key)
 	 * 概要  :JSON連想配列の最上階層からキーに対応した値を取り出す。
 	 * 引数  :String key
 	 * 返却値  :Object
@@ -182,7 +181,7 @@ function createTag(){
 	};
 
 	/* 
-	 * 関数名:this.getDom = function(key)
+	 * 関数名:this.getDomNode = function(key)
 	 * 概要  :キーに対応するHTMLのパーツを返す。
 	 * 引数  :String key
 	 * 返却値  :jQuery
@@ -216,7 +215,7 @@ function createTag(){
 			$(domNode[i]).append($('<'+ key +'></'+key+'>').text(mapNode[i]));
 		}
 	}
-	
+
 	/* 
 	 * 関数名:this.getDomChild = function(key, domNode)
 	 * 概要  :リストタイプのタグを配置する。
@@ -234,7 +233,7 @@ function createTag(){
 			//domNodeにnullを入れる。
 			domNode = null;
 		}
-		
+
 		//domNodeを返す。
 		return domNode;
 	}

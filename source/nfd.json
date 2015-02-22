@@ -1,15 +1,13 @@
-<<<<<<< HEAD
-
 {
 	"pageTitle":{
 		"image"		:{
-			"src"	:	["icon(waterdrop100).png"]
+			"src"	:	"image/icon(waterdrop100).png"
 		},
 		"title"		: {
-			"text"	:	["NFD資格取得コース"]
+			"text"	:	"NFD資格取得コース"
 		},
 		"summary"	: {
-			"text"	:	["日本フラワーデザイナー協会が認定する民間の資格としては最もポピュラーな資格です。生花をターゲットにしており、カリキュラムに沿って初級者から上級者、講師資格まで取得可能です。"]
+			"text"	:	"日本フラワーデザイナー協会が認定する民間の資格としては最もポピュラーな資格です。生花をターゲットにしており、カリキュラムに沿って初級者から上級者、講師資格まで取得可能です。"
 		}
 	},
 
@@ -19,61 +17,128 @@
 		},
 		"firstStage":{
 			"stage":{
-				"text"	:	["NFD1級"]
+				"text"	:	"NFD1級"
 			},
 			"times":{
-				"text"	:	["全40単位"]
+				"text"	:	"全40単位"
 			},
 			"price":{
-				"text"	:	["3,000 円／回"]
+				"text"	:	"3,000 円／回"
 			}
 		},
 		"secondStage":{
 			"stage":{
-				"text"	:	["NFD2級"]
-=======
-[
-	{
-		"class":"pageTitle",
-		"array":[
-			{
-				"class":"image",
-				"src":["icon(waterdrop100).png"]
->>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
+				"text"	:	"NFD2級"
 			},
-			{
-				"class":"title",
-				"text":["NFD資格取得コース"]
+			"times":{
+				"text"	:	"全40単位"
 			},
-			{
-				"class":"summary",
-				"text":["日本フラワーデザイナー協会が認定する民間の資格としては最もポピュラーな資格です。生花をターゲットにしており、カリキュラムに沿って初級者から上級者、講師資格まで取得可能です。"]
+			"price":{
+				"text"	:	"3,000 円／回"
 			}
-		]
+		},
+		"thirdStage":{
+			"stage":{
+				"text"	:	"NFD3級"
+			},
+			"times":{
+				"text"	:	"全40単位"
+			},
+			"price":{
+				"text"	:	"3,000 円／回"
+			}
+		}
 	},
-	{
-		"class":"courseGuide",
-		"array":[
-			{
-				"class":"summary",
-				"text":["コース案内"]
-			},
-			{
-			"array":[
-					{
-						"class":"firstStage",
-						"text":["NFD1級", "全40単位", "3,000 円／回"]
-					},
-					{
-						"class":"secondStage",
-						"text":["NFD2級", "全40単位", "3,000 円／回"]
-					},
-					{
-						"class":"thirdStage",
-						"text":["NFD3級", "全40単位", "3,000 円／回"]
-					}
-				]
-			}
-		]
-	}
-]
+   "footGallery": {
+        "1stDiv": {
+            "1stArt": {
+                "href": "image/1.JPG",
+                "rel": "gallery",
+                "1stImage": {
+                    "src": "image/1.JPG"
+                }
+            }
+        },
+        "2ndDiv": {
+            "2ndArt": {
+                "href": "image/2.JPG",
+                "rel": "gallery",
+                "2ndImage": {
+                    "src": "image/2.JPG"
+                }
+            }
+        },
+        "3rdDiv": {
+            "3rdArt": {
+                "href": "image/3.JPG",
+                "rel": "gallery",
+                "3rdImage": {
+                    "src": "image/3.JPG"
+                }
+            }
+        },
+        "4thDiv": {
+            "4thArt": {
+                "href": "image/4.JPG",
+                "rel": "gallery",
+                "4thImage": {
+                    "src": "image/4.JPG"
+                }
+            }
+        },
+        "5thDiv": {
+            "5thArt": {
+                "href": "image/5.JPG",
+                "rel": "gallery",
+                "5thImage": {
+                    "src": "image/5.JPG"
+                }
+            }
+        },
+        "6thDiv": {
+            "6thArt": {
+                "href": "image/6.JPG",
+                "rel": "gallery",
+                "6thImage": {
+                    "src": "image/6.JPG"
+                }
+            }
+        },
+        "7thDiv": {
+            "7thArt": {
+                "href": "image/7.JPG",
+                "rel": "gallery",
+                "7thImage": {
+                    "src": "image/7.JPG"
+                }
+            }
+        },
+        "8thDiv": {
+            "8thArt": {
+                "href": "image/8.JPG",
+                "rel": "gallery",
+                "8thImage": {
+                    "src": "image/8.JPG"
+                }
+            }
+        },
+        "9thDiv": {
+            "9thArt": {
+                "href": "image/9.JPG",
+                "rel": "gallery",
+                "9thImage": {
+                    "src": "image/9.JPG"
+                }
+            }
+        },
+        "10thDiv": {
+            "10thArt": {
+                "href": "image/10.JPG",
+                "rel": "gallery",
+                "10thImage": {
+                    "src": "image/10.JPG"
+                }
+            }
+        }
+    }
+}

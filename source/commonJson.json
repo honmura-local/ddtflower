@@ -1,4 +1,174 @@
 {
+	"header":{
+		"gides":{
+			"gideFASchool":{
+				"flowerIcon":{
+					"src":"image/icon(logo50).png"
+				},
+				"sideTextF":{
+					"text":"フラワー"
+				},
+				"sideTextA":{
+					"text":"アレンジメント"
+				},
+				"sideTextS":{
+					"text":"スクール"
+				}
+			},
+			"gideTel":{
+				"telIcon":{
+					"src":"image/icon(tell).png"
+				},
+				"p1":{
+					"text":"お問い合せ"
+				},
+				"p2":{
+					"text":"03-6413-1225"
+				},
+				"p3":{
+					"text":"(対応時間 11:00 〜 20:00)"
+				}
+			},
+			"gideMail":{
+				"contactLink":{
+					"href":"contact.html",
+					"mailIcon":{
+						"src":"image/icon(mail).png"
+					}
+				}
+			},
+			"gideAccess":{
+				"accessLink":{
+					"href":"access.html",
+					"accessIcon":{
+						"src":"image/icon(accessl).png"
+					}
+				}
+			},
+			"gideTrial":{
+				"experienceLink":{
+					"href":"experience.html",
+					"experienceIcon":{
+						"src":"image/icon(experience).png"
+					}
+				}
+			},
+			"gideBlog":{
+				"gideBlogLink":{
+					"href":"",
+					"gideBlogIcon":{
+						"src":"image/icon(blog50).png"
+					}
+				}	
+			},
+			"gideSns":{
+				"facebookLink":{
+					"href":"",
+					"facebook":{
+						"src":"image/icon(facebook).png"
+					}
+				},
+				"twitterLink":{
+					"href":"",
+					"twitter":{
+						"src":"image/icon(titter22).png"
+					}
+				}
+			},
+			"gideLogin":{
+					"login":{
+						"src":"image/icon(login22-60).png"
+				}
+			}
+		},
+		"topMenu":{
+			"preservedButton":{
+				"preservedLink":{
+					"href":"preserved.html",
+					"title":"プリザーブドフラワー",
+					"preservedText":{
+						"text":"プリザ"
+					}
+				}
+			},
+			"freshButton":{
+				"freshLink":{
+					"href":"fresh.html",
+					"title":"フレッシュフラワー",
+					"freshText":{
+						"text":"生花"
+					}
+				}
+			},
+			"nfdButton":{
+				"nfdLink":{
+					"href":"nfd.html",
+					"title":"NFD資格取得",
+					"nfdText":{
+						"text":"NFD"
+					}
+				}
+			},
+			"nationalButton":{
+				"nationalLink":{
+					"href":"national.html",
+					"title":"国家認定資格取得",
+					"nationalText":{
+						"text":"国家"
+					}
+				}
+			},
+			"bridalButton":{
+				"bridalLink":{
+					"href":"bridal.html",
+					"title":"",
+					"bridalText":{
+						"text":"ブライダル"
+					}
+				}
+			},
+			"franchiseButton":{
+				"franchiseLink":{
+					"href":"franchise.html",
+					"title":"フランチャイズ",
+					"franchiseText":{
+						"text":"FC"
+					}
+				}
+			},
+			"galleryButton":{
+				"galleryLink":{
+					"href":"gallery.html",
+					"title":"",
+					"galleryText":{
+						"text":"ギャラリー"
+					}
+				}
+			},
+			"voiceButton":{
+				"voiceLink":{
+					"href":"voice.html",
+					"title":"",
+					"voiceText":{
+						"text":"生徒さんの声"
+					}
+				}
+			}
+		}
+	},
+
+	"headImage":{
+		"headFlower":{
+			"src":"image/main(header800).png"
+		}
+	},
+
+	"footImage":{
+		"footFlower":{
+			"src":"image/main(footer800).png"
+		}
+	},	
+
 	"lessonSchedule":{
 		"summary": {
 			"text": "レッスンスケジュール"
@@ -42,14 +212,13 @@
 		},
 		"fourthHalfPeriod":{
 			"period"	: {
-				"text"	:"4.5時限目"
+				"text"	:["4.5時限目"]
 			},
 			"hour"		: {
-				"text"	:"19:00 ～ 21:00"
+				"text"	:["19:00 ～ 21:00"]
 			}
 		}
 	},
-
 	"commonText":{
 		"summary": {
 			"text"	:	"共通"
@@ -57,27 +226,15 @@
 		"commonTextList":{
 			"TD":
 			[
-				"月何回でも受講可能です。",
-				"１カ月に２回以上ご来校の場合、受講料を１０００円オフします。",
-				"１カ月に４回以上ご来校の場合、受講料を無料とします。",
-				"プリザ・生花コース修了後、本校認定のディプロマを発行します。",
-				"NFD、国家資格取得コースの花材費は別途となります。",
-				"異なるコースから生花、プリザへのスポット受講が可能です。"
+				"・月何回でも受講可能です。",
+				"・１カ月に２回以上ご来校の場合、受講料を１０００円オフします。",
+				"・１カ月に４回以上ご来校の場合、受講料を無料とします。",
+				"・プリザ・生花コース修了後、本校認定のディプロマを発行します。",
+				"・NFD、国家資格取得コースの花材費は別途となります。",
+				"・異なるコースから生花、プリザへのスポット受講が可能です。"
 			] 
 		}		    
 	},
- 	"footGallery": {
-	 	"img1": {
-	 		"src"	: "a.png"
-	 	},
-	 	"img2": {
-	 		"src"	: "b.png"
-	 	},
-	 	"img3": {
-	 		"src"	: "c.png"
-	 	}
- 	},
-
 	"salesPoint": {
 		"summary": {
 			"text"	:	"特徴"
@@ -85,12 +242,12 @@
 		"salesPointList" : {
 			"TD" :
 			[
-				   "インターネット対応のレッスン予約システムを無料にて提供します。",
-				   "花材はマージンなし、配送料のみにて準備します。",
-				   "受講料のロイヤリティーは５％。",
-				   "年間ロイヤリティーは５万円。",
-				   "他フランチャイズ店の生徒さんもレッスン可能です。登録店へのロイヤリティー３５％が発生します。",
-				   "本校、他コース（プリザ、生花、NFD、国家）の受講が半額で受けられます。もちろん資格取得可能です。"
+				   "・インターネット対応のレッスン予約システムを無料にて提供します。",
+				   "・花材はマージンなし、配送料のみにて準備します。",
+				   "・受講料のロイヤリティーは５％。",
+				   "・年間ロイヤリティーは５万円。",
+				   "・他フランチャイズ店の生徒さんもレッスン可能です。登録店へのロイヤリティー３５％が発生します。",
+				   "・本校、他コース（プリザ、生花、NFD、国家）の受講が半額で受けられます。もちろん資格取得可能です。"
 			]			
 		}
 	},
@@ -102,14 +259,22 @@
 		"memberRuleList": {
 			"TD" :
 			[
-				"お支払い：都度払い前金制です。現金により次回分を事前にお支払い頂きます。",
-				"ご予約：予約指定日のプリザは3日前まで、生花は7日前までにインターネットもしくは電話によりご予約出来ます。",
-				"キャンセル：ご予約日のプリザは３日、生花は７日以上前までにキャンセル可能です。",
-				"振替え：上記、予約、キャンセル規定に沿い振替え自由です。",
-				"前金：最終受講日から３か月間受講がなかった場合、経過日から１カ月毎に５００円を前金から引かせて頂きます。",
-				"退会：随時、退会可能です。退会時、前金の残金は返金されます。",
+				"・お支払い：都度払い前金制です。現金により次回分を事前にお支払い頂きます。",
+				"・ご予約：予約指定日のプリザは3日前まで、生花は7日前までにインターネットもしくは電話によりご予約出来ます。",
+				"・キャンセル：ご予約日のプリザは３日、生花は７日以上前までにキャンセル可能です。",
+				"・振替え：上記、予約、キャンセル規定に沿い振替え自由です。",
+				"・前金：最終受講日から３か月間受講がなかった場合、経過日から１カ月毎に５００円を前金から引かせて頂きます。",
+				"・退会：随時、退会可能です。退会時、前金の残金は返金されます。",
 				"＊NFDおよび国家は生花に含みます。"
 			]
 		}
+	},
+	
+	"footer":{
+		"copyright":{
+			"text":"CopyRight © 2015 Digital Design Think Corporation All Rights Reserved."
+		}
+	},
+	"calendar":{
 	}
 }

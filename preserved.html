@@ -1,9 +1,10 @@
+<!-- DDTFlowersトップページのメニューの検証です。 -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
 <meta charset="UTF-8">
-<title>プリザーブドフラワーコース</title>
+<title>DDTFlowers/プリザーブドフラワー</title>
 <!-- メインのCSSファイルを読み込む。 -->
 <link type="text/css" href="css/style.css" rel="stylesheet">
 <!-- jqueryUIのcssを読み込む -->
@@ -21,295 +22,53 @@
 <script type="text/javascript" src="js/slick.min.js" ></script>
 <!-- クリックした画像をピックアップ表示するためのjQueryプラグイン「fancybox」の本体を読み込む。 -->
 <script type="text/javascript" src="js/source/jquery.fancybox.js" ></script>
-<!-- サイト全体のレイアウト調整用JSファイル。 -->
-<script src="js/flowersstylefix.js"></script>
-<!-- マウスオーバーで要素を透過するプラグイン -->
-<script src="js/functionFilter.js"></script>
-
 <!-- 関数一覧にしたjsファイルを読み込む -->
 <script type="text/javascript" src="js/functions.js"></script>
-<!-- 関数一覧にしたjsファイルを読み込む -->
+<!-- タグを作成するJSの関数群を読み込む -->
 <script type="text/javascript" src="js/createTag.js"></script>
+<!-- サイト全体のレイアウト調整用JSファイル。 -->
+<script src="js/flowersstylefix.js"></script>
+<!-- 要素作成の関数群を読み込む。 -->
+<script src="js/createfunctions.js"></script>
+
 <script>
-//ドキュメント配備後
 $(document).ready(function(){
 	// aタグの要素にマウスオーバーのフィルターを配置する。
-	functionFilter('a,.link_gide');
+	functionFilter('a,.gideLogin img');
 	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-	fixYCoordinate('header', 'header:eq(1)');
+	fixYCoordinate('header', '.main');
 	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 	fixXCoordinateOnScroll('header')
+	// ログイン状態をチェックする。
+	checkLoginState();
 });
-
 </script>
-
 </head>
+<body>
 <!-- container -->
 <div id="container">
-		<!-- ヘッダー領域。 -->
-	<header>
-		<!-- ガイド領域。 -->
-		<div class="gides">
-			<!-- フラワーアレンジメントスクール -->
-			<div class="gide_f_a_school">
-				<!-- お花アイコン -->
-				<img src="image/icon(logo50).png"></img>
-				<!-- 「フラワーアレンジメントスクール」のテキスト。 -->
-				<p>フラワー</p>
-				<p>アレンジメント</p>
-				<p>スクール</p>
-			</div>
-			<div class="gide_tel">
-				<img src="image/icon(tell).png">
-				<p class="p1">お問い合せ</p>
-				<p class="p2">03-6413-1225</p>
-				<p class="p3">(対応時間 11:00 〜 20:00)</p>
-			</div>
-			<div class="gide_mail link_gide">
-				<a href="contact.html">
-					<img src="image/icon(mail).png">
-				</a>
-			</div>
-			<div class="gide_access link_gide">
-				<a href="access.html">
-					<img src="image/icon(accessl).png">
-				</a>
-			</div>
-			<div class="gide_trial link_gide">
-				<a href="experience.html"><img src="image/icon(experience).png"></a>
-			</div>
-			<div class="gide_blog link_gide">
-				<img src="image/icon(blog50).png">
-			</div>
-			<div class="gide_sns link_gide">
-				<img class="facebook" src="image/icon(facebook).png">
-				<img class="twitter_tweet" src="image/icon(titter22).png">
-			</div>
-			<div class="gide_login link_gide">
-				<img class="login" src="image/icon(login22-60).png">
-			</div>
-		</div>
-		<ul class="top_menu">
-				<li class="button"><a href="preserved.html" title="プリザーブドフラワー"><p>プリザ</p></a></li>
-				<li class="button"><a href="fresh.html" title="フレッシュフラワー"><p>生花</p></a></li>
-				<li class="button"><a href="nfd.html" title="NFD資格取得"><p>NFD</p></a></li>
-				<li class="button"><a href="national.html" title="国家認定資格取得"><p>国家</p></a></li>
-				<li class="button"><a href="bridal.html"><p>ブライダル</p></a></li>
-				<li class="button"><a href="franchise.html" title="フランチャイズ"><p>FC</p></a></li>
-				<li class="button"><a href="gallery.html"><p>ギャラリー</p></a></li>
-				<li class="button"><a href="voice.html"><p>生徒さんの声</p></a></li>
-		</ul>
-	</header>
-
-	<header><img src="image/main(header800).png"></header>
 	<!-- トップページのコンテンツのタグ。 -->
-	<div class="main">
-		<div class="pageTitle">
-			<h1 class="title">プリザーブドフラワーアレンジメントコース</h1>
-			<img src="image/icon(clover).png" >
-			<h2 class="summary">プリザーブドフラワーはお手入れ不要、数年間綺麗な状態で楽しむこと出来ます。この事からウェディングブーケを前もって準備出来たり、使用後作りかえることも簡単で、高価なプリザも結果的には経済的だったりします。また生花には不可能な形や、写真立てやバックに付けることも出来てアイデアは無限に広がります。お店で買えば高価なプリザも自分で作ればリーズナブル。お友達へのギフトにも最適です！</h2>
-		</div>
-
-		<!-- コース案内テーブル -->
-		<table class="courseGuide">
-		<!-- テーブルの概要 -->
-		<caption class="summary">コース案内</caption>
-		<!-- 1行目 -->
-		<tr class="firstStage">
-			<!-- 行の見出し -->
-			<th class="stage">1stステージ</th>
-			<!-- 2つ目のカラムの内容 -->
-			<td class="times">全12回</td>
-			<!-- 3つ目のカラムの内容 -->
-			<td class="price">6,000 円／回</td>
-		</tr>
-		<!-- 2行目 -->
-		<tr class="secondStage">
-			<!-- 行の見出し -->
-			<th class="stage">2ndステージ</th>
-			<!-- 2つ目のカラムの内容 -->
-			<td class="times">全12回</td>
-			<!-- 3つ目のカラムの内容 -->
-			<td class="price">6,000 円／回</td>
-		</tr>
-		<!-- 3行目 -->
-		<tr class="thirdStage">
-			<!-- 行の見出し -->
-			<th class="stage">3rdステージ</th>
-			<!-- 2つ目のカラムの内容 -->
-			<td class="times">全12回</td>
-			<!-- 3つ目のカラムの内容 -->
-			<td class="price">6,000 円／回</td>
-		</tr>
-	</table>
-
-		<!-- レッスンスケジュールテーブル -->
-<table class="lessonSchedule">
-	<!-- テーブルの概要 -->
-	<caption class="summary">レッスンスケジュール</caption>
-	<!-- 1行目 -->
-	<tr class="week">
-		<!-- テーブルの見出しを幅2カラム分で作る -->
-		<th colspan="2" class="tableHead">月曜日～日曜日</th>
-	</tr>
-	<!-- 2行目 -->
-	<tr class="firstPeriod">
-		<!-- 行の見出し -->
-		<th class="period">1時限目</th>
-		<!-- 2カラム目の内容 -->
-		<td class="hour">11:00 ～ 13:00</td>
-	</tr>
-	<!-- 3行目 -->
-	<tr class="secondPeriod">
-		<!-- 行の見出し -->
-		<th class="period">2時限目</th>
-		<!-- 2カラム目の内容 -->
-		<td class="hour">14:00 ～ 16:00</td>
-	</tr>
-	<!-- 4行目 -->
-	<tr class="thirdPeriod">
-		<!-- 行の見出し -->
-		<th class="period">3時限目</th>
-		<!-- 2カラム目の内容 -->
-		<td class="hour">16:30 ～ 18:30</td>
-	</tr>
-	<!-- 5行目 -->
-	<tr class="fourthPeriod">
-		<!-- 行の見出し -->
-		<th class="period">4時限目</th>
-		<!-- 2カラム目の内容 -->
-		<td class="hour">19:00 ～ 21:00</td>
-	</tr>
-	<!-- 6行目 -->
-	<tr class="fourthHalfPeriod">
-		<!-- 行の見出し -->
-		<th class="period">4.5時限目</th>
-		<!-- 2カラム目の内容 -->
-		<td class="hour">19:30 ～ 21:30</td>
-	</tr>
-</table>
-
-<!-- 共通リスト項目 -->
-<table class="commonText">
-	<!-- テーブルの概要 -->
-	<caption class="summary">共通</caption>
-	<!-- 項目一覧 -->
-	<!-- 1行目 -->
-	<tr class="commonTextList">
-		<td>・月何回でも受講可能です。</td>
-	</tr>
-	<!-- 2行目 -->
-	<tr class="commonTextList">
-		<td>・１カ月に２回以上ご来校の場合、受講料を１０００円オフします。</td>
-	</tr>
-	<!-- 3行目 -->
-	<tr class="commonTextList">
-		<td>・１カ月に４回以上ご来校の場合、受講料を無料とします。</td>
-	</tr>
-	<!-- 4行目 -->
-	<tr class="commonTextList">
-		<td>・プリザ・生花コース修了後、本校認定のディプロマを発行します。</td>
-	</tr>
-	<!-- 5行目 -->
-	<tr class="commonTextList">
-		<td>・NFD、国家資格取得コースの花材費は別途となります。</td>
-	</tr>
-	<!-- 6行目 -->
-	<tr class="commonTextList">
-		<td>・異なるコースから生花、プリザへのスポット受講が可能です。</td>
-	</tr>
-</table>
-
-<!-- カルーセルの写真ギャラリー。JavaScriptで画像のタグを追加していく。 -->
-<div class="foot_gallery"></div>
-
-<!-- 特徴のリスト項目 -->
-<table class="salesPoint">
-	<!-- テーブルの概要 -->
-	<caption class="summary">特徴</caption>
-	<!-- 項目一覧 -->
-	<!-- 1行目 -->
-	<tr class="salesPointList">
-		<td>・インターネット対応のレッスン予約システムを無料にて提供します。</td>
-	</tr>
-	<!-- 2行目 -->
-	<tr class="salesPointList">
-		<td>・花材はマージンなし、配送料のみにて準備します。</td>
-	</tr>
-	<!-- 3行目 -->
-	<tr class="salesPointList">
-		<td>・受講料のロイヤリティーは５％。</td>
-	</tr>
-	<!-- 4行目 -->
-	<tr class="salesPointList">
-		<td>・年間ロイヤリティーは５万円。</td>
-	</tr>
-	<!-- 5行目 -->
-	<tr class="salesPointList">
-		<td>・他フランチャイズ店の生徒さんもレッスン可能です。登録店へのロイヤリティー３５％が発生します。</td>
-	</tr>
-	<!-- 6行目 -->
-	<tr class="salesPointList">
-		<td>・本校、他コース（プリザ、生花、NFD、国家）の受講が半額で受けられます。もちろん資格取得可能です。</td>
-	</tr>
-	</table>
-
-	<!-- 会員規約のリスト項目 -->
-	<table class="memberRule">
-	<!-- テーブルの概要 -->
-	<caption class="summary">会員規約</caption>
-	<!-- 項目一覧 -->
-	<!-- 1行目 -->
-	<tr class="memberRuleList">
-		<td>・お支払い：都度払い前金制です。現金により次回分を事前にお支払い頂きます。</td>
-	</tr>
-	<!-- 2行目 -->
-	<tr class="memberRuleList">
-		<td>・ご予約：予約指定日のプリザは3日前まで、生花は7日前までにインターネットもしくは電話によりご予約出来ます。</td>
-	</tr>
-	<!-- 3行目 -->
-	<tr class="memberRuleList">
-		<td>・キャンセル：ご予約日のプリザは３日、生花は７日以上前までにキャンセル可能です。</td>
-	</tr>
-	<!-- 4行目 -->
-	<tr class="memberRuleList">
-		<td>・振替え：上記、予約、キャンセル規定に沿い振替え自由です。</td>
-	</tr>
-	<!-- 5行目 -->
-	<tr class="memberRuleList">
-		<td>・前金：最終受講日から３か月間受講がなかった場合、経過日から１カ月毎に５００円を前金から引かせて頂きます。</td>
-	</tr>
-	<!-- 6行目 -->
-	<tr class="memberRuleList">
-		<td>・退会：随時、退会可能です。退会時、前金の残金は返金されます。</td>
-	</tr>
-	<!-- 7行目 -->
-	<tr class="memberRuleList">
-		<td>・＊NFDおよび国家は生花に含みます。</td>
-	</tr>
-	</table>
-
-	</div>
-	<footer><img src="image/main(footer800).png"><span class="copyright">CopyRight &copy; 2015 Digital Design Think Corporation All Rights Reserved.</span></footer>
+	<div class="main"></div>
 </div>
 
 <script>
-//createHeader();
-//createFooter();
-//createTitle(0);
-//createTableCourseGuide(0);
-//createLessonSchedule();
-//createPointGuide();
-createScrollPictures();
-//createPointGuide(共通);
-//createPointGuide(特徴);
-//createPointGuide(会員規約);
+var creator = new createTag();
 
-//createTableSpecialGuide();
-//createCalendar();
-//createScrollPictures();
-//createPictures();
-
+creator.getJsonFile('source/preserved.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+creator.outputTag('header');					// トップメニューを作る
+creator.outputTag('headImage');					// 天の画像を作る
+creator.outputTag('pageTitle');					// タイトル領域を作る
+creator.outputTag('courseGuide');				// コース案内テーブルを作る
+creator.outputTag('lessonSchedule');			//レッスンスケジュールテーブル
+creator.outputTag('commonText');				//共通リストテーブルを作る
+creator.outputTag('footGallery');				// ギャラリー画像を作る
+creator.outputTag('salesPoint');				// 特徴リストを作る
+creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
+creator.outputTag('footImage');					// 地の画像を作る
+creator.outputTag('footer');					// フッターを作る
+createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
 </script>
 </body>
 </html>

@@ -1,0 +1,406 @@
+{
+	"pageTitle":{
+		"image"		:{
+			"src"	:	"image/icon(butterfly).png"
+		},
+		"title"		: {
+			"text"	:	"体験レッスン"
+		},
+		"summary"	: {
+			"text"	:	"興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
+		}
+	},
+
+	"specialGuide":{
+		"summary" :{
+			"text": "体験レッスン案内"
+		},
+		"category":{
+			"item":{
+				"text"	:	"カテゴリ"
+			},
+			"content":{
+				"text"	:	"花・ガーデニング・環境"
+			}
+		},
+		"doKnow":{
+			"item":{
+				"text"	:	"できること・わかること"
+			},
+			"content":{
+				"text"	:	"プリザーブドフラワー"
+			}
+		},
+		"cost":{
+			"item":{
+				"text"	:	"費用"
+			},
+			"content":{
+				"text"	:	"3,800円"
+			}
+		},
+		"times":{
+			"item":{
+				"text"	:	"回数"
+			},
+			"content":{
+				"text"	:	"1回"
+			}
+		},
+		"hour":{
+			"item":{
+				"text"	:	"1回あたりの時間"
+			},
+			"content":{
+				"text"	:	"90分"
+			}
+		},
+		"target":{
+			"item":{
+				"text"	:	"対象者"
+			},
+			"content":{
+				"text"	:	"初めての方&nbsp;癒されたい方&nbsp;趣味を見つけたい方&nbsp;どなたでも大歓迎"
+			}
+		},
+		"bring":{
+			"item":{
+				"text"	:	"持ち物・その他"
+			},
+			"content":{
+				"text"	:	"お持ち帰り用の袋をご持参下さい"		
+			}
+		}
+	},
+	"experienceGallery": {
+        "experience1stDiv": {
+            "experience1stArt": {
+                "href": "image/1.JPG",
+                "rel": "gallery",
+                "experience1stImage": {
+                    "src": "image/1.JPG"
+                }
+            }
+        },
+        "experience2ndDiv": {
+            "experience2ndArt": {
+                "href": "image/2.JPG",
+                "rel": "gallery",
+                "experience2ndImage": {
+                    "src": "image/2.JPG"
+                }
+            }
+        },
+        "experience3rdDiv": {
+            "experience3rdArt": {
+                "href": "image/3.JPG",
+                "rel": "gallery",
+                "experience3rdImage": {
+                    "src": "image/3.JPG"
+                }
+            }
+        },
+        "experience4thDiv": {
+            "experience4thArt": {
+                "href": "image/4.JPG",
+                "rel": "gallery",
+                "experience4thImage": {
+                    "src": "image/4.JPG"
+                }
+            }
+        }
+    },
+    "specialReservedDialog": {
+        "specialDate": {},
+        "reservedSummary": {
+            "text": "予約可能の可否につきましては追ってメールにより返信させていただきます。"
+        },
+        "radioButtonSpecialConstruct": {
+            "constructFirstRow": {
+            	"width":"100",
+                "constructHead": {
+                    "text": "作品"
+                },
+                "preserved1RadioButtonWrap": {
+                    "preserved1RadioButton": {
+                        "name": "construct",
+                        "value": "プリザ1",
+                        "type": "radio"
+                    }
+                },
+                "preserved1Label": {
+                    "text": "プリザ1"
+                },
+                "preserved2RadioButtonWrap": {
+                    "preserved2RadioButton": {
+                        "name": "construct",
+                        "value": "プリザ2",
+                        "type": "radio"
+                    }
+                },
+                "preserved2Label": {
+                    "text": "プリザ2"
+                }
+            },
+            "constructSecondRow": {
+                "blank1": {"visibility":"invisible"},
+                "fresh1RadioButtonWrap": {
+                    "fresh1RadioButton": {
+                        "name": "construct",
+                        "value": "生花1",
+                        "type": "radio"
+                    }
+                },
+                "fresh1Label": {
+                    "text": "生花1"
+                },
+                "fresh2RadioButtonWrap": {
+                    "fresh2RadioButton": {
+                        "name": "construct",
+                        "value": "生花2",
+                        "type": "radio"
+                    }
+                },
+                "fresh2Label": {
+                    "text": "生花2"
+                }
+            }
+        },
+        "radioButtonSpecialSchedule": {
+            "scheduleFirstRow": {
+                "scheduleHead": {
+                    "text": "時限"
+                },
+                "firstPeriodRadioButtonWrap": {
+                    "firstPeriodRadioButton": {
+                        "name": "schedule",
+                        "value": "11:00 〜 13:00",
+                        "type": "radio"
+                    }
+                },
+                "firstPeriodLabel": {
+                    "text": "11:00 〜 13:00"
+                }
+            },
+            "scheduleSecondRow": {
+                "blank2": {},
+                "secondPeriodRadioButtonWrap": {
+                    "secondPeriodRadioButton": {
+                        "name": "schedule",
+                        "value": "14:00 〜 16:00",
+                        "type": "radio"
+                    }
+                },
+                "secondPeriodLabel": {
+                    "text": "14:00 〜 16:00"
+                }
+            },
+            "scheduleThirdRow": {
+                "blank3": {},
+                "thirdPeriodRadioButtonWrap": {
+                    "thirdPeriodRadioButton": {
+                        "name": "schedule",
+                        "value": "16:30 〜 18:30",
+                        "type": "radio"
+                    }
+                },
+                "thirdPeriodLabel": {
+                    "text": "16:30 〜 18:30"
+                }
+            },
+            "scheduleFourthRow": {
+                "blank4": {},
+                "fourthPeriodRadioButtonWrap": {
+                    "fourthPeriodRadioButton": {
+                        "name": "schedule",
+                        "value": "19:00 〜 21:00",
+                        "type": "radio"
+                    }
+                },
+                "fourthPeriodLabel": {
+                    "text": "19:00 〜 21:00"
+                }
+            },
+            "scheduleFourthHalfRow": {
+                "blank5": {},
+                "fourthHalfPeriodRadioButtonWrap": {
+                    "fourthHalfPeriodRadioButton": {
+                        "name": "schedule",
+                        "value": "19:30 〜 21:30",
+                        "type": "radio"
+                    }
+                },
+                "fourthHalfPeriodLabel": {
+                    "text": "19:30 〜 21:30"
+                }
+            }
+        },
+        "subInfo": {
+            "subInfoFirstRow": {
+                "subInfoHead": {
+                    "text": "予備情報"
+                }
+            },
+            "subInfoSecondRow": {
+                "dayOfWeekHead": {
+                    "text": "可能曜日"
+                },
+                "mondayCheckBoxWrap": {
+                    "mondayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "月",
+                        "type": "checkbox"
+                    }
+                },
+                "mondayLabel": {
+                    "text": "月"
+                },
+                "tuesdayCheckBoxWrap": {
+                    "tuesdayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "火",
+                        "type": "checkbox"
+                    }
+                },
+                "tuesdayLabel": {
+                    "text": "火"
+                },
+                "wednesdayCheckBoxWrap": {
+                    "wednesdayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "水",
+                        "type": "checkbox"
+                    }
+                },
+                "wednesdayLabel": {
+                    "text": "水"
+                },
+                "thirsdayCheckBoxWrap": {
+                    "thirsthdayCheckBox": {
+                        "name": "dayOfWeek",
+                        "value": "木",
+                        "type": "checkbox"
+                    }
+                },
+                "thirsdayLabel": {
+                    "text": "木"
+                }
+            },
+            "subInfoThirdRow": {
+                "blank6": {},
+                "fridayCheckBoxWrap": {
+                    "fridayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "金",
+                        "type": "checkbox"
+                    }
+                },
+                "fridayLabel": {
+                    "text": "金"
+                },
+                "saturdayCheckBoxWrap": {
+                    "saturdayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "土",
+                        "type": "checkbox"
+                    }
+                },
+                "saturdayLabel": {
+                    "text": "土"
+                },
+                "sundayCheckBoxWrap": {
+                    "sundayCheckbox": {
+                        "name": "dayOfWeek",
+                        "value": "日",
+                        "type": "checkbox"
+                    }
+                },
+                "sundayLabel": {
+                    "text": "日"
+                }
+            },
+            "subInfoFourthRow": {
+                "weekHead": {
+                    "text": "可能週"
+                },
+                "firstWeekCheckBoxWrap": {
+                    "firstWeekCheckbox": {
+                        "name": "week",
+                        "value": "1週",
+                        "type": "checkbox"
+                    }
+                },
+                "firstWeekCheckBoxLabel": {
+                    "text": "1週"
+                },
+                "secondWeekCheckBoxWrap": {
+                    "secondWeekCheckbox": {
+                        "name": "week",
+                        "value": "2週",
+                        "type": "checkbox"
+                    }
+                },
+                "secondWeekCheckBoxLabel": {
+                    "text": "2週"
+                },
+                "thirdWeekCheckBoxWrap": {
+                    "thirdWeekCheckbox": {
+                        "name": "week",
+                        "value": "3週",
+                        "type": "checkbox"
+                    }
+                },
+                "thirdWeekCheckBoxLabel": {
+                    "text": "3週"
+                },
+                "fourthWeekCheckBoxWrap": {
+                    "fourthWeekCheckbox": {
+                        "name": "week",
+                        "value": "4週",
+                        "type": "checkbox"
+                    }
+                },
+                "fourthWeekCheckBoxLabel": {
+                    "text": "4週"
+                }
+            }
+        }
+    },
+    "specialReservedConfirmDialog": {
+        "confirmNotice": {
+            "text": "以下の内容で予約希望を承ります。"
+        },
+        "specialConfirmSummary": {
+            "selectedDate": {
+                "dateLabel": {
+                    "text": "予約希望日時"
+                },
+                "dateValue": {}
+            },
+            "selectedConstruct": {
+                "constructLabel": {
+                    "text": "希望作品"
+                },
+                "constructValue": {}
+            },
+            "selectedSchedule": {
+                "scheduleLabel": {
+                    "text": "希望時限"
+                },
+                "scheduleValue": {}
+            },
+            "subWeekOfDay": {
+                "subWeekOfDayLabel": {
+                    "text": "予備希望曜日"
+                },
+                "subWeekOfDayValue": {}
+            },
+            "subWeek": {
+                "subWeekLabel": {
+                    "text": "予備希望週"
+                },
+                "subWeekValue": {}
+            }
+        }
+    }
+}

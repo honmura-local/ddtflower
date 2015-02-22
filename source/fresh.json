@@ -1,14 +1,13 @@
-<<<<<<< HEAD
 {
 	"pageTitle":{
 		"image"		:{
-			"src"	:	["icon(leaf100)"]
+			"src"	:	"image/icon(leaf100).png"
 		},
 		"title"		: {
-			"text"	:	["生花フラワーアレンジメントコース"]
+			"text"	:	"生花フラワーアレンジメントコース"
 		},
 		"summary"	: {
-			"text"	:	["生花に触れる事により四季を感じ、そして草木の生命を敏感に感じるとる感性が育まれます。また、瑞々しいフレッシュな質感、香りそして豊富な花の種類は何といっても生花の魅力です。近くのお花屋さんで手軽に花材をそろえてお友達にプレゼント！なんて事もできてポイント高いですね。"]
+			"text"	:	"生花に触れる事により四季を感じ、そして草木の生命を敏感に感じるとる感性が育まれます。また、瑞々しいフレッシュな質感、香りそして豊富な花の種類は何といっても生花の魅力です。近くのお花屋さんで手軽に花材をそろえてお友達にプレゼント！なんて事もできてポイント高いですね。"
 		}
 	},
 
@@ -18,72 +17,128 @@
 		},
 		"firstStage":{
 			"stage":{
-				"text"	:	["1stステージ"]
-=======
-[
-	{
-		"class"	:"pageTitle",
-		"array":[
-			{
-				"class":"image",
-				"src":["icon(leaf100)"]
->>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
+				"text"	:	"1stステージ"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"全12回"
 			},
 			"price":{
-				"text"	:	["4,200 円／回"]
+				"text"	:	"4,200 円／回"
 			}
-<<<<<<< HEAD
 		},
 		"secondStage":{
 			"stage":{
-				"text"	:	["2stステージ"]
+				"text"	:	"2ndステージ"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"全12回"
 			},
 			"price":{
-				"text"	:	["5,000 円／回"]
+				"text"	:	"5,000 円／回"
 			}
 		},
 		"thirdStage":{
 			"stage":{
-				"text"	:	["3stステージ"]
+				"text"	:	"3rdステージ"
 			},
 			"times":{
-				"text"	:	["全12回"]
+				"text"	:	"全12回"
 			},
 			"price":{
-				"text"	:	["6,000 円／回"]
-=======
-		]
-	},
-	{
-		"class":"courseGuide",
-		"array":[
-			{
-				"class":"summary",
-				"text":["コース案内"]
-			},
-			{
-			"array":[
-					{
-						"class":"firstStage",
-						"text":["1stステージ", "全12回", "4,200 円／回"]
-					},
-					{
-						"class":"secondStage",
-						"text":["2ndステージ", "全12回", "5,000 円／回"]
-					},
-					{
-						"class":"thirdStage",
-						"text":["3rdステージ", "全12回", "6,000 円／回"]
-					}
-				]
->>>>>>> f44d63198ce83dbfada2e53b43d938ca07d7f2d6
+				"text"	:	"6,000 円／回"
 			}
 		}
-	}
+	},
+    "footGallery": {
+        "1stDiv": {
+            "1stArt": {
+                "href": "image/1.JPG",
+                "rel": "gallery",
+                "1stImage": {
+                    "src": "image/1.JPG"
+                }
+            }
+        },
+        "2ndDiv": {
+            "2ndArt": {
+                "href": "image/2.JPG",
+                "rel": "gallery",
+                "2ndImage": {
+                    "src": "image/2.JPG"
+                }
+            }
+        },
+        "3rdDiv": {
+            "3rdArt": {
+                "href": "image/3.JPG",
+                "rel": "gallery",
+                "3rdImage": {
+                    "src": "image/3.JPG"
+                }
+            }
+        },
+        "4thDiv": {
+            "4thArt": {
+                "href": "image/4.JPG",
+                "rel": "gallery",
+                "4thImage": {
+                    "src": "image/4.JPG"
+                }
+            }
+        },
+        "5thDiv": {
+            "5thArt": {
+                "href": "image/5.JPG",
+                "rel": "gallery",
+                "5thImage": {
+                    "src": "image/5.JPG"
+                }
+            }
+        },
+        "6thDiv": {
+            "6thArt": {
+                "href": "image/6.JPG",
+                "rel": "gallery",
+                "6thImage": {
+                    "src": "image/6.JPG"
+                }
+            }
+        },
+        "7thDiv": {
+            "7thArt": {
+                "href": "image/7.JPG",
+                "rel": "gallery",
+                "7thImage": {
+                    "src": "image/7.JPG"
+                }
+            }
+        },
+        "8thDiv": {
+            "8thArt": {
+                "href": "image/8.JPG",
+                "rel": "gallery",
+                "8thImage": {
+                    "src": "image/8.JPG"
+                }
+            }
+        },
+        "9thDiv": {
+            "9thArt": {
+                "href": "image/9.JPG",
+                "rel": "gallery",
+                "9thImage": {
+                    "src": "image/9.JPG"
+                }
+            }
+        },
+        "10thDiv": {
+            "10thArt": {
+                "href": "image/10.JPG",
+                "rel": "gallery",
+                "10thImage": {
+                    "src": "image/10.JPG"
+                }
+            }
+        }
+    }
 }
