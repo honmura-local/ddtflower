@@ -23,8 +23,15 @@ function fixXCoordinateOnScroll(fixedElem){
  * 返却値 :なし
  * 作成者:T.M
  * 作成日:2015.02.09
+ * 変更者:T.M
+ * 変更日:2015.02.22
+ * 内容　:ウィンドウのリサイズイベントに変更しました。
 */
 function fixYCoordinate(upperElem, lowerElem){
-	// upperElemの高さをlowerElemの上marginに設定する。
-	$(lowerElem).css('margin-top', $(upperElem).height());
+	// リサイズイベントを登録する。
+	// スマホレイアウト時はメディアクエリーにより、ここで設定されるmarginが無視されます。
+	$(window).resize(function(){
+		// upperElemの高さをlowerElemの上marginに設定する。
+		$(lowerElem).css('margin-top', $(upperElem).height());
+	});
 }

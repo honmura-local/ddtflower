@@ -1,0 +1,143 @@
+{
+    "pageTitle": {
+        "image": {
+            "src": "image/icon(leaf2).png"
+        },
+        "title": {
+            "text": "FC（フランチャイズ・ライセンス）資格取得コース"
+        },
+        "summary": {
+            "text": "大好きなお花で生活したい。本校のフランチャイズ制度はそんなあなたの夢に実現をサポートします。自宅から開業できるので初期投資はほとんど不要です。"
+        }
+    },
+    "courseGuide": {
+        "summary": {
+            "text": "コース案内"
+        },
+        "firstStage": {
+            "stage": {
+                "text": "1stステージ"
+            },
+            "times": {
+                "text": "全16単位"
+            },
+            "price": {
+                "text": "6,000 円／回"
+            }
+        },
+        "secondStage": {
+            "stage": {
+                "text": "2ndステージ"
+            },
+            "times": {
+                "text": "全16単位"
+            },
+            "price": {
+                "text": "7,000 円／回"
+            }
+        },
+        "thirdStage": {
+            "stage": {
+                "text": "教育実習"
+            },
+            "times": {
+                "text": "全48単位"
+            },
+            "price": {
+                "text": "500円／回"
+            }
+        }
+    },
+    "footGallery": {
+        "1stDiv": {
+            "1stArt": {
+                "href": "image/1.JPG",
+                "rel": "gallery",
+                "1stImage": {
+                    "src": "image/1.JPG"
+                }
+            }
+        },
+        "2ndDiv": {
+            "2ndArt": {
+                "href": "image/2.JPG",
+                "rel": "gallery",
+                "2ndImage": {
+                    "src": "image/2.JPG"
+                }
+            }
+        },
+        "3rdDiv": {
+            "3rdArt": {
+                "href": "image/3.JPG",
+                "rel": "gallery",
+                "3rdImage": {
+                    "src": "image/3.JPG"
+                }
+            }
+        },
+        "4thDiv": {
+            "4thArt": {
+                "href": "image/4.JPG",
+                "rel": "gallery",
+                "4thImage": {
+                    "src": "image/4.JPG"
+                }
+            }
+        },
+        "5thDiv": {
+            "5thArt": {
+                "href": "image/5.JPG",
+                "rel": "gallery",
+                "5thImage": {
+                    "src": "image/5.JPG"
+                }
+            }
+        },
+        "6thDiv": {
+            "6thArt": {
+                "href": "image/6.JPG",
+                "rel": "gallery",
+                "6thImage": {
+                    "src": "image/6.JPG"
+                }
+            }
+        },
+        "7thDiv": {
+            "7thArt": {
+                "href": "image/7.JPG",
+                "rel": "gallery",
+                "7thImage": {
+                    "src": "image/7.JPG"
+                }
+            }
+        },
+        "8thDiv": {
+            "8thArt": {
+                "href": "image/8.JPG",
+                "rel": "gallery",
+                "8thImage": {
+                    "src": "image/8.JPG"
+                }
+            }
+        },
+        "9thDiv": {
+            "9thArt": {
+                "href": "image/9.JPG",
+                "rel": "gallery",
+                "9thImage": {
+                    "src": "image/9.JPG"
+                }
+            }
+        },
+        "10thDiv": {
+            "10thArt": {
+                "href": "image/10.JPG",
+                "rel": "gallery",
+                "10thImage": {
+                    "src": "image/10.JPG"
+                }
+            }
+        }
+    }
+}

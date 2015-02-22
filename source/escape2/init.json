@@ -1,5 +1,0 @@
-{
-    "sendReservedPhp": "php/sendreserved.php",
-    "jsonDirectory": "source/",
-    "jsonIdentifier": "json"
-}

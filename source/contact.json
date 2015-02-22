@@ -13,7 +13,7 @@
     "contactForm":{
         "action":"postmail/postmail.cgi",
         "method": "post",
-        "formBody":{
+        "formBody.cf":{
             "name":{
                 "formContent":{
                     "text":"氏名"

@@ -97,7 +97,7 @@ function createSpecialReservedDialog(json, array){
 	// 生成したdivタグをjQuery UIのダイアログにする。
 	$('.specialReservedDialog').dialog({
 		// 幅を設定する。
-		width			: '320px',
+		width			: '300px',
 		// 予約ダイアログのクラスを追加する。
 		dialogClass		:'reservedDialog',
 		// ダイアログを生成と同時に開く。
@@ -290,7 +290,7 @@ function createSpecialReservedConfirmDialog(reservedData){
 	// 生成したdivタグをjQuery UIのダイアログにする。
 	$('.specialReservedConfirmDialog').dialog({
 		// 幅を設定する。
-		width			: '320px',
+		width			: '300px',
 		// 予約ダイアログのクラスを追加する。
 		dialogClass		:'reservedDialog',
 		// ダイアログを生成と同時に開く。

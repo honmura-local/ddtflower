@@ -921,8 +921,8 @@ footer{
 }
 
 /* 
- * セレクタ:.specialReservedDialog
- * 概要   :お花の予約ダイアログ。
+ * セレクタ:.specialReservedDialog table th
+ * 概要   :お花の予約ダイアログの見出しセル。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.06
  */
@@ -1221,10 +1221,12 @@ footer{
  * 概要   :特徴についてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を削除しました。
  */
 .commonText {
 	margin: 30px 0;	/* 上下に30px余白をとる */
-    width: 55%;   	/* 幅を70%にする */
     clear: left;    /* 左側の回り込みをなくす */
 }
 
@@ -1248,9 +1250,13 @@ footer{
  * 概要   :リスト項目ついてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を追加しました。
  */
 .courseGuide, .commonText, .memberRule {
-	margin-left: 20px;
+	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
+    width: 780px;    	/* 幅を780pxにする */
 }
 
 /* 
@@ -1258,9 +1264,11 @@ footer{
  * 概要   :特徴についてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を削除しました。
  */
 .salesPoint {
-    width: 100%;    /* 幅を100%にする */
     margin: 30px 0 30px 20px; /* 上下に30pxの余白をとる */
 }
 
@@ -1271,7 +1279,6 @@ footer{
  * 作成日 :2015.02.09
  */
 .memberRule {
-    width: 100%;            /* 幅を100%にする */
     margin-bottom: 50px;    /* 余白を下に50pxにする */
 }
 
@@ -1290,13 +1297,6 @@ footer{
     margin: 40px 0px;     /* 上下に40pxの余白を空ける */
     float: left;            /* 左側に回り込む */
 }
-
-/* 
- * セレクタ:.specialGuide .summary
- * 概要   :体験レッスン案内テーブルについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
 
 /* 
  * セレクタ:.specialGuide th, .specialGuide td
@@ -1524,8 +1524,6 @@ footer{
 .baseMap {
 	width: 100%;		/* 幅を外枠に合わせる。 */
 	height: 400px;		/* 高さを指定する。 */
-	
-
 }
 
 /* 
@@ -1574,7 +1572,8 @@ footer{
 
 /* ここまでアクセスページ */
 
-}/* PC用のスタイルの記述終わり */
+/* PC用のスタイルの記述終わり */
+}
 
 /* スマホ用cssの始まり */
 /* 画面のサイズが649px以下の時のスタイルシート */
@@ -1622,17 +1621,20 @@ footer{
      * セレクタ   :.pageTitle .title
      * 概要    :スマホ用タイトル部分h1のスタイル
      * 作成者  :T.Yamamoto
-     * 作成日  :2015.02.16
+     * 作成日  :2015.02.22
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
      */
     .pageTitle .title {
         font-weight: bold;  /* 文字を太くする */
         font-size: 16px;    /* フォントサイズ18pxにする */
         padding: 10px 0;    /* 要素の幅を10px広げる */
-        margin-bottom: 10px;/* 10px底に余白をとる */
         text-align: center; /* 中央揃えにする */
-		width: 60%;
-		float: left;
-		margin-top: 20px;
+		width: 75%;			/* 幅を可変にする。 */
+		float: left;		/* 左に寄せる。 */
+		margin-top: 2%;		/* 可変のmarginを挿入する。 */
+		margin-right: 5%;	/* 画面右端との間に適切なmarginを取る。 */
     }
 
     /* 
@@ -1640,14 +1642,16 @@ footer{
      * 概要   :スマホ用コンテンツのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
      */
     .pageTitle img {
         display: inline-block;  /* ブロック要素として並べる */
         float: left;            /* 左側に回り込みする */
-        margin-right: 15px;     /* 右に15px余白をとる */
-        width: 80px;            /* 幅を80pxにする */
-        height: 80px;           /* 高さを80pxにする */
-        margin-bottom: 30px;
+        width: 15%;            /* 幅を可変にする */
+        height: auto;          /* 高さを自動調整する */
+        margin: 0 4% 30px 1%;	/* 上以外にmarginを配置する。 */
     }
 
     /* 
@@ -1655,11 +1659,16 @@ footer{
      * 概要  :スマホ用コンテンツのスタイル
      * 作成者:T.Yamamoto
      * 作成日:2015.02.16
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
      */
     .pageTitle .summary{
         display: inline-block;  /* ブロック要素として並べる */
         text-indent: 1em;       /* 改行したときにインデントをとる */
-        width:60%;              /* 幅を67%にする */
+		width: 75%;			/* 幅を可変にする。 */
+		margin-top: 2%;		/* 可変のmarginを挿入する。 */
+		margin-right: 5%;	/* 画面右端との間に適切なmarginを取る。 */
         font-size: 11px;        /* フォントのサイズを12pxにする */
         line-height: 1.4;       /* 行の高さを1.4行分にする */
         margin-bottom: 20px;    /* 下方向に余白を20pxとる */
@@ -1700,11 +1709,15 @@ footer{
      * 概要   :スマホ用コース案内テーブルのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :table-layoutを記述しました。
      */
     .courseGuide {
         width: 93%;            /* 幅を60pxにする */
         height: auto;          /* 高さを自動にする */
         margin-bottom: 20px;   /* 20px下に余白を空ける */
+        table-layout: fixed;	/* セルの幅を均等に割る。 */
     }
 
     /* 
@@ -1712,11 +1725,14 @@ footer{
      * 概要   :スマホ用コース案内テーブルのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :margin、text-alignを変更しました。
      */
     .courseGuide .summary, .lessonSchedule .summary{
-        font-size: 14px;        /* フォントサイズを15pxにする */
-        text-align: left;       /* 左寄りにする */
-        margin: 0 0 5px 20px;  　/* 下に10pxの余白を空ける */
+        font-size: 14px;     /* フォントサイズを15pxにする */
+        text-align: center;  /* 中央寄せにする */
+        margin: 0 0 20px;  　/* 下に10pxの余白を空ける */
     }
 
     /* 
@@ -1724,12 +1740,14 @@ footer{
      * 概要   :スマホ用コンテンツのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :displayを削除しました。
      */
     .courseGuide th, .courseGuide td{
         padding: 15px 0;        /* 要素の幅を横に15px広げる */
         font-size:12px;         /* フォントサイズを12pxにする */
         margin-left: 35px;      /* 左から35px余白をとる */
-        display: inline-block;  /* ブロック要素にして並べる */
         text-align: center;     /* 中央揃えにする */
     }
 
@@ -1738,10 +1756,13 @@ footer{
      * 概要   :スマホ用レッスンスケジュールテーブルのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :margin、幅を変更しました。
      */
     .lessonSchedule {
-        width: 94%;            /* 幅を94%にする */
-        margin-bottom: 10px;   /* 下に10pxの余白を空ける */
+        width: 90%;            /* 幅を90%にする */
+		margin: 0 5% 10px;		/* 適切なmarginを取る。 */
     }
 
     /* 
@@ -1835,11 +1856,11 @@ footer{
      * 作成日 :2015.02.16
      * 変更者 :T.Masuda
      * 変更日 :2015.02.21
-     * 作成日 :2015.02.21
+     * 内容　 :margin、幅を変更しました。
      */
     .commonText, .salesPoint, .memberRule {
-        width: 90%;            /* 幅を95%にする */
-        margin: 15px 5px;     /* 上に余白を10px、横に5%とる */
+        width: 90%;            /* 幅を90%にする */
+        margin: 15px 5%;     /* 上に余白を10px、横に5%とる */
         line-height: 1.5;      /* 1行の高さを1.5行分にする */
         padding-left: 1em;     /* インデントを一つとる */
         text-indent: -.5em;     /* 改行したときにインデントをとる */
@@ -1905,7 +1926,7 @@ footer{
 	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
 	text-indent: -80px;	/* 1行目を左にずらす。 */
 	display: block;		/* ブロックとして扱う */
-	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
+	margin-left: 28%;	/* 左marginを可変にする。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
 	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
 	font-size: 14px;	/* フォントサイズを設定する。 */
@@ -1925,7 +1946,7 @@ footer{
 	display: block;				/* blockとして扱う */
 	font-size: 12px;			/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
 	margin-left: 15px;			/* 左にmarginを挿入する。 */
-	width: 50%;					/* 幅を画面の50%に指定する。 */
+	width: 45%;					/* 幅を画面の45%に指定する。 */
 }
 /* 
  * セレクタ:.formRuby
@@ -2037,7 +2058,6 @@ footer{
 	clear: both;			/* 回り込みをなくす */
 	padding-left: 5%;		/* 左に間隔を取る */
 }	
-}
 /* 
  * セレクタ:.accessInfo > span
  * 概要   :アクセス情報の項目。
@@ -2580,6 +2600,38 @@ footer{
     box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4); /* トップメニュー下に陰影をつける。 */
     position: relative;	/* 重なりを上にするためにこの設定をする */
     z-index: 1;			/* 重なりを上にする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedDialog
+ * 概要   :お花の予約ダイアログ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.22
+ */
+.specialReservedDialog{
+    font-size: 14px;	/* 小さめのフォントを指定する。 */
+    text-align: left;	/* 文字を左に寄せる。 */
+}
+
+/* 
+ * セレクタ:.specialReservedDialog > *
+ * 概要   :お花の予約ダイアログの各項目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.22
+ */
+.specialReservedDialog > *{
+    margin-bottom: 5px;	/* 最低限の間隔を空ける。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog
+ * 概要   :お花の予約の確認ダイアログ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.22
+ */
+.specialReservedConfirmDialog{
+    font-size: 14px;
+    text-align: left;
 }
 
 }/* スマホ用のcssの終わり */
