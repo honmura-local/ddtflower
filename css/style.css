@@ -31,7 +31,9 @@ time, mark, audio, video {
     outline:0;
     vertical-align:baseline;
     background:transparent;
-}
+	/* iPhone Safariの文字サイズが自動調整される仕様への対策 */
+	-webkit-text-size-adjust: 100%;
+	}
 
 body {
     line-height:1;
@@ -153,7 +155,7 @@ body{
     background: white;  /* 背景色を白にする。 */
 }
 /* 幅が651px以上のときのスタイル */
-@media only screen and (min-width: 651px) {
+@media only screen and (min-width: 681px) {
 
 /* 
  * セレクタ:#container
@@ -1165,7 +1167,7 @@ footer{
  */
 .courseGuide {
     margin: 20px 0;   /* 上から20px余白を空ける */
-    width:  55%;        /* コース案内テーブル全体の幅を70%にする */
+    width: 780px;    	/* 幅を780pxにする */
     float: left;        /* 左回りに回り込みできるようにする */
 }
 
@@ -1243,6 +1245,7 @@ footer{
     font-family: sans-serif;	/* fontをsans-serifにする */
     padding-left: 1em;	   		/* インデントを一つとる */
     text-indent: -1em;  	  	/* 改行したときにインデントをとる */
+    width: 50%;    				/* 幅を50%にする */
 }
 
 /* 
@@ -1256,7 +1259,6 @@ footer{
  */
 .courseGuide, .commonText, .memberRule {
 	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
-    width: 780px;    	/* 幅を780pxにする */
 }
 
 /* 
@@ -1280,6 +1282,7 @@ footer{
  */
 .memberRule {
     margin-bottom: 50px;    /* 余白を下に50pxにする */
+    width: 780px;    	/* 幅を780pxにする */
 }
 
 /* 
@@ -1339,7 +1342,7 @@ footer{
 .calendar {
     margin-top: 80px;   /* 上から80px余白を空ける */
     width: 45%;         /* 幅を47%にする */
-    height: 300px
+    height: 300px;
     font-size: 14px;    /* 文字サイズを20pxにする */
     float: right;       /* 右側に回り込む */
 }
@@ -1577,7 +1580,7 @@ footer{
 
 /* スマホ用cssの始まり */
 /* 画面のサイズが649px以下の時のスタイルシート */
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 680px) {
     
     /* 
      * セレクタ:#container
@@ -1645,13 +1648,16 @@ footer{
      * 変更者  :T.Masuda
      * 変更日  :2015.02.22
      * 内容　  :幅とmarginを変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.23
+     * 内容　  :marginを変更。
      */
     .pageTitle img {
         display: inline-block;  /* ブロック要素として並べる */
         float: left;            /* 左側に回り込みする */
         width: 15%;            /* 幅を可変にする */
         height: auto;          /* 高さを自動調整する */
-        margin: 0 4% 30px 1%;	/* 上以外にmarginを配置する。 */
+        margin: 0 4% 0px 1%;	/* 左右にmarginを配置する。 */
     }
 
     /* 
@@ -1662,16 +1668,17 @@ footer{
      * 変更者  :T.Masuda
      * 変更日  :2015.02.22
      * 内容　  :幅とmarginを変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.23
+     * 内容　  :幅を変更。
      */
     .pageTitle .summary{
         display: inline-block;  /* ブロック要素として並べる */
         text-indent: 1em;       /* 改行したときにインデントをとる */
-		width: 75%;			/* 幅を可変にする。 */
-		margin-top: 2%;		/* 可変のmarginを挿入する。 */
-		margin-right: 5%;	/* 画面右端との間に適切なmarginを取る。 */
+		width: 65%;			/* 幅を可変にする。 */
         font-size: 11px;        /* フォントのサイズを12pxにする */
         line-height: 1.4;       /* 行の高さを1.4行分にする */
-        margin-bottom: 20px;    /* 下方向に余白を20pxとる */
+        margin: -0% 5% 20px 19%;	/* 全方向にmarginを挿入する。 */
     }
 
     /* 
@@ -1842,11 +1849,23 @@ footer{
      * 概要   :スマホ用カレンダーのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.23
+     * 内容 　:無駄なスタイルを削除しました。
      */
      .calendar {
-        margin-left: 10%;  /* 左から40px余白をとる */
         font-size: 12.5px;  /* 文字サイズを12.5pxにする */
-        text-align: center;
+     }
+
+    /* 
+     * セレクタ:.calendar
+     * 概要   :スマホ用カレンダー本体のスタイル
+     * 作成者 :T.Masuda
+     * 作成日 :2015.02.23
+     */
+     .calendar > div{
+	     display: block;	/* ブロック要素として表示する。 */
+	     margin: 0 auto;	/* 中央に寄せる。 */
      }
 
     /* 
@@ -2172,10 +2191,14 @@ footer{
  * 概要   :電話窓口のガイド。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.23
+ * 内容　 :左のmarginを消し、幅を増やしました。
  */
 .gideTel{
     height: inherit;    /* 高さを継承する。 */
-    width: 150px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
+    width: 177px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
+    margin-left: 0;     /* 画像の空白部分で余白は十分なので、左marginを消す。 */
 }
 
 /* 
@@ -2217,9 +2240,12 @@ footer{
  * 概要   :.gide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.23
+ * 内容　 :フォントサイズを大きく変更しました。
  */
 .gideTel .p2{
-    font-size: 13px;    /* フォントサイズを指定する。 */
+    font-size: 15px;    /* フォントサイズを指定する。 */
     color:  limegreen;  /* 淡い緑のフォントにする。 */
     margin: 3px 0;      /* 上下に適正な間隔を空ける。 */
 }
@@ -2408,9 +2434,12 @@ footer{
  * 変更者 :T.Masuda
  * 変更日 :2015.02.19
  * 内容   :ログイン名表示のため幅を調整しました。50px → 100px
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.23
+ * 内容   :iPhone用レイアウトのため幅を狭めました。
  */
 .gideLogin{
-    width: 100px;        	/* 幅を100pxに設定する。 */
+    width: 50px;        	/* 幅を50pxに設定する。 */
     height: inherit;   		 /* 高さをガイド領域から継承する。 */
     vertical-align: top;	/* 水平位置を上に合わせる。 */
 }
@@ -2446,6 +2475,7 @@ footer{
  */
 .gideLogin .userName{
     display: block; /* ブロック要素となる。 */
+	width: 75px;
 }
 
 /* トップメニュー領域 */
@@ -2454,12 +2484,15 @@ footer{
  * 概要   :ヘッダー領域内のトップメニュー。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 作成日 :2015.02.23
+ * 内容 　:フォントサイズ、padding、幅を変更しました。
  */
 .topMenu{
     width       :   100%;      /* 幅を画面にあわせる。 */
     height      :   auto;       /* 内容により高さを変動させる。 */
     margin      : 0 auto;       /* 中央に揃える。 */
     font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
+    text-align:     center;     /* 文字を中心に寄せる。 */
 }
 
 /* 
@@ -2467,16 +2500,19 @@ footer{
  * 概要   :トップメニューのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.23
+ * 内容 　:フォントサイズ、padding、幅を変更しました。
  */
 .topMenu li{
-    width:          100px;          /* 固定幅にして、幅が足りなくなれば改行するようにする。 */
+    width:          auto;          /* 幅を文字のサイズに合わせる。 */
     height:         100%;           /* 外枠に高さを合わせる。 */
     display:        inline-block;   /* インラインブロック表示にする。 */
-    font-size:      14px;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
+    font-size:      13px;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
     box-sizing:     border-box;     /* 自身の幅をpadding、border込みで計算する。 */
     text-align:     center;         /* 文字を中心に寄せる。 */
     vertical-align: middle;         /* 文字の位置を中心に揃える。 */
-    padding: 5px 0px;				/* 上下にpaddingを設定する。 */
+    padding: 5px 1em;				/* 上下にpaddingを設定する。左右にも1文字分のpaddingを入れる。 */
 }
 
 /* 
@@ -2509,7 +2545,7 @@ footer{
  * 作成日 :2015.02.05
  */
 .topMenu li p{
-    font-size:  16px;   		/* 妥当なフォントサイズを指定する。 */
+    font-size:  13px;   		/* 妥当なフォントサイズを指定する。 */
     display:    inline-block;   /* インラインブロック表示を行う。 */
     padding: 5px auto;			/* ボタンを小さくする。 */
 }
