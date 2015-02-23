@@ -129,12 +129,12 @@ input, select {
     *zoom: 1;
 }
 
-a:hover {
-    opacity: 0.5;
-}
 /* ここまでclearfix */
 
 /* 各タグの基本設定 */
+a:hover {
+    opacity: 0.5;
+}
 /* 
  * セレクタ:h1,h2,h3,h4,h5
  * 概要   :見出した具
@@ -154,6 +154,17 @@ h1,h2,h3,h4,h5,th{
 body{
     background: white;  /* 背景色を白にする。 */
 }
+/* 
+ * セレクタ:.gide_f_a_school p
+ * 概要   :f_a_schoolのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.23
+ */
+.gideFASchool p{
+	text-decoration	: none;	/* リンクの下線を消す。 */
+	color			: #000;
+}
+
 /* 幅が651px以上のときのスタイル */
 @media only screen and (min-width: 681px) {
 
@@ -1166,8 +1177,8 @@ footer{
  * 作成日 :2015.02.09
  */
 .courseGuide {
-    margin: 20px 0;   /* 上から20px余白を空ける */
-    width: 780px;    	/* 幅を780pxにする */
+    margin: 20px 0;  	 /* 上から20px余白を空ける */
+    width: 50%;    		/* 幅を50%にする */
     float: left;        /* 左回りに回り込みできるようにする */
 }
 
@@ -1253,9 +1264,6 @@ footer{
  * 概要   :リスト項目ついてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.22
- * 内容　 :幅の記述を追加しました。
  */
 .courseGuide, .commonText, .memberRule {
 	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
@@ -1882,7 +1890,7 @@ footer{
         margin: 15px 5%;     /* 上に余白を10px、横に5%とる */
         line-height: 1.5;      /* 1行の高さを1.5行分にする */
         padding-left: 1em;     /* インデントを一つとる */
-        text-indent: -.5em;     /* 改行したときにインデントをとる */
+        text-indent: -1.0em;     /* 改行したときにインデントをとる */
     }
 
     /* 
