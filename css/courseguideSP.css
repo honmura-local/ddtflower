@@ -1,1 +1,230 @@
 @CHARSET "UTF-8";
+
+	/* 
+	 * セレクタ:.pageTitle
+	 * 概要   :タイトル領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 */
+	.pageTitle{
+	    width: 100%;           /* 可変幅に設定する。 */
+	}
+
+    /* 
+     * セレクタ:.pageTitle img
+     * 概要   :スマホ用コンテンツのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.23
+     * 内容　  :marginを変更。
+     */
+    .pageTitle img {
+        width: 15%;            /* 幅を可変にする */
+        height: auto;          /* 高さを自動調整する */
+        margin: 0 4% 0px 1%;	/* 左右にmarginを配置する。 */
+    }
+
+    /* 
+     * セレクタ   :.pageTitle .title
+     * 概要    :スマホ用タイトル部分h1のスタイル
+     * 作成者  :T.Yamamoto
+     * 作成日  :2015.02.22
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.24
+     * 内容　  :paddingを変更。
+     */
+    .pageTitle .title {
+        font-weight: bold;  /* 文字を太くする */
+        font-size: 16px;    /* フォントサイズ18pxにする */
+        padding: 1% 0 5px;  /* 上下にpaddingを挿入する。 */
+		width: 65%;			/* 幅を可変にする。 */
+		float: none;		/* floatを解除する。 */
+		margin: 2% auto 0;	/* 可変のmarginを挿入する。加えて中央に寄せる。 */
+		display: block;		/* ブロック要素にして中心寄せを有効にする。 */
+    }
+
+    /* 
+     * セレクタ:.pageTitle .summary
+     * 概要  :スマホ用コンテンツのスタイル
+     * 作成者:T.Yamamoto
+     * 作成日:2015.02.16
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.22
+     * 内容　  :幅とmarginを変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.23
+     * 内容　  :幅を変更。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.24
+     * 内容　  :ブロック要素に変更しました。。
+     */
+    .pageTitle .summary{
+		width: 65%;					/* 幅を可変にする。 */
+        font-size: 11px;       		/* フォントのサイズを12pxにする */
+        margin: 0 5% 0px 19%;		/* 左右にmarginを挿入する。 */
+   		display: block;  			/* ブロック要素にする */
+    }
+
+    /* 
+     * セレクタ:.courseGuide
+     * 概要   :スマホ用コース案内テーブルのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :table-layoutを記述しました。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :幅調整とfloatの解除を行いました。
+     */
+    .courseGuide {
+        width: 90%;            /* 幅を60pxにする */
+        height: auto;          /* 高さを自動にする */
+        margin-bottom: 20px;   /* 20px下に余白を空ける */
+        table-layout: fixed;	/* セルの幅を均等に割る。 */
+        float: none;			/* floatを解除する。 */
+    }
+
+    /* 
+     * セレクタ:.courseGuide th, .courseGuide td
+     * 概要   :スマホ用コンテンツのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :displayを削除しました。
+     */
+    .courseGuide th, .courseGuide td{
+        padding: 15px 0;        /* 要素の幅を横に15px広げる */
+        font-size:12px;         /* フォントサイズを12pxにする */
+        margin-left: 35px;      /* 左から35px余白をとる */
+        text-align: center;     /* 中央揃えにする */
+    }
+
+    /* 
+     * セレクタ:.courseGuide .summary, .lessonSchedule .summary
+     * 概要   :スマホ用コース案内テーブルのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :margin、text-alignを変更しました。
+     */
+    .courseGuide .summary, .lessonSchedule .summary{
+        font-size: 14px;     /* フォントサイズを15pxにする */
+        text-align: center;  /* 中央寄せにする */
+        margin: 0 0 20px;  　/* 下に20pxの余白を空ける */
+    }
+
+    /* 
+     * セレクタ:.lessonSchedule
+     * 概要   :スマホ用レッスンスケジュールテーブルのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.22
+     * 内容　 :margin、幅を変更しました。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :floatを解除しました。
+     */
+    .lessonSchedule {
+        width: 90%;            /* 幅を90%にする */
+		margin: 0 5% 10px;		/* 適切なmarginを取る。 */
+    	float: none;			/* 段組みレイアウトを解除する。 */
+    }
+
+    /* 
+     * セレクタ:.lessonSchedule th, .lessonSchedule td
+     * 概要   :スマホ用レッスンスケジュールテーブルの中身のスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     */
+    .lessonSchedule th, .lessonSchedule td{
+        width: 50%;         /* 幅を50%にする */
+        padding: 7px;       /* 要素の幅を7px広くする */
+        font-size:13px;     /* 文字サイズを13pxにする */  
+    }
+
+        /* 
+     * セレクタ:.commonText, .salesPoint, .memberRule
+     * 概要   :スマホ用リストのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.21
+     * 内容　 :margin、幅を変更しました。
+     */
+    .commonText, .salesPoint, .memberRule {
+        width: 90%;            /* 幅を90%にする */
+        margin: 15px 5%;     /* 上に余白を10px、横に5%とる */
+        line-height: 1.5;      /* 1行の高さを1.5行分にする */
+        padding-left: 1em;     /* インデントを一つとる */
+        text-indent: -1.0em;     /* 改行したときにインデントをとる */
+    }
+
+    /* 
+     * セレクタ:.commonText .summary, .salesPoint .summary, .memberRule .summary
+     * 概要   :スマホ用リストのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :text-alignを変更しました。
+     */
+    .commonText .summary, .salesPoint .summary, .memberRule .summary {
+        text-align: center;       /* 中央寄せにする */
+        font-size: 13px;        /* 文字サイズを14pxにする */
+    }
+
+    /* 
+     * セレクタ:.commonText td, .salesPoint td, .memberRule td
+     * 概要   :スマホ用リストのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     */
+    .commonText td, .salesPoint td, .memberRule td {
+        text-align: left;       /* 左寄りにする */
+        font-size: 11px;        /* 文字サイズを14pxにする */
+    }
+
+     /* 
+     * セレクタ:.footGallery
+     * 概要   :スマホ用写真ギャラリーのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.21
+     * 内容   :幅とmarginを調整。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容   :高さを指定しました。。
+     */
+    .footGallery {
+    	margin: 0 auto;		/* 中央に寄せる。 */
+        width: 80%;			/* 左右のボタンの幅を考慮した幅を設定する。 */
+        height: auto;		/* 高さを自動調整する。 */
+    }
+
+    /* 
+     * セレクタ:.footGallery img
+     * 概要   :スマホ用写真ギャラリーのスタイル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.21
+     * 内容   :幅とmarginを調整。
+     */
+    .footGallery img {
+		width: 95%;		/* 幅を少し小さめにする */
+		margin: 0 auto;	/* 中央に寄せる */
+    }
+
+    

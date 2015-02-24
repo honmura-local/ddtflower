@@ -35,3 +35,4 @@ function fixYCoordinate(upperElem, lowerElem){
 		$(lowerElem).css('margin-top', $(upperElem).height());
 	});
 }
+

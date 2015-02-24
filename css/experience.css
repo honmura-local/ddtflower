@@ -1,1 +1,89 @@
 @CHARSET "UTF-8";
+
+/* 体験レッスン */
+
+/* 
+ * セレクタ:.specialGuide
+ * 概要   :体験レッスン案内テーブルについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.21
+ * 内容  :余分なネガティブマージンを削除。
+ */
+.specialGuide {
+    width: 50%;             /* 幅を52%にする */
+    padding: 10px;          /* 10px要素の幅を広げる */
+    margin: 40px 0px;     /* 上下に40pxの余白を空ける */
+    float: left;            /* 左側に回り込む */
+}
+
+/* 
+ * セレクタ:.specialGuide th, .specialGuide td
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.specialGuide th, .specialGuide td {
+    padding: 10px;      /* 要素の幅を10px広げる */
+    font-size: 15px;    /* 文字サイズを15pxにするする */
+    text-align: left;   /* 文字を左寄りにする */
+}
+
+/* 
+ * セレクタ:.specialGuide th
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.specialGuide th {
+    width: 35%;         /* 幅を40%にする */
+}
+
+/* 
+ * セレクタ:.specialGuide td
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.specialGuide td {
+    width: 65%;         /* 幅を60%にする */
+}
+
+/* 
+ * セレクタ:.calendar
+ * 概要   :カレンダーについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.calendar {
+    margin: 80px 0 0;	/* 上のmarginを設定する。 */
+    width: 45%;         /* 幅を47%にする */
+    font-size: 14px;    /* 文字サイズを20pxにする */
+    float: right;       /* 右側に回り込む */
+}
+
+/* 
+ * セレクタ:.experienceGallery
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素。体験レッスンページ用
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.21
+ */
+.experienceGallery{
+    width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
+    height: 110px;      /* 高さを110pxに指定する。 */
+    margin: 0 auto;     /* 中央に寄せる。 */
+    clear: both;        /* 回り込みを無効にする */
+}
+
+/* 
+ * セレクタ:.experienceGallery img
+ * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.21
+ */
+.experienceGallery img{
+    height: auto;  /* 高さを自動にする */
+    width:  180px;  /* 幅を200pxにする */
+}
+

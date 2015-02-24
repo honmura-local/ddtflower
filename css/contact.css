@@ -1,1 +1,116 @@
 @CHARSET "UTF-8";
+
+/* 問い合わせページ */
+
+/* 
+ * セレクタ:.contactForm dl
+ * 概要   :入力項目のリスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm dl{
+	margin: 0 auto 0;	/* 外枠より横幅が狭ければ、中央に寄せる */
+	width: 550px;
+	display: block;		/* ブロックとして扱う */
+	position: relative;	/* 相対位置を取る */
+	clear: both;		/* 回り込みさせない */
+}
+
+/* 
+ * セレクタ:.contactForm dt
+ * 概要   :入力項目の見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm dt{
+	float: left;		/* 内容と共に左寄せで横に並べる */
+	clear: both;		/* 回り込みをさせない */
+	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
+	text-indent: -80px;	/* 1行目を左にずらす。 */
+	display: block;		/* ブロックとして扱う */
+	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
+	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
+	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
+	font-size: 14px;	/* フォントサイズを設定する。 */
+	font-weight: bold;	/* 太字にする */
+}
+
+/* 
+ * セレクタ:.contactForm dd
+ * 概要   :入力項目のinput要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm dd{
+	float: left;				/* 左に寄せる */
+	padding-left: 20px;			/* 線と内容との間に間隔を取る */
+	padding-bottom: 20px;		/* 下に15pxの間隔を空け、次の項目との間に隙間を空ける */
+	border-left: dotted 1px #999;	/* 左に破線を引き、項目と内容を隔てる */
+	display: block;				/* blockとして扱う */
+	font-size: 12px;			/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
+	margin-left: 15px;			/* 左にmarginを挿入する。 */
+}
+
+/* 
+ * セレクタ:.formRuby
+ * 概要   :項目名のルビ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.formRuby{
+	/* ブロックとし扱い、隣り合うspanの要素となる項目名に対し改行する */
+	display: block;	
+	font-size: 10px;	/* ルビサイズのフォントにする */
+	line-height: 10px;	/* 最低限の文字の高さを取る */
+}
+
+/* 
+ * セレクタ:.contactForm textarea
+ * 概要   :入力項目のテキストエリア。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm .textarea{
+	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
+	max-width: 340px;			/* 引き延ばせる最大の幅を設定する。 */
+}
+
+/* 
+ * セレクタ:.contactForm .submitButton
+ * 概要   :問い合わせフォームのSubmitボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm .submitButton{
+	margin: 20px auto 50px;	/* 中央に寄せる */
+	display: block;			/* ブロック要素として扱う。 */
+	clear: both;			/* 要素の回り込みを阻止する。 */
+	background-color: #000;	/* 背景色を黒にする */
+	color: #FFF;			/* 白抜き文字に指定する。 */
+	font-weight: bold;		/* 通常のfont-weightでは大分細くなってしまうので、太字にする */
+	width: 150px;			/* 幅を150pxに指定する。 */
+	height: 35px;			/* 高さを35pxに指定する。 */
+	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
+	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
+	border-style: none;		/* 初期設定されている枠線を消す */	
+}
+
+/* 
+ * セレクタ:.contactForm .submitButton:hover
+ * 概要   :問い合わせフォームのSubmitボタンのマウスオーバーイベント。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm .submitButton:hover{
+	opacity: 0.7;	/* ボタンを透過する */
+}
+
+/* 
+ * セレクタ:.contactForm input
+ * 概要   :問い合わせフォームのinput要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.18
+ */
+.contactForm input{
+	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
+}

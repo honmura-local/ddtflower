@@ -1,1 +1,12 @@
 @CHARSET "UTF-8";
+
+/* 
+ * セレクタ:.flowerBackground
+ * 概要   :トップページの背景。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.21
+ */
+.flowerBackground{
+    /*height: 772px;*/          /* トップページ用の画像の高さに合わせた領域を形成する。 */
+}
+

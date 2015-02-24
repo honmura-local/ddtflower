@@ -1,5 +1,6 @@
 {
     "pageTitle":{
+    	"class":"pageTitle cf",
         "image":{
             "src"   :"image/icon(leaf2).png"
         },
@@ -22,7 +23,7 @@
                     "text":"*"
                 },
                 "formRuby":{
-                    "texr":"Name"
+                    "text":"Name"
                 }
             },
             "nameTextBox":{
@@ -41,7 +42,7 @@
                     "text":"*"
                 },
                 "formRuby":{
-                    "texr":"Sex"
+                    "text":"Sex"
                 }
             },
             "sexRadioButton":{

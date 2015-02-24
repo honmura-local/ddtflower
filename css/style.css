@@ -4,7 +4,7 @@
 
 /* 文字コードをUTF-8に指定 */
 @charset "utf-8";
-/* リセットCSS */
+/* リセットCSS。追記分はコメントあり。 */
 /* 
 html5doctor.com Reset Stylesheet
 v1.6.1
@@ -41,6 +41,7 @@ body {
     font-family:Meiryo, メイリオ, 'Lucida Grande',
     'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3',
     sans-serif;
+    background: white;  /* 背景色を白にする。 */
 }
 
 article,aside,details,figcaption,figure,
@@ -68,6 +69,8 @@ a {
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    /* リンクの下線を消す */
+    text-decoration: none;
 }
 
 /* change colours to suit your needs */
@@ -146,29 +149,6 @@ h1,h2,h3,h4,h5,th{
 }
 
 /* 
- * セレクタ:body
- * 概要   :ページ全体。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.03
- */
-body{
-    background: white;  /* 背景色を白にする。 */
-}
-/* 
- * セレクタ:.gide_f_a_school p
- * 概要   :f_a_schoolのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.23
- */
-.gideFASchool p{
-	text-decoration	: none;	/* リンクの下線を消す。 */
-	color			: #000;
-}
-
-/* 幅が651px以上のときのスタイル */
-@media only screen and (min-width: 681px) {
-
-/* 
  * セレクタ:#container
  * 概要   :画面の幅に合わせて伸縮する、最上階層のdivタグ
  * 作成者 :T.Masuda
@@ -183,21 +163,21 @@ body{
 
 /* ヘッダー領域。 */
 
-/* ! 関数で作られたのヘッダーとの重複が起きるため、一時的にセレクタを分割します。
-    こちらは2番目のヘッダーであるというセレクタにします。 02/10
-   ! headerクラスを作りました 02/20
 /* 
  * セレクタ:.header
  * 概要   :ヘッダー領域のタグ。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.05
+ * 内容　 :min-widthを設定しました。
  */
 .header{
     width: 100%;            /* 幅をcontainer一杯に広げる。 */
-    min-width: 800px;       /* 最低幅を.mainと同様に幅を800pxに設定する。 */
     margin: 0px auto 3px;   /* 横位置を中心に寄せる。画面上端との間に間隔を空ける。 */
     background: inherit;    /* containerの背景色を継承する。 */
     box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4); /* トップメニュー下に陰影をつける。 */
+    min-width: 800px;		/* 最低幅をmainの幅と合わせる。 */
     position: fixed;    /* ヘッダーを固定する。 */
     z-index: 1;         /* 重なり順を指定する。 */
     top     :   0;      /* 上から0の座標に配置する。 */
@@ -206,12 +186,12 @@ body{
 
 /* ガイド領域 */
 /* 
- * セレクタ:.gides
+ * セレクタ:.guides
  * 概要   :様々な案内情報を掲載するヘッダー内の領域。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gides{
+.guides{
     width       :   800px;      /* 幅をメインコンテンツと合わせる。 */
     height      :   50px;       /* この領域の高さを設定する。 */
     margin      : 0 auto;       /* 中央に揃える。 */
@@ -219,297 +199,152 @@ body{
     font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
 }
 /* 
- * セレクタ:.gides > *
+ * セレクタ:.guides > *
  * 概要   :ガイド領域直下の要素。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gides > *{
+.guides > *{
     display         :   inline-block;   /* インラインブロック表示にし、横に並べる。 */
     font-size       :   10px;           /* フォントサイズを指定し直す。 */
     vertical-align  :   middle;         /* 高さを行の中心に揃える。 */
     margin-left     :   3px;            /* 統一して左に3pxのmarginを挿入する。 */
 }
+
 /* 
- * セレクタ:.gides > div:first-child
- * 概要   :ガイド領域直下の一番目のdivタグ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-/* .gides > div:first-child{
-    margin-left: 5px;   左に最低限の間隔を空ける。
-} */
-/* 
- * セレクタ:.gide_f_a_school
+ * セレクタ:.guideFASchool
  * 概要   :フラワーアレンジメントスクールのガイド。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideFASchool{
-    height: inherit;    /* gidesの高さを継承する。 */
+.guideFASchool{
+    height: inherit;    /* guidesの高さを継承する。 */
     width: 165px;       /* 正方形の画像2個分＋αの幅を取る。 */
 }
 
 /* 
- * セレクタ:.gide_f_a_school img
+ * セレクタ:.guideFASchool img
  * 概要   :f_a_schoolのアイコン画像。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideFASchool img{
-    height: inherit;    /* 外枠の高さを継承する。 */
-    width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
+.guideFASchool img{
     float: left;        /* この要素を左によせ、段組みレイアウトにする。 */
 }
 
 /* 
- * セレクタ:.gide_f_a_school p
+ * セレクタ:.guideFASchool p
  * 概要   :f_a_schoolのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideFASchool p{
-    font-size   : 12px;     /* フォントサイズを指定する。 */
-    display     : block;    /* インラインブロック表示にする。 */
-    margin-top  : 4px;      /* 上に少々の間隔を取る。 */
-    text-indent : 5px;      /* 先頭にインデントを入れる。 */
+.guideFASchool p{
+    font-size   	: 12px;     /* フォントサイズを指定する。 */
+    display     	: block;    /* ブロック要素にして縦に並べる。 */
+    margin-top  	: 4px;      /* 上に少々の間隔を取る。 */
+    text-indent 	: 5px;      /* 先頭にインデントを入れる。 */
+	text-decoration	: none;		/* リンクの下線を消す。 */
+	color			: #000;		/* フォントの色を黒にする。 */
 }
 
 /* 
- * セレクタ:.gide_tel
+ * セレクタ:.guideTel
  * 概要   :電話窓口のガイド。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel{
+.guideTel{
     height: inherit;    /* 高さを継承する。 */
     width: 250px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
 }
 
 /* 
- * セレクタ:.gide_tel img
+ * セレクタ:.guideTel img
  * 概要   :.telのアイコン画像。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel img{
+.guideTel img{
     height: inherit;    /* 外枠の高さを継承する。 */
-    width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
     float: left;        /* 左に寄せる。 */
 }
 
 /* 
- * セレクタ:.gide_tel p
- * 概要   :.gide_telのテキスト。
+ * セレクタ:.guideTel p
+ * 概要   :.guide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel p{
+.guideTel p{
     display: block; /* ブロック要素として扱う。 */
 }
 
 /* 
- * セレクタ:.gide_tel .p1
- * 概要   :.gide_telのテキスト。
+ * セレクタ:.guideTel .p1
+ * 概要   :.guide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel .p1{
+.guideTel .p1{
     font-size: 11px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     margin-top: 4px;    /* 上に軽い空白を与える。 */
     color:  #777;       /* 灰色のフォントにする。 */
 }
 
 /* 
- * セレクタ:.gide_tel .p2
- * 概要   :.gide_telのテキスト。
+ * セレクタ:.guideTel .p2
+ * 概要   :.guide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel .p2{
+.guideTel .p2{
     font-size: 15px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     color:  limegreen;  /* 淡い緑のフォントにする。 */
     margin: 3px 0;      /* 上下に適正な間隔を空ける。 */
 }
 
 /* 
- * セレクタ:.gide_tel .p3
- * 概要   :.gide_telのテキスト。
+ * セレクタ:.guideTel .p3
+ * 概要   :.guide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideTel .p3{
+.guideTel .p3{
     font-size: 10px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
 }
-
 /* 
- * セレクタ:.gide_mail
- * 概要   :.メールのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideMail{
-    width: 50px;        /* 幅を50pxにする。 */
-    height: inherit;    /* ガイド領域の高さに合わせる。 */
-}
-
-/* 
- * セレクタ:.gide_mail img
- * 概要   :.メールのガイドの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideMail img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_access
- * 概要   :.アクセスのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideAccess{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_access img
- * 概要   :アクセスの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideAccess img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_trial
- * 概要   :体験レッスンのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTrial{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_trial img
- * 概要   :体験レッスンの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTrial img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_blog
- * 概要   :ブログのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideBlog{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_blog img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideBlog img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_facebook
- * 概要   :facebookのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFacebook{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_facebook img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFacebook img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_twitter
- * 概要   :ブログのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTwitter{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_twitter img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTwitter img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_sns
+ * セレクタ:.guideSns
  * 概要   :.SNSサイトのガイド。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideSns{
-    width: 22px;        /* 幅を22pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
+.guideSns{
+	height: inherit;	/* 高さをガイド領域から継承する。 */
 }
 
 /* 
- * セレクタ:.gide_sns .facebook
+ * セレクタ:.guideSns > *
+ * 概要   :.guideSnsの子要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.05
+ */
+.guideSns > *{
+	display: block;	/* ブロック要素として扱い、縦に並べる。 */
+	vertiacl-align: top;
+}
+
+/* 
+ * セレクタ:.guideSns .facebook
  * 概要   :Facebookの画像。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.gideSns .facebook{
-    width: inherit; /* 幅を継承する。 */
-    height: 22px;   /* 高さを22pxに指定する。 */
+.guideSns .facebook{
     margin-bottom: 6px; /* 下部に6pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
 }
 
 /* 
- * セレクタ:.gide_sns .twitter_tweet
- * 概要   :Twitterのツイートの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideSns .twitter{
-    width: inherit; /* 幅を継承する。 */
-    height: 22px;   /* 高さを22pxに指定する。 */
-}
-
-/* 
- * セレクタ:.gide_login
+ * セレクタ:.guideLogin
  * 概要   :ログインのガイド。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -517,14 +352,13 @@ body{
  * 変更日 :2015.02.19
  * 内容   :ログイン名表示のため幅を調整しました。50px → 100px
  */
-.gideLogin{
-    width: 100px;        /* 幅を100pxに設定する。 */
+.guideLogin{
     height: inherit;    /* 高さをガイド領域から継承する。 */
     vertical-align: top;	/* 水平位置を上に合わせる。 */
 }
 
 /* 
- * セレクタ:.gide_login .login
+ * セレクタ:.guideLogin .login
  * 概要   :ログインのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -532,36 +366,36 @@ body{
  * 変更日 :2015.02.19
  * 内容   :親要素に合わせて画像サイズが引き延ばされないように変更しました。
  */
-.gideLogin .login{
+.guideLogin .login{
     width: auto;	 /* 画像自身の幅を指定する。 */
 }
 
 /* 
- * セレクタ:.gide_login .welcome
+ * セレクタ:.guideLogin .welcome
  * 概要   :ログイン名前の「ようこそ」の文字。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.19
  */
-.gideLogin .welcome{
+.guideLogin .welcome{
     display: block; /* ブロック要素となる。 */
 }
 
 /* 
- * セレクタ:.gide_login .userName
+ * セレクタ:.guideLogin .userName
  * 概要   :ログイン名。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.19
  */
-.gideLogin .userName{
+.guideLogin .userName{
     display: block; /* ブロック要素となる。 */
+	width: 130px;	/* 幅に余裕を持たせる。 */
 }
-
 
 /* ここまでガイド領域。 */
 
 /* トップメニュー領域 */
 /* 
- * セレクタ:.top_menu
+ * セレクタ:.topMenu
  * 概要   :ヘッダー領域内のトップメニュー。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -574,7 +408,7 @@ body{
 }
 
 /* 
- * セレクタ:.top_menu .button
+ * セレクタ:.topMenu li
  * 概要   :トップメニューのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -586,11 +420,11 @@ body{
     font-size:      14px;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
     box-sizing:     border-box;     /* 自身の幅をpadding、border込みで計算する。 */
     text-align:     center;         /* 文字を中心に寄せる。 */
-    vertical-align: middle;         /* 文字の位置を中心に揃える。 */
+    vertical-align: middle;         /* 文字の高さを中心に揃える。 */
 }
 
 /* 
- * セレクタ:.top_menu .button:hover,.button:active
+ * セレクタ:.topMenu .li:hover,.li:active
  * 概要   :トップメニューのボタンにマウスカーソルが合ったとき、またはタップしたとき。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -600,7 +434,7 @@ body{
 }
 
 /* 
- * セレクタ:.top_menu .button a
+ * セレクタ:.topMenu .button a
  * 概要   :トップメニューのボタンのリンク。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
@@ -613,22 +447,17 @@ body{
 }
 
 /* 
- * セレクタ:.top_menu .button
- * 概要   :トップメニューのボタンのリンク。
+ * セレクタ:.topMenu p
+ * 概要   :トップメニューのボタンのリンクの文字。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.topMenu li p{
-    margin-top: 18px;   /* 中心に寄せるのに必要なだけの上marginを挿入する。 */
-    font-size:  16px;   /* 妥当なフォントサイズを指定する。 */
-    display:    inline-block;   /* インラインブロック表示を行う。 */
+.topMenu p{
+    margin-top	: 18px;   		/* 中心に寄せるのに必要なだけの上marginを挿入する。 */
+    font-size	: 16px;   		/* 妥当なフォントサイズを指定する。 */
+    display		: inline-block; /* インラインブロック表示を行う。 */
 }
 
-/* ここまでトップメニュー領域 */
-
-/* ここまでヘッダー領域。 */
-
-/* コンテンツ領域。 */
 /* 
  * セレクタ:.main
  * 概要   :コンテンツ領域。
@@ -636,59 +465,14 @@ body{
  * 作成日 :2015.02.02
  */
 .main{
-    width:      800px;      /* コンテンツ幅を800pxにする。 */
-    margin: 0 auto 0;       /* 横位置を中心に寄せる。 */
-    background: inherit;    /* containerの背景色を継承する。 */
-    position: relative;     /* 相対位置の要素にする。 */
-    z-index:    0;          /* 重なり順の優先順位を低くする。 */
+    width		: 800px;      /* コンテンツ幅を800pxにする。 */
+    margin		: 0 auto 0;   /* 横位置を中心に寄せる。 */
+    background	: inherit;    /* containerの背景色を継承する。 */
+    position	: relative;   /* 相対位置の要素にする。 */
+    z-index		: 0;          /* 重なり順の優先順位を低くする。 */
 }
 
-/* 
- * セレクタ:.flowerBackground
- * 概要   :トップページの背景。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.flowerBackground{
-    height: 772px;          /* トップページ用の画像の高さに合わせた領域を形成する。 */
-    background-image: url("../image/top(800).png"); /* 背景画像をセットする。 */
-    background-repeat: no-repeat;   /* 背景画像の表示を繰り返さない。 */
-}
-/* 
- * セレクタ:.wrapper_upper
- * 概要   :コンテンツを挟み込む画像。上部。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.wrapper_upper{
-    width: inherit;         /* コンテンツ領域の幅を継承する。 */
-    height: auto;           /* 画像サイズに合わせて高さを自動調整する。 */
-}
 
-/* 
- * セレクタ:.wrapper_lower
- * 概要   :コンテンツを挟み込む画像。下部。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.wrapper_lower{
-    width: inherit;         /* コンテンツ領域の幅を継承する。 */
-    height: auto;           /* 画像サイズに合わせて高さを自動調整する。 */
-}
-
-/* 
- * セレクタ:.content
- * 概要   :コンテンツページの内容表示領域。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.content{
-    width: inherit;         /* .mainの幅を継承する。 */
-}
-
-/* ここまでコンテンツ領域。 */
-
-/* フッター領域。 */
 /* 
  * セレクタ:footer
  * 概要   :フッター領域のタグ。
@@ -715,773 +499,6 @@ footer{
     background: inherit;        /* 背景を継承する。 */  
 }
 
-/* ここまでフッター領域。 */
-
-/* 
- * セレクタ:.pageTitle
- * 概要   :タイトル領域
- * 作成者 :T.Masuda
- * 作成日 :2015.02.03
- */
-.pageTitle{
-    width: 800px;           /* 幅を800pxにする。100%に設定しても無効なので、固定値を使う。 */
-    vertical-align: middle; /* 内包する要素の高さを中心に揃える。 */
-    box-sizing: border-box;     /* サイズの計算にpaddingと枠線を加える。 */
-    margin-bottom: 20px;   /* 下に20pxの余白を空ける */
-}
-
-/* 
- * セレクタ:.pageTitle img
- * 概要   :タイトルの画像
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.pageTitle img{
-    width:  100px;          /* 幅100px */
-    height: 100px;          /* 高100px */
-    padding: 0 5px 0 5px;   /* 左右に5pxのpaddingを配置する。 */
-    margin-top: -20px;       /* 上から20px余白を空ける */
-    box-sizing: border-box; /* サイズの計算にpaddingと枠線を加える。 */
-    background: #FFF;       /* 仮の背景色を指定する。 */
-    display: inline-block;  /* 横並びにするためにブロック要素にする */
-    float:left;             /* 左に寄せる。 */
-}
-
-/* 
- * セレクタ:.pageTitle .title
- * 概要   :タイトルの文字
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.pageTitle .title{
-    width:          690px;          /* 余った幅いっぱいに横幅を取る。 */
-    height:         auto;           /* 高さを自動調整する。 */
-    font-size:      24px;           /* フォントサイズを25pxに指定する。 */
-    box-sizing:     border-box;     /* サイズの計算にpaddingと枠線を加える。 */
-    text-align:     center;         /* 文字を中央に寄せる。 */
-    margin:         18px auto 15px; /* 詰めすぎるとバランスが悪いので、marginでずらす。 */
-	padding-top: 	15px;			/* 画像の中心に合わせる。 */
-}
-
-/* 
- * セレクタ:.pageTitle .summary
- * 概要   :タイトル部分概要。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.pageTitle .summary{
-    width:      690px;      /* 幅を60%に設定する。 */
-    padding: 	2px;		/* 要素の幅を2px広げる */
-    height:     auto;       /* 高さを自動調整する。 */
-    font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
-    text-indent: 1em;		/* インデントを1文字分入れる */
-    font-family: Osaka;		/* フォントをOsakaにする */
-
-    font-weight: normal;	/* 文字の太さを通常にする */
-    line-height: 1.4;		/* 行間を1.4行分とる */
-    margin: 0 auto;         /* 中央に寄せる。 */
-    display: inline-block;  /* 横並びにするためにブロック要素にする */
-}
-
-/* 
- * セレクタ:.footGallery
- * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
- * 作成者 :T.Masuda
- * 作成日 :2015.02.04
- */
-.footGallery{
-    width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
-    height: 110px;      /* 高さを110pxに指定する。 */
-    margin: 0 auto;     /* 中央に寄せる。 */
-    clear: both;        /* 回り込みを無効にする */
-}
-
-/* 
- * セレクタ:.footGallery img
- * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.footGallery img{
-    height: auto;  /* 高さを自動にする */
-    width:  180px;  /* 幅を200pxにする */
-}
-
-/* 体験レッスン */
-
-/* 
- * セレクタ:.experienceGallery
- * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素。体験レッスンページ用
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.experienceGallery{
-    width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
-    height: 110px;      /* 高さを110pxに指定する。 */
-    margin: 0 auto;     /* 中央に寄せる。 */
-    clear: both;        /* 回り込みを無効にする */
-}
-
-/* 
- * セレクタ:.experienceGallery img
- * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
- * 作成者 :T.Masuda 
- * 作成日 :2015.02.21
- */
-.experienceGallery img{
-    height: auto;  /* 高さを自動にする */
-    width:  180px;  /* 幅を200pxにする */
-}
-
-
-/* 
- * セレクタ:.specialGuide
- * 概要   :レッスンページの内容案内。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialGuide{
-    width: 390px;       /* 幅をmarginと隣のカレンダーの幅を想定したサイズに設定する。 */
-    margin: 0 5px 10px; /* 左右5px、下10pxのmarginを挿入する。 */
-}
-
-/* 
- * セレクタ:.specialCalendar
- * 概要   :予約のカレンダー。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialCalendar{
-    float: right;           /* 右に寄せる。 */
-    width: 390px;       /* 幅をmarginと隣のカレンダーの幅を想定したサイズに設定する。 */
-    margin: 0 5px 10px; /* 左右5px、下10pxのmarginを挿入する。 */
-}
-
-/* 
- * セレクタ:.special_pictures
- * 概要   :作品紹介の画像群。子要素にfloatを適用するためclearfixも設定する。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialPictures{
-    width: 790px;           /* 幅を790pxに設定する。 */
-    padding: 5px;           /* 全方向にpaddingを配置する。 */
-    margin-bottom: 15px;    /* コンテンツ下端との間に間隔を取る。 */
-}
-
-/* 
- * セレクタ:.specialPictures div
- * 概要   :作品紹介の画像の外枠。テキストも添えるのでこのタグで括る。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.6
- */
-.specialPictures div{
-    width: 187.5px;     /* 5pxのmarginを想定した幅を設定する。 */
-    max-width: 187.5px; /* 一個分の最大幅を設定する。 */
-    margin: 5px;        /* 全方向に5pxのmarginを設定する。 */
-    float: left;        /* 左に詰める。 */
-}
-
-/* 
- * セレクタ:.specialPictures img
- * 概要   :作品紹介の画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialPictures img{
-    max-width: inherit;     /* 画像が大きくなりすぎないように限界を設ける。 */
-}
-
-/* 
- * セレクタ:.specialPictures p
- * 概要   :作品紹介の一文。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialPictures p{
-    
-}
-
-/* 
- * セレクタ:.specialReservedDialog
- * 概要   :お花の予約ダイアログ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialReservedDialog{
-    font-size: 14px;
-    text-align: left;
-}
-
-/* 
- * セレクタ:.specialDate
- * 概要   :予約希望日。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialDate{
-    margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
-}
-
-/* 
- * セレクタ:.reservedSummary
- * 概要   :予約希望についての概要(注意書き)。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.reservedSummary{
-    margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
-}
-
-/* 
- * セレクタ:.specialReservedDialog table th
- * 概要   :お花の予約ダイアログの見出しセル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialReservedDialog table th{
-    width: 60px;		/* 幅を60pxにする */
-}
-
-/* 
- * セレクタ:.specialRadioButtonConstruct
- * 概要   :作品選択のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.
- */
-.specialRadioButtonConstruct{
-    width: inherit;     /* 幅をダイアログから継承する。 */
-}
-/* 
- * セレクタ:.specialRadioButtonConstruct th
- * 概要   :作品選択のテーブルの見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialRadioButtonConstruct th{
-}
-
-/* 
- * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+0)
- * 概要   :作品選択のテーブルの作品名。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialRadioButtonConstruct tr td:nth-child(2n+0){
-    width: 80px;        /* 4最大文字が入ることを想定した幅を指定する。 */
-}
-
-/* 
- * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+1)
- * 概要   :作品選択のテーブルの作品名。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialRadioButtonConstruct tr td:nth-child(2n+1){
-    width: 20px;        /* ラジオボタン1個が入る幅を指定する。 */
-}
-
-/* 
- * セレクタ:.specialRadioButtonConstruct th
- * 概要   :作品選択のテーブルの見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialRadioButtonConstruct th{
-    width: 50px;        /* 「作品」の文字が十分に入る幅を設定する。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule
- * 概要   :予約日時のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule{
-    width: inherit;     /* ダイアログの幅を継承する。 */
-    margin-bottom: 5px; /* 次のコンテンツとの間に間隔を取る。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule td
- * 概要   :予約日時のテーブルの見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule th{
-    width: 40px;        /* 「時限」の文字が入るだけの幅を確保する。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+0)
- * 概要   :予約日時のテーブルのラジオボタン列。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule tr td:nth-child(2n+0){
-    width: 20x;     /* ラジオボタンが十分に配置できる幅をセットする。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+1)
- * 概要   :予約日時のテーブルの時間記述列。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule tr td:nth-child(2n+1){
-    width: 120x;    /* ラジオボタンが十分に配置できる幅をセットする。 */
-}
-
-/*
- * セレクタ:.subInfo
- * 概要   :予約についての予備情報。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo{
-    width: inherit;     /* ダイアログの幅を継承する。 */
-}
-
-/*
- * セレクタ:.subInfo table
- * 概要   :予約可能曜日、週のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo table{
-    margin: 5px 10px;   /* 上下左右に適度なmarginを挿入する。 */
-}
-
-/*
- * セレクタ:.subInfo th,td
- * 概要   :.subInfo tableのテキストまたはチェックボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo th,td{
-    vertical-align  :   middle; /* 高さを中心に揃える。 */
-    width           :   auto;   /* 幅を文字に合わせる。 */
-    height          :   auto;   /* 高さを文字に合わせる。 */
-}
-
-/*
- * セレクタ:.subInfo th,td
- * 概要   :.subInfo tableのテキストまたはチェックボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr td:nth-child(2n+1){
-    min-width: 23px;
-}
-
-/*
- * セレクタ:.subInfo tr:nth-child(2) th
- * 概要   :.subInfo table2行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(2) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-/*
- * セレクタ:.subInfo tr:nth-child(3) th
- * 概要   :.subInfo table3行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(3) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-/*
- * セレクタ:.subInfo tr:nth-child(4) th
- * 概要   :.subInfo table4行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(4) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-
-/* 
- * セレクタ:.specialReservedConfirmDialog
- * 概要   :予約希望の送信の確定を行うダイアログ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialReservedConfirmDialog{
-    font-size: 14px;
-    text-align: left;
-}
-
-/* 
- * セレクタ:.specialConfirmSummary
- * 概要   :予約希望の情報の一覧を表示するテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialConfirmSummary{
-}
-
-/* 
- * セレクタ:.specialConfirmSummary tr td:nth-child(1)
- * 概要   :.specialConfirmSummaryの行の1番目(見出し)のセル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialConfirmSummary tr td:nth-child(1){
-    width: 90px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
-}
-
-/* 
- * セレクタ:.specialReservedConfirmDialog button
- * 概要   :予約希望の送信のOKボタン、キャンセルボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialReservedConfirmDialog button{
-    margin: 5px;    /* 全方向に微小のmarginを挿入する。 */
-}
-
-/* 
- * セレクタ:.confirmNotice
- * 概要   :予約希望の送信ダイアログの送信の同意を求める注意書き。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.confirmNotice{
-    margin-bottom: 5px; /* 下の入力内容一覧との間に間隔を取る。 */
-}
-
-/* ここまで特別レッスン */
-
-
-/* 
- * セレクタ:.summary
- * 概要   :概要のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.summary{
-    font-size: 18px;    /* 文字のサイズを25pxにする */
-    text-align: left;   /* 文字を左寄せにする */
-    margin-bottom: 5px;	/* 下方向に余白を5pxとる */
-}
-
-/* 
- * セレクタ:.courseGuide
- * 概要   :コース案内についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.courseGuide {
-    margin: 20px 0;  	 /* 上から20px余白を空ける */
-    width: 50%;    		/* 幅を50%にする */
-    float: left;        /* 左回りに回り込みできるようにする */
-}
-
-/* 
- * セレクタ:.courseGuide tr, .courseGuide th, 
- * 概要   :コース案内のレコードについてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.courseGuide th, .courseGuide td {
-    padding: 20px;      /* 幅を30px広げる */
-    font-size: 16px;    /* フォントサイズを21pxにする */
-}
-
-/* 
- * セレクタ:.lessonSchedule
- * 概要   :レッスンスケジュール(時間割)についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.lessonSchedule {
-    margin: 20px;   /* 上から余白を20pxとる */
-    width:  35%;        /* レッスンスケジュールテーブル全体の幅を30%にする */
-    float: right;       /* 右回りに回り込みする */
-}
-
-/* 
- * セレクタ:.lessonSchedule .summary
- * 概要   :レッスンスケジュールの概要についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.lessonSchedule .summary {
-	text-align: center;		/* 中央揃えにする */
-    margin-bottom: 20px;    /* 下向きに20px余白をとる */
-}
-
-/* 
- * セレクタ:.lessonSchedule th, .lessonSchedule td
- * 概要   :レッスンスケジュールのレコードについてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.lessonSchedule th, .lessonSchedule td {
-    padding: 0 10px 25px 10px;  /* 左から0、10px、30px、20px、広げる */
-    font-size: 16px;            /* フォントサイズを21pxにする */
-    font-weight: normal;        /* 文字の太さを普通にする */
-    width: 100px;               /* 幅を100pxにする */
-}
-
-/* 
- * セレクタ:.commonText 
- * 概要   :特徴についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.22
- * 内容　 :幅の記述を削除しました。
- */
-.commonText {
-	margin: 30px 0;	/* 上下に30px余白をとる */
-    clear: left;    /* 左側の回り込みをなくす */
-}
-
-/* 
- * セレクタ:.commonText td, .salesPoint td, .memberRule td
- * 概要   :リスト項目ついてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.commonText td, .salesPoint td, .memberRule td{
-    padding: 5px 0;   			/* 上下に30pxの余白をとる */
-    font-size: 13px;			/* フォントのサイズを16pxにする */
-    line-height: 1.3;			/* 行の高さを1.3行分にする */
-    font-family: sans-serif;	/* fontをsans-serifにする */
-    padding-left: 1em;	   		/* インデントを一つとる */
-    text-indent: -1em;  	  	/* 改行したときにインデントをとる */
-    width: 50%;    				/* 幅を50%にする */
-}
-
-/* 
- * セレクタ:.courseGuide, .commonText, .salesPoint, .memberRule
- * 概要   :リスト項目ついてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.courseGuide, .commonText, .memberRule {
-	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
-}
-
-/* 
- * セレクタ:.salesPoint 
- * 概要   :特徴についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.22
- * 内容　 :幅の記述を削除しました。
- */
-.salesPoint {
-    margin: 30px 0 30px 20px; /* 上下に30pxの余白をとる */
-}
-
-/* 
- * セレクタ:.memberRule
- * 概要   :会員規約についてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.memberRule {
-    margin-bottom: 50px;    /* 余白を下に50pxにする */
-    width: 780px;    	/* 幅を780pxにする */
-}
-
-/* 
- * セレクタ:.specialGuide
- * 概要   :体験レッスン案内テーブルについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.21
- * 内容  :余分なネガティブマージンを削除。
- */
-.specialGuide {
-    width: 50%;             /* 幅を52%にする */
-    padding: 10px;          /* 10px要素の幅を広げる */
-    margin: 40px 0px;     /* 上下に40pxの余白を空ける */
-    float: left;            /* 左側に回り込む */
-}
-
-/* 
- * セレクタ:.specialGuide th, .specialGuide td
- * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.specialGuide th, .specialGuide td {
-    padding: 10px;      /* 要素の幅を10px広げる */
-    font-size: 15px;    /* 文字サイズを15pxにするする */
-    text-align: left;   /* 文字を左寄りにする */
-}
-
-/* 
- * セレクタ:.specialGuide th
- * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.specialGuide th {
-    width: 35%;         /* 幅を40%にする */
-}
-
-/* 
- * セレクタ:.specialGuide td
- * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.specialGuide td {
-    width: 65%;         /* 幅を60%にする */
-}
-
-/* 
- * セレクタ:.calendar
- * 概要   :カレンダーについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.calendar {
-    margin-top: 80px;   /* 上から80px余白を空ける */
-    width: 45%;         /* 幅を47%にする */
-    height: 300px;
-    font-size: 14px;    /* 文字サイズを20pxにする */
-    float: right;       /* 右側に回り込む */
-}
-
-
-
-/* ! 既存のヘッダーとの重複が起きるため、一時的にセレクタを分割します。
-    こちらは2番目のヘッダーであるというセレクタにします。 02/10
- */
-/* 
- * セレクタ:.headImage
- * 概要   :ヘッダーのタグ。
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.headImage{
-    width: 800px;       /* 横幅を800pxにする。 */
-    margin-top: 120px;  /* 上から150px余白をとる */ 
-}
-
-/* 問い合わせページ */
-
-/* 
- * セレクタ:.contactForm dl
- * 概要   :入力項目のリスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dl{
-	margin: 0 auto 0;	/* 外枠より横幅が狭ければ、中央に寄せる */
-	width: 550px;
-	display: block;		/* ブロックとして扱う */
-	position: relative;	/* 相対位置を取る */
-	clear: both;		/* 回り込みさせない */
-}
-/* 
- * セレクタ:.contactForm dt
- * 概要   :入力項目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dt{
-	float: left;		/* 内容と共に左寄せで横に並べる */
-	clear: both;		/* 回り込みをさせない */
-	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	text-indent: -80px;	/* 1行目を左にずらす。 */
-	display: block;		/* ブロックとして扱う */
-	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
-	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
-	font-size: 14px;	/* フォントサイズを設定する。 */
-	font-weight: bold;	/* 太字にする */
-}
-/* 
- * セレクタ:.contactForm dd
- * 概要   :入力項目のinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dd{
-	float: left;				/* 左に寄せる */
-	padding-left: 20px;			/* 線と内容との間に間隔を取る */
-	padding-bottom: 20px;		/* 下に15pxの間隔を空け、次の項目との間に隙間を空ける */
-	border-left: dotted 1px #999;	/* 左に破線を引き、項目と内容を隔てる */
-	display: block;				/* blockとして扱う */
-	font-size: 12px;			/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
-	margin-left: 15px;			/* 左にmarginを挿入する。 */
-}
-/* 
- * セレクタ:.formRuby
- * 概要   :項目名のルビ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.formRuby{
-	/* ブロックとし扱い、隣り合うspanの要素となる項目名に対し改行する */
-	display: block;	
-	font-size: 10px;	/* ルビサイズのフォントにする */
-	line-height: 10px;	/* 最低限の文字の高さを取る */
-}
-/* 
- * セレクタ:.contactForm textarea
- * 概要   :入力項目のテキストエリア。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm .textarea{
-	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
-	max-width: 340px;			/* 引き延ばせる最大の幅を設定する。 */
-}
-
-/* 
- * セレクタ:.contactForm .submitButton
- * 概要   :問い合わせフォームのSubmitボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm .submitButton{
-	margin: 20px auto 50px;	/* 中央に寄せる */
-	display: block;			/* ブロック要素として扱う。 */
-	clear: both;			/* 要素の回り込みを阻止する。 */
-	background-color: #000;	/* 背景色を黒にする */
-	color: #FFF;			/* 白抜き文字に指定する。 */
-	font-weight: bold;		/* 通常のfont-weightでは大分細くなってしまうので、太字にする */
-	width: 150px;			/* 幅を150pxに指定する。 */
-	height: 35px;			/* 高さを35pxに指定する。 */
-	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
-	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
-	border-style: none;		/* 初期設定されている枠線を消す */	
-}
-
-/* 
- * セレクタ:.contactForm .submitButton:hover
- * 概要   :問い合わせフォームのSubmitボタンのマウスオーバーイベント。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm .submitButton:hover{
-	opacity: 0.7;	/* ボタンを透過する */
-}
-
-/* 
- * セレクタ:.contactForm input
- * 概要   :問い合わせフォームのinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm input{
-	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
-}
-
 /* 
  * セレクタ:.textRed
  * 概要   :字を赤くするためのクラス。
@@ -1491,1074 +508,6 @@ footer{
 .textRed{
 	color: #F00;	/* 文字の色を赤にする。 */
 }
-/* ここまで問い合わせページ */
-
-/* アクセスページ */
-
-/* 
- * セレクタ:.accessInfo 
- * 概要   :アクセス情報一覧の外枠。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessInfo {
-	width: 600px;			/* 取る幅。 */
-	margin: 0 auto 10px;	/* 中心に寄せ、下の要素と間隔も取る */
-}
-/* 
- * セレクタ:.accessInfo > span
- * 概要   :アクセス情報の項目。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessInfo > span {
-	display: block;		/* 各項目ごとに改行するように、ブロック要素にする。 */
-	font-size: 14px;	/* 小さめのフォントサイズを設定する。 */
-	line-height: 18px;	/* font-sizeより大きい行サイズを指定して行間を空ける。 */
-}
-/* 
- * セレクタ:.accessMap
- * 概要   :スクールのグーグルマップのラッパー。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessMap {
-	margin: 0 auto 40px;	/* 中心に寄せて、フッター部分とも間隔を取る。 */
-	width: 600px;			/* 取る幅。 */
-}
-/* 
- * セレクタ:.baseMap
- * 概要   :スクールのグーグルマップのラッパー。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.baseMap {
-	width: 100%;		/* 幅を外枠に合わせる。 */
-	height: 400px;		/* 高さを指定する。 */
-}
-
-/* 
- * セレクタ:.loginDialog
- * 概要   :ログインのダイアログ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.19
- */
-.loginDialog {
-	font-size: 16px;					/* フォントサイズを指定する。 */
-	font-family: sans-serif;			/* containerのフォントと合わせる */
-	text-shadow: 1px 1px 1px #dfdfdf;	/* containerのフォントと合わせる */
-}
-
-/* 
- * セレクタ:.loginDialog > *
- * 概要   :ログインダイアログの子要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.189
- */
-.loginDialog > * {
-	margin-bottom: 5px;	/* 行間を取る。 */
-	line-height: 18px;					/* 1行の高さを指定する。 */
-}
-
-
-/* 
- * セレクタ:.loginDialog label
- * 概要   :ログインダイアログのラベル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.189
- */
-.loginDialog label {
-	display: inline-block;	/* インラインブロック要素に指定してテキストボックスと並べる。 */
-	width: 100px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
-}
-
-/* 
- * セレクタ:.loginDialog input
- * 概要   :ログインダイアログのinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.189
- */
-.loginDialog input {
-}
-
-/* ここまでアクセスページ */
-
-/* PC用のスタイルの記述終わり */
-}
-
-/* スマホ用cssの始まり */
-/* 画面のサイズが649px以下の時のスタイルシート */
-@media only screen and (max-width: 680px) {
-    
-    /* 
-     * セレクタ:#container
-     * 概要   :スマホ用コンテンツのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     */
-    #container {
-        width: 100%;         /* コンテンツの幅を100%にする */
-        margin: 0 auto;     /* 中央揃えにする */
-        font-size: 12px;    /* フォントサイズを12pxにする */
-	 	font-family: sans-serif; /* フォントを設定する */
-        text-shadow: 1px 1px 1px #dfdfdf;   /* テキストに影を入れる */
-    }
-
-    /* 
-     * セレクタ:header
-     * 概要   :スマホ用ヘッダーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .headImage {
-    width: 100%;        /* 横幅を100%にする。 */
-    margin: 0 auto;     /* 中央揃えにする */
-    }
-
-    /* 
-     * セレクタ:headImage img
-     * 概要   :スマホ用ヘッダー画像のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .headImage img {
-        width: 100%;    /* 画像の幅を100%にする */
-        height auto;    /* 高さを自動で合わせる */
-    }
-
-    /* 
-     * セレクタ   :.pageTitle .title
-     * 概要    :スマホ用タイトル部分h1のスタイル
-     * 作成者  :T.Yamamoto
-     * 作成日  :2015.02.22
-     * 変更者  :T.Masuda
-     * 変更日  :2015.02.22
-     * 内容　  :幅とmarginを変更。
-     */
-    .pageTitle .title {
-        font-weight: bold;  /* 文字を太くする */
-        font-size: 16px;    /* フォントサイズ18pxにする */
-        padding: 10px 0;    /* 要素の幅を10px広げる */
-        text-align: center; /* 中央揃えにする */
-		width: 75%;			/* 幅を可変にする。 */
-		float: left;		/* 左に寄せる。 */
-		margin-top: 2%;		/* 可変のmarginを挿入する。 */
-		margin-right: 5%;	/* 画面右端との間に適切なmarginを取る。 */
-    }
-
-    /* 
-     * セレクタ:#container
-     * 概要   :スマホ用コンテンツのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者  :T.Masuda
-     * 変更日  :2015.02.22
-     * 内容　  :幅とmarginを変更。
-     * 変更者  :T.Masuda
-     * 変更日  :2015.02.23
-     * 内容　  :marginを変更。
-     */
-    .pageTitle img {
-        display: inline-block;  /* ブロック要素として並べる */
-        float: left;            /* 左側に回り込みする */
-        width: 15%;            /* 幅を可変にする */
-        height: auto;          /* 高さを自動調整する */
-        margin: 0 4% 0px 1%;	/* 左右にmarginを配置する。 */
-    }
-
-    /* 
-     * セレクタ:.pageTitle .summary
-     * 概要  :スマホ用コンテンツのスタイル
-     * 作成者:T.Yamamoto
-     * 作成日:2015.02.16
-     * 変更者  :T.Masuda
-     * 変更日  :2015.02.22
-     * 内容　  :幅とmarginを変更。
-     * 変更者  :T.Masuda
-     * 変更日  :2015.02.23
-     * 内容　  :幅を変更。
-     */
-    .pageTitle .summary{
-        display: inline-block;  /* ブロック要素として並べる */
-        text-indent: 1em;       /* 改行したときにインデントをとる */
-		width: 65%;			/* 幅を可変にする。 */
-        font-size: 11px;        /* フォントのサイズを12pxにする */
-        line-height: 1.4;       /* 行の高さを1.4行分にする */
-        margin: -0% 5% 20px 19%;	/* 全方向にmarginを挿入する。 */
-    }
-
-    /* 
-     * セレクタ:.footGallery
-     * 概要   :スマホ用写真ギャラリーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 内容   :幅とmarginを調整。
-     */
-    .footGallery {
-        margin-left: 15px;  /* 15px右に寄せる */
-        width: 85%;			/* 左右のボタンの幅を考慮した幅を設定する。 */
-        margin: 0 auto;		/* 中央に寄せる */
-    }
-
-    /* 
-     * セレクタ:.footGallery img
-     * 概要   :スマホ用写真ギャラリーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 内容   :幅とmarginを調整。
-     */
-    .footGallery img {
-		width: 95%;		/* 幅を少し小さめにする */
-		margin: 0 auto;	/* 中央に寄せる */
-		height: auto;   /* 高さを自動にする */
-    }
-
-    /* 
-     * セレクタ:.courseGuide
-     * 概要   :スマホ用コース案内テーブルのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :table-layoutを記述しました。
-     */
-    .courseGuide {
-        width: 93%;            /* 幅を60pxにする */
-        height: auto;          /* 高さを自動にする */
-        margin-bottom: 20px;   /* 20px下に余白を空ける */
-        table-layout: fixed;	/* セルの幅を均等に割る。 */
-    }
-
-    /* 
-     * セレクタ:.courseGuide .summary, .lessonSchedule .summary
-     * 概要   :スマホ用コース案内テーブルのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :margin、text-alignを変更しました。
-     */
-    .courseGuide .summary, .lessonSchedule .summary{
-        font-size: 14px;     /* フォントサイズを15pxにする */
-        text-align: center;  /* 中央寄せにする */
-        margin: 0 0 20px;  　/* 下に10pxの余白を空ける */
-    }
-
-    /* 
-     * セレクタ:.courseGuide th, .courseGuide td
-     * 概要   :スマホ用コンテンツのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :displayを削除しました。
-     */
-    .courseGuide th, .courseGuide td{
-        padding: 15px 0;        /* 要素の幅を横に15px広げる */
-        font-size:12px;         /* フォントサイズを12pxにする */
-        margin-left: 35px;      /* 左から35px余白をとる */
-        text-align: center;     /* 中央揃えにする */
-    }
-
-    /* 
-     * セレクタ:.lessonSchedule
-     * 概要   :スマホ用レッスンスケジュールテーブルのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :margin、幅を変更しました。
-     */
-    .lessonSchedule {
-        width: 90%;            /* 幅を90%にする */
-		margin: 0 5% 10px;		/* 適切なmarginを取る。 */
-    }
-
-    /* 
-     * セレクタ:.lessonSchedule th, .lessonSchedule td
-     * 概要   :スマホ用レッスンスケジュールテーブルの中身のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .lessonSchedule th, .lessonSchedule td{
-        width: 50%;         /* 幅を50%にする */
-        padding: 7px;       /* 要素の幅を7px広くする */
-        font-size:13px;     /* 文字サイズを13pxにする */  
-    }
-
-    /* 
-     * セレクタ:.specialGuide
-     * 概要   :スマホ用体験レッスン案内テーブルのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-     .specialGuide {
-        margin: 5px 10px 20px 30px;    /* 余白をとる */
-     }
-
-    /* 
-     * セレクタ:.specialGuide .summary
-     * 概要   :スマホ用体験レッスン案内テーブル概要のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-     .specialGuide .summary {
-        padding: 15px; /* 要素の幅を15px広げる */
-        font-size: 13px;/* フォントのサイズを13pxにする */
-     }
-
-    /* 
-     * セレクタ:.specialGuide th, .specialGuide td
-     * 概要   :スマホ用体験レッスン案内テーブル中身のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-     .specialGuide th, .specialGuide td{
-        padding: 7px;      /* 要素の幅を7px広げる */
-        font-size: 11px;   /* フォントのサイズを11pxにする */
-        width: 50%;        /* 幅を50%にする */
-        text-align: left;  /* 左寄りにする */
-     }
-
-/* 
- * セレクタ:.experienceGallery
- * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素。体験レッスンページ用
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.experienceGallery{
-    width: 100%;       		/* 幅をページ幅に合わせて伸縮する。 */
-    height: auto;      		/* 高さを自動調整する。 */
-    margin: 20px auto 0;     /* 中央に寄せる。上とも間を空ける。 */
-    clear: both;        	/* 回り込みを無効にする */
-}
-
-/* 
- * セレクタ:.experienceGallery img
- * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
- * 作成者 :T.Masuda 
- * 作成日 :2015.02.21
- */
-.experienceGallery img{
-    height: auto;  	/* 高さを自動にする */
-    width:  80%;  	/* 幅を200pxにする */
-    margin: 0 auto;	/* 画像を中央に寄せる。 */
-}
-
-
-    /* 
-     * セレクタ:.calendar
-     * 概要   :スマホ用カレンダーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.23
-     * 内容 　:無駄なスタイルを削除しました。
-     */
-     .calendar {
-        font-size: 12.5px;  /* 文字サイズを12.5pxにする */
-     }
-
-    /* 
-     * セレクタ:.calendar
-     * 概要   :スマホ用カレンダー本体のスタイル
-     * 作成者 :T.Masuda
-     * 作成日 :2015.02.23
-     */
-     .calendar > div{
-	     display: block;	/* ブロック要素として表示する。 */
-	     margin: 0 auto;	/* 中央に寄せる。 */
-     }
-
-    /* 
-     * セレクタ:.commonText, .salesPoint, .memberRule
-     * 概要   :スマホ用リストのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 内容　 :margin、幅を変更しました。
-     */
-    .commonText, .salesPoint, .memberRule {
-        width: 90%;            /* 幅を90%にする */
-        margin: 15px 5%;     /* 上に余白を10px、横に5%とる */
-        line-height: 1.5;      /* 1行の高さを1.5行分にする */
-        padding-left: 1em;     /* インデントを一つとる */
-        text-indent: -1.0em;     /* 改行したときにインデントをとる */
-    }
-
-    /* 
-     * セレクタ:.commonText .summary, .salesPoint .summary, .memberRule .summary
-     * 概要   :スマホ用リストのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .commonText .summary, .salesPoint .summary, .memberRule .summary {
-        text-align: left;       /* 左寄りにする */
-        font-size: 13px;        /* 文字サイズを14pxにする */
-    }
-
-    /* 
-     * セレクタ:.commonText td, .salesPoint td, .memberRule td
-     * 概要   :スマホ用リストのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .commonText td, .salesPoint td, .memberRule td {
-        text-align: left;       /* 左寄りにする */
-        font-size: 11px;        /* 文字サイズを14pxにする */
-    }
-
-    /* 
-     * セレクタ:.footImage img
-     * 概要   :スマホ用フッター画像のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .footImage img {
-        width: 100%;        /* 幅を100%にする */
-        height: auto;       /* 高さを自動にする */
-    }
-    
-/* 問い合わせページ */
-
-/* 
- * セレクタ:.contactForm dl
- * 概要   :入力項目のリスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dl{
-	margin: 0 auto 0;	/* 外枠より横幅が狭ければ、中央に寄せる */
-	width: 100%;		/* 幅を可変にする。 */
-	display: block;		/* ブロックとして扱う */
-	position: relative;	/* 相対位置を取る */
-	clear: both;		/* 回り込みさせない */
-}
-/* 
- * セレクタ:.contactForm dt
- * 概要   :入力項目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dt{
-	float: left;		/* 内容と共に左寄せで横に並べる */
-	clear: both;		/* 回り込みをさせない */
-	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	text-indent: -80px;	/* 1行目を左にずらす。 */
-	display: block;		/* ブロックとして扱う */
-	margin-left: 28%;	/* 左marginを可変にする。 */
-	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
-	font-size: 14px;	/* フォントサイズを設定する。 */
-	font-weight: bold;	/* 太字にする */
-}
-/* 
- * セレクタ:.contactForm dd
- * 概要   :入力項目のinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm dd{
-	float: left;				/* 左に寄せる */
-	padding-left: 20px;			/* 線と内容との間に間隔を取る */
-	padding-bottom: 20px;		/* 下に15pxの間隔を空け、次の項目との間に隙間を空ける */
-	border-left: dotted 1px #999;	/* 左に破線を引き、項目と内容を隔てる */
-	display: block;				/* blockとして扱う */
-	font-size: 12px;			/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
-	margin-left: 15px;			/* 左にmarginを挿入する。 */
-	width: 45%;					/* 幅を画面の45%に指定する。 */
-}
-/* 
- * セレクタ:.formRuby
- * 概要   :項目名のルビ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.formRuby{
-	/* ブロックとし扱い、隣り合うspanの要素となる項目名に対し改行する */
-	display: block;	
-	font-size: 10px;	/* ルビサイズのフォントにする */
-	line-height: 10px;	/* 最低限の文字の高さを取る */
-}
-/* 
- * セレクタ:.contactForm textarea
- * 概要   :入力項目のテキストエリア。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm textarea{
-	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
-	max-width: 340px;			/* 引き延ばせる最大の幅を設定する。 */
-	width: 100%;	/* 幅を可変にする。 */
-}
-
-/* 
- * セレクタ:.contactForm .submitButton
- * 概要   :問い合わせフォームのSubmitボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm .submitButton{
-	margin: 20px auto 50px;	/* 中央に寄せる */
-	display: block;			/* ブロック要素として扱う。 */
-	clear: both;			/* 要素の回り込みを阻止する。 */
-	background-color: #000;	/* 背景色を黒にする */
-	color: #FFF;			/* 白抜き文字に指定する。 */
-	font-weight: bold;		/* 通常のfont-weightでは大分細くなってしまうので、太字にする */
-	width: 150px;			/* 幅を150pxに指定する。 */
-	height: 35px;			/* 高さを35pxに指定する。 */
-	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
-	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
-	border-style: none;		/* 初期設定されている枠線を消す */	
-}
-
-/* 
- * セレクタ:.contactForm .submitButton:hover
- * 概要   :問い合わせフォームのSubmitボタンのマウスオーバーイベント。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm .submitButton:hover{
-	opacity: 0.7;	/* ボタンを透過する */
-}
-
-/* 
- * セレクタ:.contactForm input
- * 概要   :問い合わせフォームのinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm input{
-	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
-}
-
-/* 
- * セレクタ:.contactForm input[type="text"]
- * 概要   :問い合わせフォームのテキストボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm input[type="text"]{
-	width: 100%;	/* 幅を外枠に合わせる。 */
-}
-
-/* 
- * セレクタ:.contactForm input[type="email"]
- * 概要   :問い合わせフォームのメールのテキストボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.contactForm input[type="email"]{
-	width: 100%;	/* 幅を外枠に合わせる。 */
-}
-
-
-/* 
- * セレクタ:.textRed
- * 概要   :字を赤くするためのクラス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.textRed{
-	color: #F00;	/* 文字の色を赤にする。 */
-}
-/* ここまで問い合わせページ */
-
-/* アクセスページ */
-
-/* 
- * セレクタ:.accessInfo 
- * 概要   :アクセス情報一覧の外枠。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessInfo {
-	margin: 0 auto 10px;	/* 中心に寄せ、下の要素と間隔も取る */
-	width: 95%;				/* paddingを考慮した幅を取る。 */
-	clear: both;			/* 回り込みをなくす */
-	padding-left: 5%;		/* 左に間隔を取る */
-}	
-/* 
- * セレクタ:.accessInfo > span
- * 概要   :アクセス情報の項目。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessInfo > span {
-	display: block;		/* 各項目ごとに改行するように、ブロック要素にする。 */
-	font-size: 12px;	/* 小さめのフォントサイズを設定する。 */
-	line-height: 18px;	/* font-sizeより大きい行サイズを指定して行間を空ける。 */
-}
-
-/* 
- * セレクタ:.accessMap
- * 概要   :スクールのグーグルマップのラッパー。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.accessMap {
-	margin: 0 auto 40px;	/* 中心に寄せて、フッター部分とも間隔を取る。 */
-}
-/* 
- * セレクタ:.baseMap
- * 概要   :スクール所在地のGoogleMap。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.baseMap {
-	width: 95%;		/* 余白分を考慮した幅を取る */
-	height: 400px;	/* 高さを固定にする */
-	margin: 0 auto;	/* 中心に寄せる */
-	display: block;	/* ブロック要素にしてmarginによる中央寄せを有効にする。 */
-}
-
-
-/* 
- * セレクタ:.copyright
- * 概要   :コピーライトのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.20
- */
-.copyright {
-    font-size: 8px;      /* 文字サイズを7pxにする */
-}
-/* ここまでアクセスページ */    
-
-/* ガイド領域 */
-/* 
- * セレクタ:.gides
- * 概要   :様々な案内情報を掲載するヘッダー内の領域。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.gides{
-    width       :   100%;      /* 幅を画面に合わせる。 */
-    height      :   auto;       /* 高さを自動調整する。 */
-    margin      : 0 auto;       /* 中央に揃える。 */
-    padding     :   10px 0;     /* 上下15pxのpaddingを指定する。左右には最低限のpaddingを指定する。 */
-    font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
-}
-/* 
- * セレクタ:.gides > *
- * 概要   :ガイド領域直下の要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gides > *{
-    display         :   inline-block;   /* インラインブロック表示にし、横に並べる。 */
-    font-size       :   10px;           /* フォントサイズを指定し直す。 */
-    vertical-align  :   middle;         /* 高さを行の中心に揃える。 */
-    margin-left     :   3px;            /* 統一して左に3pxのmarginを挿入する。 */
-    margin-bottom   :   5px;            /* 改行した要素との間に最低限の間を空ける。 */
-}
-/* 
- * セレクタ:.gide_f_a_school
- * 概要   :フラワーアレンジメントスクールのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.gideFASchool{
-    height: inherit;    /* gidesの高さを継承する。 */
-    width: 140px;       /* スマホ用に幅を切り詰める */
-}
-
-/* 
- * セレクタ:.gide_f_a_school img
- * 概要   :f_a_schoolのアイコン画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFASchool img{
-    height: inherit;    /* 外枠の高さを継承する。 */
-    width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
-    float: left;        /* この要素を左によせ、段組みレイアウトにする。 */
-}
-
-/* 
- * セレクタ:.gide_f_a_school p
- * 概要   :f_a_schoolのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFASchool p{
-    font-size   : 12px;     /* フォントサイズを指定する。 */
-    display     : block;    /* インラインブロック表示にする。 */
-    margin-top  : 4px;      /* 上に少々の間隔を取る。 */
-    text-indent : 5px;      /* 先頭にインデントを入れる。 */
-}
-
-/* 
- * セレクタ:.gide_tel
- * 概要   :電話窓口のガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 変更者 :T.Masuda
- * 変更日 :2015.02.23
- * 内容　 :左のmarginを消し、幅を増やしました。
- */
-.gideTel{
-    height: inherit;    /* 高さを継承する。 */
-    width: 177px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
-    margin-left: 0;     /* 画像の空白部分で余白は十分なので、左marginを消す。 */
-}
-
-/* 
- * セレクタ:.gide_tel img
- * 概要   :.telのアイコン画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTel img{
-    height: inherit;    /* 外枠の高さを継承する。 */
-    width: 50px;        /* 正方形のサイズになるように幅を指定する。 */
-    float: left;        /* 左に寄せる。 */
-}
-
-/* 
- * セレクタ:.gide_tel p
- * 概要   :.gide_telのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTel p{
-    display: block; /* ブロック要素として扱う。 */
-}
-
-/* 
- * セレクタ:.gide_tel .p1
- * 概要   :.gide_telのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTel .p1{
-    font-size: 11px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
-    margin-top: 4px;    /* 上に軽い空白を与える。 */
-    color:  #777;       /* 灰色のフォントにする。 */
-}
-
-/* 
- * セレクタ:.gide_tel .p2
- * 概要   :.gide_telのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 変更者 :T.Masuda
- * 変更日 :2015.02.23
- * 内容　 :フォントサイズを大きく変更しました。
- */
-.gideTel .p2{
-    font-size: 15px;    /* フォントサイズを指定する。 */
-    color:  limegreen;  /* 淡い緑のフォントにする。 */
-    margin: 3px 0;      /* 上下に適正な間隔を空ける。 */
-}
-
-/* 
- * セレクタ:.gide_tel .p3
- * 概要   :.gide_telのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTel .p3{
-    font-size: 10px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_mail
- * 概要   :.メールのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideMail{
-    width: 50px;        /* 幅を50pxにする。 */
-    height: inherit;    /* ガイド領域の高さに合わせる。 */
-}
-
-/* 
- * セレクタ:.gide_mail img
- * 概要   :.メールのガイドの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideMail img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_access
- * 概要   :.アクセスのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideAccess{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_access img
- * 概要   :アクセスの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideAccess img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_trial
- * 概要   :体験レッスンのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTrial{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_trial img
- * 概要   :体験レッスンの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTrial img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_blog
- * 概要   :ブログのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideBlog{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_blog img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideBlog img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_facebook
- * 概要   :facebookのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFacebook{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_facebook img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideFacebook img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_twitter
- * 概要   :ブログのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTwitter{
-    width: 50px;        /* 幅を50pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_twitter img
- * 概要   :ブログの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideTwitter img{
-    width: inherit; /* 幅を継承する。 */
-    height: auto;   /* 高さを自動調整し、ストレッチしないようにする。 */
-}
-
-/* 
- * セレクタ:.gide_sns
- * 概要   :.SNSサイトのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideSns{
-    width: 22px;        /* 幅を22pxに設定する。 */
-    height: inherit;    /* 高さをガイド領域から継承する。 */
-}
-
-/* 
- * セレクタ:.gide_sns .facebook
- * 概要   :Facebookの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideSns .facebook{
-    width: inherit; /* 幅を継承する。 */
-    height: 22px;   /* 高さを22pxに指定する。 */
-    margin-bottom: 6px; /* 下部に6pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
-}
-
-/* 
- * セレクタ:.gide_sns .twitter_tweet
- * 概要   :Twitterのツイートの画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.gideSns .twitter{
-    width: inherit; /* 幅を継承する。 */
-    height: 22px;   /* 高さを22pxに指定する。 */
-}
-
-/* 
- * セレクタ:.gide_login
- * 概要   :ログインのガイド。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 変更者 :T.Masuda
- * 変更日 :2015.02.19
- * 内容   :ログイン名表示のため幅を調整しました。50px → 100px
- * 変更者 :T.Masuda
- * 変更日 :2015.02.23
- * 内容   :iPhone用レイアウトのため幅を狭めました。
- */
-.gideLogin{
-    width: 50px;        	/* 幅を50pxに設定する。 */
-    height: inherit;   		 /* 高さをガイド領域から継承する。 */
-    vertical-align: top;	/* 水平位置を上に合わせる。 */
-}
-
-/* 
- * セレクタ:.gide_login .login
- * 概要   :ログインのボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 変更者 :T.Masuda
- * 変更日 :2015.02.19
- * 内容   :親要素に合わせて画像サイズが引き延ばされないように変更しました。
- */
-.gideLogin .login{
-    width: auto;	 /* 画像自身の幅を指定する。 */
-}
-
-/* 
- * セレクタ:.gide_login .welcome
- * 概要   :ログイン名前の「ようこそ」の文字。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.19
- */
-.gideLogin .welcome{
-    display: block; /* ブロック要素となる。 */
-}
-
-/* 
- * セレクタ:.gide_login .userName
- * 概要   :ログイン名。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.19
- */
-.gideLogin .userName{
-    display: block; /* ブロック要素となる。 */
-	width: 75px;
-}
-
-/* トップメニュー領域 */
-/* 
- * セレクタ:.top_menu
- * 概要   :ヘッダー領域内のトップメニュー。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 作成日 :2015.02.23
- * 内容 　:フォントサイズ、padding、幅を変更しました。
- */
-.topMenu{
-    width       :   100%;      /* 幅を画面にあわせる。 */
-    height      :   auto;       /* 内容により高さを変動させる。 */
-    margin      : 0 auto;       /* 中央に揃える。 */
-    font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
-    text-align:     center;     /* 文字を中心に寄せる。 */
-}
-
-/* 
- * セレクタ:.top_menu .button
- * 概要   :トップメニューのボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- * 作成者 :T.Masuda
- * 作成日 :2015.02.23
- * 内容 　:フォントサイズ、padding、幅を変更しました。
- */
-.topMenu li{
-    width:          auto;          /* 幅を文字のサイズに合わせる。 */
-    height:         100%;           /* 外枠に高さを合わせる。 */
-    display:        inline-block;   /* インラインブロック表示にする。 */
-    font-size:      13px;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
-    box-sizing:     border-box;     /* 自身の幅をpadding、border込みで計算する。 */
-    text-align:     center;         /* 文字を中心に寄せる。 */
-    vertical-align: middle;         /* 文字の位置を中心に揃える。 */
-    padding: 5px 1em;				/* 上下にpaddingを設定する。左右にも1文字分のpaddingを入れる。 */
-}
-
-/* 
- * セレクタ:.top_menu .button:hover,.button:active
- * 概要   :トップメニューのボタンにマウスカーソルが合ったとき、またはタップしたとき。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.topMenu li:hover, .topMenu li:active{
-    background: #EEE;   /* ボタンの背景色を薄い灰色にする。 */
-}
-
-/* 
- * セレクタ:.top_menu .button a
- * 概要   :トップメニューのボタンのリンク。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.topMenu li a{
-    width:      100%;   /* 幅をボタン全体に合わせる。 */
-    height:     100%;   /* 高さをボタン全体に合わせる。 */
-    display:    block;  /* ブロック表示を行う。 */
-    color:      #000;   /* フォントカラーを黒にする。 */
-}
-
-/* 
- * セレクタ:.top_menu .button
- * 概要   :トップメニューのボタンのリンク。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.topMenu li p{
-    font-size:  13px;   		/* 妥当なフォントサイズを指定する。 */
-    display:    inline-block;   /* インラインブロック表示を行う。 */
-    padding: 5px auto;			/* ボタンを小さくする。 */
-}
-
-/* ここまでトップメニュー領域 */
 
 /* 
  * セレクタ:.loginDialog
@@ -2592,7 +541,7 @@ footer{
  */
 .loginDialog label {
 	display: inline-block;	/* インラインブロック要素に指定してテキストボックスと並べる。 */
-	width: 80px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
+	width: 100px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
 }
 
 /* 
@@ -2603,80 +552,13 @@ footer{
  */
 .loginDialog input {
 }
-/* 
- * セレクタ:.main
- * 概要   :コンテンツ領域。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.main{
-	margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
-}
-/* 
- * セレクタ:.flowerBackground
- * 概要   :トップページの背景。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.flowerBackground{
-    height: auto;          /* トップページ用の画像の高さに合わせた領域を形成する。 */
-    width: 100%;          /* 外枠に幅を合わせる。 */
-	margin-top: 1px!important;	/* スマホレイアウト時は上marginを固定にする。 */
-}
-/* 
- * セレクタ:.flowerImage
- * 概要   :トップページの背景画像。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.flowerImage{
-	width:100%;
-	height: auto;
-}
-/* 
- * セレクタ:.header
- * 概要   :ヘッダー領域のタグ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.header{
-	width: 100%;
-    box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4); /* トップメニュー下に陰影をつける。 */
-    position: relative;	/* 重なりを上にするためにこの設定をする */
-    z-index: 1;			/* 重なりを上にする。 */
-}
 
 /* 
- * セレクタ:.specialReservedDialog
- * 概要   :お花の予約ダイアログ。
+ * セレクタ:.textRed
+ * 概要   :字を赤くするためのクラス。
  * 作成者 :T.Masuda
- * 作成日 :2015.02.22
+ * 作成日 :2015.02.18
  */
-.specialReservedDialog{
-    font-size: 14px;	/* 小さめのフォントを指定する。 */
-    text-align: left;	/* 文字を左に寄せる。 */
+.textRed{
+	color: #F00;	/* 文字の色を赤にする。 */
 }
-
-/* 
- * セレクタ:.specialReservedDialog > *
- * 概要   :お花の予約ダイアログの各項目。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.22
- */
-.specialReservedDialog > *{
-    margin-bottom: 5px;	/* 最低限の間隔を空ける。 */
-}
-
-/* 
- * セレクタ:.specialReservedConfirmDialog
- * 概要   :お花の予約の確認ダイアログ。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.22
- */
-.specialReservedConfirmDialog{
-    font-size: 14px;
-    text-align: left;
-}
-
-}/* スマホ用のcssの終わり */
-

@@ -1,1 +1,249 @@
 @CHARSET "UTF-8";
+
+/* 特別レッスン予約のダイアログ */
+
+/* 
+ * セレクタ:.specialReservedDialog
+ * 概要   :お花の予約ダイアログ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialReservedDialog{
+    font-size: 14px;
+    text-align: left;
+}
+
+/* 
+ * セレクタ:.specialDate
+ * 概要   :予約希望日。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialDate{
+    margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
+}
+
+/* 
+ * セレクタ:.reservedSummary
+ * 概要   :予約希望についての概要(注意書き)。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.reservedSummary{
+    margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
+}
+
+/* 
+ * セレクタ:.specialReservedDialog table th
+ * 概要   :お花の予約ダイアログの見出しセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialReservedDialog table th{
+    width: 60px;		/* 幅を60pxにする */
+}
+
+/* 
+ * セレクタ:.specialRadioButtonConstruct
+ * 概要   :作品選択のテーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.
+ */
+.specialRadioButtonConstruct{
+    width: inherit;     /* 幅をダイアログから継承する。 */
+}
+/* 
+ * セレクタ:.specialRadioButtonConstruct th
+ * 概要   :作品選択のテーブルの見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct th{
+}
+
+/* 
+ * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+0)
+ * 概要   :作品選択のテーブルの作品名。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct tr td:nth-child(2n+0){
+    width: 80px;        /* 4最大文字が入ることを想定した幅を指定する。 */
+}
+
+/* 
+ * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+1)
+ * 概要   :作品選択のテーブルの作品名。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct tr td:nth-child(2n+1){
+    width: 20px;        /* ラジオボタン1個が入る幅を指定する。 */
+}
+
+/* 
+ * セレクタ:.specialRadioButtonConstruct th
+ * 概要   :作品選択のテーブルの見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct th{
+    width: 50px;        /* 「作品」の文字が十分に入る幅を設定する。 */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule
+ * 概要   :予約日時のテーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.radioButtonSpecialSchedule{
+    width: inherit;     /* ダイアログの幅を継承する。 */
+    margin-bottom: 5px; /* 次のコンテンツとの間に間隔を取る。 */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule td
+ * 概要   :予約日時のテーブルの見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.radioButtonSpecialSchedule th{
+    width: 40px;        /* 「時限」の文字が入るだけの幅を確保する。 */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+0)
+ * 概要   :予約日時のテーブルのラジオボタン列。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.radioButtonSpecialSchedule tr td:nth-child(2n+0){
+    width: 20x;     /* ラジオボタンが十分に配置できる幅をセットする。 */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+1)
+ * 概要   :予約日時のテーブルの時間記述列。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.radioButtonSpecialSchedule tr td:nth-child(2n+1){
+    width: 120x;    /* ラジオボタンが十分に配置できる幅をセットする。 */
+}
+
+/*
+ * セレクタ:.subInfo
+ * 概要   :予約についての予備情報。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.subInfo{
+    width: inherit;     /* ダイアログの幅を継承する。 */
+}
+
+/*
+ * セレクタ:.subInfo table
+ * 概要   :予約可能曜日、週のテーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.subInfo table{
+    margin: 5px 10px;   /* 上下左右に適度なmarginを挿入する。 */
+}
+
+/*
+ * セレクタ:.subInfo th,td
+ * 概要   :.subInfo tableのテキストまたはチェックボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.subInfo th,td{
+    vertical-align  :   middle; /* 高さを中心に揃える。 */
+    width           :   auto;   /* 幅を文字に合わせる。 */
+    height          :   auto;   /* 高さを文字に合わせる。 */
+}
+
+/*
+ * セレクタ:.subInfo th,td
+ * 概要   :.subInfo tableのテキストまたはチェックボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.subInfo tr td:nth-child(2n+1){
+    min-width: 23px;
+}
+
+/*
+ * セレクタ:.subInfo tr:nth-child(2) th
+ * 概要   :.subInfo table2行目の見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.subInfo tr:nth-child(2) th{
+    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
+    font-weight     : normal;   /* フォントの太さを通常にする。 */
+}
+
+/*
+ * セレクタ:.subInfo tr:nth-child(3) th
+ * 概要   :.subInfo table3行目の見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.subInfo tr:nth-child(3) th{
+    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
+    font-weight     : normal;   /* フォントの太さを通常にする。 */
+}
+/*
+ * セレクタ:.subInfo tr:nth-child(4) th
+ * 概要   :.subInfo table4行目の見出し。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.subInfo tr:nth-child(4) th{
+    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
+    font-weight     : normal;   /* フォントの太さを通常にする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog
+ * 概要   :予約希望の送信の確定を行うダイアログ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialReservedConfirmDialog{
+    font-size: 14px;
+    text-align: left;
+}
+
+/* 
+ * セレクタ:.specialConfirmSummary tr td:nth-child(1)
+ * 概要   :.specialConfirmSummaryの行の1番目(見出し)のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialConfirmSummary tr td:nth-child(1){
+    width: 90px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog button
+ * 概要   :予約希望の送信のOKボタン、キャンセルボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialReservedConfirmDialog button{
+    margin: 5px;    /* 全方向に微小のmarginを挿入する。 */
+}
+
+/* 
+ * セレクタ:.confirmNotice
+ * 概要   :予約希望の送信ダイアログの送信の同意を求める注意書き。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.confirmNotice{
+    margin-bottom: 5px; /* 下の入力内容一覧との間に間隔を取る。 */
+}
+

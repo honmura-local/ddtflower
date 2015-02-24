@@ -1,5 +1,6 @@
 {
     "pageTitle": {
+    	"class":"pageTitle cf",
         "image": {
             "src": "image/icon(tulip).png"
         },
@@ -54,7 +55,8 @@
                 "href": "image/1.JPG",
                 "rel": "gallery",
                 "1stImage": {
-                    "src": "image/1.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/1.JPG"
                 }
             }
         },
@@ -63,7 +65,8 @@
                 "href": "image/2.JPG",
                 "rel": "gallery",
                 "2ndImage": {
-                    "src": "image/2.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/2.JPG"
                 }
             }
         },
@@ -72,7 +75,8 @@
                 "href": "image/3.JPG",
                 "rel": "gallery",
                 "3rdImage": {
-                    "src": "image/3.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/3.JPG"
                 }
             }
         },
@@ -81,7 +85,8 @@
                 "href": "image/4.JPG",
                 "rel": "gallery",
                 "4thImage": {
-                    "src": "image/4.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/4.JPG"
                 }
             }
         },
@@ -90,7 +95,8 @@
                 "href": "image/5.JPG",
                 "rel": "gallery",
                 "5thImage": {
-                    "src": "image/5.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/5.JPG"
                 }
             }
         },
@@ -99,7 +105,8 @@
                 "href": "image/6.JPG",
                 "rel": "gallery",
                 "6thImage": {
-                    "src": "image/6.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/6.JPG"
                 }
             }
         },
@@ -108,7 +115,8 @@
                 "href": "image/7.JPG",
                 "rel": "gallery",
                 "7thImage": {
-                    "src": "image/7.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/7.JPG"
                 }
             }
         },
@@ -117,7 +125,8 @@
                 "href": "image/8.JPG",
                 "rel": "gallery",
                 "8thImage": {
-                    "src": "image/8.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/8.JPG"
                 }
             }
         },
@@ -126,7 +135,8 @@
                 "href": "image/9.JPG",
                 "rel": "gallery",
                 "9thImage": {
-                    "src": "image/9.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/9.JPG"
                 }
             }
         },
@@ -135,7 +145,8 @@
                 "href": "image/10.JPG",
                 "rel": "gallery",
                 "10thImage": {
-                    "src": "image/10.JPG"
+                    "src": "image/dummy.png",
+                    "data-original": "image/10.JPG"
                 }
             }
         }

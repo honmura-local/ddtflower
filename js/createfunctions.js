@@ -564,7 +564,7 @@ function checkLogin(){
 		// ログインボタンをログアウトボタンに差し替える。
 		$('.login').removeClass('login')
 					.addClass('logout')
-					.attr('src', 'image/icon(logout22-60).png');
+					.attr('src', 'image/icon(logout22-50).png');
 		//ログアウトボタンの下にユーザ名を表示する。
 		$('.logout')
 					// spanタグを追加する。

@@ -1,5 +1,6 @@
 {
 	"pageTitle":{
+    	"class":"pageTitle cf",
 		"image"		:{
 			"src"	:	"image/icon(leaf100).png"
 		},

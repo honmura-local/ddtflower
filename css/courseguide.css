@@ -1,1 +1,232 @@
 @CHARSET "UTF-8";
+
+/* 
+ * セレクタ:.pageTitle
+ * 概要   :タイトル領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.03
+ */
+.pageTitle{
+    width: 800px;           /* 幅を800pxにする。100%に設定しても無効なので、固定値を使う。 */
+    vertical-align: middle; /* 内包する要素の高さを中心に揃える。 */
+    box-sizing: border-box;     /* サイズの計算にpaddingと枠線を加える。 */
+    margin-bottom: 20px;   /* 下に20pxの余白を空ける */
+}
+
+/* 
+ * セレクタ:.pageTitle img
+ * 概要   :タイトルの画像
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.24
+ * 内容　 :高さを調整しました。
+ */
+.pageTitle img{
+	width: 100px;			/* 画像サイズに関係なく幅を100pxにする。 */
+	height: auto;			/* 画像の縦横比に応じた高さを取る。 */
+    padding: 0 5px 0 5px;   /* 左右に5pxのpaddingを配置する。 */
+    margin-top: -20px;      /* 上から20px余白を空ける */
+    box-sizing: border-box; /* サイズの計算にpaddingと枠線を加える。 */
+    background: #FFF;       /* 仮の背景色を指定する。 */
+    display: inline-block;  /* 横並びにするためにブロック要素にする */
+    float:left;             /* 左に寄せる。 */
+}
+
+/* 
+ * セレクタ:.pageTitle .title
+ * 概要   :タイトルの文字
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.24
+ * 内容　 :pageTitleにclearfixを適用したため、上marginを調整しました。
+ */
+.pageTitle .title{
+    width:          690px;          /* 余った幅いっぱいに横幅を取る。 */
+    height:         auto;           /* 高さを自動調整する。 */
+    font-size:      24px;           /* フォントサイズを25pxに指定する。 */
+    box-sizing:     border-box;     /* サイズの計算にpaddingと枠線を加える。 */
+    text-align:     center;         /* 文字を中央に寄せる。 */
+    margin:         0 auto 15px; 	/* 中央寄せにし、下marginを挿入する。 */
+	padding-top: 	15px;			/* 画像の中心に合わせる。 */
+}
+
+/* 
+ * セレクタ:.pageTitle .summary
+ * 概要   :タイトル部分概要。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.05
+ */
+.pageTitle .summary{
+    width:      690px;      /* 幅を60%に設定する。 */
+    padding: 	2px;		/* 要素の幅を2px広げる */
+    height:     auto;       /* 高さを自動調整する。 */
+    font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
+    text-indent: 1em;		/* インデントを1文字分入れる */
+    font-family: Osaka;		/* フォントをOsakaにする */
+    font-weight: normal;	/* 文字の太さを通常にする */
+    line-height: 1.4;		/* 行間を1.4行分とる */
+    margin: 0 auto;         /* 中央に寄せる。 */
+    display: inline-block;  /* ブロック要素にする */
+}
+
+/* 
+ * セレクタ:.courseGuide
+ * 概要   :コース案内についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.courseGuide {
+    margin: 20px 0;  	 /* 上から20px余白を空ける */
+    width: 50%;    		/* 幅を50%にする */
+    float: left;        /* 左回りに回り込みできるようにする */
+}
+
+/* 
+ * セレクタ:.courseGuide, .commonText, .salesPoint, .memberRule
+ * 概要   :リスト項目ついてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.courseGuide, .commonText, .memberRule {
+	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
+}
+
+/* 
+ * セレクタ:.courseGuide tr, .courseGuide th, 
+ * 概要   :コース案内のレコードについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.courseGuide th, .courseGuide td {
+    padding: 20px;      /* 幅を30px広げる */
+    font-size: 16px;    /* フォントサイズを21pxにする */
+}
+
+/* 
+ * セレクタ:.lessonSchedule
+ * 概要   :レッスンスケジュール(時間割)についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule {
+    margin: 20px;   /* 上から余白を20pxとる */
+    width:  35%;        /* レッスンスケジュールテーブル全体の幅を30%にする */
+    float: right;       /* 右回りに回り込みする */
+}
+
+/* 
+ * セレクタ:.lessonSchedule .summary
+ * 概要   :レッスンスケジュールの概要についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule .summary {
+	text-align: center;		/* 中央揃えにする */
+    margin-bottom: 20px;    /* 下向きに20px余白をとる */
+}
+
+/* 
+ * セレクタ:.lessonSchedule th, .lessonSchedule td
+ * 概要   :レッスンスケジュールのレコードについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.lessonSchedule th, .lessonSchedule td {
+    padding: 0 10px 25px 10px;  /* 左から0、10px、30px、20px、広げる */
+    font-size: 16px;            /* フォントサイズを21pxにする */
+    font-weight: normal;        /* 文字の太さを普通にする */
+    width: 100px;               /* 幅を100pxにする */
+}
+
+/* 
+ * セレクタ:.commonText 
+ * 概要   :特徴についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を削除しました。
+ */
+.commonText {
+	margin: 30px 0;	/* 上下に30px余白をとる */
+    clear: left;    /* 左側の回り込みをなくす */
+}
+
+/* 
+ * セレクタ:.commonText td, .salesPoint td, .memberRule td
+ * 概要   :リスト項目ついてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.commonText td, .salesPoint td, .memberRule td{
+    padding: 5px 0;   			/* 上下に30pxの余白をとる */
+    font-size: 13px;			/* フォントのサイズを16pxにする */
+    line-height: 1.3;			/* 行の高さを1.3行分にする */
+    font-family: sans-serif;	/* fontをsans-serifにする */
+    padding-left: 1em;	   		/* インデントを一つとる */
+    text-indent: -1em;  	  	/* 改行したときにインデントをとる */
+    width: 50%;    				/* 幅を50%にする */
+}
+
+/* 
+ * セレクタ:.salesPoint 
+ * 概要   :特徴についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を削除しました。
+ */
+.salesPoint {
+    margin: 30px 0 30px 20px; /* 上下に30pxの余白をとる */
+}
+
+/* 
+ * セレクタ:.memberRule
+ * 概要   :会員規約についてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.memberRule {
+    margin-bottom: 50px;    /* 余白を下に50pxにする */
+    width: 780px;    	/* 幅を780pxにする */
+}
+
+
+/* 
+ * セレクタ:.summary
+ * 概要   :概要のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.summary{
+    font-size: 18px;    /* 文字のサイズを25pxにする */
+    text-align: left;   /* 文字を左寄せにする */
+    margin-bottom: 5px;	/* 下方向に余白を5pxとる */
+}
+
+/* 
+ * セレクタ:.footGallery
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.04
+ */
+.footGallery{
+    width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
+    height: 110px;      /* 高さを110pxに指定する。 */
+    margin: 0 auto;     /* 中央に寄せる。 */
+    clear: both;        /* 回り込みを無効にする */
+}
+
+/* 
+ * セレクタ:.footGallery img
+ * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.footGallery img{
+    width:  180px;  /* 幅を200pxにする */
+    height: auto;  /* 高さを自動にする */
+}

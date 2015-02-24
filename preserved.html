@@ -6,7 +6,14 @@
 <meta charset="UTF-8">
 <title>DDTFlowers/プリザーブドフラワー</title>
 <!-- メインのCSSファイルを読み込む。 -->
-<link type="text/css" href="css/style.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<!-- コース案内のCSSファイルを読み込む。 -->
+<link href="css/courseguide.css" rel="stylesheet" type="text/css">
+
+<!-- 画面幅がスマホ用サイズになったらスマホ用CSSを読み込む。 -->
+<link href="css/styleSP.css" rel="stylesheet" type="text/css" media="only screen and (max-width:680px)">
+<link href="css/courseguideSP.css" rel="stylesheet" type="text/css" media="only screen and (max-width:680px)">
+
 <!-- jqueryUIのcssを読み込む -->
 <link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
 <!-- slickのCSSを読み込む。 -->
@@ -30,6 +37,7 @@
 <script src="js/flowersstylefix.js"></script>
 <!-- 要素作成の関数群を読み込む。 -->
 <script src="js/createfunctions.js"></script>
+<script src="js/jquery.lazyload.min.js"></script>
 
 <script>
 $(document).ready(function(){
@@ -42,6 +50,7 @@ $(document).ready(function(){
 	// ログイン状態をチェックする。
 	checkLoginState();
 });
+
 </script>
 </head>
 <body>
@@ -68,7 +77,53 @@ creator.outputTag('salesPoint');				// 特徴リストを作る
 creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
 creator.outputTag('footImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
-createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
+	createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
+
+jQuery(function($){
+	function addSlickClass(){
+		
+	// slickのギャラリーの要素を走査する。
+	for(var i = 0; i < $('.slick-slide').length; i++){
+		// 現在の要素を変数に格納する。
+		var cur = $('.slick-slide').eq(i);
+		// 現在の要素のindexの値を格納する。
+		var ind = parseInt(cur.attr('index'))
+		//indexが-2から2の間でなければ
+		if(!(ind + 2 >= 0) || !(ind + 2 <= 5)){
+			//画像に後から読み込むという意味のクラスを付加する。
+			$('img',cur).addClass('loadAfterPageLoad');
+		//そうでないものは
+		} else {
+			//画像をすぐに読み込むという意味のクラスを付加する。
+			$('img',cur).addClass('loadSoonPageLoad');
+		}
+	}
+	}
+	
+	
+	var asc = $.when(addSlickClass());
+	
+	asc.done(function(){
+		//すぐに読み込む画像に対して
+		$.each($('.loadSoonPageLoad'), function(){
+			//src要素を設定する。
+			$(this).attr('src', $(this).attr('data-original'));
+		});
+	});
+	
+	// 後から読み込む画像のイベントを設定する。
+	$(".loadAfterPageLoad").lazyload({
+		//5秒後に読み込むイベントを設定する。
+		  event : "5secDelay"
+	  });
+	});
+	
+	
+$(window).on("load", function() {
+    var timeout1 = setTimeout(function() {
+        $(".loadAfterPageLoad").trigger("5secDelay")
+    }, 5000);
+});	
 </script>
 </body>
 </html>

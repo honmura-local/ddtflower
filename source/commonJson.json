@@ -1,21 +1,24 @@
 {
 	"header":{
-		"gides":{
-			"gideFASchool":{
-				"flowerIcon":{
-					"src":"image/icon(logo50).png"
-				},
-				"sideTextF":{
-					"text":"フラワー"
-				},
-				"sideTextA":{
-					"text":"アレンジメント"
-				},
-				"sideTextS":{
-					"text":"スクール"
+		"guides":{
+			"guideFASchool":{
+				"toppageLink":{
+					"href":"index.html",
+					"flowerIcon":{
+						"src":"image/icon(logo50).png"
+					},
+					"sideTextF":{
+						"text":"フラワー"
+					},
+					"sideTextA":{
+						"text":"アレンジメント"
+					},
+					"sideTextS":{
+						"text":"スクール"
+					}
 				}
 			},
-			"gideTel":{
+			"guideTel":{
 				"telIcon":{
 					"src":"image/icon(tell).png"
 				},
@@ -29,7 +32,7 @@
 					"text":"(対応時間 11:00 〜 20:00)"
 				}
 			},
-			"gideMail":{
+			"guideMail":{
 				"contactLink":{
 					"href":"contact.html",
 					"mailIcon":{
@@ -37,7 +40,7 @@
 					}
 				}
 			},
-			"gideAccess":{
+			"guideAccess":{
 				"accessLink":{
 					"href":"access.html",
 					"accessIcon":{
@@ -45,7 +48,7 @@
 					}
 				}
 			},
-			"gideTrial":{
+			"guideTrial":{
 				"experienceLink":{
 					"href":"experience.html",
 					"experienceIcon":{
@@ -53,15 +56,15 @@
 					}
 				}
 			},
-			"gideBlog":{
-				"gideBlogLink":{
+			"guideBlog":{
+				"guideBlogLink":{
 					"href":"",
-					"gideBlogIcon":{
+					"guideBlogIcon":{
 						"src":"image/icon(blog50).png"
 					}
 				}	
 			},
-			"gideSns":{
+			"guideSns":{
 				"facebookLink":{
 					"href":"",
 					"facebook":{
@@ -75,9 +78,9 @@
 					}
 				}
 			},
-			"gideLogin":{
+			"guideLogin":{
 					"login":{
-						"src":"image/icon(login22-60).png"
+						"src":"image/icon(login22-50).png"
 				}
 			}
 		},
