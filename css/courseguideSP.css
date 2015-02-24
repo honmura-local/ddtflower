@@ -82,14 +82,14 @@
      * 内容　 :table-layoutを記述しました。
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
-     * 内容　 :幅調整とfloatの解除を行いました。
+     * 内容　 :幅調整とfloatの解除を行いました。中央寄せの設定をしました。下marginを入れました。
      */
     .courseGuide {
         width: 90%;            /* 幅を60pxにする */
         height: auto;          /* 高さを自動にする */
-        margin-bottom: 20px;   /* 20px下に余白を空ける */
         table-layout: fixed;	/* セルの幅を均等に割る。 */
         float: none;			/* floatを解除する。 */
+        margin: 0 auto 15px;	/* 中央に寄せる。下にもmarginを追加する。 */
     }
 
     /* 
@@ -100,12 +100,14 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.22
      * 内容　 :displayを削除しました。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :paddingを削除しました。text-alignを追加しました。
      */
     .courseGuide th, .courseGuide td{
-        padding: 15px 0;        /* 要素の幅を横に15px広げる */
         font-size:12px;         /* フォントサイズを12pxにする */
         margin-left: 35px;      /* 左から35px余白をとる */
-        text-align: center;     /* 中央揃えにする */
+        text-align: center;		/* 文字を中心に寄せる。 */
     }
 
     /* 
@@ -116,11 +118,14 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.22
      * 内容　 :margin、text-alignを変更しました。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :marginをなくしました。
      */
     .courseGuide .summary, .lessonSchedule .summary{
         font-size: 14px;     /* フォントサイズを15pxにする */
         text-align: center;  /* 中央寄せにする */
-        margin: 0 0 20px;  　/* 下に20pxの余白を空ける */
+        margin-bottom: 2px;	/* 下のmarginを減らす。 */
     }
 
     /* 
@@ -133,25 +138,25 @@
      * 内容　 :margin、幅を変更しました。
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
-     * 内容　 :floatを解除しました。
+     * 内容　 :floatを解除しました。幅を狭めました。中央に寄せるようにしました。
      */
     .lessonSchedule {
-        width: 90%;            /* 幅を90%にする */
-		margin: 0 5% 10px;		/* 適切なmarginを取る。 */
+        width: 75%;            	/* 幅を75%にする */
+		margin: 0 auto 10px;	/* 中央に寄せる。 */
     	float: none;			/* 段組みレイアウトを解除する。 */
     }
 
-    /* 
-     * セレクタ:.lessonSchedule th, .lessonSchedule td
-     * 概要   :スマホ用レッスンスケジュールテーブルの中身のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     */
-    .lessonSchedule th, .lessonSchedule td{
-        width: 50%;         /* 幅を50%にする */
-        padding: 7px;       /* 要素の幅を7px広くする */
-        font-size:13px;     /* 文字サイズを13pxにする */  
-    }
+/* 
+ * セレクタ:.lessonSchedule .tableHead,.lessonSchedule .period,.lessonSchedule .hour
+ * 概要   :レッスンスケジュールのセル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.24
+ */
+.lessonSchedule .tableHead,.lessonSchedule .period,.lessonSchedule .hour {
+    padding: 4px;       /* 要素の幅を4px広くする */
+    font-size:13px;     /* 文字サイズを13pxにする */  
+	text-align: center;	/* 文字を左に寄せる。 */
+}
 
         /* 
      * セレクタ:.commonText, .salesPoint, .memberRule
@@ -161,10 +166,13 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.21
      * 内容　 :margin、幅を変更しました。
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容　 :margin、幅を変更しました。
      */
     .commonText, .salesPoint, .memberRule {
-        width: 90%;            /* 幅を90%にする */
-        margin: 15px 5%;     /* 上に余白を10px、横に5%とる */
+        width: 85%;            /* 幅を90%にする */
+        margin: 15px auto;     /* 上に余白を10px、中央に寄せる。 */
         line-height: 1.5;      /* 1行の高さを1.5行分にする */
         padding-left: 1em;     /* インデントを一つとる */
         text-indent: -1.0em;     /* 改行したときにインデントをとる */
@@ -177,11 +185,12 @@
      * 作成日 :2015.02.16
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
-     * 内容　 :text-alignを変更しました。
+     * 内容　 :text-alignを変更しました。下marginを調整しました。
      */
     .commonText .summary, .salesPoint .summary, .memberRule .summary {
-        text-align: center;       /* 中央寄せにする */
+        text-align: center;     /* 中央寄せにする */
         font-size: 13px;        /* 文字サイズを14pxにする */
+        margin-bottom: 3px;		/* 下に3pxのmarginを挿入する。 */
     }
 
     /* 
@@ -189,10 +198,14 @@
      * 概要   :スマホ用リストのスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.24
+     * 内容   :インデントの調整をしました。
      */
     .commonText td, .salesPoint td, .memberRule td {
         text-align: left;       /* 左寄りにする */
         font-size: 11px;        /* 文字サイズを14pxにする */
+        padding-left: 1.0em;	/* インデントの基準を左端にして整える。 */
     }
 
      /* 
