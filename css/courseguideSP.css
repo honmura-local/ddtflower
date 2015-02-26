@@ -141,7 +141,7 @@
      * 変更日 :2015.02.24
      * 内容　 :text-alignを変更しました。下marginを調整しました。
      */
-    .commonText .summary, .salesPoint .summary, .memberRule .summary {
+    .commonText .summary, .salesPoint .summary, .memberRule .summary , .merit .summary{
         font-size: 13px;        /* 文字サイズを14pxにする */
         margin-bottom: 3px;		/* 下に3pxのmarginを挿入する。 */
     }
@@ -159,6 +159,42 @@
         text-align: left;       /* 左寄りにする */
         font-size: 11px;        /* 文字サイズを14pxにする */
     }
+
+/* 
+ * セレクタ:.merit
+ * 概要   :ご入会メリット
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit {
+	width: 90%;				/* 幅を少し狭めた上で可変にする。 */
+	margin: 0 auto 10px;	/* 中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.merit dt
+ * 概要   :ご入会メリット、各項目見出し
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit dt{
+    font-size: 12px;    			/* 文字のサイズを18pxにする */
+    padding-left: 1em;			/* 適切にインデントをつける。 */
+}
+
+/* 
+ * セレクタ:.merit dd
+ * 概要   :ご入会メリット、各項目内容
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit dd{
+    font-size: 11px;    	/* 文字のサイズを18pxにする */
+	margin-bottom: 3px;		/* 各項目で十分に間を空ける。 */
+    padding-left: 2.0em;	/* 更にインデントをつける。 */
+}
+
+
 
 /* 
  * セレクタ:.photoGallery
@@ -211,7 +247,18 @@
 	vertical-align: middle;		/* 高さを中心に合わせる。 */
 	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
 }
-	
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRightFlower
+ * 概要   :フォトギャラリーのタイトルの右側のお花の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.photoGallery .galleryImgRightFlower{
+	display: none;	/* iPhoneの画面サイズではこの画像が入るスペースがないため、消しておく。 */
+}
+
+
 /* 
  * セレクタ:.footGallery
  * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素

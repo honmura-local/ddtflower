@@ -70,6 +70,9 @@
             },
             "galleryImgRight": {
                 "src": "image/icon(redbird).png"
+            },
+            "galleryImgRightFlower": {
+                "src": "image/icon(redsunflower).png"
             }
         },
         "footGallery": {

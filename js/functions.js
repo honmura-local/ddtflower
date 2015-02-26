@@ -207,13 +207,16 @@ function createGallery(selector){
 		arrows:false,
 		// レスポンシブレイアウトに対応する。
 		responsive:true,
-		// 一度に3個の画像をギャラリーに並べる。
+		//表示する画像の数を画面サイズに依存させる。
 		slidesToShow:slickitems,
 	    slidesToScroll: slickitems,
-		mobileFirst: true,
+		//モバイル優先の設定を使う。
+	    mobileFirst: true,
+		//最初に表示しない画像は後から読み込む。
 		lazyLoad:true,
 		// 緩急をつけたアニメーションでスクロールする。
 		easing:'swing',
+	    //幅を可変にする。
 		variableWidth:true,
 		// 画像を中心に配置する。
 		centerMode: true
@@ -243,13 +246,16 @@ function createGallery(selector){
 			accessibility:false,
 			// 矢印ボタンを使う。
 			arrows:false,
+			//モバイル優先の設定を使う。
 			mobileFirst: true,
+			//最初に表示しない画像を後から読み込む。
 			lazyLoad:true,
 			// レスポンシブレイアウトに対応する。
 			responsive:true,
-			// 一度に3個の画像をギャラリーに並べる。
+			//表示する画像の数を画面サイズに依存させる。
 			slidesToShow:slickitems,
 		    slidesToScroll: slickitems,
+		    //幅を可変にする。
 			variableWidth:true,
 			// 緩急をつけたアニメーションでスクロールする。
 			easing:'swing',

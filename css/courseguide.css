@@ -94,7 +94,7 @@
  * 作成者 :T.Masuda
  */
 .courseGuide caption {
-	background:	#0074a5;	/* 濃い青の背景を設定する。 */
+	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
 	color: #FFF;			/* フォントの色を白にする。 */
     font-size: 14px;		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
@@ -179,7 +179,7 @@
  */
 .lessonSchedule .summary {
 	text-align: center;		/* 中央揃えにする */
-	background:	#0074a5;	/* 濃い青の背景を設定する。 */
+	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
 	color: #FFF;			/* フォントの色を白にする。 */
     font-size: 14px;		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
@@ -324,6 +324,9 @@
  * 概要   :箇条書きの概要のスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :ご入会メリット追加
  */
 .commonText .summary, .salesPoint .summary, .memberRule .summary{
     font-size: 18px;    			/* 文字のサイズを18pxにする */
@@ -335,16 +338,159 @@
 }
 
 /* 
+ * セレクタ:.merit
+ * 概要   :ご入会メリット
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit {
+	clear: both;				/* 回り込みの対象にしない。 */
+	margin-bottom: 10px;		/* コンテンツの後に間隔を取る */
+	/* background:	#ffcfff; */		/* 背景を薄いピンクにする。 */
+	margin-top: 60px;			/* 上のmarginを挿入する。子要素をずらした分を考慮した値を指定する。 */
+	color: #555;
+}
+/* 
+ * セレクタ:.merit > *
+ * 概要   :ご入会メリットのタグ直下の全要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit > * {
+	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
+	top: -13px;			/* 対象の要素を上にずらす。 */
+}
+
+/* 
+ * セレクタ:.merit .meritTitle
+ * 概要   :ご入会メリットのタイトル部分
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+ .merit .meritTitle{
+	clear: both;
+	/* margin-bottom: 25px; */
+	text-align: center;
+	height: 35px;
+	top: -35px;
+padding-bottom: 60px;
+border-bottom: 1px solid #AAA;
+}
+
+/* 
+ * セレクタ:.merit .meritTitleText
+ * 概要   :ご入会メリットのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.merit .meritTitleText{
+	vertical-align: bottom;		/* 高さを中心に合わせる。 */
+	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
+	font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
+	color: #555;
+}
+	
+/* 
+ * セレクタ:.merit .meritImgLeft
+ * 概要   :ご入会メリットのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .meritImgLeft{
+	vertical-align: bottom;		/* 高さを底に合わせる。 */
+	margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+}
+
+/* 
+ * セレクタ:.merit .meritImgRight
+ * 概要   :ご入会メリットのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.merit .meritImgRight{
+	vertical-align: bottom;		/* 高さを中心に合わせる。 */
+	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
+}
+
+/* 
+ * セレクタ:.merit .meritImageToExperience
+ * 概要   :ご入会メリットの体験レッスンリンク画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+ .merit .meritToExperience {
+	float: right;			/* 右に寄せる。 */
+	top: -25px;				/* 上にずらす。 */		
+	margin-right: 5px;		/* 右にmarginを挿入する。 */
+	display: block;
+	width: 107px;
+	height: 123px;
+}
+
+/* 
+ * セレクタ:.merit .meritImageToExperience:hover
+ * 概要   :ご入会メリットの体験レッスンリンク画像にマウスを重ねたときの処理。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+ .merit .meritToExperience:hover {
+ 	opacity: 0.5;	/* 透過する。 */
+}
+
+/* 
+ * セレクタ:.merit dt,.merit dd
+ * 概要   :ご入会メリット、各項目
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit dt,.merit dd{
+    padding: 2px 0em;	/* 適切に間隔を取る */
+}
+
+/* 
+ * セレクタ:.merit dt
+ * 概要   :ご入会メリット、各項目見出し
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit dt{
+    font-size: 15px;    			/* 文字のサイズを15pxにする */
+    padding-left: 0.7em;			/* 適切にインデントをつける。 */
+    font-weight: bold;				/* 太字にして勢いをつける。 */
+    margin-bottom: 3px;
+    border-left: solid 5px rgb(206,220,58);
+    color: #555;
+    margin-left: 0;
+}
+
+/* 
+ * セレクタ:.merit dd
+ * 概要   :ご入会メリット、各項目内容
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit dd{
+    font-size: 13px;    	/* 文字のサイズを18pxにする */
+	
+    margin-bottom: 10px;		/* 各項目で十分に間を空ける。 */
+    padding-left: 2em;	/* 更にインデントをつける。 */
+    color: #555;
+    line-height: 20px;
+    color: #555;
+    font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
+}
+
+/* 
  * セレクタ:.photoGallery
  * 概要   :コース案内コンテンツ内のフォトギャラリー。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
  */
 .photoGallery{
-	height: 158px;					/* 全体を包むだけの高さを設定する。 */
+	height: 157px;					/* 全体を包むだけの高さを設定する。 */
 	width: 100%;					/* mainに合わせた幅を設定する。 */
 	background: rgb(206,220,58);	/* 黄緑の背景を設定する。 */
-	margin: 53px auto 10px;			/* 座標をずらした分の上marginを設定する。加えて中央に寄せる。 */
+	margin: 75px auto 10px;			/* 座標をずらした分の上marginを設定する。加えて中央に寄せる。 */
 }
 
 /* 
@@ -355,7 +501,7 @@
  */
 .photoGallery > * {
 	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
-	top: -53px;			/* 対象の要素を上にずらす。 */
+	top: -51px;			/* 対象の要素を上にずらす。 */
 }
 
 /* 
@@ -366,7 +512,7 @@
  */
 .photoGallery .galleryTitle{
 	width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
-	margin: 0 auto 5px;		/* 中央に寄せて、下に最低限のmarginを取る。 */
+	margin: 0px auto 6px;		/* 中央に寄せて、下に最低限のmarginを取る。 */
 	font-size: 0px;			/* インライン要素特有の余白を消す。 */
 	text-align: center;		/* 要素を中央に集める。 */
 }
@@ -380,6 +526,7 @@
 .photoGallery .galleryTitleText{
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
+	color: #FFF;				/* 白抜き文字にする。 */
 }
 	
 /* 
@@ -403,6 +550,17 @@
 	vertical-align: middle;		/* 高さを中心に合わせる。 */
 	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
 }
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRightFlower
+ * 概要   :フォトギャラリーのタイトルの右側のお花の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.photoGallery .galleryImgRightFlower{
+	/* 絶対位置を指定する。これによりタイトルのレイアウトを崩さずに画像が置かれる。 */
+	position: absolute;	
+}
 	
 /* 
  * セレクタ:.footGallery
@@ -411,10 +569,12 @@
  * 作成日 :2015.02.04
  */
 .footGallery{
-    width: 770px;       /* 幅770px */
-    height: 110px;      /* 高さを110pxに指定する。 */
+    width: 800px;       /* 幅770px */
+    height: 120px;      /* 高さを110pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
+    border-right: 1px solid #D0D0AC;
+    border-left: 1px solid #D0D0AC;
 }
 
 /* 
