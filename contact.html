@@ -66,8 +66,9 @@ creator.outputTag('contactForm');				// 問い合わせフォームを作る
 creator.outputTag('footImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
 
-// aタグの要素にマウスオーバーのフィルターを配置する。
-	functionFilter('a,.gideLogin img');
+//トップメニューにマウスオーバーのフィルターを配置する。
+functionFilter('.topMenu li');
+
 // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 fixYCoordinate('header', '.main');
 // position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。

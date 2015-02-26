@@ -76,21 +76,44 @@
  * 概要   :コース案内についてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :幅を広くしました。
  */
 .courseGuide {
-    margin: 20px 0;  	 /* 上から20px余白を空ける */
-    width: 50%;    		/* 幅を50%にする */
-    float: left;        /* 左回りに回り込みできるようにする */
+    margin: 0 0 20px;  	 					/* 下に20px余白を空ける */
+    width: 56%;    							/* 幅を56%にする */
+    float: left;     					   	/* 左回りに回り込みできるようにする */
+    font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
- * セレクタ:.courseGuide, .commonText, .salesPoint, .memberRule
- * 概要   :リスト項目ついてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
+ * セレクタ:.courseGuide caption
+ * 概要   :コース案内のタイトル部分
+ * 作成日 :2015.02.25
+ * 作成者 :T.Masuda
  */
-.courseGuide, .commonText, .memberRule {
-	margin-left: 20px;	/* 左に20pxのmarginを挿入する */
+.courseGuide caption {
+	background:	#0074a5;	/* 濃い青の背景を設定する。 */
+	color: #FFF;			/* フォントの色を白にする。 */
+    font-size: 14px;		/* フォントのサイズを普通にする。 */
+	margin-bottom: 0px;		/* 下marginをなくす。 */
+	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
+	text-align: center;		/* 文字を中心に揃える。 */
+}
+
+/* 
+ * セレクタ:.courseGuide .courseGuideHead
+ * 概要   :コース案内の見出し部分
+ * 作成日 :2015.02.25
+ * 作成者 :T.Masuda
+ */
+.courseGuide .courseGuideHead th{
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
+    font-size: 13px;		/* フォントのサイズをやや小さめにする。 */
+    font-weight: bold;		/* フォントを太字にする。 */
+    text-align: center;		/* 文字を中央に寄せる。 */
+    vertical-align: middle;	/* 高さを中心に合わせる。 */
 }
 
 /* 
@@ -103,19 +126,30 @@
  * 内容　 :paddingを狭めました。text-alignも追加しました。
  */
 .courseGuide th, .courseGuide td {
-    padding: 5px;      	/* 幅を5px広げる */
-    font-size: 16px;    /* フォントサイズを21pxにする */
+    padding: 10px;      	/* 幅を10px広げる */
+    font-size: 11px;		/* フォントのサイズを小さめにする。 */
     text-align: left;	/* 文字を左に寄せる、 */
+    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
 }
 
 /* 
- * セレクタ:.courseGuide th
+ * セレクタ:.stage,.times,.price
  * 概要   :コース案内のセルについてのスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.24
  */
-.courseGuide th {
-    text-indent: 1em;	/* 1字分字下げする。。 */
+.stage,.times,.price {
+}
+
+/* 
+ * セレクタ:.price
+ * 概要   :コース案内の金額セルについてのスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.24
+ */
+.price {
+	color		: #007698;	/* フォントの色を濃い青にする。 */
+	font-weight	: bold;		/* 太字にする。 */
 }
 
 /* 
@@ -123,11 +157,15 @@
  * 概要   :レッスンスケジュール(時間割)についてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :幅を広くしました。
  */
 .lessonSchedule {
-    margin: 20px;   /* 上から余白を20pxとる */
-    width:  35%;        /* レッスンスケジュールテーブル全体の幅を30%にする */
+    margin: 0 0 5px;   /* 下に余白を5pxとる */
+    width:  42%;        /* レッスンスケジュールテーブル全体の幅を42%にする */
     float: right;       /* 右回りに回り込みする */
+    font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
@@ -141,7 +179,11 @@
  */
 .lessonSchedule .summary {
 	text-align: center;		/* 中央揃えにする */
-    margin-bottom: 5px;    /* 下向きに5px余白をとる */
+	background:	#0074a5;	/* 濃い青の背景を設定する。 */
+	color: #FFF;			/* フォントの色を白にする。 */
+    font-size: 14px;		/* フォントのサイズを普通にする。 */
+	margin-bottom: 0px;		/* 下marginをなくす。 */
+	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
 }
 
 /* 
@@ -154,9 +196,21 @@
  * 内容　 :下のpaddingを減らしました。幅の設定は効かないので消しました。
  */
 .lessonSchedule th, .lessonSchedule td {
-    padding: 0 10px 10px 10px;  /* 左から0、10px、10px、20px、広げる */
-    font-size: 16px;            /* フォントサイズを21pxにする */
-    font-weight: normal;        /* 文字の太さを普通にする */
+    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
+    padding: 10px;      	/* 幅を10px広げる */
+}
+
+/* 
+ * セレクタ:.lessonSchedule .tableHead
+ * 概要   :レッスンスケジュールの曜日のセル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.24
+ */
+.lessonSchedule .tableHead {
+	text-align: center;	/* 文字を中心に寄せる。 */
+	font-size: 13px;	/* フォントサイズをこのテーブル内の中間にする */
+	font-weight: bold;	/* 太字にする。 */
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
 }
 
 /* 
@@ -167,6 +221,7 @@
  */
 .lessonSchedule .period {
 	text-align: left;	/* 文字を左に寄せる。 */
+	font-size: 11px;	/* フォントサイズをこのテーブル内の最小にする */
 }
 
 /* 
@@ -176,7 +231,8 @@
  * 作成日 :2015.02.24
  */
 .lessonSchedule .hour {
-	text-align: right;	/* 文字を右に寄せる。 */
+	text-align: left;	/* 文字を左に寄せる。 */
+	font-size: 11px;	/* フォントサイズをこのテーブル内の最小にする */
 }
 
 /* 
@@ -190,10 +246,13 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.24
  * 内容　 :marginを変更しました。。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :marginを下だけにし、clearの値を変えました。
  */
 .commonText {
-	margin: 30px 20px;	/* 上下に30px、左右に20pxの余白をとる */
-    clear: left;    	/* 左側の回り込みをなくす */
+    clear: both;    		/* 回り込みをなくす */
+    margin-bottom: 10px;	/* 下にmarginを指定する。 */
 }
 
 /* 
@@ -204,14 +263,18 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.24
  * 内容　 :paddingを狭めました。字下げも増やしました。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :displayをlist-itemに変更しました。
  */
 .commonText td, .salesPoint td, .memberRule td{
     padding: 2px 0;   			/* 上下に2pxの余白をとる */
     font-size: 13px;			/* フォントのサイズを16pxにする */
     line-height: 1.3;			/* 行の高さを1.3行分にする */
     font-family: sans-serif;	/* fontをsans-serifにする */
-    padding-left: 2.5em;	   	/* 頭をキャプションの2文字目に合わせる。 */
-    text-indent: -1em;  	  	/* 改行したときにインデントをとる */
+    padding-left: 2.9em;	   	/* 頭をキャプションの2文字目に合わせる。 */
+    text-indent: -1em;	   		/* 先頭の文字を1文字分左にずらす。 */
+    display: list-item;			/* リストの項目として扱う。 */
 }
 
 /* 
@@ -222,9 +285,12 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.22
  * 内容　 :幅の記述を削除しました。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :marginを下だけにしました。
  */
 .salesPoint {
-    margin: 30px 0 30px 20px; /* 上下に30pxの余白をとる */
+	margin-bottom: 10px;	/* 下のmarginを指定する。 */
 }
 
 /* 
@@ -232,25 +298,112 @@
  * 概要   :会員規約についてそれぞれの項目のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :marginを減らしました。
  */
 .memberRule {
-    margin-bottom: 50px;    /* 余白を下に50pxにする */
-    width: 780px;    	/* 幅を780pxにする */
+    width: 780px;    		/* 幅を780pxにする */
+    margin-bottom: 20px;	/* 下marginを20pxにする。 */
 }
 
 
 /* 
- * セレクタ:.summary
- * 概要   :概要のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
+ * セレクタ:.commonText, .salesPoint, .memberRule
+ * 概要   :箇条書きのスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
  */
-.summary{
-    font-size: 18px;    /* 文字のサイズを25pxにする */
-    text-align: left;   /* 文字を左寄せにする */
-    margin-bottom: 5px;	/* 下方向に余白を5pxとる */
+.commonText, .salesPoint, .memberRule{
+	list-style: disc inside;	/* リストの項目の先頭に点をつける。 */
+	width: 100%;				/* 幅をmain一杯に広げる。 */
 }
 
+/* 
+ * セレクタ:.commonText .summary, .salesPoint .summary, .memberRule .summary
+ * 概要   :箇条書きの概要のスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.commonText .summary, .salesPoint .summary, .memberRule .summary{
+    font-size: 18px;    			/* 文字のサイズを18pxにする */
+    font-weight: bold;				/* 太字にする。 */
+    text-align: left;  				/* 文字を左寄せにする */
+    margin-bottom: 5px;				/* 下方向に余白を5pxとる */
+    padding-bottom: 6px;			/* 下線との間に余白を文字1/3とる */
+    border-bottom: 1px solid #666;	/* 下線を引く */
+}
+
+/* 
+ * セレクタ:.photoGallery
+ * 概要   :コース案内コンテンツ内のフォトギャラリー。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery{
+	height: 158px;					/* 全体を包むだけの高さを設定する。 */
+	width: 100%;					/* mainに合わせた幅を設定する。 */
+	background: rgb(206,220,58);	/* 黄緑の背景を設定する。 */
+	margin: 53px auto 10px;			/* 座標をずらした分の上marginを設定する。加えて中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.photoGallery > *
+ * 概要   :フォトギャラリーのタグ直下の全要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery > * {
+	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
+	top: -53px;			/* 対象の要素を上にずらす。 */
+}
+
+/* 
+ * セレクタ:.photoGallery .galleryTitle
+ * 概要   :フォトギャラリーのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryTitle{
+	width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
+	margin: 0 auto 5px;		/* 中央に寄せて、下に最低限のmarginを取る。 */
+	font-size: 0px;			/* インライン要素特有の余白を消す。 */
+	text-align: center;		/* 要素を中央に集める。 */
+}
+
+/* 
+ * セレクタ:.photoGallery .galleryTitleText
+ * 概要   :フォトギャラリーのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryTitleText{
+	vertical-align: bottom;		/* 高さを中心に合わせる。 */
+	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
+}
+	
+/* 
+ * セレクタ:.photoGallery .galleryImgLeft
+ * 概要   :フォトギャラリーのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryImgLeft{
+	vertical-align: bottom;		/* 高さを底に合わせる。 */
+	margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+}
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRight
+ * 概要   :フォトギャラリーのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryImgRight{
+	vertical-align: middle;		/* 高さを中心に合わせる。 */
+	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
+}
+	
 /* 
  * セレクタ:.footGallery
  * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
@@ -258,7 +411,7 @@
  * 作成日 :2015.02.04
  */
 .footGallery{
-    width: 750px;       /* 幅750px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
+    width: 770px;       /* 幅770px */
     height: 110px;      /* 高さを110pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
@@ -269,8 +422,14 @@
  * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 変更者 :T.Yamamoto
+ * 変更日 :2015.02.09
+ * 内容　 :幅を変更しました。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :高さ、幅を変更しました。
  */
 .footGallery img{
-    width:  180px;  /* 幅を200pxにする */
-    height: auto;  /* 高さを自動にする */
+    width:  auto;  	/* 幅を自動調整にする */
+    height: 120px;  /* 高さを固定にする */
 }

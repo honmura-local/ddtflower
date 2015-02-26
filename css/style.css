@@ -135,9 +135,6 @@ input, select {
 /* ここまでclearfix */
 
 /* 各タグの基本設定 */
-a:hover {
-    opacity: 0.5;
-}
 /* 
  * セレクタ:h1,h2,h3,h4,h5
  * 概要   :見出した具
@@ -158,7 +155,6 @@ h1,h2,h3,h4,h5,th{
     width: 100%;            /* 横幅を画面一杯に広げる */
     background: inherit;    /* bodyの背景色を継承する。 */
     font-family: sans-serif;	/* フォントを決める */
-    text-shadow: 1px 1px 1px #dfdfdf;   /* テキストに影を入れる */
 }
 
 /* ヘッダー領域。 */
@@ -198,6 +194,17 @@ h1,h2,h3,h4,h5,th{
     padding     :   10px 0;     /* 上下15pxのpaddingを指定する。左右には最低限のpaddingを指定する。 */
     font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
 }
+
+/* 
+ * セレクタ:.guides a:hover
+ * 概要   :ガイドのリンクにマウスカーソルを重ねたときの動作。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.guides a:hover{
+	opacity: 0.5;	/* 透過率を下げる。 */
+}
+
 /* 
  * セレクタ:.guides > *
  * 概要   :ガイド領域直下の要素。
@@ -424,13 +431,13 @@ h1,h2,h3,h4,h5,th{
 }
 
 /* 
- * セレクタ:.topMenu .li:hover,.li:active
- * 概要   :トップメニューのボタンにマウスカーソルが合ったとき、またはタップしたとき。
+ * セレクタ:.topMenu li.active
+ * 概要   :選択中のトップメニューのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.topMenu li:hover, .topMenu li:active{
-    background: #EEE;   /* ボタンの背景色を薄い灰色にする。 */
+.topMenu li.active{
+	border-bottom: 3px solid rgb(0, 174, 40);
 }
 
 /* 
@@ -457,6 +464,18 @@ h1,h2,h3,h4,h5,th{
     font-size	: 16px;   		/* 妥当なフォントサイズを指定する。 */
     display		: inline-block; /* インラインブロック表示を行う。 */
 }
+/* 
+ * セレクタ:.topMenu .active p
+ * 概要   :選択中のトップメニューのボタンのリンクの文字。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.topMenu .active p{
+	color:rgb(0, 174, 40);
+	opacity: 1!important;
+}
+
+
 
 /* 
  * セレクタ:.main
@@ -518,7 +537,6 @@ footer{
 .loginDialog {
 	font-size: 14px;					/* フォントサイズを指定する。 */
 	font-family: sans-serif;			/* containerのフォントと合わせる */
-	text-shadow: 1px 1px 1px #dfdfdf;	/* containerのフォントと合わせる */
 }
 
 /* 

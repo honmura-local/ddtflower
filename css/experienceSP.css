@@ -8,9 +8,11 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
      * 内容  :width、margin、floatを設定しました。
+     * 変更日 :2015.02.26
+     * 内容  :widthを修正しました。
      */
      .specialGuide {
-       width: 65%;				/* marginを考慮した可変幅を設定する。 */
+       width: 90%;				/* marginを考慮した可変幅を設定する。 */
        margin: 0 auto 10px;		/* 中央に寄せる。下のmarginもセットする。 */
        float: none;				/* floatを解除する。 */
      }
@@ -77,21 +79,24 @@
  * 作成日 :2015.02.21
  */
 .experienceGallery{
-    width: 100%;       		/* 幅をページ幅に合わせて伸縮する。 */
+    width: 90%;       		/* 幅をページ幅に合わせて伸縮する。最低限の余白は残すようにする */
     height: auto;      		/* 高さを自動調整する。 */
-    margin: 0 auto 10px;     /* 中央に寄せる。下とも間を空ける。 */
+    margin: 0 auto 10px;    /* 中央に寄せる。下とも間を空ける。 */
     clear: both;        	/* 回り込みを無効にする */
 }
 
 /* 
  * セレクタ:.experienceGallery img
- * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
+ * 概要   :カルーセルで表示する画像の設定。
  * 作成者 :T.Masuda 
  * 作成日 :2015.02.21
+ * 変更者 :T.Masuda 
+ * 変更日 :2015.02.26
+ * 内容　 :画像のサイズのスタイルを変更しました。
  */
 .experienceGallery img{
     height: auto;  	/* 高さを自動にする */
-    width:  80%;  	/* 幅を200pxにする */
+    width:  100%;  	/* 幅を自動調整にする */
     margin: 0 auto;	/* 画像を中央に寄せる。 */
 }
 

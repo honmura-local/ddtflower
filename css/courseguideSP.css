@@ -63,13 +63,16 @@
      * 内容　  :幅を変更。
      * 変更者  :T.Masuda
      * 変更日  :2015.02.24
-     * 内容　  :ブロック要素に変更しました。。
+     * 内容　  :ブロック要素に変更しました。
+     * 変更者  :T.Masuda
+     * 変更日  :2015.02.26
+     * 内容　  :幅を変更しました。また、marginの記述をなくしました。clear:bothを記述しました。
      */
     .pageTitle .summary{
-		width: 65%;					/* 幅を可変にする。 */
-        font-size: 11px;       		/* フォントのサイズを12pxにする */
-        margin: 0 5% 0px 19%;		/* 左右にmarginを挿入する。 */
-   		display: block;  			/* ブロック要素にする */
+		width: 90%;			/* 幅を可変にする。 */
+        font-size: 11px;    /* フォントのサイズを12pxにする */
+   		display: block;  	/* ブロック要素にする */
+   		clear: both;		/* 回り込みをなくす。 */
     }
 
     /* 
@@ -93,42 +96,6 @@
     }
 
     /* 
-     * セレクタ:.courseGuide th, .courseGuide td
-     * 概要   :スマホ用コンテンツのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :displayを削除しました。
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.24
-     * 内容　 :paddingを削除しました。text-alignを追加しました。
-     */
-    .courseGuide th, .courseGuide td{
-        font-size:12px;         /* フォントサイズを12pxにする */
-        margin-left: 35px;      /* 左から35px余白をとる */
-        text-align: center;		/* 文字を中心に寄せる。 */
-    }
-
-    /* 
-     * セレクタ:.courseGuide .summary, .lessonSchedule .summary
-     * 概要   :スマホ用コース案内テーブルのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.22
-     * 内容　 :margin、text-alignを変更しました。
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.24
-     * 内容　 :marginをなくしました。
-     */
-    .courseGuide .summary, .lessonSchedule .summary{
-        font-size: 14px;     /* フォントサイズを15pxにする */
-        text-align: center;  /* 中央寄せにする */
-        margin-bottom: 2px;	/* 下のmarginを減らす。 */
-    }
-
-    /* 
      * セレクタ:.lessonSchedule
      * 概要   :スマホ用レッスンスケジュールテーブルのスタイル
      * 作成者 :T.Yamamoto
@@ -141,24 +108,12 @@
      * 内容　 :floatを解除しました。幅を狭めました。中央に寄せるようにしました。
      */
     .lessonSchedule {
-        width: 75%;            	/* 幅を75%にする */
+        width: 90%;            	/* 幅を90%にする */
 		margin: 0 auto 10px;	/* 中央に寄せる。 */
     	float: none;			/* 段組みレイアウトを解除する。 */
     }
 
-/* 
- * セレクタ:.lessonSchedule .tableHead,.lessonSchedule .period,.lessonSchedule .hour
- * 概要   :レッスンスケジュールのセル
- * 作成者 :T.Masuda
- * 作成日 :2015.02.24
- */
-.lessonSchedule .tableHead,.lessonSchedule .period,.lessonSchedule .hour {
-    padding: 4px;       /* 要素の幅を4px広くする */
-    font-size:13px;     /* 文字サイズを13pxにする */  
-	text-align: center;	/* 文字を左に寄せる。 */
-}
-
-        /* 
+    /* 
      * セレクタ:.commonText, .salesPoint, .memberRule
      * 概要   :スマホ用リストのスタイル
      * 作成者 :T.Yamamoto
@@ -171,11 +126,10 @@
      * 内容　 :margin、幅を変更しました。
      */
     .commonText, .salesPoint, .memberRule {
-        width: 85%;            /* 幅を90%にする */
+        width: 90%;            /* 幅を90%にする */
         margin: 15px auto;     /* 上に余白を10px、中央に寄せる。 */
         line-height: 1.5;      /* 1行の高さを1.5行分にする */
         padding-left: 1em;     /* インデントを一つとる */
-        text-indent: -1.0em;     /* 改行したときにインデントをとる */
     }
 
     /* 
@@ -188,7 +142,6 @@
      * 内容　 :text-alignを変更しました。下marginを調整しました。
      */
     .commonText .summary, .salesPoint .summary, .memberRule .summary {
-        text-align: center;     /* 中央寄せにする */
         font-size: 13px;        /* 文字サイズを14pxにする */
         margin-bottom: 3px;		/* 下に3pxのmarginを挿入する。 */
     }
@@ -205,39 +158,67 @@
     .commonText td, .salesPoint td, .memberRule td {
         text-align: left;       /* 左寄りにする */
         font-size: 11px;        /* 文字サイズを14pxにする */
-        padding-left: 1.0em;	/* インデントの基準を左端にして整える。 */
     }
 
-     /* 
-     * セレクタ:.footGallery
-     * 概要   :スマホ用写真ギャラリーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 内容   :幅とmarginを調整。
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.24
-     * 内容   :高さを指定しました。。
-     */
-    .footGallery {
-    	margin: 0 auto;		/* 中央に寄せる。 */
-        width: 80%;			/* 左右のボタンの幅を考慮した幅を設定する。 */
-        height: auto;		/* 高さを自動調整する。 */
-    }
+/* 
+ * セレクタ:.photoGallery
+ * 概要   :コース案内コンテンツ内のフォトギャラリー。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery{
+	width: 90%;				/* 余白を考えた幅に設定する。 */
+}
 
-    /* 
-     * セレクタ:.footGallery img
-     * 概要   :スマホ用写真ギャラリーのスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 内容   :幅とmarginを調整。
-     */
-    .footGallery img {
-		width: 95%;		/* 幅を少し小さめにする */
-		margin: 0 auto;	/* 中央に寄せる */
-    }
+/* 
+ * セレクタ:.photoGallery .galleryTitle
+ * 概要   :フォトギャラリーのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryTitle{
+	width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
+}
 
-    
+/* 
+ * セレクタ:.photoGallery .galleryTitleText
+ * 概要   :フォトギャラリーのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryTitleText{
+	font-size:18px;				/* フォントサイズを18pxに設定する。 */
+}
+	
+/* 
+ * セレクタ:.photoGallery .galleryImgLeft
+ * 概要   :フォトギャラリーのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryImgLeft{
+	vertical-align: bottom;		/* 高さを底に合わせる。 */
+	margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+}
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRight
+ * 概要   :フォトギャラリーのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.photoGallery .galleryImgRight{
+	vertical-align: middle;		/* 高さを中心に合わせる。 */
+	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
+}
+	
+/* 
+ * セレクタ:.footGallery
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.footGallery{
+    width: 95%;       /* 詰めすぎない幅に設定する。 */
+}
+

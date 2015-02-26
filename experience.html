@@ -67,17 +67,16 @@ creator.outputTag('headImage');					// 天の画像を作る
 creator.outputTag('pageTitle');					// タイトル領域を作る
 creator.outputTag('specialGuide');				//体験ガイドを作る
 creator.outputTag('calendar');					//カレンダーを作る
-creator.outputTag('experienceGallery');					//カレンダーを作る
+creator.outputTag('experienceGallery');			//体験レッスン用ギャラリーを作る
 creator.outputTag('commonText');				//共通リストテーブルを作る
-creator.outputTag('footGallery');				// ギャラリー画像を作る
-creator.outputTag('salesPoint');				// 特徴リストを作る
 creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
 creator.outputTag('footImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
 createUnmovableGallery('experienceGallery');	//slickによる動かないギャラリーを作成する。
 
-// aタグの要素にマウスオーバーのフィルターを配置する。
-	functionFilter('a,.gideLogin img');
+//トップメニューにマウスオーバーのフィルターを配置する。
+functionFilter('.topMenu li');
+
 // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 fixYCoordinate('header', '.main');
 // position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。

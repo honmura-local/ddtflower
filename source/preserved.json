@@ -1,6 +1,6 @@
 {
     "pageTitle": {
-    	"class":"pageTitle cf",
+        "class": "pageTitle cf",
         "image": {
             "src": "image/icon(tulip).png"
         },
@@ -14,6 +14,17 @@
     "courseGuide": {
         "summary": {
             "text": "コース案内"
+        },
+        "courseGuideHead": {
+            "stageHead": {
+                "text": "レベル"
+            },
+            "timesHead": {
+                "text": "回数"
+            },
+            "priceHead": {
+                "text": "金額(1回当たり)"
+            }
         },
         "firstStage": {
             "stage": {
@@ -49,104 +60,107 @@
             }
         }
     },
-    "footGallery": {
-        "1stDiv": {
-            "1stArt": {
-                "href": "image/1.JPG",
-                "rel": "gallery",
-                "1stImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/1.JPG"
-                }
+    "photoGallery": {
+        "galleryTitle": {
+            "galleryImgLeft": {
+                "src": "image/icon(bluesmallbird).png"
+            },
+            "galleryTitleText": {
+                "text": "Photo Gallery"
+            },
+            "galleryImgRight": {
+                "src": "image/icon(redbird).png"
             }
         },
-        "2ndDiv": {
-            "2ndArt": {
-                "href": "image/2.JPG",
-                "rel": "gallery",
-                "2ndImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/2.JPG"
+        "footGallery": {
+            "1stDiv": {
+                "1stArt": {
+                    "href": "photo/general/web/DSC_1086.jpg",
+                    "rel": "gallery",
+                    "1stImage": {
+                        "src": "photo/general/web100/DSC_1086.jpg"
+                    }
                 }
-            }
-        },
-        "3rdDiv": {
-            "3rdArt": {
-                "href": "image/3.JPG",
-                "rel": "gallery",
-                "3rdImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/3.JPG"
+            },
+            "2ndDiv": {
+                "2ndArt": {
+                    "href": "photo/general/web/DSC_1061.jpg",
+                    "rel": "gallery",
+                    "2ndImage": {
+                        "src": "photo/general/web100/DSC_1061.jpg"
+                    }
                 }
-            }
-        },
-        "4thDiv": {
-            "4thArt": {
-                "href": "image/4.JPG",
-                "rel": "gallery",
-                "4thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/4.JPG"
+            },
+            "3rdDiv": {
+                "3rdArt": {
+                    "href": "photo/general/web/DSC_1038.jpg",
+                    "rel": "gallery",
+                    "3rdImage": {
+                        "src": "photo/general/web100/DSC_1038.jpg"
+                    }
                 }
-            }
-        },
-        "5thDiv": {
-            "5thArt": {
-                "href": "image/5.JPG",
-                "rel": "gallery",
-                "5thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/5.JPG"
+            },
+            "4thDiv": {
+                "4thArt": {
+                    "href": "photo/general/web/DSC_1025.jpg",
+                    "rel": "gallery",
+                    "4thImage": {
+                        "src": "photo/general/web100/DSC_1025.jpg"
+                    }
                 }
-            }
-        },
-        "6thDiv": {
-            "6thArt": {
-                "href": "image/6.JPG",
-                "rel": "gallery",
-                "6thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/6.JPG"
+            },
+            "5thDiv": {
+                "5thArt": {
+                    "href": "photo/general/web/DSC_1008.jpg",
+                    "rel": "gallery",
+                    "5thImage": {
+                        "src": "photo/general/web100/DSC_1008.jpg"
+                    }
                 }
-            }
-        },
-        "7thDiv": {
-            "7thArt": {
-                "href": "image/7.JPG",
-                "rel": "gallery",
-                "7thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/7.JPG"
+            },
+            "6thDiv": {
+                "6thArt": {
+                    "href": "photo/general/web/DSC_0985.jpg",
+                    "rel": "gallery",
+                    "6thImage": {
+                        "src": "photo/general/web100/DSC_0985.jpg"
+                    }
                 }
-            }
-        },
-        "8thDiv": {
-            "8thArt": {
-                "href": "image/8.JPG",
-                "rel": "gallery",
-                "8thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/8.JPG"
+            },
+            "7thDiv": {
+                "7thArt": {
+                    "href": "photo/general/web/DSC_0947.jpg",
+                    "rel": "gallery",
+                    "7thImage": {
+                        "src": "photo/general/web/DSC_0947.jpg"
+                    }
                 }
-            }
-        },
-        "9thDiv": {
-            "9thArt": {
-                "href": "image/9.JPG",
-                "rel": "gallery",
-                "9thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/9.JPG"
+            },
+            "8thDiv": {
+                "8thArt": {
+                    "href": "photo/general/web/DSC_0898.jpg",
+                    "rel": "gallery",
+                    "8thImage": {
+                        "src": "photo/general/web100/DSC_0898.jpg"
+                    }
                 }
-            }
-        },
-        "10thDiv": {
-            "10thArt": {
-                "href": "image/10.JPG",
-                "rel": "gallery",
-                "10thImage": {
-                    "src": "image/dummy.png",
-                    "data-original": "image/10.JPG"
+            },
+            "9thDiv": {
+                "9thArt": {
+                    "href": "photo/general/web/DSC_0894.jpg",
+                    "rel": "gallery",
+                    "9thImage": {
+                        "src": "photo/general/web100/DSC_0894.jpg"
+                    }
+                }
+            },
+            "10thDiv": {
+                "10thArt": {
+                    "href": "photo/general/web/DSC_0834.jpg",
+                    "rel": "gallery",
+                    "10thImage": {
+                        "src": "photo/general/web100/DSC_0834.jpg"
+                    }
                 }
             }
         }

@@ -54,26 +54,20 @@ function functionFilter (filterTarget) {
   // jqueryの記述の始まり
   $(function() {
 	//現在表示中のページのボタン以外に対して
-    $(filterTarget).filter(':not([href$="' + currentLocation + '"])')
+    $(filterTarget).filter(':has(a:not([href$="' + currentLocation + '"]))')
         .mouseenter(function() {            // 引数の要素にマウスを乗せた時の処理
-            $(this).css("opacity", 0.5);    // 引数の要素の透過度を0.5にする
+            $(this).addClass('active');    // 引数の要素にactiveクラスを付与する。
         })
         .mouseleave(function() {            // 引数の要素からマウスが離れたときの処理
-            $(this).css("opacity", 1);      // 引数の要素の透過度を戻す
+            $(this).removeClass('active');  // 引数の要素からactiveクラスを除去する。
         });
   });// jqueryの記述の終わり
   
   // URLからファイル名を取得する。
 	var contentName = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
   
-	// 現在のページのボタンの枠に対して
-	$('.topMenu li:has(a[href$="' + currentLocation + '"])').css({
-		background: "#EEE"   	/* ボタンの背景色を薄い灰色にする。 */
-	});
-	//現在のページのボタンに対して
-	$('.topMenu a[href$="' + currentLocation + '"]').css({
-		opacity: "0.5"   	/* 文字を透過する。 */
-	});
+	// 現在のページのボタンの枠に対して、activeクラスを付与する。
+	$('.topMenu li:has(a[href$="' + currentLocation + '"])').addClass('active');
   
 }
 
@@ -196,18 +190,31 @@ function callReservedDialog(dateText){
  * 作成者:T.M
  */
 function createGallery(selector){
+
+	// slickの画像の個数を用意する。
+	var slickitems = 3;
+	// 画面がスマホレイアウトであれば
+	if(window.innerWidth <= 680){
+		// 表示する個数を減らす。
+		slickitems = 1;
+	}
+	
 // jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
 	$('.' + selector).slick({
 		// 矢印ボタンでの制御を有効にする。
-		accessibility:true,
+		accessibility:false,
 		// 矢印ボタンを使う。
-		arrows:true,
+		arrows:false,
 		// レスポンシブレイアウトに対応する。
 		responsive:true,
 		// 一度に3個の画像をギャラリーに並べる。
-		slidesToShow:3,
+		slidesToShow:slickitems,
+	    slidesToScroll: slickitems,
+		mobileFirst: true,
+		lazyLoad:true,
 		// 緩急をつけたアニメーションでスクロールする。
 		easing:'swing',
+		variableWidth:true,
 		// 画像を中心に配置する。
 		centerMode: true
 	});
@@ -217,6 +224,39 @@ function createGallery(selector){
 	$('.' + selector + ' a').fancybox({
 		'hideOnContentClick': true
 	}); 
+	
+	//ウィンドウの幅が変わったときのイベントを登録する。
+	$(window).resize(function(){
+		// 画面がスマホレイアウトであれば
+		if(window.innerWidth <= 680){
+			// 表示する個数を減らす。
+			slickitems = 1;
+		//PCレイアウトであれば
+		} else{
+			//表示する個数を多めにする。
+			slickitems = 3;
+		}
+		$('.' + selector).unslick();
+		//slickの設定を直す。
+		$('.' + selector).slick({
+			// 矢印ボタンでの制御を有効にする。
+			accessibility:false,
+			// 矢印ボタンを使う。
+			arrows:false,
+			mobileFirst: true,
+			lazyLoad:true,
+			// レスポンシブレイアウトに対応する。
+			responsive:true,
+			// 一度に3個の画像をギャラリーに並べる。
+			slidesToShow:slickitems,
+		    slidesToScroll: slickitems,
+			variableWidth:true,
+			// 緩急をつけたアニメーションでスクロールする。
+			easing:'swing',
+			// 画像を中心に配置する。
+			centerMode: true
+		});
+	});
 }
 
 /*
