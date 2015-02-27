@@ -18,21 +18,6 @@
      }
 
     /* 
-     * セレクタ:.specialGuide .summary
-     * 概要   :スマホ用体験レッスン案内テーブル概要のスタイル
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.24
-     * 内容  :text-alignを設定しました。
-     */
-     .specialGuide .summary {
-        padding: 15px; /* 要素の幅を15px広げる */
-        font-size: 13px;/* フォントのサイズを13pxにする */
-        text-align: center;	/* 文字を中央に寄せる。 */
-     }
-
-    /* 
      * セレクタ:.specialGuide th, .specialGuide td
      * 概要   :スマホ用体験レッスン案内テーブル中身のスタイル
      * 作成者 :T.Yamamoto
@@ -80,10 +65,11 @@
  * 作成日 :2015.02.21
  */
 .experienceGallery{
-    width: 90%;       		/* 幅をページ幅に合わせて伸縮する。最低限の余白は残すようにする */
+    width: 100%;       		/* 幅をページ幅に合わせて伸縮する */
     height: auto;      		/* 高さを自動調整する。 */
     margin: 0 auto 10px;    /* 中央に寄せる。下とも間を空ける。 */
     clear: both;        	/* 回り込みを無効にする */
+    margin-bottom: 30px!important;
 }
 
 /* 
@@ -101,3 +87,33 @@
     margin: 0 auto;	/* 画像を中央に寄せる。 */
 }
 
+/* 
+ * セレクタ:.experienceConstructs
+ * 概要   :体験レッスンページの作品一覧。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.experienceConstructs {
+	width: 90%;		/* 幅90% */
+	margin: 0 auto;	/* 中央寄せ */
+}
+
+/* 
+ * セレクタ:.experienceGallery > div > div
+ * 概要   :作品一覧の画像配置領域。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.experienceGallery > div > div{
+	width:100%!important;	/* 画像の領域の幅を一定にする。 */
+}
+
+/* 
+ * セレクタ:.experienceGallery > div > div
+ * 概要   :作品一覧の画像1つの領域。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.experienceGallery > div > div > div{
+	width:50%!important;	/* 2個ずつ並べて表示する。 */
+}

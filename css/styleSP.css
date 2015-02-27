@@ -13,8 +13,6 @@
         width: 100%;         /* コンテンツの幅を100%にする */
         margin: 0 auto;     /* 中央揃えにする */
         font-size: 12px;    /* フォントサイズを12pxにする */
-	 	font-family: sans-serif; /* フォントを設定する */
-        text-shadow: 1px 1px 1px #dfdfdf;   /* テキストに影を入れる */
     }
 
 	/* 
@@ -72,11 +70,12 @@
  * 内容　:中央寄せのデザインに変更しました。
  */
 .copyright {
-    font-size: 8px;      /* 文字サイズを8pxにする */
-	text-align: left;	/* 文字を左に詰める。 */
-	width: 65%;			/* 文字の取る幅の最低サイズを要素の幅にする。 */
-	display: block;		/* marginによる中央寄せを有効にするためにブロック要素にする。 */
-	margin: 0 auto;		/* 中央に寄せる。 */
+	font-size: 8px;			/* フォントサイズをより小さくする。 */
+	text-align: center;		/* 中心に寄せる。 */
+	width: 100%;			/* 幅を一杯に取る。 */
+	display: block;			/* ブロック要素として扱う。 */
+	margin: 0 auto;			/* 中心に寄せる。 */
+	word-break: break-all;	/* 単語単位の改行をしない。 */
 }
 
 /* ガイド領域 */

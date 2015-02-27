@@ -13,10 +13,12 @@
 	},
 
 	"courseGuide":{
+		"class": "courseGuide guideTable",
 		"summary" :{
 			"text": "コース案内"
 		},
         "courseGuideHead": {
+			"class":"guideHead",
             "stageHead": {
                 "text": "レベル"
             },

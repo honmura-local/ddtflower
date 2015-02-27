@@ -12,10 +12,12 @@
         }
     },
     "courseGuide": {
+ 		"class": "courseGuide guideTable",
         "summary": {
             "text": "コース案内"
         },
         "courseGuideHead": {
+			"class":"guideHead",
             "stageHead": {
                 "text": "レベル"
             },
@@ -70,6 +72,9 @@
             },
             "galleryImgRight": {
                 "src": "image/icon(redbird).png"
+            },
+            "galleryImgRightFlower": {
+                "src": "image/icon(redsunflower).png"
             }
         },
         "footGallery": {

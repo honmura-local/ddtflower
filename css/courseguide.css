@@ -65,7 +65,6 @@
     height:     auto;       /* 高さを自動調整する。 */
     font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
     text-indent: 1em;		/* インデントを1文字分入れる */
-    font-family: Osaka;		/* フォントをOsakaにする */
     font-weight: normal;	/* 文字の太さを通常にする */
     line-height: 1.4;		/* 行間を1.4行分とる */
     margin: 0 auto;         /* 中央に寄せる。 */
@@ -85,19 +84,30 @@
     margin: 0 0 20px;  	 					/* 下に20px余白を空ける */
     width: 56%;    							/* 幅を56%にする */
     float: left;     					   	/* 左回りに回り込みできるようにする */
+}
+
+/* 
+ * セレクタ:.courseGuide
+ * 概要   :コース案内についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :幅を広くしました。
+ */
+.guideTable {
     font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
- * セレクタ:.courseGuide caption
- * 概要   :コース案内のタイトル部分
- * 作成日 :2015.02.25
+ * セレクタ:.guideTable .summary
+ * 概要   :案内テーブル概要のスタイル
  * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
  */
-.courseGuide caption {
-	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
-	color: #FFF;			/* フォントの色を白にする。 */
-    
+.guideTable .summary {
+ 	background:	rgb(206,220,58);	/* 黄緑の背景を設定する。 */
+	color: #FFF;					/* フォントの色を白にする。 */
 	font-size: 16px;		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
 	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
@@ -105,33 +115,31 @@
 }
 
 /* 
- * セレクタ:.courseGuide .courseGuideHead
- * 概要   :コース案内の見出し部分
- * 作成日 :2015.02.25
+ * セレクタ:.guideTable td,.guideTable th
+ * 概要   :案内テーブルセルのスタイル
  * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
  */
-.courseGuide .courseGuideHead th{
+.guideTable td,.guideTable th {
+    padding: 10px;      	/* 幅を10px広げる */
+    font-size: 11px;		/* フォントのサイズを小さめにする。 */
+    text-align: left;	/* 文字を左に寄せる、 */
+    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
+}
+
+/* 
+ * セレクタ:.guideHead th
+ * 概要   :案内テーブル見出し行のセルのスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
+.guideHead th{
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
 	background: #F0F3F5;	/* 背景色を薄い青にする。 */
     font-size: 13px;		/* フォントのサイズをやや小さめにする。 */
     font-weight: bold;		/* フォントを太字にする。 */
     text-align: center;		/* 文字を中央に寄せる。 */
     vertical-align: middle;	/* 高さを中心に合わせる。 */
-}
-
-/* 
- * セレクタ:.courseGuide th, .courseGuide td 
- * 概要   :コース案内のセルについてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 作成者 :T.Masuda
- * 作成日 :2015.02.24
- * 内容　 :paddingを狭めました。text-alignも追加しました。
- */
-.courseGuide th, .courseGuide td {
-    padding: 10px;      	/* 幅を10px広げる */
-    font-size: 11px;		/* フォントのサイズを小さめにする。 */
-    text-align: left;	/* 文字を左に寄せる、 */
-    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
 }
 
 /* 
@@ -167,7 +175,6 @@
     margin: 0 0 5px;   /* 下に余白を5pxとる */
     width:  42%;        /* レッスンスケジュールテーブル全体の幅を42%にする */
     float: right;       /* 右回りに回り込みする */
-    font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
@@ -181,12 +188,6 @@
  */
 .lessonSchedule .summary {
 	text-align: center;		/* 中央揃えにする */
-	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
-	color: #FFF;			/* フォントの色を白にする。 */
-    
-	font-size: 16px;		/* フォントのサイズを普通にする。 */
-	margin-bottom: 0px;		/* 下marginをなくす。 */
-	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
 }
 
 /* 
@@ -319,7 +320,7 @@
 }
 
 /* 
- * セレクタ:.commonText .summary, .salesPoint .summary, .memberRule .summary
+ * セレクタ:.commonText .listHead, .salesPoint .listHead, .memberRule .listHead
  * 概要   :箇条書きの概要のスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
@@ -327,7 +328,7 @@
  * 変更日 :2015.02.26
  * 内容　 :ご入会メリット追加
  */
-.commonText .summary, .salesPoint .summary, .memberRule .summary{
+.commonText .listHead, .salesPoint .listHead, .memberRule .listHead{
     font-size: 18px;    			/* 文字のサイズを18pxにする */
     font-weight: bold;				/* 太字にする。 */
     text-align: left;  				/* 文字を左寄せにする */
@@ -352,7 +353,6 @@
 .merit {
 	clear: both;				/* 回り込みの対象にしない。 */
 	margin-bottom: 10px;		/* コンテンツの後に間隔を取る */
-	/* background:	#ffcfff; */		/* 背景を薄いピンクにする。 */
 	margin-top: 60px;			/* 上のmarginを挿入する。子要素をずらした分を考慮した値を指定する。 */
 	color: #555;
 }
@@ -374,13 +374,23 @@
  * 作成日 :2015.02.26
  */
  .merit .meritTitle{
-	clear: both;
-	/* margin-bottom: 25px; */
-	text-align: center;
-	height: 35px;
-	top: -35px;
-padding-bottom: 60px;
-border-bottom: 1px solid #AAA;
+	clear: both;					/* 回り込みをなくす */
+	text-align: left;				/* 左にそろえる */
+	height: 35px;					/* 帯の高さ */
+	top: 0px;						/* 上にずらさない */
+	margin-bottom: 28px;			/* 下に適切なmarginを挿入する */
+	background: rgb(206,220,58);	/* 背景を黄緑色にする。 */
+}
+
+/* 
+ * セレクタ:.merit > *
+ * 概要   :ご入会メリットのタイトル内の要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit .meritTitle > *{
+	position: relative;		/* 座標をずらすためにこの設定をする。 */
+	top: -47px;				/* 上にずらす。 */
 }
 
 /* 
@@ -390,21 +400,23 @@ border-bottom: 1px solid #AAA;
  * 作成日 :2015.02.25
  */
 .merit .meritTitleText{
+	color: #FFF;				/* 白抜き文字にする。 */
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
-	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
-	font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
-	color: #555;
+	font-size: 18px;			/* フォントサイズを18pxに設定する。 */
+	vertical-align: middle;		/* 高さを中心揃えにする */
+	position: relative;			/* 相対位置指定をする */
+	top: -58px;					/* 位置を上にずらす。 */
+	/* テキストにふちをつける。 */
+	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
 }
 	
 /* 
  * セレクタ:.merit .meritImgLeft
  * 概要   :ご入会メリットのタイトルの左側の画像。
  * 作成者 :T.Masuda
- * 作成日 :2015.02.25
+ * 作成日 :2015.02.27
  */
-.photoGallery .meritImgLeft{
-	vertical-align: bottom;		/* 高さを底に合わせる。 */
-	margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+.merit .meritImgLeft {
 }
 
 /* 
@@ -414,8 +426,6 @@ border-bottom: 1px solid #AAA;
  * 作成日 :2015.02.25
  */
 .merit .meritImgRight{
-	vertical-align: bottom;		/* 高さを中心に合わせる。 */
-	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
 }
 
 /* 
@@ -427,10 +437,12 @@ border-bottom: 1px solid #AAA;
  .merit .meritToExperience {
 	float: right;			/* 右に寄せる。 */
 	top: -25px;				/* 上にずらす。 */		
-	margin-right: 5px;		/* 右にmarginを挿入する。 */
-	display: block;
-	width: 107px;
-	height: 123px;
+	margin-right: 1px;		/* 右にmarginを挿入する。 */
+	margin-left: 5px;		/* 左にmarginを挿入する。文字との間に間隔を取る。 */
+	display: block;			/* ブロック要素にして中の画像のサイズを認識する。 */
+	width: 107px;			/* 画像サイズに合わせる */
+	height: 123px;			/* 画像サイズに合わせる */
+	z-index: 2;				/* 重なりを上にする。 */
 }
 
 /* 
@@ -460,13 +472,14 @@ border-bottom: 1px solid #AAA;
  * 作成日 :2015.02.26
  */
 .merit dt{
-    font-size: 15px;    			/* 文字のサイズを15pxにする */
-    padding-left: 0.7em;			/* 適切にインデントをつける。 */
-    font-weight: bold;				/* 太字にして勢いをつける。 */
-    margin-bottom: 3px;
-    border-left: solid 5px rgb(206,220,58);
-    color: #555;
-    margin-left: 0;
+    font-size: 15px;    					/* 文字のサイズを15pxにする */
+    padding-left: 0.7em;					/* 適切にインデントをつける。 */
+    font-weight: bold;						/* 太字にして勢いをつける。 */
+    margin-bottom: 3px;						/* 下にmarginを入れる */
+    border-left: solid 5px rgb(206,220,58);	/* 頭に緑の傍線をつける。 */
+    color: #555;							/* 文字の色を濃いグレーにする */
+    margin-left: 0;							/* 左のmarginをなくす */
+    background:	#EEE;						/* 背景色をつけて帯をつくる。 */
 }
 
 /* 
@@ -505,7 +518,7 @@ border-bottom: 1px solid #AAA;
  */
 .photoGallery > * {
 	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
-	top: -51px;			/* 対象の要素を上にずらす。 */
+	top: -50px;			/* 対象の要素を上にずらす。 */
 }
 
 /* 
@@ -518,7 +531,7 @@ border-bottom: 1px solid #AAA;
 	width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
 	margin: 0px auto 6px;		/* 中央に寄せて、下に最低限のmarginを取る。 */
 	font-size: 0px;			/* インライン要素特有の余白を消す。 */
-	text-align: center;		/* 要素を中央に集める。 */
+	text-align: left;		/* 要素を中央に集める。 */
 }
 
 /* 
@@ -531,6 +544,7 @@ border-bottom: 1px solid #AAA;
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
 	color: #FFF;				/* 白抜き文字にする。 */
+	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
 }
 	
 /* 

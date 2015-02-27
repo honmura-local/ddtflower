@@ -38,9 +38,8 @@ time, mark, audio, video {
 body {
     line-height:1;
     /* font-familyを指定 */
-    font-family:Meiryo, メイリオ, 'Lucida Grande',
-    'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3',
-    sans-serif;
+	font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
+	color: #555;
     background: white;  /* 背景色を白にする。 */
 }
 
@@ -154,7 +153,7 @@ h1,h2,h3,h4,h5,th{
 #container{
     width: 100%;            /* 横幅を画面一杯に広げる */
     background: inherit;    /* bodyの背景色を継承する。 */
-    font-family: sans-serif;	/* フォントを決める */
+    /*font-family: sans-serif;*/	/* フォントを決める */
 }
 
 /* ヘッダー領域。 */
@@ -175,7 +174,7 @@ h1,h2,h3,h4,h5,th{
     box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4); /* トップメニュー下に陰影をつける。 */
     min-width: 800px;		/* 最低幅をmainの幅と合わせる。 */
     position: fixed;    /* ヘッダーを固定する。 */
-    z-index: 1;         /* 重なり順を指定する。 */
+    z-index: 5;         /* 重なり順を指定する。 */
     top     :   0;      /* 上から0の座標に配置する。 */
     left    :   0;      /* 左から0の座標に配置する。 */    
 }
@@ -536,7 +535,6 @@ footer{
  */
 .loginDialog {
 	font-size: 14px;					/* フォントサイズを指定する。 */
-	font-family: sans-serif;			/* containerのフォントと合わせる */
 }
 
 /* 

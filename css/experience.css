@@ -32,12 +32,6 @@
  * 内容　 :コース案内と同様のレイアウトへの修正をしました。
  */
 .specialGuide .summary {
- 	background:	#0074a5;	/* 濃い青の背景を設定する。 */
-	color: #FFF;			/* フォントの色を白にする。 */
-	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
-    font-size: 13px;		/* フォントのサイズを普通にする。 */
-    text-align: center;		/* 文字を中央に寄せる。 */
-	margin-bottom: 0px;		/* 下marginをなくす。 */
 }
 
 /* 
@@ -103,8 +97,20 @@
     height: 120px;      /* 高さを120pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
+	margin-bottom: 60px!important;	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
 }
 
+/* 
+ * セレクタ:.experienceGallery > div
+ * 概要   :experienceGalleryの画像リスト部分
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
+.experienceGallery > div {
+	padding: 8px 0 0;					/* 上部にpaddingを挿入する。 */
+	background: rgb(206,220,58);		/* 背景色を黄緑色にする。 */
+	border: 1px solid rgb(206,220,58);	/* 黄緑色の罫線で囲む。 */
+}
 /* 
  * セレクタ:.experienceGallery img
  * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
@@ -115,12 +121,36 @@
  * 内容　 :フォトギャラリーと同様の画像要素サイズに変更しました。
  */
 .experienceGallery img{
-	height: 120px;
-	width: auto;
+	height: auto;		/* 高さを固定値にして揃える。 */
+	width: 200px;		/* 幅を自動調整する。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.experienceGallery img
+ * 概要   :作品ギャラリーの作品名。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.experienceGallery p {
+	text-align: center;	/* 中央に寄せる。 */
+	padding: 5px 0;		/* 上下に余裕を持たせる。 */
+	color: #FFF;		/* 白抜き文字 */
 }
 
 .calendar > div {
 	width: 100%;
 	font-size: 22px;
 	box-sizing: border-box;
+}
+.galleryTitle {
+	text-align: center;
+	background: rgb(206,220,58);
+	padding-top: 8px;
+}
+span.galleryTitleText {
+	font-size: 16px;
+	color: #FFF;
+	/* テキストにふちをつける。 */
+	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
 }

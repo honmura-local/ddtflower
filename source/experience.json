@@ -13,6 +13,7 @@
 	},
 
 	"specialGuide":{
+		"class": "specialGuide guideTable",
 		"summary" :{
 			"text": "体験レッスン案内"
 		},
@@ -73,43 +74,62 @@
 			}
 		}
 	},
-	"experienceGallery": {
-        "experience1stDiv": {
-            "experience1stArt": {
-                "href": "photo/general/web/DSC_0898.jpg",
-                "rel": "gallery",
-                "experience1stImage": {
-                    "src": "photo/general/web100/DSC_0898.jpg"
-                }
-            }
-        },
-        "experience2ndDiv": {
-            "experience2ndArt": {
-                "href": "photo/general/web/DSC_0894.jpg",
-                "rel": "gallery",
-                "experience2ndImage": {
-                    "src": "photo/general/web100/DSC_0894.jpg"
-                }
-            }
-        },
-        "experience3rdDiv": {
-            "experience3rdArt": {
-                "href": "photo/general/web/DSC_0099.jpg",
-                "rel": "gallery",
-                "experience3rdImage": {
-                    "src": "photo/general/web100/DSC_0099.jpg"
-                }
-            }
-        },
-        "experience4thDiv": {
-            "experience4thArt": {
-                "href": "photo/general/web/DSC_0094.jpg",
-                "rel": "gallery",
-                "experience4thImage": {
-                    "src": "photo/general/web100/DSC_0094.jpg"
-                }
-            }
-        }
+	"experienceConstructs":{
+		"galleryTitle":{
+			"galleryTitleText":{
+				"text":"作品一覧"
+			}
+		},
+		"experienceGallery": {
+	        "experience1stDiv": {
+	            "experience1stArt": {
+	                "href": "photo/general/web/DSC_0898.jpg",
+	                "rel": "gallery",
+	                "experience1stImage": {
+	                    "src": "photo/general/web100/DSC_0898.jpg"
+	                },
+	                "construct1stName": {
+	                    "text": "プリザ1"
+	                }
+	            }
+	        },
+	        "experience2ndDiv": {
+	            "experience2ndArt": {
+	                "href": "photo/general/web/DSC_0894.jpg",
+	                "rel": "gallery",
+	                "experience2ndImage": {
+	                    "src": "photo/general/web100/DSC_0894.jpg"
+	                },
+	                "construct2ndName": {
+	                    "text": "プリザ2"
+	                }
+	            }
+	        },
+	        "experience3rdDiv": {
+	            "experience3rdArt": {
+	                "href": "photo/general/web/DSC_0099.jpg",
+	                "rel": "gallery",
+	                "experience3rdImage": {
+	                    "src": "photo/general/web100/DSC_0099.jpg"
+	                },
+	                "construct3rdName": {
+	                    "text": "生花1"
+	                }
+	            }
+	        },
+	        "experience4thDiv": {
+	            "experience4thArt": {
+	                "href": "photo/general/web/DSC_0094.jpg",
+	                "rel": "gallery",
+	                "experience4thImage": {
+	                    "src": "photo/general/web100/DSC_0094.jpg"
+	                },
+	                "construct4thName": {
+	                    "text": "生花2"
+	                }
+	            }
+	        }
+		}
     },
     "specialReservedDialog": {
         "specialDate": {},

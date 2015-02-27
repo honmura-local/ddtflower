@@ -173,10 +173,12 @@
 	},	
 
 	"lessonSchedule":{
+		"class": "lessonSchedule guideTable",
 		"summary": {
 			"text": "レッスンスケジュール"
 		},
 		"week":{
+			"class":"guideHead",
 			"tableHead":{
 				"text":"月曜日～日曜日"
 			}
@@ -223,7 +225,7 @@
 		}
 	},
 	"commonText":{
-		"summary": {
+		"listHead": {
 			"text"	:	"共通"
 		},
 		"commonTextList":{
@@ -239,7 +241,7 @@
 		}		    
 	},
 	"salesPoint": {
-		"summary": {
+		"listHead": {
 			"text"	:	"特徴"
 		},
 		"salesPointList" : {
@@ -256,7 +258,7 @@
 	},
 	
 	"memberRule":{
-		"summary": {
+		"listHead": {
 			"text"	: "会員規約"
 		},
 		"memberRuleList": {

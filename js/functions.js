@@ -281,6 +281,8 @@ function createUnmovableGallery(selector){
         arrows:false,
         // レスポンシブレイアウトに対応する。
         responsive:true,
+        //可変幅にする。
+		variableWidth:true,
         // 用意されている画像の数だけ並べる。
         slidesToShow:$('.' + selector + ' img').length
 	});
