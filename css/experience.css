@@ -17,7 +17,7 @@
 .specialGuide {
     width: 50%;             /* 幅を52%にする */
     padding: 10px;          /* 10px要素の幅を広げる */
-    margin: 40px 0px;     /* 上下に40pxの余白を空ける */
+    margin: 0px 0px 30px;     /* 上下に40pxの余白を空ける */
     float: left;            /* 左側に回り込む */
     font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
@@ -86,8 +86,8 @@
  * 作成日 :2015.02.09
  */
 .calendar {
-    margin: 80px 0 0;	/* 上のmarginを設定する。 */
-    width: 45%;         /* 幅を47%にする */
+    /* margin: 80px 0 0; */	/* 上のmarginを設定する。 */
+    width: 48%;         /* 幅を47%にする */
     font-size: 14px;    /* 文字サイズを20pxにする */
     float: right;       /* 右側に回り込む */
 }
@@ -119,3 +119,8 @@
 	width: auto;
 }
 
+.calendar > div {
+	width: 100%;
+	font-size: 22px;
+	box-sizing: border-box;
+}

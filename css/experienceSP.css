@@ -69,6 +69,7 @@
      .calendar > div{
 	     display: block;	/* ブロック要素として表示する。 */
 	     margin: 0 auto;	/* 中央に寄せる。 */
+     	 width: 90%;		/* 幅を90%に設定する。 */
      }
 
 

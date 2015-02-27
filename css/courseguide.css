@@ -11,6 +11,7 @@
     vertical-align: middle; /* 内包する要素の高さを中心に揃える。 */
     box-sizing: border-box;     /* サイズの計算にpaddingと枠線を加える。 */
     margin-bottom: 20px;   /* 下に20pxの余白を空ける */
+    margin-top: 20px;		/* 天の画像と被らないように、上にmarginを挿入する。 */
 }
 
 /* 
@@ -96,7 +97,8 @@
 .courseGuide caption {
 	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
 	color: #FFF;			/* フォントの色を白にする。 */
-    font-size: 14px;		/* フォントのサイズを普通にする。 */
+    
+	font-size: 16px;		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
 	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
 	text-align: center;		/* 文字を中心に揃える。 */
@@ -181,7 +183,8 @@
 	text-align: center;		/* 中央揃えにする */
 	background: rgb(206,220,58);	/* 濃い青の背景を設定する。 */
 	color: #FFF;			/* フォントの色を白にする。 */
-    font-size: 14px;		/* フォントのサイズを普通にする。 */
+    
+	font-size: 16px;		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
 	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
 }
@@ -264,17 +267,14 @@
  * 変更日 :2015.02.24
  * 内容　 :paddingを狭めました。字下げも増やしました。
  * 変更者 :T.Masuda
- * 変更日 :2015.02.26
- * 内容　 :displayをlist-itemに変更しました。
  */
 .commonText td, .salesPoint td, .memberRule td{
-    padding: 2px 0;   			/* 上下に2pxの余白をとる */
-    font-size: 13px;			/* フォントのサイズを16pxにする */
-    line-height: 1.3;			/* 行の高さを1.3行分にする */
+    padding: 3px 0;   			/* 上下に3pxの余白をとる */
+    font-size: 13px;			/* フォントのサイズを13pxにする */
+    line-height: 16px;			/* 行の高さを多めに取る。 */
     font-family: sans-serif;	/* fontをsans-serifにする */
     padding-left: 2.9em;	   	/* 頭をキャプションの2文字目に合わせる。 */
     text-indent: -1em;	   		/* 先頭の文字を1文字分左にずらす。 */
-    display: list-item;			/* リストの項目として扱う。 */
 }
 
 /* 
@@ -304,7 +304,7 @@
  */
 .memberRule {
     width: 780px;    		/* 幅を780pxにする */
-    margin-bottom: 20px;	/* 下marginを20pxにする。 */
+    margin-bottom: 5px;	/* 下marginを5pxにする。 */
 }
 
 
@@ -315,7 +315,6 @@
  * 作成日 :2015.02.26
  */
 .commonText, .salesPoint, .memberRule{
-	list-style: disc inside;	/* リストの項目の先頭に点をつける。 */
 	width: 100%;				/* 幅をmain一杯に広げる。 */
 }
 
@@ -335,6 +334,13 @@
     margin-bottom: 5px;				/* 下方向に余白を5pxとる */
     padding-bottom: 6px;			/* 下線との間に余白を文字1/3とる */
     border-bottom: 1px solid #666;	/* 下線を引く */
+}
+
+
+
+.commonText td:before, .salesPoint td:before, .memberRule td:before {
+	content: "●";
+	font-size: 10px;
 }
 
 /* 
@@ -471,11 +477,9 @@ border-bottom: 1px solid #AAA;
  */
 .merit dd{
     font-size: 13px;    	/* 文字のサイズを18pxにする */
-	
     margin-bottom: 10px;		/* 各項目で十分に間を空ける。 */
     padding-left: 2em;	/* 更にインデントをつける。 */
-    color: #555;
-    line-height: 20px;
+    line-height: 18px;
     color: #555;
     font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
 }

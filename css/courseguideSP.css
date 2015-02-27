@@ -7,7 +7,8 @@
 	 * 作成日 :2015.02.24
 	 */
 	.pageTitle{
-	    width: 100%;           /* 可変幅に設定する。 */
+	    width: 100%;        /* 可変幅に設定する。 */
+	    margin-top: 0;		/* 上のmarginをなくす。 */
 	}
 
     /* 
@@ -143,7 +144,7 @@
      */
     .commonText .summary, .salesPoint .summary, .memberRule .summary , .merit .summary{
         font-size: 13px;        /* 文字サイズを14pxにする */
-        margin-bottom: 3px;		/* 下に3pxのmarginを挿入する。 */
+        margin-bottom: 8px;		/* 下に8pxのmarginを挿入する。 */
     }
 
     /* 
@@ -178,8 +179,8 @@
  * 作成日 :2015.02.26
  */
 .merit dt{
-    font-size: 12px;    			/* 文字のサイズを18pxにする */
-    padding-left: 1em;			/* 適切にインデントをつける。 */
+    font-size: 12px;    			/* 文字のサイズを12pxにする */
+    padding-left: 0.5em;			/* 適切にインデントをつける。 */
 }
 
 /* 
@@ -189,13 +190,24 @@
  * 作成日 :2015.02.26
  */
 .merit dd{
-    font-size: 11px;    	/* 文字のサイズを18pxにする */
+    font-size: 11px;    	/* 文字のサイズを11pxにする */
 	margin-bottom: 3px;		/* 各項目で十分に間を空ける。 */
-    padding-left: 2.0em;	/* 更にインデントをつける。 */
+    padding-left: 2.1em;	/* 更にインデントをつける。 */
+	line-height: 16px;		/* スマホレイアウト時には行間を詰める。 */
 }
-
-
-
+.merit .meritTitle {
+	padding-bottom: 18px;
+	padding-top		:30px;
+}
+.merit .meritTitleText {
+	font-size: 18px;
+}
+.merit .meritImgLeft {
+	width: 52px;
+}
+.merit .meritImgRight {
+	width: 50px;
+}
 /* 
  * セレクタ:.photoGallery
  * 概要   :コース案内コンテンツ内のフォトギャラリー。
@@ -204,6 +216,7 @@
  */
 .photoGallery{
 	width: 90%;				/* 余白を考えた幅に設定する。 */
+	margin-top: 50px;
 }
 
 /* 
@@ -266,6 +279,9 @@
  * 作成日 :2015.02.26
  */
 .footGallery{
-    width: 95%;       /* 詰めすぎない幅に設定する。 */
+    width: 100%;       /* 幅を一杯に取る。 */
 }
 
+.memberRule {
+	margin-bottom: 10px;
+}
