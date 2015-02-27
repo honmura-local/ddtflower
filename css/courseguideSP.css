@@ -282,3 +282,6 @@
     width: 100%;       /* 幅を一杯に取る。 */
 }
 
+.memberRule {
+	margin-bottom: 10px;
+}
