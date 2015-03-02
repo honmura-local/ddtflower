@@ -161,31 +161,14 @@
 }
 
 /* 
- * セレクタ:.galleryTitle
- * 概要   :ギャラリーのタイトル部分。
+ * セレクタ:.calendar td
+ * 概要   :datepickerの日付。
  * 作成者 :T.Masuda 
- * 作成日 :2015.02.27
+ * 作成日 :2015.03.02
  */
-.galleryTitle {
-	text-align: center;				/* 中心にそろえる。 */
-	background: rgb(206,220,58);	/* 背景色を緑にする。 */
-	height: 36px;					/* 高さを他のテーブルのタイトルと同じ高さにする。 */
-	vertical-align: middle;			/* 高さを中心に揃える。 */
-	display: inline-block;			/* インラインブロックとして扱う。 */
-	width: 100%;					/* 幅を100%にする。 */
-}
-
-/* 
- * セレクタ:.galleryTitleText
- * 概要   :ギャラリーのタイトルのテキスト。
- * 作成者 :T.Masuda 
- * 作成日 :2015.02.27
- */
-.galleryTitleText {
-	font-size: 16px;		/* やや大きめのフォントサイズを指定する。 */
-	color: #FFF;			/* 白抜き文字にする。 */
-	display: inline-block;	/* インラインブロックとして扱う。 */
-	margin-top: 10px;		/* 上に10pxのmarginを挿入して、文字の高さを中心に揃える。 */
+.calendar .ui-datepicker td a{
+	padding-top 	: 6px;		/* 上paddingを設定する。 */
+	padding-bottom 	: 6px;		/* 下paddingを設定する。 */
 }
 
 /* 体験レッスン */
@@ -232,7 +215,7 @@
  */
 .specialGuide th, .specialGuide td {
     padding: 10px;      /* 要素の幅を10px広げる */
-    font-size: 11px;    /* 文字サイズを11pxにするする */
+    font-size: 13px;    /* 文字サイズを13pxにするする */
     text-align: left;   /* 文字を左寄りにする */
     border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
 }

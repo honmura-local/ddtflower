@@ -38,9 +38,10 @@ time, mark, audio, video {
 body {
     line-height:1;
     /* font-familyを指定 */
-	font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
-	color: #555;
+	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
+	color: #555;		/* ベースのフォンとカラー */
     background: white;  /* 背景色を白にする。 */
+    font-size: 13px;	/* ベースのフォントサイズ */
 }
 
 article,aside,details,figcaption,figure,

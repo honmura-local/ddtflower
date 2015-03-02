@@ -11,10 +11,10 @@
             "text": "興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
         }
     },
-    "reservedFlow":{
+    "reservedFlow": {
         "reservedFlowTitle": {
-            "reservedFlowImgLeft":{
-                "src":"image/icon(smilebird).png"
+            "reservedFlowImgLeft": {
+                "src": "image/icon(smilebird).png"
             },
             "reservedFlowTitleText": {
                 "text": "ご予約までの流れ"
@@ -23,44 +23,44 @@
                 "src": "image/icon(clearfacebird).png"
             }
         },
-        "firstStep":{
-            "text":"STEP1"
+        "firstStep": {
+            "text": "STEP1"
         },
-        "firstStepSummary":{
-            "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
+        "firstStepSummary": {
+            "text": "あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
         },
-        "firstStepSummary1":{
-            "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
+        "firstStepSummary1": {
+            "text": "カレンダーから体験レッスンを受けたい日にちをクリックします。"
         },
-        "firstStepSummary2":{
-            "text":"＊予約ダイアログが表示されます。"
+        "firstStepSummary2": {
+            "text": "＊予約ダイアログが表示されます。"
         },
-        "secondStep":{
-            "text":"STEP2"
+        "secondStep": {
+            "text": "STEP2"
         },
-        "secondStepSummary":{
-            "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
+        "secondStepSummary": {
+            "text": "プリザ、生花の作品写真群から作りたい作品を選んでください。"
         },
-        "thirdStep":{
-            "text":"STEP3"
+        "thirdStep": {
+            "text": "STEP3"
         },
-        "thirdStepSumary":{
-            "text":"希望する時限を選んでください。＊複数指定を推奨します。"
+        "thirdStepSumary": {
+            "text": "希望する時限を選んでください。＊複数指定を推奨します。"
         },
-        "fourthStep":{
-            "text":"STEP4"
+        "fourthStep": {
+            "text": "STEP4"
         },
-        "fourthStepSummary":{
-            "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
+        "fourthStepSummary": {
+            "text": "予備情報として比較的受けやすい曜日、と週を選んでください。"
         },
-        "fifthStep":{
-            "text":"STEP5"
+        "fifthStep": {
+            "text": "STEP5"
         },
-        "fifthStepSummary":{
-            "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
+        "fifthStepSummary": {
+            "text": "予約可能か否かにつきまして追ってメールにより返信致します。"
         },
-        "fifthStepSummary1":{
-            "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+        "fifthStepSummary1": {
+            "text": "また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
         }
     },
     "specialGuide": {
@@ -125,59 +125,52 @@
             }
         }
     },
-    "experienceConstructs": {
-        "galleryTitle": {
-            "galleryTitleText": {
-                "text": "体験作品一覧"
+    "experienceGallery": {
+        "experience1stDiv": {
+            "experience1stArt": {
+                "href": "photo/general/web/DSC_0898.jpg",
+                "rel": "gallery",
+                "experience1stImage": {
+                    "src": "photo/general/web100/DSC_0898.jpg"
+                },
+                "construct1stName": {
+                    "text": "プリザ作品1"
+                }
             }
         },
-        "experienceGallery": {
-            "experience1stDiv": {
-                "experience1stArt": {
-                    "href": "photo/general/web/DSC_0898.jpg",
-                    "rel": "gallery",
-                    "experience1stImage": {
-                        "src": "photo/general/web100/DSC_0898.jpg"
-                    },
-                    "construct1stName": {
-                        "text": "プリザ作品1"
-                    }
+        "experience2ndDiv": {
+            "experience2ndArt": {
+                "href": "photo/general/web/DSC_0894.jpg",
+                "rel": "gallery",
+                "experience2ndImage": {
+                    "src": "photo/general/web100/DSC_0894.jpg"
+                },
+                "construct2ndName": {
+                    "text": "プリザ作品2"
                 }
-            },
-            "experience2ndDiv": {
-                "experience2ndArt": {
-                    "href": "photo/general/web/DSC_0894.jpg",
-                    "rel": "gallery",
-                    "experience2ndImage": {
-                        "src": "photo/general/web100/DSC_0894.jpg"
-                    },
-                    "construct2ndName": {
-                        "text": "プリザ作品2"
-                    }
+            }
+        },
+        "experience3rdDiv": {
+            "experience3rdArt": {
+                "href": "photo/general/web/DSC_0099.jpg",
+                "rel": "gallery",
+                "experience3rdImage": {
+                    "src": "photo/general/web100/DSC_0099.jpg"
+                },
+                "construct3rdName": {
+                    "text": "生花作品1"
                 }
-            },
-            "experience3rdDiv": {
-                "experience3rdArt": {
-                    "href": "photo/general/web/DSC_0099.jpg",
-                    "rel": "gallery",
-                    "experience3rdImage": {
-                        "src": "photo/general/web100/DSC_0099.jpg"
-                    },
-                    "construct3rdName": {
-                        "text": "生花作品1"
-                    }
-                }
-            },
-            "experience4thDiv": {
-                "experience4thArt": {
-                    "href": "photo/general/web/DSC_0094.jpg",
-                    "rel": "gallery",
-                    "experience4thImage": {
-                        "src": "photo/general/web100/DSC_0094.jpg"
-                    },
-                    "construct4thName": {
-                        "text": "生花作品2"
-                    }
+            }
+        },
+        "experience4thDiv": {
+            "experience4thArt": {
+                "href": "photo/general/web/DSC_0094.jpg",
+                "rel": "gallery",
+                "experience4thImage": {
+                    "src": "photo/general/web100/DSC_0094.jpg"
+                },
+                "construct4thName": {
+                    "text": "生花作品2"
                 }
             }
         }
@@ -474,6 +467,22 @@
                     "text": "予備希望週"
                 },
                 "subWeekValue": {}
+            }
+        }
+    },
+    "photoGallery": {
+        "galleryTitle": {
+            "galleryImgLeft": {
+                "src": "image/icon(bluesmallbird).png"
+            },
+            "galleryTitleText": {
+                "text": "体験作品一覧"
+            },
+            "galleryImgRight": {
+                "src": "image/icon(redbird).png"
+            },
+            "galleryImgRightFlower": {
+                "src": "image/icon(redsunflower).png"
             }
         }
     }

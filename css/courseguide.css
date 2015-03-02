@@ -58,10 +58,13 @@
  * 概要   :タイトル部分概要。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.02
+ * 内容 　:paddingと幅を変更しました。
  */
 .pageTitle .summary{
-    width:      690px;      /* 幅を60%に設定する。 */
-    padding: 	2px;		/* 要素の幅を2px広げる */
+    width:      660px;      /* 幅を660pxに設定する。 */
+    padding: 	1em;		/* 要素の幅を1em広げる */
     height:     auto;       /* 高さを自動調整する。 */
     font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
     text-indent: 1em;		/* インデントを1文字分入れる */
@@ -339,7 +342,7 @@
 
 .commonText td:before, .salesPoint td:before, .memberRule td:before {
 	content: "●";
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .memberRule tr:last-child td:before {
@@ -409,8 +412,6 @@
 	vertical-align: middle;		/* 高さを中心揃えにする */
 	position: relative;			/* 相対位置指定をする */
 	top: -58px;					/* 位置を上にずらす。 */
-	/* テキストにふちをつける。 */
-	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
 }
 	
 /* 
@@ -545,7 +546,6 @@
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
 	color: #FFF;				/* 白抜き文字にする。 */
-	text-shadow:   -1px -1px #FFF,  1px -1px #FFF,  -1px 1px #FFF,  1px 1px #FFF;
 }
 	
 /* 

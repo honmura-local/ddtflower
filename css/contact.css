@@ -31,7 +31,7 @@
 	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
 	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
-	font-size: 14px;	/* フォントサイズを設定する。 */
+	font-size: 13px;	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }
 

@@ -342,14 +342,14 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 }
 
 /*
- * 関数名:loadingScreen()
+ * 関数名:appearLoadingScreen(selector)
  * 引数  :String selector
  * 戻り値:なし
- * 概要  :ローディング画面を表示する。
+ * 概要  :ページ読み込み時にローディング画面を表示する。
  * 作成日:2015.03.02
  * 作成者:T.Masuda
  */
-function loadingScreen(selector){
+function appearLoadingScreen(selector){
 	// jQueryのコードを書く。
 	$(function(){
 		//指定した要素をを見えなくする。
@@ -379,3 +379,49 @@ function loadingScreen(selector){
 		});
 	};
 }
+
+/*
+ * 関数名:callLoadingScreen(selector)
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :ローディング画面を表示する。
+ * 作成日:2015.03.02
+ * 作成者:T.Masuda
+ */
+function callLoadingScreen(selector){
+	// jQueryのコードを書く。
+	$(function(){
+		//指定した要素をを見えなくする。
+		$(selector).fadeOut();	
+		//ローディング画面を追加する。
+		$('body').prepend($('<div id="loading">')
+				.attr({
+					position:'absolute',	/* 絶対位置を指定する。 */
+					left:'50%',				/* 画面中央 */
+					top:'20%',				/* 上から20%の位置に置く */
+					marginLeft:'-30px',		/* 自分の大きさの半分左にずらして中心に置く。 */
+					zIndex: 2000			/* 必ず見える様にする。 */
+				})
+				//ローディング画像を追加する。
+				.append($('<img src="image/gif-load.gif">')
+				)
+		);
+	});
+	
+//	//ウィンドウのロードが終わったら
+//	window.onload = function(){
+//		//jQueryのコードを書く。
+//		$(function() {
+//			//ローディング画面をフェードアウトさせる。
+//			$("#loading").fadeOut();
+//			//指定した要素をフェードインさせる。
+//			$(selector).fadeIn();
+//		});
+//	};
+}
+
+/* リンクが押されたら */
+$(document).on('click', 'a[href*=".html"]', function(){
+	//ローディング画面を呼び出す。
+	callLoadingScreen('#container');
+});
