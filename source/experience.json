@@ -1,200 +1,186 @@
 {
-	"pageTitle":{
-    	"class":"pageTitle cf",
-		"image"		:{
-			"src"	:	"image/icon(butterfly).png"
-		},
-		"title"		: {
-			"text"	:	"体験レッスン"
-		},
-		"summary"	: {
-			"text"	:	"興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
-		}
-	},
-
-    "reservedFlow":{
+    "pageTitle": {
+        "class": "pageTitle cf",
+        "image": {
+            "src": "image/icon(butterfly).png"
+        },
+        "title": {
+            "text": "体験レッスン"
+        },
         "summary": {
-            "tsext":"ご予約までの流れ"
-        },
-        "step":{
-            "stepContent":{
-                "stepSummary":{
-                    "text":"STEP1"
-                },
-                "stepText":{
-                    "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
-                },
-                "stepText":{
-                    "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
-                },
-                "stepText":{
-                    "text":"＊予約ダイアログが表示されます。"
-                }
+            "text": "興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
+        }
+    },
+    "reservedFlow":{
+        "reservedFlowTitle": {
+            "reservedFlowImgLeft":{
+                "src":"image/icon(smilebird).png"
+            },
+            "reservedFlowTitleText": {
+                "text": "ご予約までの流れ"
+            },
+            "reservedFlowImgRight": {
+                "src": "image/icon(clearfacebird).png"
             }
         },
-        "step":{
-            "stepContent":{
-                "stepSummary":{
-                    "text":"STEP2"
-                },
-                "stepText":{
-                    "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
-                }
+        "firstStep":{
+            "text":"STEP1"
+        },
+        "firstStepSummary":{
+            "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
+        },
+        "firstStepSummary1":{
+            "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
+        },
+        "firstStepSummary2":{
+            "text":"＊予約ダイアログが表示されます。"
+        },
+        "secondStep":{
+            "text":"STEP2"
+        },
+        "secondStepSummary":{
+            "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
+        },
+        "thirdStep":{
+            "text":"STEP3"
+        },
+        "thirdStepSumary":{
+            "text":"希望する時限を選んでください。＊複数指定を推奨します。"
+        },
+        "fourthStep":{
+            "text":"STEP4"
+        },
+        "fourthStepSummary":{
+            "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
+        },
+        "fifthStep":{
+            "text":"STEP5"
+        },
+        "fifthStepSummary":{
+            "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
+        },
+        "fifthStepSummary1":{
+            "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+        }
+    },
+    "specialGuide": {
+        "class": "specialGuide guideTable",
+        "summary": {
+            "text": "体験レッスン案内"
+        },
+        "category": {
+            "item": {
+                "text": "カテゴリ"
+            },
+            "content": {
+                "text": "花・ガーデニング・環境"
             }
         },
-        "step":{
-            "stepContent":{
-                "stepSummary":{
-                    "text":"STEP3"
-                },
-                "stepText":{
-                    "text":"希望する時限を選んでください。＊複数指定を推奨します。"
-                }
+        "doKnow": {
+            "item": {
+                "text": "できること・わかること"
+            },
+            "content": {
+                "text": "プリザーブドフラワー"
             }
         },
-        "step":{
-            "stepContent":{
-                "stepSummary":{
-                    "text":"STEP4"
-                },
-                "stepText":{
-                    "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
-                }
+        "cost": {
+            "item": {
+                "text": "費用"
+            },
+            "content": {
+                "text": "3,800円"
             }
         },
-        "step":{
-            "stepContent":{
-                "stepSummary":{
-                    "text":"STEP5"
-                },
-                "stepText":{
-                    "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
-                },
-                "stepText":{
-                    "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
-                }
+        "times": {
+            "item": {
+                "text": "回数"
+            },
+            "content": {
+                "text": "1回"
+            }
+        },
+        "hour": {
+            "item": {
+                "text": "1回あたりの時間"
+            },
+            "content": {
+                "text": "90分"
+            }
+        },
+        "target": {
+            "item": {
+                "text": "対象者"
+            },
+            "content": {
+                "text": "初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
+            }
+        },
+        "bring": {
+            "item": {
+                "text": "持ち物・その他"
+            },
+            "content": {
+                "text": "お持ち帰り用の袋をご持参下さい"
             }
         }
     },
-
-	"specialGuide":{
-		"class": "specialGuide guideTable",
-		"summary" :{
-			"text": "体験レッスン案内"
-		},
-		"category":{
-			"item":{
-				"text"	:	"カテゴリ"
-			},
-			"content":{
-				"text"	:	"花・ガーデニング・環境"
-			}
-		},
-		"doKnow":{
-			"item":{
-				"text"	:	"できること・わかること"
-			},
-			"content":{
-				"text"	:	"プリザーブドフラワー"
-			}
-		},
-		"cost":{
-			"item":{
-				"text"	:	"費用"
-			},
-			"content":{
-				"text"	:	"3,800円"
-			}
-		},
-		"times":{
-			"item":{
-				"text"	:	"回数"
-			},
-			"content":{
-				"text"	:	"1回"
-			}
-		},
-		"hour":{
-			"item":{
-				"text"	:	"1回あたりの時間"
-			},
-			"content":{
-				"text"	:	"90分"
-			}
-		},
-		"target":{
-			"item":{
-				"text"	:	"対象者"
-			},
-			"content":{
-				"text"	:	"初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
-			}
-		},
-		"bring":{
-			"item":{
-				"text"	:	"持ち物・その他"
-			},
-			"content":{
-				"text"	:	"お持ち帰り用の袋をご持参下さい"		
-			}
-		}
-	},
-	"experienceConstructs":{
-		"galleryTitle":{
-			"galleryTitleText":{
-				"text":"体験作品一覧"
-			}
-		},
-		"experienceGallery": {
-	        "experience1stDiv": {
-	            "experience1stArt": {
-	                "href": "photo/general/web/DSC_0898.jpg",
-	                "rel": "gallery",
-	                "experience1stImage": {
-	                    "src": "photo/general/web100/DSC_0898.jpg"
-	                },
-	                "construct1stName": {
-	                    "text": "プリザ作品1"
-	                }
-	            }
-	        },
-	        "experience2ndDiv": {
-	            "experience2ndArt": {
-	                "href": "photo/general/web/DSC_0894.jpg",
-	                "rel": "gallery",
-	                "experience2ndImage": {
-	                    "src": "photo/general/web100/DSC_0894.jpg"
-	                },
-	                "construct2ndName": {
-	                    "text": "プリザ作品2"
-	                }
-	            }
-	        },
-	        "experience3rdDiv": {
-	            "experience3rdArt": {
-	                "href": "photo/general/web/DSC_0099.jpg",
-	                "rel": "gallery",
-	                "experience3rdImage": {
-	                    "src": "photo/general/web100/DSC_0099.jpg"
-	                },
-	                "construct3rdName": {
-	                    "text": "生花作品1"
-	                }
-	            }
-	        },
-	        "experience4thDiv": {
-	            "experience4thArt": {
-	                "href": "photo/general/web/DSC_0094.jpg",
-	                "rel": "gallery",
-	                "experience4thImage": {
-	                    "src": "photo/general/web100/DSC_0094.jpg"
-	                },
-	                "construct4thName": {
-	                    "text": "生花作品2"
-	                }
-	            }
-	        }
-		}
+    "experienceConstructs": {
+        "galleryTitle": {
+            "galleryTitleText": {
+                "text": "体験作品一覧"
+            }
+        },
+        "experienceGallery": {
+            "experience1stDiv": {
+                "experience1stArt": {
+                    "href": "photo/general/web/DSC_0898.jpg",
+                    "rel": "gallery",
+                    "experience1stImage": {
+                        "src": "photo/general/web100/DSC_0898.jpg"
+                    },
+                    "construct1stName": {
+                        "text": "プリザ作品1"
+                    }
+                }
+            },
+            "experience2ndDiv": {
+                "experience2ndArt": {
+                    "href": "photo/general/web/DSC_0894.jpg",
+                    "rel": "gallery",
+                    "experience2ndImage": {
+                        "src": "photo/general/web100/DSC_0894.jpg"
+                    },
+                    "construct2ndName": {
+                        "text": "プリザ作品2"
+                    }
+                }
+            },
+            "experience3rdDiv": {
+                "experience3rdArt": {
+                    "href": "photo/general/web/DSC_0099.jpg",
+                    "rel": "gallery",
+                    "experience3rdImage": {
+                        "src": "photo/general/web100/DSC_0099.jpg"
+                    },
+                    "construct3rdName": {
+                        "text": "生花作品1"
+                    }
+                }
+            },
+            "experience4thDiv": {
+                "experience4thArt": {
+                    "href": "photo/general/web/DSC_0094.jpg",
+                    "rel": "gallery",
+                    "experience4thImage": {
+                        "src": "photo/general/web100/DSC_0094.jpg"
+                    },
+                    "construct4thName": {
+                        "text": "生花作品2"
+                    }
+                }
+            }
+        }
     },
     "specialReservedDialog": {
         "specialDate": {},
@@ -203,7 +189,7 @@
         },
         "radioButtonSpecialConstruct": {
             "constructFirstRow": {
-            	"width":"100",
+                "width": "100",
                 "constructHead": {
                     "text": "作品"
                 },
@@ -229,7 +215,9 @@
                 }
             },
             "constructSecondRow": {
-                "blank1": {"visibility":"invisible"},
+                "blank1": {
+                    "visibility": "invisible"
+                },
                 "fresh1RadioButtonWrap": {
                     "fresh1RadioButton": {
                         "name": "construct",
