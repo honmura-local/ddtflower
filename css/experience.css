@@ -19,7 +19,6 @@
     padding: 10px;          /* 10px要素の幅を広げる */
     margin: 0px 0px 30px;     /* 上下に40pxの余白を空ける */
     float: left;            /* 左側に回り込む */
-    font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
@@ -97,7 +96,8 @@
     height: 120px;      /* 高さを120pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
-	margin-bottom: 60px!important;	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
+	
+    margin-bottom: 60px!important;	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
 }
 
 /* 
@@ -107,8 +107,8 @@
  * 作成日 :2015.02.27
  */
 .experienceGallery > div {
-	padding: 8px 0 0;					/* 上部にpaddingを挿入する。 */
-	background: rgb(206,220,58);		/* 背景色を黄緑色にする。 */
+	/* padding: 8px 0 0; */					/* 上部にpaddingを挿入する。 */
+	/* background: rgb(206,220,58); */		/* 背景色を黄緑色にする。 */
 	border: 1px solid rgb(206,220,58);	/* 黄緑色の罫線で囲む。 */
 }
 /* 
@@ -135,7 +135,7 @@
 .experienceGallery p {
 	text-align: center;	/* 中央に寄せる。 */
 	padding: 5px 0;		/* 上下に余裕を持たせる。 */
-	color: #FFF;		/* 白抜き文字 */
+	color: #000;		/* 白抜き文字 */
 }
 
 /* 
@@ -145,9 +145,19 @@
  * 作成日 :2015.02.27
  */
 .calendar > div {
-	width: 100%;			/* 幅を領域一杯に広げる。 */
-	font-size: 22px;		/* フォントサイズを上げて全体を大きくする。 */
+	width: 		100%;			/* 幅を領域一杯に広げる。 */
+	font-size: 	16px;		/* フォントサイズを上げて全体を大きくする。 */
 	box-sizing: border-box;	/* サイズの計算に線、paddingを含む。 */
+}
+
+/* 
+ * セレクタ:.calendar > div > div
+ * 概要   :datepickerの各内容。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.03.02
+ */
+.calendar > div  > div {
+	font-size: 	0.95em;		/* タイトルより少しだけ小さいフォントを指定する。 */
 }
 
 /* 
@@ -157,9 +167,12 @@
  * 作成日 :2015.02.27
  */
 .galleryTitle {
-	text-align: center;				/* 中心にそろえる */
+	text-align: center;				/* 中心にそろえる。 */
 	background: rgb(206,220,58);	/* 背景色を緑にする。 */
-	padding-top: 8px;				/* 上に領域をのばす。 */
+	height: 36px;					/* 高さを他のテーブルのタイトルと同じ高さにする。 */
+	vertical-align: middle;			/* 高さを中心に揃える。 */
+	display: inline-block;			/* インラインブロックとして扱う。 */
+	width: 100%;					/* 幅を100%にする。 */
 }
 
 /* 
@@ -169,8 +182,147 @@
  * 作成日 :2015.02.27
  */
 .galleryTitleText {
-	font-size: 16px;	/* やや大きめのフォントサイズを指定する。 */
-	color: #FFF;		/* 白抜き文字にする。 */
-	/* テキストにふちをつける。 */
-	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
+	font-size: 16px;		/* やや大きめのフォントサイズを指定する。 */
+	color: #FFF;			/* 白抜き文字にする。 */
+	display: inline-block;	/* インラインブロックとして扱う。 */
+	margin-top: 10px;		/* 上に10pxのmarginを挿入して、文字の高さを中心に揃える。 */
 }
+
+/* 体験レッスン */
+
+/* 
+ * セレクタ:.specialGuide
+ * 概要   :体験レッスン案内テーブルについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.21
+ * 内容  :余分なネガティブマージンを削除。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :コース案内と同様のレイアウトへの修正をしました。
+ */
+.specialGuide {
+    width: 50%;             	/* 幅を50%にする */
+    padding: 10px;          	/* 10px要素の幅を広げる */
+    margin: 0px 0px 30px;     	/* 下に30pxの余白を空ける */
+    float: left;           	 	/* 左側に回り込む */
+}
+
+/* 
+ * セレクタ:.specialGuide .summary
+ * 概要   :体験レッスン案内テーブル概要のスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :コース案内と同様のレイアウトへの修正をしました。
+ */
+.specialGuide .summary {
+}
+
+/* 
+ * セレクタ:.specialGuide th, .specialGuide td
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :コース案内と同様のレイアウトへの修正をしました。
+ */
+.specialGuide th, .specialGuide td {
+    padding: 10px;      /* 要素の幅を10px広げる */
+    font-size: 11px;    /* 文字サイズを11pxにするする */
+    text-align: left;   /* 文字を左寄りにする */
+    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
+}
+
+/* 
+ * セレクタ:.specialGuide th
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :コース案内と同様のレイアウトへの修正をしました。
+ */
+.specialGuide th {
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
+}
+
+/* 
+ * セレクタ:.specialGuide td
+ * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.specialGuide td {
+    width: 65%;         /* 幅を60%にする */
+}
+
+/* 
+ * セレクタ:.calendar
+ * 概要   :カレンダーについてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ */
+.calendar {
+    /* margin: 80px 0 0; */	/* 上のmarginを設定する。 */
+    width: 48%;         /* 幅を47%にする */
+    font-size: 14px;    /* 文字サイズを20pxにする */
+    float: right;       /* 右側に回り込む */
+}
+
+/* 
+ * セレクタ:.experienceGallery
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素。体験レッスンページ用
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.21
+ */
+.experienceGallery{
+    width: 800px;       /* 幅800px。左右にある矢印ボタンの取る幅を加味した幅に設定する。 */
+    height: 120px;      /* 高さを120pxに指定する。 */
+    margin: 0 auto;     /* 中央に寄せる。 */
+    clear: both;        /* 回り込みを無効にする */
+	
+    margin-bottom: 60px!important;	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
+}
+
+/* 
+ * セレクタ:.experienceGallery > div
+ * 概要   :experienceGalleryの画像リスト部分
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
+.experienceGallery > div {
+	border: 1px solid rgb(206,220,58);	/* 黄緑色の罫線で囲む。 */
+}
+/* 
+ * セレクタ:.experienceGallery img
+ * 概要   :カルーセルで表示する画像のサイズを200pxの正方形にする。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.21
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :フォトギャラリーと同様の画像要素サイズに変更しました。
+ */
+.experienceGallery img{
+	height: auto;		/* 高さを固定値にして揃える。 */
+	width: 200px;		/* 幅を自動調整する。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
+/*border: 1px solid rgb(206,220,58);
+box-sizing: border-box;*/
+}
+
+/* 
+ * セレクタ:.experienceGallery img
+ * 概要   :作品ギャラリーの作品名。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.experienceGallery p {
+	text-align: center;	/* 中央に寄せる。 */
+	padding: 5px 0;		/* 上下に余裕を持たせる。 */
+	color: #000;		/* 白抜き文字 */
+}
+

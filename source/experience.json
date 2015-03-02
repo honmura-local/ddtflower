@@ -142,7 +142,7 @@
 	"experienceConstructs":{
 		"galleryTitle":{
 			"galleryTitleText":{
-				"text":"作品一覧"
+				"text":"体験作品一覧"
 			}
 		},
 		"experienceGallery": {
@@ -154,7 +154,7 @@
 	                    "src": "photo/general/web100/DSC_0898.jpg"
 	                },
 	                "construct1stName": {
-	                    "text": "プリザ1"
+	                    "text": "プリザ作品1"
 	                }
 	            }
 	        },
@@ -166,7 +166,7 @@
 	                    "src": "photo/general/web100/DSC_0894.jpg"
 	                },
 	                "construct2ndName": {
-	                    "text": "プリザ2"
+	                    "text": "プリザ作品2"
 	                }
 	            }
 	        },
@@ -178,7 +178,7 @@
 	                    "src": "photo/general/web100/DSC_0099.jpg"
 	                },
 	                "construct3rdName": {
-	                    "text": "生花1"
+	                    "text": "生花作品1"
 	                }
 	            }
 	        },
@@ -190,7 +190,7 @@
 	                    "src": "photo/general/web100/DSC_0094.jpg"
 	                },
 	                "construct4thName": {
-	                    "text": "生花2"
+	                    "text": "生花作品2"
 	                }
 	            }
 	        }

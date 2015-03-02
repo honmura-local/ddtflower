@@ -153,7 +153,6 @@ h1,h2,h3,h4,h5,th{
 #container{
     width: 100%;            /* 横幅を画面一杯に広げる */
     background: inherit;    /* bodyの背景色を継承する。 */
-    /*font-family: sans-serif;*/	/* フォントを決める */
 }
 
 /* ヘッダー領域。 */
@@ -335,8 +334,8 @@ h1,h2,h3,h4,h5,th{
  * 作成日 :2015.02.05
  */
 .guideSns > *{
-	display: block;	/* ブロック要素として扱い、縦に並べる。 */
-	vertiacl-align: top;
+	display: block;			/* ブロック要素として扱い、縦に並べる。 */
+	vertical-align: top;	/* 上に寄せる。 */
 }
 
 /* 
