@@ -96,7 +96,6 @@
  * 内容　 :幅を広くしました。
  */
 .guideTable {
-    font-family: osaka, Arial, Helvetica;	/* フォントを設定する。 */
 }
 
 /* 
@@ -273,7 +272,6 @@
     padding: 3px 0;   			/* 上下に3pxの余白をとる */
     font-size: 13px;			/* フォントのサイズを13pxにする */
     line-height: 16px;			/* 行の高さを多めに取る。 */
-    font-family: sans-serif;	/* fontをsans-serifにする */
     padding-left: 2.9em;	   	/* 頭をキャプションの2文字目に合わせる。 */
     text-indent: -1em;	   		/* 先頭の文字を1文字分左にずらす。 */
 }
@@ -342,6 +340,11 @@
 .commonText td:before, .salesPoint td:before, .memberRule td:before {
 	content: "●";
 	font-size: 10px;
+}
+
+.memberRule tr:last-child td:before {
+	content: "＊";
+	font-size: 14px;
 }
 
 /* 
@@ -493,8 +496,6 @@
     margin-bottom: 10px;		/* 各項目で十分に間を空ける。 */
     padding-left: 2em;	/* 更にインデントをつける。 */
     line-height: 18px;
-    color: #555;
-    font-family: Helvetica, Arial, "Hiragino Kaku Gothic ProN", "Meiryo", "MS PGothic", sans-serif;
 }
 
 /* 

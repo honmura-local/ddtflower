@@ -1,188 +1,200 @@
 {
-    "pageTitle":{
-        "class":"pageTitle cf",
-        "image"     :{
-            "src"   :   "image/icon(butterfly).png"
-        },
-        "title"     : {
-            "text"  :   "体験レッスン"
-        },
-        "summary"   : {
-            "text"  :   "興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
-        }
-    },
+	"pageTitle":{
+    	"class":"pageTitle cf",
+		"image"		:{
+			"src"	:	"image/icon(butterfly).png"
+		},
+		"title"		: {
+			"text"	:	"体験レッスン"
+		},
+		"summary"	: {
+			"text"	:	"興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
+		}
+	},
 
     "reservedFlow":{
-        "reservedFlowTitle": {
-            "reservedFlowImgLeft":{
-                "src":"image/icon(smilebird).png"
-            },
-            "reservedFlowTitleText": {
-                "text": "ご予約までの流れ"
-            },
-            "reservedFlowImgRight": {
-                "src": "image/icon(clearfacebird).png"
+        "summary": {
+            "tsext":"ご予約までの流れ"
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP1"
+                },
+                "stepText":{
+                    "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
+                },
+                "stepText":{
+                    "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
+                },
+                "stepText":{
+                    "text":"＊予約ダイアログが表示されます。"
+                }
             }
         },
-        "firstStep":{
-            "text":"STEP1"
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP2"
+                },
+                "stepText":{
+                    "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
+                }
+            }
         },
-        "firstStepSummary":{
-            "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP3"
+                },
+                "stepText":{
+                    "text":"希望する時限を選んでください。＊複数指定を推奨します。"
+                }
+            }
         },
-        "firstStepSummary1":{
-            "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP4"
+                },
+                "stepText":{
+                    "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
+                }
+            }
         },
-        "firstStepSummary2":{
-            "text":"＊予約ダイアログが表示されます。"
-        },
-        "secondStep":{
-            "text":"STEP2"
-        },
-        "secondStepSummary":{
-            "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
-        },
-        "thirdStep":{
-            "text":"STEP3"
-        },
-        "thirdStepSumary":{
-            "text":"希望する時限を選んでください。＊複数指定を推奨します。"
-        },
-        "fourthStep":{
-            "text":"STEP4"
-        },
-        "fourthStepSummary":{
-            "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
-        },
-        "fifthStep":{
-            "text":"STEP5"
-        },
-        "fifthStepSummary":{
-            "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
-        },
-        "fifthStepSummary1":{
-            "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP5"
+                },
+                "stepText":{
+                    "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
+                },
+                "stepText":{
+                    "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+                }
+            }
         }
     },
 
-    "specialGuide":{
-        "class": "specialGuide guideTable",
-        "summary" :{
-            "text": "体験レッスン案内"
-        },
-        "category":{
-            "item":{
-                "text"  :   "カテゴリ"
-            },
-            "content":{
-                "text"  :   "花・ガーデニング・環境"
-            }
-        },
-        "doKnow":{
-            "item":{
-                "text"  :   "できること・わかること"
-            },
-            "content":{
-                "text"  :   "プリザーブドフラワー"
-            }
-        },
-        "cost":{
-            "item":{
-                "text"  :   "費用"
-            },
-            "content":{
-                "text"  :   "3,800円"
-            }
-        },
-        "times":{
-            "item":{
-                "text"  :   "回数"
-            },
-            "content":{
-                "text"  :   "1回"
-            }
-        },
-        "hour":{
-            "item":{
-                "text"  :   "1回あたりの時間"
-            },
-            "content":{
-                "text"  :   "90分"
-            }
-        },
-        "target":{
-            "item":{
-                "text"  :   "対象者"
-            },
-            "content":{
-                "text"  :   "初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
-            }
-        },
-        "bring":{
-            "item":{
-                "text"  :   "持ち物・その他"
-            },
-            "content":{
-                "text"  :   "お持ち帰り用の袋をご持参下さい"       
-            }
-        }
-    },
-    "experienceConstructs":{
-        "galleryTitle":{
-            "galleryTitleText":{
-                "text":"作品一覧"
-            }
-        },
-        "experienceGallery": {
-            "experience1stDiv": {
-                "experience1stArt": {
-                    "href": "photo/general/web/DSC_0898.jpg",
-                    "rel": "gallery",
-                    "experience1stImage": {
-                        "src": "photo/general/web100/DSC_0898.jpg"
-                    },
-                    "construct1stName": {
-                        "text": "プリザ1"
-                    }
-                }
-            },
-            "experience2ndDiv": {
-                "experience2ndArt": {
-                    "href": "photo/general/web/DSC_0894.jpg",
-                    "rel": "gallery",
-                    "experience2ndImage": {
-                        "src": "photo/general/web100/DSC_0894.jpg"
-                    },
-                    "construct2ndName": {
-                        "text": "プリザ2"
-                    }
-                }
-            },
-            "experience3rdDiv": {
-                "experience3rdArt": {
-                    "href": "photo/general/web/DSC_0099.jpg",
-                    "rel": "gallery",
-                    "experience3rdImage": {
-                        "src": "photo/general/web100/DSC_0099.jpg"
-                    },
-                    "construct3rdName": {
-                        "text": "生花1"
-                    }
-                }
-            },
-            "experience4thDiv": {
-                "experience4thArt": {
-                    "href": "photo/general/web/DSC_0094.jpg",
-                    "rel": "gallery",
-                    "experience4thImage": {
-                        "src": "photo/general/web100/DSC_0094.jpg"
-                    },
-                    "construct4thName": {
-                        "text": "生花2"
-                    }
-                }
-            }
-        }
+	"specialGuide":{
+		"class": "specialGuide guideTable",
+		"summary" :{
+			"text": "体験レッスン案内"
+		},
+		"category":{
+			"item":{
+				"text"	:	"カテゴリ"
+			},
+			"content":{
+				"text"	:	"花・ガーデニング・環境"
+			}
+		},
+		"doKnow":{
+			"item":{
+				"text"	:	"できること・わかること"
+			},
+			"content":{
+				"text"	:	"プリザーブドフラワー"
+			}
+		},
+		"cost":{
+			"item":{
+				"text"	:	"費用"
+			},
+			"content":{
+				"text"	:	"3,800円"
+			}
+		},
+		"times":{
+			"item":{
+				"text"	:	"回数"
+			},
+			"content":{
+				"text"	:	"1回"
+			}
+		},
+		"hour":{
+			"item":{
+				"text"	:	"1回あたりの時間"
+			},
+			"content":{
+				"text"	:	"90分"
+			}
+		},
+		"target":{
+			"item":{
+				"text"	:	"対象者"
+			},
+			"content":{
+				"text"	:	"初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
+			}
+		},
+		"bring":{
+			"item":{
+				"text"	:	"持ち物・その他"
+			},
+			"content":{
+				"text"	:	"お持ち帰り用の袋をご持参下さい"		
+			}
+		}
+	},
+	"experienceConstructs":{
+		"galleryTitle":{
+			"galleryTitleText":{
+				"text":"体験作品一覧"
+			}
+		},
+		"experienceGallery": {
+	        "experience1stDiv": {
+	            "experience1stArt": {
+	                "href": "photo/general/web/DSC_0898.jpg",
+	                "rel": "gallery",
+	                "experience1stImage": {
+	                    "src": "photo/general/web100/DSC_0898.jpg"
+	                },
+	                "construct1stName": {
+	                    "text": "プリザ作品1"
+	                }
+	            }
+	        },
+	        "experience2ndDiv": {
+	            "experience2ndArt": {
+	                "href": "photo/general/web/DSC_0894.jpg",
+	                "rel": "gallery",
+	                "experience2ndImage": {
+	                    "src": "photo/general/web100/DSC_0894.jpg"
+	                },
+	                "construct2ndName": {
+	                    "text": "プリザ作品2"
+	                }
+	            }
+	        },
+	        "experience3rdDiv": {
+	            "experience3rdArt": {
+	                "href": "photo/general/web/DSC_0099.jpg",
+	                "rel": "gallery",
+	                "experience3rdImage": {
+	                    "src": "photo/general/web100/DSC_0099.jpg"
+	                },
+	                "construct3rdName": {
+	                    "text": "生花作品1"
+	                }
+	            }
+	        },
+	        "experience4thDiv": {
+	            "experience4thArt": {
+	                "href": "photo/general/web/DSC_0094.jpg",
+	                "rel": "gallery",
+	                "experience4thImage": {
+	                    "src": "photo/general/web100/DSC_0094.jpg"
+	                },
+	                "construct4thName": {
+	                    "text": "生花作品2"
+	                }
+	            }
+	        }
+		}
     },
     "specialReservedDialog": {
         "specialDate": {},
@@ -191,7 +203,7 @@
         },
         "radioButtonSpecialConstruct": {
             "constructFirstRow": {
-                "width":"100",
+            	"width":"100",
                 "constructHead": {
                     "text": "作品"
                 },
@@ -248,12 +260,12 @@
                 "firstPeriodRadioButtonWrap": {
                     "firstPeriodRadioButton": {
                         "name": "schedule",
-                        "value": "11:00 ～ 13:00",
+                        "value": "11:00 〜 13:00",
                         "type": "radio"
                     }
                 },
                 "firstPeriodLabel": {
-                    "text": "11:00 ～ 13:00"
+                    "text": "11:00 〜 13:00"
                 }
             },
             "scheduleSecondRow": {
@@ -261,12 +273,12 @@
                 "secondPeriodRadioButtonWrap": {
                     "secondPeriodRadioButton": {
                         "name": "schedule",
-                        "value": "14:00 ～ 16:00",
+                        "value": "14:00 〜 16:00",
                         "type": "radio"
                     }
                 },
                 "secondPeriodLabel": {
-                    "text": "14:00 ～ 16:00"
+                    "text": "14:00 〜 16:00"
                 }
             },
             "scheduleThirdRow": {
@@ -274,12 +286,12 @@
                 "thirdPeriodRadioButtonWrap": {
                     "thirdPeriodRadioButton": {
                         "name": "schedule",
-                        "value": "16:30 ～ 18:30",
+                        "value": "16:30 〜 18:30",
                         "type": "radio"
                     }
                 },
                 "thirdPeriodLabel": {
-                    "text": "16:30 ～ 18:30"
+                    "text": "16:30 〜 18:30"
                 }
             },
             "scheduleFourthRow": {
@@ -287,12 +299,12 @@
                 "fourthPeriodRadioButtonWrap": {
                     "fourthPeriodRadioButton": {
                         "name": "schedule",
-                        "value": "19:00 ～ 21:00",
+                        "value": "19:00 〜 21:00",
                         "type": "radio"
                     }
                 },
                 "fourthPeriodLabel": {
-                    "text": "19:00 ～ 21:00"
+                    "text": "19:00 〜 21:00"
                 }
             },
             "scheduleFourthHalfRow": {
@@ -300,43 +312,25 @@
                 "fourthHalfPeriodRadioButtonWrap": {
                     "fourthHalfPeriodRadioButton": {
                         "name": "schedule",
-                        "value": "19:30 ～ 21:30",
+                        "value": "19:30 〜 21:30",
                         "type": "radio"
                     }
                 },
                 "fourthHalfPeriodLabel": {
-                    "text": "19:30 ～ 21:30"
+                    "text": "19:30 〜 21:30"
                 }
             }
         },
         "subInfo": {
             "subInfoFirstRow": {
                 "subInfoHead": {
-                    "text": "予備情報",
-                    "colspan":"5"
+                    "text": "予備情報"
                 }
             },
             "subInfoSecondRow": {
-                "blank":{},
-                "blank2":{},
                 "dayOfWeekHead": {
-                    "text": "可能曜日",
-                    "colspan":"3"
+                    "text": "可能曜日"
                 },
-                "allDayCeckboxWrap":{
-                    "allDayCeckbox":{
-                        "type":"checkbox",
-                        "name":"dayOfWeek"
-                    }
-                },
-                "allDayCeckboxLabel":{
-                    "colspan":"12",
-                    "text":"全ての曜日にチェックする"
-                }
-            },
-            "subInfoThirdRow": {
-                "blank":{},
-                "blank2":{},
                 "mondayCheckBoxWrap": {
                     "mondayCheckbox": {
                         "name": "dayOfWeek",
@@ -376,7 +370,10 @@
                 },
                 "thirsdayLabel": {
                     "text": "木"
-                },
+                }
+            },
+            "subInfoThirdRow": {
+                "blank6": {},
                 "fridayCheckBoxWrap": {
                     "fridayCheckbox": {
                         "name": "dayOfWeek",
@@ -408,28 +405,11 @@
                     "text": "日"
                 }
             },
-            "subInfoFourthRow":{
+            "subInfoFourthRow": {
                 "weekHead": {
-                    "blank":{},
-                    "blank2":{},
-                    "text": "可能週",
-                    "colspan": "3"
+                    "text": "可能週"
                 },
-                "allWeekChekboxWrap":{
-                    "allWeekChekbox":{
-                        "type":"checkbox",
-                        "name":"week"
-                    }
-                },
-                "allWeekChekboxLabel":{
-                    "text":"全ての週にチェックする",
-                    "colspan":"9"
-                }
-            },
-            "subInfoFifthRow": {
                 "firstWeekCheckBoxWrap": {
-                    "blank":{},
-                    "blank2":{},
                     "firstWeekCheckbox": {
                         "name": "week",
                         "value": "1週",
@@ -437,7 +417,6 @@
                     }
                 },
                 "firstWeekCheckBoxLabel": {
-                    "colspan":"2",
                     "text": "1週"
                 },
                 "secondWeekCheckBoxWrap": {
@@ -448,7 +427,6 @@
                     }
                 },
                 "secondWeekCheckBoxLabel": {
-                    "colspan":"2",
                     "text": "2週"
                 },
                 "thirdWeekCheckBoxWrap": {
@@ -459,7 +437,6 @@
                     }
                 },
                 "thirdWeekCheckBoxLabel": {
-                    "colspan":"2",
                     "text": "3週"
                 },
                 "fourthWeekCheckBoxWrap": {
@@ -470,7 +447,6 @@
                     }
                 },
                 "fourthWeekCheckBoxLabel": {
-                    "colspan":"2",
                     "text": "4週"
                 }
             }
