@@ -11,7 +11,7 @@
             "text":"パスワード"
         },
         "password":{
-            "type": "text",
+            "type": "password",
             "name": "password"
         }
     }
