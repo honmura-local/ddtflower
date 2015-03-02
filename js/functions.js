@@ -340,3 +340,42 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 		});
  	});
 }
+
+/*
+ * 関数名:loadingScreen()
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :ローディング画面を表示する。
+ * 作成日:2015.03.02
+ * 作成者:T.Masuda
+ */
+function loadingScreen(selector){
+	// jQueryのコードを書く。
+	$(function(){
+		//指定した要素をを見えなくする。
+		$(selector).attr('display', 'none');	
+		//ローディング画面を追加する。
+		$('body').prepend($('<div id="loading">')
+					.attr({
+						position:'absolute',	/* 絶対位置を指定する。 */
+						left:'50%',				/* 画面中央 */
+						top:'20%',				/* 上から20%の位置に置く */
+						marginLeft:'-30px'		/* 自分の大きさの半分左にずらして中心に置く。 */
+					})
+					//ローディング画像を追加する。
+					.append($('<img src="image/gif-load.gif">')
+					)
+			);
+	});
+	
+	//ウィンドウのロードが終わったら
+	window.onload = function(){
+		//jQueryのコードを書く。
+		$(function() {
+			//ローディング画面をフェードアウトさせる。
+			$("#loading").fadeOut();
+			//指定した要素をフェードインさせる。
+			$(selector).fadeIn();
+		});
+	};
+}

@@ -30,9 +30,11 @@
 <!-- タグを作成するJSの関数群を読み込む -->
 <script type="text/javascript" src="js/createTag.js"></script>
 
-
 <!-- JavaScriptのコードを記述する -->
 <script>
+	//ローディング画面を出す。
+	loadingScreen('#container');
+
 //ドキュメント配備後
 $(document).ready(function(){
 	creator = new createTag();
@@ -58,7 +60,6 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-
 <!-- container -->
 <div id="container">
 	<!-- トップページのコンテンツのタグ。 -->
