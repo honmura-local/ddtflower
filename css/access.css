@@ -12,7 +12,6 @@
     margin-bottom: 5px;	/* 下のmarginを小さくする。 */
 }
 
-
 /* 
  * セレクタ:.pageTitle .summary
  * 概要   :タイトル領域の概要部分
@@ -59,7 +58,6 @@
 .accessMap {
 	margin: 0 auto 20px;	/* 中心に寄せて、フッター部分とも間隔を取る。 */
 	width: 600px;			/* 取る幅。 */
-	
 }
 
 /* 
@@ -73,12 +71,25 @@
 	height: 400px;		/* 高さを指定する。 */
 }
 
+/* 
+ * セレクタ:.transport
+ * 概要   :交通機関の情報。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .transport {
-	list-style: none;
-	margin: 5px 0;
+	list-style: none;	/* liタグの頭の点をなくす */
+	margin: 5px 0;		/* 上下の要素と間を空ける。 */
 }
+
+/* 
+ * セレクタ:.transport li
+ * 概要   :交通機関の情報の各項目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .transport li{
-	font-size: 14px;
-	margin-right: 14px;
-	line-height: 18px;
+	font-size: 14px;	/* フォントサイズを指定する。 */
+	margin-right: 14px;	/* スマホレイアウトの場合、右端に文字が届くのでmarginを配置する。 */
+	line-height: 18px;	/* 行間を空ける。 */
 }

@@ -138,19 +138,39 @@
 	color: #FFF;		/* 白抜き文字 */
 }
 
+/* 
+ * セレクタ:.calendar > div 
+ * 概要   :datepicker本体。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
 .calendar > div {
-	width: 100%;
-	font-size: 22px;
-	box-sizing: border-box;
+	width: 100%;			/* 幅を領域一杯に広げる。 */
+	font-size: 22px;		/* フォントサイズを上げて全体を大きくする。 */
+	box-sizing: border-box;	/* サイズの計算に線、paddingを含む。 */
 }
+
+/* 
+ * セレクタ:.galleryTitle
+ * 概要   :ギャラリーのタイトル部分。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
 .galleryTitle {
-	text-align: center;
-	background: rgb(206,220,58);
-	padding-top: 8px;
+	text-align: center;				/* 中心にそろえる */
+	background: rgb(206,220,58);	/* 背景色を緑にする。 */
+	padding-top: 8px;				/* 上に領域をのばす。 */
 }
-span.galleryTitleText {
-	font-size: 16px;
-	color: #FFF;
+
+/* 
+ * セレクタ:.galleryTitleText
+ * 概要   :ギャラリーのタイトルのテキスト。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.02.27
+ */
+.galleryTitleText {
+	font-size: 16px;	/* やや大きめのフォントサイズを指定する。 */
+	color: #FFF;		/* 白抜き文字にする。 */
 	/* テキストにふちをつける。 */
 	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
 }

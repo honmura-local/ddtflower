@@ -197,14 +197,36 @@
     padding-left: 2.1em;	/* 更にインデントをつける。 */
 	line-height: 16px;		/* スマホレイアウト時には行間を詰める。 */
 }
+
+/* 
+ * セレクタ:.merit .meritTitle
+ * 概要   :ご入会メリット、タイトル領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
 .merit .meritTitle {
 }
+
+/* 
+ * セレクタ:.merit .meritImgLeft
+ * 概要   :ご入会メリット、左の画像
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
 .merit .meritImgLeft {
-	width: 52px;
+	width: 52px;	/* 画像のサイズを半分にする。 */
 }
+
+/* 
+ * セレクタ:.merit .meritImgRight
+ * 概要   :ご入会メリット、右の画像
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
 .merit .meritImgRight {
-	width: 50px;
+	width: 50px;	/* 画像のサイズを半分にする。 */
 }
+
 /* 
  * セレクタ:.photoGallery
  * 概要   :コース案内コンテンツ内のフォトギャラリー。
@@ -278,32 +300,68 @@
  * 作成日 :2015.02.26
  */
 .footGallery{
-    width: 100%;       /* 幅を一杯に取る。 */
+    width: 90%;       /* 幅をmarginを考慮した値にして取る。 */
 }
 
+/* 
+ * セレクタ:.memberRule
+ * 概要   :会員規約
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .memberRule {
-	margin-bottom: 10px;
+	margin-bottom: 10px;	/* 最下部に来るので、フッターとのmarginを調整する。 */
 }
 
+/* 
+ * セレクタ:.photoGallery > * 
+ * 概要   :フォトギャラリーの直下要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .photoGallery > * {
-	top: -10px;
+	top: -10px;		/* 上にずらす。 */
 }
 
+/* 
+ * セレクタ:.merit .meritTitle > * 
+ * 概要   :入会メリットのタイトル領域の要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .merit .meritTitle > * {
-position: relative;
-top: -7px;
+	position: relative;	/* 相対位置要素に指定する */
+	top: -7px;			/* 上にずらす。 */
 }
 
+/* 
+ * セレクタ:.merit .meritTitle 
+ * 概要   :入会メリットのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .merit .meritTitle {
-height: 36px;
-background: rgb(206,220,58);
+	height: 36px;					/* 高さを固定値で指定する。 */
+	background: rgb(206,220,58);	/* 背景色を黄緑にする。 */
 }
 
+/* 
+ * セレクタ:.merit .meritTitleText 
+ * 概要   :入会メリットのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .merit .meritTitleText {
-font-size: 15px;
-top: -18px;
+	font-size: 15px;	/* フォントサイズを中くらいに指定する。 */
+	top: -18px;			/* 上にずらす。 */
 }
 
+/* 
+ * セレクタ:.guideTable .summary
+ * 概要   :案内テーブルのタイトル部分。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
 .guideTable .summary {
-	font-size: 16px;
+	font-size: 16px;	/* やや大きめのフォントを指定する。 */
 }
