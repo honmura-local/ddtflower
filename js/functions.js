@@ -315,3 +315,28 @@ function createUnmovableGallery(selector){
 	}); 
 }
 
+/*
+ * 関数名:allCheckbox
+ * 引数  :var checkboxTarget, var allCheckTarget
+ * 戻り値:なし
+ * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
+ * 作成日:2015.02.28
+ * 作成者:T.Yamamoto
+ */
+function allCheckbox(checkboxTarget, allCheckTarget) {
+	// jqueryの記述の始まり
+ 	$(function() {
+ 		// 第一引数の要素がクリックされたときの処理
+		$('body').on('click', checkboxTarget, function() {
+			// 第一引数のチェックボックスにチェックが入った時の処理
+			if($(checkboxTarget + ':checked').val() == 'on') {
+				// 第二引数のチェックボックスにチェックする
+				$(allCheckTarget).prop('checked', true);
+			// 第一引数のチェックボックスのチェックが外れた時の処理
+			} else if ($(checkboxTarget + ':checked').val() == undefined) {
+				// 第二引数のチェックボックスのチェックを外す
+				$(allCheckTarget).prop('checked', false);
+			};
+		});
+ 	});
+}
