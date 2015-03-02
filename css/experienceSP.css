@@ -117,3 +117,43 @@
 .experienceGallery > div > div > div{
 	width:50%!important;	/* 2個ずつ並べて表示する。 */
 }
+
+/* 
+ * セレクタ:.reservedFlow
+ * 概要   :作品一覧の画像1つの領域。
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.03.02
+ */
+.reservedFlow {
+	margin-top: 10px;	/* 上marginを減らす。 */
+}
+
+/* 
+ * セレクタ:.reservedFlowTitle > *
+ * 概要   :予約希望フローのタイトル領域の要素
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.03.02
+ */
+.reservedFlowTitle > * {
+	top: 0px!important;		/* タイトル領域の要素をタイトル領域からはみ出ない様にする。 */
+}
+
+/* 
+ * セレクタ:.reservedFlowTitleText
+ * 概要   :予約希望フローのタイトル
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.03.02
+ */
+.reservedFlowTitleText {
+	vertical-align: bottom;		/* タイトルを下に寄せる。 */
+}
+
+/* 
+ * セレクタ:.experienceGallery
+ * 概要   :体験レッスンページのギャラリー
+ * 作成者 :T.Masuda 
+ * 作成日 :2015.03.02
+ */
+.experienceGallery {
+	width: 90%;		/* 幅90% */
+}

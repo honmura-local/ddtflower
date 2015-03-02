@@ -365,3 +365,58 @@
 .guideTable .summary {
 	font-size: 16px;	/* やや大きめのフォントを指定する。 */
 }
+
+/* 
+ * セレクタ:.reservedFlow
+ * 概要   :ご予約までの流れ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.02
+ */
+.reservedFlow {
+	width: 90%;			/* スマホコンテンツ用の幅にする。 */
+	margin-right: auto;	/* 右marginをauto */	
+	margin-left: auto;	/* 左marginもautoにすることで中央に寄せる。 */
+}
+/* 
+ * セレクタ:.reservedFlowTitle
+ * 概要   :フご予約までの流れのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.reservedFlowTitle{
+	width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
+}
+
+/* 
+ * セレクタ:.reservedFlowTitleText
+ * 概要   :ご予約までの流れのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.reservedFlowTitleText{
+	font-size:18px;				/* フォントサイズを18pxに設定する。 */
+}
+	
+/* 
+ * セレクタ:.reservedFlowImgLeft
+ * 概要   :ご予約までの流れのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.reservedFlowImgLeft{
+	vertical-align: bottom;		/* 高さを底に合わせる。 */
+	margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+	width: 22px;
+}
+
+/* 
+ * セレクタ:.reservedFlowImgRight
+ * 概要   :ご予約までの流れのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ */
+.reservedFlowImgRight{
+	vertical-align: middle;		/* 高さを中心に合わせる。 */
+	margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
+	width: 35px;
+}

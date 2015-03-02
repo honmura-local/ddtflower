@@ -65,14 +65,15 @@
 }
 
 /* 
- * セレクタ:.contactForm textarea
+ * セレクタ:.contactForm .contentTextArea textarea
  * 概要   :入力項目のテキストエリア。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm .textarea{
+.contactForm .contentTextArea textarea{
 	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
-	max-width: 340px;			/* 引き延ばせる最大の幅を設定する。 */
+	width: 380px;				/* 幅を設定する。 */
+	max-width: 500px;			/* 引き延ばせる最大の幅を設定する。 */
 }
 
 /* 
@@ -113,4 +114,14 @@
  */
 .contactForm input{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
+}
+
+/* 
+ * セレクタ:.contactForm input[type="text"],.contactForm input[type="email"] 
+ * 概要   :問い合わせフォームのテキストボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.02
+ */
+.contactForm input[type="text"],.contactForm input[type="email"] {
+	width: 380px;	/* 幅を指定する。 */
 }
