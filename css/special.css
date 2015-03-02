@@ -31,6 +31,7 @@
  */
 .reservedSummary{
     margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
+    text-indent: 1em;   /* インデントを1文字分とる */
 }
 
 /* 
@@ -99,7 +100,7 @@
  */
 .radioButtonSpecialSchedule{
     width: inherit;     /* ダイアログの幅を継承する。 */
-    margin-bottom: 5px; /* 次のコンテンツとの間に間隔を取る。 */
+
 }
 
 /* 
@@ -246,4 +247,47 @@
 .confirmNotice{
     margin-bottom: 5px; /* 下の入力内容一覧との間に間隔を取る。 */
 }
+
+
+/* 
+ * セレクタ:.reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
+ * 概要   :ダイアログのコンテンツ部分のスタイル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo{
+    font-size: 15px;    /* フォントのサイズを15pxにする */
+    margin-top: 5px;    /* 上から5pxの余白をとる */
+}
+
+.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo {
+    border-top: 1px solid #D0D0AC;  /* 灰色の線を入れる */
+    display: block;                 /* ブロックレベル要素にする */
+    padding: 10px;                  /* 要素の幅を10px広げる */
+}
+
+.radioButtonSpecialConstruct td {
+    padding-left: 5px;
+}
+
+/* 
+ * セレクタ:.reservedSummary td
+ * 概要   :ダイアログのコンテンツ部分のスタイル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.09
+ */
+.reservedSummary {
+    margin-bottom: 10px;    /* 余白を下に10pxとる */
+    line-height: 1.3;       /* 行間を1.3行分あける */
+}
+
+
+
+
+.preserved2RadioButtonWrap, .fresh2RadioButtonWrap {
+    display: block;
+    margin-left: 20px;
+
+}
+
 

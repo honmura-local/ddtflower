@@ -445,7 +445,7 @@ button.ui-button::-moz-focus-inner {
 	float: left;
 	margin: .1em 0;
 	white-space: nowrap;
-	width: 90%;
+	width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
