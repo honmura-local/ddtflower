@@ -350,7 +350,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit {
+.merit, .reservedFlow {
 	clear: both;				/* 回り込みの対象にしない。 */
 	margin-bottom: 10px;		/* コンテンツの後に間隔を取る */
 	margin-top: 60px;			/* 上のmarginを挿入する。子要素をずらした分を考慮した値を指定する。 */
@@ -362,7 +362,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit > * {
+.merit > *,.reservedFlow > * {
 	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
 	top: -13px;			/* 対象の要素を上にずらす。 */
 }
@@ -373,7 +373,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
- .merit .meritTitle{
+ .merit .meritTitle, .reservedFlow .reservedFlowTitle{
 	clear: both;					/* 回り込みをなくす */
 	text-align: left;				/* 左にそろえる */
 	height: 35px;					/* 帯の高さ */
@@ -388,7 +388,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit .meritTitle > *{
+.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *{
 	position: relative;		/* 座標をずらすためにこの設定をする。 */
 	top: -47px;				/* 上にずらす。 */
 }
@@ -399,7 +399,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
  */
-.merit .meritTitleText{
+.merit .meritTitleText, .reservedFlow .reservedFlowTitleText{
 	color: #FFF;				/* 白抜き文字にする。 */
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 18px;			/* フォントサイズを18pxに設定する。 */
@@ -461,7 +461,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dt,.merit dd{
+.merit dt,.merit dd, .reservedFlow dt, .reservedFlow dd{
     padding: 2px 0em;	/* 適切に間隔を取る */
 }
 
@@ -471,7 +471,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dt{
+.merit dt, .reservedFlow dt{
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
@@ -488,7 +488,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dd{
+.merit dd, .reservedFlow dd{
     font-size: 13px;    	/* 文字のサイズを18pxにする */
     margin-bottom: 10px;		/* 各項目で十分に間を空ける。 */
     padding-left: 2em;	/* 更にインデントをつける。 */
@@ -544,7 +544,7 @@
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
 	color: #FFF;				/* 白抜き文字にする。 */
-	text-shadow:   -1px -1px #000,  1px -1px #000,  -1px 1px #000,  1px 1px #000;
+	text-shadow:   -1px -1px #FFF,  1px -1px #FFF,  -1px 1px #FFF,  1px 1px #FFF;
 }
 	
 /* 
@@ -592,7 +592,6 @@
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
     border: 1px solid #D0D0AC;
-    /* border-left: 1px solid #D0D0AC; */
     border-bottom-width: 1px;
 }
 
@@ -612,6 +611,7 @@
     width:  auto;  	/* 幅を自動調整にする */
     height: 120px;  /* 高さを固定にする */
 }
+
 /* 
  * セレクタ:.footGallery > div
  * 概要   :ギャラリー直下のdiv
@@ -619,17 +619,17 @@
  * 作成日 :2015.02.27
  */
  .footGallery > div {
-	border-bottom: 1px solid #D0D0AC;	/* 下に黄緑の線を引く。 */
+    border-bottom: 1px solid #D0D0AC;    /* 下に黄緑の線を引く。 */
+    
 }
 
 /* smooth div scrollの矢印 */
 #mixedContent .contentBox {
-	position: relative;
-	float: left;
-	display: block;
-	height: 308px;
-	width: 200px;
-	border: solid 1px #ccc;
-	padding: 10px;
-	margin: 0px 5px;
-}
+    position: relative;
+    float: left;
+    display: block;
+    height: 308px;
+    width: 200px;
+    border: solid 1px #ccc;
+    padding: 10px;
+    margin: 0px 5px;

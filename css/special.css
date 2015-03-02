@@ -41,7 +41,7 @@
  * 作成日 :2015.02.06
  */
 .specialReservedDialog table th{
-    width: 60px;		/* 幅を60pxにする */
+    width: 50px;        /* 幅を60pxにする */
 }
 
 /* 
@@ -143,70 +143,6 @@
     width: inherit;     /* ダイアログの幅を継承する。 */
 }
 
-/*
- * セレクタ:.subInfo table
- * 概要   :予約可能曜日、週のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo table{
-    margin: 5px 10px;   /* 上下左右に適度なmarginを挿入する。 */
-}
-
-/*
- * セレクタ:.subInfo th,td
- * 概要   :.subInfo tableのテキストまたはチェックボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo th,td{
-    vertical-align  :   middle; /* 高さを中心に揃える。 */
-    width           :   auto;   /* 幅を文字に合わせる。 */
-    height          :   auto;   /* 高さを文字に合わせる。 */
-}
-
-/*
- * セレクタ:.subInfo th,td
- * 概要   :.subInfo tableのテキストまたはチェックボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr td:nth-child(2n+1){
-    min-width: 23px;
-}
-
-/*
- * セレクタ:.subInfo tr:nth-child(2) th
- * 概要   :.subInfo table2行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(2) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-
-/*
- * セレクタ:.subInfo tr:nth-child(3) th
- * 概要   :.subInfo table3行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(3) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-/*
- * セレクタ:.subInfo tr:nth-child(4) th
- * 概要   :.subInfo table4行目の見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.subInfo tr:nth-child(4) th{
-    padding-left    :   15px;   /* 左に2文字程度の空白を挿入する。 */
-    font-weight     : normal;   /* フォントの太さを通常にする。 */
-}
-
 /* 
  * セレクタ:.specialReservedConfirmDialog
  * 概要   :予約希望の送信の確定を行うダイアログ。
@@ -248,7 +184,6 @@
     margin-bottom: 5px; /* 下の入力内容一覧との間に間隔を取る。 */
 }
 
-
 /* 
  * セレクタ:.reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
  * 概要   :ダイアログのコンテンツ部分のスタイル。
@@ -257,37 +192,196 @@
  */
 .reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo{
     font-size: 15px;    /* フォントのサイズを15pxにする */
-    margin-top: 5px;    /* 上から5pxの余白をとる */
 }
 
+/* 
+ * セレクタ:.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
+ * 概要   :ダイアログのコンテンツ部分のスタイル。
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
 .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo {
     border-top: 1px solid #D0D0AC;  /* 灰色の線を入れる */
     display: block;                 /* ブロックレベル要素にする */
     padding: 10px;                  /* 要素の幅を10px広げる */
 }
 
-.radioButtonSpecialConstruct td {
-    padding-left: 5px;
-}
-
 /* 
- * セレクタ:.reservedSummary td
- * 概要   :ダイアログのコンテンツ部分のスタイル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
+ * セレクタ:.reservedSummary
+ * 概要   :ダイアログの概要部分のスタイル。
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
  */
 .reservedSummary {
-    margin-bottom: 10px;    /* 余白を下に10pxとる */
     line-height: 1.3;       /* 行間を1.3行分あける */
 }
 
-
-
-
+/* 
+ * セレクタ:.preserved2RadioButtonWrap, .fresh2RadioButtonWrap
+ * 概要   :ダイアログの作品のラジオボタンのスタイル。
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
 .preserved2RadioButtonWrap, .fresh2RadioButtonWrap {
-    display: block;
-    margin-left: 20px;
-
+    display: block;     /* ブロック要素にする */
+    margin-left: 20px;  /* 左から20pxの余白をとる */
 }
 
+/* 
+ * セレクタ:.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input 
+ * 概要   :左側のラジオボタンについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input {
+    padding-left: 5px;  /* 左向きに5px要素を広げる */
+}
 
+/* 
+ * セレクタ:.radioButtonSpecialConstruct tr td
+ * 概要   :作品についての
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+
+.radioButtonSpecialConstruct tr td {
+    padding-left: 10px; /* 左向きに10px要素を広げる */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialConstruct tr td, .radioButtonSpecialSchedule tr td{
+ * 概要   :ラジオボタンについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.radioButtonSpecialConstruct tr td, .radioButtonSpecialSchedule tr td{
+    padding-top: 3px;   /* 上向きに3px要素を広げる */
+}
+
+/* 
+ * セレクタ:.subInfoFirstRow
+ * 概要   :予備情報の1行目についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.subInfoFirstRow {
+    width: 252px;       /* 要素の幅を252pxにする */
+    height: 20px;       /* 高さを20pxにする */
+}
+
+/* 
+ * セレクタ:.subInfo td
+ * 概要   :予備情報の一つのカラムについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.subInfo td {
+    width: 15px;        /* 要素の幅を15pxにする */
+}
+
+/* 
+ * セレクタ:.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {
+ * 概要   :予備情報の2行目以降のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {
+    padding-left: 5px;  /* 要素の幅を5px左向きに広げる */
+    font-size: 12px;    /* フォントサイズ12pxにする */
+    text-align: left;   /* 左寄りにする */
+}
+
+/* 
+ * セレクタ:.subInfoThirdRow {
+ * 概要   :予備情報の3行目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.subInfoThirdRow {
+    height: 30px;       /* 高さを30pxにする */
+}
+
+/* ここから予約の流れについてのスタイル設定 */
+
+/* 
+ * セレクタ:.reservedFlow
+ * 概要   :ご予約の流れ全体のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.reservedFlow {
+    color: #555;        /* 文字色を真っ黒でなく少しグレーをかけた色にする */
+    margin: 0 auto;     /* 中央揃えにする */
+    width: 800px;       /* 幅を800pxにする */
+    list-style: none;   /* リストスタイルをなくす */
+    
+}
+
+/* 
+ * セレクタ:.reservedFlow　.summary
+ * 概要   :ご予約の流れ　概要のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.reservedFlow .summary {
+    border-left: 5px solid #cedc3a; /* テキストの横に5pxの線を入れる */
+    padding-left: 0.7em;            /* ボーダーから余白をあける */
+    margin-bottom: 20px;            /* 下向きに20pxの余白に取る */
+}
+
+/* 
+ * セレクタ:.step1, .step2, .step3, .step4, .step5
+ * 概要   :ご予約の流れ　ステップのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.step1, .step2, .step3, .step4, .step5 {
+    margin: 0 5px;      /* 左右に5pxの余白をとる */
+    list-style: none;   /* リストスタイルをなくす */
+}
+
+/* 
+ * セレクタ:.stepContent
+ * 概要   :ご予約の流れ　ステップのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.stepContent {
+    list-style: none;   /* リストスタイルをなくす */
+}
+
+/* 
+ * セレクタ:.stepContent li
+ * 概要   :
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.stepContent li {
+    padding: 5px;       /* 要素の幅を5px広くする */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule td
+ * 概要   .radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input 
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.stepSummary {
+    font-size: 14px;    /* フォントサイズを14pxにする */
+    font-weight: bold;
+    margin-bottom: 5px; /* 下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialSchedule td
+ * 概要   .radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input 
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.27
+ */
+.stepText, .stepText1, .stepText2 {
+    font-size: 12px;        /* フォントサイズ12pxにする */
+    margin-bottom: 10px;    /* 下向きに10pxの余白をとる */ 
+    margin-left: 15px;     /* 左向きに10pxの余白をとる */ 
+}
+
+/* ここまで予約の流れについてのスタイル設定 */

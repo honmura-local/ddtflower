@@ -367,37 +367,37 @@
 
 <!-- 体験レッスンの作品一覧 -->
 <div class="experienceConstructs">
-	<!-- ギャラリーのタイトル。 -->
-	<div class="galleryTitle">
-		<!-- ギャラリー中心のタイトル文字。 -->
-		<span class="galleryTitleText"></span>
-	</div>
-	<div class="experienceGallery">
-		<!-- ギャラリーの画像。divタグ、aタグにimgタグを格納する構成。任意の数を用意する。現在は試験的に10個。 -->
-		<div class="experience1stDiv">
-			<a class="experience1stArt" href="" rel="">
-				<img class="experience1stImage" src="">
-				<p class="construct1stName"></p>
-			</a>
-		</div>
-		<div class="experience2ndDiv">
-			<a class="experience2ndArt" href="" rel="">
-				<img class="experience2ndImage" src="">
-				<p class="construct2ndName"></p>
-			</a>
-		</div>
-		<div class="experience3rdDiv">
-			<a class="experience3rdArt" href="" rel="">
-				<img class="experience3rdImage" src="">
-				<p class="construct3rdName"></p>
-			</a>
-		</div>
-		<div class="experience4thDiv">
-			<a class="experience4thArt" href="" rel="">
-				<img class="experience4thImage" src="">
-				<p class="construct4thName"></p>
-			</a>
-		</div>
+    <!-- ギャラリーのタイトル。 -->
+    <div class="galleryTitle">
+        <!-- ギャラリー中心のタイトル文字。 -->
+        <span class="galleryTitleText"></span>
+    </div>
+    <div class="experienceGallery">
+        <!-- ギャラリーの画像。divタグ、aタグにimgタグを格納する構成。任意の数を用意する。現在は試験的に10個。 -->
+        <div class="experience1stDiv">
+            <a class="experience1stArt" href="" rel="">
+                <img class="experience1stImage" src="">
+                <p class="construct1stName"></p>
+            </a>
+        </div>
+        <div class="experience2ndDiv">
+            <a class="experience2ndArt" href="" rel="">
+                <img class="experience2ndImage" src="">
+                <p class="construct2ndName"></p>
+            </a>
+        </div>
+        <div class="experience3rdDiv">
+            <a class="experience3rdArt" href="" rel="">
+                <img class="experience3rdImage" src="">
+                <p class="construct3rdName"></p>
+            </a>
+        </div>
+        <div class="experience4thDiv">
+            <a class="experience4thArt" href="" rel="">
+                <img class="experience4thImage" src="">
+                <p class="construct4thName"></p>
+            </a>
+        </div>
 	</div>
 </div>
 
@@ -429,7 +429,7 @@
 <!-- 会員規約のリスト項目 -->
 <table class="memberRule">
 	<!-- テーブルの概要 -->
-	<caption class="listHead"></caption>
+	<caption class="summary"></caption>
 	<!-- 項目一覧 -->
 	<!-- 1行目 -->
 	<tr class="memberRuleList">
@@ -663,63 +663,93 @@
   <!-- 1行目 -->
     <tr class="subInfoFirstRow">
   <!-- 「予備情報」という見出し -->
-      <th class="subInfoHead"></th>
+      <td class="subInfoHead" colspan=""></td>
     </tr>
   <!-- 見出しとチェックボックスの親タグ、チェックボックス、ラベルのセットの繰り返し×3行 -->
 	<!-- 2~3行目は曜日の選択 -->  
+	<!-- 可能曜日1行目 -->
     <tr class="subInfoSecondRow">
-      <th class="dayOfWeekHead"></th>
+      <!-- 可能曜日テキスト -->
+      <td class="blank"></td>
+      <td class="blank2"></td>
+      <td class="dayOfWeekHead" colspan=""></td>
+      <!-- 可能曜日全チェック -->
+      <td class="allDayCeckboxWrap">
+        <input class="allDayCeckbox" type="" name="">
+      </td>
+      <!-- 可能曜日全チェックラベル -->
+      <td class="allDayCeckboxLabel" colspan=""></td>
+    </tr>
+    <!-- 3行目 -->
+    <tr class="subInfoThirdRow">
+      <td class="blank"></td>
+      <td class="blank2"></td>
+      <!-- 可能曜日月曜日チェックボックス -->
       <td class="mondayCheckBoxWrap">
         <input class="mondayCheckbox" type="" name="" value="">
       </td>
       <td class="mondayLabel"></td>
+      <!-- 可能曜日火曜日チェックボックス -->
       <td class="tuesdayCheckBoxWrap">
         <input class="tuesdayCheckbox" type="" name="" value="">
       </td>
       <td class="tuesdayLabel"></td>
+      <!-- 可能曜日水曜日チェックボックス -->
       <td class="wednesdayCheckBoxWrap">
         <input class="wednesdayCheckbox" type="" name="" value="">
       </td>
       <td class="wednesdayLabel"></td>
+      <!-- 可能曜日木曜日チェックボックス -->
       <td class="thirsdayCheckBoxWrap">
         <input class="thirsthdayCheckBox" type="" name="" value="">
       </td>
       <td class="thirsdayLabel"></td>
-    </tr>
-    <tr class="subInfoThirdRow">
-      <th class="blank6"></th>
+      <!-- 可能曜日金曜日チェックボックス -->
       <td class="fridayCheckBoxWrap">
         <input class="fridayCheckbox" type="" name="" value="">
       </td>
       <td class="fridayLabel"></td>
+      <!-- 可能曜日土曜日チェックボックス -->
       <td class="saturdayCheckBoxWrap">
         <input class="saturdayCheckbox" type="" name="" value="">
       </td>
       <td class="saturdayLabel"></td>
+      <!-- 可能曜日日曜日チェックボックス -->
       <td class="sundayCheckBoxWrap">
         <input class="sundayCheckbox" type="" name="" value="">
       </td>
       <td class="sundayLabel"></td>
     </tr>
-  <!-- 4行目は週の選択 -->
+  <!-- 4行目週 -->
     <tr class="subInfoFourthRow">
-      <th class="weekHead"></th>
+      <td class="blank"></td>
+      <td class="blank2"></td>
+      <td class="weekHead" colspan=""></td>
+      <td class="allWeekChekboxWrap">
+        <input class="allWeekChekbox" type="" name="">
+      </td>
+      <td class="allWeekChekboxLabel" colspan=""></td>
+    </tr>
+    <!-- 5行目週の選択 -->
+    <tr class="subInfoFifthRow">
+      <td class="blank"></td>
+      <td class="blank2"></td>
       <td class="firstWeekCheckBoxWrap">
         <input class="firstWeekCheckbox" type="" name="" value="">
       </td>
-      <td class="firstWeekCheckBoxLabel"></td>
+      <td class="firstWeekCheckBoxLabel" colspan=""></td>
       <td class="secondWeekCheckBoxWrap">
         <input class="secondWeekCheckbox" type="" name="" value="">
       </td>
-      <td class="secondWeekCheckBoxLabel"></td>
+      <td class="secondWeekCheckBoxLabel" colspan=""></td>
       <td class="thirdWeekCheckBoxWrap">
         <input class="thirdWeekCheckbox" type="" name="" value="">
       </td>
-      <td class="thirdWeekCheckBoxLabel"></td>
+      <td class="thirdWeekCheckBoxLabel" colspan=""></td>
       <td class="fourthWeekCheckBoxWrap">
         <input class="fourthWeekCheckbox" type="" name="" value="">
       </td>
-      <td class="fourthWeekCheckBoxLabel"></td>
+      <td class="fourthWeekCheckBoxLabel" colspan=""></td>
     </tr>
   </table>
 </div>
@@ -759,6 +789,46 @@
   </table>
 </div>
 
+<!-- 予約の流れコンテンツ -->
+<dl class="reservedFlow">
+	<!-- 予約の流れのタイトル。 -->
+	<div class="reservedFlowTitle">
+		<!-- 予約の流れ左の画像。 -->
+		<img class="reservedFlowImgLeft" src="">
+		<!-- 予約の流れ中心のタイトル文字。 -->
+		<span class="reservedFlowTitleText"></span>
+		<!-- 予約の流れ右の画像。 -->
+		<img class="reservedFlowImgRight" src="">
+	</div>
+	<!-- 予約の流れの一覧。 -->
+	<!-- step1 -->
+	<dt class="firstStep"></dt>
+	<!-- step1概要1行目 -->
+	<dd class="firstStepSummary"></dd>
+	<!--  step1概要2行目-->
+	<dd class="firstStepSummary1"></dt>
+	<!-- step1概要3行目 -->
+	<dd class="firstStepSummary2"></dd>
+	<!-- step2 -->
+	<dt class="secondStep"></dt>
+	<!-- step2概要 -->
+	<dd class="secondStepSummary"></dd>
+	<!-- step3 -->
+	<dt class="thirdStep"></dt>
+	<!-- step3概要 -->
+	<dd class="thirdStepSumary"></dd>
+	<!-- step4 -->
+	<dt class="fourthStep"></dt>
+	<!-- step4概要 -->
+	<dd class="fourthStepSummary"></dd>
+	<!-- step5 -->
+	<dt class="fifthStep"></dt>
+	<!-- step5概要1行目 -->
+	<dd class="fifthStepSummary"></dd>
+	<!-- step5概要2行目 -->
+	<dd class="fifthStepSummary1"></dd>
+</dl>
+<!-- 予約の流れコンテンツ おわり -->
 </div>
 </body>
 </html>

@@ -12,6 +12,71 @@
 		}
 	},
 
+    "reservedFlow":{
+        "summary": {
+            "tsext":"ご予約までの流れ"
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP1"
+                },
+                "stepText":{
+                    "text":"あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
+                },
+                "stepText":{
+                    "text":"カレンダーから体験レッスンを受けたい日にちをクリックします。"
+                },
+                "stepText":{
+                    "text":"＊予約ダイアログが表示されます。"
+                }
+            }
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP2"
+                },
+                "stepText":{
+                    "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
+                }
+            }
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP3"
+                },
+                "stepText":{
+                    "text":"希望する時限を選んでください。＊複数指定を推奨します。"
+                }
+            }
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP4"
+                },
+                "stepText":{
+                    "text":"予備情報として比較的受けやすい曜日、と週を選んでください。"
+                }
+            }
+        },
+        "step":{
+            "stepContent":{
+                "stepSummary":{
+                    "text":"STEP5"
+                },
+                "stepText":{
+                    "text":"予約可能か否かにつきまして追ってメールにより返信致します。"
+                },
+                "stepText":{
+                    "text":"また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+                }
+            }
+        }
+    },
+
 	"specialGuide":{
 		"class": "specialGuide guideTable",
 		"summary" :{
