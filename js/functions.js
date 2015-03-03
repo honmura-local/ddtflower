@@ -403,7 +403,7 @@ function callLoadingScreen(selector){
 					zIndex: 2000			/* 必ず見える様にする。 */
 				})
 				//ローディング画像を追加する。
-				.append($('<img src="image/gif-load.gif">')
+				.append($('<img src="image/loading.gif">')
 				)
 		);
 	});
