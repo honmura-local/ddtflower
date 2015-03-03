@@ -36,7 +36,7 @@ time, mark, audio, video {
 	}
 
 body {
-    line-height:1;
+    line-height:1.4;        /* 1行の間を1.4行分にする */
     /* font-familyを指定 */
 	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
 	color: #555;		/* ベースのフォンとカラー */
@@ -247,7 +247,7 @@ h1,h2,h3,h4,h5,th{
 .guideFASchool p{
     font-size   	: 12px;     /* フォントサイズを指定する。 */
     display     	: block;    /* ブロック要素にして縦に並べる。 */
-    margin-top  	: 4px;      /* 上に少々の間隔を取る。 */
+    margin-top  	: 2px;      /* 上に少々の間隔を取る。 */
     text-indent 	: 5px;      /* 先頭にインデントを入れる。 */
 	text-decoration	: none;		/* リンクの下線を消す。 */
 	color			: #000;		/* フォントの色を黒にする。 */
@@ -306,7 +306,6 @@ h1,h2,h3,h4,h5,th{
 .guideTel .p2{
     font-size: 15px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     color:  limegreen;  /* 淡い緑のフォントにする。 */
-    margin: 3px 0;      /* 上下に適正な間隔を空ける。 */
 }
 
 /* 

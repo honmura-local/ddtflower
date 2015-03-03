@@ -479,10 +479,8 @@
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
-    margin-bottom: 3px;						/* 下にmarginを入れる */
+    margin: 14px 0 3px 0;					/* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58);	/* 頭に緑の傍線をつける。 */
-    color: #555;							/* 文字の色を濃いグレーにする */
-    margin-left: 0;							/* 左のmarginをなくす */
     background:	#EEE;						/* 背景色をつけて帯をつくる。 */
 }
 
@@ -493,10 +491,7 @@
  * 作成日 :2015.02.26
  */
 .merit dd, .reservedFlow dd{
-    font-size: 13px;    	/* 文字のサイズを18pxにする */
-    margin-bottom: 10px;		/* 各項目で十分に間を空ける。 */
     padding-left: 2em;	/* 更にインデントをつける。 */
-    line-height: 18px;
 }
 
 /* 
@@ -634,3 +629,4 @@
     border: solid 1px #ccc;
     padding: 10px;
     margin: 0px 5px;
+}
