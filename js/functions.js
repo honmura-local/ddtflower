@@ -342,86 +342,46 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 }
 
 /*
- * 関数名:appearLoadingScreen(selector)
- * 引数  :String selector
- * 戻り値:なし
- * 概要  :ページ読み込み時にローディング画面を表示する。
- * 作成日:2015.03.02
- * 作成者:T.Masuda
- */
-function appearLoadingScreen(selector){
-	// jQueryのコードを書く。
-	$(function(){
-		//指定した要素をを見えなくする。
-		$(selector).attr('display', 'none');	
-		//ローディング画面を追加する。
-		$('body').prepend($('<div id="loading">')
-					.attr({
-						position:'absolute',	/* 絶対位置を指定する。 */
-						left:'50%',				/* 画面中央 */
-						top:'20%',				/* 上から20%の位置に置く */
-						marginLeft:'-30px'		/* 自分の大きさの半分左にずらして中心に置く。 */
-					})
-					//ローディング画像を追加する。
-					.append($('<img src="image/gif-load.gif">')
-					)
-			);
-	});
-	
-	//ウィンドウのロードが終わったら
-	window.onload = function(){
-		//jQueryのコードを書く。
-		$(function() {
-			//ローディング画面をフェードアウトさせる。
-			$("#loading").fadeOut();
-			//指定した要素をフェードインさせる。
-			$(selector).fadeIn();
-		});
-	};
-}
-
-/*
- * 関数名:callLoadingScreen(selector)
- * 引数  :String selector
+ * 関数名:callLoadingScreen()
+ * 引数  :なし
  * 戻り値:なし
  * 概要  :ローディング画面を表示する。
  * 作成日:2015.03.02
  * 作成者:T.Masuda
  */
-function callLoadingScreen(selector){
-	// jQueryのコードを書く。
-	$(function(){
-		//指定した要素をを見えなくする。
-		$(selector).fadeOut();	
-		//ローディング画面を追加する。
-		$('body').prepend($('<div id="loading">')
-				.attr({
-					position:'absolute',	/* 絶対位置を指定する。 */
-					left:'50%',				/* 画面中央 */
-					top:'20%',				/* 上から20%の位置に置く */
-					marginLeft:'-30px',		/* 自分の大きさの半分左にずらして中心に置く。 */
-					zIndex: 2000			/* 必ず見える様にする。 */
-				})
-				//ローディング画像を追加する。
-				.append($('<img src="image/loading.gif">')
-				)
-		);
-	});
+function callLoadingScreen(){
 	
-//	//ウィンドウのロードが終わったら
-//	window.onload = function(){
-//		//jQueryのコードを書く。
-//		$(function() {
-//			//ローディング画面をフェードアウトさせる。
-//			$("#loading").fadeOut();
-//			//指定した要素をフェードインさせる。
-//			$(selector).fadeIn();
-//		});
-//	};
+		//ローディング画面を出す。
+		$('#loading').css('display','block');
+		//ローディング画像を出す。
+		$('#loading img').css('display','block');
 }
+
+/* ローディング画面呼び出しのイベント登録 */
+/* ページが読み込まれたら */
+$(document).ready(function(){
+	//ローディング画面を追加する。
+	$('body').prepend($('<div id="loading">')
+			.attr({
+				position:'absolute',	/* 絶対位置を指定する。 */
+				left:'50%',				/* 画面中央 */
+				top:'20%',				/* 上から20%の位置に置く */
+				marginLeft:'-30px',		/* 自分の大きさの半分左にずらして中心に置く。 */
+				zIndex: '2000',			/* 必ず見える様にする。 */
+				display:'none'			/* 初期状態では見えなくする。 */
+			})
+			//ローディング画像を追加する。
+			.append($('<img src="image/loading.gif">')
+					//初期状態では見えなくする。
+					.css('display', 'none')
+			)
+	);
+});
 
 /* リンクが押されたら */
 $(document).on('click', 'a[href*=".html"]', function(){
-	//ローディング画面を呼び出す。
-	callLoadingScreen('#container');
+	//画面遷移に指定秒後にローディング画面を呼び出す。
+	window.setTimeout('callLoadingScreen()', 0);
 });
+/* 以上、ローディング画面呼び出しのイベント登録。 */
+
