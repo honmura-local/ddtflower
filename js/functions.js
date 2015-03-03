@@ -212,35 +212,23 @@ function callReservedDialog(dateText){
  */
 function createGallery(selector){
 
-	// slickの画像の個数を用意する。
-	var slickitems = 3;
-	// 画面がスマホレイアウトであれば
-	if(window.innerWidth <= 680){
-		// 表示する個数を減らす。
-		slickitems = 1;
-	}
+//	// slickの画像の個数を用意する。
+//	var slickitems = 3;
+//	// 画面がスマホレイアウトであれば
+//	if(window.innerWidth <= 680){
+//		// 表示する個数を減らす。
+//		slickitems = 1;
+//	}
 	
 // jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
-	$('.' + selector).slick({
-		// 矢印ボタンでの制御を有効にする。
-		accessibility:false,
-		// 矢印ボタンを使う。
-		arrows:false,
-		// レスポンシブレイアウトに対応する。
-		responsive:true,
-		//表示する画像の数を画面サイズに依存させる。
-		slidesToShow:slickitems,
-	    slidesToScroll: slickitems,
-		//モバイル優先の設定を使う。
-	    mobileFirst: true,
-		//最初に表示しない画像は後から読み込む。
-		lazyLoad:true,
-		// 緩急をつけたアニメーションでスクロールする。
-		easing:'swing',
-	    //幅を可変にする。
-		variableWidth:true,
-		// 画像を中心に配置する。
-		centerMode: true
+	$('.' + selector).smoothDivScroll({
+		//カーソル合わせでスクロールする領域を表示する。
+		hotSpotScrolling: true,
+		//タッチでのスクロールを有効にする。
+		touchScrolling: true,
+		manualContinuousScrolling: true,
+		//マウスホイールによるスクロールを無効にする。
+		mousewheelScrolling: false
 	});
 	
 // フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
@@ -249,41 +237,41 @@ function createGallery(selector){
 		'hideOnContentClick': true
 	}); 
 	
-	//ウィンドウの幅が変わったときのイベントを登録する。
-	$(window).resize(function(){
-		// 画面がスマホレイアウトであれば
-		if(window.innerWidth <= 680){
-			// 表示する個数を減らす。
-			slickitems = 1;
-		//PCレイアウトであれば
-		} else{
-			//表示する個数を多めにする。
-			slickitems = 3;
-		}
-		$('.' + selector).unslick();
-		//slickの設定を直す。
-		$('.' + selector).slick({
-			// 矢印ボタンでの制御を有効にする。
-			accessibility:false,
-			// 矢印ボタンを使う。
-			arrows:false,
-			//モバイル優先の設定を使う。
-			mobileFirst: true,
-			//最初に表示しない画像を後から読み込む。
-			lazyLoad:true,
-			// レスポンシブレイアウトに対応する。
-			responsive:true,
-			//表示する画像の数を画面サイズに依存させる。
-			slidesToShow:slickitems,
-		    slidesToScroll: slickitems,
-		    //幅を可変にする。
-			variableWidth:true,
-			// 緩急をつけたアニメーションでスクロールする。
-			easing:'swing',
-			// 画像を中心に配置する。
-			centerMode: true
-		});
-	});
+//	//ウィンドウの幅が変わったときのイベントを登録する。
+//	$(window).resize(function(){
+//		// 画面がスマホレイアウトであれば
+//		if(window.innerWidth <= 680){
+//			// 表示する個数を減らす。
+//			slickitems = 1;
+//		//PCレイアウトであれば
+//		} else{
+//			//表示する個数を多めにする。
+//			slickitems = 3;
+//		}
+//		$('.' + selector).unslick();
+//		//slickの設定を直す。
+//		$('.' + selector).smoothDivScroll({
+//			// 矢印ボタンでの制御を有効にする。
+//			accessibility:false,
+//			// 矢印ボタンを使う。
+//			arrows:false,
+//			//モバイル優先の設定を使う。
+//			mobileFirst: true,
+//			//最初に表示しない画像を後から読み込む。
+//			lazyLoad:true,
+//			// レスポンシブレイアウトに対応する。
+//			responsive:true,
+//			//表示する画像の数を画面サイズに依存させる。
+//			slidesToShow:slickitems,
+//		    slidesToScroll: slickitems,
+//		    //幅を可変にする。
+//			variableWidth:true,
+//			// 緩急をつけたアニメーションでスクロールする。
+//			easing:'swing',
+//			// 画像を中心に配置する。
+//			centerMode: true
+//		});
+//	});
 }
 
 /*

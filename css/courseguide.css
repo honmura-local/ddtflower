@@ -578,17 +578,31 @@
 	
 /* 
  * セレクタ:.footGallery
- * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
+ * 概要   :jQueryプラグイン「Smooth Div Scroll」によるカルーセルとなる要素
  * 作成者 :T.Masuda
  * 作成日 :2015.02.04
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.03
+ * 内容　 :Smooth Div Scrollへの対応のため、position relativeを指定しました。
  */
 .footGallery{
-    width: 800px;       /* 幅770px */
-    height: 120px;      /* 高さを110pxに指定する。 */
-    margin: 0 auto;     /* 中央に寄せる。 */
-    clear: both;        /* 回り込みを無効にする */
-    border: 1px solid #D0D0AC;
-    border-bottom-width: 1px;
+    width: 800px;       		/* 幅800px */
+    height: 120px;				/* 高さを110pxに指定する。 */
+    margin: 0 auto 20px;		/* 中央に寄せる。下に余白を空ける。 */
+    clear: both;				/* 回り込みを無効にする */
+    border: 1px solid #D0D0AC;	/* 黄緑色の枠線を引く。 */
+    position: relative;			/* 絶対位置を利用する子要素の基準となる。 */
+	box-sizing: border-box;		/* サイズの計算に罫線とpaddingを勘定に入れる。 */
+}
+
+/* 
+ * セレクタ:.footGallery a
+ * 概要   :Smooth Div Scrollによるギャラリーのリンクのタグ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.03
+ */
+.footGallery a{
+	font-size: 0px;	/* フォントサイズを0にし、インライン要素独自の余白を消す。 */
 }
 
 /* 
