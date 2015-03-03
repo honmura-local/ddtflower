@@ -302,7 +302,7 @@
                 }
             }
         },
-                "subInfo": {
+        "subInfo": {
             "subInfoFirstRow": {
                 "subInfoHead": {
                     "text": "予備情報",
@@ -469,7 +469,6 @@
             }
         }
     },
-
     "specialReservedConfirmDialog": {
         "confirmNotice": {
             "text": "以下の内容で予約希望を承ります。"
