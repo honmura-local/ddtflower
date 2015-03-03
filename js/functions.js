@@ -350,30 +350,25 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
  * 作成者:T.Masuda
  */
 function callLoadingScreen(){
-	
 		//ローディング画面を出す。
-		$('#loading').css('display','block');
-		//ローディング画像を出す。
-		$('#loading img').css('display','block');
+		$('.loading').css('display','block');
 }
 
 /* ローディング画面呼び出しのイベント登録 */
 /* ページが読み込まれたら */
 $(document).ready(function(){
 	//ローディング画面を追加する。
-	$('body').prepend($('<div id="loading">')
-			.attr({
-				position:'absolute',	/* 絶対位置を指定する。 */
-				left:'50%',				/* 画面中央 */
-				top:'20%',				/* 上から20%の位置に置く */
-				marginLeft:'-30px',		/* 自分の大きさの半分左にずらして中心に置く。 */
-				zIndex: '2000',			/* 必ず見える様にする。 */
-				display:'none'			/* 初期状態では見えなくする。 */
-			})
+	$('body').prepend($('<div></div>')
+			.addClass('loading')
 			//ローディング画像を追加する。
-			.append($('<img src="image/loading.gif">')
-					//初期状態では見えなくする。
-					.css('display', 'none')
+			.append($('<img>')
+					//ローディング画像のパスを追加する。
+					.attr('src', 'image/loading.gif')
+			)
+			//Loadingの文字を表示する。
+			.append($('<p></p>')
+					//文字を追加する。
+					.text('Loading...')
 			)
 	);
 });
