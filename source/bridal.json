@@ -1,0 +1,14 @@
+{
+    "pageTitle": {
+        "class": "pageTitle cf",
+        "image": {
+            "src": "image/icon(leaf3).png"
+        },
+        "title": {
+            "text": "ブライダル"
+        },
+        "summary": {
+            "text": ""
+        }
+    }
+}

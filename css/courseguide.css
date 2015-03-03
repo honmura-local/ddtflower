@@ -338,8 +338,6 @@
     border-bottom: 1px solid #666;	/* 下線を引く */
 }
 
-
-
 .commonText td:before, .salesPoint td:before, .memberRule td:before {
 	content: "●";
 	font-size: 12px;
@@ -356,11 +354,10 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit, .reservedFlow {
+.merit, .reservedFlow, .examination{
 	clear: both;				/* 回り込みの対象にしない。 */
 	margin-bottom: 10px;		/* コンテンツの後に間隔を取る */
 	margin-top: 60px;			/* 上のmarginを挿入する。子要素をずらした分を考慮した値を指定する。 */
-	color: #555;
 }
 /* 
  * セレクタ:.merit > *
@@ -368,7 +365,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit > *,.reservedFlow > * {
+.merit > *,.reservedFlow > *, .examination > * {
 	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
 	top: -13px;			/* 対象の要素を上にずらす。 */
 }
@@ -379,7 +376,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
- .merit .meritTitle, .reservedFlow .reservedFlowTitle{
+ .merit .meritTitle, .reservedFlow .reservedFlowTitle, .examination .examinationTitle{
 	clear: both;					/* 回り込みをなくす */
 	text-align: left;				/* 左にそろえる */
 	height: 35px;					/* 帯の高さ */
@@ -394,7 +391,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *{
+.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *, .examination .examinationTitle > *{
 	position: relative;		/* 座標をずらすためにこの設定をする。 */
 	top: -47px;				/* 上にずらす。 */
 }
@@ -465,7 +462,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dt,.merit dd, .reservedFlow dt, .reservedFlow dd{
+dl{
     padding: 2px 0em;	/* 適切に間隔を取る */
 }
 
@@ -475,7 +472,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dt, .reservedFlow dt{
+dt {
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
@@ -490,7 +487,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-.merit dd, .reservedFlow dd{
+dd{
     padding-left: 2em;	/* 更にインデントをつける。 */
 }
 
@@ -629,4 +626,33 @@
     border: solid 1px #ccc;
     padding: 10px;
     margin: 0px 5px;
+}
+
+/* 
+ * セレクタ:.examinationFeeText
+ * 概要   :受験料金テーブル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.03
+ */
+ .examinationFeeText {
+    margin-left: 2em;   /* 2文字分 */
+ }
+
+/* 
+ * セレクタ:.examinationFeeText
+ * 概要   :受験料金テーブル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.03
+ */
+ .examinationFeeText td {
+    width: 15%;   /* 一つのカラムの幅を15%にする */
+ }
+ 
+.examinationTitle .examinationTitleText {
+    color: #FFF;                /* 白抜き文字にする。 */
+    vertical-align: bottom;     /* 高さを中心に合わせる。 */
+    font-size: 18px;            /* フォントサイズを18pxに設定する。 */
+    vertical-align: middle;     /* 高さを中心揃えにする */
+    position: relative;         /* 相対位置指定をする */
+    top: -77px;                 /* 位置を上にずらす。 */
 }

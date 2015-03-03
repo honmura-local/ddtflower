@@ -4,20 +4,21 @@
 <head>
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
 <meta charset="UTF-8">
-<title>DDTFlowers</title>
+<title>DDTFlowers/プリザーブドフラワー</title>
 <!-- メインのCSSファイルを読み込む。 -->
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <!-- コース案内のCSSファイルを読み込む。 -->
 <link href="css/courseguide.css" rel="stylesheet" type="text/css">
 
+<!-- slickのCSSを読み込む。 -->
+<link type="text/css" href="css/slick.css" rel="stylesheet">
+<!-- jqueryUIのcssを読み込む -->
+<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+
 <!-- 画面幅がスマホ用サイズになったらスマホ用CSSを読み込む。 -->
 <link href="css/styleSP.css" rel="stylesheet" type="text/css" media="only screen and (max-width:680px)">
 <link href="css/courseguideSP.css" rel="stylesheet" type="text/css" media="only screen and (max-width:680px)">
 
-<!-- jqueryUIのcssを読み込む -->
-<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
-<!-- slickのCSSを読み込む。 -->
-<link type="text/css" href="css/slick.css" rel="stylesheet">
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 
@@ -42,15 +43,12 @@
 $(document).ready(function(){
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
-
 	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 	fixYCoordinate('header', '.main');
 	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 	fixXCoordinateOnScroll('header')
 	// ログイン状態をチェックする。
 	checkLoginState();
-	createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
-
 });
 
 </script>
@@ -65,22 +63,22 @@ $(document).ready(function(){
 <script>
 var creator = new createTag();
 
-creator.getJsonFile('source/national.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getJsonFile('source/voice.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 creator.outputTag('header');					// トップメニューを作る
 creator.outputTag('headImage');					// 天の画像を作る
 creator.outputTag('pageTitle');					// タイトル領域を作る
-creator.outputTag('examination');				// 資格試験の説明を作る
-creator.outputTag('merit');						// ご入会メリットを作る
-creator.outputTag('photoGallery');				// ギャラリー画像を作る
-creator.outputTag('footGallery');				// ギャラリー画像を作る
-creator.outputTag('courseGuide');				// コース案内テーブルを作る
-creator.outputTag('lessonSchedule');			//レッスンスケジュールテーブル
-creator.outputTag('commonText');				//共通リストテーブルを作る
-creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
+// creator.outputTag('merit');						//メリットのリストを作る
+// creator.outputTag('photoGallery');				// ギャラリー画像を作る
+// creator.outputTag('footGallery');				// ギャラリー画像を作る
+// creator.outputTag('courseGuide');				// コース案内テーブルを作る
+// creator.outputTag('lessonSchedule');			//レッスンスケジュールテーブル
+// creator.outputTag('commonText');				//共通リストテーブルを作る
+// creator.outputTag('memberRule');				// 会員規約のリストテーブルを作る
 creator.outputTag('footImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
+	createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
 
 </script>
 </body>

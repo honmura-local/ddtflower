@@ -1,24 +1,108 @@
 {
-	"pageTitle":{
-    	"class":"pageTitle cf",
-		"image"		:{
-			"src"	:	"image/icon(waterdrop100).png"
-		},
-		"title"		: {
-			"text"	:	"国家認定資格取得コース"
-		},
-		"summary"	: {
-			"text"	:	"国が認定している唯一のフラワーアレンジメント国家資格です。本校では３級から１級まで取得可能です。２級以上の難易度は高めですが、その分ステータスも高く頑張る価値は十分です。"
-		}
-	},
-
-	"courseGuide":{
-		"class": "courseGuide guideTable",
-		"summary" :{
-			"text": "コース案内"
-		},
+    "pageTitle":{
+        "class":"pageTitle cf",
+        "image"     :{
+            "src"   :   "image/icon(waterdrop100).png"
+        },
+        "title"     : {
+            "text"  :   "フラワー装飾技能検定資格取得コース"
+        },
+        "summary"   : {
+            "text"  :   "国が認定している唯一のフラワーアレンジメント国家資格です。本校では３級から１級まで取得可能です。２級以上の難易度は高めですが、その分ステータスも高く頑張る価値は十分です。"
+        }
+    },
+    "examination":{
+        "examinationTitle":{
+            "examinationImgLeft":{
+                "src": "image/icon(pinkbird).png"
+            },
+            "examinationTitleText":{
+                "text":"フラワー装飾技能検定資格取得コースとは"
+            },
+            "examinationImgRight":{
+                "src": "image/icon(graybird).png"
+            }
+        },
+        "examinationSummary": {
+            "text":"概要"
+        },
+        "examinationSummaryText1":{
+            "text":"日本で唯一のフラワーデザインに関する国家資格であり労働省が行う国家検定です。"
+        },
+        "examinationSummaryText2":{
+            "text":"１級は労働大臣名の、２級は各都道府県、知事名の合格証書と技能士章が交付され、技能士と称することができます。"
+        },
+        "examinationAbout": {
+            "text":"学科試験と実技試験について"
+        },
+        "examinationAboutText1":{
+            "text":"学科試験と実技試験があります。"
+        },
+        "examinationAboutText2":{
+            "text":"学科試験はフラワー装飾全般に関する問題でマークシート方式。"
+        },
+        "examinationAboutText3":{
+            "text":"実技試験の１級は、カーネーション・小菊・その他を使用 して立食用卓上装飾花（４０分）、卓上装飾花（３５分）、ブーケ（６０分）の３点を制作します。"
+        },
+        "aboutClass2Text1":{
+            "text":"２級は、Ａ・Ｂコースより選択でき、１級と同様の花材で 行います。"
+        },
+        "aboutClass2Text2": {
+            "text":"Ａコースは花器付盛花（３０分）、コサージ（３０分）、 ブーケ（６０分）。"
+        },
+        "aboutClass2Text3":{
+            "text":"Ｂコースは籠花（３０分）、贈呈用花束（３０分）、花器 付盛花（３０分）。"
+        },
+        "examinationFee": {
+            "text":"受験料"
+        },
+        "examinationFeeText1":{
+            "text":"１級実技と学科　 　 　 　 ￥３２０００　 　実技のみ　 　￥２９０００"
+        },
+        "examinationFeeText2":{
+            "text":"２級実技と学科（Ａ）　 　￥２５０００　 　実技のみ　 　￥２２０００"
+        },
+        "examinationFeeText3":{
+            "text":"２級実技と学科（Ｂ）　 　￥２７０００　 　実技のみ　 　￥２９０００"
+        },
+        "examinationFeeText4":{
+            "text":"学科のみ 　 　 　 　 　 　 １・２級共通　 　　 　 　 　 　 ￥　３１００"
+        },
+        "examinationDay": {
+            "text":"試験日程"
+        },
+        "examinationDayText1": {
+            "text":"実技試験は年１回、６月から９ 月の間に実施します。"
+        },
+        "examinationDayText1": {
+            "text":"学科試験は全国統一で実施しま す。（９月付近)"
+        },
+        "examinationDayText2": {
+            "text":"３月に受験案内書を配布します。"
+        },
+        "examinationDayText3": {
+            "text":"４月上旬に受験申請の受付が行われます。（郵送不可）"
+        },
+        "examinationCapacity":{
+            "text":"受験資格"
+        },
+        "examinationCapacityText1":{
+            "text":"１級　　実務経験１２年以上　 　７年以上に短縮"
+        },
+        "examinationCapacityText2":{
+            "text":"２級　　実務経験　３年以上　 　２年以上に短縮"
+        },
+        "examinationCapacityText3":{
+            "text":"２級合格後１級に受講できる期 間が、５年必要でしたが　　２年以上に短縮"
+        }
+    },
+    "courseGuide":{
+        "class": "courseGuide guideTable",
+        "summary" :{
+            "text": "コース案内"
+        },
         "courseGuideHead": {
-			"class":"guideHead",
+            "class":"guideHead",
             "stageHead": {
                 "text": "レベル"
             },
@@ -29,40 +113,40 @@
                 "text": "金額(1回当たり)"
             }
         },
-		"firstStage":{
-			"stage":{
-				"text"	:	"未定"
-			},
-			"times":{
-				"text"	:	"未定"
-			},
-			"price":{
-				"text"	:	"未定"
-			}
-		},
-		"secondStage":{
-			"stage":{
-				"text"	:	"未定"
-			},
-			"times":{
-				"text"	:	"未定"
-			},
-			"price":{
-				"text"	:	"未定"
-			}
-		},
-		"thirdStage":{
-			"stage":{
-				"text"	:	"未定"
-			},
-			"times":{
-				"text"	:	"未定"
-			},
-			"price":{
-				"text"	:	"未定"
-			}
-		}
-	},
+        "firstStage":{
+            "stage":{
+                "text"  :   "未定"
+            },
+            "times":{
+                "text"  :   "未定"
+            },
+            "price":{
+                "text"  :   "未定"
+            }
+        },
+        "secondStage":{
+            "stage":{
+                "text"  :   "未定"
+            },
+            "times":{
+                "text"  :   "未定"
+            },
+            "price":{
+                "text"  :   "未定"
+            }
+        },
+        "thirdStage":{
+            "stage":{
+                "text"  :   "未定"
+            },
+            "times":{
+                "text"  :   "未定"
+            },
+            "price":{
+                "text"  :   "未定"
+            }
+        }
+    },
     "footGallery": {
         "1stDiv": {
             "1stArt": {
