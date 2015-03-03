@@ -38,8 +38,8 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm textarea{
-	width: 100%;	/* 幅を可変にする。 */
+.contactForm .contentTextArea textarea {
+	width: 100%; 
 }
 
 /* 
