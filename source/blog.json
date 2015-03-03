@@ -1,0 +1,14 @@
+{
+    "pageTitle": {
+        "class": "pageTitle cf",
+        "image": {
+            "src": "image/icon(redbranchleaf).png"
+        },
+        "title": {
+            "text": "ブログ"
+        },
+        "summary": {
+            "text": ""
+        }
+    }
+}

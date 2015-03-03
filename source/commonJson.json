@@ -61,7 +61,7 @@
 			},
 			"guideBlog":{
 				"guideBlogLink":{
-					"href":"",
+					"href":"blog.html",
 					"guideBlogIcon":{
 						"src":"image/icon(blog50).png"
 					}
@@ -120,7 +120,7 @@
 					"href":"national.html",
 					"title":"国家認定資格取得",
 					"nationalText":{
-						"text":"国家"
+						"text":"国家資格"
 					}
 				}
 			},
