@@ -302,16 +302,34 @@
                 }
             }
         },
-        "subInfo": {
+                "subInfo": {
             "subInfoFirstRow": {
                 "subInfoHead": {
-                    "text": "予備情報"
+                    "text": "予備情報",
+                    "colspan":"5"
                 }
             },
             "subInfoSecondRow": {
+                "blank":{},
+                "blank2":{},
                 "dayOfWeekHead": {
-                    "text": "可能曜日"
+                    "text": "可能曜日",
+                    "colspan":"3"
                 },
+                "allDayCeckboxWrap":{
+                    "allDayCeckbox":{
+                        "type":"checkbox",
+                        "name":"dayOfWeek"
+                    }
+                },
+                "allDayCeckboxLabel":{
+                    "colspan":"12",
+                    "text":"全ての曜日にチェックする"
+                }
+            },
+            "subInfoThirdRow": {
+                "blank":{},
+                "blank2":{},
                 "mondayCheckBoxWrap": {
                     "mondayCheckbox": {
                         "name": "dayOfWeek",
@@ -351,10 +369,7 @@
                 },
                 "thirsdayLabel": {
                     "text": "木"
-                }
-            },
-            "subInfoThirdRow": {
-                "blank6": {},
+                },
                 "fridayCheckBoxWrap": {
                     "fridayCheckbox": {
                         "name": "dayOfWeek",
@@ -386,11 +401,28 @@
                     "text": "日"
                 }
             },
-            "subInfoFourthRow": {
+            "subInfoFourthRow":{
                 "weekHead": {
-                    "text": "可能週"
+                    "blank":{},
+                    "blank2":{},
+                    "text": "可能週",
+                    "colspan": "3"
                 },
+                "allWeekChekboxWrap":{
+                    "allWeekChekbox":{
+                        "type":"checkbox",
+                        "name":"week"
+                    }
+                },
+                "allWeekChekboxLabel":{
+                    "text":"全ての週にチェックする",
+                    "colspan":"9"
+                }
+            },
+            "subInfoFifthRow": {
                 "firstWeekCheckBoxWrap": {
+                    "blank":{},
+                    "blank2":{},
                     "firstWeekCheckbox": {
                         "name": "week",
                         "value": "1週",
@@ -398,6 +430,7 @@
                     }
                 },
                 "firstWeekCheckBoxLabel": {
+                    "colspan":"2",
                     "text": "1週"
                 },
                 "secondWeekCheckBoxWrap": {
@@ -408,6 +441,7 @@
                     }
                 },
                 "secondWeekCheckBoxLabel": {
+                    "colspan":"2",
                     "text": "2週"
                 },
                 "thirdWeekCheckBoxWrap": {
@@ -418,6 +452,7 @@
                     }
                 },
                 "thirdWeekCheckBoxLabel": {
+                    "colspan":"2",
                     "text": "3週"
                 },
                 "fourthWeekCheckBoxWrap": {
@@ -428,11 +463,13 @@
                     }
                 },
                 "fourthWeekCheckBoxLabel": {
+                    "colspan":"2",
                     "text": "4週"
                 }
             }
         }
     },
+
     "specialReservedConfirmDialog": {
         "confirmNotice": {
             "text": "以下の内容で予約希望を承ります。"
