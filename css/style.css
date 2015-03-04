@@ -209,11 +209,14 @@ h1,h2,h3,h4,h5,th{
  * 概要   :ガイド領域直下の要素。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.04
+ * 内容　 :vertical-alignをtopに変更しました。
  */
 .guides > *{
     display         :   inline-block;   /* インラインブロック表示にし、横に並べる。 */
     font-size       :   10px;           /* フォントサイズを指定し直す。 */
-    vertical-align  :   middle;         /* 高さを行の中心に揃える。 */
+    vertical-align  :   top;         	/* 高さを行の上端に揃える。 */
     margin-left     :   3px;            /* 統一して左に3pxのmarginを挿入する。 */
 }
 
@@ -345,7 +348,7 @@ h1,h2,h3,h4,h5,th{
  * 作成日 :2015.02.05
  */
 .guideSns .facebook{
-    margin-bottom: 6px; /* 下部に6pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
+    margin-bottom: 2px; /* 下部に2pxのmarginを挿入して、次の画像を底辺に貼付ける。 */
 }
 
 /* 
@@ -393,7 +396,7 @@ h1,h2,h3,h4,h5,th{
  */
 .guideLogin .userName{
     display: block; /* ブロック要素となる。 */
-	width: 130px;	/* 幅に余裕を持たせる。 */
+	/*width: 130px;*/	/* 幅に余裕を持たせる。 */
 }
 
 /* ここまでガイド領域。 */

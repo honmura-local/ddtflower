@@ -1,6 +1,30 @@
 @CHARSET "UTF-8";
 /* スマホ用汎用CSS */
     
+/* 
+ * セレクタ:.main
+ * 概要   :コンテンツ領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.21
+ */
+.main{
+    width:      100%;      /* 幅をcontainerに合わせる。 */
+	margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
+}
+
+/* 画面がタブレットの幅であれば */
+@media screen and (min-width: 430px) {
+	/* 
+	 * セレクタ:.main
+	 * 概要   :コンテンツ領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.04
+	 */
+	.main{
+	    min-width:    610px;      	/* 画面を一定サイズ以上縮小しない。 */
+	}
+}
+    
     /* 
      * セレクタ:#container
      * 概要   :スマホ用container
@@ -133,7 +157,7 @@
  * 作成日 :2015.02.24
  */
 .guideLogin .userName{
-	width: 75px;	/* 幅に余裕がないので狭める。 */
+	/*width: 75px;*/	/* 幅に余裕がないので狭める。 */
 }
 
 /* トップメニュー領域 */
@@ -183,16 +207,6 @@
     margin-top:  0;   	/* 上のmarginをなくす */
 }
 
-/* 
- * セレクタ:.main
- * 概要   :コンテンツ領域。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.main{
-    width:      100%;      /* 幅をcontainerに合わせる。 */
-	margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
-}
 
 /* 
  * セレクタ:footer

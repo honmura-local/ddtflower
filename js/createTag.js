@@ -98,7 +98,7 @@ function createTag(){
 	 * 作成日:2015.02.20
 	 */
 	this.outputTag = function(key, domNodeName){
-		//curDomNodeがundefined(未入力)であれば
+		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
 		domNodeName = domNodeName === undefined ? key : domNodeName;
 			
 		//JSONの先頭のキーの連想配列と、DOMの先頭を取得する。
@@ -189,10 +189,13 @@ function createTag(){
 	 * 返却値  :jQuery
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
+	 * 変更者:T.Masuda
+	 * 変更日:2015.03.04
+	 * 内容  :テンプレートのHTMLそのものではなく、コピーを返す様に変更しました。
 	 */
 	this.getDomNode = function(key){
-		//メンバのHTMLからキーに対応した要素を取り出し返す。
-		return $('[class="' + key +'"]', this.dom);
+		//メンバのHTMLからキーに対応した要素をコピーして返す。
+		return $($('[class="' + key +'"]', this.dom).clone(false));
 	};
 	
 	/* 
