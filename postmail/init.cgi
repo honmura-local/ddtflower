@@ -140,7 +140,7 @@ $cf{logfile} = './data/log.cgi';
 $cf{sesfile} = './data/ses.cgi';
 
 # テンプレートディレクトリ【サーバパス】
-$cf{tmpldir} = './tmpl';
+$cf{tmpldir} = '../';
 
 # セッションの許容時間（分単位）
 # → 確認画面表示後、送信ボタンを押すまでの時間
