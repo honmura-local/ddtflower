@@ -644,24 +644,10 @@ dd{
 
 /* 
  * セレクタ:.examinationFeeText
- * 概要   :受験料金テーブル
+ * 概要   :国家資格ページ説明のタイトル部分
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.03
  */
- .examinationFeeText {
-    margin-left: 2em;   /* 2文字分 */
- }
-
-/* 
- * セレクタ:.examinationFeeText
- * 概要   :受験料金テーブル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.03
- */
- .examinationFeeText td {
-    width: 15%;   /* 一つのカラムの幅を15%にする */
- }
- 
 .examinationTitle .examinationTitleText {
     color: #FFF;                /* 白抜き文字にする。 */
     vertical-align: bottom;     /* 高さを中心に合わせる。 */
@@ -669,4 +655,14 @@ dd{
     vertical-align: middle;     /* 高さを中心揃えにする */
     position: relative;         /* 相対位置指定をする */
     top: -77px;                 /* 位置を上にずらす。 */
+}
+
+ /* 
+ * セレクタ:.courseGuide .item
+ * 概要   :国家資格ページコース案内のthに関するスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.03
+ */
+.courseGuide .item {
+    text-align: left;       /* 文字を左寄りにする */
 }

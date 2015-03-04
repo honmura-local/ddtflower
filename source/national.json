@@ -96,54 +96,39 @@
             "text":"２級合格後１級に受講できる期 間が、５年必要でしたが　　２年以上に短縮"
         }
     },
-    "courseGuide":{
+    "nationalCourseGuide":{
         "class": "courseGuide guideTable",
         "summary" :{
             "text": "コース案内"
         },
-        "courseGuideHead": {
+        "lessonFee": {
             "class":"guideHead",
-            "stageHead": {
-                "text": "レベル"
+            "item":{
+                "text":"受講料"
             },
-            "timesHead": {
-                "text": "回数"
-            },
-            "priceHead": {
-                "text": "金額(1回当たり)"
+            "content":{
+                "class":"price",
+                "text":"3000円／回"
             }
         },
-        "firstStage":{
-            "stage":{
-                "text"  :   "未定"
+        "lessonCount":{
+            "class":"guideHead",
+            "item":{
+                "text":"回数(目安)"
             },
-            "times":{
-                "text"  :   "未定"
-            },
-            "price":{
-                "text"  :   "未定"
+            "content":{
+                "class":"price",
+                "text":""
             }
         },
-        "secondStage":{
-            "stage":{
-                "text"  :   "未定"
+        "flowerFee":{
+            "class":"guideHead",
+            "item":{
+                "text":"別途花材費"
             },
-            "times":{
-                "text"  :   "未定"
-            },
-            "price":{
-                "text"  :   "未定"
-            }
-        },
-        "thirdStage":{
-            "stage":{
-                "text"  :   "未定"
-            },
-            "times":{
-                "text"  :   "未定"
-            },
-            "price":{
-                "text"  :   "未定"
+            "content":{
+                "class":"price",
+                "text":"2000円 ～ 5000円"
             }
         }
     },
