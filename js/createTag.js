@@ -97,9 +97,16 @@ function createTag(){
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.20
 	 */
-	this.outputTag = function(key){
+	this.outputTag = function(key, domNodeName){
+		//curDomNodeがundefined(未入力)であれば
+		domNodeName = domNodeName === undefined ? key : domNodeName;
+			
+		//JSONの先頭のキーの連想配列と、DOMの先頭を取得する。
+		mapNode = this.getMapNode(key);			//マップの先頭を取得する。
+		domNode = this.getDomNode(domNodeName);	//DOMの先頭を取得する。
+
 		// createTagでキーに対応したHTMLのパーツを作成し、変数tagに格納する。
-		var tag = this.createTag(key, CREATETAG_FIRST);
+		var tag = this.createTag(mapNode, domNode);
 		// パーツの作成に成功したならば
 		if(tag != null){
 			//createTag関数をコールし、作成したタグをmainに追加する。
@@ -121,11 +128,6 @@ function createTag(){
 	 * 作成日:2015.02.19
 	 */
 	this.createTag = function(curMapNode, curDomNode){
-		//curDomNodeが-1(初回コール時)であれば
-		if(curDomNode == -1){
-			curDomNode = this.getDomNode(curMapNode);	//DOMの先頭を取得する。
-			curMapNode = this.getMapNode(curMapNode);	//マップの先頭を取得する。
-		}
 		
 		//マップ、DOMが取得できていなかったら
 		if(curMapNode == null || curDomNode == null){
@@ -208,7 +210,7 @@ function createTag(){
 			//処理をやめる。
 			return;
 		}
-		
+
 		//mapNodeの配列分ループする。
 		for(var i = 0; i < mapNode.length; i++){
 			//keyでタグを生成する。
