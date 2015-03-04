@@ -402,7 +402,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
  */
-.merit .meritTitleText, .reservedFlow .reservedFlowTitleText{
+.merit .meritTitleText, .reservedFlow .reservedFlowTitleText, .examinationTitle .examinationTitleText{
 	color: #FFF;				/* 白抜き文字にする。 */
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
 	font-size: 18px;			/* フォントサイズを18pxに設定する。 */
@@ -462,7 +462,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-dl{
+.merit dt,.merit dd, .reservedFlow dt, .reservedFlow dd, .examination dt, .examination dd {
     padding: 2px 0em;	/* 適切に間隔を取る */
 }
 
@@ -472,11 +472,11 @@ dl{
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-dt {
+.merit dt, .reservedFlow dt, .examination dt {
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
-    margin: 14px 0 3px 0;					/* 下にmarginを入れる */
+    margin: 10px 0 3px 0;					/* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58);	/* 頭に緑の傍線をつける。 */
     background:	#EEE;						/* 背景色をつけて帯をつくる。 */
 }
@@ -487,7 +487,7 @@ dt {
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  */
-dd{
+.merit dd, .reservedFlow dd, .examination dd {
     padding-left: 2em;	/* 更にインデントをつける。 */
 }
 
@@ -640,21 +640,6 @@ dd{
     border: solid 1px #ccc;
     padding: 10px;
     margin: 0px 5px;
-}
-
-/* 
- * セレクタ:.examinationFeeText
- * 概要   :国家資格ページ説明のタイトル部分
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.03
- */
-.examinationTitle .examinationTitleText {
-    color: #FFF;                /* 白抜き文字にする。 */
-    vertical-align: bottom;     /* 高さを中心に合わせる。 */
-    font-size: 18px;            /* フォントサイズを18pxに設定する。 */
-    vertical-align: middle;     /* 高さを中心揃えにする */
-    position: relative;         /* 相対位置指定をする */
-    top: -77px;                 /* 位置を上にずらす。 */
 }
 
  /* 
