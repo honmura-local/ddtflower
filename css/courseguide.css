@@ -702,6 +702,7 @@
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
+
 	/* 
 	 * セレクタ:.pageTitle
 	 * 概要   :タイトル領域
@@ -864,262 +865,408 @@
         padding-left: 2.5em;	/* インデントを調整する。 */
     }
 
-	/* 
-	 * セレクタ:.merit
-	 * 概要   :ご入会メリット
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit {
-		width: 90%;				/* 幅を少し狭めた上で可変にする。 */
-		margin: 0 auto 10px;	/* 中央に寄せる。 */
-	}
+/* 
+ * セレクタ:.merit
+ * 概要   :ご入会メリット
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.03
+ * 内容   :セレクターに.reservedFlow, .examinationを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターをdescriptionに変更
+ */
+.description {
+	width: 90%;				/* 幅を少し狭めた上で可変にする。 */
+	margin: 0 auto 10px;	/* 中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.merit dt
+ * 概要   :ご入会メリット、各項目見出し
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.03
+ * 内容   :セレクターに.reservedFlow dt, .examination dtを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターをcontentsBorderに変更
+ */
+.contentsBorder{
+    font-size: 12px;    			/* 文字のサイズを12pxにする */
+    padding-left: 0.5em;			/* 適切にインデントをつける。 */
+}
+
+/* 
+ * セレクタ:.merit dd
+ * 概要   :ご入会メリット、各項目内容
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.03
+ * 内容   :セレクターに.reservedFlow dd, .examination ddを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsBorderInTextに変更,マージンとラインハイトの削除
+ 　　　　　　　padding-leftを2.1emから2emに変更
+ */
+.contentsBorderInText{
+    font-size: 11px;    	/* 文字のサイズを11pxにする */
+    /*margin-bottom: 6px;*/		/* 各項目で十分に間を空ける。 */
+    padding-left: 2em;	/* 更にインデントをつける。 */
+	/*line-height: 16px;*/		/* スマホレイアウト時には行間を詰める。 */
+}
+
+/* 
+ * セレクタ:.merit .meritTitle
+ * 概要   :ご入会メリット、タイトル領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.merit .meritTitle {
+}
+
+/* 
+ * セレクタ:.merit .meritImgLeft
+ * 概要   :ご入会メリット、左の画像
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   :セレクターに.reservedFlow .reservedFlowImgLeftを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsTitle imgに変更, widthをheight:40px;に変更
+ */
+.contentsTitle img {
+	height: 40px;	/* 画像のサイズを半分にする。 */
+}
+
+/* 
+ * セレクタ:.contentsTitleBack .contentsTitle .contentsImgLeftL
+ * 概要   :青い鳥についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.05
+ */
+.contentsTitleBack .contentsTitle .contentsImgLeftL {
+    height: 25px;   /* 画像のサイズを半分にする。 */
+}
+
+/* 
+ * セレクタ:.merit .meritImgRight
+ * 概要   :ご入会メリット、右の画像
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   :セレクターに.reservedImgRightを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.merit .meritImgRight, .reservedFlow .reservedFlowImgRight {*/
+	/*width: 50px;*/	/* 画像のサイズを半分にする。 */
+/*}*/
+
+/* 
+ * セレクタ:.photoGallery
+ * 概要   :コース案内コンテンツ内のフォトギャラリー。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.photoGallery{*/
+	/*width: 90%;	*/			/* 余白を考えた幅に設定する。 */
+	/*margin-top: 0px;	*/	/* 上のmarginをなくす。 */
+/*}*/
+
+/* 
+ * セレクタ:.photoGallery .galleryTitle
+ * 概要   :フォトギャラリーのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.photoGallery .galleryTitle{*/
+	/*width: 100%;*/			/* 中央寄せにより固定値での幅設定は必要なし。 */
+/*}*/
+
+/* 
+ * セレクタ:.photoGallery .galleryTitleText
+ * 概要   :フォトギャラリーのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.photoGallery .galleryTitleText{*/
+	/*font-size:18px;*/			/* フォントサイズを18pxに設定する。 */
+/*}*/
 	
-	/* 
-	 * セレクタ:.merit dt
-	 * 概要   :ご入会メリット、各項目見出し
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit dt{
-	    font-size: 12px;    			/* 文字のサイズを12pxにする */
-	    padding-left: 0.5em;			/* 適切にインデントをつける。 */
-	}
+/* 
+ * セレクタ:.photoGallery .galleryImgLeft
+ * 概要   :フォトギャラリーのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.photoGallery .galleryImgLeft{*/
+	/*vertical-align: bottom;*/		/* 高さを底に合わせる。 */
+	/*margin: 0 11px 0 26px;*/		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+	/*width: 22px;*/
+/*}*/
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRight
+ * 概要   :フォトギャラリーのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.photoGallery .galleryImgRight{*/
+	/*vertical-align: middle;*/		/* 高さを中心に合わせる。 */
+	/*margin: 0 0 0 11px;*/		/* 左にmarginを設定する。文字との間隔調整となる。 */
+	/*width: 35px;*/
+/*}*/
+
+/* 
+ * セレクタ:.photoGallery .galleryImgRightFlower
+ * 概要   :フォトギャラリーのタイトルの右側のお花の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsImgRightRに変更
+ */
+.contentsImgRightR {
+	display: none;	/* iPhoneの画面サイズではこの画像が入るスペースがないため、消しておく。 */
+}
+
+
+/* 
+ * セレクタ:.footGallery
+ * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ */
+.footGallery{
+    width: 90%;       /* 幅をmarginを考慮した値にして取る。 */
+}
+
+/* 
+ * セレクタ:.memberRule
+ * 概要   :会員規約
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
+.memberRule {
+	margin-bottom: 10px;	/* 最下部に来るので、フッターとのmarginを調整する。 */
+}
+
+/* 
+ * セレクタ:.photoGallery > * 
+ * 概要   :フォトギャラリーの直下要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :削除
+ */
+/*.photoGallery > * {*/
+	/*top: -10px;*/		/* 上にずらす。 */
+/*}*/
+
+/* 
+ * セレクタ:.merit .meritTitle > * 
+ * 概要   :入会メリットのタイトル領域の要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   :セレクターに.reservedFlow .reservedFlowTitle, .examination .examinationTitleを追加
+ */
+/*.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *, .examination .examinationTitle > * {*/
+	/*position: relative;*/	/* 相対位置要素に指定する */
+	/*top: -7px;*/			/* 上にずらす。 */
+/*}*/
+
+/* 
+ * セレクタ:.merit .meritTitle 
+ * 概要   :入会メリットのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   :セレクターに.reservedFlow .reservedFlowTitle , .examination .examinationTitleを追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.merit .meritTitle, .reservedFlow .reservedFlowTitle , .examination .examinationTitle{*/
+	/*height: 36px;*/					/* 高さを固定値で指定する。 */
+	/*background: rgb(206,220,58);*/	/* 背景色を黄緑にする。 */
+/*}*/
+
+/* 
+ * セレクタ:.merit .meritTitleText 
+ * 概要   :入会メリットのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   :セレクターに.reservedFlow .reservedFlowTitleText, .examination .examinationTitleText を追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsTittleTextに変更し、
+ */
+.contentsTitleText {
+	font-size: 15px;	/* フォントサイズを中くらいに指定する。 */
+	top: -18px;			/* 上にずらす。 */
+}
+
+/* 
+ * セレクタ:.guideTable .summary
+ * 概要   :案内テーブルのタイトル部分。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.27
+ */
+.guideTable .summary {
+	font-size: 16px;	/* やや大きめのフォントを指定する。 */
+}
+
+/* 
+ * セレクタ:.reservedFlow
+ * 概要   :ご予約までの流れ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.02
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.reservedFlow {*/
+	/*width: 90%;	*/		/* スマホコンテンツ用の幅にする。 */
+	/*margin-right: auto;*/	/* 右marginをauto */	
+	/*margin-left: auto;*/	/* 左marginもautoにすることで中央に寄せる。 */
+/*}*/
+/* 
+ * セレクタ:.reservedFlowTitle
+ * 概要   :ご予約までの流れのタイトル領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.reservedFlowTitle{*/
+	/*width: 100%;*/			/* 中央寄せにより固定値での幅設定は必要なし。 */
+/*}*/
+
+/* 
+ * セレクタ:.reservedFlowTitleText
+ * 概要   :ご予約までの流れのタイトルのテキスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.reservedFlowTitleText{*/
+	/*font-size:18px;*/				/* フォントサイズを18pxに設定する。 */
+/*}*/
 	
-	/* 
-	 * セレクタ:.merit dd
-	 * 概要   :ご入会メリット、各項目内容
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit dd{
-	    font-size: 11px;    	/* 文字のサイズを11pxにする */
-		
-	    margin-bottom: 6px;		/* 各項目で十分に間を空ける。 */
-	    padding-left: 2.1em;	/* 更にインデントをつける。 */
-		line-height: 16px;		/* スマホレイアウト時には行間を詰める。 */
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritTitle
-	 * 概要   :ご入会メリット、タイトル領域
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit .meritTitle {
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritImgLeft
-	 * 概要   :ご入会メリット、左の画像
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit .meritImgLeft {
-		width: 52px;	/* 画像のサイズを半分にする。 */
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritImgRight
-	 * 概要   :ご入会メリット、右の画像
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.merit .meritImgRight {
-		width: 50px;	/* 画像のサイズを半分にする。 */
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery
-	 * 概要   :コース案内コンテンツ内のフォトギャラリー。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.photoGallery{
-		width: 90%;				/* 余白を考えた幅に設定する。 */
-		margin-top: 0px;		/* 上のmarginをなくす。 */
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery .galleryTitle
-	 * 概要   :フォトギャラリーのタイトル領域。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.photoGallery .galleryTitle{
-		width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery .galleryTitleText
-	 * 概要   :フォトギャラリーのタイトルのテキスト。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.photoGallery .galleryTitleText{
-		font-size:18px;				/* フォントサイズを18pxに設定する。 */
-	}
-		
-	/* 
-	 * セレクタ:.photoGallery .galleryImgLeft
-	 * 概要   :フォトギャラリーのタイトルの左側の画像。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.photoGallery .galleryImgLeft{
-		vertical-align: bottom;		/* 高さを底に合わせる。 */
-		margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
-		width: 22px;
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery .galleryImgRight
-	 * 概要   :フォトギャラリーのタイトルの右側の画像。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.photoGallery .galleryImgRight{
-		vertical-align: middle;		/* 高さを中心に合わせる。 */
-		margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
-		width: 35px;
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery .galleryImgRightFlower
-	 * 概要   :フォトギャラリーのタイトルの右側のお花の画像。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.photoGallery .galleryImgRightFlower{
-		display: none;	/* iPhoneの画面サイズではこの画像が入るスペースがないため、消しておく。 */
-	}
-	
-	
-	/* 
-	 * セレクタ:.footGallery
-	 * 概要   :jQueryプラグイン「Slick」によるカルーセルとなる要素
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.26
-	 */
-	.footGallery{
-	    width: 90%;       /* 幅をmarginを考慮した値にして取る。 */
-	}
-	
-	/* 
-	 * セレクタ:.memberRule
-	 * 概要   :会員規約
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.memberRule {
-		margin-bottom: 10px;	/* 最下部に来るので、フッターとのmarginを調整する。 */
-	}
-	
-	/* 
-	 * セレクタ:.photoGallery > * 
-	 * 概要   :フォトギャラリーの直下要素
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.photoGallery > * {
-		top: -10px;		/* 上にずらす。 */
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritTitle > * 
-	 * 概要   :入会メリットのタイトル領域の要素。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.merit .meritTitle > * {
-		position: relative;	/* 相対位置要素に指定する */
-		top: -7px;			/* 上にずらす。 */
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritTitle 
-	 * 概要   :入会メリットのタイトル領域。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.merit .meritTitle {
-		height: 36px;					/* 高さを固定値で指定する。 */
-		background: rgb(206,220,58);	/* 背景色を黄緑にする。 */
-	}
-	
-	/* 
-	 * セレクタ:.merit .meritTitleText 
-	 * 概要   :入会メリットのタイトルのテキスト。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.merit .meritTitleText {
-		font-size: 15px;	/* フォントサイズを中くらいに指定する。 */
-		top: -18px;			/* 上にずらす。 */
-	}
-	
-	/* 
-	 * セレクタ:.guideTable .summary
-	 * 概要   :案内テーブルのタイトル部分。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.27
-	 */
-	.guideTable .summary {
-		font-size: 16px;	/* やや大きめのフォントを指定する。 */
-	}
-	
-	/* 
-	 * セレクタ:.reservedFlow
-	 * 概要   :ご予約までの流れ。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.02
-	 */
-	.reservedFlow {
-		width: 90%;			/* スマホコンテンツ用の幅にする。 */
-		margin-right: auto;	/* 右marginをauto */	
-		margin-left: auto;	/* 左marginもautoにすることで中央に寄せる。 */
-	}
-	/* 
-	 * セレクタ:.reservedFlowTitle
-	 * 概要   :フご予約までの流れのタイトル領域。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.reservedFlowTitle{
-		width: 100%;			/* 中央寄せにより固定値での幅設定は必要なし。 */
-	}
-	
-	/* 
-	 * セレクタ:.reservedFlowTitleText
-	 * 概要   :ご予約までの流れのタイトルのテキスト。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.reservedFlowTitleText{
-		font-size:18px;				/* フォントサイズを18pxに設定する。 */
-	}
-		
-	/* 
-	 * セレクタ:.reservedFlowImgLeft
-	 * 概要   :ご予約までの流れのタイトルの左側の画像。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.reservedFlowImgLeft{
-		vertical-align: bottom;		/* 高さを底に合わせる。 */
-		margin: 0 11px 0 26px;		/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
-		width: 22px;
-	}
-	
-	/* 
-	 * セレクタ:.reservedFlowImgRight
-	 * 概要   :ご予約までの流れのタイトルの右側の画像。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.25
-	 */
-	.reservedFlowImgRight{
-		vertical-align: middle;		/* 高さを中心に合わせる。 */
-		margin: 0 0 0 11px;		/* 左にmarginを設定する。文字との間隔調整となる。 */
-		width: 35px;
-	}
+/* 
+ * セレクタ:.reservedFlowImgLeft
+ * 概要   :ご予約までの流れのタイトルの左側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   : marginを消しました
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.reservedFlowImgLeft{*/
+	/*vertical-align: bottom;*/		/* 高さを底に合わせる。 */
+	/*margin: 0 11px 0 26px;	*/	/* 左右にmarginを設定する。左は右の画像との幅合わせ、右は文字との間隔調整となる。 */
+	/*width: 22px;*/
+/*}*/
+
+/* 
+ * セレクタ:.reservedFlowImgRight
+ * 概要   :ご予約までの流れのタイトルの右側の画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.04
+ * 内容   : marginを消しました
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.reservedFlowImgRight{*/
+	/*vertical-align: middle;*/		/* 高さを中心に合わせる。 */
+	/*margin: 0 0 0 11px;*/		/* 左にmarginを設定する。文字との間隔調整となる。 */
+	/*width: 35px;*/
+/*}*/
+
+/* 
+ * セレクタ:.examinationImgLeft
+ * 概要   :スマホ用フラワー国家資格についての左の画像のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.04
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.examinationImgLeft {*/
+    /*width: 49px;*/       /* 元の幅の半分の幅にする */
+/*}*/
+
+/* 
+ * セレクタ:.examinationImgLeft
+ * 概要   :フラワー国家資格についての左の画像のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.04
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
+ */
+/*.examinationImgRight {*/
+    /*display: none;*/      /* スマホではこの画像は表示しない */
+/*}*/
+
+/* 
+ * セレクタ:.contentsTitle
+ * 概要   :緑の帯に入る領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.05
+ */
+ .contentsTitle{
+    position: relative;     /* 相対位置にする */
+    bottom: 7px;              /* 5px上にずらす */
+ }
+
+
+/* 
+ * セレクタ:.contentsTitleText
+ * 概要   :緑の帯に入るテキスト領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.05
+ */
+ .contentsTitleText{
+    position: relative;     /* 相対位置にする */
+    top: -10px;              /* 5px上にずらす */
+ }
 }
