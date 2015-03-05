@@ -125,3 +125,74 @@
 .contactForm input[type="text"],.contactForm input[type="email"] {
 	width: 380px;	/* 幅を指定する。 */
 }
+
+/* 入力確認ページ */
+/* 
+ * セレクタ:.confirmSendMail
+ * 概要   :送信内容確認のブロック。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail {
+	width: 800px;	/* 幅をmainに合わせる。 */
+}
+/* 
+ * セレクタ:.confirmSendMail .ttl
+ * 概要   :送信内容確認のブロックのタイトル部分。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail .ttl{
+	font-size	: 18px;							/* 文字をタイトルサイズにする。 */
+	padding-left: 0.5em;						/* 文字が大きめな分、左の余白は小さくする */
+	font-weight	: normal;						/* 文字の太さを通常にする。 */
+	margin		: 10px 0 3px 0;					/* 上下に適切なmarginを挿入する。 */
+	border-left	: solid 5px rgb(206,220,58);	/* 左に傍線を引く。 */
+	background	: #EEE;							/* 背景をグレーにし、帯化する */
+	display		: block;						/* ブロック要素として扱い、1行分の幅を取る。 */
+}
+
+/* 
+ * セレクタ:.confirmSendMail th, .confirmSendMail td
+ * 概要   :お問い合わせフォームの確認テーブルのセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail th, .confirmSendMail td {
+    padding		: 10px; 				/* 要素の幅を10px広げる */
+    font-size	: 13px;				    /* 文字サイズを13pxにするする */
+    text-align	: left;					/* 文字を左寄りにする */
+    border		: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
+}
+
+/* 
+ * セレクタ:.confirmSendMail th
+ * 概要   :お問い合わせフォームの確認テーブルの見出しセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail th {
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
+}
+
+/* 
+ * セレクタ:.confirmSendMail ul
+ * 概要   :お問い合わせフォームの確認テーブルの注意書きリスト。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail ul {
+	list-style	: none;		/* リストの先頭の索引をつけない。 */
+	margin		: 5px auto;	/* 上下に適切なmarginを挿入する。 */
+}
+
+/* 
+ * セレクタ:.confirmSendMail li:before
+ * 概要   :お問い合わせフォームの確認テーブルの注意書きリスト項目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail li:before {
+	content: "※";
+}
+/* 入力確認ページはここまで */
