@@ -42,15 +42,18 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.24
  * 内容　 :pageTitleにclearfixを適用したため、上marginを調整しました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :font-sizeを28px, marginを0 30px autoにした
  */
 .pageTitle .title{
-    width:          690px;          /* 余った幅いっぱいに横幅を取る。 */
+    width:          750px;          /* 余った幅いっぱいに横幅を取る。 */
     height:         auto;           /* 高さを自動調整する。 */
-    font-size:      24px;           /* フォントサイズを25pxに指定する。 */
+    font-size:      28px;           /* フォントサイズを28pxに指定する。 */
     box-sizing:     border-box;     /* サイズの計算にpaddingと枠線を加える。 */
     text-align:     center;         /* 文字を中央に寄せる。 */
-    margin:         0 auto 15px; 	/* 中央寄せにし、下marginを挿入する。 */
-	padding-top: 	15px;			/* 画像の中心に合わせる。 */
+    margin:         0 auto;     /* 中央寄せにし、下marginを挿入する。 */
+    padding-top:    15px;           /* 画像の中心に合わせる。 */
 }
 
 /* 
@@ -61,17 +64,23 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.03.02
  * 内容 　:paddingと幅を変更しました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :幅を700pxにし、marginを0px autoにし、clearを追加
+ 　　　　　　　　padding、height、font-weight、line-height、displayを消去
  */
 .pageTitle .summary{
-    width:      660px;      /* 幅を660pxに設定する。 */
-    padding: 	1em;		/* 要素の幅を1em広げる */
-    height:     auto;       /* 高さを自動調整する。 */
+    clear: both;            /* 回り込みをなくす */
+    width:      700px;      /* 幅を660pxに設定する。 */
+    /*padding:  1em;*/      /* 要素の幅を1em広げる */
+    /*height:     auto;*/       /* 高さを自動調整する。 */
     font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
-    text-indent: 1em;		/* インデントを1文字分入れる */
-    font-weight: normal;	/* 文字の太さを通常にする */
-    line-height: 1.4;		/* 行間を1.4行分とる */
+    text-indent: 1em;       /* インデントを1文字分入れる */
+    /*font-weight: normal;*/    /* 文字の太さを通常にする */
+    /*line-height: 1.4;*/       /* 行間を1.4行分とる */
+    padding: 5px 0;
     margin: 0 auto;         /* 中央に寄せる。 */
-    display: inline-block;  /* ブロック要素にする */
+    /*display: inline-block;*/  /* ブロック要素にする */
 }
 
 /* 
