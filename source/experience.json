@@ -12,55 +12,42 @@
         }
     },
     "reservedFlow": {
-        "reservedFlowTitle": {
-            "reservedFlowImgLeft": {
-                "src": "image/icon(smilebird).png"
-            },
-            "reservedFlowTitleText": {
-                "text": "ご予約までの流れ"
-            },
-            "reservedFlowImgRight": {
-                "src": "image/icon(clearfacebird).png"
+        "class":"description",
+        "contentsTitleBack":{
+            "contentsTitle":{
+                "contentsImgLeft":{
+                    "src": "image/icon(smilebird).png"
+                },
+                "contentsTitleText":{
+                    "text": "ご予約までの流れ"
+                },
+                "contentsImgRight":{
+                    "src": "image/icon(clearfacebird).png"
+                }
             }
         },
-        "firstStep": {
-            "text": "STEP1"
+        "contentsBorder": {
+            "span":
+            [
+                "STEP1",
+                "STEP2",
+                "STEP3",
+                "STEP4",
+                "STEP5"
+            ]
         },
-        "firstStepSummary": {
-            "text": "あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。"
-        },
-        "firstStepSummary1": {
-            "text": "カレンダーから体験レッスンを受けたい日にちをクリックします。"
-        },
-        "firstStepSummary2": {
-            "text": "＊予約ダイアログが表示されます。"
-        },
-        "secondStep": {
-            "text": "STEP2"
-        },
-        "secondStepSummary": {
-            "text": "プリザ、生花の作品写真群から作りたい作品を選んでください。"
-        },
-        "thirdStep": {
-            "text": "STEP3"
-        },
-        "thirdStepSumary": {
-            "text": "希望する時限を選んでください。＊複数指定を推奨します。"
-        },
-        "fourthStep": {
-            "text": "STEP4"
-        },
-        "fourthStepSummary": {
-            "text": "予備情報として比較的受けやすい曜日、と週を選んでください。"
-        },
-        "fifthStep": {
-            "text": "STEP5"
-        },
-        "fifthStepSummary": {
-            "text": "予約可能か否かにつきまして追ってメールにより返信致します。"
-        },
-        "fifthStepSummary1": {
-            "text": "また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+        "contentsBorderInText":{
+            "span":
+            [
+                "あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。",
+                "カレンダーから体験レッスンを受けたい日にちをクリックします。",
+                "＊予約ダイアログが表示されます。",
+                "プリザ、生花の作品写真群から作りたい作品を選んでください。",
+                "希望する時限を選んでください。＊複数指定を推奨します。",
+                "予備情報として比較的受けやすい曜日と週を選んでください。",
+                "予約可能か否かにつきまして追ってメールにより返信致します。",
+                "また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+            ]
         }
     },
     "specialGuide": {
@@ -68,20 +55,12 @@
         "summary": {
             "text": "体験レッスン案内"
         },
-        "category": {
-            "item": {
-                "text": "カテゴリ"
-            },
-            "content": {
-                "text": "花・ガーデニング・環境"
-            }
-        },
         "doKnow": {
             "item": {
-                "text": "できること・わかること"
+                "text": "体験種別"
             },
             "content": {
-                "text": "プリザーブドフラワー"
+                "text": "プリザーブドフラワー,生花"
             }
         },
         "cost": {
@@ -89,7 +68,7 @@
                 "text": "費用"
             },
             "content": {
-                "text": "3,800円"
+                "text": "2,400円"
             }
         },
         "times": {
@@ -507,17 +486,18 @@
         }
     },
     "photoGallery": {
-        "galleryTitle": {
-            "galleryImgLeft": {
+        "class":"description contentsTitleBack",
+        "contentsTitle": {
+            "contentsImgLeftL": {
                 "src": "image/icon(bluesmallbird).png"
             },
-            "galleryTitleText": {
+            "contentsTitleText": {
                 "text": "体験作品一覧"
             },
-            "galleryImgRight": {
+            "contentsImgRight": {
                 "src": "image/icon(redbird).png"
             },
-            "galleryImgRightFlower": {
+            "contentsImgRightR": {
                 "src": "image/icon(redsunflower).png"
             }
         }

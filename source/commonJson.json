@@ -279,59 +279,48 @@
 	},
 	
 	"merit":{
-        "meritTitle": {
-            "meritImgLeft": {
-                "src": "image/icon(smilebird).png"
-            },
-            "meritTitleText": {
-                "text": "ご入会メリット"
-            },
-            "meritImgRight": {
-                "src": "image/icon(clearfacebird).png"
-            }
-        },
+		"class":"description",
+		"contentsTitleBack":{
+			"contentsTitle": {
+	            "contentsImgLeft": {
+	                "src": "image/icon(smilebird).png"
+	            },
+	            "contentsTitleText": {
+	                "text": "ご入会メリット"
+	            },
+	            "contentsImgRight": {
+	                "src": "image/icon(clearfacebird).png"
+	            }
+	        }
+		},
         "meritToExperience":{
         	"href":"experience.html",
 	        "meritImgToExperience": {
 	            "src": "image/icon(merittoexperience).png"
 	        }
         },
-		"firstMerit": {
-			"text":"年会費&入会金無料!安心の受講料 都度払い"
-		},
-		"firstMeritDetail":{
-			"text":"次のレッスン代を先に支払う都度払い前金制、退会時、前金は返金されます。いつでも退会可能、制約はございません。"
-		},
-		"secondMerit": {
-			"text":"レッスン代はリーズナブル。 でも使う花の量はめちゃめちゃ多い!"
-		},
-		"secondMeritDetail":{
-			"text":"レッスン後の満足度が違います。本校の花材は利益ゼロ、卸値のまま提供しているから平均他店の2~ 3 倍の花材が使えます。"
-		},
-		"thirdMerit": {
-			"text":"インターネットでらくらく予約。 うっかり防止にメールによる前日予約通知機能もあり!"
-		},
-		"thirdMeritDetail":{
-			"text":"いつでも、どこからでも携帯電話、パソコンから予約・変更ができるから便利で安心です!"
-		},
-		"fourthMerit": {
-			"text":"各コース修了後 , 有名花材店提携カードを発行。 定価の 50% ~ 61%off で購入可能!"
-		},
-		"fourthMeritDetail":{
-			"text":"なんと!業界のプロから一般の花好きの方まで御用達、有名花材店の商品を 50%~ 61%off で購入できる♪"
-		},
-		"fifthMerit": {
-			"text":"会員カードでポイントをどんどん貯めよう"
-		},
-		"fifthMeritDetail":{
-			"text":"レッスン代から商品の購入まで 1%~ 4%ポイント付加、スクール内で使えるから無駄なくお得!"
-		},
-		"sixthMerit": {
-			"text":"コーヒー&お菓子&手作りパンを無料提供♪"
-		},
-		"sixthMeritDetail":{
-			"text":"受講後の寛ぎのひと時に&仕事帰りでも安心♪おいしいコーヒー&お菓子&“ほかほか”の手作りパンをお召上がりください。"
-		}
+        "contentsBorder":{
+        	"span":
+        	[
+       			"年会費&入会金無料!安心の受講料 都度払い",
+        		"レッスン代はリーズナブル。 でも使う花の量はめちゃめちゃ多い!",
+        		"インターネットでらくらく予約。 うっかり防止にメールによる前日予約通知機能もあり!",
+        		"各コース修了後 , 有名花材店提携カードを発行。 定価の 50% ~ 61%off で購入可能!",
+        		"会員カードでポイントをどんどん貯めよう",
+        		"コーヒー&お菓子&手作りパンを無料提供♪"
+        	]
+        },
+        "contentsBorderInText":{
+        	"span":
+        	[
+ 				"次のレッスン代を先に支払う都度払い前金制、退会時、前金は返金されます。いつでも退会可能、制約はございません。",
+ 				"レッスン後の満足度が違います。本校の花材は利益ゼロ、卸値のまま提供しているから平均他店の2~ 3 倍の花材が使えます。",
+ 				"いつでも、どこからでも携帯電話、パソコンから予約・変更ができるから便利で安心です!",
+ 				"なんと!業界のプロから一般の花好きの方まで御用達、有名花材店の商品を 50%~ 61%off で購入できる♪",
+ 				"レッスン代から商品の購入まで 1%~ 4%ポイント付加、スクール内で使えるから無駄なくお得!",
+ 				"受講後の寛ぎのひと時に&仕事帰りでも安心♪おいしいコーヒー&お菓子&“ほかほか”の手作りパンをお召上がりください。"
+        	]
+        }
 	},
 	
 	"footer":{
@@ -342,17 +331,18 @@
 	"calendar":{
 	},
     "photoGallery": {
-        "galleryTitle": {
-            "galleryImgLeft": {
+    	"class":"description contentsTitleBack",
+        "contentsTitle": {
+            "contentsImgLeftL": {
                 "src": "image/icon(bluesmallbird).png"
             },
-            "galleryTitleText": {
+            "contentsTitleText": {
                 "text": "Photo Gallery"
             },
-            "galleryImgRight": {
+            "contentsImgRight": {
                 "src": "image/icon(redbird).png"
             },
-            "galleryImgRightFlower": {
+            "contentsImgRightR": {
                 "src": "image/icon(redsunflower).png"
             }
         }

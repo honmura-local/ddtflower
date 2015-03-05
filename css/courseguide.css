@@ -353,10 +353,13 @@
  * 概要   :ご入会メリット
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.dscriptionに変更,margin-bottomの削除
  */
-.merit, .reservedFlow, .examination{
+.description {
 	clear: both;				/* 回り込みの対象にしない。 */
-	margin-bottom: 10px;		/* コンテンツの後に間隔を取る */
+	/*margin-bottom: 10px;*/		/* コンテンツの後に間隔を取る */
 	margin-top: 60px;			/* 上のmarginを挿入する。子要素をずらした分を考慮した値を指定する。 */
 }
 /* 
@@ -364,24 +367,30 @@
  * 概要   :ご入会メリットのタグ直下の全要素。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
  */
-.merit > *,.reservedFlow > *, .examination > * {
-	position: relative;	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
-	top: -13px;			/* 対象の要素を上にずらす。 */
-}
+/*.merit > *,.reservedFlow > *, .examination > * {*/
+	/*position: relative;*/	/* 座標をずらしてレイアウトを作るためにこの設定をまず行う。 */
+	/*top: -13px;*/			/* 対象の要素を上にずらす。 */
+/*}*/
 
 /* 
  * セレクタ:.merit .meritTitle
  * 概要   :ご入会メリットのタイトル部分
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターをcontentsTitkleBackに変更し、margin,topプロパティを削除
  */
- .merit .meritTitle, .reservedFlow .reservedFlowTitle, .examination .examinationTitle{
+ .contentsTitleBack{
 	clear: both;					/* 回り込みをなくす */
 	text-align: left;				/* 左にそろえる */
 	height: 35px;					/* 帯の高さ */
-	top: 0px;						/* 上にずらさない */
-	margin-bottom: 28px;			/* 下に適切なmarginを挿入する */
+	/*top: 0px;*/						/* 上にずらさない */
+	/*margin-bottom: 28px;*/			/* 下に適切なmarginを挿入する */
 	background: rgb(206,220,58);	/* 背景を黄緑色にする。 */
 }
 
@@ -390,10 +399,30 @@
  * 概要   :ご入会メリットのタイトル内の要素
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :全削除
  */
-.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *, .examination .examinationTitle > *{
-	position: relative;		/* 座標をずらすためにこの設定をする。 */
-	top: -47px;				/* 上にずらす。 */
+/*.merit .meritTitle > *, .reservedFlow .reservedFlowTitle > *, .examination .examinationTitle > *{*/
+	/*position: relative;*/		/* 座標をずらすためにこの設定をする。 */
+	/*top: -47px;*/				/* 上にずらす。 */
+/*}*/
+
+
+
+/* 
+ * セレクタ:.contentdTitle
+ * 概要   :ご入会メリットのタイトルのテキスト。
+ * 作成日 :2015.03.05
+ * 作成者 :T.Masuda
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :margin-leftを追加
+ */
+.contentsTitle{
+    margin-left: 5px;       /* 左から5pxの余白をとる */
+    position: relative;     /* 相対位置にする */
+    bottom: 47px;           /* 下から45px上にあげる */
 }
 
 /* 
@@ -401,16 +430,20 @@
  * 概要   :ご入会メリットのタイトルのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+ * 内容   :セレクターをcontentsTitleTextに変更し、vartical-alignを削除し、
+ 　　　　　　　　top:-58px;をbottom:10px;にした
  */
-.merit .meritTitleText, .reservedFlow .reservedFlowTitleText, .examinationTitle .examinationTitleText{
+.contentsTitleText {
 	color: #FFF;				/* 白抜き文字にする。 */
-	vertical-align: bottom;		/* 高さを中心に合わせる。 */
+	/*vertical-align: bottom;*/	/* 高さを中心に合わせる。 */
 	font-size: 18px;			/* フォントサイズを18pxに設定する。 */
-	vertical-align: middle;		/* 高さを中心揃えにする */
+	/*vertical-align: middle;*/	/* 高さを中心揃えにする */
 	position: relative;			/* 相対位置指定をする */
-	top: -58px;					/* 位置を上にずらす。 */
+	bottom: 10px;				/* 位置を上にずらす。 */
+    margin-right: 3px;          /* 右に3pxの余白をとる */
 }
-	
+
 /* 
  * セレクタ:.merit .meritImgLeft
  * 概要   :ご入会メリットのタイトルの左側の画像。
@@ -434,8 +467,11 @@
  * 概要   :ご入会メリットの体験レッスンリンク画像。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクター名を .description .meritToExperienceに変更
  */
- .merit .meritToExperience {
+ .description .meritToExperience {
 	float: right;			/* 右に寄せる。 */
 	top: -25px;				/* 上にずらす。 */		
 	margin-right: 1px;		/* 右にmarginを挿入する。 */
@@ -451,8 +487,11 @@
  * 概要   :ご入会メリットの体験レッスンリンク画像にマウスを重ねたときの処理。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクター名を  .description .meritToExperience:hoverに変更
  */
- .merit .meritToExperience:hover {
+ .description .meritToExperience:hover {
  	opacity: 0.5;	/* 透過する。 */
 }
 
@@ -461,8 +500,11 @@
  * 概要   :ご入会メリット、各項目
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsBorder, .contentsBorderInTextに変更
  */
-.merit dt,.merit dd, .reservedFlow dt, .reservedFlow dd, .examination dt, .examination dd {
+.contentsBorder, .contentsBorderInText{
     padding: 2px 0em;	/* 適切に間隔を取る */
 }
 
@@ -471,8 +513,11 @@
  * 概要   :ご入会メリット、各項目見出し
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsBorderに変更
  */
-.merit dt, .reservedFlow dt, .examination dt {
+.contentsBorder {
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
@@ -486,8 +531,11 @@
  * 概要   :ご入会メリット、各項目内容
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.05
+ * 内容   :セレクターを.contentsBorderInTextに変更
  */
-.merit dd, .reservedFlow dd, .examination dd {
+.contentsBorderInText {
     padding-left: 2em;	/* 更にインデントをつける。 */
 }
 

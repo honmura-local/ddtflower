@@ -12,123 +12,106 @@
         }
     },
     "examination":{
-        "examinationTitle":{
-            "examinationImgLeft":{
-                "src": "image/icon(pinkbird).png"
-            },
-            "examinationTitleText":{
-                "text":"フラワー装飾技能検定資格とは"
-            },
-            "examinationImgRight":{
-                "src": "image/icon(graybird).png"
+        "class":"description",
+        "contentsTitleBack":{
+            "contentsTitle":{
+                "contentsImgLeft":{
+                    "src": "image/icon(pinkbird).png"
+                },
+                "contentsTitleText":{
+                    "text":"フラワー装飾技能検定資格とは"
+                },
+                "contentsImgRightR":{
+                    "src": "image/icon(graybird).png"
+                }
             }
         },
-        "examinationSummary": {
-            "text":"概要"
+        "contentsBorder": {
+            "span":
+            [
+                "概要",
+                "学科試験と実技試験について",
+                "受験料",
+                "試験日程",
+                "受験資格"
+            ]
         },
-        "examinationSummaryText1":{
-            "text":"日本で唯一のフラワーデザインに関する国家資格であり労働省が行う国家検定です。"
-        },
-        "examinationSummaryText2":{
-            "text":"１級は労働大臣名の、２級は各都道府県、知事名の合格証書と技能士章が交付され、技能士と称することができます。"
-        },
-        "examinationAbout": {
-            "text":"学科試験と実技試験について"
-        },
-        "examinationAboutText1":{
-            "text":"学科試験と実技試験があります。"
-        },
-        "examinationAboutText2":{
-            "text":"学科試験はフラワー装飾全般に関する問題でマークシート方式。"
-        },
-        "examinationAboutText3":{
-            "text":"実技試験の１級は、カーネーション・小菊・その他を使用 して立食用卓上装飾花（４０分）、卓上装飾花（３５分）、ブーケ（６０分）の３点を制作します。"
-        },
-        "aboutClass2Text1":{
-            "text":"２級は、Ａ・Ｂコースより選択でき、１級と同様の花材で 行います。"
-        },
-        "aboutClass2Text2": {
-            "text":"Ａコースは花器付盛花（３０分）、コサージ（３０分）、 ブーケ（６０分）。"
-        },
-        "aboutClass2Text3":{
-            "text":"Ｂコースは籠花（３０分）、贈呈用花束（３０分）、花器 付盛花（３０分）。"
-        },
-        "examinationFee": {
-            "text":"受験料"
-        },
-        "examinationFeeText1":{
-            "text":"１級実技と学科　 　 　 　 ￥３２０００　 　実技のみ　 　￥２９０００"
-        },
-        "examinationFeeText2":{
-            "text":"２級実技と学科（Ａ）　 　￥２５０００　 　実技のみ　 　￥２２０００"
-        },
-        "examinationFeeText3":{
-            "text":"２級実技と学科（Ｂ）　 　￥２７０００　 　実技のみ　 　￥２９０００"
-        },
-        "examinationFeeText4":{
-            "text":"学科のみ 　 　 　 　 　 　 １・２級共通　 　　 　 　 　 　 ￥　３１００"
-        },
-        "examinationDay": {
-            "text":"試験日程"
-        },
-        "examinationDayText1": {
-            "text":"実技試験は年１回、６月から９月の間に実施します。"
-        },
-        "examinationDayText1": {
-            "text":"学科試験は全国統一で実施します。（９月付近)"
-        },
-        "examinationDayText2": {
-            "text":"３月に受験案内書を配布します。"
-        },
-        "examinationDayText3": {
-            "text":"４月上旬に受験申請の受付が行われます。（郵送不可）"
-        },
-        "examinationCapacity":{
-            "text":"受験資格"
-        },
-        "examinationCapacityText1":{
-            "text":"１級　　実務経験１２年以上　 　７年以上に短縮"
-        },
-        "examinationCapacityText2":{
-            "text":"２級　　実務経験　３年以上　 　２年以上に短縮"
-        },
-        "examinationCapacityText3":{
-            "text":"２級合格後１級に受講できる期間が、５年必要でしたが２年以上に短縮"
+        "contentsBorderInText":{
+            "span":
+            [
+                "日本で唯一のフラワーデザインに関する国家資格であり労働省が行う国家検定です。",
+                "１級は労働大臣名の、２級は各都道府県、知事名の合格証書と技能士章が交付され、技能士と称することができます。",
+                "学科試験と実技試験があります。",
+                "学科試験はフラワー装飾全般に関する問題でマークシート方式。",
+                "実技試験の１級は、カーネーション・小菊・その他を使用 して立食用卓上装飾花（４０分）、卓上装飾花（３５分）、ブーケ（６０分）の３点を制作します。",
+                "２級は、Ａ・Ｂコースより選択でき、１級と同様の花材で 行います。",
+                "Ａコースは花器付盛花（３０分）、コサージ（３０分）、 ブーケ（６０分）。",
+                "Ｂコースは籠花（３０分）、贈呈用花束（３０分）、花器 付盛花（３０分）。",
+                "１級実技と学科　 　 　 　 　 ￥３２０００",
+                "実技のみ 　 　 　 　 　 　 　 ￥２９０００",
+                "２級実技と学科(A)　 　 　 　￥２５０００",
+                "実技のみ 　 　 　 　 　 　 　 ￥２２０００",
+                "２級実技と学科(B)　 　 　 　￥２７０００",
+                "実技のみ 　 　 　 　 　 　 　 ￥２９０００",
+                "学科のみ(１・２級共通)　 　 ￥　３１００",
+                "実技試験は年１回、６月から９月の間に実施します。",
+                "学科試験は全国統一で実施します。（９月付近)",
+                "３月に受験案内書を配布します。",
+                "４月上旬に受験申請の受付が行われます。（郵送不可）",
+                "１級　　実務経験１２年以上　 　７年以上に短縮",
+                "２級　　実務経験　３年以上　 　２年以上に短縮",
+                "２級合格後１級に受講できる期間が、５年必要でしたが２年以上に短縮"
+            ]
         }
     },
-    "nationalCourseGuide":{
+    "courseGuide": {
         "class": "courseGuide guideTable",
-        "summary" :{
+        "summary": {
             "text": "コース案内"
         },
-        "lessonFee": {
-            "class":"guideHead",
-            "item":{
-                "text":"受講料"
+        "courseGuideHead": {
+            "class": "guideHead",
+            "stageHead": {
+                "text": "レベル"
             },
-            "content":{
-                "class":"price",
-                "text":"3000円／回"
+            "timesHead": {
+                "text": "回数"
+            },
+            "priceHead": {
+                "text": "金額(1回当たり)"
             }
         },
-        "lessonCount":{
-            "class":"guideHead",
-            "item":{
-                "text":"回数(目安)"
+        "firstStage": {
+            "stage": {
+                "text": "1級"
             },
-            "content":{
-                "class":"price",
-                "text":""
+            "times": {
+                "text": "合格基準に達するまで"
+            },
+            "price": {
+                "html": "3,000 円／回<br>別途花材費2000円～5000円"
             }
         },
-        "flowerFee":{
-            "class":"guideHead",
-            "item":{
-                "text":"別途花材費"
+        "secondStage": {
+            "stage": {
+                "text": "2級(Aコース)"
             },
-            "content":{
-                "class":"price",
-                "text":"2000円 ～ 5000円"
+            "times": {
+                "text": "合格基準に達するまで"
+            },
+            "price": {
+                "html": "3,000 円／回<br>別途花材費2000円～5000円"
+            }
+        },
+        "thirdStage": {
+            "stage": {
+                "text": "2級(Bコース)"
+            },
+            "times": {
+                "text": "合格基準に達するまで"
+            },
+            "price": {
+                "html": "3,000 円／回<br>別途花材費2000円～5000円"
             }
         }
     },
