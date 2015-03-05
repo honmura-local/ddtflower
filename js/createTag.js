@@ -126,6 +126,9 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
+	 * 修正者:T.Masuda
+	 * 修正日:2015.02.19
+	 * 内容　:2015.03.05
 	 */
 	this.createTag = function(curMapNode, curDomNode){
 		
@@ -140,13 +143,16 @@ function createTag(){
 			var mapNode = curMapNode[key];	//mapNodeの内容をcurMapNode内のmapNodeの参照に切り替える。
 			var attribute = false;				//属性値を格納する変数
 			
-			//キーがテキストであれば
+			//キーがtextであれば
 			if(key == 'text'){
-				//curDomにテキストを追加する。
+				//curDomにテキストtextメソッドで追加する。
 				curDomNode.text(mapNode);
-			}
+			//キーがHTMLであれば
+			} else if(html == 'html'){
+				//curDomにテキストをhtmlメソッドで追加する。
+				curDomNode.html(mapNode);
 			//mapNodeが配列であれば
-			 else if($.isArray(mapNode)){
+			} else if($.isArray(mapNode)){
 				//キー名でタグを作成し、そのテキストにキー値をセットする。
 				this.createTagArray(key, mapNode, curDomNode);
 			//mapNodeが子であれば
