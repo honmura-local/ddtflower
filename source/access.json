@@ -12,10 +12,10 @@
         }
     },
 	"accessInfo":{
-        "accessInfoTitle":{
+        "contentsBorder":{
             "text":"DDTFlowers(DDTフラワーズ)"
         },
-        "accessInfoText":{
+        "contentsBorderInText":{
             "span":[
                 "〒160-0022",
                 "東京都新宿区新宿2-12-1 アコードビル4階",

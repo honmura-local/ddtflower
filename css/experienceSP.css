@@ -22,11 +22,14 @@
      * 概要   :スマホ用体験レッスン案内テーブル中身のスタイル
      * 作成者 :T.Yamamoto
      * 作成日 :2015.02.16
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.05
+     * 内容   :widthをの削除
      */
      .specialGuide th, .specialGuide td{
         padding: 7px;      /* 要素の幅を7px広げる */
         font-size: 11px;   /* フォントのサイズを11pxにする */
-        width: 50%;        /* 幅を50%にする */
+        /*width: 50%;*/        /* 幅を50%にする */
         text-align: left;  /* 左寄りにする */
      }
 
