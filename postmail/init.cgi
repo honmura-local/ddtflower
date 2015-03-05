@@ -1,4 +1,4 @@
-# モジュール宣言/変数初期化
+﻿# モジュール宣言/変数初期化
 use strict;
 my %cf;
 #┌─────────────────────────────────
@@ -79,7 +79,7 @@ $cf{version} = 'postmail v8.02';
 $cf{kcode} = 'utf8';
 
 # 送信先メールアドレス
-$cf{mailto} = 'info@ddthink.com';
+$cf{mailto} = 'xellos00195@gmail.com';
 
 # sendmailのパス【サーバパス】
 # → プロバイダの指定を確認のこと
@@ -131,16 +131,16 @@ $cf{multi_sub} = {
 $cf{sub_reply} = '　DDTフラワーズ 体験レッスンのご予約の希望を承りました。';
 
 # 本体プログラム【URLパス】
-$cf{mail_cgi} = './postmail.cgi';
+$cf{mail_cgi} = '../postmail.cgi';
 
 # ログファイル【サーバパス】
-$cf{logfile} = './data/log.cgi';
+$cf{logfile} = 'postmail/data/log.cgi';
 
 # セッションファイル【サーバパス】
-$cf{sesfile} = './data/ses.cgi';
+$cf{sesfile} = 'postmail/data/ses.cgi';
 
 # テンプレートディレクトリ【サーバパス】
-$cf{tmpldir} = '../';
+$cf{tmpldir} = './';
 
 # セッションの許容時間（分単位）
 # → 確認画面表示後、送信ボタンを押すまでの時間
@@ -152,7 +152,7 @@ $cf{sestime} = 5;
 $cf{reload} = 1;
 
 # 送信後の戻り先【URLパス】
-$cf{back} = '../index.html';
+$cf{back} = 'index.html';
 
 # フォームのname値の正当性をチェックする（セキュリティ強化策）
 # → 半角文字は英数字、アンダーバー、ハイフンはOK。全角は全てOK
