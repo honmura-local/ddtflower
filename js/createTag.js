@@ -148,7 +148,7 @@ function createTag(){
 				//curDomにテキストtextメソッドで追加する。
 				curDomNode.text(mapNode);
 			//キーがHTMLであれば
-			} else if(html == 'html'){
+			} else if(key == 'html'){
 				//curDomにテキストをhtmlメソッドで追加する。
 				curDomNode.html(mapNode);
 			//mapNodeが配列であれば
