@@ -436,12 +436,12 @@ h1,h2,h3,h4,h5,th{
 }
 
 /* 
- * セレクタ:.topMenu li.active
+ * セレクタ:.topMenu li.active,.topMenu li.current
  * 概要   :選択中のトップメニューのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
-.topMenu li.active{
+.topMenu li.active,.topMenu li.current{
 	border-bottom: 3px solid rgb(0, 174, 40);
 }
 
@@ -470,12 +470,12 @@ h1,h2,h3,h4,h5,th{
     display		: inline-block; /* インラインブロック表示を行う。 */
 }
 /* 
- * セレクタ:.topMenu .active p
+ * セレクタ:.topMenu .active p, .topMenu .current p
  * 概要   :選択中のトップメニューのボタンのリンクの文字。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
  */
-.topMenu .active p{
+.topMenu .active p, .topMenu .current p{
 	color:rgb(0, 174, 40);
 	opacity: 1!important;
 }

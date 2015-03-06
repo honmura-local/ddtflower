@@ -152,12 +152,12 @@ currentLocation = '';
 function functionFilter (filterTarget) {
   // jqueryの記述の始まり
 	//現在表示中のページのボタン以外に対して
-    $(filterTarget, document).filter(':has(a:not([href$="' + currentLocation + '"]))')
-        .mouseenter(function() {            // 引数の要素にマウスを乗せた時の処理
-            $(this).addClass('active');    // 引数の要素にactiveクラスを付与する。
+    $(document)
+        .on('mouseenter', filterTarget, function() {	// 引数の要素にマウスを乗せた時の処理
+            $(this).addClass('active');   				 // 引数の要素にactiveクラスを付与する。
         })
-        .mouseleave(function() {            // 引数の要素からマウスが離れたときの処理
-            $(this).removeClass('active');  // 引数の要素からactiveクラスを除去する。
+        .on('mouseleave', filterTarget, function() {	// 引数の要素からマウスが離れたときの処理
+            $(this).removeClass('active');  			// 引数の要素からactiveクラスを除去する。
         });
 }
 	
@@ -170,10 +170,11 @@ function functionFilter (filterTarget) {
  * 作成者:T.Masuda
  */
 function changeSelectedButtonColor(filterTarget){
-	//一旦全てのactiveクラスを剥奪する。	
+	//一旦全てのactive,currentクラスを剥奪する。	
 	$(filterTarget).removeClass('active');
-	// 現在のページのボタンの枠に対して、activeクラスを付与する。
-	$(filterTarget, document).filter(':has(a[href$="' + currentLocation + '"])').addClass('active');
+	$(filterTarget).removeClass('current');
+	// 現在のページのボタンの枠に対して、currentクラスを付与する。
+	$(filterTarget, document).filter(':has(a[href$="' + currentLocation + '"])').addClass('current');
 }
 
 //Ajax通信が始まったら
