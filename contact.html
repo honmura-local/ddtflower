@@ -23,6 +23,8 @@ creator.outputTag('footer');					// フッターを作る
 fixYCoordinate('header', '.main');
 // position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 fixXCoordinateOnScroll('header')
+	// ログイン状態をチェックする。
+	checkLoginState();
 </script>
 </head>
 <body>
