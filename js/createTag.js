@@ -212,18 +212,37 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
+	 * 変更者:T.Masuda
+	 * 変更日:2015.03.06
+	 * 内容　:本来想定されていた動作に修正されました。
 	 */
 	this.createTagArray = function(key, mapNode, domNode){
+		//domNodeのキーの要素を取得する。
+		domNode = this.getDomChild(key, domNode); 
+		
 		//引数にnullがあれば
 		if(key == null || mapNode == null || domNode == null){
 			//処理をやめる。
 			return;
 		}
+		
+		//不足しているタグの個数を算出する。
+		var clones = mapNode.length - 1;
+		//domNodeを必要な分コピーする。
+		for(var i = 0; i < clones; i++){
+			//1個目のmapNodeの後ろに自身のコピーを追加する。
+			$(domNode[0]).after($(domNode[0]).clone(false));
+		}
 
+		//domNodeの兄弟要素を全て取得する。
+		
+		
 		//mapNodeの配列分ループする。
 		for(var i = 0; i < mapNode.length; i++){
 			//keyでタグを生成する。
-			$(domNode[i]).append($('<'+ key +'></'+key+'>').text(mapNode[i]));
+			$(domNode).text(mapNode[i]);
+			//domNodeを次に移動する。
+			domNode = $(domNode).next();
 		}
 	}
 
@@ -235,17 +254,23 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
+	 * 変更者:T.Masuda
+	 * 変更日:2015.03.06
+	 * 内容　:タグに対応しました。
 	 */
 	this.getDomChild = function(key, domNode){
-		//domNodeの子の階層からkeyを持つノードを取得する。
-		domNode = $('.' + key, domNode);
+		//domNodeの返却用変数を作る。
+		var domNodeReturn;
+		
+		//domNodeの子の階層からkeyのクラスを持つノードを取得する。
+		var domNodeReturn = $('.' + key, domNode);
 		//DOMの取得に失敗したら
-		if(domNode[0] == null){
-			//domNodeにnullを入れる。
-			domNode = null;
+		if(domNodeReturn[0] == null){
+			//domNodeの子の階層からkeyのタグ名を持つノードを取得する。
+			domNodeReturn = $(key, domNode);
 		}
-
-		//domNodeを返す。
-		return domNode;
+		
+		//domNodeReturnを返す。
+		return domNodeReturn;
 	}
 }
