@@ -199,7 +199,7 @@ button.ui-button-icons-only {
 	line-height: normal;
 }
 .ui-button-text-only .ui-button-text {
-	padding: .8em 1.6em;
+	padding: 1em 2em;
 }
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
@@ -476,7 +476,7 @@ button.ui-button::-moz-focus-inner {
 	float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em 0;
+	margin: .5em .8em .5em 0;
 	cursor: pointer;
 }
 .ui-dialog .ui-resizable-se {

@@ -200,7 +200,7 @@
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
-.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo {
+.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo,.personInformation {
     border-top: 1px solid #D0D0AC;  /* 灰色の線を入れる */
     display: block;                 /* ブロックレベル要素にする */
     padding: 10px;                  /* 要素の幅を10px広げる */
@@ -301,6 +301,89 @@
     height: 30px;       /* 高さを30pxにする */
 }
 
+/* 
+ * セレクタ:.personTextbox
+ * 概要   :ダイアログ上部のテキストボックスのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.personTextbox {
+    margin-left: 2em;
+}
+/* 
+ * セレクタ:.buttonTopText
+ * 概要   :ダイアログ上部のラベルのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.buttonTopText {
+    vertical-align: middle;     /* 中央に揃える */
+}
+
+/* 
+ * セレクタ:.dialigContentHead
+ * 概要   :予備情報のコンテンツタイトル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+
+.dialogContentHead {
+    font-weight: bold;      /* 太字にする */
+}
+
+/* 
+ * セレクタ:.canDayAll, .weekOfDay, .canWeekAll, .monthOfWeek
+ * 概要   :予備情報の2行目以降のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.canDayAll, .weekOfDay, .canWeekAll, .monthOfWeek, .textboxLabel {
+    font-size: 12px;        /* フォントサイズ12pxにする */
+    padding-left: 1em;      /* 左から1文字分余白を空ける */
+    padding-top: 2px;       /* 2px上向きに余白をとる */
+}
+
+/* 
+ * セレクタ:.canDayAll, .weekOfDay, .canWeekAll, .monthOfWeek
+ * 概要   :予備情報の2行目以降のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.canDayAll label {
+    padding-left: .5em;     /* 左から余白を半文字分とる */
+}
+
+/* 
+ * セレクタ:.canWeekAll
+ * 概要   :可能週の行のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.canWeekAll {
+    margin-top: 5px;    /* 上向きに余白をとる */
+}
+
+/* 
+ * セレクタ:.canWeekAll label
+ * 概要   :可能週の行のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.canWeekAll label {
+    padding-left: 1.5em;    /* 上向きに余白をとる */
+}
+
+/* 
+ * セレクタ:.buttonBottomText
+ * 概要   :チェックボックスのラベルについてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.06
+ */
+.buttonBottomText {
+    margin-left: -6px;  /* 左に5px寄せる */
+}
+
+.
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 	
