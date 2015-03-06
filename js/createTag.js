@@ -8,7 +8,7 @@ function createTag(){
 	this.json = null;
 	//ひな形のHTMLのDOMを格納する変数。
 	this.dom = '';
-
+	
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
 	 * 概要  :JSONファイルを取得して返す。
@@ -212,9 +212,6 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
-	 * 変更者:T.Masuda
-	 * 変更日:2015.03.06
-	 * 内容　:正常に動作しなかったため、修正しました。
 	 */
 	this.createTagArray = function(key, mapNode, domNode){
 		//引数にnullがあれば
@@ -226,7 +223,7 @@ function createTag(){
 		//mapNodeの配列分ループする。
 		for(var i = 0; i < mapNode.length; i++){
 			//keyでタグを生成する。
-			$(domNode[0]).append($('<'+ key +'></'+key+'>').text(mapNode[i]));
+			$(domNode[i]).append($('<'+ key +'></'+key+'>').text(mapNode[i]));
 		}
 	}
 
