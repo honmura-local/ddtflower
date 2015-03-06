@@ -59,41 +59,6 @@ function createCalendar () {
 
 
 /*
- * 関数名:functionFilter
- * 引数  :var filterTarget
- * 戻り値:なし
- * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
- * 作成日:2015.02.05
- * 作成者:T.Y
- * 変更日:2015.02.22
- * 変更者:T.Masuda
- * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
- */
-function functionFilter (filterTarget) {
-  // URLからファイル名を取得する。
-  currentLocation = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
-  // jqueryの記述の始まり
-  $(function() {
-	//現在表示中のページのボタン以外に対して
-    $(filterTarget).filter(':has(a:not([href$="' + currentLocation + '"]))')
-        .mouseenter(function() {            // 引数の要素にマウスを乗せた時の処理
-            $(this).addClass('active');    // 引数の要素にactiveクラスを付与する。
-        })
-        .mouseleave(function() {            // 引数の要素からマウスが離れたときの処理
-            $(this).removeClass('active');  // 引数の要素からactiveクラスを除去する。
-        });
-  });// jqueryの記述の終わり
-  
-  // URLからファイル名を取得する。
-	var contentName = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
-  
-	// 現在のページのボタンの枠に対して、activeクラスを付与する。
-	$('.topMenu li:has(a[href$="' + currentLocation + '"])').addClass('active');
-  
-}
-
-
-/*
  * 関数名:toolTip
  * 引数  :var targetElement
  * 戻り値:なし
@@ -212,14 +177,6 @@ function callReservedDialog(dateText){
  */
 function createGallery(selector){
 
-//	// slickの画像の個数を用意する。
-//	var slickitems = 3;
-//	// 画面がスマホレイアウトであれば
-//	if(window.innerWidth <= 680){
-//		// 表示する個数を減らす。
-//		slickitems = 1;
-//	}
-	
 // jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
 	$('.' + selector).smoothDivScroll({
 		//カーソル合わせでスクロールする領域を表示する。
@@ -236,42 +193,6 @@ function createGallery(selector){
 	$('.' + selector + ' a').fancybox({
 		'hideOnContentClick': true
 	}); 
-	
-//	//ウィンドウの幅が変わったときのイベントを登録する。
-//	$(window).resize(function(){
-//		// 画面がスマホレイアウトであれば
-//		if(window.innerWidth <= 680){
-//			// 表示する個数を減らす。
-//			slickitems = 1;
-//		//PCレイアウトであれば
-//		} else{
-//			//表示する個数を多めにする。
-//			slickitems = 3;
-//		}
-//		$('.' + selector).unslick();
-//		//slickの設定を直す。
-//		$('.' + selector).smoothDivScroll({
-//			// 矢印ボタンでの制御を有効にする。
-//			accessibility:false,
-//			// 矢印ボタンを使う。
-//			arrows:false,
-//			//モバイル優先の設定を使う。
-//			mobileFirst: true,
-//			//最初に表示しない画像を後から読み込む。
-//			lazyLoad:true,
-//			// レスポンシブレイアウトに対応する。
-//			responsive:true,
-//			//表示する画像の数を画面サイズに依存させる。
-//			slidesToShow:slickitems,
-//		    slidesToScroll: slickitems,
-//		    //幅を可変にする。
-//			variableWidth:true,
-//			// 緩急をつけたアニメーションでスクロールする。
-//			easing:'swing',
-//			// 画像を中心に配置する。
-//			centerMode: true
-//		});
-//	});
 }
 
 /*

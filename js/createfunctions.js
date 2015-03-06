@@ -191,7 +191,6 @@ function createSpecialDate(year, month, day){
 function sendReservedData(reservedData){
 	// サーバにデータを送信し、その結果の文字列をisSuccessに格納する。
 	var isSuccess = sendData(reservedData);
-	
 	// データの送信に成功したら
 	if(isSuccess){
 		// 帰ってきたメッセージをダイアログで表示する。
@@ -220,7 +219,6 @@ function sendData(reservedData){
 		// 予約データ保存用のPHPにデータを送信する。2015.02.19現在該当PHPが無いため自身のURLに送信しています。
 		url: location.href,
 //		url: init["sendReservedPhp"],
-//		 url: 'correctReserved.php',
 		// テキストデータを返してもらう。
 		dataType: 'text',
 		// 非同期通信にしない。
@@ -229,7 +227,7 @@ function sendData(reservedData){
 		data: {"reserved":reservedData},
 		// 通信成功時の処理。
 		success:function(text){
-			// returnsに帰ってきたテキストを代入する。2015.02.19現在ではテスト用のテキストを返す。
+			// returnsに帰ってきたテキストを代入する。2015.03.06現在ではテスト用のテキストを返す。
 			//returns = text;
 			returns = "ご予約希望を承りました。追ってメールでの返信をいたします。";
 		}

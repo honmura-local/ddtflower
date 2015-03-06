@@ -8,7 +8,7 @@ function createTag(){
 	this.json = null;
 	//ひな形のHTMLのDOMを格納する変数。
 	this.dom = '';
-	
+
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
 	 * 概要  :JSONファイルを取得して返す。

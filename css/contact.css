@@ -195,6 +195,15 @@
 .confirmSendMail li:before {
 	content: "※";
 }
+/* 
+ * セレクタ:.confirmSendMail .form
+ * 概要   :お問い合わせフォームの確認テーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.05
+ */
+.confirmSendMail .form {
+	width: 100%;	/* 幅を100%にする。 */
+}
 /* 入力確認ページはここまで */
 
 /* スマホ・タブレットレイアウト */

@@ -2,57 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
-<meta charset="UTF-8">
 <title>DDTFlowers</title>
-
-<!-- メインのCSSファイルを読み込む。 -->
-<link href="css/style.css" rel="stylesheet" type="text/css">
 <!-- コース案内のCSSファイルを読み込む。 -->
 <link href="css/courseguide.css" rel="stylesheet" type="text/css">
 <!-- アクセスページのCSSファイルを読み込む。 -->
 <link href="css/access.css" rel="stylesheet" type="text/css">
-
-<!-- jqueryUIのcssを読み込む -->
-<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
-<!-- slickのCSSを読み込む。 -->
-<link type="text/css" href="css/slick.css" rel="stylesheet">
-<!-- fancyboxのCSSを読み込む。 -->
-<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
-
-<!-- jQueryの本体を読み込む。 -->
-<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-<!-- jQueryUIを読み込む。 -->
-<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<!-- カルーセルのギャラリー生成プラグイン「Slick」の本体を読み込む。 -->
-<script type="text/javascript" src="js/slick.min.js" ></script>
-<!-- クリックした画像をピックアップ表示するためのjQueryプラグイン「fancybox」の本体を読み込む。 -->
-<script type="text/javascript" src="js/source/jquery.fancybox.js" ></script>
-<!-- 関数一覧にしたjsファイルを読み込む -->
-<script type="text/javascript" src="js/functions.js"></script>
-<!-- タグを作成するJSの関数群を読み込む -->
-<script type="text/javascript" src="js/createTag.js"></script>
-<!-- サイト全体のレイアウト調整用JSファイル。 -->
-<script src="js/flowersstylefix.js"></script>
-<!-- 要素作成の関数群を読み込む。 -->
-<script src="js/createfunctions.js"></script>
-
 <script>
-
-
-</script>
-</head>
-<body>
-<!-- container -->
-<div id="container">
-	<!-- トップページのコンテンツのタグ。 -->
-	<div class="main"></div>
-</div>
-
-<script>
-
-creator = new createTag();
-
 creator.getJsonFile('source/access.json');		// ファイルのデータをjsonを用いて持ってくる
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
@@ -63,16 +18,14 @@ creator.outputTag('accessInfo');				// アクセス情報のコンテンツを�
 creator.outputTag('accessMap');					// アクセスのマップを作る。
 creator.outputTag('footImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
-
 // トップメニューにマウスオーバーのフィルターを配置する。
-	functionFilter('.topMenu li');
+functionFilter('.topMenu li');
 // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 fixYCoordinate('header', '.main');
 // position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 fixXCoordinateOnScroll('header')
-// ログイン状態をチェックする。
-checkLoginState();
-
 </script>
+</head>
+<body>
 </body>
 </html>
