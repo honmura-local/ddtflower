@@ -49,7 +49,7 @@ footer,header,hgroup,menu,nav,section {
     display:block;
 }
 
-nav ul {
+nav ul, li {
     list-style:none;
 }
 
