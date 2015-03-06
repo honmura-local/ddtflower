@@ -479,6 +479,9 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクター名を .description .meritToExperienceに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.06
+ * 内容   :widthとheightの消去
  */
  .description .meritToExperience {
 	float: right;			/* 右に寄せる。 */
@@ -486,8 +489,8 @@
 	margin-right: 1px;		/* 右にmarginを挿入する。 */
 	margin-left: 5px;		/* 左にmarginを挿入する。文字との間に間隔を取る。 */
 	display: block;			/* ブロック要素にして中の画像のサイズを認識する。 */
-	width: 107px;			/* 画像サイズに合わせる */
-	height: 123px;			/* 画像サイズに合わせる */
+	/*width: 107px;*/			/* 画像サイズに合わせる */
+	/*height: 123px;*/			/* 画像サイズに合わせる */
 	z-index: 2;				/* 重なりを上にする。 */
 }
 
@@ -545,7 +548,7 @@
  * 内容   :セレクターを.contentsBorderInTextに変更
  */
 .contentsBorderInText {
-    padding-left: 2em;	/* 更にインデントをつける。 */
+    padding-left: 1em;	/* 更にインデントをつける。 */
 }
 
 /* 
@@ -704,10 +707,13 @@
  * 概要   :国家資格ページコース案内のthに関するスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.03
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.06
+ * 内容   :全削除
  */
-.courseGuide .item {
-    text-align: left;       /* 文字を左寄りにする */
-}
+/*.courseGuide .item {*/
+    /*text-align: left; */      /* 文字を左寄りにする */
+/*}*/
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
@@ -799,11 +805,14 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
      * 内容　 :幅調整とfloatの解除を行いました。中央寄せの設定をしました。下marginを入れました。
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.05
+     * 内容   :table-layoutの削除
      */
     .courseGuide {
         width: 90%;            /* 幅を60pxにする */
         height: auto;          /* 高さを自動にする */
-        table-layout: fixed;	/* セルの幅を均等に割る。 */
+        /*table-layout: fixed;*/	/* セルの幅を均等に割る。 */
         float: none;			/* floatを解除する。 */
         margin: 0 auto 15px;	/* 中央に寄せる。下にもmarginを追加する。 */
     }
@@ -920,11 +929,14 @@
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsBorderInTextに変更,マージンとラインハイトの削除
  　　　　　　　padding-leftを2.1emから2emに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.06
+ * 内容   :padding-leftを1emに変更
  */
 .contentsBorderInText{
     font-size: 11px;    	/* 文字のサイズを11pxにする */
     /*margin-bottom: 6px;*/		/* 各項目で十分に間を空ける。 */
-    padding-left: 2em;	/* 更にインデントをつける。 */
+    padding-left: 1em;	/* 更にインデントをつける。 */
 	/*line-height: 16px;*/		/* スマホレイアウト時には行間を詰める。 */
 }
 
