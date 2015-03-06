@@ -521,40 +521,21 @@
 }
 
 /* 
- * セレクタ:.contentsBorder
+ * セレクタ:.merit dt
  * 概要   :ご入会メリット、各項目見出し
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsBorderに変更
- * 変更者 :T.Masuda
- * 変更日 :2015.03.06
- * 内容   :セレクターを.contentsBorderに変更
  */
 .contentsBorder {
     font-size: 15px;    					/* 文字のサイズを15pxにする */
+    padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
     margin: 10px 0 3px 0;					/* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58);	/* 頭に緑の傍線をつける。 */
     background:	#EEE;						/* 背景色をつけて帯をつくる。 */
-    width: 100%;							/* 幅を一杯に広げる */
-    display: table;							/* テーブルとして扱う。 */
-    height: 30px;							/* 高さを指定する。 */
-    box-sizing: border-box;					/* 幅計算の勘定にborder、paddingを含む。 */
-}
-
-/* 
- * セレクタ:.contentsBorder span
- * 概要   :ご入会メリット、各項目見出し
- * 作成者 :T.Masuda
- * 作成日 :2015.02.26
- * 内容   :セレクターを.contentsBorderに変更
- */
-.contentsBorder span{
-    padding-left: 0.7em;					/* 適切にインデントをつける。 */
-    display: table-cell;					/* 高さ中心揃えのため、table-cellにする。 */
-    vertical-align: middle;					/* 高さを中心に揃える。 */
 }
 
 /* 
@@ -933,6 +914,7 @@
  */
 .contentsBorder{
     font-size: 12px;    			/* 文字のサイズを12pxにする */
+    padding-left: 0.5em;			/* 適切にインデントをつける。 */
 }
 
 /* 
@@ -953,7 +935,9 @@
  */
 .contentsBorderInText{
     font-size: 11px;    	/* 文字のサイズを11pxにする */
+    /*margin-bottom: 6px;*/		/* 各項目で十分に間を空ける。 */
     padding-left: 1em;	/* 更にインデントをつける。 */
+	/*line-height: 16px;*/		/* スマホレイアウト時には行間を詰める。 */
 }
 
 /* 
