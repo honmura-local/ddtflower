@@ -120,9 +120,27 @@ $(document).on('submit', 'form', function(event){
 		'eMail':$('*[name="eMail"]',this).val(),
 		'content':$('*[name="content"]',this).val()
 	},
-			  function(data){
-			    alert("Data Loaded: " + data);
-			  });
+	 function(data){
+		//mainのタグを空にする。
+		$('.main').empty();
+		$('.main').append('body');
+		//linkタグを収集する。
+		var links = $(data).filter('link');
+		//scriptタグを収集する。
+		var scripts = $(data).filter('script:parent');
+		//linkタグを展開する。
+		links.each(function(){
+			//headタグ内にlinkタグを順次追加していく。
+			$('head').append($(this));
+		});
+		//scriptタグを展開する。
+		scripts.each(function(){
+			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+			$('.main').append($(this));
+		});
+		//カレントのURLを更新する。
+		currentLocation = url;
+	});
 	
 //	//Ajax通信を行う。
 //	$.ajax({

@@ -88,6 +88,13 @@ function createSpecialReservedDialog(json, array){
 	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
 	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
 
+	//ダイアログを呼ぶ下準備としてjsonとテンプレートのdomを取得する。
+	creator.getJsonFile('source/experience.json');
+	creator.getDomFile('source/template.html');
+	
+	// ダイアログの本体となるdivタグを生成する。
+	creator.outputTag('specialReservedDialog');
+	
 	// ダイアログの本体となるdivタグを生成する。
 	creator.outputTag('specialReservedDialog');
 	
@@ -116,8 +123,6 @@ function createSpecialReservedDialog(json, array){
 		},
 		// ダイアログが閉じられる前のイベント
 		beforeClose:function(event, ui){
-			// ロストした分のダイアログのDOMを補填する。
-			creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 		},
 		// 位置を指定する。
 		position:{
