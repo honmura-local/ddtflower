@@ -12,22 +12,25 @@ $(document).ready(function(){
 });
 
 /*
- * 関数名:callPage(url)
- * 引数  :String url
+ * 関数名:callPage(url, state)
+ * 引数  :String url, Object state
  * 戻り値:なし
  * 概要  :新たにページを読み込む。
  * 作成日:2015.03.05
  * 作成者:T.M
+ * 修正日:2015.03.06
+ * 修正者:T.M
+ * 内容　:戻るボタンに対応しました。
  */
-function callPage(url){
+function callPage(url, state){
 	//Ajax通信を行う。
 	$.ajax({
 		//URLを指定する。
 		url: url,
 		//HTMLを返してもらう。
 		dataType:'html',
-		//非同期通信を行う。
-		async: true,
+		//同期通信を行う。
+		async: false,
 		//通信成功時の処理
 		success:function(html){
 			//mainのタグを空にする。
@@ -48,6 +51,11 @@ function callPage(url){
 			});
 			//カレントのURLを更新する。
 			currentLocation = url;
+			//第二引数が入力されていなければ
+			if(state === void(0)){
+				//画面遷移の履歴を追加する。
+				history.pushState({'url':currentLocation}, '', location.href);
+			}
 		}
 	})
 	//JSONデータを格納する変数を初期化する。
@@ -181,3 +189,16 @@ $(document).ajaxStop( function(){
 	changeSelectedButtonColor('.topMenu li');
 });
 /* 以上、ローディング画面呼び出しのイベント登録。 */
+
+//popStateに対応できているブラウザであれば
+if (window.history && window.history.pushState){
+	//popStateのイベントを定義する。
+    $(window).on("popstate",function(event){
+        //初回アクセスであれば何もしない。
+    	if (!event.originalEvent.state){
+    		return; // 処理を終える。
+    	}
+        var state = event.originalEvent.state; 	//stateオブジェクトを取得する。
+        callPage(state['url'], state);			//履歴からページを読み込む。
+  });
+}
