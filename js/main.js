@@ -113,26 +113,37 @@ $(document).ready(function(){
 $(document).on('submit', 'form', function(event){
 	//submitイベントをキャンセルする。
 	event.preventDefault();
-	//Ajax通信を行う。
-	$.ajax({
-		//URLを指定する。
-		url:$(this).attr('action'),
-		//POSTする。
-		method:'post',
-		//HTML形式のデータを返してもらう。
-		dataType:'html',
-		//送信するフォームデータを書き出す。
-		data:{
-				'name':$('*[name="name"]',this).val(),
-				'sex':$('*[name="sex"]:checked',this).val(),
-				'eMail':$('*[name="eMail"]',this).val(),
-				'content':$('*[name="content"]',this).val(),
-			},
-		//成功時の処理。
-		success:function(html){
-			alert('success');
-		}
-	});
+	
+	$.get($(this).attr('action'), {
+		'name':$('*[name="name"]',this).val(),
+		'sex':$('*[name="sex"]:checked',this).val(),
+		'eMail':$('*[name="eMail"]',this).val(),
+		'content':$('*[name="content"]',this).val()
+	},
+			  function(data){
+			    alert("Data Loaded: " + data);
+			  });
+	
+//	//Ajax通信を行う。
+//	$.ajax({
+//		//URLを指定する。
+//		url:$(this).attr('action'),
+//		//POSTする。
+//		method:'post',
+//		//HTML形式のデータを返してもらう。
+//		dataType:'html',
+//		//送信するフォームデータを書き出す。
+//		data:{
+//				'name':$('*[name="name"]',this).val(),
+//				'sex':$('*[name="sex"]:checked',this).val(),
+//				'eMail':$('*[name="eMail"]',this).val(),
+//				'content':$('*[name="content"]',this).val(),
+//			},
+//		//成功時の処理。
+//		success:function(html){
+//			alert('success');
+//		}
+//	});
 });
 
 //現在選択中のページ
@@ -200,6 +211,7 @@ if (window.history && window.history.pushState){
     		return; // 処理を終える。
     	}
         var state = event.originalEvent.state; 	//stateオブジェクトを取得する。
+        currentLocation = state['url'];
         callPage(state['url'], state);			//履歴からページを読み込む。
   });
 }
