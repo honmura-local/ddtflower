@@ -52,7 +52,7 @@ $(document).ready(function(){
 	creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 	creator.outputTag('header');					// トップメニューを作る
-	creator.outputTag('flowerBackground');			// トップページ背景を作る
+	creator.outputTag('flowerBackground', 'createImage');			// トップページ背景を作る
 	creator.outputTag('footer');					// フッターーを作る
 	
 	// トップメニューにマウスオーバーのフィルターを配置する。

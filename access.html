@@ -12,11 +12,11 @@ creator.getJsonFile('source/access.json');		// ファイルのデータをjson�
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 creator.outputTag('header');					// トップメニューを作る
-creator.outputTag('headImage');					// 天の画像を作る
+creator.outputTag('headImage', 'createImage');					// 天の画像を作る
 creator.outputTag('pageTitle');					// タイトル領域を作る
 creator.outputTag('accessInfo');				// アクセス情報のコンテンツを作る。
 creator.outputTag('accessMap');					// アクセスのマップを作る。
-creator.outputTag('footImage');					// 地の画像を作る
+creator.outputTag('footImage', 'createImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
 // トップメニューにマウスオーバーのフィルターを配置する。
 functionFilter('.topMenu li');

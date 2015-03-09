@@ -264,10 +264,14 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.26
  * 内容　 :marginを下だけにし、clearの値を変えました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemListに変更、widthの追加
  */
-.commonText {
+.itemList {
     clear: both;    		/* 回り込みをなくす */
     margin-bottom: 10px;	/* 下にmarginを指定する。 */
+    width: 100%;            /* 幅を100%にする */
 }
 
 /* 
@@ -279,10 +283,13 @@
  * 変更日 :2015.02.24
  * 内容　 :paddingを狭めました。字下げも増やしました。
  * 変更者 :T.Masuda
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemList .listContent に変更、フォントサイズの削除
  */
-.commonText td, .salesPoint td, .memberRule td{
+.itemList .listContent{
     padding: 3px 0;   			/* 上下に3pxの余白をとる */
-    font-size: 13px;			/* フォントのサイズを13pxにする */
+    /*font-size: 13px;*/			/* フォントのサイズを13pxにする */
     line-height: 16px;			/* 行の高さを多めに取る。 */
     padding-left: 2.9em;	   	/* 頭をキャプションの2文字目に合わせる。 */
     text-indent: -1em;	   		/* 先頭の文字を1文字分左にずらす。 */
@@ -324,10 +331,13 @@
  * 概要   :箇条書きのスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :全削除
  */
-.commonText, .salesPoint, .memberRule{
-	width: 100%;				/* 幅をmain一杯に広げる。 */
-}
+/*.commonText, .salesPoint, .memberRule{*/
+	/*width: 100%;*/				/* 幅をmain一杯に広げる。 */
+/*}*/
 
 /* 
  * セレクタ:.commonText .listHead, .salesPoint .listHead, .memberRule .listHead
@@ -337,8 +347,11 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.26
  * 内容　 :ご入会メリット追加
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemList .listTitleに変更
  */
-.commonText .listHead, .salesPoint .listHead, .memberRule .listHead{
+.itemList .listTitle {
     font-size: 18px;    			/* 文字のサイズを18pxにする */
     font-weight: bold;				/* 太字にする。 */
     text-align: left;  				/* 文字を左寄せにする */
@@ -347,12 +360,22 @@
     border-bottom: 1px solid #666;	/* 下線を引く */
 }
 
-.commonText td:before, .salesPoint td:before, .memberRule td:before {
+/* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemList .listContent:beforeに変更
+ */
+.itemList .listContent:before {
 	content: "●";
 	font-size: 12px;
 }
 
-.memberRule tr:last-child td:before {
+/* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemList .listContent:nth-last-of-type(1):beforeに変更
+ */
+.memberRule .listContent:nth-last-of-type(1):before {
 	content: "＊";
 	font-size: 14px;
 }
@@ -515,8 +538,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsBorder, .contentsBorderInTextに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.description dt, .description ddに変更
  */
-.contentsBorder, .contentsBorderInText{
+.description dt, .description dd{
     padding: 2px 0em;	/* 適切に間隔を取る */
 }
 
@@ -528,8 +554,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsBorderに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.description dt, .contentsBorderに変更
  */
-.contentsBorder {
+.description dt, .contentsBorder {
     font-size: 15px;    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
@@ -546,8 +575,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsBorderInTextに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.description dd, .contentsBorderInTextに変更
  */
-.contentsBorderInText {
+.description dd, .contentsBorderInText {
     padding-left: 1em;	/* 更にインデントをつける。 */
 }
 
@@ -715,6 +747,16 @@
     /*text-align: left; */      /* 文字を左寄りにする */
 /*}*/
 
+/* 
+ * セレクタ:.noneDisplay
+ * 概要   :隠すべき要素のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.08
+ */
+.noneDisplay {
+    display: none;      /* 要素を隠す */
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -846,8 +888,11 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
      * 内容　 :margin、幅を変更しました。
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.08
+    　* 内容   :セレクターをitemListに変更
      */
-    .commonText, .salesPoint, .memberRule {
+    .itemList {
         width: 90%;            /* 幅を90%にする */
         margin: 15px auto;     /* 上に余白を10px、中央に寄せる。 */
         line-height: 1.5;      /* 1行の高さを1.5行分にする */
@@ -862,8 +907,11 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
      * 内容　 :text-alignを変更しました。下marginを調整しました。
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.08
+     * 内容   :セレクターを.itemList .listTitleに変更
      */
-    .commonText .listHead, .salesPoint .listHead, .memberRule .listHead {
+    .itemList .listTitle {
         font-size: 13px;        /* 文字サイズを14pxにする */
         margin-bottom: 8px;		/* 下に8pxのmarginを挿入する。 */
     }
@@ -876,8 +924,11 @@
      * 変更者 :T.Masuda
      * 変更日 :2015.02.24
      * 内容   :インデントの調整をしました。
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.08
+     * 内容   :セレクターを.itemList .listContentに変更
      */
-    .commonText td, .salesPoint td, .memberRule td {
+    .itemList .listContent {
         text-align: left;       /* 左寄りにする */
         font-size: 11px;        /* 文字サイズを11pxにする */
         padding-left: 2.5em;	/* インデントを調整する。 */
@@ -911,8 +962,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターをcontentsBorderに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.description dtに変更
  */
-.contentsBorder{
+.description dt{
     font-size: 12px;    			/* 文字のサイズを12pxにする */
     padding-left: 0.5em;			/* 適切にインデントをつける。 */
 }
@@ -932,8 +986,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.06
  * 内容   :padding-leftを1emに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.description ddに変更
  */
-.contentsBorderInText{
+.description dd{
     font-size: 11px;    	/* 文字のサイズを11pxにする */
     /*margin-bottom: 6px;*/		/* 各項目で十分に間を空ける。 */
     padding-left: 1em;	/* 更にインデントをつける。 */

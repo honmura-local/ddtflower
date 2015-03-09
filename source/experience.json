@@ -12,7 +12,6 @@
         }
     },
     "reservedFlow": {
-        "class":"description",
         "contentsTitleBack":{
             "contentsTitle":{
                 "contentsImgLeft":{
@@ -26,28 +25,47 @@
                 }
             }
         },
-        "contentsBorder": {
-            "span":
-            [
-                "STEP1",
-                "STEP2",
-                "STEP3",
-                "STEP4",
-                "STEP5"
-            ]
+        "meritToExperience":{
+            "class":"noneDisplay"
         },
-        "contentsBorderInText":{
-            "span":
-            [
-                "あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。",
-                "カレンダーから体験レッスンを受けたい日にちをクリックします。",
-                "＊予約ダイアログが表示されます。",
-                "プリザ、生花の作品写真群から作りたい作品を選んでください。",
-                "希望する時限を選んでください。＊複数指定を推奨します。",
-                "予備情報として比較的受けやすい曜日と週を選んでください。",
-                "予約可能か否かにつきまして追ってメールにより返信致します。",
-                "また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
-            ]
+        "contentsBorder1": {
+            "text":"STEP1"
+        },
+        "contentsBorderInText1":[
+            "あらかじめ、体験レッスン用作品群から作りたい作品を選んでおきます。",
+            "カレンダーから体験レッスンを受けたい日にちをクリックします。",
+            "＊予約ダイアログが表示されます。"
+        ],
+        "contentsBorder2": {
+            "text":"STEP2"
+        },
+        "contentsBorderInText2":{
+            "text":"プリザ、生花の作品写真群から作りたい作品を選んでください。"
+        },
+        "contentsBorder3": {
+            "text":"STEP3"
+        },
+        "contentsBorderInText3":{
+            "text":"希望する時限を選んでください。＊複数指定を推奨します。"
+        },
+        "contentsBorder4": {
+            "text":"STEP4"
+        },
+        "contentsBorderInText4":{
+            "text":"予備情報として比較的受けやすい曜日と週を選んでください。"
+        },
+        "contentsBorder5": {
+            "text":"STEP5"
+        },
+        "contentsBorderInText5":[
+            "予約可能か否かにつきまして追ってメールにより返信致します。",
+            "また、予約不可の場合は予備情報を参考にこちらから予約日時を提案させて頂きます。"
+        ],
+        "contentsBorder6": {
+            "class":"noneDisplay"
+        },
+        "contentsBorderInText6":{
+            "class":"noneDisplay"
         }
     },
     "specialGuide": {
@@ -302,8 +320,7 @@
                 },
                 "allDayButton":{
                     "allDayCheckbox":{
-                        "type":"checkbox",
-                        "name":"dayOfWeek"
+                        "type":"checkbox"
                     },
                     "allCheckboxLabel":{
                         "text":"全て可"
@@ -388,8 +405,7 @@
                 },
                 "allWeekButton":{
                     "allWeekCheckbox":{
-                        "type":"checkbox",
-                        "name":"week"
+                        "type":"checkbox"
                     },
                     "allCheckboxLabel":{
                         "text":"全て可"

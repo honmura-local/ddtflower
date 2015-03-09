@@ -13,10 +13,10 @@ creator.getJsonFile('source/contact.json');		// ファイルのデータをjson�
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 creator.outputTag('header');					// トップメニューを作る
-creator.outputTag('headImage');					// 天の画像を作る
+creator.outputTag('headImage', 'createImage');					// 天の画像を作る
 creator.outputTag('pageTitle');					// タイトル領域を作る
 creator.outputTag('contactForm');				// 問い合わせフォームを作る
-creator.outputTag('footImage');					// 地の画像を作る
+creator.outputTag('footImage', 'createImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
 
 // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
