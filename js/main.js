@@ -42,7 +42,7 @@ function callPage(url, state){
 			//linkタグを展開する。
 			links.each(function(){
 				//headタグ内にlinkタグを順次追加していく。
-				$('head').append($(this));
+				$('.main').append($(this));
 			});
 			//scriptタグを展開する。
 			scripts.each(function(){
@@ -174,7 +174,7 @@ $(document).on('submit', 'form', function(event){
 		//linkタグを展開する。
 		links.each(function(){
 			//headタグ内にlinkタグを順次追加していく。
-			$('head').append($(this));
+			$('.main').append($(this));
 		});
 		//scriptタグを展開する。
 		scripts.each(function(){
