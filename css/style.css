@@ -39,7 +39,7 @@ body {
 	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
 	color: #555;		/* ベースのフォンとカラー */
     background: white;  /* 背景色を白にする。 */
-    font-size: 13px;	/* ベースのフォントサイズ */
+    font-size: 10.5pt;	/* ベースのフォントサイズ */
 }
 
 article,aside,details,figcaption,figure,

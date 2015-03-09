@@ -74,7 +74,7 @@
     width:      700px;      /* 幅を660pxに設定する。 */
     /*padding:  1em;*/      /* 要素の幅を1em広げる */
     /*height:     auto;*/       /* 高さを自動調整する。 */
-    font-size:  15px;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
+    font-size:  12pt;       /* フォントのサイズを指定する。タイトルより小さめのフォンとサイズにする。 */
     text-indent: 1em;       /* インデントを1文字分入れる */
     /*font-weight: normal;*/    /* 文字の太さを通常にする */
     /*line-height: 1.4;*/       /* 行間を1.4行分とる */
@@ -495,7 +495,7 @@
 .contentsTitleText {
 	color: #FFF;				/* 白抜き文字にする。 */
 	/*vertical-align: bottom;*/	/* 高さを中心に合わせる。 */
-	font-size: 18px;			/* フォントサイズを18pxに設定する。 */
+	font-size: 12pt;			/* フォントサイズを18pxに設定する。 */
 	/*vertical-align: middle;*/	/* 高さを中心揃えにする */
 	position: relative;			/* 相対位置指定をする */
 	bottom: 10px;				/* 位置を上にずらす。 */
@@ -569,7 +569,7 @@
  * 内容   :セレクターを.description dt, .description ddに変更
  */
 .description dt, .description dd{
-    padding: 2px 0em;	/* 適切に間隔を取る */
+    padding: 4px 0em;	/* 適切に間隔を取る */
 }
 
 /* 
