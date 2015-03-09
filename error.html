@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-style-type" content="text/css" />
-<link rel="stylesheet" href="postmail.css" type="text/css" media="all" />
-<title>お問い合わせフォーム : エラー</title>
+<title>DDTFlowers</title>
+<!-- お問い合わせページのCSSファイルを読み込む。 -->
+<link href="css/contact.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<blockquote>
+<div id="container">
+<div class="main">
+
+<blockquote class="confirmSendMail">
 <strong class="ttl">お問い合わせフォーム &gt; エラー</strong>
 <ul>
 <li class="msg">前画面に戻って正しく入力してください。</li>
@@ -24,7 +25,34 @@
 
 </table>
 <br />
-<input type="button" value="&lt; 前画面に戻る" onclick="history.back()" />
+<form action="postmail.cgi" method="post">
+<!-- hidden -->
+<input type="button" value="&lt; 前に戻る" onclick="history.back()" class="button" />
+</form>
 </blockquote>
+</div>
+</div>
+<script>
+
+creator = new createTag();
+
+creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+creator.outputTag('header');					// トップメニューを作る
+creator.outputTag('headImage');					// 天の画像を作る
+creator.outputTag('footImage');					// 地の画像を作る
+creator.outputTag('footer');					// フッターを作る
+$('.headImage').after($('.confirmSendMail'));	//headImageの後に入力確認テーブルを移動する。
+// トップメニューにマウスオーバーのフィルターを配置する。
+	functionFilter('.topMenu li');
+// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+fixYCoordinate('header', '.main');
+// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+fixXCoordinateOnScroll('header')
+// ログイン状態をチェックする。
+checkLoginState();
+//ボタンをjQueryのボタンにする。
+$('.button').button();
+</script>
 </body>
 </html>

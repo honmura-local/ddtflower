@@ -3,12 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-style-type" content="text/css" />
-<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes" />
 <title>DDTFlowers</title>
 
-<!-- メインのCSSファイルを読み込む。 -->
-<link href="css/style.css" rel="stylesheet" type="text/css" />
 <!-- お問い合わせページのCSSファイルを読み込む。 -->
 <link href="css/contact.css" rel="stylesheet" type="text/css" />
 
@@ -48,13 +44,11 @@
 </div>
 <script>
 
-creator = new createTag();
-
 creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 creator.outputTag('header');					// トップメニューを作る
-creator.outputTag('headImage');					// 天の画像を作る
-creator.outputTag('footImage');					// 地の画像を作る
+creator.outputTag('headImage', 'createImage');					// 天の画像を作る
+creator.outputTag('footImage', 'createImage');					// 地の画像を作る
 creator.outputTag('footer');					// フッターを作る
 $('.headImage').after($('.confirmSendMail'));	//headImageの後に入力確認テーブルを移動する。
 // トップメニューにマウスオーバーのフィルターを配置する。
@@ -65,7 +59,8 @@ fixYCoordinate('header', '.main');
 fixXCoordinateOnScroll('header')
 // ログイン状態をチェックする。
 checkLoginState();
-
+//ボタンをjQueryのボタンにする。
+$('.button').button();
 </script>
 
 </body>
