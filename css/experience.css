@@ -80,11 +80,14 @@
  * 概要   :カレンダーについてそれぞれの項目のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .calendar {
     /* margin: 80px 0 0; */	/* 上のmarginを設定する。 */
     width: 48%;         /* 幅を47%にする */
-    font-size: 14px;    /* 文字サイズを20pxにする */
+    /*font-size: 14px;*/    /* 文字サイズを20pxにする */
     float: right;       /* 右側に回り込む */
 }
 
@@ -220,10 +223,13 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.09
  * 内容   :フォントサイズ以外、削除
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .specialGuide th, .specialGuide td {
     /*padding: 10px;*/      /* 要素の幅を10px広げる */
-    font-size: 13px;    /* 文字サイズを13pxにするする */
+    /*font-size: 13px;*/    /* 文字サイズを13pxにするする */
     /*text-align: left*/;   /* 文字を左寄りにする */
     /*border: 1px solid #D0D0AC;*/	/* 黄緑の罫線で区切る。 */
 }
@@ -362,10 +368,13 @@ box-sizing: border-box;*/
      * 追加者 :T.Yamamoto
      * 追加日 :2015.03.05
      * 内容   :widthをの削除
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
      .specialGuide th, .specialGuide td{
         padding: 7px;      /* 要素の幅を7px広げる */
-        font-size: 11px;   /* フォントのサイズを11pxにする */
+        /*font-size: 11px;*/   /* フォントのサイズを11pxにする */
         /*width: 50%;*/        /* 幅を50%にする */
         text-align: left;  /* 左寄りにする */
      }
@@ -378,10 +387,13 @@ box-sizing: border-box;*/
      * 変更者 :T.Masuda
      * 変更日 :2015.02.23
      * 内容  :無駄なスタイルを削除しました。
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
      .calendar {
      	width: 100%;			/* 横幅を一杯広げる。 */
-        font-size: 12.5px;  	/* 文字サイズを12.5pxにする */
+        /*font-size: 12.5px;*/  	/* 文字サイズを12.5pxにする */
         margin: 0 auto 10px;	/* 上のmarginをなくす。下には追加する。 */
      }
 
