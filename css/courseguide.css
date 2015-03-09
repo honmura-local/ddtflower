@@ -54,6 +54,7 @@
     text-align:     center;         /* 文字を中央に寄せる。 */
     margin:         0 auto;     /* 中央寄せにし、下marginを挿入する。 */
     padding-top:    15px;           /* 画像の中心に合わせる。 */
+    font-weight: bold;
 }
 
 /* 
