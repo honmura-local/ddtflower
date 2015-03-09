@@ -50,6 +50,7 @@ function disableInputs(dialog){
 function getCheckBoxValue(className){
 	// 返却する値を格納する配列を用意する。
 	var checkBoxies = [];
+	var tmp = $('input[name="'+ className +'"]:checked');
 	// チェックが入ったチェックボックスを走査する。
 	$('input[name="'+ className +'"]:checked').each(function(i){
 		// 該当するチェックボックスから値を取得してcheckBoxiesに格納する。
@@ -94,10 +95,7 @@ function createSpecialReservedDialog(json, array){
 	
 	// ダイアログの本体となるdivタグを生成する。
 	creator.outputTag('specialReservedDialog');
-	
-	// ダイアログの本体となるdivタグを生成する。
-	creator.outputTag('specialReservedDialog');
-	
+
 	// ダイアログに日付欄を追加する。
 	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
 
