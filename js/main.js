@@ -278,18 +278,30 @@ if (window.history && window.history.pushState){
  * 返却値  :Object
  * 作成者:T.M
  * 作成日:2015.02.11
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :氏名、電話番号、メールアドレス、人数を追加
  */
 function createReservedData(reservedData){
 	
 	// reservedDataに選択作品のデータを格納する。
 	reservedData['construct'] = $('input[name="construct"]:checked').val();
 	// reservedDataに選択した時限のデータを格納する。
-	reservedData['schedule'] = $('input[name="schedule"]:checked').val();
+	reservedData['schedule'] = getCheckBoxValue('schedule');
 	// 選択した予備日程の曜日を配列で取得してreservedDataに格納する。
 	reservedData['weekDay'] = getCheckBoxValue('dayOfWeek');
 	// 選択した予備日程の週を配列で取得してreservedDataに格納する。
 	reservedData['weekNumber'] = getCheckBoxValue('week');
+	// 入力された氏名を取得する
+	reservedData['personName'] = $('input[name="personName"]').val();
+	// 入力された電話番号を取得する
+	reservedData['personPhoneNumber'] = $('input[name="personPhoneNumber"]').val();
+	// 入力されたメールアドレスを取得する
+	reservedData['personEmail'] = $('input[name="personEmail"]').val();
+	// 入力された人数を取得する
+	reservedData['personCount'] = $('input[name="personCount"]').val();
 	
+
 	// reservedDataを返す。
 	return reservedData;
 }
@@ -408,7 +420,12 @@ function createSpecialReservedDialog(json, array){
 			        	 click:function(event, ui){
 			        		 // 必須入力項目が皆入力済みであれば
 			        		 if($('input[name="construct"]:checked' ,this).length > 0 
-			        				 && $('input[name="schedule"]:checked' ,this).length > 0){
+			        				 && $('input[name="schedule"]:checked' ,this).length > 0
+			        		 		 && ($('input[name="personName"]').val().length > 0)
+									 && ($('input[name="personPhoneNumber"]').val().length > 0)
+									 && ($('input[name="personEmail"]').val().length > 0)
+									 && ($('input[name="personCount"]').val().length > 0)
+			        		 ) {
 				        		 // 予約希望データを作成する。
 			        			 reservedData = createReservedData(reservedData);
 				        		 
@@ -417,7 +434,7 @@ function createSpecialReservedDialog(json, array){
 				        		 // このダイアログの入力要素を一時的に無効化する。
 				        		 disableInputs($(this));
 			        		 } else {
-			        			 alert('作品、時限、またはその両方が未入力となっています。');
+			        			 alert('未入力の項目があります。');
 			        		 }
 			        	 }
 			         },
@@ -635,6 +652,14 @@ function createSpecialConfirmSummary(reservedData){
 	$('.subWeekOfDayValue').text(reservedData['weekDay']);
 	// 予備の希望週を書き出す。
 	$('.subWeekValue').text(reservedData['weekNumber']);
+	// 個人情報の氏名を書き出す。
+	$('.subPersonNameValue').text(reservedData['personName']);
+	// 個人情報の電話番号を書き出す。
+	$('.subPersonPhoneNumberValue').text(reservedData['personPhoneNumber']);
+	// 個人情報のメールアドレスを書き出す。
+	$('.subPersonEmailValue').text(reservedData['personEmail']);
+	// 個人情報の人数を書き出す。
+	$('.subPersonCountValue').text(reservedData['personCount']);
 }
 
 /* 

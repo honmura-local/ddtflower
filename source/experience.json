@@ -466,7 +466,7 @@
                     "html":"氏名<br>"
                 },
                 "personTextbox":{
-                    "name":"name",
+                    "name":"personName",
                     "size":"27"
                 }
             }
@@ -477,7 +477,7 @@
                     "html":"電話番号<br>"
                 },
                 "personTextbox":{
-                    "name":"number",
+                    "name":"personPhoneNumber",
                     "size":"27"
                 }
             }
@@ -488,7 +488,7 @@
                     "html":"メールアドレス<br>"
                 },
                 "personTextbox":{
-                    "name":"email",
+                    "name":"personEmail",
                     "size":"27"
                 }
             }
@@ -499,7 +499,7 @@
                     "html":"人数<br>"
                 },
                 "personTextbox":{
-                    "name":"name",
+                    "name":"personCount",
                     "size":"1"
                 }
             }
@@ -539,6 +539,30 @@
                     "text": "予備希望週"
                 },
                 "subWeekValue": {}
+            },
+            "subPersonName":{
+                "subPersonNameLabel":{
+                    "text":"氏名"
+                },
+                "subPersonNameValue": {}
+            },
+            "subPersonPhoneNumber":{
+                "subPersonPhoneNumberLabel":{
+                    "text":"電話番号"
+                },
+                "subPersonPhoneNumberValue": {}
+            },
+            "subPersonEmail":{
+                "subPersonEmailLabel":{
+                    "text":"メールアドレス"
+                },
+                "subPersonEmailValue": {}
+            },
+            "subPersonCount":{
+                "subPersonCountLabel":{
+                    "text":"人数"
+                },
+                "subPersonCountValue": {}
             }
         }
     },
