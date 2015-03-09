@@ -118,19 +118,11 @@ $(document).ready(function(){
  * 作成者:T.Masuda
  */
 function createFormData(form){
-	
-}
-
-/* フォームがsubmitされたら */
-$(document).on('submit', 'form', function(event){
-	//submitイベントをキャンセルする。
-	event.preventDefault();
-	
-	//送信するデータを格納する連想配列を宣言する。
-	var formData = {};
+	//返却するデータを格納する変数を宣言する。
+	var formDataReturn = {};
 	
 	//フォーム内の入力要素を走査する。
-	$('input, textarea, input:radio:checked, input:checkbox:checked', this).each(function(){
+	$('input, textarea, input:radio:checked, input:checkbox:checked', form).each(function(){
 		//値を取得する。
 		var val = $(this).val();
 		//name属性の値を取得する。
@@ -147,7 +139,7 @@ $(document).on('submit', 'form', function(event){
 				val[i] = $(this).val();
 			});
 			//formDataを連想配列として扱い、keyとvalueを追加していく。
-			formData[name] = val;
+			formDataReturn[name] = val;
 		//チェックが入った2番目以降のチェックボックスなら
 		} else if($(this).attr('type') == 'checkbox' 
 			&& $(this).index('[name="' + name + '"]') != 0){
@@ -155,9 +147,23 @@ $(document).on('submit', 'form', function(event){
 		//それ以外であれば
 		} else {
 			//formDataを連想配列として扱い、keyとvalueを追加していく。
-			formData[name] = val;
+			formDataReturn[name] = val;
 		}
 	});
+	
+	//フォームデータを返す。
+	return formDataReturn;
+}
+
+/* フォームがsubmitされたら */
+$(document).on('submit', 'form', function(event){
+	//submitイベントをキャンセルする。
+	event.preventDefault();
+	//フォームのaction属性から送信URLを取得する。
+	var url = $(this).attr('action');
+	
+	//送信するデータを格納する連想配列を作成する。
+	var formData = createFormData($(this));
 	
 	//getメソッドでフォームの送信を行う。
 	$.get($(this).attr('action'), formData,
