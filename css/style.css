@@ -39,7 +39,7 @@ body {
 	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
 	color: #555;		/* ベースのフォンとカラー */
     background: white;  /* 背景色を白にする。 */
-    font-size: 10.5pt;	/* ベースのフォントサイズ */
+    font-size: 12pt;	/* ベースのフォントサイズ */
 }
 
 article,aside,details,figcaption,figure,
@@ -425,12 +425,15 @@ h1,h2,h3,h4,h5,th{
  * 概要   :トップメニューのボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :font-sizeを消去
  */
 .topMenu li{
     width:          12.5%;          /* 1/8の幅に設定する。 */
     height:         100%;           /* 外枠に高さを合わせる。 */
     display:        inline-block;   /* インラインブロック表示にする。 */
-    font-size:      14px;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
+    font-size:      12pt;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
     box-sizing:     border-box;     /* 自身の幅をpadding、border込みで計算する。 */
     text-align:     center;         /* 文字を中心に寄せる。 */
     vertical-align: middle;         /* 文字の高さを中心に揃える。 */
@@ -464,10 +467,13 @@ h1,h2,h3,h4,h5,th{
  * 概要   :トップメニューのボタンのリンクの文字。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :font-sizeの消去
  */
 .topMenu p{
     margin-top	: 18px;   		/* 中心に寄せるのに必要なだけの上marginを挿入する。 */
-    font-size	: 16px;   		/* 妥当なフォントサイズを指定する。 */
+    /*font-size	: 16px;*/   		/* 妥当なフォントサイズを指定する。 */
     display		: inline-block; /* インラインブロック表示を行う。 */
 }
 /* 
@@ -646,11 +652,14 @@ footer{
 	     * 作成日 :2015.02.16
 	     * 変更者 :T.Masuda
 	     * 変更日 :2015.02.21
+	     * 追加者 :T.Yamamoto
+ 		* 追加日 :2015.03.09
+ 		* 内容   :フォントサイズ消去
 	     */
 	    #container {
 	        width: 100%;         /* コンテンツの幅を100%にする */
 	        margin: 0 auto;     /* 中央揃えにする */
-	        font-size: 12px;    /* フォントサイズを12pxにする */
+	        /*font-size: 12px;*/    /* フォントサイズを12pxにする */
 	    }
 	
 		/* 
@@ -812,10 +821,13 @@ footer{
 	 * 修正者 :T.Masuda
 	 * 修正日 :2015.03.04
 	 * 内容 　:paddingを変更しました。
+	 * 追加者 :T.Yamamoto
+ 	 * 追加日 :2015.03.09
+ 	 * 内容   :font-size削除
 	 */
 	.topMenu li{
 	    width:          auto;          /* 幅を文字のサイズに合わせる。 */
-	    font-size:      13px;           /*  PCレイアウトより小さめのフォントにする。 */
+	    /*font-size:      13px;*/           /*  PCレイアウトより小さめのフォントにする。 */
 	    padding: 5px 0.85em;			/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
 	}
 	
@@ -824,9 +836,12 @@ footer{
 	 * 概要   :トップメニューのボタンのリンクの文字。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.24
+	 * 追加者 :T.Yamamoto
+ 	* 追加日 :2015.03.09
+ 	* 内容   :font-sizeの削除
 	 */
 	.topMenu p{
-	    font-size:  13px;   /* 妥当なフォントサイズを指定する。 */
+	   /* font-size:  13px;*/   /* 妥当なフォントサイズを指定する。 */
 	    margin-top:  0;   	/* 上のmarginをなくす */
 	}
 	

@@ -115,14 +115,18 @@
  * 概要   :案内テーブル概要のスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .guideTable .summary {
  	background:	rgb(206,220,58);	/* 黄緑の背景を設定する。 */
 	color: #FFF;					/* フォントの色を白にする。 */
-	font-size: 16px;		/* フォントのサイズを普通にする。 */
+	/*font-size: 16px;*/		/* フォントのサイズを普通にする。 */
 	margin-bottom: 0px;		/* 下marginをなくす。 */
 	padding: 10px 5px;		/* 全方向にpaddingを指定する。 */
 	text-align: center;		/* 文字を中心に揃える。 */
+    font-weight: bold;
 }
 
 /* 
@@ -476,11 +480,15 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :margin-leftを追加
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-weight:bold;追加
  */
 .contentsTitle{
     margin-left: 5px;       /* 左から5pxの余白をとる */
     position: relative;     /* 相対位置にする */
     bottom: 47px;           /* 下から45px上にあげる */
+    font-weight: bold;
 }
 
 /* 
@@ -491,11 +499,14 @@
  * 追加者 :T.Yamamoto
  * 内容   :セレクターをcontentsTitleTextに変更し、vartical-alignを削除し、
  　　　　　　　　top:-58px;をbottom:10px;にした
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .contentsTitleText {
 	color: #FFF;				/* 白抜き文字にする。 */
 	/*vertical-align: bottom;*/	/* 高さを中心に合わせる。 */
-	font-size: 12pt;			/* フォントサイズを18pxに設定する。 */
+	/*font-size: 12pt;*/			/* フォントサイズを18pxに設定する。 */
 	/*vertical-align: middle;*/	/* 高さを中心揃えにする */
 	position: relative;			/* 相対位置指定をする */
 	bottom: 10px;				/* 位置を上にずらす。 */
@@ -583,9 +594,12 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.08
  * 内容   :セレクターを.description dt, .contentsBorderに変更
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .description dt, .contentsBorder {
-    font-size: 15px;    					/* 文字のサイズを15pxにする */
+/*    font-size: 15px;*/    					/* 文字のサイズを15pxにする */
     padding-left: 0.7em;					/* 適切にインデントをつける。 */
     font-weight: bold;						/* 太字にして勢いをつける。 */
     margin: 10px 0 3px 0;					/* 下にmarginを入れる */
@@ -651,10 +665,13 @@
  * 概要   :フォトギャラリーのタイトルのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.25
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .photoGallery .galleryTitleText{
 	vertical-align: bottom;		/* 高さを中心に合わせる。 */
-	font-size: 22px;			/* フォントサイズを22pxに設定する。 */
+	/*font-size: 22px;*/			/* フォントサイズを22pxに設定する。 */
 	color: #FFF;				/* 白抜き文字にする。 */
 }
 	
@@ -826,10 +843,13 @@
      * 変更者  :T.Masuda
      * 変更日  :2015.02.24
      * 内容　  :paddingを変更。
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
     .pageTitle .title {
         font-weight: bold;  /* 文字を太くする */
-        font-size: 17px;    /* フォントサイズ17pxにする */
+        /*font-size: 17px;*/    /* フォントサイズ17pxにする */
         padding: 1% 0 5px;  /* 上下にpaddingを挿入する。 */
 		width: 65%;			/* 幅を可変にする。 */
 		float: none;		/* floatを解除する。 */
@@ -854,10 +874,13 @@
      * 変更者  :T.Masuda
      * 変更日  :2015.02.26
      * 内容　  :幅を変更しました。また、marginの記述をなくしました。clear:bothを記述しました。
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
     .pageTitle .summary{
 		width: 90%;			/* 幅を可変にする。 */
-        font-size: 11px;    /* フォントのサイズを12pxにする */
+        /*font-size: 11px;*/    /* フォントのサイズを12pxにする */
    		display: block;  	/* ブロック要素にする */
    		clear: both;		/* 回り込みをなくす。 */
     }
@@ -936,9 +959,12 @@
      * 追加者 :T.Yamamoto
      * 追加日 :2015.03.08
      * 内容   :セレクターを.itemList .listTitleに変更
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
     .itemList .listTitle {
-        font-size: 13px;        /* 文字サイズを14pxにする */
+        /*font-size: 13px;*/        /* 文字サイズを14pxにする */
         margin-bottom: 8px;		/* 下に8pxのmarginを挿入する。 */
     }
 
@@ -953,10 +979,13 @@
      * 追加者 :T.Yamamoto
      * 追加日 :2015.03.08
      * 内容   :セレクターを.itemList .listContentに変更
+     * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
      */
     .itemList .listContent {
         text-align: left;       /* 左寄りにする */
-        font-size: 11px;        /* 文字サイズを11pxにする */
+        /*font-size: 11px;*/        /* 文字サイズを11pxにする */
         padding-left: 2.5em;	/* インデントを調整する。 */
     }
 
@@ -991,9 +1020,12 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.08
  * 内容   :セレクターを.description dtに変更
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .description dt{
-    font-size: 12px;    			/* 文字のサイズを12pxにする */
+    /*font-size: 12px;*/    			/* 文字のサイズを12pxにする */
     padding-left: 0.5em;			/* 適切にインデントをつける。 */
 }
 
@@ -1015,9 +1047,12 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.08
  * 内容   :セレクターを.description ddに変更
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .description dd{
-    font-size: 11px;    	/* 文字のサイズを11pxにする */
+    /*font-size: 11px;*/    	/* 文字のサイズを11pxにする */
     /*margin-bottom: 6px;*/		/* 各項目で十分に間を空ける。 */
     padding-left: 1em;	/* 更にインデントをつける。 */
 	/*line-height: 16px;*/		/* スマホレイアウト時には行間を詰める。 */
@@ -1236,9 +1271,12 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.05
  * 内容   :セレクターを.contentsTittleTextに変更し、
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .contentsTitleText {
-	font-size: 15px;	/* フォントサイズを中くらいに指定する。 */
+	/*font-size: 15px;*/	/* フォントサイズを中くらいに指定する。 */
 	top: -18px;			/* 上にずらす。 */
 }
 
@@ -1247,9 +1285,12 @@
  * 概要   :案内テーブルのタイトル部分。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .guideTable .summary {
-	font-size: 16px;	/* やや大きめのフォントを指定する。 */
+	/*font-size: 16px;*/	/* やや大きめのフォントを指定する。 */
 }
 
 /* 
