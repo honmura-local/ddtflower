@@ -63,6 +63,7 @@ function callPage(url, state){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 }
+
 /*
  * 関数名:callLoadingScreen()
  * 引数  :なし
@@ -108,22 +109,64 @@ $(document).ready(function(){
 	);
 });
 
+/*
+ * 関数名:createFormData(form)
+ * 引数  :jQuery form
+ * 戻り値:Object
+ * 概要  :フォームの投稿データを作る。
+ * 作成日:2015.03.09
+ * 作成者:T.Masuda
+ */
+function createFormData(form){
+	
+}
 
 /* フォームがsubmitされたら */
 $(document).on('submit', 'form', function(event){
 	//submitイベントをキャンセルする。
 	event.preventDefault();
 	
-	$.get($(this).attr('action'), {
-		'name':$('*[name="name"]',this).val(),
-		'sex':$('*[name="sex"]:checked',this).val(),
-		'eMail':$('*[name="eMail"]',this).val(),
-		'content':$('*[name="content"]',this).val()
-	},
+	//送信するデータを格納する連想配列を宣言する。
+	var formData = {};
+	
+	//フォーム内の入力要素を走査する。
+	$('input, textarea, input:radio:checked, input:checkbox:checked', this).each(function(){
+		//値を取得する。
+		var val = $(this).val();
+		//name属性の値を取得する。
+		var name = $(this).attr('name');
+		
+		//name属性で括られた最初のチェックボックスなら
+		if($(this).attr('type') == 'checkbox' 
+			&& $(this).index('[name="' + name + '"]') == 0){
+			//valを配列として扱う。
+			val = [];
+			//name属性で括られたチェックボックスを走査していく。
+			$('input:checkbox[name="' + name + '"]').each(function(i){
+				//配列にチェックボックスの値を格納していく。
+				val[i] = $(this).val();
+			});
+			//formDataを連想配列として扱い、keyとvalueを追加していく。
+			formData[name] = val;
+		//チェックが入った2番目以降のチェックボックスなら
+		} else if($(this).attr('type') == 'checkbox' 
+			&& $(this).index('[name="' + name + '"]') != 0){
+			//何もしない。
+		//それ以外であれば
+		} else {
+			//formDataを連想配列として扱い、keyとvalueを追加していく。
+			formData[name] = val;
+		}
+	});
+	
+	//getメソッドでフォームの送信を行う。
+	$.get($(this).attr('action'), formData,
+	// 成功時の処理を記述する。
 	 function(data){
 		//mainのタグを空にする。
 		$('.main').empty();
-		$('.main').append('body');
+		//bodyタグ直下の要素をを取得し、mainのタグに格納する。
+		$('.main').append($('body > *', data));
 		//linkタグを収集する。
 		var links = $(data).filter('link');
 		//scriptタグを収集する。
@@ -141,27 +184,6 @@ $(document).on('submit', 'form', function(event){
 		//カレントのURLを更新する。
 		currentLocation = url;
 	});
-	
-//	//Ajax通信を行う。
-//	$.ajax({
-//		//URLを指定する。
-//		url:$(this).attr('action'),
-//		//POSTする。
-//		method:'post',
-//		//HTML形式のデータを返してもらう。
-//		dataType:'html',
-//		//送信するフォームデータを書き出す。
-//		data:{
-//				'name':$('*[name="name"]',this).val(),
-//				'sex':$('*[name="sex"]:checked',this).val(),
-//				'eMail':$('*[name="eMail"]',this).val(),
-//				'content':$('*[name="content"]',this).val(),
-//			},
-//		//成功時の処理。
-//		success:function(html){
-//			alert('success');
-//		}
-//	});
 });
 
 //現在選択中のページ
