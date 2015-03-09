@@ -161,9 +161,12 @@
  * 概要   :.specialConfirmSummaryの行の1番目(見出し)のセル。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.06
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :幅を90pxから110pxに変更
  */
 .specialConfirmSummary tr td:nth-child(1){
-    width: 90px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
+    width: 110px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
 }
 
 /* 
@@ -349,7 +352,7 @@
  */
 .canDayAll, .weekOfDay, .canWeekAll, .monthOfWeek, .textboxLabel {
     font-size: 12px;        /* フォントサイズ12pxにする */
-    padding-left: 1em;      /* 左から1文字分余白を空ける */
+    padding-left: .5em;      /* 左から1文字分余白を空ける */
     padding-top: 2px;       /* 2px上向きに余白をとる */
 }
 
