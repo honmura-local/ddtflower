@@ -170,6 +170,20 @@
 }
 
 /* 
+ * セレクタ:.specialConfirmSummary tr td:nth-child(1)
+ * 概要   :.specialConfirmSummaryの行の1番目(見出し)のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :幅を90pxから110pxに変更
+ */
+.specialConfirmSummary tr td:nth-child(2){
+    width: 160px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
+    word-break:break-all;
+}
+
+/* 
  * セレクタ:.specialReservedConfirmDialog button
  * 概要   :予約希望の送信のOKボタン、キャンセルボタン。
  * 作成者 :T.Masuda
