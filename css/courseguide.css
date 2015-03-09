@@ -382,7 +382,7 @@
     padding: 3px 0;             /* 上下に3pxの余白をとる */
     /*font-size: 13px;*/            /* フォントのサイズを13pxにする */
     line-height: 16px;          /* 行の高さを多めに取る。 */
-    padding-left: 2.9em;        /* 頭をキャプションの2文字目に合わせる。 */
+    padding-left: 2.5em;        /* 頭をキャプションの2文字目に合わせる。 */
     text-indent: -1em;          /* 先頭の文字を1文字分左にずらす。 */
 }
 
