@@ -44,13 +44,13 @@
 </div>
 <script>
 
-creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-creator.outputTag('header');					// トップメニューを作る
-creator.outputTag('headImage', 'createImage');					// 天の画像を作る
-creator.outputTag('footImage', 'createImage');					// 地の画像を作る
-creator.outputTag('footer');					// フッターを作る
-$('.headImage').after($('.confirmSendMail'));	//headImageの後に入力確認テーブルを移動する。
+creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
+creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
+creator.outputTag('header');							// トップメニューを作る
+creator.outputTag('headImage', 'createImage');			// 天の画像を作る
+creator.outputTag('footImage', 'createImage');			// 地の画像を作る
+creator.outputTag('footer');							// フッターを作る
+$('.createImage').eq(0).after($('.confirmSendMail'));	//headImageの後に入力確認テーブルを移動する。
 // トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
 // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
