@@ -433,7 +433,7 @@ h1,h2,h3,h4,h5,th{
     width:          12.5%;          /* 1/8の幅に設定する。 */
     height:         100%;           /* 外枠に高さを合わせる。 */
     display:        inline-block;   /* インラインブロック表示にする。 */
-    font-size:      11pt;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
+    font-size:      10pt;           /*  インラインブロックで並べるため、フォントサイズを指定する。 */
     box-sizing:     border-box;     /* 自身の幅をpadding、border込みで計算する。 */
     text-align:     center;         /* 文字を中心に寄せる。 */
     vertical-align: middle;         /* 文字の高さを中心に揃える。 */
