@@ -33,6 +33,11 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
+			//ギャラリーがあったら
+//			if($('.footGallery').length > 0){
+//				//ギャラリーを破棄する。
+//				destroyGallery('.footGallery');
+//			}
 			//mainのタグを空にする。
 			$('.main').empty();
 			//linkタグを収集する。
@@ -91,7 +96,6 @@ function hideLoadingScreen(){
 }
 
 /* ローディング画面呼び出しのイベント登録 */
-/* ページが読み込まれたら */
 $(document).ready(function(){
 	//ローディング画面を追加する。
 	$('body').prepend($('<div></div>')
@@ -1102,11 +1106,18 @@ function callReservedDialog(dateText){
  * 概要  :カルーセルのギャラリーを生成する。
  * 作成日:2015.02.21
  * 作成者:T.M
+ * 変更日:2015.03.09
+ * 変更者:T.M
+ * 内容　:setTimeoutを利用してAjax通信でのページ読み込みに対応しました。
  */
 function createGallery(selector){
-	//画像のロードが終わったら処理を走らせる。
-	$(document).ready(function(){
-	// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
+	//一旦ギャラリーを隠す。
+	$('.' + selector).hide();
+	//時間をおいて関数を実行する。
+	window.setTimeout(function(){
+		//ギャラリーを見える様にする。
+		$('.' + selector).show();
+		// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
 		$('.' + selector).smoothDivScroll({
 			//カーソル合わせでスクロールする領域を表示する。
 			hotSpotScrolling: true,
@@ -1116,13 +1127,26 @@ function createGallery(selector){
 			//マウスホイールによるスクロールを無効にする。
 			mousewheelScrolling: false
 		});
-		
-	// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
-	// 拡大表示を行うようにする。
+		// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
+		// 拡大表示を行うようにする。
 		$('.' + selector + ' a').fancybox({
 			'hideOnContentClick': true
-		}); 
-	});
+		});
+	//1秒置いて実行する。
+	}, 1000);
+}
+
+/*
+ * 関数名:destroyGallery(selector)
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :カルーセルのギャラリーを破棄する。
+ * 作成日:2015.03.09
+ * 作成者:T.M
+ */
+function destroyGallery(selector){
+	//選択されたギャラリーを破棄する。
+	$(selector).smoothDivScroll("destroy");
 }
 
 /*
