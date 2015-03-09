@@ -134,10 +134,13 @@
  * 概要   :案内テーブルセルのスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .guideTable td,.guideTable th {
     padding: 10px;      	/* 幅を10px広げる */
-    font-size: 11px;		/* フォントのサイズを小さめにする。 */
+    /*font-size: 11px;*/		/* フォントのサイズを小さめにする。 */
     text-align: left;	/* 文字を左に寄せる、 */
     border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
 }
@@ -150,11 +153,14 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.09
  * 内容   :background重複部分の削除
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .guideHead th{
 	background: #F0F3F5;	/* 背景色を薄い青にする。 */
 	/*background: #F0F3F5;*/	/* 背景色を薄い青にする。 */
-    font-size: 13px;		/* フォントのサイズをやや小さめにする。 */
+    /*font-size: 13px;*/		/* フォントのサイズをやや小さめにする。 */
     font-weight: bold;		/* フォントを太字にする。 */
     text-align: center;		/* 文字を中央に寄せる。 */
     vertical-align: middle;	/* 高さを中心に合わせる。 */
