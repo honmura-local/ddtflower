@@ -49,7 +49,7 @@
 .pageTitle .title{
     width:          750px;          /* 余った幅いっぱいに横幅を取る。 */
     height:         auto;           /* 高さを自動調整する。 */
-    font-size:      28px;           /* フォントサイズを28pxに指定する。 */
+    font-size:      12pt;           /* フォントサイズを28pxに指定する。 */
     box-sizing:     border-box;     /* サイズの計算にpaddingと枠線を加える。 */
     text-align:     center;         /* 文字を中央に寄せる。 */
     margin:         0 auto;     /* 中央寄せにし、下marginを挿入する。 */
@@ -258,10 +258,13 @@
  * 概要   :レッスンスケジュールの時限のセル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.24
+ * 追加者 :T.Yamamoto
+    * 追加日 :2015.03.09
+    * 内容   :font-sizeの削除
  */
 .lessonSchedule .period {
 	text-align: left;	/* 文字を左に寄せる。 */
-	font-size: 11px;	/* フォントサイズをこのテーブル内の最小にする */
+	/*font-size: 11px;*/	/* フォントサイズをこのテーブル内の最小にする */
 }
 
 /* 
