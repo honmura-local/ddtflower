@@ -7,15 +7,12 @@
 					"flowerIcon":{
 						"src":"image/icon(logo50).png"
 					},
-					"sideTextF":{
-						"text":"フラワー"
-					},
-					"sideTextA":{
-						"text":"アレンジメント"
-					},
-					"sideTextS":{
-						"text":"スクール"
-					}
+					"sideText":
+						[
+							"フラワー",
+							"アレンジメント",
+							"スクール"
+						]
 				}
 			},
 			"guideTel":{

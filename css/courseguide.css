@@ -143,10 +143,13 @@
  * 概要   :案内テーブル見出し行のセルのスタイル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :background重複部分の削除
  */
 .guideHead th{
 	background: #F0F3F5;	/* 背景色を薄い青にする。 */
-	background: #F0F3F5;	/* 背景色を薄い青にする。 */
+	/*background: #F0F3F5;*/	/* 背景色を薄い青にする。 */
     font-size: 13px;		/* フォントのサイズをやや小さめにする。 */
     font-weight: bold;		/* フォントを太字にする。 */
     text-align: center;		/* 文字を中央に寄せる。 */
@@ -196,10 +199,14 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.24
  * 内容　 :下のmarginを減らしました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
  */
-.lessonSchedule .summary {
-	text-align: center;		/* 中央揃えにする */
-}
+/*.lessonSchedule .summary {*/
+	/*text-align: center;*/		/* 中央揃えにする */
+/*}*/
 
 /* 
  * セレクタ:.lessonSchedule th, .lessonSchedule td
@@ -209,24 +216,32 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.24
  * 内容　 :下のpaddingを減らしました。幅の設定は効かないので消しました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
  */
-.lessonSchedule th, .lessonSchedule td {
-    border: 1px solid #D0D0AC;	/* 黄緑の罫線で区切る。 */
-    padding: 10px;      	/* 幅を10px広げる */
-}
+/*.lessonSchedule th, .lessonSchedule td {*/
+    /*border: 1px solid #D0D0AC;*/	/* 黄緑の罫線で区切る。 */
+    /*padding: 10px;*/      	/* 幅を10px広げる */
+/*}*/
 
 /* 
  * セレクタ:.lessonSchedule .tableHead
  * 概要   :レッスンスケジュールの曜日のセル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.24
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
  */
-.lessonSchedule .tableHead {
-	text-align: center;	/* 文字を中心に寄せる。 */
-	font-size: 13px;	/* フォントサイズをこのテーブル内の中間にする */
-	font-weight: bold;	/* 太字にする。 */
-	background: #F0F3F5;	/* 背景色を薄い青にする。 */
-}
+/*.lessonSchedule .tableHead {*/
+	/*text-align: center;*/	/* 文字を中心に寄せる。 */
+	/*font-size: 13px;*/	/* フォントサイズをこのテーブル内の中間にする */
+	/*font-weight: bold;*/	/* 太字にする。 */
+	/*background: #F0F3F5;*/	/* 背景色を薄い青にする。 */
+/*}*/
 
 /* 
  * セレクタ:.lessonSchedule .period
@@ -244,11 +259,66 @@
  * 概要   :レッスンスケジュールの時間のセル
  * 作成者 :T.Masuda
  * 作成日 :2015.02.24
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
  */
-.lessonSchedule .hour {
-	text-align: left;	/* 文字を左に寄せる。 */
-	font-size: 11px;	/* フォントサイズをこのテーブル内の最小にする */
-}
+/*.lessonSchedule .hour {*/
+	/*text-align: left;*/	/* 文字を左に寄せる。 */
+	/*font-size: 11px;*/	/* フォントサイズをこのテーブル内の最小にする */
+/*}*/
+
+/* 
+ * セレクタ:.salesPoint 
+ * 概要   :特徴についてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.22
+ * 内容　 :幅の記述を削除しました。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :marginを下だけにしました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
+ */
+/*.salesPoint {*/
+	/*margin-bottom: 10px;*/	/* 下のmarginを指定する。 */
+/*}*/
+
+/* 
+ * セレクタ:.memberRule
+ * 概要   :会員規約についてそれぞれの項目のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.26
+ * 内容　 :marginを減らしました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
+
+ */
+/*.memberRule {*/
+    /*width: 780px;*/    		/* 幅を780pxにする */
+    /*margin-bottom: 5px;*/	/* 下marginを5pxにする。 */
+/*}*/
+
+/* 
+ * セレクタ:.commonText, .salesPoint, .memberRule
+ * 概要   :箇条書きのスタイル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.26
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :全削除
+ */
+/*.commonText, .salesPoint, .memberRule{*/
+	/*width: 100%;*/				/* 幅をmain一杯に広げる。 */
+/*}*/
 
 /* 
  * セレクタ:.commonText 
@@ -269,75 +339,10 @@
  * 内容   :セレクターを.itemListに変更、widthの追加
  */
 .itemList {
-    clear: both;    		/* 回り込みをなくす */
-    margin-bottom: 10px;	/* 下にmarginを指定する。 */
+    clear: both;            /* 回り込みをなくす */
+    margin-bottom: 10px;    /* 下にmarginを指定する。 */
     width: 100%;            /* 幅を100%にする */
 }
-
-/* 
- * セレクタ:.commonText td, .salesPoint td, .memberRule td
- * 概要   :リスト項目ついてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.24
- * 内容　 :paddingを狭めました。字下げも増やしました。
- * 変更者 :T.Masuda
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.08
- * 内容   :セレクターを.itemList .listContent に変更、フォントサイズの削除
- */
-.itemList .listContent{
-    padding: 3px 0;   			/* 上下に3pxの余白をとる */
-    /*font-size: 13px;*/			/* フォントのサイズを13pxにする */
-    line-height: 16px;			/* 行の高さを多めに取る。 */
-    padding-left: 2.9em;	   	/* 頭をキャプションの2文字目に合わせる。 */
-    text-indent: -1em;	   		/* 先頭の文字を1文字分左にずらす。 */
-}
-
-/* 
- * セレクタ:.salesPoint 
- * 概要   :特徴についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.22
- * 内容　 :幅の記述を削除しました。
- * 変更者 :T.Masuda
- * 変更日 :2015.02.26
- * 内容　 :marginを下だけにしました。
- */
-.salesPoint {
-	margin-bottom: 10px;	/* 下のmarginを指定する。 */
-}
-
-/* 
- * セレクタ:.memberRule
- * 概要   :会員規約についてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- * 変更者 :T.Masuda
- * 変更日 :2015.02.26
- * 内容　 :marginを減らしました。
- */
-.memberRule {
-    width: 780px;    		/* 幅を780pxにする */
-    margin-bottom: 5px;	/* 下marginを5pxにする。 */
-}
-
-
-/* 
- * セレクタ:.commonText, .salesPoint, .memberRule
- * 概要   :箇条書きのスタイル
- * 作成者 :T.Masuda
- * 作成日 :2015.02.26
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.08
- * 内容   :全削除
- */
-/*.commonText, .salesPoint, .memberRule{*/
-	/*width: 100%;*/				/* 幅をmain一杯に広げる。 */
-/*}*/
 
 /* 
  * セレクタ:.commonText .listHead, .salesPoint .listHead, .memberRule .listHead
@@ -358,6 +363,27 @@
     margin-bottom: 5px;				/* 下方向に余白を5pxとる */
     padding-bottom: 6px;			/* 下線との間に余白を文字1/3とる */
     border-bottom: 1px solid #666;	/* 下線を引く */
+}
+
+/* 
+ * セレクタ:.commonText td, .salesPoint td, .memberRule td
+ * 概要   :リスト項目ついてのスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.02.09
+ * 変更者 :T.Masuda
+ * 変更日 :2015.02.24
+ * 内容　 :paddingを狭めました。字下げも増やしました。
+ * 変更者 :T.Masuda
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.08
+ * 内容   :セレクターを.itemList .listContent に変更、フォントサイズの削除
+ */
+.itemList .listContent{
+    padding: 3px 0;             /* 上下に3pxの余白をとる */
+    /*font-size: 13px;*/            /* フォントのサイズを13pxにする */
+    line-height: 16px;          /* 行の高さを多めに取る。 */
+    padding-left: 2.9em;        /* 頭をキャプションの2文字目に合わせる。 */
+    text-indent: -1em;          /* 先頭の文字を1文字分左にずらす。 */
 }
 
 /* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
@@ -1147,10 +1173,13 @@
  * 概要   :会員規約
  * 作成者 :T.Masuda
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
  */
-.memberRule {
-	margin-bottom: 10px;	/* 最下部に来るので、フッターとのmarginを調整する。 */
-}
+/*.memberRule {*/
+	/*margin-bottom: 10px;*/	/* 最下部に来るので、フッターとのmarginを調整する。 */
+/*}*/
 
 /* 
  * セレクタ:.photoGallery > * 

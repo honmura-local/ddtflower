@@ -21,6 +21,10 @@
  * 概要   :入力項目の見出し。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :font-sizeがbodyのスタイルと重複するため削除
+
  */
 .contactForm dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
@@ -31,7 +35,7 @@
 	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
 	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
-	font-size: 13px;	/* フォントサイズを設定する。 */
+	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }
 

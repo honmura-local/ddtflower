@@ -18,10 +18,13 @@
  * 概要   :予約希望日。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.06
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   : 全削除
  */
-.specialDate{
-    margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
-}
+/*.specialDate{*/
+    /*margin-bottom: 5px;*/ /* 下に5pxのmarginを挿入する。 */
+/*}*/
 
 /* 
  * セレクタ:.reservedSummary
@@ -100,7 +103,6 @@
  */
 .radioButtonSpecialSchedule{
     width: inherit;     /* ダイアログの幅を継承する。 */
-
 }
 
 /* 
@@ -243,7 +245,6 @@
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
-
 .radioButtonSpecialConstruct tr td {
     padding-left: 10px; /* 左向きに10px要素を広げる */
 }
@@ -274,32 +275,41 @@
  * 概要   :予備情報の一つのカラムについてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
  */
-.subInfo td {
-    width: 15px;        /* 要素の幅を15pxにする */
-}
+/*.subInfo td {*/
+    /*width: 15px;*/        /* 要素の幅を15pxにする */
+/*}*/
 
 /* 
  * セレクタ:.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {
  * 概要   :予備情報の2行目以降のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
  */
-.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {
-    padding-left: 5px;  /* 要素の幅を5px左向きに広げる */
-    font-size: 12px;    /* フォントサイズ12pxにする */
-    text-align: left;   /* 左寄りにする */
-}
+/*.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {*/
+    /*padding-left: 5px;*/  /* 要素の幅を5px左向きに広げる */
+    /*font-size: 12px;*/    /* フォントサイズ12pxにする */
+    /*text-align: left;*/   /* 左寄りにする */
+/*}*/
 
 /* 
  * セレクタ:.subInfoThirdRow {
  * 概要   :予備情報の3行目のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :全削除
  */
-.subInfoThirdRow {
-    height: 30px;       /* 高さを30pxにする */
-}
+/*.subInfoThirdRow {*/
+    /*height: 30px;*/       /* 高さを30pxにする */
+/*}*/
 
 /* 
  * セレクタ:.personTextbox
@@ -383,7 +393,6 @@
     margin-left: -6px;  /* 左に5px寄せる */
 }
 
-.
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 	

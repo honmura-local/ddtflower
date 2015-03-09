@@ -112,10 +112,14 @@
 	 * 概要   :アクセス情報一覧の外枠。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
+	 * 追加者 :T.Yamamoto
+	 * 追加日 :2015.03.09
+ 	 * 内容   :widthを95%から90%に変更、padding-leftからpaddingに変更
+
 	 */
 	.accessInfo {
-		width: 95%;				/* paddingを考慮した幅を取る。 */
-		padding-left: 5%;		/* 左に間隔を取る */
+		width: 90%;				/* paddingを考慮した幅を取る。 */
+		padding: 5%;		/* 左に間隔を取る */
 	}	
 	
 	/* 

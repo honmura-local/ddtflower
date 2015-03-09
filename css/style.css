@@ -668,33 +668,42 @@ footer{
 	     * 概要   :スマホ用ヘッダーのスタイル
 	     * 作成者 :T.Yamamoto
 	     * 作成日 :2015.02.16
+	     * 追加者 :T.Yamamoto
+		 * 追加日 :2015.03.09
+ 		 * 内容   :全削除
 	     */
-	    .headImage {
-	  	  width: 100%;        /* 横幅を100%にする。 */
-	  	  margin: 0 auto;     /* 中央揃えにする */
-	    }
+	    /*.headImage {*/
+	  	  /*width: 100%;*/        /* 横幅を100%にする。 */
+	  	  /*margin: 0 auto;*/     /* 中央揃えにする */
+	    /*}*/
 	
 	    /* 
 	     * セレクタ:headImage img
 	     * 概要   :スマホ用ヘッダー画像のスタイル
 	     * 作成者 :T.Yamamoto
 	     * 作成日 :2015.02.16
+	     * 追加者 :T.Yamamoto
+		 * 追加日 :2015.03.09
+ 		 * 内容   :全削除
 	     */
-	    .headImage img {
-	        width: 100%;    /* 画像の幅を100%にする */
-	        height auto;    /* 高さを自動で合わせる */
-	    }
+	    /*.headImage img {*/
+	        /*width: 100%;*/    /* 画像の幅を100%にする */
+	        /*height auto;*/    /* 高さを自動で合わせる */
+	    /*}*/
 	
 	    /* 
 	     * セレクタ:.footImage img
 	     * 概要   :スマホ用フッター画像のスタイル
 	     * 作成者 :T.Yamamoto
 	     * 作成日 :2015.02.16
+	     * 追加者 :T.Yamamoto
+		 * 追加日 :2015.03.09
+ 		 * 内容   :全削除
 	     */
-	    .footImage img {
-	        width: 100%;        /* 幅を100%にする */
-	        height: auto;       /* 高さを自動にする */
-	    }
+	    /*.footImage img {*/
+	        /*width: 100%;*/        /* 幅を100%にする */
+	        /*height: auto;*/       /* 高さを自動にする */
+	    /*}*/
 	
 	
 	/* 
