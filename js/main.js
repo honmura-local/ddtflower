@@ -1104,23 +1104,25 @@ function callReservedDialog(dateText){
  * 作成者:T.M
  */
 function createGallery(selector){
-
-// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
-	$('.' + selector).smoothDivScroll({
-		//カーソル合わせでスクロールする領域を表示する。
-		hotSpotScrolling: true,
-		//タッチでのスクロールを有効にする。
-		touchScrolling: true,
-		manualContinuousScrolling: true,
-		//マウスホイールによるスクロールを無効にする。
-		mousewheelScrolling: false
+	//画像のロードが終わったら処理を走らせる。
+	$(document).ready(function(){
+	// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
+		$('.' + selector).smoothDivScroll({
+			//カーソル合わせでスクロールする領域を表示する。
+			hotSpotScrolling: true,
+			//タッチでのスクロールを有効にする。
+			touchScrolling: true,
+			manualContinuousScrolling: true,
+			//マウスホイールによるスクロールを無効にする。
+			mousewheelScrolling: false
+		});
+		
+	// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
+	// 拡大表示を行うようにする。
+		$('.' + selector + ' a').fancybox({
+			'hideOnContentClick': true
+		}); 
 	});
-	
-// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
-// 拡大表示を行うようにする。
-	$('.' + selector + ' a').fancybox({
-		'hideOnContentClick': true
-	}); 
 }
 
 /*
