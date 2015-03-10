@@ -237,7 +237,8 @@
 	 * 作成日 :2015.02.18
 	 */
 	.contactForm dt{
-		margin-left: 28%;	/* 左marginを可変にする。 */
+		margin-left: 10%;	/* 左marginを可変にする。 */
+		width: 104px;		/* 文字の幅を設定。最長の文字に合わせる */
 	}
 	
 	/* 
