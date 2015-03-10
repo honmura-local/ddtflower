@@ -411,7 +411,7 @@
  */
 .itemList .listContent:before {
 	content: "●";
-	font-size: 12px;
+	font-size: 16px;
 }
 
 /* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
@@ -589,8 +589,11 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.08
  * 内容   :セレクターを.description dt, .description ddに変更
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.10
+ * 内容   :セレクターから.description ddを削除
  */
-.description dt, .description dd{
+.description dt{
     padding: 4px 0em;	/* 適切に間隔を取る */
 }
 
@@ -632,6 +635,7 @@
  */
 .description dd, .contentsBorderInText {
     padding-left: 1em;	/* 更にインデントをつける。 */
+    padding-top:2px;
 }
 
 /* 
@@ -861,11 +865,14 @@
      * 変更者  :T.Masuda
      * 変更日  :2015.02.23
      * 内容　  :marginを変更。
+     * 変更者  :T.Yamamoto
+     * 変更日  :2015.03.10
+     * 内容　  :marginを0 4% 0px 1%から15px 4% 0 1%　に変更。
      */
     .pageTitle img {
         width: 15%;            /* 幅を可変にする */
         height: auto;          /* 高さを自動調整する */
-        margin: 0 4% 0px 1%;	/* 左右にmarginを配置する。 */
+        margin: 15px 4% 0 1%;	/* 左右にmarginを配置する。 */
     }
 
     /* 
@@ -1477,4 +1484,13 @@
         position: relative;     /* 相対位置にする */
         top: -10px;              /* 5px上にずらす */
      }
+
+     /* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
+     * 追加者 :T.Yamamoto
+     * 追加日 :2015.03.10
+     * 内容   :スマホはフォントサイズを変える
+     */
+    .itemList .listContent:before {
+        font-size: 13px;
+    }
 }
