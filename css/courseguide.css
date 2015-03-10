@@ -872,7 +872,7 @@
     .pageTitle img {
         width: 15%;            /* 幅を可変にする */
         height: auto;          /* 高さを自動調整する */
-        margin: 15px 4% 0 1%;	/* 左右にmarginを配置する。 */
+        margin: 15px 4% 0 4%;	/* 左右にmarginを配置する。 */
     }
 
     /* 
@@ -1054,7 +1054,7 @@
     .itemList .listContent {
         text-align: left;       /* 左寄りにする */
         /*font-size: 11px;*/        /* 文字サイズを11pxにする */
-        padding-left: 2.5em;	/* インデントを調整する。 */
+        padding-left: 2em;	/* インデントを調整する。 */
     }
 
 /* 
