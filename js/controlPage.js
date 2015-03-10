@@ -1,4 +1,4 @@
-// 汎用的な処理をまとめたJSファイル。
+// 画面遷移を操作する関数を中心にまとめたJSファイル。
 
 // ドキュメント読み込み後の処理
 $(document).ready(function(){
@@ -50,6 +50,8 @@ function overwrightContent(target, data){
  * 内容　:戻るボタンに対応しました。
  */
 function callPage(url, state){
+	//urlから#を抜き取り、有効なURLを形成する。
+	url = url.replace('#', '');
 	//Ajax通信を行う。
 	$.ajax({
 		//URLを指定する。
@@ -68,9 +70,6 @@ function callPage(url, state){
 			if(state === void(0) && window.history && window.history.pushState){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':currentLocation}, '', location.href);
-			//pushStateに対応していなければ、hashchangeのイベントで対応する。
-			} else if(state === void(0) && !(window.history && window.history.pushState)){
-				
 			}
 		}
 	});
@@ -325,7 +324,20 @@ $(window).on('load', function(){
 		}
 	//pushStateに対応していなければhashchangeのイベントで更新を行う。
 	}else{
-		
+		//ハッシュ切り替えイベント発生時の処理
+		$(window).bind("hashchange", function(ev){
+			//ハッシュが変わっていれば
+			if(location.hash) {
+				//URLからハッシュを取り出し、変数に格納する。
+				var hash = location.hash;
+				//該当するページを読み込む。
+				callPage(hash);
+				//そうでなければ
+			} else {
+				//画面を更新する。
+				location.reload();
+			}
+		});
 	}
 });
 
