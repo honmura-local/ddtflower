@@ -16,34 +16,58 @@
 <link type="text/css" href="css/smoothDivScroll.css" rel="stylesheet">
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
+
+<script>
+$(document).ready(function(){
+	// トップメニューにマウスオーバーのフィルターを配置する。
+	functionFilter('.topMenu li');
+	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+	fixYCoordinate('header', '.main');
+	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+	fixXCoordinateOnScroll('header')
+	// ログイン状態をチェックする。
+	checkLoginState();
+});
+</script>
 </head>
 <body>
-	<script>
-		creator.getJsonFile('source/bridal.json');			// ファイルのデータをjsonを用いて持ってくる
-		creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
-		creator.getDomFile('source/template.html');			// ファイルのhtmlデータをdomを用いて持ってくる
-		creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-		creator.outputTag('pageTitle');						// タイトル領域を作る
-		creator.outputTag('handmadeMerit', 'description');	// 手作りによるメリットを作る
-		creator.outputTag('handmadeFlow', 'description');	// 作成までの流れを作る
-		creator.outputTag('photoGallery');					// ギャラリー画像を作る
-		creator.outputTag('footGallery');					// ギャラリー画像を作る
-		createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
-		creator.outputTag('bridalItemTable');				// ブライダルページのアイテム一覧を作る
-		creator.outputTag('lessonSchedule');				//レッスンスケジュールテーブル
-		creator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る
-		creator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
-		creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-		creator.outputTag('footer');						// フッターを作る
-		
-		//トップメニューにマウスオーバーのフィルターを配置する。
-		functionFilter('.topMenu li');
-		// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-		fixYCoordinate('header', '.main');
-		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-		fixXCoordinateOnScroll('header')
-		// ログイン状態をチェックする。
-		checkLoginState();
-	</script>
+<!-- container -->
+<div id="container">
+	<!-- トップページのコンテンツのタグ。 -->
+	<div class="main"></div>
+</div>
+
+<script>
+var creator = new createTag();
+
+creator.getJsonFile('source/bridal.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+creator.outputTag('header');					// トップメニューを作る
+creator.outputTag('headImage', 'createImage');					// 天の画像を作る
+creator.outputTag('pageTitle');					// タイトル領域を作る
+creator.outputTag('handmadeMerit', 'description');				// 手作りによるメリットを作る
+creator.outputTag('handmadeFlow', 'description');				// 作成までの流れを作る
+creator.outputTag('photoGallery');				// ギャラリー画像を作る
+creator.outputTag('footGallery');				// ギャラリー画像を作る
+createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
+creator.outputTag('bridalItemTable');						// ブライダルページのアイテム一覧を作る
+creator.outputTag('lessonSchedule');			//レッスンスケジュールテーブル
+creator.outputTag('commonText', 'itemList');				//共通リストテーブルを作る
+creator.outputTag('memberRule', 'itemList');				// 会員規約のリストテーブルを作る
+creator.outputTag('footImage', 'createImage');					// 地の画像を作る
+creator.outputTag('footer');					// フッターを作る
+
+//トップメニューにマウスオーバーのフィルターを配置する。
+functionFilter('.topMenu li');
+
+// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+fixYCoordinate('header', '.main');
+// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+fixXCoordinateOnScroll('header')
+// ログイン状態をチェックする。
+checkLoginState();
+
+</script>
 </body>
 </html>

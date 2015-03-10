@@ -34,7 +34,7 @@ time, mark, audio, video {
 	}
 
 body {
-    line-height:1.4;        /* 1行の間を1.4行分にする */
+    line-height:1.4;        /* 1行の間を1.5行分にする */
     /* font-familyを指定 */
 	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
 	color: #555;		/* ベースのフォンとカラー */
