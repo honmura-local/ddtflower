@@ -1,6 +1,15 @@
 // 画面遷移を操作する関数を中心にまとめたJSファイル。
 
-// ドキュメント読み込み後の処理
+currentLocation = '';	//現在選択中のページの変数
+
+/*
+ * イベント:ready
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :ドキュメント読み込み後のイベント
+ * 作成日 :2015.03.10
+ * 作成者 :T.M
+ */
 $(document).ready(function(){
 	// リンクをクリックしたら
 	$(document).on('click', 'a[href$=".html"]', function(event){
@@ -105,7 +114,14 @@ function hideLoadingScreen(){
 	$('.loading').css('display','none');
 }
 
-/* ローディング画面呼び出しのイベント登録 */
+/*
+ * イベント:ready
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :ローディング画面の作成。
+ * 作成日 :2015.03.10
+ * 作成者 :T.M
+ */
 $(document).ready(function(){
 	//ローディング画面を追加する。
 	$('body').prepend($('<div></div>')
@@ -169,7 +185,14 @@ function createFormData(form){
 	return formDataReturn;
 }
 
-/* フォームがsubmitされたら */
+/*
+ * イベント:submit
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :フォームがsubmitされたときのイベント。
+ * 作成日 :2015.03.10
+ * 作成者 :T.M
+ */
 $(document).on('submit', 'form', function(event){
 	//submitイベントをキャンセルする。
 	event.preventDefault();
@@ -205,9 +228,6 @@ $(document).on('submit', 'form', function(event){
 		currentLocation = url;
 	});
 });
-
-//現在選択中のページ
-currentLocation = '';
 
 /*
  * 関数名:functionFilter

@@ -1,7 +1,9 @@
 //JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
 
 //createTagコール時の引数として使う定数。
-const CREATETAG_FIRST = -1;
+//const CREATETAG_FIRST = -1;
+//@mod IEでconstを使うとエラーを起こすので、constを抜きました。
+CREATETAG_FIRST = -1;
 
 function createTag(){
 	//JSONデータを格納する変数。
