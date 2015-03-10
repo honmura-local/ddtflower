@@ -3,6 +3,27 @@
 currentLocation = '';	//現在選択中のページの変数
 
 /*
+ * 関数名:isSupportPushState()
+ * 引数  :なし
+ * 戻り値:boolean
+ * 概要  :ブラウザがpushStateに対応しているかをbooleanで返す。
+ * 作成日:2015.03.10
+ * 作成者:T.M
+ */
+function isSupportPushState(){
+	// 返却値を格納する変数returnsを宣言し、falseで初期化する。
+	var returns = false;
+	//ブラウザがpushStateに対応していれば
+	if(window.history && window.history.pushState){
+		//trueを返す様にする。
+		returns = true;
+	}
+	
+	//returnsを返す。
+	return returns;
+}
+
+/*
  * イベント:ready
  * 引数   :なし
  * 戻り値 :なし
@@ -13,10 +34,13 @@ currentLocation = '';	//現在選択中のページの変数
 $(document).ready(function(){
 	// リンクをクリックしたら
 	$(document).on('click', 'a[href$=".html"]', function(event){
-		//URLを引数にしてページを切り替える関数をコールする。
-		callPage($(this).attr('href'));
-		//通常の画面遷移をキャンセルする。
-		event.preventDefault();
+		//pushState対応ブラウザであれば
+		if(isSupportPushState()){
+			//URLを引数にしてページを切り替える関数をコールする。
+			callPage($(this).attr('href'));
+			//通常の画面遷移をキャンセルする。		
+			event.preventDefault();
+		}
 	});
 });
 
@@ -34,7 +58,7 @@ function overwrightContent(target, data){
 	//linkタグを収集する。
 	var links = $(data).filter('link');
 	//scriptタグを収集する。
-	var scripts = $(data).filter('script:parent');
+	var scripts = $(data).filter('script');
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。
@@ -76,7 +100,7 @@ function callPage(url, state){
 			//カレントのURLを更新する。
 			currentLocation = url;
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
-			if(state === void(0) && window.history && window.history.pushState){
+			if(state === void(0) && isSupportPushState()){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':currentLocation}, '', location.href);
 			}
@@ -309,7 +333,7 @@ $(document).ajaxStop( function(){
  * 作成者:T.Masuda
  */
 //popStateに対応できているブラウザであれば
-if (window.history && window.history.pushState){
+if (isSupportPushState()){
 	//popStateのイベントを定義する。
     $(window).on("popstate",function(event){
         //初回アクセスであれば何もしない。
@@ -332,7 +356,7 @@ if (window.history && window.history.pushState){
  */
 $(window).on('load', function(){
 	//pushStateに対応していれば、pushStateで更新のイベント
-	if (window.history && window.history.pushState){
+	if (isSupportPushState()){
 		//初回ロードでなければ
 		if (window.history.state){
 			//履歴からURLを引き出す
@@ -356,8 +380,15 @@ $(window).on('load', function(){
 				location.reload();
 			}
 		});
+		
+		//画面遷移でのページ読み込み時点でハッシュがあれば
+		if(location.hash) {
+			//URLからハッシュを取り出し、変数に格納する。
+			var hash = location.hash;
+			//該当するページを読み込む。
+			callPage(hash);
+		//そうでなければ
+		}
+
 	}
 });
-
-
-
