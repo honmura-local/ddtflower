@@ -89,15 +89,18 @@ function createTag(){
 	};
 
 	/* 
-	 * 関数名:this.outputTag = function(key)
+	 * 関数名:this.outputTag = function(key, domNodeName, appendTo)
 	 * 概要  :キーからパーツを。
-	 * 引数  :String key
+	 * 引数  :String key, String domNodeName, String appendTo
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.20
+	 * 修正者:T.Masuda
+	 * 修正日:2015.03.09
+	 * 内容　:指定した要素に挿入できるように引数を追加しました。
 	 */
-	this.outputTag = function(key, domNodeName){
+	this.outputTag = function(key, domNodeName, appendTo){
 		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
 		domNodeName = domNodeName === undefined ? key : domNodeName;
 			
@@ -109,8 +112,15 @@ function createTag(){
 		var tag = this.createTag(mapNode, domNode);
 		// パーツの作成に成功したならば
 		if(tag != null){
-			//createTag関数をコールし、作成したタグをmainに追加する。
-			$('.main').append(tag);
+			//appendToに指定先があれば
+			if(appendTo !== undefined){
+				//指定した先にtagを挿入する。
+				$(appendTo).prepend(tag);
+			//そうでなければ
+			} else {
+				//mainのタグにtagを挿入する。。
+				$('.main').append(tag);
+			}
 		// パーツの作成に失敗したならば
 		} else{
 			//失敗のメッセージダイアログを出す。

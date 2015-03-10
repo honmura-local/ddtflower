@@ -1,0 +1,333 @@
+// 汎用的な処理をまとめたJSファイル。
+
+// ドキュメント読み込み後の処理
+$(document).ready(function(){
+	// リンクをクリックしたら
+	$(document).on('click', 'a[href$=".html"]', function(event){
+		//URLを引数にしてページを切り替える関数をコールする。
+		callPage($(this).attr('href'));
+		//通常の画面遷移をキャンセルする。
+		event.preventDefault();
+	});
+});
+
+/*
+ * 関数名:overwrightContent(target, data)
+ * 引数  :String target, Object state
+ * 戻り値:なし
+ * 概要  :既存のコンテンツを消して、新たなコンテンツを書き出す。
+ * 作成日:2015.03.09
+ * 作成者:T.M
+ */
+function overwrightContent(target, data){
+	//mainのタグを空にする。
+	$(target).empty();
+	//linkタグを収集する。
+	var links = $(data).filter('link');
+	//scriptタグを収集する。
+	var scripts = $(data).filter('script:parent');
+	//linkタグを展開する。
+	links.each(function(){
+		//headタグ内にlinkタグを順次追加していく。
+		$(target).append($(this));
+	});
+	//scriptタグを展開する。
+	scripts.each(function(){
+		//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+		$(target).append($(this));
+	});
+}
+
+/*
+ * 関数名:callPage(url, state)
+ * 引数  :String url, Object state
+ * 戻り値:なし
+ * 概要  :新たにページを読み込む。
+ * 作成日:2015.03.05
+ * 作成者:T.M
+ * 修正日:2015.03.06
+ * 修正者:T.M
+ * 内容　:戻るボタンに対応しました。
+ */
+function callPage(url, state){
+	//Ajax通信を行う。
+	$.ajax({
+		//URLを指定する。
+		url: url,
+		//HTMLを返してもらう。
+		dataType:'html',
+		//同期通信を行う。
+		async: false,
+		//通信成功時の処理
+		success:function(html){
+			//既存のコンテンツを上書きする。
+			overwrightContent('.main', html);
+			//カレントのURLを更新する。
+			currentLocation = url;
+			//第二引数が入力されていなければ、また、pushStateに対応していれば
+			if(state === void(0) && window.history && window.history.pushState){
+				//画面遷移の履歴を追加する。
+				history.pushState({'url':currentLocation}, '', location.href);
+			//pushStateに対応していなければ、hashchangeのイベントで対応する。
+			} else if(state === void(0) && !(window.history && window.history.pushState)){
+				
+			}
+		}
+	});
+	//JSONデータを格納する変数を初期化する。
+	creator.json = null;
+	//ひな形のHTMLのDOMを格納する変数を初期化する。
+	creator.dom = '';
+}
+
+/*
+ * 関数名:callLoadingScreen()
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :ローディング画面を表示する。
+ * 作成日:2015.03.02
+ * 作成者:T.Masuda
+ */
+function callLoadingScreen(){
+		//ローディング画面を出す。
+		$('.loading').css('display','block');
+}
+
+/*
+ * 関数名:hideLoadingScreen()
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :ローディング画面を隠す。
+ * 作成日:2015.03.05
+ * 作成者:T.Masuda
+ */
+function hideLoadingScreen(){
+	//ローディング画面を隠す。
+	$('.loading').css('display','none');
+}
+
+/* ローディング画面呼び出しのイベント登録 */
+$(document).ready(function(){
+	//ローディング画面を追加する。
+	$('body').prepend($('<div></div>')
+			.addClass('loading')
+			//ローディング画像を追加する。
+			.append($('<img>')
+					//ローディング画像のパスを追加する。
+					.attr('src', 'image/loading.gif')
+			)
+			//Loadingの文字を表示する。
+			.append($('<p></p>')
+					//文字を追加する。
+					.text('Loading...')
+			)
+	);
+});
+
+/*
+ * 関数名:createFormData(form)
+ * 引数  :jQuery form
+ * 戻り値:Object
+ * 概要  :フォームの投稿データを作る。
+ * 作成日:2015.03.09
+ * 作成者:T.Masuda
+ */
+function createFormData(form){
+	//返却するデータを格納する変数を宣言する。
+	var formDataReturn = {};
+	
+	//フォーム内の入力要素を走査する。
+	$('input, textarea, input:radio:checked, input:checkbox:checked', form).each(function(){
+		//値を取得する。
+		var val = $(this).val();
+		//name属性の値を取得する。
+		var name = $(this).attr('name');
+		
+		//name属性で括られた最初のチェックボックスなら
+		if($(this).attr('type') == 'checkbox' 
+			&& $(this).index('[name="' + name + '"]') == 0){
+			//valを配列として扱う。
+			val = [];
+			//name属性で括られたチェックボックスを走査していく。
+			$('input:checkbox[name="' + name + '"]').each(function(i){
+				//配列にチェックボックスの値を格納していく。
+				val[i] = $(this).val();
+			});
+			//formDataを連想配列として扱い、keyとvalueを追加していく。
+			formDataReturn[name] = val;
+		//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
+		} else if(($(this).attr('type') == 'checkbox' 
+			&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
+			//何もしない。
+		//それ以外であれば
+		} else {
+			//formDataを連想配列として扱い、keyとvalueを追加していく。
+			formDataReturn[name] = val;
+		}
+	});
+	
+	//フォームデータを返す。
+	return formDataReturn;
+}
+
+/* フォームがsubmitされたら */
+$(document).on('submit', 'form', function(event){
+	//submitイベントをキャンセルする。
+	event.preventDefault();
+	//フォームのaction属性から送信URLを取得する。
+	var url = $(this).attr('action');
+	
+	//送信するデータを格納する連想配列を作成する。
+	var formData = createFormData($(this));
+	
+	//postメソッドでフォームの送信を行う。
+	$.post(url, formData,
+	// 成功時の処理を記述する。
+	 function(data){
+		//mainのタグを空にする。
+		$('.main').empty();
+		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
+		$('.main').append($('.main > *', data));
+		//linkタグを収集する。
+		var links = $(data).filter('link');
+		//scriptタグを収集する。
+		var scripts = $(data).filter('script:parent');
+		//linkタグを展開する。
+		links.each(function(){
+			//headタグ内にlinkタグを順次追加していく。
+			$('.main').append($(this));
+		});
+		//scriptタグを展開する。
+		scripts.each(function(){
+			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+			$('.main').append($(this));
+		});
+		//カレントのURLを更新する。
+		currentLocation = url;
+	});
+});
+
+//現在選択中のページ
+currentLocation = '';
+
+/*
+ * 関数名:functionFilter
+ * 引数  :var filterTarget
+ * 戻り値:なし
+ * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
+ * 作成日:2015.02.05
+ * 作成者:T.Y
+ * 変更日:2015.02.22
+ * 変更者:T.Masuda
+ * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
+ */
+function functionFilter (filterTarget) {
+  // jqueryの記述の始まり
+	//現在表示中のページのボタン以外に対して
+    $(document)
+        .on('mouseenter', filterTarget, function() {	// 引数の要素にマウスを乗せた時の処理
+            $(this).addClass('active');   				 // 引数の要素にactiveクラスを付与する。
+        })
+        .on('mouseleave', filterTarget, function() {	// 引数の要素からマウスが離れたときの処理
+            $(this).removeClass('active');  			// 引数の要素からactiveクラスを除去する。
+        });
+}
+	
+/*
+ * 関数名:changeSelectedButtonColor
+ * 引数  :var filterTarget
+ * 戻り値:なし
+ * 概要  :選択した要素の色を変えるクラスを付与する。
+ * 作成日:2015.03.06
+ * 作成者:T.Masuda
+ */
+function changeSelectedButtonColor(filterTarget){
+	//一旦全てのactive,currentクラスを剥奪する。	
+	$(filterTarget).removeClass('active');
+	$(filterTarget).removeClass('current');
+	// 現在のページのボタンの枠に対して、currentクラスを付与する。
+	$(filterTarget, document).filter(':has(a[href$="' + currentLocation + '"])').addClass('current');
+}
+
+/*
+ * イベント名:ajaxStart
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :Ajax通信を開始した後の処理。
+ * 作成日　　:2015.03.09
+ * 作成者　　:T.Masuda
+ */
+//Ajax通信が始まったら
+$(document).ajaxStart( function(){
+	//ローディング画面を出す。
+	callLoadingScreen();
+});
+
+
+/*
+ * イベント名:ajaxStop
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :Ajax通信を終えた後の処理。
+ * 作成日　　:2015.03.09
+ * 作成者　　:T.Masuda
+ */
+//Ajax通信が全て終了したら
+$(document).ajaxStop( function(){
+	//ローディング画面を隠す。
+	hideLoadingScreen();
+	//選択されたトップメニューの色を変える。
+	changeSelectedButtonColor('.topMenu li');
+});
+/* 以上、ローディング画面呼び出しのイベント登録。 */
+
+/*
+ * 関数名:なし
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :Ajax通信でのページ読み込みを行っていても、ブラウザバック等の履歴機能を有効にする。
+ * 作成日:2015.03.09
+ * 作成者:T.Masuda
+ */
+//popStateに対応できているブラウザであれば
+if (window.history && window.history.pushState){
+	//popStateのイベントを定義する。
+    $(window).on("popstate",function(event){
+        //初回アクセスであれば何もしない。
+    	if (!event.originalEvent.state){
+    		return; // 処理を終える。
+    	}
+        var state = event.originalEvent.state; 	//stateオブジェクトを取得する。
+        currentLocation = state['url'];			//stateから現在のURLを取り出し保存する。
+        callPage(state['url'], state);			//履歴からページを読み込む。
+  });
+//pushStateに対応していなければhashchangeで履歴を取る。
+} else {
+}
+
+/*
+ * イベント名:load
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :ページの読み込みを終えた後の処理。
+ * 作成日　　:2015.03.09
+ * 作成者　　:T.Masuda
+ */
+$(window).on('load', function(){
+	//pushStateに対応していれば、pushStateで更新のイベント
+	if (window.history && window.history.pushState){
+		//履歴からURLを引き出す
+		var currentUrl = window.history.state.url;
+		// 現在のページの履歴があれば
+		if(currentUrl != null);{
+			//ページを読み込む。更新なので履歴を積まないために第二引数を入力する。
+			callPage(currentUrl, window.history.state);
+		}
+	//pushStateに対応していなければhashchangeのイベントで更新を行う。
+	}else{
+		
+	}
+});
+
+
+
