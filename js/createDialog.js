@@ -376,6 +376,9 @@ function createSpecialReservedConfirmDialog(reservedData){
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.10
+ * 内容   :389行目のtextメソッドをhtmlメソッドに変更しました
  */
 function createSpecialConfirmSummary(reservedData){
 	// 予約希望日時を書き出す。
@@ -383,7 +386,7 @@ function createSpecialConfirmSummary(reservedData){
 	// 希望作品を書き出す。
 	$('.constructValue').text(reservedData['construct']);
 	// 希望の時限を書き出す。
-	$('.scheduleValue').text(reservedData['schedule']);
+	$('.scheduleValue').html(reservedData['schedule']);
 	// 予備の希望曜日を書き出す。
 	$('.subWeekOfDayValue').text(reservedData['weekDay']);
 	// 予備の希望週を書き出す。
