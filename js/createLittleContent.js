@@ -67,6 +67,9 @@ function createCalendar () {
  * 概要  :引数の要素に対してツールチップを表示する
  * 作成日:2015.02.06
  * 作成者:T.Y
+ * 変更日:2015.03.10
+ * 変更者:T.Masuda
+ * 内容　:,を余計に書いてあった部分とコメント抜けを修正しました。
  */
 function toolTip() {
   $(function() {
@@ -93,9 +96,9 @@ function toolTip() {
           .text($(this).data('tips'))
         //マウスの座標に応じて表示位置を決定
           .css({
-            top: e.pageY,//現在マウスポインターがあるY座標
-            left: e.pageX,//現在マウスポインターがあるX座標
-            zIndex: 2,
+            top: e.pageY,	//現在マウスポインターがあるY座標
+            left: e.pageX,	//現在マウスポインターがあるX座標
+            zIndex: 2		//z-indexを指定して重なりを制御する。
           })
           .fadeIn(300);//300ミリ秒かけて表示する
       })
