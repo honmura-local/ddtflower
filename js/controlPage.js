@@ -57,8 +57,8 @@ function overwrightContent(target, data){
 	$(target).empty();
 	//linkタグを収集する。
 	var links = $(data).filter('link');
-	//scriptタグを収集する。
-	var scripts = $(data).filter('script');
+	//コードが書かれているscriptタグを収集する。
+	var scripts = $(data).filter('script:not(:empty)');
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。

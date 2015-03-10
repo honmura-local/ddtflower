@@ -14,7 +14,6 @@
 		creator.getJsonFile('source/contact.json');		// お問い合わせページのJSONを取得する。
 		creator.getJsonFile('source/commonJson.json');	// 共通項目のJSONを取得する。
 		creator.getDomFile('source/template.html');		// パーツテンプレートのdomをhtmlファイルから取得する。
-		creator.outputTag('header', 'header');	// トップメニューを作る
 		creator.outputTag('headImage', 'createImage');	// 天の画像を作る
 		creator.outputTag('pageTitle');					// タイトル領域を作る
 		creator.outputTag('contactForm');				// 問い合わせフォームを作る
@@ -25,8 +24,6 @@
 		fixYCoordinate('header', '.main');
 		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 		fixXCoordinateOnScroll('header')
-		// ログイン状態をチェックする。
-		checkLoginState();
 	</script>
 </body>
 </html>

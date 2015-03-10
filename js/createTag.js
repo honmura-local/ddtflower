@@ -1,7 +1,7 @@
 //JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
 
 //createTagコール時の引数として使う定数。
-const CREATETAG_FIRST = -1;
+CREATETAG_FIRST = -1;
 
 function createTag(){
 	//JSONデータを格納する変数。
@@ -96,9 +96,9 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.20
-	 * 修正者:T.Masuda
-	 * 修正日:2015.03.09
-	 * 内容　:指定した要素に挿入できるように引数を追加しました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.03.10
+	 * 内容　:第三引数appendToを追加しました。指定した先にタグを挿入します。
 	 */
 	this.outputTag = function(key, domNodeName, appendTo){
 		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
@@ -112,15 +112,17 @@ function createTag(){
 		var tag = this.createTag(mapNode, domNode);
 		// パーツの作成に成功したならば
 		if(tag != null){
-			//appendToに指定先があれば
-			if(appendTo !== undefined){
-				//指定した先にtagを挿入する。
+			//@mod 2015.03.10 T.Masuda 第三引数appendToに対応しました。
+			//appendToが入力されていれば
+			if(appendTo != null){
+				//appendで、作成したタグをappendToに追加する。
 				$(appendTo).append(tag);
-			//そうでなければ
+			//appendToが空であれば	
 			} else {
-				//mainのタグにtagを挿入する。。
+				//appendで作成したタグをmainに追加する。
 				$('.main').append(tag);
 			}
+			//@mod 2015.03.10 T.Masuda ここまで変更しました。
 		// パーツの作成に失敗したならば
 		} else{
 			//失敗のメッセージダイアログを出す。

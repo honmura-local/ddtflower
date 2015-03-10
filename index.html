@@ -51,10 +51,15 @@ $(document).ready(function(){
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
-	creator.outputTag('header', 'header');					// トップメニューを作る
-	creator.outputTag('main', 'main');						// コンテンツを格納するmainのタグを作る
+	//ヘッダー内のタグが作成済みでなければ
+	if($('header').children().length <= 0){
+		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る
+		creator.outputTag('topMenu', 'topMenu', '.header');		// トップメニューを作る
+		// ログイン状態をチェックする。
+		checkLoginState();
+	}
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
-	creator.outputTag('footer');							// フッターーを作る
+	creator.outputTag('footer');							// フッターを作る
 	
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
@@ -63,8 +68,6 @@ $(document).ready(function(){
 	fixYCoordinate('header', '.flowerBackground');
 	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 	fixXCoordinateOnScroll('header')
-	// ログイン状態をチェックする。
-	checkLoginState();
 	
 	//JSONデータを格納する変数を初期化する。
 	creator.json = null;
@@ -78,7 +81,8 @@ $(document).ready(function(){
 <body>
 <!-- container -->
 <div id="container">
-<div class="main"></div>
+	<header class="header"></header>
+	<div class="main"></div>
 </div>
 </body>
 </html>

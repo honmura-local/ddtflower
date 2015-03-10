@@ -11,7 +11,6 @@
 		creator.getJsonFile('source/voice.json');		// ファイルのデータをjsonを用いて持ってくる
 		creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
 		creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-		creator.outputTag('header', 'header');	// トップメニューを作る
 		creator.outputTag('headImage', 'createImage');	// 天の画像を作る
 		creator.outputTag('pageTitle');					// タイトル領域を作る
 		creator.outputTag('footImage', 'createImage');	// 地の画像を作る
@@ -21,8 +20,6 @@
 		fixYCoordinate('header', '.main');
 		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 		fixXCoordinateOnScroll('header')
-		// ログイン状態をチェックする。
-		checkLoginState();
 	</script>
 </body>
 </html>
