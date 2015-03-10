@@ -300,8 +300,6 @@ if (window.history && window.history.pushState){
         currentLocation = state['url'];			//stateから現在のURLを取り出し保存する。
         callPage(state['url'], state);			//履歴からページを読み込む。
   });
-//pushStateに対応していなければhashchangeで履歴を取る。
-} else {
 }
 
 /*
@@ -315,10 +313,10 @@ if (window.history && window.history.pushState){
 $(window).on('load', function(){
 	//pushStateに対応していれば、pushStateで更新のイベント
 	if (window.history && window.history.pushState){
-		//履歴からURLを引き出す
-		var currentUrl = window.history.state.url;
-		// 現在のページの履歴があれば
-		if(currentUrl != null);{
+		//初回ロードでなければ
+		if (window.history.state){
+			//履歴からURLを引き出す
+			var currentUrl = window.history.state.url;
 			//ページを読み込む。更新なので履歴を積まないために第二引数を入力する。
 			callPage(currentUrl, window.history.state);
 		}
