@@ -51,10 +51,10 @@ $(document).ready(function(){
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
-	//ヘッダー、mainのタグが作成済みでなければ
-	creator.outputTag('header', 'header');	// トップメニューを作る
+	creator.outputTag('header', 'header');					// トップメニューを作る
+	creator.outputTag('main', 'main');						// コンテンツを格納するmainのタグを作る
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
-	creator.outputTag('footer');							// フッターを作る
+	creator.outputTag('footer');							// フッターーを作る
 	
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
