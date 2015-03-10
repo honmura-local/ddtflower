@@ -51,8 +51,11 @@ $(document).ready(function(){
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
-	creator.outputTag('header', 'header', '#container');	// トップメニューを作る
-	creator.outputTag('main', 'main', '#container');		// コンテンツを格納するmainのタグを作る
+	//ヘッダー、mainのタグが作成済みでなければ
+	if(!($('.header', document).length > 0)){
+		creator.outputTag('header', 'header', '#container');	// トップメニューを作る
+		creator.outputTag('main', 'main', '#container');		// コンテンツを格納するmainのタグを作る
+	}
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	creator.outputTag('footer');							// フッターーを作る
 	
