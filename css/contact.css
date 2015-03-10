@@ -27,17 +27,20 @@
  * 変更者 :T.Yamamoto
  * 変更日 :2015.03.10
  * 内容   :iPhoneサイズで崩れが起きていたため、widthを増加しました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.10
+ * 内容   :margin-left, text-indentの削除、widthを45pxから128pxに変更した
 
  */
 .contactForm dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
 	clear: both;		/* 回り込みをさせない */
 	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	text-indent: -80px;	/* 1行目を左にずらす。 */
+	/*text-indent: -80px;*/	/* 1行目を左にずらす。 */
 	display: block;		/* ブロックとして扱う */
-	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
+	/*margin-left: 80px;*/	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 45px;		/* 文字の幅を設定。最長の文字に合わせる */
+	width: 128px;		/* 文字の幅を設定。最長の文字に合わせる */
 	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }

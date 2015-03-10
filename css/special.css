@@ -401,14 +401,47 @@
 }
 
 /* 
+ * セレクタ:.weekOfDay label input
+ * 概要   :可能曜日のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.10
+ */
+.weekOfDay label input {
+    margin-left: 20px;      /* 20px左に余白を空ける */
+}
+
+/* 
+ * セレクタ:monthOfWeek label input
+ * 概要   :可能曜日のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.10
+ */
+.monthOfWeek label input {
+    margin-left: 10px;      /* 10px左に余白を空ける */
+}
+
+/* 
+ * セレクタ:.weekOfDay, .weekOfDay, .monthOfWeek
+ * 概要   :可能曜日のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.10
+ */
+.weekOfDay, .monthOfWeek {
+    line-height: 2;
+}
+
+/* 
  * セレクタ:.buttonBottomText
  * 概要   :チェックボックスのラベルについてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.06
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.10
+ * 内容   :全削除
  */
-.buttonBottomText {
-    margin-left: -8px;  /* 左に5px寄せる */
-}
+/*.buttonBottomText {*/
+    /*margin-left: 0px;*/  /* 左に5px寄せる */
+/*}*/
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
