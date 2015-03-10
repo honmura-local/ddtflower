@@ -115,7 +115,7 @@ function createTag(){
 			//appendToに指定先があれば
 			if(appendTo !== undefined){
 				//指定した先にtagを挿入する。
-				$(appendTo).prepend(tag);
+				$(appendTo).append(tag);
 			//そうでなければ
 			} else {
 				//mainのタグにtagを挿入する。。

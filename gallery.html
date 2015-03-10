@@ -5,35 +5,31 @@
 <title>DDTFlowers/プリザーブドフラワー</title>
 <!-- コース案内のCSSファイルを読み込む。 -->
 <link href="css/courseguide.css" rel="stylesheet" type="text/css">
-
 <!-- slickのCSSを読み込む。 -->
 <link type="text/css" href="css/slick.css" rel="stylesheet">
 <!-- jqueryUIのcssを読み込む -->
 <link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
-
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 
-<script>
-	creator.getJsonFile('source/gallery.json');	// ファイルのデータをjsonを用いて持ってくる
-	creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-	creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-	creator.outputTag('header');					// トップメニューを作る
-	creator.outputTag('headImage', 'createImage');					// 天の画像を作る
-	creator.outputTag('pageTitle');					// タイトル領域を作る
-	creator.outputTag('footImage', 'createImage');					// 地の画像を作る
-	creator.outputTag('footer');					// フッターを作る
-	// createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
-
-	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-	fixYCoordinate('header', '.main');
-	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-	fixXCoordinateOnScroll('header')
-	// ログイン状態をチェックする。
-	checkLoginState();
-
-</script>
 </head>
 <body>
+	<script>
+		creator.getJsonFile('source/gallery.json');		// ファイルのデータをjsonを用いて持ってくる
+		creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+		creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+		creator.outputTag('header');					// トップメニューを作る
+		creator.outputTag('headImage', 'createImage');	// 天の画像を作る
+		creator.outputTag('pageTitle');					// タイトル領域を作る
+		creator.outputTag('footImage', 'createImage');	// 地の画像を作る
+		creator.outputTag('footer');					// フッターを作る
+	
+		// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+		fixYCoordinate('header', '.main');
+		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+		fixXCoordinateOnScroll('header')
+		// ログイン状態をチェックする。
+		checkLoginState();
+	</script>
 </body>
 </html>
