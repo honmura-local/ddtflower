@@ -34,11 +34,10 @@ time, mark, audio, video {
 	}
 
 body {
-    line-height:1.4;        /* 1行の間を1.5行分にする */
-    /* font-familyを指定 */
-	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
-	color: #555;		/* ベースのフォンとカラー */
-    background: white;  /* 背景色を白にする。 */
+    line-height:1.4;        /* 1行の間を1.4行分にする */
+	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';		/* font-familyを指定 */
+	color: #555;			/* ベースのフォントカラー */
+    background: white;  	/* 背景色を白にする。 */
 }
 
 h2,
@@ -617,14 +616,14 @@ footer{
      * 変更日 :2015.02.21
      * 追加者 :T.Yamamoto
 	 * 追加日 :2015.03.10
-		 * 内容   :文字サイズを削除
+	 * 内容   :文字サイズを削除
      */
     #container {
         width: 100%;        /* コンテンツの幅を100%にする */
         margin: 0 auto;     /* 中央揃えにする */
     }
     /* 
-     * セレクタ:#container
+     * セレクタ:#container, .pageTitle .summary
      * 概要   :スマホ用デフォルト文字サイズの設定
      * 作成者 :T.Yamamoto
      * 作成日 :2015.03.10

@@ -602,7 +602,7 @@
      * 内容   :セレクターをdescriptionに変更
      */
     .description {
-        margin: 0 auto 10px;    /* 中央に寄せる。 */
+        margin: 15px 5% 0 5%;    /* コンテンツの左右を中央に寄せ、上から15pxの余白をとる */
     }
 
     /* 
@@ -650,7 +650,7 @@
      */
      .contentsTitleText{
         position: relative;     /* 相対位置にする */
-        top: -10px;              /* 5px上にずらす */
+        top: -10px;              /* 10px上にずらす */
      }
 
     /* 
@@ -751,6 +751,6 @@
      * 内容   :font-sizeの削除
      */
     .itemList .listContent {
-        text-indent: -13px;      /* 字下げようにインデントをとる */
+        text-indent: -8px;      /* 字下げのためにインデントをとる */
     }
 }
