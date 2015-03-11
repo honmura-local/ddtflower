@@ -49,7 +49,7 @@
     /*padding: 10px;*/      /* 要素の幅を10px広げる */
     /*font-size: 11px;*/    /* 文字サイズを11pxにするする */
     /*text-align: left;*/   /* 文字を左寄りにする */
-    /*border: 1px solid #D0D0AC;*/  /* 黄緑の罫線で区切る。 */
+    /*border: 1px solid #D0D0AC;*/	/* 黄緑の罫線で区切る。 */
 /*}*/
 
 /* 
@@ -62,7 +62,7 @@
  * 内容　 :コース案内と同様のレイアウトへの修正をしました。
  */
 .specialGuide th {
-    background: #F0F3F5;    /* 背景色を薄い青にする。 */
+	background: #F0F3F5;	/* 背景色を薄い青にする。 */
 }
 
 /* 
@@ -72,7 +72,7 @@
  * 作成日 :2015.02.09
  */
 .specialGuide td {
-    width: 64%;         /* 幅を64%にする */
+    width: 65%;         /* 幅を60%にする */
 }
 
 /* 
@@ -82,7 +82,7 @@
  * 作成日 :2015.02.09
  */
 .calendar {
-    /* margin: 80px 0 0; */ /* 上のmarginを設定する。 */
+    /* margin: 80px 0 0; */	/* 上のmarginを設定する。 */
     width: 48%;         /* 幅を47%にする */
     font-size: 14px;    /* 文字サイズを20pxにする */
     float: right;       /* 右側に回り込む */
@@ -99,7 +99,7 @@
     height: 120px;      /* 高さを120pxに指定する。 */
     margin: 0 auto;     /* 中央に寄せる。 */
     clear: both;        /* 回り込みを無効にする */
-    margin-bottom: 60px!important;  /* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
+    margin-bottom: 60px!important;	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
 }
 
 /* 
@@ -109,9 +109,9 @@
  * 作成日 :2015.02.27
  */
 .experienceGallery > div {
-    /* padding: 8px 0 0; */                 /* 上部にpaddingを挿入する。 */
-    /* background: rgb(206,220,58); */      /* 背景色を黄緑色にする。 */
-    border: 1px solid rgb(206,220,58);  /* 黄緑色の罫線で囲む。 */
+	/* padding: 8px 0 0; */					/* 上部にpaddingを挿入する。 */
+	/* background: rgb(206,220,58); */		/* 背景色を黄緑色にする。 */
+	border: 1px solid rgb(206,220,58);	/* 黄緑色の罫線で囲む。 */
 }
 /* 
  * セレクタ:.experienceGallery img
@@ -123,9 +123,9 @@
  * 内容　 :フォトギャラリーと同様の画像要素サイズに変更しました。
  */
 .experienceGallery img{
-    height: auto;       /* 高さを固定値にして揃える。 */
-    width: 200px;       /* 幅を自動調整する。 */
-    margin: 0 auto;     /* 中央に寄せる。 */
+	height: auto;		/* 高さを固定値にして揃える。 */
+	width: 200px;		/* 幅を自動調整する。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
 }
 
 /* 
@@ -135,9 +135,9 @@
  * 作成日 :2015.02.27
  */
 .experienceGallery p {
-    text-align: center; /* 中央に寄せる。 */
-    padding: 5px 0;     /* 上下に余裕を持たせる。 */
-    color: #000;        /* 白抜き文字 */
+	text-align: center;	/* 中央に寄せる。 */
+	padding: 5px 0;		/* 上下に余裕を持たせる。 */
+	color: #000;		/* 白抜き文字 */
 }
 
 /* 
@@ -147,9 +147,9 @@
  * 作成日 :2015.02.27
  */
 .calendar > div {
-    width:      100%;           /* 幅を領域一杯に広げる。 */
-    font-size:  16px;       /* フォントサイズを上げて全体を大きくする。 */
-    box-sizing: border-box; /* サイズの計算に線、paddingを含む。 */
+	width: 		100%;			/* 幅を領域一杯に広げる。 */
+	font-size: 	16px;		/* フォントサイズを上げて全体を大きくする。 */
+	box-sizing: border-box;	/* サイズの計算に線、paddingを含む。 */
 }
 
 /* 
@@ -159,7 +159,7 @@
  * 作成日 :2015.03.02
  */
 .calendar > div  > div {
-    font-size:  0.95em;     /* タイトルより少しだけ小さいフォントを指定する。 */
+	font-size: 	0.95em;		/* タイトルより少しだけ小さいフォントを指定する。 */
 }
 
 /* 
@@ -169,8 +169,8 @@
  * 作成日 :2015.03.02
  */
 .calendar .ui-datepicker td a{
-    padding-top     : 6px;      /* 上paddingを設定する。 */
-    padding-bottom  : 6px;      /* 下paddingを設定する。 */
+	padding-top 	: 6px;		/* 上paddingを設定する。 */
+	padding-bottom 	: 6px;		/* 下paddingを設定する。 */
 }
 
 /* 体験レッスン */
@@ -188,10 +188,10 @@
  * 内容　 :コース案内と同様のレイアウトへの修正をしました。
  */
 .specialGuide {
-    width: 50%;                 /* 幅を50%にする */
-    padding: 10px;              /* 10px要素の幅を広げる */
-    margin: 0px 0px 30px;       /* 下に30pxの余白を空ける */
-    float: left;                /* 左側に回り込む */
+    width: 50%;             	/* 幅を50%にする */
+    padding: 10px;          	/* 10px要素の幅を広げる */
+    margin: 0px 0px 30px;     	/* 下に30pxの余白を空ける */
+    float: left;           	 	/* 左側に回り込む */
 }
 
 /* 
@@ -220,17 +220,13 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.09
  * 内容   :フォントサイズ以外、削除
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.10
- * 内容   :全削除
-
  */
-/*.specialGuide th, .specialGuide td {*/
+.specialGuide th, .specialGuide td {
     /*padding: 10px;*/      /* 要素の幅を10px広げる */
-    /*font-size: 13px;*/    /* 文字サイズを13pxにするする */
+    font-size: 13px;    /* 文字サイズを13pxにするする */
     /*text-align: left*/;   /* 文字を左寄りにする */
-    /*border: 1px solid #D0D0AC;*/  /* 黄緑の罫線で区切る。 */
-/*}*/
+    /*border: 1px solid #D0D0AC;*/	/* 黄緑の罫線で区切る。 */
+}
 
 /* 
  * セレクタ:.specialGuide th
@@ -245,7 +241,7 @@
  * 内容   :全削除
  */
 /*.specialGuide th {*/
-    /*background: #F0F3F5;*/    /* 背景色を薄い青にする。 */
+	/*background: #F0F3F5;*/	/* 背景色を薄い青にする。 */
 /*}*/
 
 /* 
@@ -268,7 +264,7 @@
  * 内容   :84行目と重複するため全削除
  */
 /*.calendar {*/
-    /* margin: 80px 0 0; */ /* 上のmarginを設定する。 */
+    /* margin: 80px 0 0; */	/* 上のmarginを設定する。 */
     /*width: 48%;*/         /* 幅を47%にする */
     /*font-size: 14px;*/    /* 文字サイズを20pxにする */
     /*float: right;*/       /* 右側に回り込む */
@@ -288,7 +284,7 @@
     /*height: 120px;*/      /* 高さを120pxに指定する。 */
     /*margin: 0 auto;*/     /* 中央に寄せる。 */
     /*clear: both;*/        /* 回り込みを無効にする */
-    /*margin-bottom: 60px!important;*/  /* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
+    /*margin-bottom: 60px!important;*/	/* 下にmarginを挿入する。slickのcssの値を上書きするためにimportantをつける。 */
 /*}*/
 
 /* 
@@ -301,7 +297,7 @@
  * 内容   :111行目と重複するため、全削除
  */
 /*.experienceGallery > div {*/
-    /*border: 1px solid rgb(206,220,58);*/  /* 黄緑色の罫線で囲む。 */
+	/*border: 1px solid rgb(206,220,58);*/	/* 黄緑色の罫線で囲む。 */
 /*}*/
 /* 
  * セレクタ:.experienceGallery img
@@ -316,9 +312,9 @@
  * 内容   :125行目と重複するため、全削除
  */
 /*.experienceGallery img{*/
-    /*height: auto;*/       /* 高さを固定値にして揃える。 */
-    /*width: 200px;*/       /* 幅を自動調整する。 */
-    /*margin: 0 auto;*/     /* 中央に寄せる。 */
+	/*height: auto;*/		/* 高さを固定値にして揃える。 */
+	/*width: 200px;*/		/* 幅を自動調整する。 */
+	/*margin: 0 auto;*/		/* 中央に寄せる。 */
 /*border: 1px solid rgb(206,220,58);
 box-sizing: border-box;*/
 /*}*/
@@ -333,9 +329,9 @@ box-sizing: border-box;*/
  * 内容   :137行目と重複するため全削除
  */
 /*.experienceGallery p {*/
-    /*text-align: center;*/ /* 中央に寄せる。 */
-    /*padding: 5px 0;*/     /* 上下に余裕を持たせる。 */
-    /*color: #000;*/        /* 白抜き文字 */
+	/*text-align: center;*/	/* 中央に寄せる。 */
+	/*padding: 5px 0;*/		/* 上下に余裕を持たせる。 */
+	/*color: #000;*/		/* 白抜き文字 */
 /*}*/
 
 /* スマホ・タブレットレイアウト */
@@ -353,9 +349,9 @@ box-sizing: border-box;*/
      * 内容  :widthを修正しました。
      */
      .specialGuide {
-       width: 90%;              /* marginを考慮した可変幅を設定する。 */
-       margin: 0 auto 10px;     /* 中央に寄せる。下のmarginもセットする。 */
-       float: none;             /* floatを解除する。 */
+       width: 90%;				/* marginを考慮した可変幅を設定する。 */
+       margin: 0 auto 10px;		/* 中央に寄せる。下のmarginもセットする。 */
+       float: none;				/* floatを解除する。 */
      }
 
     /* 
@@ -384,9 +380,9 @@ box-sizing: border-box;*/
      * 内容  :無駄なスタイルを削除しました。
      */
      .calendar {
-        width: 100%;            /* 横幅を一杯広げる。 */
-        font-size: 12.5px;      /* 文字サイズを12.5pxにする */
-        margin: 0 auto 10px;    /* 上のmarginをなくす。下には追加する。 */
+     	width: 100%;			/* 横幅を一杯広げる。 */
+        font-size: 12.5px;  	/* 文字サイズを12.5pxにする */
+        margin: 0 auto 10px;	/* 上のmarginをなくす。下には追加する。 */
      }
 
     /* 
@@ -396,9 +392,9 @@ box-sizing: border-box;*/
      * 作成日 :2015.02.23
      */
      .calendar > div{
-         display: block;    /* ブロック要素として表示する。 */
-         margin: 0 auto;    /* 中央に寄せる。 */
-         width: 90%;        /* 幅を90%に設定する。 */
+	     display: block;	/* ブロック要素として表示する。 */
+	     margin: 0 auto;	/* 中央に寄せる。 */
+     	 width: 90%;		/* 幅を90%に設定する。 */
      }
 
 
@@ -412,10 +408,10 @@ box-sizing: border-box;*/
  * 内容   :widthを90%にする
  */
 .experienceGallery{
-    width: 90%;             /* 幅をページ幅に合わせて伸縮する */
-    height: auto;           /* 高さを自動調整する。 */
+    width: 90%;       		/* 幅をページ幅に合わせて伸縮する */
+    height: auto;      		/* 高さを自動調整する。 */
     margin: 0 auto 10px;    /* 中央に寄せる。下とも間を空ける。 */
-    clear: both;            /* 回り込みを無効にする */
+    clear: both;        	/* 回り込みを無効にする */
     margin-bottom: 30px!important;
 }
 
@@ -429,9 +425,9 @@ box-sizing: border-box;*/
  * 内容　 :画像のサイズのスタイルを変更しました。
  */
 .experienceGallery img{
-    height: auto;   /* 高さを自動にする */
-    width:  100%;   /* 幅を自動調整にする */
-    margin: 0 auto; /* 画像を中央に寄せる。 */
+    height: auto;  	/* 高さを自動にする */
+    width:  100%;  	/* 幅を自動調整にする */
+    margin: 0 auto;	/* 画像を中央に寄せる。 */
 }
 
 /* 
@@ -441,8 +437,8 @@ box-sizing: border-box;*/
  * 作成日 :2015.02.27
  */
 .experienceConstructs {
-    width: 90%;     /* 幅90% */
-    margin: 0 auto; /* 中央寄せ */
+	width: 90%;		/* 幅90% */
+	margin: 0 auto;	/* 中央寄せ */
 }
 
 /* 
@@ -452,7 +448,7 @@ box-sizing: border-box;*/
  * 作成日 :2015.02.27
  */
 .experienceGallery > div > div{
-    width:100%!important;   /* 画像の領域の幅を一定にする。 */
+	width:100%!important;	/* 画像の領域の幅を一定にする。 */
 }
 
 /* 
@@ -462,7 +458,7 @@ box-sizing: border-box;*/
  * 作成日 :2015.02.27
  */
 .experienceGallery > div > div > div{
-    width:50%!important;    /* 2個ずつ並べて表示する。 */
+	width:50%!important;	/* 2個ずつ並べて表示する。 */
 }
 
 /* 
@@ -475,7 +471,7 @@ box-sizing: border-box;*/
  * 内容   :全削除
  */
 /*.reservedFlow {*/
-    /*margin-top: 10px;*/   /* 上marginを減らす。 */
+	/*margin-top: 10px;*/	/* 上marginを減らす。 */
 /*}*/
 
 /* 
@@ -488,7 +484,7 @@ box-sizing: border-box;*/
  * 内容   :全削除
  */
 /*.reservedFlowTitle > * {*/
-    /*top: 0px!important;*/     /* タイトル領域の要素をタイトル領域からはみ出ない様にする。 */
+	/*top: 0px!important;*/		/* タイトル領域の要素をタイトル領域からはみ出ない様にする。 */
 /*}*/
 
 /* 
@@ -501,7 +497,7 @@ box-sizing: border-box;*/
  * 内容   :全削除
  */
 /*.reservedFlowTitleText {*/
-    /*vertical-align: bottom;*/     /* タイトルを下に寄せる。 */
+	/*vertical-align: bottom;*/		/* タイトルを下に寄せる。 */
 /*}*/
 
 /* 
@@ -514,6 +510,6 @@ box-sizing: border-box;*/
  * 内容   :全削除
  */
 /*.experienceGallery {*/
-    /*width: 90%;*/     /* 幅90% */
+	/*width: 90%;*/		/* 幅90% */
 /*}*/
 }

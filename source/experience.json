@@ -8,7 +8,7 @@
             "text": "体験レッスン"
         },
         "summary": {
-            "text": "興味はあるけど作れるかどうか、続くかどうか不安・・・。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
+            "text": "興味はあるけど作れるかどうか、続くかどうか不安…。まずは体験レッスンを受けてみて下さい！体験レッスンは本コースに則した内容で楽しくてかわいい作品を作ることが出来ます。"
         }
     },
     "reservedFlow": {
@@ -246,7 +246,7 @@
                     "buttonTopLabel":{
                         "buttonTop": {
                             "name": "schedule",
-                            "value": "11:00 〜 13:00<br>",
+                            "value": "11:00 〜 13:00",
                             "type": "checkbox"
                         },
                         "buttonTopText":{
@@ -261,7 +261,7 @@
                     "buttonTopLabel":{
                        "buttonTop": {
                             "name": "schedule",
-                            "value": "14:00 〜 16:00<br>",
+                            "value": "14:00 〜 16:00",
                             "type": "checkbox"
                         },
                         "buttonTopText":{
@@ -275,7 +275,7 @@
                 "buttonTopLabel":{
                     "buttonTop": {
                             "name": "schedule",
-                            "value": "16:30 〜 18:30<br>",
+                            "value": "16:30 〜 18:30",
                             "type": "checkbox"
                     },
                     "buttonTopText":{
@@ -288,7 +288,7 @@
                 "buttonTopLabel":{
                     "buttonTop": {
                         "name": "schedule",
-                        "value": "19:00 〜 21:00<br>",
+                        "value": "19:00 〜 21:00",
                         "type": "checkbox"
                     },
                     "buttonTopText":{
@@ -301,7 +301,7 @@
                 "buttonTopLabel":{
                     "buttonTop": {
                         "name": "schedule",
-                        "value": "19:30 〜 21:00<br>",
+                        "value": "19:30 〜 21:00",
                         "type": "checkbox"
                     },
                     "buttonTopText":{

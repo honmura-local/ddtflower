@@ -24,9 +24,6 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.09
  * 内容   :font-sizeがbodyのスタイルと重複するため削除
- * 変更者 :T.Yamamoto
- * 変更日 :2015.03.10
- * 内容   :iPhoneサイズで崩れが起きていたため、widthを増加しました。
 
  */
 .contactForm dt{
@@ -37,7 +34,7 @@
 	display: block;		/* ブロックとして扱う */
 	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 45px;		/* 文字の幅を設定。最長の文字に合わせる */
+	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
 	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }
@@ -242,12 +239,9 @@
 	 * 概要   :入力項目のinput要素。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
-	 * 修正者 :T.Masuda
-	 * 修正日 :2015.03.10
-	 * 内容　 :幅を調整しました。
 	 */
 	.contactForm dd{
-		width: 42%;					/* 幅を画面の42%に指定する。 */
+		width: 45%;					/* 幅を画面の45%に指定する。 */
 	}
 	
 	/* 
