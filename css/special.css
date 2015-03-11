@@ -14,19 +14,6 @@
 }
 
 /* 
- * セレクタ:.specialDate
- * 概要   :予約希望日。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   : 全削除
- */
-/*.specialDate{*/
-    /*margin-bottom: 5px;*/ /* 下に5pxのmarginを挿入する。 */
-/*}*/
-
-/* 
  * セレクタ:.reservedSummary
  * 概要   :予約希望についての概要(注意書き)。
  * 作成者 :T.Masuda
@@ -38,7 +25,7 @@
 .reservedSummary{
     margin-bottom: 5px; /* 下に5pxのmarginを挿入する。 */
     text-indent: 1em;   /* インデントを1文字分とる */
-    line-height: 1.3;
+    line-height: 1.3;   /* 行間を1.3行分にする */
 }
 
 /* 
@@ -48,25 +35,7 @@
  * 作成日 :2015.02.06
  */
 .specialReservedDialog table th{
-    width: 50px;        /* 幅を60pxにする */
-}
-
-/* 
- * セレクタ:.specialRadioButtonConstruct
- * 概要   :作品選択のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.
- */
-.specialRadioButtonConstruct{
-    width: inherit;     /* 幅をダイアログから継承する。 */
-}
-/* 
- * セレクタ:.specialRadioButtonConstruct th
- * 概要   :作品選択のテーブルの見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.specialRadioButtonConstruct th{
+    width: 50px;        /* 幅を50pxにする */
 }
 
 /* 
@@ -90,62 +59,12 @@
 }
 
 /* 
- * セレクタ:.specialRadioButtonConstruct th
- * 概要   :作品選択のテーブルの見出し。
+ * セレクタ:.specialRadioButtonConstruct, .radioButtonSpecialSchedule, .subInfo
+ * 概要   :希望作品のテーブル。予約日時のテーブル。予備情報。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.06
  */
-.specialRadioButtonConstruct th{
-    width: 50px;        /* 「作品」の文字が十分に入る幅を設定する。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule
- * 概要   :予約日時のテーブル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule{
-    width: inherit;     /* ダイアログの幅を継承する。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule td
- * 概要   :予約日時のテーブルの見出し。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule th{
-    width: 40px;        /* 「時限」の文字が入るだけの幅を確保する。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+0)
- * 概要   :予約日時のテーブルのラジオボタン列。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule tr td:nth-child(2n+0){
-    width: 20x;     /* ラジオボタンが十分に配置できる幅をセットする。 */
-}
-
-/* 
- * セレクタ:.radioButtonSpecialSchedule tr td:nth-child(2n+1)
- * 概要   :予約日時のテーブルの時間記述列。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.radioButtonSpecialSchedule tr td:nth-child(2n+1){
-    width: 120x;    /* ラジオボタンが十分に配置できる幅をセットする。 */
-}
-
-/*
- * セレクタ:.subInfo
- * 概要   :予約についての予備情報。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- */
-.subInfo{
+ .specialRadioButtonConstruct, .radioButtonSpecialSchedule, .subInfo{
     width: inherit;     /* ダイアログの幅を継承する。 */
 }
 
@@ -170,21 +89,18 @@
  * 内容   :幅を90pxから110pxに変更
  */
 .specialConfirmSummary tr td:nth-child(1){
-    width: 110px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
+    width: 110px;    /* 確認ダイアログで見出しの幅を110pxにする */
 }
 
 /* 
- * セレクタ:.specialConfirmSummary tr td:nth-child(1)
- * 概要   :.specialConfirmSummaryの行の1番目(見出し)のセル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.06
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   :幅を90pxから110pxに変更
+ * セレクタ:.specialConfirmSummary tr td:nth-child(2)
+ * 概要   :.specialConfirmSummaryの行の2番目(中身)のセル。
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.09
  */
 .specialConfirmSummary tr td:nth-child(2){
-    width: 160px;    /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
-    word-break:break-all;
+    width: 160px;           /* 90pxの幅を取り、見出し分十分な余裕を取る。 */
+    word-break:break-all;   /* 改行の設定をし、レイアウトを崩さないようにする */
 }
 
 /* 
@@ -208,16 +124,6 @@
 }
 
 /* 
- * セレクタ:.reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
- * 概要   :ダイアログのコンテンツ部分のスタイル。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.09
- */
-.reservedSummary, .radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo{
-    font-size: 15px;    /* フォントのサイズを15pxにする */
-}
-
-/* 
  * セレクタ:.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
  * 概要   :ダイアログのコンテンツ部分のスタイル。
  * 作成者 :T.Yamamoto
@@ -227,27 +133,7 @@
     border-top: 1px solid #D0D0AC;  /* 灰色の線を入れる */
     display: block;                 /* ブロックレベル要素にする */
     padding: 10px;                  /* 要素の幅を10px広げる */
-}
-
-/* 
- * セレクタ:.reservedSummary
- * 概要   :ダイアログの概要部分のスタイル。
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- */
-/*.reservedSummary {*/
-    /*line-height: 1.3;*/       /* 行間を1.3行分あける */
-/*}*/
-
-/* 
- * セレクタ:.preserved2RadioButtonWrap, .fresh2RadioButtonWrap
- * 概要   :ダイアログの作品のラジオボタンのスタイル。
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- */
-.preserved2RadioButtonWrap, .fresh2RadioButtonWrap {
-    display: block;     /* ブロック要素にする */
-    margin-left: 20px;  /* 左から20pxの余白をとる */
+    font-size: 15px;                /* フォントのサイズを15pxにする */
 }
 
 /* 
@@ -262,7 +148,7 @@
 
 /* 
  * セレクタ:.radioButtonSpecialConstruct tr td
- * 概要   :作品についての
+ * 概要   :作品についてのプリザ2、生花２の設定
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
@@ -281,68 +167,13 @@
 }
 
 /* 
- * セレクタ:.subInfoFirstRow
- * 概要   :予備情報の1行目についてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.11
- * 内容   :全削除
- */
-/*.subInfoFirstRow {*/
-    /*width: 252px;*/       /* 要素の幅を252pxにする */
-    /*height: 20px;*/       /* 高さを20pxにする */
-/*}*/
-
-/* 
- * セレクタ:.subInfo td
- * 概要   :予備情報の一つのカラムについてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   :全削除
- */
-/*.subInfo td {*/
-    /*width: 15px;*/        /* 要素の幅を15pxにする */
-/*}*/
-
-/* 
- * セレクタ:.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {
- * 概要   :予備情報の2行目以降のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   :全削除
- */
-/*.subInfoSecondRow, .subInfoThirdRow, .subInfoFourthRow, .subInfoFifthRow {*/
-    /*padding-left: 5px;*/  /* 要素の幅を5px左向きに広げる */
-    /*font-size: 12px;*/    /* フォントサイズ12pxにする */
-    /*text-align: left;*/   /* 左寄りにする */
-/*}*/
-
-/* 
- * セレクタ:.subInfoThirdRow {
- * 概要   :予備情報の3行目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.27
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   :全削除
- */
-/*.subInfoThirdRow {*/
-    /*height: 30px;*/       /* 高さを30pxにする */
-/*}*/
-
-/* 
  * セレクタ:.personTextbox
  * 概要   :ダイアログ上部のテキストボックスのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.06
  */
 .personTextbox {
-    margin-left: 2em;
+    margin-left: 2em;       /* 二も自分左から余白を空ける */
 }
 /* 
  * セレクタ:.buttonTopText
@@ -428,29 +259,11 @@
 }
 
 /* 
- * セレクタ:.weekOfDay, .weekOfDay, .monthOfWeek
+ * セレクタ:.weekOfDay, .monthOfWeek
  * 概要   :可能曜日のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.10
  */
 .weekOfDay, .monthOfWeek {
-    line-height: 2;
-}
-
-/* 
- * セレクタ:.buttonBottomText
- * 概要   :チェックボックスのラベルについてのスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.06
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.10
- * 内容   :全削除
- */
-/*.buttonBottomText {*/
-    /*margin-left: 0px;*/  /* 左に5px寄せる */
-/*}*/
-
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-	
+    line-height: 2;         /* 1行の行間を2行分にする */
 }
