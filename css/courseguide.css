@@ -38,7 +38,7 @@
 .pageTitle img{
     width: 100px;           /* 画像サイズに関係なく幅を100pxにする。 */
     height: auto;           /* 画像の縦横比に応じた高さを取る。 */
-    /*padding: 0 5px 0 5px;*/   /* 左右に5pxのpaddingを配置する。 */
+    padding: 0 5px;   /* 左右に5pxのpaddingを配置する。 */
     /*margin-top: -20px;*/      /* 上から20px余白を空ける */
     box-sizing: border-box; /* サイズの計算にpaddingと枠線を加える。 */
     background: #FFF;       /* 仮の背景色を指定する。 */
