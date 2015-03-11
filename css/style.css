@@ -35,11 +35,14 @@ time, mark, audio, video {
 
 body {
     line-height:1.4;        /* 1行の間を1.4行分にする */
-    /* font-familyを指定 */
-	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';
-	color: #555;		/* ベースのフォンとカラー */
-    background: white;  /* 背景色を白にする。 */
-    font-size: 13px;	/* ベースのフォントサイズ */
+	font-family: 'Osaka', 'メイリオ', 'ＭＳ Ｐゴシック';		/* font-familyを指定 */
+	color: #555;			/* ベースのフォントカラー */
+    background: white;  	/* 背景色を白にする。 */
+}
+
+h2,
+body {
+	font-size: 16px;	/* ベースのフォントサイズ */  /* 2015.03.10 サイズを16pxに変更 */
 }
 
 article,aside,details,figcaption,figure,
@@ -166,15 +169,14 @@ h1,h2,h3,h4,h5,th{
  * 内容　 :min-widthを設定しました。
  */
 .header{
-    width: 100%;            /* 幅をcontainer一杯に広げる。 */
-    margin: 0px auto 3px;   /* 横位置を中心に寄せる。画面上端との間に間隔を空ける。 */
-    background: inherit;    /* containerの背景色を継承する。 */
+    width: 100%;            		/* 幅をcontainer一杯に広げる。 */
+    margin: 0px auto 3px;   		/* 横位置を中心に寄せる。画面上端との間に間隔を空ける。 */
+    background: inherit;    		/* containerの背景色を継承する。 */
     box-shadow: 0px 0.5px 10px 0px rgba(0,0,0,0.4); /* トップメニュー下に陰影をつける。 */
-    min-width: 800px;		/* 最低幅をmainの幅と合わせる。 */
-    position: fixed;    /* ヘッダーを固定する。 */
-    z-index: 5;         /* 重なり順を指定する。 */
-    top     :   0;      /* 上から0の座標に配置する。 */
-    left    :   0;      /* 左から0の座標に配置する。 */    
+    min-width: 800px;				/* 最低幅をmainの幅と合わせる。 */
+    position: fixed;    			/* ヘッダーを固定する。 */
+    z-index: 5;         			/* 重なり順を指定する。 */
+    top     :   0;      			/* 上から0の座標に配置する。 */
 }
 
 /* ガイド領域 */
@@ -247,10 +249,8 @@ h1,h2,h3,h4,h5,th{
  */
 .guideFASchool p{
     font-size   	: 12px;     /* フォントサイズを指定する。 */
-    display     	: block;    /* ブロック要素にして縦に並べる。 */
     margin-top  	: 2px;      /* 上に少々の間隔を取る。 */
     text-indent 	: 5px;      /* 先頭にインデントを入れる。 */
-	text-decoration	: none;		/* リンクの下線を消す。 */
 	color			: #000;		/* フォントの色を黒にする。 */
 }
 
@@ -277,25 +277,18 @@ h1,h2,h3,h4,h5,th{
 }
 
 /* 
- * セレクタ:.guideTel p
- * 概要   :.guide_telのテキスト。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.05
- */
-.guideTel p{
-    display: block; /* ブロック要素として扱う。 */
-}
-
-/* 
  * セレクタ:.guideTel .p1
  * 概要   :.guide_telのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.09
+ * 内容   :colorを統一化のため、消去
  */
 .guideTel .p1{
     font-size: 11px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     margin-top: 4px;    /* 上に軽い空白を与える。 */
-    color:  #777;       /* 灰色のフォントにする。 */
+    /*color:  #777;*/       /* 灰色のフォントにする。 */
 }
 
 /* 
@@ -440,7 +433,7 @@ h1,h2,h3,h4,h5,th{
  * 作成日 :2015.02.05
  */
 .topMenu li.active,.topMenu li.current{
-	border-bottom: 3px solid rgb(0, 174, 40);
+	border-bottom: 3px solid rgb(0, 174, 40);	/* メニューの下に緑の線を引く */
 }
 
 /* 
@@ -474,11 +467,9 @@ h1,h2,h3,h4,h5,th{
  * 作成日 :2015.02.25
  */
 .topMenu .active p, .topMenu .current p{
-	color:rgb(0, 174, 40);
-	opacity: 1!important;
+	color:rgb(0, 174, 40);		/* 文字の色を黄緑にする */
+	opacity: 1!important;		/* 透過度を1にして、透明にさせなくする */
 }
-
-
 
 /* 
  * セレクタ:.main
@@ -493,7 +484,6 @@ h1,h2,h3,h4,h5,th{
     position	: relative;   /* 相対位置の要素にする。 */
     z-index		: 0;          /* 重なり順の優先順位を低くする。 */
 }
-
 
 /* 
  * セレクタ:footer
@@ -545,7 +535,7 @@ footer{
  * セレクタ:.loginDialog > *
  * 概要   :ログインダイアログの子要素。
  * 作成者 :T.Masuda
- * 作成日 :2015.02.189
+ * 作成日 :2015.02.19
  */
 .loginDialog > * {
 	margin-bottom: 3px;	/* 行間を取る。 */
@@ -557,30 +547,11 @@ footer{
  * セレクタ:.loginDialog label
  * 概要   :ログインダイアログのラベル。
  * 作成者 :T.Masuda
- * 作成日 :2015.02.189
+ * 作成日 :2015.02.19
  */
 .loginDialog label {
 	display: inline-block;	/* インラインブロック要素に指定してテキストボックスと並べる。 */
 	width: 100px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
-}
-
-/* 
- * セレクタ:.loginDialog input
- * 概要   :ログインダイアログのinput要素。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.189
- */
-.loginDialog input {
-}
-
-/* 
- * セレクタ:.textRed
- * 概要   :字を赤くするためのクラス。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.18
- */
-.textRed{
-	color: #F00;	/* 文字の色を赤にする。 */
 }
 
 /* 
@@ -619,7 +590,7 @@ footer{
 	 * 作成日 :2015.02.21
 	 */
 	.main{
-	    width:      100%;      /* 幅をcontainerに合わせる。 */
+	    width:      100%;      		/* 幅をcontainerに合わせる。 */
 		margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
 	}
 	
@@ -632,78 +603,47 @@ footer{
 		 * 作成日 :2015.03.04
 		 */
 		.main{
-		    min-width:    610px;      	/* 画面を一定サイズ以上縮小しない。 */
+		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
 		}
 	}
-	    
-	    /* 
-	     * セレクタ:#container
-	     * 概要   :スマホ用container
-	     * 作成者 :T.Yamamoto
-	     * 作成日 :2015.02.16
-	     * 変更者 :T.Masuda
-	     * 変更日 :2015.02.21
-	     */
-	    #container {
-	        width: 100%;         /* コンテンツの幅を100%にする */
-	        margin: 0 auto;     /* 中央揃えにする */
-	        font-size: 12px;    /* フォントサイズを12pxにする */
-	    }
-	
-		/* 
-		 * セレクタ:.header
-		 * 概要   :ヘッダー領域のタグ。
-		 * 作成者 :T.Masuda
-		 * 作成日 :2015.02.21
-		 */
-		.header{
-		    position: static;	/* position fixedを解除する。 */
-		    min-width: 0px;		/* 最低幅を無効にする。 */
-		}
-	
-	    /* 
-	     * セレクタ:.headImage
-	     * 概要   :スマホ用ヘッダーのスタイル
-	     * 作成者 :T.Yamamoto
-	     * 作成日 :2015.02.16
-	     * 追加者 :T.Yamamoto
-		 * 追加日 :2015.03.09
- 		 * 内容   :全削除
-	     */
-	    /*.headImage {*/
-	  	  /*width: 100%;*/        /* 横幅を100%にする。 */
-	  	  /*margin: 0 auto;*/     /* 中央揃えにする */
-	    /*}*/
-	
-	    /* 
-	     * セレクタ:headImage img
-	     * 概要   :スマホ用ヘッダー画像のスタイル
-	     * 作成者 :T.Yamamoto
-	     * 作成日 :2015.02.16
-	     * 追加者 :T.Yamamoto
-		 * 追加日 :2015.03.09
- 		 * 内容   :全削除
-	     */
-	    /*.headImage img {*/
-	        /*width: 100%;*/    /* 画像の幅を100%にする */
-	        /*height auto;*/    /* 高さを自動で合わせる */
-	    /*}*/
-	
-	    /* 
-	     * セレクタ:.footImage img
-	     * 概要   :スマホ用フッター画像のスタイル
-	     * 作成者 :T.Yamamoto
-	     * 作成日 :2015.02.16
-	     * 追加者 :T.Yamamoto
-		 * 追加日 :2015.03.09
- 		 * 内容   :全削除
-	     */
-	    /*.footImage img {*/
-	        /*width: 100%;*/        /* 幅を100%にする */
-	        /*height: auto;*/       /* 高さを自動にする */
-	    /*}*/
-	
-	
+
+    /* 
+     * セレクタ:#container
+     * 概要   :スマホ用container
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.21
+     * 追加者 :T.Yamamoto
+	 * 追加日 :2015.03.10
+	 * 内容   :文字サイズを削除
+     */
+    #container {
+        width: 100%;        /* コンテンツの幅を100%にする */
+        margin: 0 auto;     /* 中央揃えにする */
+    }
+    /* 
+     * セレクタ:#container, .pageTitle .summary
+     * 概要   :スマホ用デフォルト文字サイズの設定
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.03.10
+     */
+	#container,
+	.pageTitle .summary {
+		font-size: 13px;    /* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ:.header
+	 * 概要   :ヘッダー領域のタグ。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.header{
+	    position: static;	/* position fixedを解除する。 */
+	    min-width: 0px;		/* 最低幅を無効にする。 */
+	}
+
 	/* 
 	 * セレクタ:.copyright
 	 * 概要   :コピーライトのスタイル。スマホ用では中央に寄せる。
@@ -732,9 +672,6 @@ footer{
 	.guides{
 	    width       :   100%;      /* 幅を画面に合わせる。 */
 	    height      :   auto;       /* 高さを自動調整する。 */
-	    margin      : 0 auto;       /* 中央に揃える。 */
-	    padding     :   10px 0;     /* 上下15pxのpaddingを指定する。左右には最低限のpaddingを指定する。 */
-	    font-size   :   0px;        /* 子要素のインラインブロック指定による自動挿入の空白を消す。 */
 	}
 	
 	/* 
@@ -811,9 +748,9 @@ footer{
 	 * 内容 　:paddingを変更しました。
 	 */
 	.topMenu li{
-	    width:          auto;          /* 幅を文字のサイズに合わせる。 */
-	    font-size:      13px;           /*  PCレイアウトより小さめのフォントにする。 */
-	    padding: 5px 0.85em;			/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
+	    width:          auto;       /* 幅を文字のサイズに合わせる。 */
+	    font-size:      13px;       /*  PCレイアウトより小さめのフォントにする。 */
+	    padding: 5px 0.85em;		/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
 	}
 	
 	/* 
@@ -826,7 +763,6 @@ footer{
 	    font-size:  13px;   /* 妥当なフォントサイズを指定する。 */
 	    margin-top:  0;   	/* 上のmarginをなくす */
 	}
-	
 	
 	/* 
 	 * セレクタ:footer

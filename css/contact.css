@@ -24,17 +24,20 @@
  * 追加者 :T.Yamamoto
  * 追加日 :2015.03.09
  * 内容   :font-sizeがbodyのスタイルと重複するため削除
+ * 変更者 :T.Yamamoto
+ * 変更日 :2015.03.10
+ * 内容   :text-indent,marginを削除
 
  */
 .contactForm dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
 	clear: both;		/* 回り込みをさせない */
 	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	text-indent: -80px;	/* 1行目を左にずらす。 */
+	/*text-indent: -80px;*/	/* 1行目を左にずらす。 */
 	display: block;		/* ブロックとして扱う */
-	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
+	/*margin-left: 80px;*/	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 32px;		/* 文字の幅を設定。最長の文字に合わせる */
+	width: 128px;		/* 文字の幅を設定。最長の文字に合わせる */
 	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }
@@ -231,7 +234,8 @@
 	 * 作成日 :2015.02.18
 	 */
 	.contactForm dt{
-		margin-left: 28%;	/* 左marginを可変にする。 */
+		margin-left: 10%;	/* 左marginを可変にする。 */
+		width: 107px;		/* 幅を107pxにする */
 	}
 	
 	/* 
@@ -239,40 +243,26 @@
 	 * 概要   :入力項目のinput要素。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.03.10
+	 * 内容　 :幅を調整しました。
 	 */
 	.contactForm dd{
-		width: 45%;					/* 幅を画面の45%に指定する。 */
+		width: 42%;					/* 幅を画面の42%に指定する。 */
 	}
-	
 	/* 
-	 * セレクタ:.contactForm textarea
-	 * 概要   :入力項目のテキストエリア。
+	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail {
+	 * 概要   :入力項目
 	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
+	 * 作成日 :2015.03.11
 	 */
-	.contactForm .contentTextArea textarea {
-		width: 100%; 
-	}
-	
-	/* 
-	 * セレクタ:.contactForm input[type="text"]
-	 * 概要   :問い合わせフォームのテキストボックス。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 */
-	.contactForm input[type="text"]{
-		width: 100%;	/* 幅を外枠に合わせる。 */
-	}
-	
-	/* 
-	 * セレクタ:.contactForm input[type="email"]
-	 * 概要   :問い合わせフォームのメールのテキストボックス。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 */
-	.contactForm input[type="email"]{
-		width: 100%;	/* 幅を外枠に合わせる。 */
-	}
+	 .contactForm .contentTextArea textarea,
+	 .contactForm input[type="text"],
+	 .contactForm input[type="email"],
+	 .confirmSendMail 
+	 {
+	 	width: 90%; 		/* 幅を90%にする */
+	 }
 	
 	/* 入力確認ページ */
 	/* 
@@ -282,7 +272,6 @@
 	 * 作成日 :2015.03.05
 	 */
 	.confirmSendMail {
-		width: 90%;		/* 幅をmainに合わせる。 */
 		margin: 0 auto;	/* 位置を中央に寄せる。 */
 	}
 /* 入力確認ページはここまで */

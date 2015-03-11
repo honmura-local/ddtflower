@@ -500,7 +500,7 @@
                 },
                 "personTextbox":{
                     "name":"personCount",
-                    "size":"1"
+                    "size":"2"
                 }
             }
         }
