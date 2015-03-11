@@ -751,6 +751,6 @@
      * 内容   :font-sizeの削除
      */
     .itemList .listContent {
-        text-indent: -.5em;      /* 字下げようにインデントをとる */
+        text-indent: -13px;      /* 字下げようにインデントをとる */
     }
 }
