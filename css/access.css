@@ -76,23 +76,29 @@
  * 概要   :交通機関の情報。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.11
+ * 内容   :全削除
  */
-.transport {
-	list-style: none;	/* liタグの頭の点をなくす */
-	margin: 5px 0;		/* 上下の要素と間を空ける。 */
-}
+/*.transport {*/
+	/*list-style: none;*/	/* liタグの頭の点をなくす */
+	/*margin: 5px 0;*/		/* 上下の要素と間を空ける。 */
+/*}*/
 
 /* 
  * セレクタ:.transport li
  * 概要   :交通機関の情報の各項目。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.27
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.11
+ * 内容   :全削除
  */
-.transport li{
-	font-size: 14px;	/* フォントサイズを指定する。 */
-	margin-right: 14px;	/* スマホレイアウトの場合、右端に文字が届くのでmarginを配置する。 */
-	line-height: 18px;	/* 行間を空ける。 */
-}
+/*.transport li{*/
+	/*font-size: 14px;*/	/* フォントサイズを指定する。 */
+	/*margin-right: 14px;*/	/* スマホレイアウトの場合、右端に文字が届くのでmarginを配置する。 */
+	/*line-height: 18px;*/	/* 行間を空ける。 */
+/*}*/
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){

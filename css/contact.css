@@ -26,18 +26,18 @@
  * 内容   :font-sizeがbodyのスタイルと重複するため削除
  * 変更者 :T.Yamamoto
  * 変更日 :2015.03.10
- * 内容   :iPhoneサイズで崩れが起きていたため、widthを増加しました。
+ * 内容   :text-indent,marginを削除
 
  */
 .contactForm dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
 	clear: both;		/* 回り込みをさせない */
 	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	text-indent: -80px;	/* 1行目を左にずらす。 */
+	/*text-indent: -80px;*/	/* 1行目を左にずらす。 */
 	display: block;		/* ブロックとして扱う */
-	margin-left: 80px;	/* 左にtext-indentと同じ分のmarginを挿入する。 */
+	/*margin-left: 80px;*/	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 45px;		/* 文字の幅を設定。最長の文字に合わせる */
+	width: 128px;		/* 文字の幅を設定。最長の文字に合わせる */
 	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
 	font-weight: bold;	/* 太字にする */
 }
@@ -234,7 +234,8 @@
 	 * 作成日 :2015.02.18
 	 */
 	.contactForm dt{
-		margin-left: 28%;	/* 左marginを可変にする。 */
+		margin-left: 10%;	/* 左marginを可変にする。 */
+		width: 107px;		/* 幅を107pxにする */
 	}
 	
 	/* 

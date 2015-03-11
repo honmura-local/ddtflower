@@ -186,13 +186,16 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.26
  * 内容　 :コース案内と同様のレイアウトへの修正をしました。
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.11
+ * 内容   :全削除
  */
-.specialGuide {
-    width: 50%;                 /* 幅を50%にする */
-    padding: 10px;              /* 10px要素の幅を広げる */
-    margin: 0px 0px 30px;       /* 下に30pxの余白を空ける */
-    float: left;                /* 左側に回り込む */
-}
+/*.specialGuide {*/
+    /*width: 50%;*/                 /* 幅を50%にする */
+    /*padding: 10px;*/              /* 10px要素の幅を広げる */
+    /*margin: 0px 0px 30px;*/       /* 下に30pxの余白を空ける */
+    /*float: left;*/                /* 左側に回り込む */
+/*}*/
 
 /* 
  * セレクタ:.specialGuide .summary
@@ -228,7 +231,7 @@
 /*.specialGuide th, .specialGuide td {*/
     /*padding: 10px;*/      /* 要素の幅を10px広げる */
     /*font-size: 13px;*/    /* 文字サイズを13pxにするする */
-    /*text-align: left*/;   /* 文字を左寄りにする */
+    /*text-align: left*/   /* 文字を左寄りにする */
     /*border: 1px solid #D0D0AC;*/  /* 黄緑の罫線で区切る。 */
 /*}*/
 
@@ -253,10 +256,13 @@
  * 概要   :体験レッスン案内テーブルレコードについてそれぞれの項目のスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.09
+ * 追加者 :T.Yamamoto
+ * 追加日 :2015.03.11
+ * 内容   :全削除
  */
-.specialGuide td {
-    width: 65%;         /* 幅を60%にする */
-}
+/*.specialGuide td {*/
+    /*width: 65%;*/         /* 幅を60%にする */
+/*}*/
 
 /* 
  * セレクタ:.calendar
