@@ -79,7 +79,7 @@ $cf{version} = 'postmail v8.02';
 $cf{kcode} = 'utf8';
 
 # 送信先メールアドレス
-$cf{mailto} = 'xellos00195@gmail.com';
+$cf{mailto} = 'hana@ddthink.com';
 
 # sendmailのパス【サーバパス】
 # → プロバイダの指定を確認のこと
