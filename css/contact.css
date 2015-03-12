@@ -9,11 +9,9 @@
  * 作成日 :2015.02.18
  */
 .contactForm dl{
-	margin: 0 auto 0;	/* 外枠より横幅が狭ければ、中央に寄せる */
-	width: 550px;
-	display: block;		/* ブロックとして扱う */
-	position: relative;	/* 相対位置を取る */
+	width: 700px;		/* 幅を700pxにする */
 	clear: both;		/* 回り込みさせない */
+	margin-left: 100px;	/* 左から100px寄せる */
 }
 
 /* 
@@ -32,13 +30,9 @@
 .contactForm dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
 	clear: both;		/* 回り込みをさせない */
-	/* -80px分字を左にずらす。これを適切に設定することで項目と内容の間隔を崩さずにならべることができる */
-	/*text-indent: -80px;*/	/* 1行目を左にずらす。 */
 	display: block;		/* ブロックとして扱う */
-	/*margin-left: 80px;*/	/* 左にtext-indentと同じ分のmarginを挿入する。 */
 	line-height: 20px;	/* 文字の高さを20pxに設定する。 */
-	width: 128px;		/* 文字の幅を設定。最長の文字に合わせる */
-	/*font-size: 13px;*/	/* フォントサイズを設定する。 */
+	width: 20%;			/* 文字の幅を設定。最長の文字に合わせる */
 	font-weight: bold;	/* 太字にする */
 }
 
@@ -49,13 +43,14 @@
  * 作成日 :2015.02.18
  */
 .contactForm dd{
-	float: left;				/* 左に寄せる */
-	padding-left: 20px;			/* 線と内容との間に間隔を取る */
-	padding-bottom: 20px;		/* 下に15pxの間隔を空け、次の項目との間に隙間を空ける */
+	float: left;					/* 左に寄せる */
+	width: 70%;						/* 70%にする */
+	padding-left: 40px;				/* 線と内容との間に間隔を取る */
+	padding-bottom: 20px;			/* 下に15pxの間隔を空け、次の項目との間に隙間を空ける */
 	border-left: dotted 1px #999;	/* 左に破線を引き、項目と内容を隔てる */
-	display: block;				/* blockとして扱う */
-	font-size: 12px;			/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
-	margin-left: 15px;			/* 左にmarginを挿入する。 */
+	display: block;					/* blockとして扱う */
+	font-size: 12px;				/* 入力を誘導する文字を添えるため小さな文字を設定する。 */
+	margin-left: 15px;				/* 左にmarginを挿入する。 */
 }
 
 /* 
@@ -66,7 +61,7 @@
  */
 .formRuby{
 	/* ブロックとし扱い、隣り合うspanの要素となる項目名に対し改行する */
-	display: block;	
+	display: block;		/* ブロック要素にする */
 	font-size: 10px;	/* ルビサイズのフォントにする */
 	line-height: 10px;	/* 最低限の文字の高さを取る */
 }
@@ -79,7 +74,6 @@
  */
 .contactForm .contentTextArea textarea{
 	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
-	width: 380px;				/* 幅を設定する。 */
 	max-width: 500px;			/* 引き延ばせる最大の幅を設定する。 */
 }
 
@@ -121,16 +115,6 @@
  */
 .contactForm input{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
-}
-
-/* 
- * セレクタ:.contactForm input[type="text"],.contactForm input[type="email"] 
- * 概要   :問い合わせフォームのテキストボックス。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.02
- */
-.contactForm input[type="text"],.contactForm input[type="email"] {
-	width: 380px;	/* 幅を指定する。 */
 }
 
 /* 入力確認ページ */
@@ -224,7 +208,9 @@
 	 * 作成日 :2015.02.18
 	 */
 	.contactForm dl{
-		width: 100%;		/* 幅を可変にする。 */
+		width: 90%;		/* 幅を可変にする。 */
+		margin: 0 auto;	/* 中央寄せにする */
+		font-size: 12px;/* デフォルトより1px小さくする */
 	}
 	
 	/* 
@@ -234,8 +220,7 @@
 	 * 作成日 :2015.02.18
 	 */
 	.contactForm dt{
-		margin-left: 10%;	/* 左marginを可変にする。 */
-		width: 107px;		/* 幅を107pxにする */
+		width: 36%;		/* 幅を40%にする */
 	}
 	
 	/* 
@@ -248,7 +233,9 @@
 	 * 内容　 :幅を調整しました。
 	 */
 	.contactForm dd{
-		width: 42%;					/* 幅を画面の42%に指定する。 */
+		width: 60%;					/* 幅を画面の60%に指定する。 */
+		padding-left: 10px;
+		margin-left: 0px;
 	}
 	/* 
 	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail {
@@ -261,7 +248,7 @@
 	 .contactForm input[type="email"],
 	 .confirmSendMail 
 	 {
-	 	width: 90%; 		/* 幅を90%にする */
+	 	 width: 100%; 		/* 幅を90%にする */
 	 }
 	
 	/* 入力確認ページ */

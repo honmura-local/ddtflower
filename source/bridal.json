@@ -21,6 +21,7 @@
                     "text": "手作りによるメリット"
                 },
                 "contentsImgRight": {
+                    "class":"contentsImgRightR",
                     "src": "image/icon(graybird).png"
                 }
             }

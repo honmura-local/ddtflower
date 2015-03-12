@@ -199,7 +199,9 @@ button.ui-button-icons-only {
 	line-height: normal;
 }
 .ui-button-text-only .ui-button-text {
-	padding: 1em 2em;
+	padding: .8em 1.6em;
+	font-weight: bold;
+	font-size: 12px;
 }
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {

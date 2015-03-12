@@ -711,7 +711,8 @@
      * 作成日 :2015.03.10
      */
     .guideTable td,.guideTable th {
-        font-size: 11px;        /* フォントのサイズを小さめにする。 */
+        font-size: 12px;        /* フォントのサイズを小さめにする。 */
+        padding: 7px;           /* PCより3px拡張幅を縮める */
     }
 
     /* 
