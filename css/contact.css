@@ -248,7 +248,7 @@
 	 .contactForm input[type="email"],
 	 .confirmSendMail 
 	 {
-	 	 width: 100%; 		/* 幅を90%にする */
+	 	 width: 90%; 		/* 幅を95%にする */
 	 }
 	
 	/* 入力確認ページ */
