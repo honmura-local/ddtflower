@@ -399,7 +399,7 @@
  * 内容   :font-sizeをbodyと統一するため、削除
  */
 .description dt, .contentsBorder {
-    padding-left: 0.5em;                    /* 適切にインデントをつける。 */
+    padding: 0 .5em;                    /* 適切にインデントをつける。 */
     font-weight: bold;                      /* 太字にして勢いをつける。 */
     margin: 10px 0 3px 0;                   /* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58); /* 頭に緑の傍線をつける。 */

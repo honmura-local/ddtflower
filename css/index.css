@@ -48,8 +48,8 @@
 .topicTitleDeco {
 	font-size	:14px;			/*補足程度のフォントサイズにする。*/
 	color		:#333;			/*濃いめの灰色の文字にする。*/
-	background	:YELLOW;		/*黄色の背景にする。*/
-	border		:solid5px #CCC;	/*薄くて太い灰色の枠線を引く。*/
+	background	:yellow;		/*黄色の背景にする。*/
+	border		:solid　5px #CCC;	/*薄くて太い灰色の枠線を引く。*/
 	border-radius:30px;			/*最大限角を丸める。*/
 }
 
@@ -112,8 +112,8 @@
 	 * 作成日 :2015.02.21
 	 */
 	.flowerImage{
-		width:100%;
-		height: auto;
+		width:100%;		/* 画像の幅を100%にする */
+		height: auto;	/* 画像の幅に比率を合わせた高さにする */
 	}
 	
 }

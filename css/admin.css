@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+
+/* 
+ * セレクタ:.contentManagement
+ * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.contentManagement {
+	width		:100%;	/*親要素(.main)と同じだけの幅を取る。*/
+}
+
+/* 
+ * セレクタ:.keyAndValue
+ * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.keyAndValue {
+	width		:90%;		/*多少余白が出る幅に設定する。*/
+	margin		:0 auto;	/*中央に寄せる。*/
+}
+
+/* 
+ * セレクタ:.key
+ * 概要   :JSONのキー名のタグのクラス。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.key {
+	width		:auto;			/*テキストの幅を基準に要素の幅を決める。*/
+	background	:#666;			/*背景を灰色にする。*/
+	color		:#FFF;			/*白抜き文字にする。*/
+	display		:inline-block;	/*インラインブロックとして扱い、横に並べる。*/
+}
+
+/* 
+ * セレクタ:.currentKey
+ * 概要   :.keysの中の最後尾の要素のクラス。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.currentKey {
+	width		:100%;		/*幅を一杯に広げる。*/
+	height		:50px;		/*3行程度の高さにする。*/
+	font-size	:16px;		/*50pxで3行入るフォントサイズにする。*/
+}
+
+/* 
+ * セレクタ:.key:after
+ * 概要   :keyの後に配置する矢印。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.key:after {
+	content		:"→";		/*右向きの矢印を配置する。*/
+}
+
+/* 
+ * セレクタ:.key.currentKey:after
+ * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ */
+.key.currentKey:after {
+	content		:"";		/*矢印をつけない。*/
+}
+
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+	/* 
+	 * セレクタ:.contentManagement
+	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.13
+	 */
+	 .contentManagement {
+	 	width		:90%;		/*余白を取るため、幅を減らす。*/
+		margin		:0 auto;	/*中央に寄せる。*/
+	 }
+
+	/* 
+	 * セレクタ:.keyAndValue
+	 * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.13
+	 */
+	.keyAndValue {
+		width	:100%;		/*枠一杯に幅を広げる。*/
+	}
+}
