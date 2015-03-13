@@ -8,6 +8,8 @@ function createTag(){
 	this.json = null;
 	//ひな形のHTMLのDOMを格納する変数。
 	this.dom = '';
+	//ブログページのナンバリングのJSON連想配列。
+	this.numbering = '';
 	
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
@@ -96,9 +98,6 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.20
-	 * 変更者:T.Masuda
-	 * 変更日:2015.03.10
-	 * 内容　:第三引数appendToを追加しました。指定した先にタグを挿入します。
 	 */
 	this.outputTag = function(key, domNodeName, appendTo){
 		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
@@ -138,14 +137,11 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
-	 * 修正者:T.Masuda
-	 * 修正日:2015.02.19
-	 * 内容　:2015.03.05
 	 */
 	this.createTag = function(curMapNode, curDomNode){
 		
 		//マップ、DOMが取得できていなかったら
-		if(curMapNode == null || curDomNode == null){
+		if(curMapNode == null || curDomNode == undefined){
 			//処理を終える。
 			return null;
 		}
@@ -182,7 +178,7 @@ function createTag(){
 				attribute.value = mapNode;
 			}
 		}
-		
+	
 		//curDomNodeを返す。
 		return curDomNode;
 	};
@@ -207,8 +203,6 @@ function createTag(){
 	 * 返却値  :jQuery
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
-	 * 変更者:T.Masuda
-	 * 変更日:2015.03.04
 	 * 内容  :テンプレートのHTMLそのものではなく、コピーを返す様に変更しました。
 	 */
 	this.getDomNode = function(key){
@@ -224,8 +218,6 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
-	 * 変更者:T.Masuda
-	 * 変更日:2015.03.06
 	 * 内容　:本来想定されていた動作に修正されました。
 	 */
 	this.createTagArray = function(key, mapNode, domNode){
@@ -266,8 +258,6 @@ function createTag(){
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
-	 * 変更者:T.Masuda
-	 * 変更日:2015.03.06
 	 * 内容　:タグに対応しました。
 	 */
 	this.getDomChild = function(key, domNode){
@@ -285,102 +275,177 @@ function createTag(){
 
 	
 	/* 
-	 * 関数名:this.createNumbering = function(jsonName, startPage, displayNum)
-	 * 概要  :ブログページのナンバリング(ページャ)を作る。
-	 * 引数  :String jsonName, int startPage, int displayNum
+	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage)
+	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
+	 * 引数  :String jsonName:処理対象となるJSONのキー名。
+	 * 		 int startPage:表示する1つ目のナンバリングの数
+	 * 		 int displayPageMax:表示するナンバリングの最大数
+	 * 		 int displayPage:表示するブログのページ番号
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.createNumbering = function(jsonName, startPage, displayNum, displayPage){
+	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage){
+		
+		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
+		this.numbering = {};		
+
+		//ナンバリング用のJSONを作る。
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage);
+		
+		//コンテンツ表示
+		this.outputTag(displayPage, jsonName);
+		
+		//ナンバリング用Tagを表示する。
+		this.outputTag('numbering', 'numbering');
+		
+		//現在表示中のページに対応するナンバリングの色を変える。
+		this.selectPageNumber(displayPage);
+	}
+
+
+
+	/* 
+	 * 関数名:this.createNumbering = function(jsonName, startPage, displayNum)
+	 * 概要  :ブログページのナンバリング(ページャ)を作る。
+	 * 引数  :String jsonName:JSON名。
+	 * 		 int startPage:表示する1つ目のナンバリングの番号。
+	 * 		 int displayPageMax:表示するナンバリングの最大個数。
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.12
+	 */
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage){
 		//ページ数を取得する。
-		var num = this.getJsonObjectNum(jsonName);
+		var pageMax = this.getJsonObjectNum(jsonName);
 		
 		//ページ数が1以下ならナンバリングを作成せずに終了する。
-		if(pageNum <= 1){
+		if(pageMax <= 1){
 			return;
 		}
 		
-		//ナンバリングオブジェクトを作成する。preをキーとした連想配列を作成し、格納する。
-		var numbering = {
-									'pre':{				
-										'text':'<<', 	//textを左の矢にし
-										//clickイベントを設定する。
-										'onclick':'outputNumberingTag(' + startPage +','+ displayNum + ',' + displayPage +')' 
-										}
-								};
-		// <<ボタンを作る。
-		createNumberingAround(numbering, 'pre', startPage, num);
-		
-		//ナンバリングの中の最後の数字を算出して変数に格納する。
-		var lastNum = startPage + displayNum;
+		// <<ボタンを作る。(1ページ前に進める)
+		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
+										displayPageMax, displayPage-1, pageMax, jsonName);
+
+		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
+		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
 		
 		//for文でナンバリングを必要なだけ作る。
-		for(var i = startPage; i < lastNum; i++){
-			var iText = i.toString();//iの数値を文字列にする。
-			var map = {iText:{}};	//ページ数をキーとしたオブジェクトを生成する。
+		for(var i = startPage; i <= lastPage; i++){
+			var indexText = (i - startPage + 1).toString();	//ナンバリングのボタンの連番の数値を文字列にする。
+			var map = {};									//ページ数をキーとしたオブジェクトを生成する。
+			map[indexText] = {};							//mapにindexTextの値をキーとした連想配列を追加する。
 			
 			//"text"キーにページ数を設定する。
-			map[iText]['text'] = i;
-			//関数実行属性にoutputTagを設定する。
-			map[iText]['onclick'] = 'outputTag(' + i +')';
+			map[indexText]['text'] = i;
+			//関数実行属性にoutputNumberingTagを設定する。
+			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
+				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ')';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
-			numbering[iText] = map[iText];
+			this.numbering[indexText] = map[indexText];
 		}
-		
-		// <<ボタンを作る。
-		createNumberingAround(numbering, 'next', startPage, num);
-		
+			
+		// <<ボタンを作る。(1ページ後に進める)
+		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
+										displayPageMax, displayPage+1, pageMax, jsonName);
+			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
-		this.json['numbering'] = numbering;
+		this.json['numbering'] = this.numbering;
 		//numberingオブジェクトを返す。
-		return numbering;
+		return this.numbering;
 	}
 	
 	/* 
-	 * 関数名:this.outputNumbering = function(startPage, displayNum, displayPage)
-	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
-	 * 引数  :int startPage, int displayNum, int displaiedPage
+	 * 関数名:this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax)
+	 * 概要  :ナンバリングの<<、>>を作る。
+	 * 引数  :object numbering:ナンバリングが格納されている連想配列
+	 * 		 string key:キー名。'pre'または'next'が入っている。
+	 * 		 String numberingString:該当するナンバリングの文字。
+	 * 		 int startPage:表示する最初のナンバリングの番号。
+	 * 		 int displayPageMax:表示するナンバリングの個数。
+	 * 		 int displayPage:現在のページ番号。
+	 * 		 int pageMax:全ページ数。
+	 * 		String jsonName:JSON名。
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.outputNumbering = function(startPage, displayNum, displayPage){
-		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayNum, displayPage);
+	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName){
+
+		var startAroundPage;
 		
-		//コンテンツ表示
-		this.outputTag(displayPage);
+		//開始ページを算出する
+		//前移動の場合
+		if (key === 'pre' && startPage > 1) {
+			//開始ページを算出、1ページ以下の場合には1ページに丸める
+			startAroundPage = startPage <= (displayPage-1) ? (startPage-1) : startPage;		
+		//後移動の場合
+		} else if (key === 'next' && (startPage+displayPageMax) < pageMax) {
+			//開始ページを算出、表示ページが最終ページを超えている場合、最終ページから開始ページを逆算する。
+			startAroundPage = (startPage+displayPageMax) < (displayPage+1) ? startPage+1 : startPage;		
+		//上記以外の場合
+		} else {
+			return;
+		}
 		
-		//ナンバリング用Tagを表示する。
-		this.outputTag('numbering');
+		var keyObj = {};	//keyオブジェクトを生成する。
+		keyObj[key] = {};	//keyのキーを持った連想配列を追加する。
+		
+		//有効属性をONにする。
+		keyObj[key]['enable'] = 'on';
+		//実際に設定する文字をtextに設定する。
+		keyObj[key]['text'] = numberingString;
+		
+		//関数実行属性をoutputNumberingTagに設定する。
+		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
+			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +')';
+		
+		//numberingオブジェクトの中に追加する。
+		numbering[key] = keyObj[key];
 	}
 
 	/* 
-	 * 関数名:this.createNumberingAround = function(numbering, key, startPage, num)
-	 * 概要  :ナンバリングの<<、>>を作る。
-	 * 引数  :object numbering, string key, int startPage, int num
-	 * 返却値  :なし
-	 * 設計者:H.Kaneko
+	 * 関数名:this.getJsonObjectNum = function(jsonName)
+	 * 概要  :jsonの指定キー直下ののキーの数を返す。
+	 * 引数  :String jsonName:処理対象のJSONのキー名。
+	 * 返却値  :int
 	 * 作成者:T.Masuda
-	 * 作成日:2015.03.12
+	 * 作成日:2015.03.13
 	 */
-	this.createNumberingAround = function(numbering, key, startPage, num){
-		//numが1以下であれば
-		if(num){
-			return;	//処理を行わない。
+	this.getJsonObjectNum = function(jsonName){
+		//返却する値を格納するための変数を宣言、0で初期化する。
+		var retNum = 0;
+		
+		//jsonのキー走査する。
+		for(key in this.json){
+			//キーが数字であれば
+			if(!(isNaN(key))){
+				//retNumに1を足す
+				retNum++;
+			}
 		}
 		
-		var keyObj = {key:{}};	//keyオブジェクトを生成する。
-		//有効属性をONにする。
-		keyobj[key]['enable'] = 'on';
-		
-		//関数実行属性をoutputNumberingTagに設定する。
-		keyobj[key]['onclick'] = 'outputNumberingTag(' + startPage +','+ num + ',' + num +')';
-		
-		//numberingオブジェクトの中に追加する。
-		numbering[key] = keyobj[key];
+		//retNumを返す。
+		return retNum;
+	}
+	
+	/* 
+	 * 関数名:this.selectPageNumber = function(displayPage)
+	 * 概要  :選択中のページナンバーの色を変える。
+	 * 引数  :int displayPage:表示中のページ番号。
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.13
+	 */
+	this.selectPageNumber = function(displayPage){
+		//全てのページナンバーからselectクラスを除去する。
+		$('.numbering li').removeClass('select');
+		//選択中のページナンバーのタグにselectクラスを付与して色を変える。
+		$('.numbering li:contains(' + displayPage + ')').addClass('select');
 	}
 }
+	
