@@ -1,205 +1,176 @@
 {
     "1": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"ブログはじめました!"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/01"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000001.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000002.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000003.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"はじめまして、FlowerMasterです！本日からブログはじめました！"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "ブログはじめました!"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/01"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000001.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000002.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000003.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "はじめまして、FlowerMasterです！本日からブログはじめました！"
+            }
+        }
     },
     "2": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "テスト記事です。"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/02"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000004.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000005.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000006.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "記事の投稿テストです。"
+            }
+        }
     },
     "3": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "テスト記事です。"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/02"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000004.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000005.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000006.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "記事の投稿テストです。"
+            }
+        }
     },
     "4": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "テスト記事です。"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/02"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000004.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000005.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000006.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "記事の投稿テストです。"
+            }
+        }
     },
     "5": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "テスト記事です。"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/02"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000004.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000005.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000006.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "記事の投稿テストです。"
+            }
+        }
     },
     "6": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
-    },
-    "2": {
-    		"blogArticle":{
-    			"blogArticleTitle":{
-	    			"blogArticleTitleText":{
-	    				"text":"テスト記事です。"
-	    			},
-	    			"blogArticleDate":{
-	    				"text":"2015/03/02"
-	    			},
-	    			"blogArticleUserName":{
-	    				"text":"FlowerMaster"
-	    			}
-	    		},
-	    		"blogArticleImages":{
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000004.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000005.png"
-	    		},
-	    		"blogArticleImage":{
-	    			"src":"photo/web/FlowerMaster/000006.png"
-	    		}
-	    	},
-	    	"blogArticleText":{
-	    		"text":"記事の投稿テストです。"
-	    	}
-    	}
+        "blogArticle": {
+            "blogArticleTitle": {
+                "blogArticleTitleText": {
+                    "text": "テスト記事です。"
+                },
+                "blogArticleDate": {
+                    "text": "2015/03/02"
+                },
+                "blogArticleUserName": {
+                    "text": "FlowerMaster"
+                }
+            },
+            "blogArticleImages": {
+                "blogArticleImage1": {
+                    "src": "photo/web/FlowerMaster/000004.png"
+                },
+                "blogArticleImage2": {
+                    "src": "photo/web/FlowerMaster/000005.png"
+                },
+                "blogArticleImage3": {
+                    "src": "photo/web/FlowerMaster/000006.png"
+                }
+            },
+            "blogArticleText": {
+                "text": "記事の投稿テストです。"
+            }
+        }
     }
 }

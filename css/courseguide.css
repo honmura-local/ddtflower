@@ -365,25 +365,6 @@
 }
 
 /* 
- * セレクタ:.merit dt,.merit dd
- * 概要   :ご入会メリット、各項目
- * 作成者 :T.Masuda
- * 作成日 :2015.02.26
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.05
- * 内容   :セレクターを.contentsBorder, .contentsBorderInTextに変更
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.08
- * 内容   :セレクターを.description dt, .description ddに変更
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.10
- * 内容   :セレクターから.description ddを削除
- */
-.description dt{
-    padding: 4px 0em;   /* 適切に間隔を取る */
-}
-
-/* 
  * セレクタ:.merit dt
  * 概要   :ご入会メリット、各項目見出し
  * 作成者 :T.Masuda
@@ -399,7 +380,7 @@
  * 内容   :font-sizeをbodyと統一するため、削除
  */
 .description dt, .contentsBorder {
-    padding-left: 0.5em;                    /* 適切にインデントをつける。 */
+    padding: 4px .5em;                    /* 適切にインデントをつける。 */
     font-weight: bold;                      /* 太字にして勢いをつける。 */
     margin: 10px 0 3px 0;                   /* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58); /* 頭に緑の傍線をつける。 */

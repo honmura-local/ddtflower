@@ -928,40 +928,36 @@
 <div class="blogArticle">
 	<!-- ブログ記事のタイトル領域 -->
 	<div class="blogArticleTitle">
-		<!-- ブログ記事のタイトル領域 -->
-		<div class="blogArticleTitle">
-			<!-- タイトル -->
-			<h2 class="blogArticleTitleText"></h2>
-			<!-- 日付 -->
-			<time class="blogArticleDate"></time>
-			<!-- ユーザーネーム -->
-			<small class="blogArticleUserName"></small>
-		</div>
-		<!-- ブログ記事画像領域 -->
-		<div class="blogArticleImages">
-			<img class="blogArticleImage" src="">
-		</div>
-		<!-- 本文 -->
-		<p class="blogArticleText"></p>
+		<!-- タイトル -->
+		<h2 class="blogArticleTitleText"></h2>
+		<!-- 日付 -->
+		<time class="blogArticleDate"></time>
+		<!-- ユーザーネーム -->
+		<small class="blogArticleUserName"></small>
 	</div>
+	<!-- ブログ記事画像領域 -->
+	<div class="blogArticleImages">
+		<img class="blogArticleImage1" src="">
+		<img class="blogArticleImage2" src="">
+		<img class="blogArticleImage3" src="">
+	</div>
+	<!-- 本文 -->
+	<p class="blogArticleText"></p>
 </div>
 <!-- blogArticle終わり -->
 
 <!-- ブログ、リスト -->
-<div class="blogArticleList">
+<ul class="blogArticleList">
 	<!-- ブログリストテキスト -->
 	<h4 class="blogArticleListTitle"></h4>
-	<!-- ブログの記事リスト -->
-	<ul class="">
-		<!-- リスト内の1行 -->
-		<li class="blogArticleListContent">
-			<!-- 日付 -->
-			<time class="blogArticleListContentDate"></time>
-			<!-- ユーザネーム -->
-			<small class-"blogArticleListContentTitle"></small>
-		</li>
-	</ul>
-</div>
+	<!-- リスト内の1行 -->
+	<li class="blogArticleListContent">
+		<!-- 日付 -->
+		<time class="blogArticleListContentDate"></time>
+		<!-- ユーザネーム -->
+		<small class-"blogArticleListContentTitle"></small>
+	</li>
+</ul>
 <!-- ブログ、リスト終わり -->
 
 <!-- トップページトピック -->
@@ -1029,5 +1025,32 @@
 	<button class="blogEditButtonsCancelButton"></button>
 </div>
 
+<!-- 管理画面 -->
+<div class="ContentManager tabContainer">
+	<!-- タブのリスト -->
+	<ul class="tabs">
+		<!-- タブのボタン領域 -->
+		<li class="tabButton">
+			<a href="">
+		</li>
+	</ul>
+	<!-- 編集コンテンツ -->
+	<div class="editContent panelContainer">
+		<!--タブのコンテンツ。idはjsonファイル名 -->
+		<div class="tabPanel" id="">
+			<!--  -->
+			<div class="keyAndValue">
+				<object class="keys">
+					<param class="key">
+					<param class="key currentKey">
+				</object>
+				<!-- valueにjsonでセットされいる値 -->
+				<textarea class="value" value="">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 管理画面　終わり -->
+</div>
 </body>
 </html>
