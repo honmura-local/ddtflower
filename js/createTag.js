@@ -271,11 +271,8 @@ function createTag(){
 	 * 内容　:タグに対応しました。
 	 */
 	this.getDomChild = function(key, domNode){
-		//domNodeの返却用変数を作る。
-		var domNodeReturn;
-		
-		//domNodeの子の階層からkeyのクラスを持つノードを取得する。
-		var domNodeReturn = $('.' + key, domNode);
+		var domNodeReturn;							//domNodeの返却用変数を作る。
+		var domNodeReturn = $('.' + key, domNode);	//domNodeの子の階層からkeyのクラスを持つノードを取得する。
 		//DOMの取得に失敗したら
 		if(domNodeReturn[0] == null){
 			//domNodeの子の階層からkeyのタグ名を持つノードを取得する。
@@ -284,5 +281,106 @@ function createTag(){
 		
 		//domNodeReturnを返す。
 		return domNodeReturn;
+	}
+
+	
+	/* 
+	 * 関数名:this.createNumbering = function(jsonName, startPage, displayNum)
+	 * 概要  :ブログページのナンバリング(ページャ)を作る。
+	 * 引数  :String jsonName, int startPage, int displayNum
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.12
+	 */
+	this.createNumbering = function(jsonName, startPage, displayNum, displayPage){
+		//ページ数を取得する。
+		var num = this.getJsonObjectNum(jsonName);
+		
+		//ページ数が1以下ならナンバリングを作成せずに終了する。
+		if(pageNum <= 1){
+			return;
+		}
+		
+		//ナンバリングオブジェクトを作成する。preをキーとした連想配列を作成し、格納する。
+		var numbering = {
+									'pre':{				
+										'text':'<<', 	//textを左の矢にし
+										//clickイベントを設定する。
+										'onclick':'outputNumberingTag(' + startPage +','+ displayNum + ',' + displayPage +')' 
+										}
+								};
+		// <<ボタンを作る。
+		createNumberingAround(numbering, 'pre', startPage, num);
+		
+		//ナンバリングの中の最後の数字を算出して変数に格納する。
+		var lastNum = startPage + displayNum;
+		
+		//for文でナンバリングを必要なだけ作る。
+		for(var i = startPage; i < lastNum; i++){
+			var iText = i.toString();//iの数値を文字列にする。
+			var map = {iText:{}};	//ページ数をキーとしたオブジェクトを生成する。
+			
+			//"text"キーにページ数を設定する。
+			map[iText]['text'] = i;
+			//関数実行属性にoutputTagを設定する。
+			map[iText]['onclick'] = 'outputTag(' + i +')';
+			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
+			numbering[iText] = map[iText];
+		}
+		
+		// <<ボタンを作る。
+		createNumberingAround(numbering, 'next', startPage, num);
+		
+		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
+		this.json['numbering'] = numbering;
+		//numberingオブジェクトを返す。
+		return numbering;
+	}
+	
+	/* 
+	 * 関数名:this.outputNumbering = function(startPage, displayNum, displayPage)
+	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
+	 * 引数  :int startPage, int displayNum, int displaiedPage
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.12
+	 */
+	this.outputNumbering = function(startPage, displayNum, displayPage){
+		//ナンバリング用のJSONを作る。
+		this.createNumbering(jsonName, startPage, displayNum, displayPage);
+		
+		//コンテンツ表示
+		this.outputTag(displayPage);
+		
+		//ナンバリング用Tagを表示する。
+		this.outputTag('numbering');
+	}
+
+	/* 
+	 * 関数名:this.createNumberingAround = function(numbering, key, startPage, num)
+	 * 概要  :ナンバリングの<<、>>を作る。
+	 * 引数  :object numbering, string key, int startPage, int num
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.12
+	 */
+	this.createNumberingAround = function(numbering, key, startPage, num){
+		//numが1以下であれば
+		if(num){
+			return;	//処理を行わない。
+		}
+		
+		var keyObj = {key:{}};	//keyオブジェクトを生成する。
+		//有効属性をONにする。
+		keyobj[key]['enable'] = 'on';
+		
+		//関数実行属性をoutputNumberingTagに設定する。
+		keyobj[key]['onclick'] = 'outputNumberingTag(' + startPage +','+ num + ',' + num +')';
+		
+		//numberingオブジェクトの中に追加する。
+		numbering[key] = keyobj[key];
 	}
 }
