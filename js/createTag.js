@@ -326,10 +326,14 @@ function createTag(){
 			return;
 		}
 		
-		// <<ボタンを作る。(1ページ前に進める)
-		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
-										displayPageMax, displayPage-1, pageMax, jsonName);
-
+		//まだ前にページがある場合、移動記号を表示する
+		if (startPage > 1) {
+			//開始ページを算出、1ページ以下の場合には1ページに丸める
+			startAroundPage = startPage <= (displayPage-1) ? (startPage-1) : startPage;		
+			// <<ボタンを作る。(1ページ前に進める)
+			this.createNumberingAround(this.numbering, 'pre', '<<', startAroundPage,
+					displayPageMax, displayPage-1, pageMax, jsonName);
+		}
 		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
 		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
 		
@@ -348,9 +352,14 @@ function createTag(){
 			this.numbering[indexText] = map[indexText];
 		}
 			
-		// <<ボタンを作る。(1ページ後に進める)
-		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
-										displayPageMax, displayPage+1, pageMax, jsonName);
+		//まだページがある場合、移動記号を表示する
+		if (lastPage < pageMax) {
+			//開始ページを算出、表示ページが最終ページを超えている場合、最終ページから開始ページを逆算する。
+			startAroundPage = (startPage+displayPageMax) < (displayPage+1) ? startPage+1 : startPage;		
+			// <<ボタンを作る。(1ページ後に進める)
+			this.createNumberingAround(this.numbering, 'next', '>>', startAroundPage,
+					displayPageMax, displayPage+1, pageMax, jsonName);
+		}
 			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
 		this.json['numbering'] = this.numbering;
@@ -375,21 +384,9 @@ function createTag(){
 	 * 作成日:2015.03.12
 	 */
 	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName){
-
-		var startAroundPage;
-		
-		//開始ページを算出する
-		//前移動の場合
-		if (key === 'pre' && startPage > 1) {
-			//開始ページを算出、1ページ以下の場合には1ページに丸める
-			startAroundPage = startPage <= (displayPage-1) ? (startPage-1) : startPage;		
-		//後移動の場合
-		} else if (key === 'next' && (startPage+displayPageMax) < pageMax) {
-			//開始ページを算出、表示ページが最終ページを超えている場合、最終ページから開始ページを逆算する。
-			startAroundPage = (startPage+displayPageMax) < (displayPage+1) ? startPage+1 : startPage;		
-		//上記以外の場合
-		} else {
-			return;
+		//存在しないページの場合
+		if(displayPage <= 0) {
+			return;	//処理を行わない。
 		}
 		
 		var keyObj = {};	//keyオブジェクトを生成する。
@@ -402,7 +399,7 @@ function createTag(){
 		
 		//関数実行属性をoutputNumberingTagに設定する。
 		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
-			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +')';
+			+ Math.round(startPage) +','+ displayPageMax + ',' + displayPage +')';
 		
 		//numberingオブジェクトの中に追加する。
 		numbering[key] = keyObj[key];
