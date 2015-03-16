@@ -191,6 +191,17 @@ function createGallery(selector){
 		//ギャラリーを見える様にする。
 		$('.' + selector).show();
 		// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
+//		$('.' + selector).smoothDivScroll({
+//			//カーソル合わせでスクロールする領域を表示する。
+//			hotSpotScrolling: true,
+//			//タッチでのスクロールを有効にする。
+//			touchScrolling: true,
+//			manualContinuousScrolling: true,
+//			//マウスホイールによるスクロールを無効にする。
+//			mousewheelScrolling: false
+//		});
+		
+		//SmoothDivScrollの関数をコールしてギャラリーを作る。
 		$('.' + selector).smoothDivScroll({
 			//カーソル合わせでスクロールする領域を表示する。
 			hotSpotScrolling: true,
@@ -198,8 +209,10 @@ function createGallery(selector){
 			touchScrolling: true,
 			manualContinuousScrolling: true,
 			//マウスホイールによるスクロールを無効にする。
-			mousewheelScrolling: false
+			mousewheelScrolling: false,
+			visibleHotSpotBackgrounds:"always"
 		});
+		
 		// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
 		// 拡大表示を行うようにする。
 		$('.' + selector + ' a').fancybox({

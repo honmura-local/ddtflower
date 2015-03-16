@@ -1,4 +1,4 @@
-Ôªø/* You can alter this CSS in order to give Smooth Div Scroll your own look'n'feel */
+/* You can alter this CSS in order to give Smooth Div Scroll your own look'n'feel */
 
 /* Invisible left hotspot */
 div.scrollingHotSpotLeft
@@ -21,16 +21,16 @@ div.scrollingHotSpotLeft
 }
 
 /* Visible left hotspot */
-div.scrollingHotSpotLeftVisible
+ div.scrollingHotSpotLeftVisible
 {
 	background-image: url(../images/arrow_left.gif);				
 	background-color: #fff;
 	background-repeat: no-repeat;
-	opacity: 0.35; /* Standard CSS3 opacity setting */
-	-moz-opacity: 0.35; /* Opacity for really old versions of Mozilla Firefox (0.9 or older) */
-	filter: alpha(opacity = 35); /* Opacity for Internet Explorer. */
-	zoom: 1; /* Trigger "hasLayout" in Internet Explorer 6 or older versions */
-}
+	opacity: 0.35; Standard CSS3 opacity setting
+	-moz-opacity: 0.35; Opacity for really old versions of Mozilla Firefox (0.9 or older)
+	filter: alpha(opacity = 35); Opacity for Internet Explorer.
+	zoom: 1; Trigger "hasLayout" in Internet Explorer 6 or older versions
+} 
 
 /* Invisible right hotspot */
 div.scrollingHotSpotRight
@@ -48,7 +48,7 @@ div.scrollingHotSpotRight
 }
 
 /* Visible right hotspot */
-div.scrollingHotSpotRightVisible
+ div.scrollingHotSpotRightVisible
 {
 	background-image: url(../images/arrow_right.gif);
 	background-color: #fff;
@@ -57,7 +57,7 @@ div.scrollingHotSpotRightVisible
 	filter: alpha(opacity = 35);
 	-moz-opacity: 0.35;
 	zoom: 1;
-}
+} 
 
 /* The scroll wrapper is always the same width and height as the containing element (div).
    Overflow is hidden because you don't want to show all of the scrollable area.
@@ -75,4 +75,14 @@ div.scrollableArea
 	position: relative;
 	width: auto;
 	height: 100%;
+}
+#mixedContent {
+	position: relative;		/* ëäëŒà íuÇéwíËÇ∑ÇÈ */
+	float: left;			/* ç∂Ç…äÒÇπÇÈ */
+	display: block;			/* ÉuÉçÉbÉNóvëfÇ∆ÇµÇƒàµÇ§ */
+	height: 308px;			/* çÇÇ≥ */
+	width: 200px;			/* ïù */
+	border: solid 1px #ccc;	/* ògê¸ */
+	padding: 10px;			/* ó]îí */
+	margin: 0px 5px;		/* margin */
 }

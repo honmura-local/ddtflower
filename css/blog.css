@@ -83,8 +83,8 @@
 .blogArticle {
 	width			: 80%;		/*親の4/5の幅を取る。残りは余白とリストボタンの領域になる。*/
 	margin			: 0 auto;	/*水平位置を中央に合わせる。*/
-	background		:#CEDC3A;	/*サイトのメインで使っている背景色を適用する。*/
-	border-radius	:5px;		/*記事領域の角を丸くする。*/
+	background		:#FFCC99 ;	/*背景色をベージュにする。*/
+	border-radius	:10px;		/*記事領域の角を丸くする。*/
 	padding: 1%;
 	box-sizing: border-box;
 }
