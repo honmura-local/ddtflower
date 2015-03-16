@@ -2,6 +2,72 @@
 
 /* 問い合わせページ */
 
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+	/* 問い合わせページ */
+
+	/* 
+	 * セレクタ:.contactForm dl
+	 * 概要   :入力項目のリスト。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.18
+	 */
+	.contactForm dl{
+		width: 90%;		/* 幅を可変にする。 */
+		margin: 0 auto;	/* 中央寄せにする */
+		font-size: 12px;/* デフォルトより1px小さくする */
+	}
+	
+	/* 
+	 * セレクタ:.contactForm dt
+	 * 概要   :入力項目の見出し。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.18
+	 */
+	.contactForm dt{
+		width: 36%;		/* 幅を40%にする */
+	}
+	
+	/* 
+	 * セレクタ:.contactForm dd
+	 * 概要   :入力項目のinput要素。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.18
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.03.10
+	 * 内容　 :幅を調整しました。
+	 */
+	.contactForm dd{
+		width: 60%;					/* 幅を画面の60%に指定する。 */
+		padding-left: 10px;
+		margin-left: 0px;
+	}
+	/* 
+	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail {
+	 * 概要   :入力項目
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.11
+	 */
+	 .contactForm .contentTextArea textarea,
+	 .contactForm input[type="text"],
+	 .contactForm input[type="email"],
+	 .confirmSendMail 
+	 {
+	 	 width: 95%; 		/* 幅を95%にする */
+	 }
+	
+	/* 入力確認ページ */
+	/* 
+	 * セレクタ:.confirmSendMail
+	 * 概要   :送信内容確認のブロック。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.05
+	 */
+	.confirmSendMail {
+		margin: 0 auto;	/* 位置を中央に寄せる。 */
+	}
+}
+
 /* 
  * セレクタ:.contactForm dl
  * 概要   :入力項目のリスト。
@@ -196,70 +262,3 @@
 	width: 100%;	/* 幅を100%にする。 */
 }
 /* 入力確認ページはここまで */
-
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-	/* 問い合わせページ */
-
-	/* 
-	 * セレクタ:.contactForm dl
-	 * 概要   :入力項目のリスト。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 */
-	.contactForm dl{
-		width: 90%;		/* 幅を可変にする。 */
-		margin: 0 auto;	/* 中央寄せにする */
-		font-size: 12px;/* デフォルトより1px小さくする */
-	}
-	
-	/* 
-	 * セレクタ:.contactForm dt
-	 * 概要   :入力項目の見出し。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 */
-	.contactForm dt{
-		width: 36%;		/* 幅を40%にする */
-	}
-	
-	/* 
-	 * セレクタ:.contactForm dd
-	 * 概要   :入力項目のinput要素。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 * 修正者 :T.Masuda
-	 * 修正日 :2015.03.10
-	 * 内容　 :幅を調整しました。
-	 */
-	.contactForm dd{
-		width: 60%;					/* 幅を画面の60%に指定する。 */
-		padding-left: 10px;
-		margin-left: 0px;
-	}
-	/* 
-	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail {
-	 * 概要   :入力項目
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.11
-	 */
-	 .contactForm .contentTextArea textarea,
-	 .contactForm input[type="text"],
-	 .contactForm input[type="email"],
-	 .confirmSendMail 
-	 {
-	 	 width: 95%; 		/* 幅を95%にする */
-	 }
-	
-	/* 入力確認ページ */
-	/* 
-	 * セレクタ:.confirmSendMail
-	 * 概要   :送信内容確認のブロック。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.05
-	 */
-	.confirmSendMail {
-		margin: 0 auto;	/* 位置を中央に寄せる。 */
-	}
-/* 入力確認ページはここまで */
-}

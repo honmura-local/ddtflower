@@ -1,5 +1,181 @@
 @CHARSET "UTF-8";
 
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+	 /* 
+	 * セレクタ:myPageReserved
+	 * 概要   :マイページの予約一覧の領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .myPageReserved {
+	 	width		:90%;	/*余白を考えた幅を指定する。*/
+	 }
+	 /* 
+	 * セレクタ:.myPageReservedList
+	 * 概要   :予約一覧。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .myPageReservedList {
+	 	width		:100%;			/*幅を一杯に取る。*/
+		margin 		:0 auto 10px; 	/*下にだけmarginを入れる。*/
+		overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
+	 }
+
+	 /* 
+	 * セレクタ:.myPageReservedCalendar
+	 * 概要   :Datepickerによるカレンダー。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .myPageReservedCalendar {
+	 	width		:100%;			/*幅を一杯に取る。*/
+		margin 		:0 auto 10px; 	/*下にだけmarginを入れる。*/
+	 }
+
+	 /* 
+	 * セレクタ:.myPageBlog
+	 * 概要   :マイページのブログの領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .myPageBlog {
+	 	width		:90%;			/*左右の余白を最低限つけるだけの幅を設定する。*/
+		margin 		:0 auto 10px; 	/*中央に寄せ、下にmarginを入れる。*/
+	 }
+
+	 /* 
+	 * セレクタ:myPageBlogButton
+	 * 概要   :ブログ関連のボタン。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .myPageBlogButton {
+	 	width		:27.3%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
+		margin		:0 3%;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
+		display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogEditImages
+	 * 概要   :ブログの画像編集領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	.blogEditImages {
+		width		:90%;			/*.mainの1/4の幅を取る。*/
+		float		:none;			/*段組みレイアウトを解除する。*/
+		margin		:0 auto 10px;	/*中央に寄せる。*/
+	}
+
+	 /* 
+	 * セレクタ:.blogEditImagesSectionImage
+	 * 概要   :画像サムネイル。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	.blogEditImagesSectionImage {
+		height		:auto;		/*高さを自動で調整する。*/
+	}
+
+	 /* 
+	 * セレクタ:.blogEditText
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	.blogEditText {
+		width		:90%;			/*mainの90%の幅を取る。*/
+		margin		:0 auto 10px;	/*中央に寄せる。*/
+	}
+
+	 /* 
+	 * セレクタ:.blogEditTextarea
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	.blogEditTextarea {
+		width		:100%;		/*枠一杯に幅を取る。*/
+	}
+
+	 /* 
+	 * セレクタ:.blogEditButtons
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogEditButtons {
+	 	width		:90%;	/*本文入力の部分と同じく、3/4の幅を取る。*/
+		padding:	:0;		/*paddingが必要なくなったため、0にする。*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+
+
+}
+
  /* 
  * セレクタ:.myPageReserved
  * 概要   :マイページの予約一覧の領域。
@@ -213,180 +389,4 @@
  */
 .blogEditButtonsCancelButton {
 	margin-left	:2em	;	/*OKボタンとの間に2文字分の間隔を取る。*/
-}
-
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-
-	 /* 
-	 * セレクタ:myPageReserved
-	 * 概要   :マイページの予約一覧の領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .myPageReserved {
-	 	width		:90%;	/*余白を考えた幅を指定する。*/
-	 }
-	 /* 
-	 * セレクタ:.myPageReservedList
-	 * 概要   :予約一覧。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .myPageReservedList {
-	 	width		:100%;			/*幅を一杯に取る。*/
-		margin 		:0 auto 10px; 	/*下にだけmarginを入れる。*/
-		overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
-	 }
-
-	 /* 
-	 * セレクタ:.myPageReservedCalendar
-	 * 概要   :Datepickerによるカレンダー。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .myPageReservedCalendar {
-	 	width		:100%;			/*幅を一杯に取る。*/
-		margin 		:0 auto 10px; 	/*下にだけmarginを入れる。*/
-	 }
-
-	 /* 
-	 * セレクタ:.myPageBlog
-	 * 概要   :マイページのブログの領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .myPageBlog {
-	 	width		:90%;			/*左右の余白を最低限つけるだけの幅を設定する。*/
-		margin 		:0 auto 10px; 	/*中央に寄せ、下にmarginを入れる。*/
-	 }
-
-	 /* 
-	 * セレクタ:myPageBlogButton
-	 * 概要   :ブログ関連のボタン。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .myPageBlogButton {
-	 	width		:27.3%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
-		margin		:0 3%;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
-		display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-	 }
-
-	 /* 
-	 * セレクタ:.blogEditImages
-	 * 概要   :ブログの画像編集領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	.blogEditImages {
-		width		:90%;			/*.mainの1/4の幅を取る。*/
-		float		:none;			/*段組みレイアウトを解除する。*/
-		margin		:0 auto 10px;	/*中央に寄せる。*/
-	}
-
-	 /* 
-	 * セレクタ:.blogEditImagesSectionImage
-	 * 概要   :画像サムネイル。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	.blogEditImagesSectionImage {
-		height		:auto;		/*高さを自動で調整する。*/
-	}
-
-	 /* 
-	 * セレクタ:.blogEditText
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	.blogEditText {
-		width		:90%;			/*mainの90%の幅を取る。*/
-		margin		:0 auto 10px;	/*中央に寄せる。*/
-	}
-
-	 /* 
-	 * セレクタ:.blogEditTextarea
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	.blogEditTextarea {
-		width		:100%;		/*枠一杯に幅を取る。*/
-	}
-
-	 /* 
-	 * セレクタ:.blogEditButtons
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .blogEditButtons {
-	 	width		:90%;	/*本文入力の部分と同じく、3/4の幅を取る。*/
-		padding:	:0;		/*paddingが必要なくなったため、0にする。*/
-	 }
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-
-	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-
-
 }

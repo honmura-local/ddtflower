@@ -971,7 +971,7 @@
 		<!-- トピックの最新記事見出しの一覧を表示する領域。 -->
 		<div class="topicContnent">
 			<!-- トピックの最新記事の画像 -->
-			<img src="topiccontentImage">
+			<img class="topicContentImage" src="">
 			<!-- トピックの最新記事の日付 -->
 			<time class="topicContentDate"></div>
 		</div>
@@ -1045,12 +1045,37 @@
 					<param class="key currentKey">
 				</object>
 				<!-- valueにjsonでセットされいる値 -->
-				<textarea class="value" value="">
+				<textarea class="value" value=""></textarea>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- 管理画面　終わり -->
+
+<!-- ブログのナンバリング(ページャ) -->
+<div>
+<ul class="numbering">
+	<!-- 前と後のボタンと5個の数字ボタン -->
+	<li class="pre" onclick=""></li>
+	<li class="1" onclick=""></li>
+	<li class="2" onclick=""></li>
+	<li class="3" onclick=""></li>
+	<li class="4" onclick=""></li>
+	<li class="5" onclick=""></li>
+	<li class="next" onclick=""></li>
+</ul>
+</div>
+
+<!-- ブログのタグ。 -->
+<div>
+	<div class="blog">
+	</div>
+</div>
+
+<!-- ナンバリングのタグ -->
+<div>
+	<div class="numberingOuter">
+	</div>
 </div>
 </body>
 </html>

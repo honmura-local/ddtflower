@@ -2,6 +2,49 @@
 
 /* アクセスページ */
 
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+	/* アクセスページ */
+
+	/* 
+	 * セレクタ:.accessInfo 
+	 * 概要   :アクセス情報一覧の外枠。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.18
+	 * 追加者 :T.Yamamoto
+	 * 追加日 :2015.03.09
+ 	 * 内容   :widthを95%から90%に変更、padding-leftからpaddingに変更
+	 */
+	.accessInfo {
+		width: 90%;				/* paddingを考慮した幅を取る。 */
+		padding: 5%;		/* 左に間隔を取る */
+	}	
+	
+	/* 
+	 * セレクタ:.accessMap
+	 * 概要   :スクールのグーグルマップのラッパー。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.18
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 * 内容　 :幅を調整しました。
+	 */
+	.accessMap {
+		width: 100%;			/* 幅をmainに合わせる。 */
+	}
+	/* 
+	 * セレクタ:.baseMap
+	 * 概要   :スクール所在地のGoogleMap。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.baseMap {
+		width: 90%;		/* 余白分を考慮した幅を取る */
+		margin: 0 auto;	/* 中心に寄せる */
+		display: block;	/* ブロック要素にしてmarginによる中央寄せを有効にする。 */
+	}
+}
+
 /* 
  * セレクタ:.pageTitle
  * 概要   :タイトル領域
@@ -69,48 +112,4 @@
 .baseMap {
 	width: 100%;		/* 幅を外枠に合わせる。 */
 	height: 400px;		/* 高さを指定する。 */
-}
-
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-	/* アクセスページ */
-
-	/* 
-	 * セレクタ:.accessInfo 
-	 * 概要   :アクセス情報一覧の外枠。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 * 追加者 :T.Yamamoto
-	 * 追加日 :2015.03.09
- 	 * 内容   :widthを95%から90%に変更、padding-leftからpaddingに変更
-	 */
-	.accessInfo {
-		width: 90%;				/* paddingを考慮した幅を取る。 */
-		padding: 5%;		/* 左に間隔を取る */
-	}	
-	
-	/* 
-	 * セレクタ:.accessMap
-	 * 概要   :スクールのグーグルマップのラッパー。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.18
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.24
-	 * 内容　 :幅を調整しました。
-	 */
-	.accessMap {
-		width: 100%;			/* 幅をmainに合わせる。 */
-	}
-	/* 
-	 * セレクタ:.baseMap
-	 * 概要   :スクール所在地のGoogleMap。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.21
-	 */
-	.baseMap {
-		width: 90%;		/* 余白分を考慮した幅を取る */
-		margin: 0 auto;	/* 中心に寄せる */
-		display: block;	/* ブロック要素にしてmarginによる中央寄せを有効にする。 */
-	}
-
 }

@@ -13,12 +13,12 @@
 	creator.getJsonFile('source/blogcontent.json');	// テスト用のブログJSONデータを取得する。
 	creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
 
-	creator.outputTag('headImage', 'createImage');	// 天の画像を作る
-	creator.outputTag('pageTitle');					// タイトル領域を作る
+	creator.outputTag('headImage', 'createImage');		// 天の画像を作る
+	creator.outputTag('pageTitle');						// タイトル領域を作る
 	//@mod 2015.03.13 T.Masuda blogコンテンツを作成する記述を追加しました。
-	creator.outputNumberingTag(1,3,1);				// ブログの記事を作る。
-	creator.outputTag('footImage', 'createImage');	// 地の画像を作る
-	creator.outputTag('footer');					// フッターを作る
+	creator.outputNumberingTag('blogArticle', 1,4,1);	// ブログの記事を作る。
+	creator.outputTag('footImage', 'createImage');		// 地の画像を作る
+	creator.outputTag('footer');						// フッターを作る
 	
 	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 	fixYCoordinate('header', '.main');

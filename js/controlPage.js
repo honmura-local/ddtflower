@@ -95,6 +95,10 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
+			//JSONデータを格納する変数を初期化する。
+			creator.json = null;
+			//ひな形のHTMLのDOMを格納する変数を初期化する。
+			creator.dom = '';
 			//既存のコンテンツを上書きする。
 			overwrightContent('.main', html);
 			//カレントのURLを更新する。
@@ -106,10 +110,6 @@ function callPage(url, state){
 			}
 		}
 	});
-	//JSONデータを格納する変数を初期化する。
-	creator.json = null;
-	//ひな形のHTMLのDOMを格納する変数を初期化する。
-	creator.dom = '';
 }
 
 /*

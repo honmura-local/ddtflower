@@ -1,5 +1,78 @@
 @CHARSET "UTF-8";
 
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+	 /* 
+	 * セレクタ:.blogArticle
+	 * 概要   :スマホ用ブログ記事本体
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticle {
+	 	width:90%;		/*親の90%の幅を取る。*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogArticleTitle
+	 * 概要   :スマホ用、ブログ記事のタイトル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticleTitle {
+	 	width	:90%;		/*画像と横並びにできてかつ、十分余白が取れる幅を設定する。*/
+		margin	:5px auto;	/*上下5pxの余白を配置し、中央に寄せる。*/
+	 }
+
+	 /* 
+	 * セレクタ:blogArticleImages
+	 * 概要   :ブログ記事の画像の領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticleImages {
+	 	width	:90%;		/*段組みレイアウトを崩して幅を広く取る。*/
+		float	:none;		/*floatを無効にして段組みを崩す。*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogArticleImage
+	 * 概要   :スマホ用、ブログ記事の画像
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticleImage {
+	 	margin		:10px auto;	/*PC時より画像同士の間隔を詰める*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogArticle.blogArticleText
+	 * 概要   :ブログ記事の本文。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticle.blogArticleText {
+	 	width		:90%;		/*段組みレイアウトをやめているので、十分に幅を広げる。*/
+		margin		:5px auto;	/*段組みを崩しているので、自動で中心に寄せる*/
+	 }
+
+	 /* 
+	 * セレクタ:.blogArticleListButton
+	 * 概要   :ブログ画面でのブログリストを呼び出すボタン
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */
+	 .blogArticleListButton {
+	 	width:auto;		/*フォントサイズに合わせた幅を指定する。*/
+	 }
+}
+
 /* 
  * セレクタ:.blogArticle
  * 概要   :ブログ記事本体。
@@ -8,10 +81,12 @@
  * 作成日 :2015.03.12
  */
 .blogArticle {
-	width: 80%;			/*親の4/5の幅を取る。残りは余白とリストボタンの領域になる。*/
-	margin: 0 auto;		/*水平位置を中央に合わせる。*/
-　　　　background:#CEDC3A;/*サイトのメインで使っている背景色を適用する。*/
-	border-radius:5px;	/*記事領域の角を丸くする。*/
+	width			: 80%;		/*親の4/5の幅を取る。残りは余白とリストボタンの領域になる。*/
+	margin			: 0 auto;	/*水平位置を中央に合わせる。*/
+	background		:#CEDC3A;	/*サイトのメインで使っている背景色を適用する。*/
+	border-radius	:5px;		/*記事領域の角を丸くする。*/
+	padding: 1%;
+	box-sizing: border-box;
 }
 
 /* 
@@ -22,9 +97,10 @@
  * 作成日 :2015.03.12
  */
 .blogArticleTitle {
-	width		: 69%;		/*画像と横並びにできてかつ、十分余白が取れる幅を設定する。*/
-	margin		: 10px 3%;	/*上下10pxの余白を配置し、左右に同じだけの余白を取る。*/
+	width: 99%;		/*画像と横並びにできてかつ、十分余白が取れる幅を設定する。*/
+	margin: 1px 1%;	/*上下10pxの余白を配置し、左右に同じだけの余白を取る。*/
 	font-size	: 0px;		/*子要素をinline-blockで横並べにするため、余計な余白が出ないよう設定する。*/
+	display: inline-block;
 }
 
 /* 
@@ -85,21 +161,36 @@
  * 作成日 :2015.03.12
  */
 .blogArticleImages {
-	width		:25%;		/*mainの1/5の幅を取る。*/
+	width		:25%;	/*mainの1/5の幅を取る。*/
 	float		:left;	/*左に寄せる。*/
+	margin-right: 5px;	/* テキスト部分と間隔を取る。 */
 }
 
  /* 
- * セレクタ:.blogArticleImage
+ * セレクタ:.blogArticleImages img
  * 概要   :ブログ記事の画像。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.12
  */
-.blogArticleImage {
+.blogArticleImages img{
 	width		:94%;		/*幅を94%に指定する。*/
-	margin		:20px auto;	/*上下20pxの余白を配置し、水平位置を中央に合わせる。*/
+	margin		:5px auto;	/*上下5pxの余白を配置し、水平位置を中央に合わせる。*/
 	display		:block;		/*marginによる中央寄せを有効にするための設定。*/
+}
+
+ /* 
+ * セレクタ:.blogArticleImages img
+ * 概要   :ブログ記事の空画像。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.13
+ */
+.blogArticleImages img[src=""]{
+	 /* 非表示3セット */
+	 width:0px;
+	 height:0px;
+	 display: none;
 }
 
  /* 
@@ -186,78 +277,56 @@
 	background	:#CEDC3A;		/*サイトのメインで使っている背景色を適用する。*/
 }
 
-
-
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-
 	 /* 
-	 * セレクタ:.blogArticle
-	 * 概要   :スマホ用ブログ記事本体
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
+	 * セレクタ:.numbering
+	 * 概要   :ナンバリング
+	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.12
 	 */
-	 .blogArticle {
-	 	width:90%;		/*親の90%の幅を取る。*/
+	 .numbering {
+	 	width:auto;				/*フォントサイズに合わせた幅を指定する。*/
+	 	display: block;			/* ブロック要素にする。 */
+	 	margin: 10px auto;		/* 中心に揃える。 */
+	 	text-align:	center;		/* ボタンを中心に寄せる。 */
+	 	clear: both;			/* 回り込みをなくす。 */
 	 }
 
 	 /* 
-	 * セレクタ:.blogArticleTitle
-	 * 概要   :スマホ用、ブログ記事のタイトル領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
+	 * セレクタ:.numbering li
+	 * 概要   :ナンバリングのボタン。
+	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.12
 	 */
-	 .blogArticleTitle {
-	 	width	:90%;		/*画像と横並びにできてかつ、十分余白が取れる幅を設定する。*/
-		margin	:5px auto;	/*上下5pxの余白を配置し、中央に寄せる。*/
+	 .numbering li{
+	 	width:auto;					/* フォントサイズに合わせた幅を指定する。*/
+	 	display: inline-block;		/* ブロック要素にする。 */
+	 	margin: 0 0.1%;				/* ボタン同士を離す。 */
+	 	padding: 0.3em 1em;			/* ボタンを広げる。 */
+	 	/*background: blue;*/			/* 背景色を設定する */
+	 	color: BLACK;				/* 白抜き文字にする。 */
+	 	cursor: pointer;			/* カーソルを指差しにする。 */
 	 }
 
 	 /* 
-	 * セレクタ:blogArticleImages
-	 * 概要   :ブログ記事の画像の領域。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
+	 * セレクタ:.numbering li
+	 * 概要   :選択中のナンバリングのボタン。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.13
 	 */
-	 .blogArticleImages {
-	 	width	:90%;		/*段組みレイアウトを崩して幅を広く取る。*/
-		float	:none;		/*floatを無効にして段組みを崩す。*/
+	 .numbering li.select{
+	 	font-weight: bold;	/* 太字にする。 */
+	 	color		: RED;	/* グレー文字にする。 */
 	 }
 
 	 /* 
-	 * セレクタ:.blogArticleImage
-	 * 概要   :スマホ用、ブログ記事の画像
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
+	 * セレクタ:.numbering li:empty
+	 * 概要   :空のナンバリングのボタン。
+	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.12
 	 */
-	 .blogArticleImage {
-	 	margin		:10px auto;	/*PC時より画像同士の間隔を詰める*/
+	 .numbering li:empty{
+	 	/* 非表示3セット */
+	 	width:0px;
+	 	height:0px;
+	 	display: none;
 	 }
-
-	 /* 
-	 * セレクタ:.blogArticle.blogArticleText
-	 * 概要   :ブログ記事の本文。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .blogArticle.blogArticleText {
-	 	width		:90%;		/*段組みレイアウトをやめているので、十分に幅を広げる。*/
-		margin		:5px auto;	/*段組みを崩しているので、自動で中心に寄せる*/
-	 }
-
-	 /* 
-	 * セレクタ:.blogArticleListButton
-	 * 概要   :ブログ画面でのブログリストを呼び出すボタン
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	 .blogArticleListButton {
-	 	width:auto;		/*フォントサイズに合わせた幅を指定する。*/
-	 }
-
-}
