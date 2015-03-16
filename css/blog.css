@@ -177,6 +177,7 @@
 	width		:94%;		/*幅を94%に指定する。*/
 	margin		:5px auto;	/*上下5pxの余白を配置し、水平位置を中央に合わせる。*/
 	display		:block;		/*marginによる中央寄せを有効にするための設定。*/
+	border-radius	:5px;	/*画像の角を丸くする。*/
 }
 
  /* 

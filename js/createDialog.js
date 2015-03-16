@@ -692,7 +692,5 @@ var errorMessages = [
 'ユーザ名、パスワード、または両方が空欄になっています。'
 ];
 
-
-
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
 var init = getInitData("source/init.json", 100);

@@ -618,7 +618,7 @@
  * 内容   :font-sizeをbodyと統一するため、削除
  */
 .description dt, .contentsBorder {
-    padding: 4px .5em;                    /* 適切にインデントをつける。 */
+    padding: 4px .3em 4px .5em;                    /* 適切にインデントをつける。 */
     font-weight: bold;                      /* 太字にして勢いをつける。 */
     margin: 10px 0 3px 0;                   /* 下にmarginを入れる */
     border-left: solid 5px rgb(206,220,58); /* 頭に緑の傍線をつける。 */
@@ -638,8 +638,7 @@
  * 内容   :セレクターを.description dd, .contentsBorderInTextに変更
  */
 .description dd, .contentsBorderInText {
-    padding-left: 1em;  /* 更にインデントをつける。 */
-    padding-top:2px;    /* 上向きに2px要素の幅を広げる */
+    padding: 2px .5em 0 1em;    /* 要素の幅を上向きに2px、右く向きに0.5文字分、左に1文字分広げる */
 }
 
 /* 

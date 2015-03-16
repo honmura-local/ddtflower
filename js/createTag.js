@@ -308,8 +308,6 @@ function createTag(){
 		this.selectPageNumber(displayPage);
 	}
 
-
-
 	/* 
 	 * 関数名:this.createNumbering = function(jsonName, startPage, displayNum)
 	 * 概要  :ブログページのナンバリング(ページャ)を作る。
