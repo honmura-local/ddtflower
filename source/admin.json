@@ -1,0 +1,14 @@
+{
+    "pageTitle": {
+        "class": "pageTitle cf",
+        "image": {
+            "src": "image/icon(waterdrop100).png"
+        },
+        "title": {
+            "text": "管理者画面"
+        },
+        "summary": {
+            "text": ""
+        }
+    }
+}

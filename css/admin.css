@@ -1,5 +1,52 @@
 @CHARSET "UTF-8";
 
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+	/* 
+	 * セレクタ:.contentManagement
+	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.13
+	 */
+	 .contentManagement {
+	 	width		:90%;		/*余白を取るため、幅を減らす。*/
+		margin		:0 auto;	/*中央に寄せる。*/
+	 }
+
+	/* 
+	 * セレクタ:.keyAndValue
+	 * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.13
+	 */
+	.keyAndValue {
+		width	:100%;		/*枠一杯に幅を広げる。*/
+	}
+
+	/* 
+	 * セレクタ:.value label
+	 * 概要   :プロパティ名のラベル。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.17
+	 */
+	.value label {
+		width		:100%	;			/* 幅を広げて段組みを崩す。 */
+	}
+	/* 
+	 * セレクタ:.value textarea
+	 * 概要   :プロパティの値を編集するテキストボックス。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.17
+	 */
+	.value textarea {
+		width		:100%;		/* 広げられるだけ幅を広げる。*/
+	}
+	
+}
+
 /* 
  * セレクタ:.contentManagement
  * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
@@ -40,14 +87,35 @@
 /* 
  * セレクタ:.currentKey
  * 概要   :.keysの中の最後尾の要素のクラス。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.17
  */
 .currentKey {
-	width		:100%;		/*幅を一杯に広げる。*/
+	background	:#FFFF33;		/* 背景を黄色にして、これがカレントのキーであると主張する。*/
+}
+
+/* 
+ * セレクタ:.value label
+ * 概要   :プロパティ名のラベル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.17
+ */
+.value label {
+	width		:10%;			/* 80px程度の幅を取る。 */
+	display		:inline-block;	/* 3行程度の高さにする。*/
+	font-size	:16px;			/* 親要素のフォントサイズを0にするため、要素のフォントサイズを指定し直す。*/
+}
+/* 
+ * セレクタ:.value textarea
+ * 概要   :プロパティの値を編集するテキストボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.17
+ */
+.value textarea {
+	width		:90%;		/*幅をラベルの幅を考慮した上で十分に広げる*/
 	height		:50px;		/*3行程度の高さにする。*/
 	font-size	:16px;		/*50pxで3行入るフォントサイズにする。*/
+	vertical-align: top;	/* 隣り合うラベルを上端で揃える。 */
 }
 
 /* 
@@ -72,29 +140,3 @@
 	content		:"";		/*矢印をつけない。*/
 }
 
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-
-	/* 
-	 * セレクタ:.contentManagement
-	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.13
-	 */
-	 .contentManagement {
-	 	width		:90%;		/*余白を取るため、幅を減らす。*/
-		margin		:0 auto;	/*中央に寄せる。*/
-	 }
-
-	/* 
-	 * セレクタ:.keyAndValue
-	 * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.13
-	 */
-	.keyAndValue {
-		width	:100%;		/*枠一杯に幅を広げる。*/
-	}
-}
