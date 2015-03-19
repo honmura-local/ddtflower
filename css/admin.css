@@ -1,142 +1,60 @@
 @CHARSET "UTF-8";
 
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
 
-	/* 
-	 * セレクタ:.contentManagement
-	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.13
-	 */
-	 .contentManagement {
-	 	width		:90%;		/*余白を取るため、幅を減らす。*/
-		margin		:0 auto;	/*中央に寄せる。*/
-	 }
-
-	/* 
-	 * セレクタ:.keyAndValue
-	 * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.13
-	 */
-	.keyAndValue {
-		width	:100%;		/*枠一杯に幅を広げる。*/
-	}
-
-	/* 
-	 * セレクタ:.value label
-	 * 概要   :プロパティ名のラベル。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.17
-	 */
-	.value label {
-		width		:100%	;			/* 幅を広げて段組みを崩す。 */
-	}
-	/* 
-	 * セレクタ:.value textarea
-	 * 概要   :プロパティの値を編集するテキストボックス。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.17
-	 */
-	.value textarea {
-		width		:100%;		/* 広げられるだけ幅を広げる。*/
-	}
-	
-}
 
 /* 
- * セレクタ:.contentManagement
- * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- */
-.contentManagement {
-	width		:100%;	/*親要素(.main)と同じだけの幅を取る。*/
-}
-
-/* 
- * セレクタ:.keyAndValue
- * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- */
-.keyAndValue {
-	width		:90%;		/*多少余白が出る幅に設定する。*/
-	margin		:0 auto;	/*中央に寄せる。*/
-}
-
-/* 
- * セレクタ:.key
- * 概要   :JSONのキー名のタグのクラス。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- */
-.key {
-	width		:auto;			/*テキストの幅を基準に要素の幅を決める。*/
-	background	:#666;			/*背景を灰色にする。*/
-	color		:#FFF;			/*白抜き文字にする。*/
-	display		:inline-block;	/*インラインブロックとして扱い、横に並べる。*/
-}
-
-/* 
- * セレクタ:.currentKey
- * 概要   :.keysの中の最後尾の要素のクラス。
+ * セレクタ:.main > .pageTitle
+ * 概要   :タイトル領域
  * 作成者 :T.Masuda
- * 作成日 :2015.03.17
+ * 作成日 :2015.02.03
  */
-.currentKey {
-	background	:#FFFF33;		/* 背景を黄色にして、これがカレントのキーであると主張する。*/
+.main > .pageTitle{
+    width: 800px;           /* 幅を800pxにする。100%に設定しても無効なので、固定値を使う。 */
+    vertical-align: middle; /* 内包する要素の高さを中心に揃える。 */
+    box-sizing: border-box; /* サイズの計算にpaddingと枠線を加える。 */
+    margin: 20px 0;         /* 下に20pxの余白を空ける */
 }
 
 /* 
- * セレクタ:.value label
- * 概要   :プロパティ名のラベル。
+ * セレクタ: .titleArea
+ * 概要   :タイトルテキストとアイコン部分のdivのスタイル
+ * 作成者 :T.Masua
+ * 作成日 :2015.03.18
+ */
+.titleArea {
+    margin-bottom: 5px;     /* タイトルのサマリーから5px余白をとる */
+}
+
+/* 
+ * セレクタ:.main > .pageTitle img
+ * 概要   :タイトルの画像
  * 作成者 :T.Masuda
- * 作成日 :2015.03.17
+ * 作成日 :2015.03.18
  */
-.value label {
-	width		:10%;			/* 80px程度の幅を取る。 */
-	display		:inline-block;	/* 3行程度の高さにする。*/
-	font-size	:16px;			/* 親要素のフォントサイズを0にするため、要素のフォントサイズを指定し直す。*/
+.main > .pageTitle img{
+    width: 100px;           /* 画像サイズに関係なく幅を100pxにする。 */
+    height: auto;           /* 画像の縦横比に応じた高さを取る。 */
+    padding: 0 5px;         /* 左右に5pxのpaddingを配置する。 */
+    box-sizing: border-box; /* サイズの計算にpaddingと枠線を加える。 */
+    background: #FFF;       /* 仮の背景色を指定する。 */
+    display: inline-block;  /* 横並びにするためにブロック要素にする */
+    vertical-align: middle; /* 中央揃えにする */
 }
+
 /* 
- * セレクタ:.value textarea
- * 概要   :プロパティの値を編集するテキストボックス。
+ * セレクタ:.main > .pageTitle .title
+ * 概要   :タイトルの文字
  * 作成者 :T.Masuda
- * 作成日 :2015.03.17
+ * 作成日 :2015.03.18
  */
-.value textarea {
-	width		:90%;		/*幅をラベルの幅を考慮した上で十分に広げる*/
-	height		:50px;		/*3行程度の高さにする。*/
-	font-size	:16px;		/*50pxで3行入るフォントサイズにする。*/
-	vertical-align: top;	/* 隣り合うラベルを上端で揃える。 */
+.main > .pageTitle .title{
+    width:          82%;        /* 余った幅いっぱいに横幅を取る。 */
+    height:         auto;       /* 高さを自動調整する。 */
+    font-size:      28px;       /* フォントサイズを28pxに指定する。 */
+    box-sizing:     border-box; /* サイズの計算にpaddingと枠線を加える。 */
+    text-align:     center;     /* 文字を中央に寄せる。 */
+    display: inline-block;      /* ブロック要素にして中心寄せを有効にする。 */
+    vertical-align: middle;     /* 中央揃えにする */
 }
 
-/* 
- * セレクタ:.key:after
- * 概要   :keyの後に配置する矢印。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- */
-.key:after {
-	content		:"→";		/*右向きの矢印を配置する。*/
-}
-
-/* 
- * セレクタ:.key.currentKey:after
- * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- */
-.key.currentKey:after {
-	content		:"";		/*矢印をつけない。*/
-}
-
+/*  * セレクタ:.main > .pageTitle .summary * 概要   :タイトル部分概要。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.main > .pageTitle .summary{    clear: both;            /* 回り込みをなくす */    width:      700px;      /* 幅を660pxに設定する。 */    text-indent: 1em;       /* インデントを1文字分入れる */    padding: 5px 0;         /* 要素の幅を5px広げる */    margin: 0 auto;         /* 中央に寄せる。 */}/*  * セレクタ:.contentManagement * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。 * 設計者 :T.Masuda * 作成者 :T.Yamamoto * 作成日 :2015.03.13 */.contentManagement {	width		:100%;	/*親要素(.main)と同じだけの幅を取る。*/}/*  * セレクタ:.keyAndValue * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。 * 設計者 :T.Masuda * 作成者 :T.Yamamoto * 作成日 :2015.03.13 */.keyAndValue {	width		:95%;		/*多少余白が出る幅に設定する。*/	margin: 0 auto 10px;	/*中央に寄せる。*/}/*  * セレクタ:.key * 概要   :JSONのキー名のタグのクラス。 * 設計者 :T.Masuda * 作成者 :T.Yamamoto * 作成日 :2015.03.13 */.key {	text-align: center;	width		:auto;			/*テキストの幅を基準に要素の幅を決める。*/	background	:#666;			/*背景を灰色にする。*/	color		:#FFF;			/*白抜き文字にする。*/	display		:inline-block;	/*インラインブロックとして扱い、横に並べる。*/	line-height: 150%;	padding-left: 5px;}/*  * セレクタ:.currentKey * 概要   :.keysの中の最後尾の要素のクラス。 * 作成者 :T.Masuda * 作成日 :2015.03.17 */.currentKey {	background: goldenrod;		/* 背景を金色にして、これがカレントのキーであると主張する。*/}/*  * セレクタ:.value label * 概要   :プロパティ名のラベル。 * 作成者 :T.Masuda * 作成日 :2015.03.17 */.value label {	width: 20%;			/* 80px程度の幅を取る。 */	display		:inline-block;	/* 3行程度の高さにする。*/	font-size	:16px;			/* 親要素のフォントサイズを0にするため、要素のフォントサイズを指定し直す。*/}/*  * セレクタ:.value textarea * 概要   :プロパティの値を編集するテキストボックス。 * 作成者 :T.Masuda * 作成日 :2015.03.17 */.value textarea {	width: 70%;		/*幅をラベルの幅を考慮した上で十分に広げる*/	margin-right: 1%;	height		:50px;		/*3行程度の高さにする。*/	font-size	:16px;		/*50pxで3行入るフォントサイズにする。*/	vertical-align: top;	/* 隣り合うラベルを上端で揃える。 */}/*  * セレクタ:.key:after * 概要   :keyの後に配置する矢印。 * 設計者 :T.Masuda * 作成者 :T.Yamamoto * 作成日 :2015.03.13 */.key:after {	content		:"→";		/*右向きの矢印を配置する。*/	background: white;	color: #555;	display: inline-block;	margin-left: 5px;	padding-left: 5px;}/*  * セレクタ:.key.currentKey:after * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。 * 設計者 :T.Masuda * 作成者 :T.Yamamoto * 作成日 :2015.03.13 */.key.currentKey:after {	content		:"";		/*矢印をつけない。*/}/*  * セレクタ:.tabPanel * 概要   :タブのパネル。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.tabPanel{	margin-top: 20px;	/* 上に20pxのmarginを配置し、タブのインデックスと間隔を取る。 */}/*  * セレクタ:.value * 概要   :プロパティに対する値を設定する要素をまとめたタグのクラス。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.value{	font-size: 0px;	/* 中の要素をインラインブロックで横に並べるため、自動で出る余白を消す。 */	margin-bottom: 5px;	display: block;}/*  * セレクタ:.value input[type="file"] * 概要   :画像アップロードのボタン本体。見えない。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.value input[type="file"]{	display: none;	/* ボタンの押下の処理を別のボタンに任せるため、このボタンは非表示にする。 */}/*  * セレクタ:.value button * 概要   :画像アップロードのイベント開始ボタン。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.value button{	display: inline-block;	/* インラインブロックにして並べる。 */}/*  * セレクタ:.keys * 概要   :キー名のまとまり。 * 作成者 :T.Masuda * 作成日 :2015.03.18 */.keys {	display: block;		/* ブロック要素にして行を丸まるつかう。 */	margin-bottom: 5px;	/* 下のvaluesとの間に間隔を取る。 */}/* スマホ・タブレットレイアウト */@media(max-width:680px){		/* 様々な影響を避けるため、極力CSSファイルを読み込まないので必要なスタイルを書く。 */    /*      * セレクタ:.main > .pageTitle     * 概要   :タイトル領域     * 作成者 :T.Masuda     * 作成日 :2015.02.24     */    .main > .pageTitle{        width: 100%;        /* 可変幅に設定する。 */        margin-top: 0;      /* 上のmarginをなくす。 */    }    /*      * セレクタ:.main > .pageTitle img     * 概要   :スマホ用コンテンツのスタイル     * 作成者  :T.Masuda     * 作成日  :2015.03.18     * 内容　  :marginを消す     */    .main > .pageTitle img {        width: 15%;                 /* 幅を可変にする */        height: auto;               /* 高さを自動調整する */        margin: 0 2% 0 4%;          /* 余白をとる */    }    /*      * セレクタ   :.main > .pageTitle .title     * 概要    :スマホ用タイトル部分h1のスタイル     * 作成者  :T.Masuda     * 作成日  :2015.03.18     */    .main > .pageTitle .title {        font-weight: bold;  /* 文字を太くする */        font-size: 19px;    /* フォントサイズ17pxにする */        width: 65%;         /* 幅を可変にする。 */    }    /*      * セレクタ:.main > .pageTitle .summary     * 概要  :タイトルの説明部分     * 作成者:T.Masuda     * 作成日:2015.03.18     */     .main > .pageTitle .summary     {        width: 90%;     /* 幅を90%にする */     }		/* 	 * セレクタ:.contentManagement	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。	 * 設計者 :T.Masuda	 * 作成者 :T.Yamamoto	 * 作成日 :2015.03.13	 */	 .contentManagement {	 	width		:90%;		/*余白を取るため、幅を減らす。*/		margin		:0 auto;	/*中央に寄せる。*/	 }	/* 	 * セレクタ:.keyAndValue	 * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。	 * 設計者 :T.Masuda	 * 作成者 :T.Yamamoto	 * 作成日 :2015.03.13	 */	.keyAndValue {		width	:100%;		/*枠一杯に幅を広げる。*/	}	/* 	 * セレクタ:.value input[type="file"]	 * 概要   :画像アップロードのボタン。	 * 作成者 :T.Masuda	 * 作成日 :2015.03.18	 */	.value input[type="file"]{		width		: 100%;	/* 段組みが解除されたので、十分に幅を取る。 */	}	/* 	 * セレクタ:.value label	 * 概要   :プロパティ名のラベル。	 * 作成者 :T.Masuda	 * 作成日 :2015.03.17	 */	.value label {		width		:100%	;			/* 幅を広げて段組みを崩す。 */	}	/* 	 * セレクタ:.value textarea	 * 概要   :プロパティの値を編集するテキストボックス。	 * 作成者 :T.Masuda	 * 作成日 :2015.03.17	 */	.value textarea {		width		:100%;		/* 広げられるだけ幅を広げる。*/	}		/* 	 * セレクタ:.value button	 * 概要   :画像アップロードのイベント開始ボタン。	 * 作成者 :T.Masuda	 * 作成日 :2015.03.18	 */	.value button{		margin-top: 3px;	/* 上にあるテキストリアとの間に間隔を取る。 */	}	}

@@ -74,39 +74,54 @@
             "preserved": {
                 "class": "preserved tabPanel",
                 "id": "preserved",
-                "keyAndValue": {
+                "pageTitleImage": {
+                    "class": "pageTitleImage keyAndValue",
                     "keys": {
-                        "key": {
-                            "class": "key",
+                        "pageTitle": {
+                            "class": "pageTitle key",
                             "text": "pageTitle"
                         },
-                        "key": {
-                            "class": "key currentKey",
+                        "image": {
+                            "class": "image key currentKey",
                             "text": "image"
                         }
                     },
                     "values": {
-                        "value": {
+                        "src": {
+                            "class": "value src",
                             "valueLabel": {
                                 "text": "src"
                             },
                             "editValue": {
                                 "value": "image/icon(tulip).png"
                             },
-                            "setSrc":{
-                            	"type":"file"
+                            "setSrc": {
+                                "type": "file"
+                            },
+                            "setSrcButton": {
+                                "text": "選択"
+                            }
+                        },
+                        "id": {
+                            "class": "value id",
+                            "valueLabel": {
+                                "text": "id"
+                            },
+                            "editValue": {
+                                "value": "titleImage"
                             }
                         }
                     }
                 },
-                "keyAndValue": {
+                "pageTitleTitle": {
+                    "class": "pageTitleTitle keyAndValue",
                     "keys": {
-                        "key": {
-                            "class": "key",
+                        "pageTitle": {
+                            "class": "pageTitle key",
                             "text": "pageTitle"
                         },
-                        "key": {
-                            "class": "key currentKey",
+                        "title": {
+                            "class": "title key currentKey",
                             "text": "title"
                         }
                     },
@@ -121,14 +136,15 @@
                         }
                     }
                 },
-                "keyAndValue": {
+                "pageTitleSummary": {
+                    "class": "pageTitleSummary keyAndValue",
                     "keys": {
-                        "key": {
-                            "class": "key",
+                        "pageTitle": {
+                            "class": "pageTitle key",
                             "text": "pageTitle"
                         },
-                        "key": {
-                            "class": "key currentKey",
+                        "summary": {
+                            "class": "summary key currentKey",
                             "text": "summary"
                         }
                     },

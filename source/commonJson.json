@@ -339,5 +339,14 @@
                 "src": "image/icon(redsunflower).png"
             }
         }
+    },
+    "textEditPopup": {
+        "textEditPopupBody": {
+            "id": "textEditPopupBody",
+            "textEditNotice": {
+                "text": "テキストを編集します。"
+            },
+            "textEdit": {}
+        }
     }
 }

@@ -207,7 +207,7 @@ function createTag(){
 	 */
 	this.getDomNode = function(key){
 		//メンバのHTMLからキーに対応した要素をコピーして返す。
-		return $($('[class="' + key +'"]', this.dom).clone(false));
+		return $($(' > *[class="' + key +'"]', this.dom).clone(false));
 	};
 	
 	/* 
@@ -272,7 +272,6 @@ function createTag(){
 		//domNodeReturnを返す。
 		return domNodeReturn;
 	}
-
 	
 	/* 
 	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage)

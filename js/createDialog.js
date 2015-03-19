@@ -694,3 +694,103 @@ var errorMessages = [
 
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
 var init = getInitData("source/init.json", 100);
+
+/* 
+ * 関数名:showEditDialog(editElem)
+ * 概要  :テキストを編集するダイアログを表示する。
+ * 引数  :Element editElem:編集対象となる要素。
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.03.18
+ */
+function showEditDialog(editElem){
+	
+//	//jQuery UIのダイアログを生成する。
+//	$('.textEditDialog').dialog({
+//		// 幅を設定する。
+//		width			: '300px',
+//		// 予約ダイアログのクラスを追加する。
+//		dialogClass		:'reservedDialog',
+//		// ダイアログを生成と同時に開く。
+//		autoOpen		: true,
+//		// Escキーを押してもダイアログが閉じないようにする。
+//		closeOnEscape	: false,
+//		// モーダルダイアログとして生成する。
+//		modal			: true,
+//		// リサイズしない。
+//		resizable		: false, 
+//		// 作成完了時のコールバック関数。
+//		create:function(event, ui){
+//			//ダイアログのテキストエリアのjQueryオブジェクトを生成する。
+//			var textarea = $('textarea', this);
+//			//テキストエリアに連動元の入力要素の内容をコピーする。
+//			textarea.val($(editElem).val());
+//			//テキストエリアと入力要素の内容が連動するようにイベント登録する。
+//			textarea.change(function(){
+//				//editElemの値をtextareaの値で上書きする。
+//				editElem.val(textarea.val());
+//			});
+//		},
+//		// 位置を指定する。
+//		position:{
+//			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+//			my:'center center',
+//			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+//			at:'center center',
+//			// ウィンドウをダイアログを配置する位置の基準に指定する。
+//			of:window
+//		},
+//		// ボタンの生成と設定を行う。
+//		buttons:[
+//			         {
+//			        	 // 終了ボタンのテキスト。
+//			        	 text:'終了',
+//			        	 // ボタン押下時の処理を記述する。
+//			        	 click:function(event, ui){
+//			        		// ダイアログを完全に消去する。
+//			        		$(this).dialog("close").dialog("destroy").remove();
+//			        	 }
+//			         }
+//		         ]
+//	});
+}
+
+/* 
+ * 関数名:useEditDialog(selector)
+ * 概要  :指定した要素をクリックしたらテキスト編集用のダイアログを出すイベントを登録する。
+ * 引数  :string selector:編集対象となる要素のセレクタ。
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.03.18
+ */
+function useEditDialog(selector){
+	
+	//createTagでダイアログのタグを作る。
+	creator.outputTag('textEditPopup','textEditPopup','body');
+	//ダイアログのテキストエリアのjQueryオブジェクトを生成する。
+	var textarea;
+	
+	//タグに呼び出すダイアログを指定する属性を追加する。
+	$(selector).attr('data-smallipop-referenced-content', '#textEditPopupBody').attr('title', 'Referenced content');
+	
+	//smallipopによるポップアップを生成する。
+    $(selector).smallipop({
+    	hideOnPopupClick:false,		//ポップアップをクリックしても消えないようにする。
+    	triggerOnClick:true,		//対象をクリックすることでポップアップが出るようにする。
+    	windowPadding:0,			//ウィンドウに対する最低限のpaddinをなくす。
+    	onAfterShow:function(from){	//ポップアップ表示前の処理。
+    		//ポップアップのテキストエリアのjQueryオブジェクトを取得する。
+    		textarea = $('.textEditPopupBody textarea', document).eq(1);
+    		//ポップアップの呼び出し元のテキストエリアの内容をコピーする。
+			textarea.val($(from).val());
+			//2つのテキストエリアの内容が連動するようにイベント登録する。
+			textarea.on('change', function(){
+				//呼び出し元のテキストエリアの値をポップアップのテキストエリアの値で上書きする。
+				from.val(textarea.val());
+			});    		
+    	},
+    	onAfterHide:function(){		//ポップアップが消えた後の処理。
+    		textarea.off('change');	//テキストエリアのイベントを解除する。
+    	}
+    });
+}

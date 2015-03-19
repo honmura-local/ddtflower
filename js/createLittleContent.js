@@ -2,6 +2,26 @@
  * 小規模のパーツ、コンテンツを作るためのJSファイル。
  */
 
+//Datepickerの日本語用設定。
+var dpJpSetting = {
+		closeText: '閉じる',
+		prevText: '&#x3c;前',
+		nextText: '次&#x3e;',
+		currentText: '本日',
+		monthNames: ['1月','2月','3月','4月','5月','6月',
+		             '7月','8月','9月','10月','11月','12月'],
+		             monthNamesShort: ['1月','2月','3月','4月','5月','6月',
+		                               '7月','8月','9月','10月','11月','12月'],
+		                               dayNames: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'],
+		                               // dayNamesShort: ['日','月','火','水','木','金','土'],
+		                               // dayNamesMin: ['日','月','火','水','木','金','土'],
+		                               weekHeader: '週',
+		                               dateFormat: 'yy/mm/dd',
+		                               firstDay: 0,
+		                               isRTL: false,
+		                               showMonthAfterYear: true,
+		                               yearSuffix: '年'};
+
 /*
  * 関数名:createCalendar
  * 引数  :なし
@@ -27,35 +47,37 @@ function createCalendar () {
         //$('.calendar').datepicker();
         // カレンダーを表示する
 
-        $.datepicker.regional['ja'] = {
-			closeText: '閉じる',
-			prevText: '&#x3c;前',
-			nextText: '次&#x3e;',
-			currentText: '本日',
-			monthNames: ['1月','2月','3月','4月','5月','6月',
-			'7月','8月','9月','10月','11月','12月'],
-			monthNamesShort: ['1月','2月','3月','4月','5月','6月',
-			'7月','8月','9月','10月','11月','12月'],
-			dayNames: ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'],
-			// dayNamesShort: ['日','月','火','水','木','金','土'],
-			// dayNamesMin: ['日','月','火','水','木','金','土'],
-			weekHeader: '週',
-			dateFormat: 'yy/mm/dd',
-			firstDay: 0,
-			isRTL: false,
-			showMonthAfterYear: true,
-			yearSuffix: '年'};
-			$.datepicker.setDefaults($.datepicker.regional['ja']);
+        $.datepicker.regional['ja'] = dpJpSetting;
+		$.datepicker.setDefaults($.datepicker.regional['ja']);
 
-        $('.calendar').datepicker({
-        	// カレンダーの日付を選択したら
-        	onSelect: function(dateText, inst){
-        		// 予約のダイアログを出す。
-        		callReservedDialog(dateText);
-        	}
-        });
+        $('.calendar').datepicker();
         // ここまで追加・修正しました。
     });// jqueryの記述の終わり
+}
+
+/*
+ * 関数名:createReservedCalendar
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :予約のカレンダーを作る。
+ * 作成日:2015.03.18
+ * 作成者:T.Masuda
+ */
+function createReservedCalendar () {
+	// jqueryの記述の始まり
+	$(function() {
+		$.datepicker.regional['ja'] = dpJpSetting;
+		$.datepicker.setDefaults($.datepicker.regional['ja']);
+		
+		$('.calendar').datepicker({
+			// カレンダーの日付を選択したら
+			onSelect: function(dateText, inst){
+				// 予約のダイアログを出す。
+				callReservedDialog(dateText);
+			}
+		});
+		// ここまで追加・修正しました。
+	});// jqueryの記述の終わり
 }
 
 
@@ -190,16 +212,6 @@ function createGallery(selector){
 	window.setTimeout(function(){
 		//ギャラリーを見える様にする。
 		$('.' + selector).show();
-		// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
-//		$('.' + selector).smoothDivScroll({
-//			//カーソル合わせでスクロールする領域を表示する。
-//			hotSpotScrolling: true,
-//			//タッチでのスクロールを有効にする。
-//			touchScrolling: true,
-//			manualContinuousScrolling: true,
-//			//マウスホイールによるスクロールを無効にする。
-//			mousewheelScrolling: false
-//		});
 		
 		//SmoothDivScrollの関数をコールしてギャラリーを作る。
 		$('.' + selector).smoothDivScroll({
@@ -220,19 +232,6 @@ function createGallery(selector){
 		});
 	//1秒置いて実行する。
 	}, 1000);
-}
-
-/*
- * 関数名:destroyGallery(selector)
- * 引数  :String selector
- * 戻り値:なし
- * 概要  :カルーセルのギャラリーを破棄する。
- * 作成日:2015.03.09
- * 作成者:T.M
- */
-function destroyGallery(selector){
-	//選択されたギャラリーを破棄する。
-	$(selector).smoothDivScroll("destroy");
 }
 
 /*
@@ -288,4 +287,19 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 			};
 		});
  	});
+}
+
+/*
+ * 関数名:createTab(selector)
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :タブのコンテンツを作成する。
+ * 作成日:2015.03.17
+ * 作成者:T.Masuda
+ */
+function createTab(selector){
+	//タブのコンテンツを作成する。
+	$(selector).easytabs({
+		updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
+	});
 }

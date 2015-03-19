@@ -2,6 +2,34 @@
 <body>
 <div>
 
+<ul class="numbering">
+	<!-- 前と後のボタンと5個の数字ボタン -->
+	<li class="pre" onclick=""></li>
+	<li class="1" onclick=""></li>
+	<li class="2" onclick=""></li>
+	<li class="3" onclick=""></li>
+	<li class="4" onclick=""></li>
+	<li class="5" onclick=""></li>
+	<li class="next" onclick=""></li>
+</ul>
+
+
+<!-- ブログのタグ。 -->
+	<div class="blog">
+	</div>
+
+<!-- ナンバリングのタグ -->
+	<div class="numberingOuter">
+	</div>
+
+<!-- テキスト入力ダイアログ -->
+<div class="textEditPopup">
+	<div class="textEditPopupBody" id="">
+		<h4 class="textEditNotice"></h4>
+		<textarea class="textEdit"></textarea>
+	</div>
+</div>
+
 <!-- タブコンテンツ -->
 	<div class="tabContainer">
 		<ul class="tabs">
@@ -41,23 +69,28 @@
 		</ul>
 		<div class="panelContainer">
 			<div class="preserved" id="">
-				<div class="keyAndValue">
+				<div class="pageTitleImage keyAndValue">
 					<span class="keys">
-						<label class="key"></label>
-						<label class="key currentKey"></label>
+						<label class="pageTitle key"></label>
+						<label class="image key currentKey"></label>
 					</span>
 					<div class="values">
-						<span class="value">
+						<span class="src value">
 							<label class="valueLabel"></label>
 							<textarea class="editValue"></textarea>
 							<input type="" class="setSrc">
+							<button class="setSrcButton"></button>
+						</span>
+						<span class="id value">
+							<label class="valueLabel"></label>
+							<textarea class="editValue"></textarea>
 						</span>
 					</div>
 				</div>
-				<div class="keyAndValue">
+				<div class="pageTitleTitle keyAndValue">
 					<span class="keys">
-						<label class="key"></label>
-						<label class="key currentKey"></label>
+						<label class="pageTitle key"></label>
+						<label class="title key currentKey"></label>
 					</span>
 					<div class="values">
 						<span class="value">
@@ -66,10 +99,10 @@
 						</span>
 					</div>
 				</div>
-				<div class="keyAndValue">
+				<div class="pageTitleSummary keyAndValue">
 					<span class="keys">
-						<label class="key"></label>
-						<label class="key currentKey"></label>
+						<label class="pageTitle key"></label>
+						<label class="summary key currentKey"></label>
 					</span>
 					<div class="values">
 						<span class="value">
@@ -355,6 +388,42 @@
 		<img class="contentsImgRightR" src="">
 	</div>
 </div>
+
+	<!-- カルーセルのギャラリー。 -->
+	<div class="footGallery">
+		<!-- ギャラリーの画像。divタグ、aタグにimgタグを格納する構成。任意の数を用意する。現在は試験的に10個。 -->
+			<a class="1stArt" href="" rel="">
+				<img class="1stImage" src="" >
+			</a>
+			<a class="2ndArt" href="" rel="">
+				<img class="2ndImage" src="" >
+			</a>
+			<a class="3rdArt" href="" rel="">
+				<img class="3rdImage" src="" >
+			</a>
+			<a class="4thArt" href="" rel="">
+				<img class="4thImage" src="" >
+			</a>
+			<a class="5thArt" href="" rel="">
+				<img class="5thImage" src="" >
+			</a>
+			<a class="6thArt" href="" rel="">
+				<img class="6thImage" src="" >
+			</a>
+			<a class="7thArt" href="" rel="">
+				<img class="7thImage" src="" >
+			</a>
+			<a class="8thArt" href="" rel="">
+				<img class="8thImage" src="" >
+			</a>
+			<a class="9thArt" href="" rel="">
+				<img class="9thImage" src="" >
+			</a>
+			<a class="10thArt" href="" rel="">
+				<img class="10thImage" src="" >
+			</a>
+	</div>
+
 
 	<!-- カルーセルのギャラリー。 -->
 	<div class="footGallery2" id="">
@@ -1045,7 +1114,7 @@
 			<!-- トピックの最新記事の画像 -->
 			<img class="topicContentImage" src="">
 			<!-- トピックの最新記事の日付 -->
-			<time class="topicContentDate"></div>
+			<time class="topicContentDate">
 		</div>
 	</div>
 </div>
@@ -1097,60 +1166,6 @@
 	<button class="blogEditButtonsCancelButton"></button>
 </div>
 
-<!-- 管理画面 -->
-<div class="ContentManager tabContainer">
-	<!-- タブのリスト -->
-	<ul class="tabs">
-		<!-- タブのボタン領域 -->
-		<li class="tabButton">
-			<a href="">
-		</li>
-	</ul>
-	<!-- 編集コンテンツ -->
-	<div class="editContent panelContainer">
-		<!--タブのコンテンツ。idはjsonファイル名 -->
-		<div class="tabPanel" id="">
-			<!--  -->
-			<div class="keyAndValue">
-				<object class="keys">
-					<param class="key">
-					<param class="key currentKey">
-				</object>
-				<!-- valueにjsonでセットされいる値 -->
-				<textarea class="value" value=""></textarea>
-			</div>
-		</div>
-	</div>
 </div>
-<!-- 管理画面　終わり -->
-
-<!-- ブログのナンバリング(ページャ) -->
-<div>
-<ul class="numbering">
-	<!-- 前と後のボタンと5個の数字ボタン -->
-	<li class="pre" onclick=""></li>
-	<li class="1" onclick=""></li>
-	<li class="2" onclick=""></li>
-	<li class="3" onclick=""></li>
-	<li class="4" onclick=""></li>
-	<li class="5" onclick=""></li>
-	<li class="next" onclick=""></li>
-</ul>
-</div>
-
-<!-- ブログのタグ。 -->
-<div>
-	<div class="blog">
-	</div>
-</div>
-
-<!-- ナンバリングのタグ -->
-<div>
-	<div class="numberingOuter">
-	</div>
-</div>
-
-
-
 </body>
 </html>
