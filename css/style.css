@@ -2,201 +2,7 @@
 
 /* 通常のレイアウト。 */
 
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
-    
-	/* 
-	 * セレクタ:.main
-	 * 概要   :コンテンツ領域。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.21
-	 */
-	.main{
-	    width:      100%;      		/* 幅をcontainerに合わせる。 */
-		margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
-	}
-	
-	/* 画面がタブレットの幅であれば */
-	@media screen and (min-width: 430px) {
-		/* 
-		 * セレクタ:.main
-		 * 概要   :コンテンツ領域。
-		 * 作成者 :T.Masuda
-		 * 作成日 :2015.03.04
-		 */
-		.main{
-		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
-		}
-	}
 
-    /* 
-     * セレクタ:#container
-     * 概要   :スマホ用container
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.02.16
-     * 変更者 :T.Masuda
-     * 変更日 :2015.02.21
-     * 追加者 :T.Yamamoto
-	 * 追加日 :2015.03.10
-	 * 内容   :文字サイズを削除
-     */
-    #container {
-        width: 100%;        /* コンテンツの幅を100%にする */
-        margin: 0 auto;     /* 中央揃えにする */
-    }
-    /* 
-     * セレクタ:#container, .pageTitle .summary
-     * 概要   :スマホ用デフォルト文字サイズの設定
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.03.10
-     */
-	#container,
-	.pageTitle .summary {
-		font-size: 13px;    /* フォントサイズを13pxにする */
-	}
-
-	/* 
-	 * セレクタ:.header
-	 * 概要   :ヘッダー領域のタグ。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.21
-	 */
-	.header{
-	    position: static;	/* position fixedを解除する。 */
-	    min-width: 0px;		/* 最低幅を無効にする。 */
-	}
-
-	/* 
-	 * セレクタ:.copyright
-	 * 概要   :コピーライトのスタイル。スマホ用では中央に寄せる。
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.02.20
-	 * 作成者 :T.T.Masuda
-	 * 作成日 :2015.02.23
-	 * 内容　:中央寄せのデザインに変更しました。
-	 */
-	.copyright {
-		font-size: 8px;			/* フォントサイズをより小さくする。 */
-		text-align: center;		/* 中心に寄せる。 */
-		width: 100%;			/* 幅を一杯に取る。 */
-		display: block;			/* ブロック要素として扱う。 */
-		margin: 0 auto;			/* 中心に寄せる。 */
-		word-break: break-all;	/* 単語単位の改行をしない。 */
-	}
-	
-	/* ガイド領域 */
-	/* 
-	 * セレクタ:.guides
-	 * 概要   :様々な案内情報を掲載するヘッダー内の領域。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.21
-	 */
-	.guides{
-	    width       :   100%;      /* 幅を画面に合わせる。 */
-	    height      :   auto;       /* 高さを自動調整する。 */
-	}
-	
-	/* 
-	 * セレクタ:.guides > *
-	 * 概要   :ガイド領域直下の要素。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.24
-	 */
-	.guides > *{
-	    margin-bottom   :   5px;            /* 改行した要素との間に最低限の間を空ける。 */
-	}
-	/* 
-	 * セレクタ:.guideFASchool
-	 * 概要   :フラワーアレンジメントスクールのガイド。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.21
-	 */
-	.guideFASchool{
-	    width: 140px;       /* スマホ用に幅を切り詰める */
-	}
-	
-	/* 
-	 * セレクタ:.guideTel
-	 * 概要   :電話窓口のガイド。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.05
-	 * 変更者 :T.Masuda
-	 * 変更日 :2015.02.23
-	 * 内容　 :左のmarginを消し、幅を増やしました。
-	 */
-	.guideTel{
-	    width: 177px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
-	    margin-left: 0;     /* 画像の空白部分で余白は十分なので、左marginを消す。 */
-	}
-	
-	/* 
-	 * セレクタ:.guideLogin .userName
-	 * 概要   :ログイン名。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.24
-	 */
-	.guideLogin .userName{
-		/*width: 75px;*/	/* 幅に余裕がないので狭める。 */
-	}
-	
-	/* トップメニュー領域 */
-	/* 
-	 * セレクタ:.topMenu
-	 * 概要   :ヘッダー領域内のトップメニュー。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.05
-	 * 作成日 :2015.02.23
-	 * 内容 　:フォントサイズ、padding、幅を変更しました。
-	 * 修正者 :T.Masuda
-	 * 修正日 :2015.03.04
-	 * 内容 　:text-alignを変更しました。
-	 */
-	.topMenu{
-	    width       : 100%;     /* 幅を画面にあわせる。 */
-	    height      : auto;     /* 内容により高さを変動させる。 */
-	    text-align	: left;     /* ボタンを左に寄せる。 */
-	}
-	
-	/* 
-	 * セレクタ:.topMenu li
-	 * 概要   :トップメニューのボタン。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.05
-	 * 修正者 :T.Masuda
-	 * 修正日 :2015.02.23
-	 * 内容 　:フォントサイズ、padding、幅を変更しました。
-	 * 修正者 :T.Masuda
-	 * 修正日 :2015.03.04
-	 * 内容 　:paddingを変更しました。
-	 */
-	.topMenu li{
-	    width:          auto;       /* 幅を文字のサイズに合わせる。 */
-	    font-size:      13px;       /*  PCレイアウトより小さめのフォントにする。 */
-	    padding: 5px 0.85em;		/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
-	}
-	
-	/* 
-	 * セレクタ:.topMenu p
-	 * 概要   :トップメニューのボタンのリンクの文字。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.24
-	 */
-	.topMenu p{
-	    font-size:  13px;   /* 妥当なフォントサイズを指定する。 */
-	    margin-top:  0;   	/* 上のmarginをなくす */
-	}
-	
-	/* 
-	 * セレクタ:footer
-	 * 概要   :フッター領域のタグ。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.02.24
-	 */
-	footer{
-	    width		: 100%;      /* 幅をmainに合わせる。 */
-	    margin-top	: 0;		/* 画像縮小に伴いコピーライトと画像が被るので上marginをなくす。 */
-	}
-}
 
 /* リセットCSS。追記分はコメントあり。 */
 /* 
@@ -717,6 +523,16 @@ footer{
 }
 
 /* 
+ * セレクタ:.createImage img
+ * 概要   : 上下の花の飾りの画像。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.19
+ */
+.createImage img{
+	width: 100%;	/* 上下の花の飾りの画像をコンテンツサイズに合わせる。 */
+}
+
+/* 
  * セレクタ:.loginDialog
  * 概要   :ログインのダイアログ。
  * 作成者 :T.Masuda
@@ -855,3 +671,249 @@ footer{
 	text-decoration	:underline;		/*ボタンにカーソルを合わせたら下線を出して強調する。*/
 }
 
+/* 
+ * セレクタ:.textEditPopup
+ * 概要   :テキスト編集用のポップアップ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.18
+ */
+.textEditPopup{
+	display: none;	/* 内包する要素のみをポップアップそのものに渡すため、この要素は隠す。 */
+}
+/* 
+ * セレクタ:.textEditPopup
+ * 概要   :テキスト編集用のポップアップの本体のタグ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.18
+ */
+.textEditPopupBody{
+	width:	auto;
+}
+
+/* 
+ * セレクタ:.textEditPopup
+ * 概要   :テキスト編集用のポップアップ内のテキストエリア。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.18
+ */
+.textEditPopupBody textarea{
+	width	: 600px;	/* 幅を固定値で取る。 */
+	height	: 150px;	/* 文章がたくさん見えるように高さを取る。 */
+}
+
+/* 
+ * セレクタ:.smallipop-instance
+ * 概要   :smallipopによるポップアップの外枠。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.18
+ */
+.smallipop-instance{
+	max-width:none!important;	/* プラグインのCSSで定義されている最大幅を上書きして無効にする。 */
+}
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+    
+	/* 
+	 * セレクタ:.main
+	 * 概要   :コンテンツ領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.main{
+	    width:      100%;      		/* 幅をcontainerに合わせる。 */
+		margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
+	}
+	
+	/* 画面がタブレットの幅であれば */
+	@media screen and (min-width: 430px) {
+		/* 
+		 * セレクタ:.main
+		 * 概要   :コンテンツ領域。
+		 * 作成者 :T.Masuda
+		 * 作成日 :2015.03.04
+		 */
+		.main{
+		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
+		}
+	}
+
+    /* 
+     * セレクタ:#container
+     * 概要   :スマホ用container
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.02.16
+     * 変更者 :T.Masuda
+     * 変更日 :2015.02.21
+     * 追加者 :T.Yamamoto
+	 * 追加日 :2015.03.10
+	 * 内容   :文字サイズを削除
+     */
+    #container {
+        width: 100%;        /* コンテンツの幅を100%にする */
+        margin: 0 auto;     /* 中央揃えにする */
+    }
+    /* 
+     * セレクタ:#container, .pageTitle .summary
+     * 概要   :スマホ用デフォルト文字サイズの設定
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.03.10
+     */
+	#container,
+	.pageTitle .summary {
+		font-size: 13px;    /* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ:.header
+	 * 概要   :ヘッダー領域のタグ。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.header{
+	    position: static;	/* position fixedを解除する。 */
+	    min-width: 0px;		/* 最低幅を無効にする。 */
+	}
+
+	/* 
+	 * セレクタ:.copyright
+	 * 概要   :コピーライトのスタイル。スマホ用では中央に寄せる。
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.02.20
+	 * 作成者 :T.T.Masuda
+	 * 作成日 :2015.02.23
+	 * 内容　:中央寄せのデザインに変更しました。
+	 */
+	.copyright {
+		font-size: 8px;			/* フォントサイズをより小さくする。 */
+		text-align: center;		/* 中心に寄せる。 */
+		width: 100%;			/* 幅を一杯に取る。 */
+		display: block;			/* ブロック要素として扱う。 */
+		margin: 0 auto;			/* 中心に寄せる。 */
+		word-break: break-all;	/* 単語単位の改行をしない。 */
+	}
+	
+	/* ガイド領域 */
+	/* 
+	 * セレクタ:.guides
+	 * 概要   :様々な案内情報を掲載するヘッダー内の領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.guides{
+	    width       :   100%;      /* 幅を画面に合わせる。 */
+	    height      :   auto;       /* 高さを自動調整する。 */
+	}
+	
+	/* 
+	 * セレクタ:.guides > *
+	 * 概要   :ガイド領域直下の要素。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 */
+	.guides > *{
+	    margin-bottom   :   5px;            /* 改行した要素との間に最低限の間を空ける。 */
+	}
+	/* 
+	 * セレクタ:.guideFASchool
+	 * 概要   :フラワーアレンジメントスクールのガイド。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.21
+	 */
+	.guideFASchool{
+	    width: 140px;       /* スマホ用に幅を切り詰める */
+	}
+	
+	/* 
+	 * セレクタ:.guideTel
+	 * 概要   :電話窓口のガイド。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.05
+	 * 変更者 :T.Masuda
+	 * 変更日 :2015.02.23
+	 * 内容　 :左のmarginを消し、幅を増やしました。
+	 */
+	.guideTel{
+	    width: 177px;       /* 電話番号をしっかり表示するため、幅を確保する。 */
+	    margin-left: 0;     /* 画像の空白部分で余白は十分なので、左marginを消す。 */
+	}
+	
+	/* 
+	 * セレクタ:.guideLogin .userName
+	 * 概要   :ログイン名。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 */
+	.guideLogin .userName{
+		/*width: 75px;*/	/* 幅に余裕がないので狭める。 */
+	}
+	
+	/* トップメニュー領域 */
+	/* 
+	 * セレクタ:.topMenu
+	 * 概要   :ヘッダー領域内のトップメニュー。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.05
+	 * 作成日 :2015.02.23
+	 * 内容 　:フォントサイズ、padding、幅を変更しました。
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.03.04
+	 * 内容 　:text-alignを変更しました。
+	 */
+	.topMenu{
+	    width       : 100%;     /* 幅を画面にあわせる。 */
+	    height      : auto;     /* 内容により高さを変動させる。 */
+	    text-align	: left;     /* ボタンを左に寄せる。 */
+	}
+	
+	/* 
+	 * セレクタ:.topMenu li
+	 * 概要   :トップメニューのボタン。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.05
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.02.23
+	 * 内容 　:フォントサイズ、padding、幅を変更しました。
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.03.04
+	 * 内容 　:paddingを変更しました。
+	 */
+	.topMenu li{
+	    width:          auto;       /* 幅を文字のサイズに合わせる。 */
+	    font-size:      13px;       /*  PCレイアウトより小さめのフォントにする。 */
+	    padding: 5px 0.85em;		/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
+	}
+	
+	/* 
+	 * セレクタ:.topMenu p
+	 * 概要   :トップメニューのボタンのリンクの文字。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 */
+	.topMenu p{
+	    font-size:  13px;   /* 妥当なフォントサイズを指定する。 */
+	    margin-top:  0;   	/* 上のmarginをなくす */
+	}
+	
+	/* 
+	 * セレクタ:footer
+	 * 概要   :フッター領域のタグ。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.24
+	 */
+	footer{
+	    width		: 100%;      /* 幅をmainに合わせる。 */
+	    margin-top	: 0;		/* 画像縮小に伴いコピーライトと画像が被るので上marginをなくす。 */
+	}
+	
+	/* 
+	 * セレクタ:.textEditPopup
+	 * 概要   :テキスト編集用のポップアップ内のテキストエリア。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.18
+	 */
+	.textEditPopupBody textarea{
+		width	: 100%;		/* 幅を固定値で取る。 */
+		min-width: 280px;	/*  */
+	}
+	
+}

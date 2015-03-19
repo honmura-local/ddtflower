@@ -39,14 +39,6 @@ var dpJpSetting = {
 function createCalendar () {
   // jqueryの記述の始まり
     $(function() {
-        //@mod 2015.02.21 T.Masuda カレンダーのタグを作る記述を削除しました。
-    	// カレンダーを表示するためのdivを作る
-        //$('.specialGuide').after('<div class="calendar"></div>');
-        // @mod 2015/02.10 T.M コールバック関数を追加しました。
-        // カレンダーを表示する
-        //$('.calendar').datepicker();
-        // カレンダーを表示する
-
         $.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 

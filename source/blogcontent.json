@@ -1,6 +1,6 @@
 {
     "1": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "ブログはじめました!1"
@@ -28,7 +28,7 @@
         }
     },
     "2": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト2"
@@ -56,7 +56,7 @@
         }
     },
     "3": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト3"
@@ -84,7 +84,7 @@
         }
     },
     "4": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト4"
@@ -112,7 +112,7 @@
         }
     },
     "5": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト5"
@@ -140,7 +140,7 @@
         }
     },
     "6": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト6"
@@ -168,7 +168,7 @@
         }
     },
     "7": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト7"
@@ -196,7 +196,7 @@
         }
     },
     "8": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト8"
@@ -224,7 +224,7 @@
         }
     },
     "9": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト9"
@@ -252,7 +252,7 @@
         }
     },
     "10": {
-        "class":"blogArticle cf",
+        "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
                 "text": "テスト10"
@@ -277,6 +277,86 @@
         },
         "blogArticleText": {
             "text": "記事の投稿テストです。"
+        }
+    },
+    "currentArticleList": {
+        "currentArticleListTitle": {
+            "text": "最新記事"
+        },
+        "currentArticleListContent1": {
+            "class": "currentArticleListContent1 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": "2015/03/19/15:00"
+                },
+                "currentArticleListContentUser": {
+                    "text": "FlowerMaster"
+                },
+                "currentArticleListContentTitle": {
+                    "text": "お疲れさまでした。"
+                }
+            }
+        },
+        "currentArticleListContent2": {
+            "class": "currentArticleListContent2 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": "2015/03/19/14:30"
+                },
+                "currentArticleListContentUser": {
+                    "text": "FlowerMaster"
+                },
+                "currentArticleListContentTitle": {
+                    "text": "授業中の一幕"
+                }
+            }
+        },
+        "currentArticleListContent3": {
+            "class": "currentArticleListContent3 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": "2015/03/18/10:00"
+                },
+                "currentArticleListContentUser": {
+                    "text": "FlowerMaster"
+                },
+                "currentArticleListContentTitle": {
+                    "text": "今日も一日"
+                }
+            }
+        },
+        "currentArticleListContent4": {
+            "class": "currentArticleListContent4 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": "2015/03/17/19:13"
+                },
+                "currentArticleListContentUser": {
+                    "text": "FlowerMaster"
+                },
+                "currentArticleListContentTitle": {
+                    "text": "満員御礼"
+                }
+            }
+        },
+        "currentArticleListContent5": {
+            "class": "currentArticleListContent5 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": "2015/03/17/13:28"
+                },
+                "currentArticleListContentUser": {
+                    "text": "FlowerMaster"
+                },
+                "currentArticleListContentTitle": {
+                    "text": "今日のピックアップ"
+                }
+            }
         }
     }
 }
