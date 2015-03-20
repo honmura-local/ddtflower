@@ -23,15 +23,15 @@
  */
 .topic {
 	width			: 280px;					/*幅を内容に合わせる。*/
-	padding			: 2px 10px;					/*内側に余白を作る。*/
-	border			: 1px solid #CCC;			/*灰色の枠線を引く。*/
+	padding			: 2px 10px 5px;				/*内側に余白を作る。*/
+	border			: 1px solid #FFF;			/*灰色の枠線を引く。*/
 	/* 影がかかる方向には枠線を引かない。 */
-	border-top		:none;
-	border-left		:none;
+	border-right		:none;
+	border-bottom		:none;
 	background		: #e9ffbc;					/*サイトのメインで使っている背景色を適用する。*/
 	position		: absolute;					/*絶対位置を指定する。座標はJavaScriptで指定する。*/
 	border-radius	: 10px;						/* 角に丸みをつける。 */
-	box-shadow		: -5px -5px 5px -5px #666;	/* 上と左に影をつける。 */
+	box-shadow		: 5px 5px 5px 0px #666;	/* 上と左に影をつける。 */
 }
 
  /*
@@ -65,11 +65,11 @@
 .topicTitleDeco {
 	font-size		: 11px;			/* 補足程度のフォントサイズにする。 */
 	color: white;			/* 濃いめの灰色の文字にする。 */
-	background: #FFF33F;		/* 黄色の背景にする。 */
+	background: #FFF100;		/* 黄色の背景にする。 */
 	display			: inline-block;	/* インラインブロック。 */
 	clear			: both;			/* 回り込みをなくす。 */
 	vertical-align	: middle;		/* 位置を上に合わせる。 */
-	padding: 0 1px;			/* 1px領域を広げる。 */
+	padding: 0 3px;			/* 1px領域を広げる。 */
 	margin			: 2px;			/* 全方向にmarginをつける。 */
 }
 
@@ -115,13 +115,13 @@
  */
 .topicContentImage {
     display: inline-block;				/* インラインブロック */
-    background-color: #ccc;				/* 背景の色を灰色にする。 */
+    background-color: white;				/* 背景の色を灰色にする。 */
     background-position: center center;	/* 背景の位置を中心にする。 */
     background-repeat: no-repeat;		/* 背景の繰り返しをなくす。 */
     margin: 0px;						/* marginを使わない。 */
-    width: 80px;						/* 固定値で幅を指定する。 */
-    height: 80px;						/* 高さも固定値 */
-    border: 1px solid #ccc;				/* 灰色の枠線を引く。 */
+    width: 76px;						/* 固定値で幅を指定する。 */
+    height: 76px;						/* 高さも固定値 */
+    border: 3px solid white;				/* 灰色の枠線を引く。 */
     background-size: cover;				/* 背景のサイズを */
     border-radius: 10px;				/* 角に丸みをつける。 */
 }
