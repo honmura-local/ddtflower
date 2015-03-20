@@ -14,6 +14,16 @@
 	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
 	overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
 	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
+	font-size: 14px;
+	height: 230px;
+	border: 1px solid #AAA;
+	box-sizing: border-box;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.reservedData{
+	margin-bottom: 10px;
 }
 
  /* 
@@ -27,8 +37,12 @@
 	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
 	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
 	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
+	font-size: 14px;
+	vertical-align: top;
 }
-
+.myPageReservedCalendar > div{
+	margin: 0 auto;
+}
  /* 
  * セレクタ:.myPageBlog
  * 概要   :マイページのブログの領域。
@@ -39,6 +53,7 @@
 .myPageBlog {
 	width:100%;		/*.mainの幅に合わせる。*/
 　　　	margin-bottom:10px;	/*下に適切なmarginを挿入する。*/
+	font-size: 0px;
 }
 
  /* 
@@ -51,7 +66,7 @@
 .myPageBlogTitle {
 	font-size	:20px;			/*フォントをタイトル用のサイズにする。*/
 	padding-left:1em;			/*1文字分インデントする。*/
-	margin		:10px 0 15px;	/*上下に余白をつける。*/
+	margin: 0px 0 10px;	/*上下に余白をつける。*/
 	font-weight	:bold;			/*太字にする。*/
 }
 
@@ -66,6 +81,15 @@
 	width		:27.3%;		/*3個のボタンを横並べにするためのサイズを指定する。*/
 	margin		:0 3%;		/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
 	display		:inline-block;/*インラインブロックにして横に並ぶ様にする。*/
+	/* height: 55px; */
+	background: #999;
+	color: white;
+	font-size: 20px;
+	vertical-align: middle;
+	border-radius: 10px;
+	text-align: center;
+	/* line-height: 55px; */
+	padding: 20px 0px;
 }
 
 
@@ -375,7 +399,8 @@
  */
 .myPageReserved {
 	width		:100%;			/*.mainの幅に合わせる。*/
-	margin		:10px auto 20px;/*上下に適切なmarginを挿入する。*/
+	margin: 10px auto 30px;/*上下に適切なmarginを挿入する。*/
+	font-size: 0px;
 }
 
  /* 
@@ -388,6 +413,6 @@
 .myPageReservedTitle {
 	font-size	:20px;		/*フォントをタイトル用のサイズにする。*/
 	padding-left:1em;		/*1文字分インデントする。*/
-	margin		:10px 0 15px;/*上下に余白をつける。*/
+	margin: 0px 0 10px;/*上下に余白をつける。*/
 	font-weight	:bold;		/*太字にする。*/
 }

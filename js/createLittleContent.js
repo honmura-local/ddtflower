@@ -23,8 +23,8 @@ var dpJpSetting = {
 		                               yearSuffix: '年'};
 
 /*
- * 関数名:createCalendar
- * 引数  :なし
+ * 関数名:createCalendar(selector)
+ * 引数  :string selector:カレンダーにするタグのセレクタ
  * 戻り値:なし
  * 概要  :カレンダーを作る
  * 作成日:2015.02.06
@@ -36,32 +36,32 @@ var dpJpSetting = {
  * 作成者:T.M
  * 概要  :カレンダーのタグを作る記述を削除しました。
  */
-function createCalendar () {
+function createCalendar (selector) {
   // jqueryの記述の始まり
     $(function() {
         $.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 
-        $('.calendar').datepicker();
+        $(selector).datepicker();
         // ここまで追加・修正しました。
     });// jqueryの記述の終わり
 }
 
 /*
- * 関数名:createReservedCalendar
- * 引数  :なし
+ * 関数名:createReservedCalendar(selector)
+ * 引数  :string selector:カレンダーにするタグのセレクタ
  * 戻り値:なし
  * 概要  :予約のカレンダーを作る。
  * 作成日:2015.03.18
  * 作成者:T.Masuda
  */
-function createReservedCalendar () {
+function createReservedCalendar (selector) {
 	// jqueryの記述の始まり
 	$(function() {
 		$.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 		
-		$('.calendar').datepicker({
+		$(selector).datepicker({
 			// カレンダーの日付を選択したら
 			onSelect: function(dateText, inst){
 				// 予約のダイアログを出す。

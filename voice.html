@@ -16,16 +16,8 @@
 		creator.getDomFile('source/template.html');			// ページのパーツのテンプレートhtmlを取得する。
 		creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 		creator.outputTag('pageTitle');						// タイトル領域を作る
-		
-		//取得したJSONを走査する。
-		for(key in creator.json){
-			//キーが数値なら
-			if(!(isNaN(key))){
-				//ブログ記事パーツを生成し、生徒さんの声として追加する。
-				creator.outputTag(key, 'blogArticle');
-			}
-		}
-		
+		//お客さんの声の内容を追加する。
+		outputKeyNumberObject(creator.json, 'blogArticle', '.main');
 		creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 		creator.outputTag('footer');						// フッターを作る
 		
