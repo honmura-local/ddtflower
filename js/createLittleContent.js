@@ -295,3 +295,5 @@ function createTab(selector){
 		updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
 	});
 }
+
+

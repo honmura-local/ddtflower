@@ -62,37 +62,76 @@
             }
         }
     },
-    "footGallery2": {
-    		"id":"mixedContent",
+    "footGallery": {
+        "1stArt": {
+            "href": "photo/general/web/DSC_1086.jpg",
+            "rel": "gallery",
             "1stImage": {
-                "src": "images/demo/field.jpg"
+                "src": "photo/general/web120/DSC_1086.jpg"
+            }
         },
+        "2ndArt": {
+            "href": "photo/general/web/DSC_1061.jpg",
+            "rel": "gallery",
             "2ndImage": {
-                "src": "images/demo/gnome.jpg"
+                "src": "photo/general/web120/DSC_1061.jpg"
+            }
         },
+        "3rdArt": {
+            "href": "photo/general/web/DSC_1038.jpg",
+            "rel": "gallery",
             "3rdImage": {
-                "src": "images/demo/pencils.jpg"
+                "src": "photo/general/web120/DSC_1038.jpg"
+            }
         },
+        "4thArt": {
+            "href": "photo/general/web/DSC_1025.jpg",
+            "rel": "gallery",
             "4thImage": {
-                "src": "images/demo/golf.jpg"
+                "src": "photo/general/web120/DSC_1025.jpg"
+            }
         },
+        "5thArt": {
+            "href": "photo/general/web/DSC_1008.jpg",
+            "rel": "gallery",
             "5thImage": {
-                "src": "images/demo/river.jpg"
+                "src": "photo/general/web120/DSC_1008.jpg"
+            }
         },
+        "6thArt": {
+            "href": "photo/general/web/DSC_0985.jpg",
+            "rel": "gallery",
             "6thImage": {
-                "src": "images/demo/train.jpg"
+                "src": "photo/general/web120/DSC_0985.jpg"
+            }
         },
+        "7thArt": {
+            "href": "photo/general/web/DSC_0947.jpg",
+            "rel": "gallery",
             "7thImage": {
-                "src": "images/demo/leaf.jpg"
+                "src": "photo/general/web/DSC_0947.jpg"
+            }
         },
+        "8thArt": {
+            "href": "photo/general/web/DSC_0898.jpg",
+            "rel": "gallery",
             "8thImage": {
-                "src": "images/demo/dog.jpg"
+                "src": "photo/general/web120/DSC_0898.jpg"
+            }
         },
+        "9thArt": {
+            "href": "photo/general/web/DSC_0894.jpg",
+            "rel": "gallery",
             "9thImage": {
-                "src": "images/demo/gnome.jpg"
+                "src": "photo/general/web120/DSC_0894.jpg"
+            }
         },
+        "10thArt": {
+            "href": "photo/general/web/DSC_0834.jpg",
+            "rel": "gallery",
             "10thImage": {
-                "src": "images/demo/pencils.jpg"
+                "src": "photo/general/web120/DSC_0834.jpg"
+            }
         }
     }
 }

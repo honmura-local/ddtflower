@@ -1,5 +1,195 @@
 @CHARSET "UTF-8";
 
+
+
+ /* 
+ * セレクタ:.myPageReservedList
+ * 概要   :予約一覧
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageReservedList {
+	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
+	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
+	overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
+	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
+}
+
+ /* 
+ * セレクタ:myPageReservedCalendar(Datepicker)
+ * 概要   :Datepickerによるカレンダー。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageReservedCalendar {
+	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
+	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
+	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
+}
+
+ /* 
+ * セレクタ:.myPageBlog
+ * 概要   :マイページのブログの領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageBlog {
+	width:100%;		/*.mainの幅に合わせる。*/
+　　　	margin-bottom:10px;	/*下に適切なmarginを挿入する。*/
+}
+
+ /* 
+ * セレクタ:myPageBlogTitle
+ * 概要   :マイページのブログの領域のタイトル。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageBlogTitle {
+	font-size	:20px;			/*フォントをタイトル用のサイズにする。*/
+	padding-left:1em;			/*1文字分インデントする。*/
+	margin		:10px 0 15px;	/*上下に余白をつける。*/
+	font-weight	:bold;			/*太字にする。*/
+}
+
+ /* 
+ * セレクタ:myPageBlogButton
+ * 概要   :ブログ関連のボタン。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageBlogButton {
+	width		:27.3%;		/*3個のボタンを横並べにするためのサイズを指定する。*/
+	margin		:0 3%;		/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
+	display		:inline-block;/*インラインブロックにして横に並ぶ様にする。*/
+}
+
+
+ /* 
+ * セレクタ:.blogEditImages
+ * 概要   :ブログの画像編集領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditImages {
+	width:25%;		/*.mainの1/4の幅を取る。*/
+	float:left;		/*画面左側に配置する。*/
+}
+
+ /* 
+ * セレクタ:.blogEditImagesSection
+ * 概要   :画像1つに対する編集領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditImagesSection {
+	width		:100%;		/*幅を一杯にとる。*/
+	position	:relative;	/*ボタンの配置で座標を指定するので、基準となるようにする。*/
+}
+
+ /* 
+ * セレクタ:.blogEditImagesSectionImage
+ * 概要   :画像サムネイル。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditImagesSectionImage {
+	width		:69%;		/*marginと合わせて3/4の幅を取る。*/
+	height		:138px;		/*サムネイルが正方形になる高さを指定する。*/
+	margin		:0 3%;		/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
+	float		:left;		/*左に寄せて段組みレイアウトを作る。*/
+}
+
+ /* 
+ * セレクタ:.blogEditImagesSectionAddButton
+ * 概要   :画像の追加ボタン。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditImagesSectionAddButton {
+	width		:21%;			/*marginと合わせて1/4の幅を取る。*/
+	margin		:0 2%;			/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
+	position	:relative;		/*座標指定を有効にする。*/
+	top			:0;				/*縦位置を上辺に合わせる。*/
+	right		:0;				/*右端に配置する。これでボックスの右上に配置される。*/
+	box-sizing	:border-box;	/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
+}
+
+ /* 
+ * セレクタ:.blogEditImagesSectionDeleteButton
+ * 概要   :画像の削除ボタン。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditImagesSectionDeleteButton {
+	width		:21%;		/*marginと合わせて1/4の幅を取る。*/
+	margin		:0 2%;		/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
+	position	:relative;	/*座標指定を有効にする。*/
+	bottom		:0;			/*縦位置を底辺に合わせる。*/
+	right		:0;			/*右端に配置する。これでボックスの右下に配置される。*/
+	box-sizing	:border-box;/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
+}
+
+ /* 
+ * セレクタ:.blogEditText
+ * 概要   :ブログの本文編集領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditText {
+	width:75%;				/*mainの3/4の幅を取る。*/
+	margin-bottom:10px;		/*下に余白を入れる。*/
+}
+
+ /* 
+ * セレクタ:.blogEditTextarea
+ * 概要   :本文を編集するためのテキストエリア。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditTextarea {
+	width		:90%;		/*余白を考慮した幅を取る。*/
+	height		:300px;		/*高さを決める。*/
+	display		:block;		/*marginによる中央寄せをするため、ブロック要素にする。*/
+	margin		:0 auto;	/*中央に寄せる。*/
+}
+
+ /* 
+ * セレクタ:.blogArticleTitle
+ * 概要   :ブログ記事作成の確定・キャンセルボタンの領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditButtons {
+	width		:75%;		/*本文入力の部分と同じく、3/4の幅を取る。*/
+	padding:	:20px;		/*内側に余白を取る。*/
+	box-sizing	:border-box;/*サイズ計算にpaddingとborderを込みにする。*/
+　　　	text-align	:right;		/*子要素となるボタンを右に寄せる。*/
+}
+
+ /* 
+ * セレクタ:.blogEditButtonsCancelButton
+ * 概要   :ブログ記事のタイトル領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.blogEditButtonsCancelButton {
+	margin-left	:2em	;	/*OKボタンとの間に2文字分の間隔を取る。*/
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -200,193 +390,4 @@
 	padding-left:1em;		/*1文字分インデントする。*/
 	margin		:10px 0 15px;/*上下に余白をつける。*/
 	font-weight	:bold;		/*太字にする。*/
-}
-
-
- /* 
- * セレクタ:.myPageReservedList
- * 概要   :予約一覧
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageReservedList {
-	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
-	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
-	overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
-	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-}
-
- /* 
- * セレクタ:myPageReservedCalendar(Datepicker)
- * 概要   :Datepickerによるカレンダー。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageReservedCalendar {
-	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
-	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
-	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-}
-
- /* 
- * セレクタ:.myPageBlog
- * 概要   :マイページのブログの領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageBlog {
-	width:100%;		/*.mainの幅に合わせる。*/
-　　　	margin-bottom:10px;	/*下に適切なmarginを挿入する。*/
-}
-
- /* 
- * セレクタ:myPageBlogTitle
- * 概要   :マイページのブログの領域のタイトル。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageBlogTitle {
-	font-size	:20px;			/*フォントをタイトル用のサイズにする。*/
-	padding-left:1em;			/*1文字分インデントする。*/
-	margin		:10px 0 15px;	/*上下に余白をつける。*/
-	font-weight	:bold;			/*太字にする。*/
-}
-
- /* 
- * セレクタ:myPageBlogButton
- * 概要   :ブログ関連のボタン。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageBlogButton {
-	width		:27.3%;		/*3個のボタンを横並べにするためのサイズを指定する。*/
-	margin		:0 3%;		/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
-	display		:inline-block;/*インラインブロックにして横に並ぶ様にする。*/
-}
-
-
- /* 
- * セレクタ:.blogEditImages
- * 概要   :ブログの画像編集領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditImages {
-	width:25%;		/*.mainの1/4の幅を取る。*/
-	float:left;		/*画面左側に配置する。*/
-}
-
- /* 
- * セレクタ:.blogEditImagesSection
- * 概要   :画像1つに対する編集領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditImagesSection {
-	width		:100%;		/*幅を一杯にとる。*/
-	position	:relative;	/*ボタンの配置で座標を指定するので、基準となるようにする。*/
-}
-
- /* 
- * セレクタ:.blogEditImagesSectionImage
- * 概要   :画像サムネイル。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditImagesSectionImage {
-	width		:69%;		/*marginと合わせて3/4の幅を取る。*/
-	height		:138px;		/*サムネイルが正方形になる高さを指定する。*/
-	margin		:0 3%;		/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
-	float		:left;		/*左に寄せて段組みレイアウトを作る。*/
-}
-
- /* 
- * セレクタ:.blogEditImagesSectionAddButton
- * 概要   :画像の追加ボタン。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditImagesSectionAddButton {
-	width		:21%;			/*marginと合わせて1/4の幅を取る。*/
-	margin		:0 2%;			/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
-	position	:relative;		/*座標指定を有効にする。*/
-	top			:0;				/*縦位置を上辺に合わせる。*/
-	right		:0;				/*右端に配置する。これでボックスの右上に配置される。*/
-	box-sizing	:border-box;	/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
-}
-
- /* 
- * セレクタ:.blogEditImagesSectionDeleteButton
- * 概要   :画像の削除ボタン。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditImagesSectionDeleteButton {
-	width		:21%;		/*marginと合わせて1/4の幅を取る。*/
-	margin		:0 2%;		/*左右に3%のmarginを配置し、widthと合わせて3/4の幅にする。*/
-	position	:relative;	/*座標指定を有効にする。*/
-	bottom		:0;			/*縦位置を底辺に合わせる。*/
-	right		:0;			/*右端に配置する。これでボックスの右下に配置される。*/
-	box-sizing	:border-box;/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
-}
-
- /* 
- * セレクタ:.blogEditText
- * 概要   :ブログの本文編集領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditText {
-	width:75%;				/*mainの3/4の幅を取る。*/
-	margin-bottom:10px;		/*下に余白を入れる。*/
-}
-
- /* 
- * セレクタ:.blogEditTextarea
- * 概要   :本文を編集するためのテキストエリア。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditTextarea {
-	width		:90%;		/*余白を考慮した幅を取る。*/
-	height		:300px;		/*高さを決める。*/
-	display		:block;		/*marginによる中央寄せをするため、ブロック要素にする。*/
-	margin		:0 auto;	/*中央に寄せる。*/
-}
-
- /* 
- * セレクタ:.blogArticleTitle
- * 概要   :ブログ記事作成の確定・キャンセルボタンの領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditButtons {
-	width		:75%;		/*本文入力の部分と同じく、3/4の幅を取る。*/
-	padding:	:20px;		/*内側に余白を取る。*/
-	box-sizing	:border-box;/*サイズ計算にpaddingとborderを込みにする。*/
-　　　	text-align	:right;		/*子要素となるボタンを右に寄せる。*/
-}
-
- /* 
- * セレクタ:.blogEditButtonsCancelButton
- * 概要   :ブログ記事のタイトル領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.blogEditButtonsCancelButton {
-	margin-left	:2em	;	/*OKボタンとの間に2文字分の間隔を取る。*/
 }

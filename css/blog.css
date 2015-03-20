@@ -462,6 +462,7 @@
 	 */
 	.blogArticleTitleText {
 		font-size: 16px;		/* フォントを小さくする */
+		width: 100%;			/* タイトルで1行取る */
 	}
 
 	 /* 
