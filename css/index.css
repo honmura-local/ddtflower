@@ -25,10 +25,10 @@
 	width: 280px;				/*幅を内容に合わせる。*/
 	padding			: 2px 10px;				/*内側に余白を作る。*/
 	border			: none;					/*灰色の枠線を引く。*/
-	background		: #d5eba8;				/*サイトのメインで使っている背景色を適用する。*/
+	background: #e9ffbc;				/*サイトのメインで使っている背景色を適用する。*/
 	position		: absolute;				/*絶対位置を指定する。座標はJavaScriptで指定する。*/
 	border-radius	: 10px;					/* 角に丸みをつける。 */
-	box-shadow		: 0 10px 5px -5px #666;	/* 下に影をつける。 */
+	box-shadow: -5px -5px 5px -5px #666;	/* 下に影をつける。 */
 }
 
  /*
@@ -42,10 +42,11 @@
  * 内容　 :フォントサイズを変更しました。また、インラインブロックにしました。
  */
 .topicTitle {
-	font-size		: 16px;			/*見出しにちょうどいいサイズのフォントサイズを指定する。*/
+	font-size: 14px;			/*見出しにちょうどいいサイズのフォントサイズを指定する。*/
 	display			: inline-block;	/* インラインブロックにする。 */
 	clear			: both;			/* 回り込みをなくす。 */
-	vertical-align	: text-top;		/* 隣の文字列と位置を合わせる。 */
+	vertical-align: middle;		/* 隣の文字列と位置を合わせる。 */
+	font-weight: bold;
 }
 
  /* 
@@ -60,8 +61,8 @@
  */
 .topicTitleDeco {
 	font-size		: 11px;			/* 補足程度のフォントサイズにする。 */
-	color			:#333;			/* 濃いめの灰色の文字にする。 */
-	background		:yellow;		/* 黄色の背景にする。 */
+	color: white;			/* 濃いめの灰色の文字にする。 */
+	background: #FFF33F;		/* 黄色の背景にする。 */
 	display			: inline-block;	/* インラインブロック。 */
 	clear			: both;			/* 回り込みをなくす。 */
 	vertical-align	: middle;		/* 位置を上に合わせる。 */
