@@ -24,7 +24,7 @@
         },
         "myPageBlogButton1": {
             "class": "myPageBlogButton",
-            "href":"#",
+            "href":"createarticle.html",
             "text":"記事編集"
         },
         "myPageBlogButton2": {
