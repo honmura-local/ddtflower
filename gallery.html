@@ -22,8 +22,9 @@
 		creator.outputTag('header');						// トップメニューを作る
 		creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 		creator.outputTag('pageTitle');						// タイトル領域を作る
-		
-		
+		creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
+		//ギャラリーの内容を追加する。
+		outputKeyNumberObject(creator.json, 'photo', '.gallery')
 		creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 		creator.outputTag('footer');						// フッターを作る
 	
@@ -31,6 +32,8 @@
 		fixYCoordinate('header', '.main');
 		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 		fixXCoordinateOnScroll('header')
+		//ギャラリーの画像を拡大できるようにする。
+		useZoomImage('photo');
 	</script>
 </body>
 </html>

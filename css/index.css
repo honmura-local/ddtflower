@@ -22,13 +22,16 @@
  * 内容　 :背景色を変更しました。
  */
 .topic {
-	width: 280px;				/*幅を内容に合わせる。*/
-	padding			: 2px 10px;				/*内側に余白を作る。*/
-	border			: none;					/*灰色の枠線を引く。*/
-	background: #e9ffbc;				/*サイトのメインで使っている背景色を適用する。*/
-	position		: absolute;				/*絶対位置を指定する。座標はJavaScriptで指定する。*/
-	border-radius	: 10px;					/* 角に丸みをつける。 */
-	box-shadow: -5px -5px 5px -5px #666;	/* 下に影をつける。 */
+	width			: 280px;					/*幅を内容に合わせる。*/
+	padding			: 2px 10px;					/*内側に余白を作る。*/
+	border			: 1px solid #CCC;			/*灰色の枠線を引く。*/
+	/* 影がかかる方向には枠線を引かない。 */
+	border-top		:none;
+	border-left		:none;
+	background		: #e9ffbc;					/*サイトのメインで使っている背景色を適用する。*/
+	position		: absolute;					/*絶対位置を指定する。座標はJavaScriptで指定する。*/
+	border-radius	: 10px;						/* 角に丸みをつける。 */
+	box-shadow		: -5px -5px 5px -5px #666;	/* 上と左に影をつける。 */
 }
 
  /*

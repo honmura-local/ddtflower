@@ -187,6 +187,22 @@ function callReservedDialog(dateText){
 }
 
 /*
+ * 関数名:useZoomImage(selector)
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :fancyboxによる画像の拡大表示を有効にする。
+ * 作成日:2015.03.20
+ * 作成者:T.M
+ */
+function useZoomImage(selector){
+	// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
+	// 拡大表示を行うようにする。
+	$('.' + selector + ' a').fancybox({
+		'hideOnContentClick': true
+	});
+}
+
+/*
  * 関数名:createGallery(selector)
  * 引数  :String selector
  * 戻り値:なし
@@ -217,11 +233,8 @@ function createGallery(selector){
 			visibleHotSpotBackgrounds:"always"
 		});
 		
-		// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
-		// 拡大表示を行うようにする。
-		$('.' + selector + ' a').fancybox({
-			'hideOnContentClick': true
-		});
+		//fancyboxで画像を拡大できるようにする。
+		useZoomImage(selector);
 	//1秒置いて実行する。
 	}, 1000);
 }
@@ -296,4 +309,24 @@ function createTab(selector){
 	});
 }
 
+/*
+ * 関数名:outputKeyNumberObject(json, domkey, target)
+ * 概要  :整数値でナンバリングされた連想配列のキーを持つオブジェクトからパーツを作り追加する。
+ * 引数  :Object json:走査対象のJSONの連想配列
+ * 		 String domkey:DOMのキー
+ * 		 String target:作成したDOMのappend先
+ * 戻り値:なし
+ * 作成日:2015.03.20
+ * 作成者:T.Masuda
+ */
+function outputKeyNumberObject(json, domkey, target){
+	//取得したJSONを走査する。
+	for(key in json){
+		//キーが数値なら
+		if(!(isNaN(key))){
+			//ブパーツを生成し、指定先に追加する。
+			creator.outputTag(key, domkey, target);
+		}
+	}
+}
 
