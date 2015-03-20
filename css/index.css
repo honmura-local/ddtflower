@@ -1,5 +1,154 @@
 @CHARSET "UTF-8";
 
+/* 
+ * セレクタ:.flowerBackground
+ * 概要   :トップページの背景。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.21
+ */
+.flowerBackground{
+    position: relative;	/* 相対位置の基準に指定する。 */
+}
+
+
+ /* 
+ * セレクタ:.topic
+ * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :背景色を変更しました。
+ */
+.topic {
+	width: 300px;			/*幅を内容に合わせる。*/
+	padding: 2px 10px;			/*内側に余白を作る。*/
+	border		:solid 1px #555;/*灰色の枠線を引く。*/
+	background: rgba(0,116,190,0.5);		/*サイトのメインで使っている背景色を適用する。*/
+	position	:absolute;		/*絶対位置を指定する。座標はJavaScriptで指定する。*/
+}
+
+ /*
+ * セレクタ:.topicTitle
+ * 概要   :トピックのタイトル部分。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :フォントサイズを変更しました。また、インラインブロックにしました。
+ */
+.topicTitle {
+	font-size: 16px;		/*見出しにちょうどいいサイズのフォントサイズを指定する。*/
+	display: inline-block;
+	clear: both;
+	vertical-align: middle;
+}
+
+ /* 
+ * セレクタ:.topicTitleDeco
+ * 概要   :トピックのタイトル部分の「New」の文字。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :インラインブロックにしました。
+ */
+.topicTitleDeco {
+	font-size	:14px;			/* 補足程度のフォントサイズにする。 */
+	color		:#333;			/* 濃いめの灰色の文字にする。 */
+	background	:yellow;		/* 黄色の背景にする。 */
+	border: solid 5px #CCC;		/* 薄くて太い灰色の枠線を引く。 */
+	border-radius:30px;			/* 最大限に角を丸める。 */
+	display: inline-block;		/* インラインブロック。 */
+	clear: both;				/* 回り込みをなくす。 */
+	vertical-align: top;		/* 位置を上に合わせる。 */
+}
+
+ /* 
+ * セレクタ:.topicBorder
+ * 概要   :コンテンツとの境界線。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.19
+ */
+.topicBorder{
+	/* リセットCSSでmarginの基準にemが設定されているため、margin消しにフォントサイズ0を指定する。 */
+	font-size:0px;
+	visibility: hidden;	/* 隠す。 */
+}
+
+ /* 
+ * セレクタ:.topicContent
+ * 概要   :トピックの最新記事見出しの一覧を表示する領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :floatで横並べにしました。また、box-sizingを適用しました。
+ */
+.topicContent {
+	padding: 0 5px 0em;			/*上に2em、左右に5px、下に4emのmarginを配置する。*/
+	width: 100px;				/*marginと合わせて100pxの幅を取る。*/
+	display: block;				/*インラインブロックにして横並びにできるようにする。*/
+	float: left;				/* 左に寄せる。 */
+	box-sizing: border-box;		/* border、paddingを幅の計算に入れる。 */
+}
+
+ /* 
+ * セレクタ:.topicContentImage
+ * 概要   :トピックの最新記事の画像。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :blog記事を参考にした、画像の比率を固定する手法を導入しました。
+ */
+.topicContentImage {
+    display: inline-block;				/* インラインブロック */
+    background-color: #ccc;				/* 背景の色を灰色にする。 */
+    background-position: center center;	/* 背景の位置を中心にする。 */
+    background-repeat: no-repeat;		/* 背景の繰り返しをなくす。 */
+    margin: 0px;						/* marginを使わない。 */
+    width: 90px;						/* 固定値で幅を指定する。 */
+    height: 90px;						/* 高さも固定値 */
+    border: 1px solid #ccc;				/* 灰色の枠線を引く。 */
+    background-size: cover;				/* 背景のサイズを */
+}
+
+ /* 
+ * セレクタ:.topicContentDate
+ * 概要   :トピックの最新記事の日付。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.19
+ * 内容　 :display、フォントサイズを変更しました。
+ */
+.topicContentDate {
+	font-size: 10px;	/* フォントサイズを小さいものにする */
+	display: block;		/* ブロック要素に指定する。 */
+	margin: 0 auto;		/* 中央に寄せる。 */
+}
+
+/* 以下3個のスタイルシートはtopicの絶対位置指定のテストです。実際にはJavaScriptで位置を指定すべきです。 */
+.topic:nth-of-type(1){
+	top: 50px;
+	right: 50px;
+}
+.topic:nth-of-type(2){
+	top: 75px;
+	right: 40px;
+}
+.topic:nth-of-type(3){
+	top: 100px;
+	right: 30px;
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -24,98 +173,14 @@
 		width:100%;		/* 画像の幅を100%にする */
 		height: auto;	/* 画像の幅に比率を合わせた高さにする */
 	}
-	
+
+	 /* 
+	 * セレクタ:.topic
+	 * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.19
+	 */
+	.topic{
+		display:none;
+	}	
 }
-
-
-/* 
- * セレクタ:.flowerBackground
- * 概要   :トップページの背景。
- * 作成者 :T.Masuda
- * 作成日 :2015.02.21
- */
-.flowerBackground{
-    /*height: 772px;*/          /* トップページ用の画像の高さに合わせた領域を形成する。 */
-}
-
-
- /* 
- * セレクタ:.topic
- * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topic {
-	width		:auto;			/*幅を内容に合わせる。*/
-	padding		:10px;			/*内側に余白を作る。*/
-	border		:solid 1px #555;/*灰色の枠線を引く。*/
-	background	:#CEDC3A;		/*サイトのメインで使っている背景色を適用する。*/
-	box-sizing	:border-box;	/*幅の計算をpadding、border込みにする。*/
-	position	:absolute;		/*絶対位置を指定する。座標はJavaScriptで指定する。*/
-}
-
- /* 
- * セレクタ:.topicTitle
- * 概要   :トピックのタイトル部分。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topicTitle {
-	font-size	:20px;		/*見出しにちょうどいいサイズのフォントサイズを指定する。*/
-}
-
- /* 
- * セレクタ:.topicTitleDeco
- * 概要   :トピックのタイトル部分の「New」の文字。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topicTitleDeco {
-	font-size	:14px;			/*補足程度のフォントサイズにする。*/
-	color		:#333;			/*濃いめの灰色の文字にする。*/
-	background	:yellow;		/*黄色の背景にする。*/
-	border		:solid　5px #CCC;	/*薄くて太い灰色の枠線を引く。*/
-	border-radius:30px;			/*最大限角を丸める。*/
-}
-
- /* 
- * セレクタ:.topicContent
- * 概要   :トピックの最新記事見出しの一覧を表示する領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topicContent {
-	margin		:2em 5px 4em;	/*上に2em、左右に5px、下に4emのmarginを配置する。*/
-	width		:90px;			/*marginと合わせて100pxの幅を取る。*/
-	display		:inline-block;	/*インラインブロックにして横並びにできるようにする。*/
-}
-
- /* 
- * セレクタ:.topicContentImage
- * 概要   :トピックの最新記事の画像。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topicContentImage {
-	width		:90%;			/*少し余白が出る幅に設定する。*/
-	text-align	:center;		/*中央に寄せる。*/
-	margin		:10px 0 15px;	/*上下にmarginを設定する。*/
-	border-radius:5px;			/*画像の4角を丸める。*/
-}
-
- /* 
- * セレクタ:.topicContentDate
- * 概要   :トピックの最新記事の日付。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.topicContentDate {
-	text-align:center;	/*中央に寄せる。*/
-}
-

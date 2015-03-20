@@ -5,16 +5,29 @@
 <title>DDTFlowers</title>
 <!-- コース案内のCSSファイルを読み込む。 -->
 <link href="css/courseguide.css" rel="stylesheet" type="text/css">
+<!-- ブログのCSSを読み込む。 -->
+<link href="css/blog.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<script>
-		creator.getJsonFile('source/voice.json');		// ファイルのデータをjsonを用いて持ってくる
-		creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-		creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-		creator.outputTag('headImage', 'createImage');	// 天の画像を作る
-		creator.outputTag('pageTitle');					// タイトル領域を作る
-		creator.outputTag('footImage', 'createImage');	// 地の画像を作る
-		creator.outputTag('footer');					// フッターを作る
+		creator.getJsonFile('source/voice.json');			// 生徒さんの声のJSONを取得する。
+		creator.getJsonFile('source/voicestudents.json');	// 生徒さんの声の記事のJSONを取得する。
+		creator.getJsonFile('source/commonJson.json');		// 共通のパーツのJSONを取得する。
+		creator.getDomFile('source/template.html');			// ページのパーツのテンプレートhtmlを取得する。
+		creator.outputTag('headImage', 'createImage');		// 天の画像を作る
+		creator.outputTag('pageTitle');						// タイトル領域を作る
+		
+		//取得したJSONを走査する。
+		for(key in creator.json){
+			//キーが数値なら
+			if(!(isNaN(key))){
+				//ブログ記事パーツを生成し、生徒さんの声として追加する。
+				creator.outputTag(key, 'blogArticle');
+			}
+		}
+		
+		creator.outputTag('footImage', 'createImage');		// 地の画像を作る
+		creator.outputTag('footer');						// フッターを作る
 		
 		// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 		fixYCoordinate('header', '.main');

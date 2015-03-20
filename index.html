@@ -77,6 +77,10 @@ $(document).ready(function(){
 		checkLoginState();
 	}
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
+	//ブログのお知らせを作る。
+	creator.outputTag('topicGallery','topic', '.flowerBackground');
+	creator.outputTag('topicCampaign','topic', '.flowerBackground');
+	creator.outputTag('topicBlog','topic', '.flowerBackground');
 	creator.outputTag('footer');							// フッターを作る
 	
 	// トップメニューにマウスオーバーのフィルターを配置する。
