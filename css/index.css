@@ -66,7 +66,7 @@
 	display			: inline-block;	/* インラインブロック。 */
 	clear			: both;			/* 回り込みをなくす。 */
 	vertical-align	: middle;		/* 位置を上に合わせる。 */
-	padding			: 1px;			/* 1px領域を広げる。 */
+	padding: 0 1px;			/* 1px領域を広げる。 */
 	margin			: 2px;			/* 全方向にmarginをつける。 */
 }
 
