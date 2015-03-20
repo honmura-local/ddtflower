@@ -214,6 +214,36 @@
 	margin-left	:2em	;	/*OKボタンとの間に2文字分の間隔を取る。*/
 }
 
+
+
+ /* 
+ * セレクタ:.myPageReserved
+ * 概要   :マイページの予約一覧の領域。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageReserved {
+	width		:100%;			/*.mainの幅に合わせる。*/
+	margin: 10px auto 30px;/*上下に適切なmarginを挿入する。*/
+	font-size: 0px;
+}
+
+ /* 
+ * セレクタ:.myPageReservedTitle
+ * 概要   :マイページの予約一覧のタイトル。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
+.myPageReservedTitle {
+	font-size	:20px;		/*フォントをタイトル用のサイズにする。*/
+	padding-left:1em;		/*1文字分インデントする。*/
+	margin: 0px 0 10px;/*上下に余白をつける。*/
+	font-weight	:bold;		/*太字にする。*/
+}
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -272,10 +302,14 @@
 	 * 作成日 :2015.03.12
 	 */
 	 .myPageBlogButton {
-	 	width		:27.3%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
-		margin		:0 3%;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
-		display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-	 }
+	 	width: 90%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
+		
+	 	margin: 0 auto 10px;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
+		
+	 	display: block;	/*インラインブロックにして横に並ぶ様にする。*/
+	 
+	 	padding: 5px 0;
+}
 
 	 /* 
 	 * セレクタ:.blogEditImages
@@ -388,31 +422,4 @@
 	 */
 
 
-}
-
- /* 
- * セレクタ:.myPageReserved
- * 概要   :マイページの予約一覧の領域。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageReserved {
-	width		:100%;			/*.mainの幅に合わせる。*/
-	margin: 10px auto 30px;/*上下に適切なmarginを挿入する。*/
-	font-size: 0px;
-}
-
- /* 
- * セレクタ:.myPageReservedTitle
- * 概要   :マイページの予約一覧のタイトル。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.12
- */
-.myPageReservedTitle {
-	font-size	:20px;		/*フォントをタイトル用のサイズにする。*/
-	padding-left:1em;		/*1文字分インデントする。*/
-	margin: 0px 0 10px;/*上下に余白をつける。*/
-	font-weight	:bold;		/*太字にする。*/
 }
