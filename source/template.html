@@ -1286,6 +1286,321 @@
 	<p class="photoUserName"></p>
 </div>
 
+<!-- オプションタブのメールアドレス設定 -->
+<div class="optionsMyMail">
+	<!-- オプションタブのラベル -->
+	<span class="optionsLabel"></span>
+	<!-- 管理者ユーザのメールアドレス設定テキストボックス -->
+	<input class="optionsMyEmailForm" type="" name="" value="">
+</div>
+
+<!-- オプションタブ 深夜のメール送信許可ラジオボタン -->
+<div class="optionsAllowMidnightMail">
+	<!-- オプションタブのラベル -->
+	<span class="optionsLabel"></span>
+	<!-- 深夜のメール送信許可ラジオボタン。許可しないラジオボタン。 -->
+	<input class="optionsAllowMidnightMailRadioForbidden" type="" name="" value="">
+	<!-- 横並びのラベル -->
+	<span class="optionsLabelInline1"></span>
+	<!-- 深夜のメール送信許可ラジオボタン。許可するラジオボタン。 -->
+	<input class="optionsAllowMidnightMailRadioAllow" type="" name="" value="">
+	<!-- 横並びのラベル -->
+	<span class="optionsLabel2"></span>
+</div>
+
+<!-- 受信するメールの種類を選択するラジオボタン -->
+<div class="optionsRecieveMailType">
+	<!-- オプションタブのラベル -->
+	<span class="optionsLabel"></span>
+	<!-- チェックボックスその1。 -->
+	<input class="optionsRecieveMailTypeCheck1" type="" name="" value="">
+	<!-- 横並びのラベル -->
+	<span class="optionsLabelInline1"></span>
+	<!-- チェックボックスその2。 -->
+	<input class="optionsRecieveMailTypeCheck2" type="" name="" value="">
+	<!-- 横並びのラベル -->
+	<span class="optionsLabelInline3"></span>
+	<!-- チェックボックスその3。 -->
+	<input class="optionsRecieveMailTypeCheck3" type="" name="" value="">
+	<!-- 横並びのラベル -->
+	<span class="optionsLabelInline3"></span>
+</div>
+
+<!-- 検索パーツの外枠 -->
+<div class="contentSearch"></div>
+<!-- 検索パーツ1組 -->
+<span class="articleSearch">
+	<!-- ラベル -->
+	<span class="articleSearchLabel"></span>
+	<!-- テキストボックス -->
+	<input type="" class="articleSearchTextBox" name="">
+</span>
+<!-- 管理するコンテンツの一覧 -->
+<div class="managementList">
+	<!-- テーブル -->
+	<table class="table">
+		<!-- 見出し行。createTagで後から必要な分の見出しのタグを流し込む。 -->
+		<!-- データ部分の行をoutputKeyNumberObjectで流し込む。 -->
+	</table>
+</div>
+
+<!-- 管理者ブログ一覧の見出し -->
+<tr class="adminBlogListHead">
+	<!-- 見出し3項目 -->
+	<th class="dateHead"></th>
+	<th class="authorHead"></th>
+	<th class="titleHead"></th>
+</tr>
+<!-- 管理者ブログ一覧のデータ行 -->
+<tr class="adminBlogListContent">
+	<td class="date"></td>
+	<td class="author"></td>
+	<td class="title"></td>
+</tr>
+
+
+<!-- キャンペーン一覧の見出し -->
+<tr class="campaignListHead">
+	<!-- 見出し4項目 -->
+	<th class="titleHead"></th>
+	<th class="startDateHead"></th>
+	<th class="endDateHead"></th>
+	<th class="maxEntryHead"></th>
+</tr>
+<!-- キャンペーン一覧のデータ行 -->
+<tr class="campaignListContent">
+	<td class="title"></td>
+	<td class="startDate"></td>
+	<td class="endDate"></td>
+	<td class="maxEntry"></td>
+</tr>
+
+<!-- 生徒さん一覧の見出し -->
+<tr class="studentListHead">
+	<!-- 見出し4項目 -->
+	<th class="nameHead"></th>
+	<th class="emailHead"></th>
+	<th class="telHead"></th>
+	<th class="joinedHead"></th>
+</tr>
+<!-- 生徒さん一覧のデータ行 -->
+<tr class="studentListContent">
+	<td class="name"></td>
+	<td class="email"></td>
+	<td class="tel"></td>
+	<td class="joined"></td>
+</tr>
+
+<!-- 編集ボタン群 -->
+<div class="listEditButtons">
+	<!-- 新規作成ボタン。 -->
+	<button class="createNew" href=""></button>
+	<!-- 編集ボタン。 -->
+	<button class="edit" href=""></button>
+	<!-- 削除ボタン。 -->
+	<button class="delete"></button>
+</div>
+
+<!-- キャンペーン作成画面のパーツ。キャンペーン名編集 -->
+<div class="campaignTitle">
+	<!-- ラベル -->
+	<span class="createCampaignLabel"></span>
+	<!-- キャンペーン名のテキストボックス。 -->
+	<input class="campaignTitleTextBox" type="" value="" name="">
+</div>
+<!-- キャンペーンの期間 -->
+<div class="campaignDates">
+	<!-- 開始日のラベル -->
+	<span class="createCampaignLabelInline1"></span>
+	<!-- 開始日のテキストボックス。 -->
+	<input type="" class="campaignStartDate" name="" value="">
+	<!-- 終了日のラベル -->
+	<span class="createCampaignLabelInline2"></span>
+	<!-- 終了日のテキストボックス。 -->
+	<input type="" class="campaignEndDate" name="" value="">
+</div>
+<!-- キャンペーンの上限人数設定 -->
+<div class="campaignMaxEntry">
+	<!-- ラベル -->
+	<span class="createCampaignLabel"></span>
+	<!-- キャンペーン上限人数設定のテキストボックス。 -->
+	<input type="" class="campaignMaxEntryTextBox" name="" value="">
+	<!-- 「人」ラベル -->
+	<span class="createCampaignLabelInline"></span>
+</div>
+
+<!-- メール送信後、又はエラーページ用のパーツ -->
+<div class="showMessage">
+	<!-- 1行目。タイトル部分として使われる事を想定しています。 -->
+	<p class="firstLine"></p>
+	<!-- 2行目。 -->
+	<p class="secondLine"></p>
+	<!-- 3行目。 -->
+	<p class="thirdLine"></p>
+	<!-- トップページへのリンク -->
+	<a class="returnToTop" href=""></a>
+</div>
+
+<!-- 生徒さん登録フォーム。 -->
+<div class="editStudent" action="" method="" >
+	<!-- フォームのパーツ領域 -->
+	<dl class="formBody cf">
+    	<!-- 氏名 -->
+		<dt class="name">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- 氏名を入力するテキストボックス -->
+        <dd class="nameTextBox">
+        	<!-- テキストボックス。 -->
+        	<input type="" class="textBox" name="" size="" required="">
+        </dd>
+        <!-- 性別 -->
+		<dt class="sex">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- 性別を選択するラジオボタン -->
+        <dd class="sexRadioButton">
+        	<!-- 性別のラジオボタンとラベル。女、男の順。 -->
+        	<input class="sexRadioButtonFemale" type="" name="" value="" checked=""><label class="sexRadioButtonFemaleLabel"></label>
+            <input class="sexRadioButtonMale" type="" name="" value=""><label class="sexRadioButtonMaleLabel"></label>
+        </dd>
+        <!-- メールアドレス -->
+        <dt class="eMail">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- メールアドレスを入力するテキストボックス -->
+        <dd class="eMailTextBox">
+        	<!-- テキストボックス。 -->
+        	<input type="" class="textBox" name="" size="" required="">
+        </dd>
+        <!-- 確認用メールアドレス -->
+        <dt class="eMailConfirm">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- 確認用メールアドレスを入力するテキストボックス -->
+        <dd class="eMailConfirmTextBox">
+        	<!-- テキストボックス。 -->
+        	<input type="" class="textBox" name="" size="" required="">
+        </dd>
+        <!-- 電話番号 -->
+        <dt class="tel">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- 電話番号を入力するテキストボックス -->
+        <dd class="telTextBox">
+        	<!-- テキストボックス。 -->
+        	<input type="" class="textBox" name="" size="" required="">
+        </dd>
+        <!-- 住所 -->
+        <dt class="address">
+        	<!-- 項目名 -->
+        	<span class="formContent"></span>
+        	<!-- 必須入力の印「*」 -->
+        	<span class="textRed"></span>
+        	<!-- ルビ -->
+        	<span class="formRuby"></span>
+        </dt>
+        <!-- 住所を入力するテキストボックス -->
+        <dd class="addressTextBox">
+        	<!-- テキストボックス。 -->
+        	<input type="" class="textBox" name="" size="" required="">
+        </dd>
+    </dl>
+    <!-- 送信ボタン。 -->
+    <button class="submit"></button>
+    <!-- 戻るボタン。 -->
+    <button class="back"></button>
+</div>	
+
+<!-- 生徒さん登録情報確認 -->
+<div class="confirmRegistration">
+	<!-- タイトル -->
+	<strong class="message"></strong>
+	<!-- リスト -->
+	<ul class="noticeList">
+		<!-- リストの項目 -->
+		<li class="notice"></li>
+	</ul>
+	<!-- フォームの入力内容 -->
+	<table class="confirmRegistrationTable">
+		<!-- 氏名 -->
+		<tr class="name">
+		  <!-- 項目 -->
+		  <th class="head"></th>
+		  <!-- 内容 -->
+		  <td class="data"></td>
+		</tr>
+		<!-- 性別 -->
+		<tr class="sex">
+		  <!-- 項目 -->
+		  <th class="head"></th>
+		  <!-- 内容 -->
+		  <td class="data"></td>
+		</tr>
+		<!-- メールアドレス -->
+		<tr class="eMail">
+		  <!-- 項目 -->
+		  <th class="head"></th>
+		  <!-- 内容 -->
+		  <td class="data"></td>
+		</tr>
+		<!-- 電話番号 -->
+		<tr class="tel">
+		  <!-- 項目 -->
+		  <th class="head"></th>
+		  <!-- 内容 -->
+		  <td class="data"></td>
+		</tr>
+		<!-- 住所 -->
+		<tr class="address">
+		  <!-- 項目 -->
+		  <th class="head"></th>
+		  <!-- 内容 -->
+		  <td class="data"></td>
+		</tr>
+	</table>
+	<!-- 改行 -->
+	<br class="br" />
+	<!-- 送信フォーム -->
+	<div class="sendForm" action="">
+		<!-- 戻るボタン -->
+		<input type="" value="" onclick="" class="backButton" />
+		<!-- 送信ボタン -->
+		<input type="" value="" class="sendButton" />
+		<!-- 見えなくしてある入力情報。 -->
+		<input type="" name="" value="" class="sendValue1">
+		<input type="" name="" value="" class="sendValue2">
+		<input type="" name="" value="" class="sendValue3">
+		<input type="" name="" value="" class="sendValue4">
+		<input type="" name="" value="" class="sendValue5">
+	</form>
+</div>
+
 </div>
 
 </body>
