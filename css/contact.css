@@ -185,7 +185,7 @@
  * 作成日 :2015.03.05
  */
 .confirmSendMail li:before {
-	content: "※";
+	content: "※";	/* メッセージの先頭に※をつける。 */
 }
 /* 
  * セレクタ:.confirmSendMail .form

@@ -36,10 +36,12 @@
     "blogEditButtons": {
      	"class":"blogEditButtons cf",
         "blogEditButtonsOKButton": {
-        	"text":"　 OK 　"
+        	"text":"　 OK 　",
+        	"href":"adminblogmanagement.html"
         },
         "blogEditButtonsCancelButton": {
-        	"text":"キャンセル"
+        	"text":"キャンセル",
+        	"href":"adminblogmanagement.html"
         }
     }
 }

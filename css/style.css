@@ -608,10 +608,14 @@ footer{
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.13
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.23
+ * 内容　 :余計な間隔を消すため、フォントサイズを0にしました。
  */
 .tabContainer ul {
-	padding		:0;	/*ulタグにデフォルトで付いてくるpaddingをなくす。*/
-	margin		:0;	/*marginをなくす。*/
+	padding		: 0;	/*ulタグにデフォルトで付いてくるpaddingをなくす。*/
+	margin		: 0;	/*marginをなくす。*/
+	font-size	: 0px;	/*フォントサイズを0に指定してインラインブロックの余白を消す。*/
 }
 
  /* 
@@ -620,14 +624,17 @@ footer{
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.13
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.23
+ * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
  */
 .tabContainer ul li {
 	display			:inline-block;		/*インラインブロックにしてボタンを横に並べる。*/
 	background		:#CCC;				/*背景色をグレーにする。*/
 	border			:solid 1px;			/*細い実線で囲む。*/
-	border-bottom	:none;				/*下の線だけなくす。*/
 	border-top-left-radius	:5px 5px;	/*左上の角を丸くする。*/
 	border-top-right-radius	:5px 5px;	/*右上の角を丸くする。*/
+	font-size		:	16px;			/* デフォルトのフォントサイズを再指定。 */
 }
 
  /* 
@@ -643,6 +650,7 @@ footer{
 	position:relative;	/*相対位置指定を有効にする。座標指定が有効になる。*/
 	top		:1px;		/*上から1pxずらし、タブの内容表示部分の枠をボタンにかかる所だけ消す。*/
 	font-weight	:bold;	/*テキストを太字にして強調する。*/
+	border-bottom: none;	/* 選択中のタブは下線をなくす。 */
  }
 
 /* 
@@ -710,6 +718,7 @@ footer{
 .smallipop-instance{
 	max-width:none!important;	/* プラグインのCSSで定義されている最大幅を上書きして無効にする。 */
 }
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
     
@@ -724,18 +733,6 @@ footer{
 		margin-top: 0px!important;	/* スマホレイアウト時は上marginをなくす。 */
 	}
 	
-	/* 画面がタブレットの幅であれば */
-	@media screen and (min-width: 430px) {
-		/* 
-		 * セレクタ:.main
-		 * 概要   :コンテンツ領域。
-		 * 作成者 :T.Masuda
-		 * 作成日 :2015.03.04
-		 */
-		.main{
-		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
-		}
-	}
 
     /* 
      * セレクタ:#container
@@ -915,5 +912,40 @@ footer{
 		width	: 100%;		/* 幅を固定値で取る。 */
 		min-width: 280px;	/*  */
 	}
+
+ /* 
+ * セレクタ:.tabContainer ul li
+ * 概要   :jqueryプラグイン「easytabs」のタブのボタン。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.13
+ * 変更者 :T.Masuda
+ * 変更日 :2015.03.23
+ * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
+ */
+.tabContainer ul li {
+	font-size		:	13px;	/* デフォルトのフォントサイズを再指定。 */
+}
 	
+	/* 画面がタブレットの幅であれば */
+	@media screen and (min-width: 430px) {
+		/* 
+		 * セレクタ:.main
+		 * 概要   :コンテンツ領域。
+		 * 作成者 :T.Masuda
+		 * 作成日 :2015.03.04
+		 */
+		.main{
+		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
+		}
+		/* 
+		 * セレクタ:.header
+		 * 概要   :ヘッダー領域。
+		 * 作成者 :T.Masuda
+		 * 作成日 :2015.03.23
+		 */
+		.header{
+		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
+		}
+	}	
 }

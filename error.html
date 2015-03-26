@@ -2,36 +2,36 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
 <title>DDTFlowers</title>
-<!-- お問い合わせページのCSSファイルを読み込む。 -->
-<link href="css/contact.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="container">
-<div class="main">
-
-<blockquote class="confirmSendMail">
-<strong class="ttl">お問い合わせフォーム &gt; エラー</strong>
-<ul>
-<li class="msg">前画面に戻って正しく入力してください。</li>
-</ul>
-<table class="form">
-
-<!-- cell_begin -->
-<tr>
-  <th>!key!</th>
-  <td>!val!</td>
-</tr>
-<!-- cell_end -->
-
-</table>
-<br />
-<form action="postmail.cgi" method="post">
-<!-- hidden -->
-<input type="button" value="&lt; 前に戻る" onclick="history.back()" class="button" />
-</form>
-</blockquote>
-</div>
-</div>
+	<div id="container">
+		<div class="main">
+			<!-- お問い合わせページのCSSファイルを読み込む。 -->
+			<link href="css/contact.css" rel="stylesheet" type="text/css" />
+			
+			<blockquote class="confirmSendMail">
+				<strong class="ttl">お問い合わせフォーム &gt; エラー</strong>
+				<ul>
+					<li class="msg">前画面に戻って正しく入力してください。</li>
+				</ul>
+				<table class="form">
+				
+				<!-- cell_begin -->
+				<tr>
+				  <th>!key!</th>
+				  <td>!val!</td>
+				</tr>
+				<!-- cell_end -->
+				
+				</table>
+				<br />
+				<form action="postmail.cgi" method="post">
+					<!-- hidden -->
+					<input type="button" value="&lt; 前に戻る" onclick="history.back()" class="button" />
+				</form>
+			</blockquote>
+		</div>
+	</div>
 <script>
 
 creator = new createTag();

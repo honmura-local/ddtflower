@@ -59,6 +59,12 @@
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
 
+</head>
+<body>
+<!-- container -->
+<div id="container">
+	<header class="header"></header>
+	<div class="main"></div>
 <!-- JavaScriptのコードを記述する -->
 <script>
 
@@ -90,7 +96,8 @@ $(document).ready(function(){
 	fixYCoordinate('header', '.flowerBackground');
 	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 	fixXCoordinateOnScroll('header')
-	
+	//テーブルの全レコード選択の処理をオンにする。
+	checkAllRecord()
 	//JSONデータを格納する変数を初期化する。
 	creator.json = null;
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
@@ -99,12 +106,6 @@ $(document).ready(function(){
 });
 
 </script>
-</head>
-<body>
-<!-- container -->
-<div id="container">
-	<header class="header"></header>
-	<div class="main"></div>
 </div>
 <a href="mypage.html" style="display:block;font-size:10px;">mypage</a>
 <a href="admin.html" style="display:block;font-size:10px;">admin</a>

@@ -147,6 +147,7 @@
 	right		:0;				/*右端に配置する。これでボックスの右上に配置される。*/
 	box-sizing	:border-box;	/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
 	margin-bottom: 32px;
+	display: block;
 }
 
  /* 
@@ -163,6 +164,7 @@
 	bottom		:0;			/*縦位置を底辺に合わせる。*/
 	right		:0;			/*右端に配置する。これでボックスの右下に配置される。*/
 	box-sizing	:border-box;/*サイズ計算にpadding、marginを含めることで、幅の%計算を正確にする。*/
+	display: block;
 }
 
  /* 
@@ -359,8 +361,9 @@
 	 * 作成日 :2015.03.12
 	 */
 	.blogEditImagesSectionImage {
-		height: 158px;		/*高さを自動で調整する。*/
+		height: 130px;		/*高さを自動で調整する。*/
 	
+		width: 130px;
 		margin-left: 0px;
 }
 
@@ -456,7 +459,9 @@
 	}
 	.blogEditImages:before {
 		padding-left: 0;
-	}
+	
+		display: block;
+}
 
 	 /* 
 	 * セレクタ:.blogArticleTitle
@@ -470,15 +475,11 @@
 		padding-left: 0;
 	}
 
-	 /* 
-	 * セレクタ:.blogEditImagesSectionAddButton
-	 * 概要   :画像の追加ボタン。
-	 * 設計者 :T.Masuda
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.03.12
-	 */
-	.blogEditImagesSectionAddButton {
-/*		margin-bottom: 40px;*/
-	}
+	.blogEditImagesSection {
+		width: 210px;
+		margin: 0 auto 10px;
+	
+		display: inline-block;
+}	
 }
 
