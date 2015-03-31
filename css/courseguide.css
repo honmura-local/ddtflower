@@ -97,12 +97,16 @@
  * 変更者 :T.Masuda
  * 変更日 :2015.02.26
  * 内容　 :幅を広くしました。
+ * 変更者 :T.Yamamoto
+ * 変更日 :2015.03.31
+ * 内容　 :marginを0にしました。
  */
 .courseGuide {
-    margin: 0 0 20px;       /* 下に20px余白を空ける */
+    margin: 0;              /* 余白を0にする */
     width: 56%;             /* 幅を56%にする */
     float: left;            /* 左回りに回り込みできるようにする */
 }
+
 
 /* 
  * セレクタ:.guideTable .summary
@@ -480,6 +484,26 @@
  */
 .noneDisplay {
     display: none;      /* 要素を隠す */
+}
+
+/* 
+ * セレクタ:.annotation
+ * 概要   :1行だけの注釈のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.31
+ */
+.annotation {
+    clear: left;      /* 左側の回り込みを解除する */
+}
+
+/* 
+ * セレクタ:.courseTable
+ * 概要   :コース案内の中のテーブル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.31
+ */
+.courseTable {
+    width: 100%;      /* 幅を100%にする */
 }
 
 /* 
