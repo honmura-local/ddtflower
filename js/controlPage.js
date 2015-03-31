@@ -186,7 +186,7 @@ function createFormData(form){
 	var formDataReturn = {};
 	
 	//フォーム内の入力要素を走査する。
-	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked', form).each(function(){
+	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden', form).each(function(){
 		//値を取得する。
 		var val = $(this).val();
 		//name属性の値を取得する。
@@ -518,8 +518,9 @@ $(document).on('click', '.imitateForm .submit', function(){
 });
 
 /*
- * イベント:submit
- * 引数   :なし
+ * イベント:$(document).on('submit', 'form.specialReservedDialog')
+ * 引数   :String 'submit':submitイベントに対する処理
+ * 　　　　:String 'form.specialReservedDialog':体験予約ダイアログのセレクタ。
  * 戻り値 :なし
  * 概要   :予約ダイアログのフォームがsubmitされたときのイベント。
  * 作成日 :2015.03.31
@@ -544,3 +545,62 @@ $(document).on('submit', 'form.specialReservedDialog', function(event){
 		$('.specialReservedConfirmDialog').append($('.main > *', data));
 	});
 });
+
+/*
+ * イベント:$(document).on('submit', '.specialReservedConfirmDialog form')
+ * 引数   :String 'submit':フォームのsubmitイベントに対する処理。
+ * 　　　　:String '.specialReservedConfirmDialog form':体験予約確認ダイアログのフォームのセレクタ。
+ * 戻り値 :なし
+ * 概要   :予約ダイアログのフォームがsubmitされたときのイベント。
+ * 作成日 :2015.03.31
+ * 作成者 :T.M
+ */
+$(document).on('submit', '.specialReservedConfirmDialog form', function(event){
+	//submitイベントをキャンセルする。
+	event.preventDefault();
+	//フォームのaction属性から送信URLを取得する。
+	var url = $(this).attr('action');
+	
+	//送信するデータを格納する連想配列を作成する。
+	var formData = createFormData($(this));
+	
+	//postメソッドでフォームの送信を行う。
+	$.post(url, formData,
+		// 成功時の処理を記述する。
+		function(){
+			//ダイアログを消す。
+			$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
+			//送信完了のダイアログを出す。
+			alert('以上の内容でご予約の希望を承りました。追ってメールでの連絡をいたします。');
+	});
+});
+
+/*
+ * イベント:$(document).on('click', '.main .confBackButton')
+ * 引数   :String 'click':クリックイベントを登録する。
+ * 		 :String '.confBackButton':通常のページでのPostmailの送信確認ページにおけるバックボタン。
+ * 戻り値 :なし
+ * 概要   :送信確認ページの戻るボタンがクリックされたときのイベント。
+ * 作成日 :2015.03.31
+ * 作成者 :T.M
+ */
+$(document).on('click', '.main .confBackButton', function(){
+	//戻る。
+	history.back();
+});
+
+/*
+ * イベント:$(document).on('click', '.specialReservedConfirmDialog .confBackButton')
+ * 引数   :String 'click':クリックイベントを登録する。
+ * 		 :String '.specialReservedConfirmDialog .confBackButton'
+ * 　　　　:予約確認ダイアログでのPostmailの送信確認ページにおけるバックボタン。
+ * 戻り値 :なし
+ * 概要   :送信確認ページの戻るボタンがクリックされたときのイベント。
+ * 作成日 :2015.03.31
+ * 作成者 :T.M
+ */
+$(document).on('click', '.specialReservedConfirmDialog .confBackButton', function(){
+	//ダイアログを消す。
+	$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
+});
+

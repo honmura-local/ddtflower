@@ -693,54 +693,6 @@ var init = getInitData("source/init.json", 100);
  */
 function showEditDialog(editElem){
 	
-//	//jQuery UIのダイアログを生成する。
-//	$('.textEditDialog').dialog({
-//		// 幅を設定する。
-//		width			: '300px',
-//		// 予約ダイアログのクラスを追加する。
-//		dialogClass		:'reservedDialog',
-//		// ダイアログを生成と同時に開く。
-//		autoOpen		: true,
-//		// Escキーを押してもダイアログが閉じないようにする。
-//		closeOnEscape	: false,
-//		// モーダルダイアログとして生成する。
-//		modal			: true,
-//		// リサイズしない。
-//		resizable		: false, 
-//		// 作成完了時のコールバック関数。
-//		create:function(event, ui){
-//			//ダイアログのテキストエリアのjQueryオブジェクトを生成する。
-//			var textarea = $('textarea', this);
-//			//テキストエリアに連動元の入力要素の内容をコピーする。
-//			textarea.val($(editElem).val());
-//			//テキストエリアと入力要素の内容が連動するようにイベント登録する。
-//			textarea.change(function(){
-//				//editElemの値をtextareaの値で上書きする。
-//				editElem.val(textarea.val());
-//			});
-//		},
-//		// 位置を指定する。
-//		position:{
-//			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-//			my:'center center',
-//			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-//			at:'center center',
-//			// ウィンドウをダイアログを配置する位置の基準に指定する。
-//			of:window
-//		},
-//		// ボタンの生成と設定を行う。
-//		buttons:[
-//			         {
-//			        	 // 終了ボタンのテキスト。
-//			        	 text:'終了',
-//			        	 // ボタン押下時の処理を記述する。
-//			        	 click:function(event, ui){
-//			        		// ダイアログを完全に消去する。
-//			        		$(this).dialog("close").dialog("destroy").remove();
-//			        	 }
-//			         }
-//		         ]
-//	});
 }
 
 /* 
