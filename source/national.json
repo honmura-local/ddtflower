@@ -92,54 +92,59 @@
         }
     },
     "courseGuide": {
-        "class": "courseGuide guideTable",
-        "summary": {
-            "text": "コース案内"
-        },
-        "courseGuideHead": {
-            "class": "guideHead",
-            "stageHead": {
-                "text": "レベル"
+        "class":"courseGuide guideTable",
+        "courseTable":{
+            "summary": {
+                "text": "コース案内"
             },
-            "timesHead": {
-                "text": "回数"
+            "courseGuideHead": {
+                "class": "guideHead",
+                "stageHead": {
+                    "text": "レベル"
+                },
+                "timesHead": {
+                    "text": "回数"
+                },
+                "priceHead": {
+                    "text": "金額"
+                }
             },
-            "priceHead": {
-                "text": "金額(1回当たり)"
+            "firstStage": {
+                "stage": {
+                    "text": "1級"
+                },
+                "times": {
+                    "html": "40回<br>(目安)"
+                },
+                "price": {
+                    "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
+                }
+            },
+            "secondStage": {
+                "stage": {
+                    "html": "2級<br>(Aコース)"
+                },
+                "times": {
+                    "html": "40回<br>(目安)"
+                },
+                "price": {
+                    "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
+                }
+            },
+            "thirdStage": {
+                "stage": {
+                    "html": "2級<br>(Bコース)"
+                },
+                "times": {
+                    "html": "40回<br>(目安)"
+                },
+                "price": {
+                    "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
+                }
             }
         },
-        "firstStage": {
-            "stage": {
-                "text": "1級"
-            },
-            "times": {
-                "html": "40回<br>(目安)"
-            },
-            "price": {
-                "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
-            }
-        },
-        "secondStage": {
-            "stage": {
-                "html": "2級<br>(Aコース)"
-            },
-            "times": {
-                "html": "40回<br>(目安)"
-            },
-            "price": {
-                "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
-            }
-        },
-        "thirdStage": {
-            "stage": {
-                "html": "2級<br>(Bコース)"
-            },
-            "times": {
-                "html": "40回<br>(目安)"
-            },
-            "price": {
-                "html": "受講料3,000 円／回<br>花材費2,000円～7,000円"
-            }
+        "annotation":{
+            "text":"※季節により花材費の上限を超える場合があり。"
         }
     },
     "footGallery": {
