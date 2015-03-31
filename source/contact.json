@@ -107,6 +107,11 @@
         "submitButton":{
             "type": "submit",
             "text": "送信内容の確認"
+        },
+        "mailSubject":{
+        	"type":"hidden",
+        	"value":"2",
+        	"name":"subject
         }
     }
 }

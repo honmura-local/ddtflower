@@ -539,10 +539,11 @@ $(document).on('submit', 'form.specialReservedDialog', function(event){
 	$.post(url, formData,
 	// 成功時の処理を記述する。
 	 function(data){
-		//不要なタグを消す。
+		//フォーム部分を切り出す。
+		var $block = $(data).find('blockquote');
 		$('link,script', data).remove();
 		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
-		$('.specialReservedConfirmDialog').append($('.main > *', data));
+		$('.specialReservedConfirmDialog').append($block);
 	});
 });
 

@@ -504,6 +504,11 @@
                     "size":"2"
                 }
             }
+        },
+        "mailSubject":{
+        	"type":"hidden",
+        	"value":"1",
+        	"name":"subject
         }
     },
     "specialReservedConfirmDialog": {

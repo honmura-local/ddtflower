@@ -332,7 +332,7 @@ function createSpecialReservedConfirmDialog(reservedData){
 		// 作成完了時のコールバック関数。
 		create:function(event, ui){
 			// タイトルバーを見えなくする。
-			$(this).prev().children().filter('button').css('display', 'none');
+			$('reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
 //			$(this).next().css('font-size', '0.5em');
 		},
 		// 位置を指定する。
