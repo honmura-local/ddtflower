@@ -114,6 +114,7 @@ $cf{replace} = {
 		'week[]' => '予備希望週',
 		'personName' => 'ご氏名',
 		'personEmail' => 'メールアドレス',
+		'personPhoneNumber' => '電話番号',
 		'personCount' => '人数',
 		'content' => 'お問い合わせ内容'
 	};
