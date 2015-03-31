@@ -1,5 +1,6 @@
 {
     "sendReservedPhp": "php/sendreserved.php",
     "jsonDirectory": "source/",
-    "jsonIdentifier": "json"
+    "jsonIdentifier": "json",
+    "cookieLimitTime":"3600000"
 }

@@ -72,6 +72,21 @@ function createReservedCalendar (selector) {
 	});// jqueryの記述の終わり
 }
 
+/*
+ * 関数名:setCallCalendar(selector)
+ * 引数  :string selector:カレンダーと関連づける要素のセレクタ。
+ * 戻り値:なし
+ * 概要  :指定した要素をクリックしてカレンダーを呼ぶようにする。
+ * 作成日:2015.03.26
+ * 作成者:T.Y
+ */
+function setCallCalendar (selector) {
+		//datepickerの日本語表示設定。
+        $.datepicker.regional['ja'] = dpJpSetting;
+		$.datepicker.setDefaults($.datepicker.regional['ja']);
+
+        $(selector).datepicker();
+}
 
 
 /*
@@ -305,9 +320,32 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 function createTab(selector){
 	//タブのコンテンツを作成する。
 	$(selector).easytabs({
-		updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
+		updateHash:false,	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
+		cache:false
 	});
 }
+
+/*
+ * イベント名:(document).bind('easytabs:ajax:complete')
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :Ajax通信でタブの内容を呼び出したときのイベント。
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+$(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPanel, response, status, xhr){
+	//overwriteContent関数同様、scriptタグとlinkタグを取得する。
+	var pagedrawer = $('script, link', response);
+	//コードを順番に実行する。
+	$.when(
+		//読み込み先のタブパネル内に取得したタグを展開する。
+		$($targetPanel).html(pagedrawer)
+	).done(function(){
+		//createTagのJSONを初期化する。
+		creator.json = '';
+	});
+});
+
 
 /*
  * 関数名:outputKeyNumberObject(json, domkey, target)
@@ -324,9 +362,377 @@ function outputKeyNumberObject(json, domkey, target){
 	for(key in json){
 		//キーが数値なら
 		if(!(isNaN(key))){
-			//ブパーツを生成し、指定先に追加する。
-			creator.outputTag(key, domkey, target);
+			//キーを一時保存して利用する。
+			var keytmp = key;
+			//パーツを生成し、指定先に追加する。
+			creator.outputTag(keytmp, domkey, target);
+			//追加したキーを削除する。
+			delete json[keytmp];
 		}
+	}
+	//trタグを追加したなら
+	if($('.recordWrapper').length > 0){
+		//trタグを取得する
+		var records = $('.recordWrapper tr');
+		//tableタグを外す
+		unwrapTable('.'+records.attr('class'));
 	}
 }
 
+/*
+ * 関数名:unwrapTable(row)
+ * 概要  :trタグの親となるtableタグを消す。createTagでtrタグを追加する場合に使用する。
+ * 引数  :String row:trタグのセレクタ文字列
+ * 戻り値:なし
+ * 作成日:2015.03.25
+ * 作成者:T.Masuda
+ */
+function unwrapTable(row){
+	//trタグの親、祖父であるtbody、tableタグを消す。
+	$(row).unwrap().unwrap();
+}
+
+/*
+ * 関数名:injectionTableData(target, map)
+ * 概要  :対象となるテーブルに配置された空のセルに連想配列の値を流し込む。
+ * 引数  :String target:処理対象となるテーブル。
+ * 		:Object map:流し込むデータを持つ連想配列。
+ * 戻り値:なし
+ * 作成日:2015.03.26
+ * 作成者:T.Masuda
+ */
+function injectionTableData(target, map){
+	//ループのカウンター変数を準備する。
+	var counter = 0;
+	//処理対象のテーブルのjQueryオブジェクトを取得する。
+	var $table = $(target);
+	
+	//mapを操作する。
+	for(key in map){
+		//対応するセルにデータを流し込む。
+		$('.' + key + ' td', $table).text(map[key]);
+		//疑似フォームで値を受け取る準備がしてあれば、そちらにも値を流し込む。
+		$('.imitateForm input:hidden').filter('[name="' + key + '"]').val(map[key]);
+	}
+}
+
+/*
+ * 関数名:createNewPhoto()
+ * 概要  :作成したMyギャラリーの新規のし写真に基本データを追加する。
+ * 引数  :なし
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function createNewPhoto(){
+	var $new = $('.myPhoto:last');	//新規の写真を変数に入れる。
+	var cookieData = GetCookies();	//ユーザ名取得のため、クッキーのデータを連想配列で取得する。
+	
+	//ユーザ名を写真に追加する。
+	$('.myPhotoUser', $new).text(cookieData['userName']);
+	//今日の日付を取得し、写真に追加する。
+	$('.myPhotoDate', $new).text(getDateTime());
+}
+
+/*
+ * 関数名:getDateTime()
+ * 概要  :日付を取得する。
+ * 引数  :なし
+ * 戻り値:string:日付の文字列。
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function getDateTime(){
+	var date = new Date()//日付取得のため、Dateクラスのインスタンスを生成する。
+	//日付を取得して返す。
+	return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+}
+
+/*
+ * 関数名:deletePhoto()
+ * 概要  :チェックが入ったMyギャラリーの写真を削除する。
+ * 引数  :なし
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function deletePhoto(){
+	//チェックボックスが入っている写真があれば
+	if($('.myPhotoCheck:checked')){
+		//選択された写真を消す。
+		$('.myPhoto').has('.myPhotoCheck:checked').remove();
+	} else {
+		//写真未選択の旨を伝える。
+		alert('削除する写真を選んでください。');
+	}
+}
+
+/*
+ * 関数名:postPhoto(photo)
+ * 概要  :サーバに保存する写真のデータを送信する。
+ * 引数  :element photo:写真のタグ。
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function postPhoto(photo){
+	//写真のデータを連想配列にして返してもらう。
+	var photoData = createPhotoData(photo);
+	
+	//Ajax通信でサーバに写真のデータを送信する。
+	$.ajax({
+		url:init['photoPost'],	//初期化データの連想配列にあるURLに送信する
+		dataType:'json',		//JSONで返してもらう。
+		data:photoData,			//作成した写真データを送信する。
+		//通信が成功したら
+		success:function(json){
+			//特に何もせず、静かに更新する。
+		},
+		//通信が失敗したら
+		error:function(){
+			//保存失敗の旨を伝える。
+			alert('写真の保存に失敗しました。');
+		}
+	});
+}
+
+/*
+ * 関数名:createPhotoData(photo)
+ * 概要  :写真のデータの連想配列を作成する。
+ * 引数  :element photo:写真のタグ。
+ * 戻り値:Object:写真のデータ。
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function createPhotoData(photo){
+	var retMap = {};	//返す連想配列を用意する。
+	//画像ソースを格納する。
+	retMap['src'] = $('.myPhotoLink', photo);
+	//日付を格納する。
+	retMap['date'] = $('.myPhotoDate', photo);
+	//ユーザ名を格納する。
+	retMap['user'] = $('.myPhotoUser', photo);
+	//タイトルを格納する。
+	retMap['title'] = $('.myPhotoTitle', photo);
+	//コメントを格納する。
+	retMap['comment'] = $('.myPhotoComment', photo);
+	
+	//作成した連想配列を返す。
+	return retMap;
+}
+
+/*
+ * 関数名:startEditText(textElem)
+ * 概要  :テキストを編集するモードに移行する。
+ * 引数  :elemental textElem:対象となる要素。
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function startEditText(textElem){
+	var currentText = $(textElem).text()		//テキストの値を取得する。
+	var className = $(textElem).attr('class');	//クラス名を取得する。
+	
+	//classNameがコメントのクラスであれば
+	if(className == 'myPhotoComment'){
+		//編集用のテキストエリアを配置する。
+		$(textElem).after($('<textarea>')
+				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
+				.val(currentText)				//テキストを引き継ぐ。
+			);
+	} else {
+		//編集用のテキストエリアを配置する。
+		$(textElem).after($('<input>')
+				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
+				.val(currentText)				//テキストを引き継ぐ。
+				.attr('type', 'text')			//テキストボックスのtypeをセットする。	
+		);
+	}
+	
+	//追加した要素にフォーカスする。
+	$('.' + className + 'Edit').focus();
+	
+	//イベント発火元の要素を消す。
+	$(textElem).remove();
+};
+
+/*
+ * 関数名:endEditText($this)
+ * 概要  :テキストの編集モードを終了する。
+ * 引数  :jQuery $this
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function endEditText(textElem){
+	var $this = $(textElem);	//引数の要素のjQueryオブジェクトを取得する。
+	//編集後のテキストボックスを取得する。
+	var currentText = $this.val();
+	//編集モードになる前のクラス名を取得する。
+	var pastClass = $this.attr('class').replace('Edit', '');
+	
+	//編集モードになる前のタグを生成する。
+	$this.after($('<p></p>')
+			.text(currentText)
+			.addClass(pastClass)
+		);
+	
+	//用済みになった編集要素を消す。
+	$this.remove();
+}
+
+/*
+ * 関数名:popupComment(selector)
+ * 概要  :指定した要素をクリックまたはタップするとテキストがポップアップで表示されるようにする。
+ * 引数  :string selector:ポップアップさせる要素。
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function popupComment(selector){
+	//指定した要素をクリックまたはダブルクリックしたらテキストがポップアップ表示される様にする。
+	$(selector, document).smallipop({triggerOnClick:true});
+}
+
+/*
+ * 関数名:beforeConfirmButtonPush(func, message, arg)
+ * 概要  :関数をコールする前に確認のダイアログを出す。
+ * 引数  :funciton func:対象の関数
+ * 		:string message:ダイアログに出すメッセージ。
+ * 		:?		arg:引数。特に型を指定しない。
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function beforeConfirmButtonPush(func, message, arg){
+	//確認ダイアログを出し、OKかキャンセルかを選択してもらう。
+	ret = confirm(message);
+	
+	//OKが押されたら
+	if(ret){
+		//引数の関数をコールする。
+		func(arg);
+	}
+}
+
+/*
+ * イベント名:$(document).on('click', '.myGalleryEditButtons .deleteButton')
+ * 引数  　 	:string 'click':クリックイベントの文字列
+ * 			:string '.myGalleryEditButtons .deleteButton':削除ボタンのセレクタ
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの削除ボタンを押したときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
+	//チェックが入っている写真があれば
+	if($('myPhotoCcheck')){
+		//確認ダイアログを出して同意を得てから画像を消す。
+		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
+	}
+});
+
+/*
+ * イベント名:$(document).on('dblclick', '.myGallery .myPhotoTitle')
+ * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
+ * 			:string '.myGallery .myPhotoTitle':写真のタイトルのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のタイトルをダブルクリックしたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('dblclick', '.myGallery .myPhotoTitle', function(){
+	//タイトルを編集モードにする。
+	startEditText(this);
+});
+
+/*
+ * イベント名:$(document).on('blur', '.myGallery .myPhotoTitleEdit')
+ * 引数  　 	:string 'blur':フォーカスが外れたときのイベントの文字列
+ * 			:string '.myGallery .myPhotoTitle':写真のタイトルのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のタイトルの編集を終えたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('blur', '.myGallery .myPhotoTitleEdit', function(){
+	//編集モードを解除する。
+	endEditText(this);
+	//編集したデータを送信する。
+	postPhoto($('.myPhoto').has(this));
+});
+
+/*
+ * イベント名:$(document).on('dblclick', '.myGallery .myPhotoComment')
+ * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
+ * 			:string '.myGallery .myPhotoComment':写真のコメントのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のコメントをダブルクリックしたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('dblclick', '.myGallery .myPhotoComment', function(){
+	//コメントを編集モードにする。
+	startEditText(this);
+});
+
+/*
+ * イベント名:$(document).on('blur', '.myGallery .myPhotoCommentEdit')
+ * 引数  　 	:string 'blur':フォーカスが外れたときのイベントの文字列
+ * 			:string '.myGallery .myPhotoCommentEdit':写真のコメント編集のセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('blur', '.myGallery .myPhotoCommentEdit', function(){
+	//編集モードを解除する。
+	endEditText(this);
+	//編集したデータを送信する。
+	postPhoto($('.myPhoto').has(this));
+});
+
+/*
+ * イベント名:$(document).on('click', '.myGalleryEditButtons .createButton')
+ * 引数  　 	:string 'click':クリックイベントの文字列
+ * 			:string '.myGalleryEditButtons .createButton':新規ボタンのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('click', '.myGalleryEditButtons .createButton', function(){
+	//画像アップローダーのタグをクリックする。
+	$('.uploader').click();
+});
+
+/*
+ * イベント名:$(document).on('change', '.uploader .createButton')
+ * 引数  　 	:string 'change':値変化のイベントの文字列
+ * 			:string '.myGalleryEditButtons .uploader':新規ボタンのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+	//アップロードボタンの値が変わったときのイベント(=アップロードを行った後のイベント)
+	$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
+			//ファイルを取得する
+		 	var file = event.target.files[0];
+		  	//画像の縮小を行う。
+			canvasResize(file, {
+		   	 crop: false,	//画像を切り取るかを選択する
+		   	 quality: 80,	//画像の品質
+		   	 //コールバック関数。画像パスを引数として受け取る。
+		   	 callback: function(data) {
+		 		//createTagで新たな写真を作成する。
+		 		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		 		//新たな写真を初期化する。
+		 		createNewPhoto();
+		 		//画像拡大用のタグにソースをセットする。
+		 		$('.myPhotoLink:last').attr('href', data);
+		 		//画像サムネイルに使う要素の画像を設定する。
+		 		$('.myPhotoImage:last').css('background-image', 'url('  +  data + ')');
+		    }
+		})
+	});

@@ -359,6 +359,7 @@
 .managementList td {
 	background: #FFF;	/* 背景色を明示的に白にする。 */
 }	
+
 /* 
  * セレクタ:.managementList td, .managementList th
  * 概要   :一覧のセル。

@@ -544,10 +544,20 @@ function createLoginDialog(){
 			        			 if(transResult["result"]){
 			        				// ユーザ情報の取得に成功していたら
 			        				 if('user' in transResult){
+			        					 //@mod T.Masuda 2015.03.27 Cookieを期限付きにしました。
 			        					//クッキーにユーザ情報を格納する。
-			        					 document.cookie = 'user='+transResult["user"];
-			        					 document.cookie = 'userName='+transResult["userName"];
-						        		 // ダイアログを消去する。
+//			        					 document.cookie = 'user='+transResult["user"];
+//			        					 document.cookie = 'userName='+transResult["userName"];
+			        					
+			        					 //日付クラスインスタンスを生成する。
+			        					 var cookieLimit = new Date();
+			        					 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			        					 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
+			        					 //cookieにユーザ情報と期限の日付を格納する。
+			        					 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
+			        					 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
+			        					 //ここまで変更しました。
+			        					 // ダイアログを消去する。
 						        		 $(this).dialog('close').dialog('destroy').remove();
 						        		 //画面を更新する。
 						        		 location.reload();

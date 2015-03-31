@@ -22,6 +22,7 @@
 	border-radius: 5px;
 }
 
+
 .reservedData{
 	margin-bottom: 10px;
 }
@@ -273,6 +274,83 @@
 	padding-left: 1.5em;
 }
 
+
+/* 個人設定ページ */
+
+/* 
+ * セレクタ:.myOption
+ * 概要   :個人設定ページのコンテンツ領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.30
+ */
+.myOption{
+	width:600px;		/* 幅はそこまで必要ないので、狭める。 */
+	margin:0 auto;		/* 中央に寄せる。 */
+}
+
+/* 
+ * セレクタ:.myOptionConfirmChange
+ * 概要   :オプションタブでの編集内容を確定するボタンの領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.30
+ */
+.myOptionConfirmChange{
+	text-align: right;		/* ボタンを右端に寄せる。 */
+}
+	
+/* 
+ * セレクタ:.myOptionConfirmChangeButton
+ * 概要   :オプションタブでの編集内容を確定するボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+.myOptionConfirmChangeButton{
+	margin:0 2em;	/* 右からずらす。 */
+}
+
+/* 
+ * セレクタ:.myOptionLable
+ * 概要   :オプションタブ内のラベル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+.myOptionLabel{
+	display : block ;	/* ブロック要素にする。 */
+}
+
+/* 
+ * セレクタ:.myOption input[type="text"]
+ * 概要   :オプションタブ内のメールアドレス入力欄。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+.myOptionText input[type="text"]{
+	width		: 80%	;	/* 十分な幅を取る。 */
+}
+
+/* 
+ * セレクタ:.myOptionLableInline
+ * 概要   :オプションタブ内の横並びにするラベル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+.myOptionLableInline{
+	display: inline-block;	/* インラインブロックにして横に並べる。 */
+	margin-right: 1em;		/* 右に最低限の余白を入れる。 */
+}
+
+/* 
+ * セレクタ:.myOptionText, .myOptionRadio, .myOptionCheckbox
+ * 概要   :オプションの各項目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.26
+ */
+.myOptionText, .myOptionRadio, .myOptionCheckbox{
+	margin-bottom: 10px;	/* 項目ごとに間隔を取る。 */
+}
+/* 個人設定はここまで */
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -480,6 +558,17 @@
 		margin: 0 auto 10px;
 	
 		display: inline-block;
-}	
+	}	
+	
+	/* 
+	 * セレクタ:.myOption
+	 * 概要   :個人設定ページのコンテンツ領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.03.30
+	 */
+	.myOption{
+		width:80%;		/* レスポンシブにする。。 */
+	}	
+
 }
 

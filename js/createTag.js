@@ -10,6 +10,8 @@ function createTag(){
 	this.dom = '';
 	//ブログページのナンバリングのJSON連想配列。
 	this.numbering = '';
+	//フォームデータを格納する連想配列。
+	this.formData = {};
 	
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))

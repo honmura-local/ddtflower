@@ -53,12 +53,15 @@ $(document).ready(function(){
  * 作成者:T.M
  */
 function overwrightContent(target, data){
+	var dat = $(data);
 	//mainのタグを空にする。
 	$(target).empty();
 	//linkタグを収集する。
-	var links = $(data).filter('link');
+//	var links = $(data).filter('link');
+	var links = $('link', data);
 	//コードが書かれているscriptタグを収集する。
-	var scripts = $(data).filter('script:not(:empty)');
+//	var scripts = $(data).filter('script:not(:empty)');
+	var scripts = $('script:not(:empty)', data);
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。
@@ -103,6 +106,13 @@ function callPage(url, state){
 			overwrightContent('.main', html);
 			//カレントのURLを更新する。
 			currentLocation = url;
+
+			//ログインダイアログが出ていれば
+			if($('.loginDialog').length){
+				//ログインダイアログを直ちに消す。
+				$('.loginDialog').dialog('close').dialog('destroy').remove();
+			}
+
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
 			if(state === void(0) && isSupportPushState()){
 				//画面遷移の履歴を追加する。
@@ -176,7 +186,7 @@ function createFormData(form){
 	var formDataReturn = {};
 	
 	//フォーム内の入力要素を走査する。
-	$('input, textarea, input:radio:checked, input:checkbox:checked', form).each(function(){
+	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked', form).each(function(){
 		//値を取得する。
 		var val = $(this).val();
 		//name属性の値を取得する。
@@ -389,6 +399,117 @@ $(window).on('load', function(){
 			callPage(hash);
 		//そうでなければ
 		}
-
 	}
+});
+
+/*
+ * 関数名:callPageInTab(url, tabPanel)
+ * 概要  :タブパネル内でページを切り替える。
+ * 引数  :String url:読み込むhtmlファイルのURL
+ * 		 element tabPanel:タブパネルのDOM要素
+ * 戻り値:なし
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+function callPageInTab(url, tabPanel){
+	//ajax通信を行う
+	$.ajax({
+		url:url,				//読み込むファイルのURLを指定する。
+		dataType:'html',		//htmlのデータを返してもらう。
+		async:false,			//同期通信を行う。
+		success:function(html, dataType){	//通信に成功したら
+			//タブパネル内を書き換える。
+			overwrightContent(tabPanel,html);
+			creator.json = '';	/* JSONをクリアする。 */
+		},
+		//通信エラーであれば
+		error:function(XMLHttpRequest, textStatus, errorThrown){
+			//エラーを通知する。
+			alert('通信に失敗しました。時間をあけて試してください。');
+		}
+	})
+}
+
+/*
+ * イベント名:$(document).on('click')
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :タブパネル内でリンクをクリックしたときのイベント。
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+//表示中のタブパネル内でリンク付きのボタンがクリックされたら
+$(document).on('click', '.tabPanel.active button[href]', function(){
+	//タブ内でのページの切り替えを行う。
+	callPageInTab($(this).attr('href'), $('.tabPanel').has(this));
+});
+
+
+/*
+ * 関数名:submitImitateForm(form)
+ * 概要  :疑似フォームを送信して画面を切り替える。
+ * 引数  :element tabPanel:疑似フォームのDOM要素
+ * 戻り値:なし
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+function submitImitateForm(form){
+	//フォームのデータを作る。
+	var formData = createFormData(form);
+	//現在のタブを取得する。
+	var activeTabPanel = $('.tabPanel').has(form);
+	
+	//createTagのインスタンスの連想配列メンバにフォームデータを格納する。
+	creator.json['formData'] = formData;
+	
+	//フォームを送信する先のページに切り替える。
+	callPageInTab(form.attr('action'), activeTabPanel);
+};
+
+/*
+ * 関数名:sendImitateForm()
+ * 概要  :疑似フォームを送信して画面を切り替える。ボタンのonclick属性でコールする。
+ * 引数  :なし
+ * 戻り値:なし
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+function sendImitateForm(form){
+	var $form = $(form);	//疑似フォームとなる要素を取得する。
+	//フォームのデータを作る。
+	var formData = createFormData($form);
+	//createTagのフォームデータのメンバを初期化する。
+	creator.formData = {};
+	//createTagのインスタンスの連想配列メンバにフォームデータを格納する。
+	creator.formData['formData'] = formData;
+	
+	//フォームを送信する先のページに切り替える。
+	callPage($form.attr('action'));
+};
+
+/*
+ * イベント名:$(document).on('submit', '.imitateForm')
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :フォームをsubmitしたときのイベント。
+ * 作成日　　:2015.03.26
+ * 作成者　　:T.Masuda
+ */
+$(document).on('submit', '.imitateForm', function(){
+	event.preventDefault();	//submitイベント本来の画面遷移をキャンセルする。
+	sendImitateForm(this);	//自己定義の関数でフォームの送信を行う。
+});
+
+/*
+ * イベント名:$(document).on('click')
+ * 引数  　 :なし
+ * 戻り値　 :なし
+ * 概要  　 :タブパネル内で疑似フォームをサブミット(クリック)したときのイベント。
+ * 作成日　　:2015.03.25
+ * 作成者　　:T.Masuda
+ */
+//表示中のタブパネル内で疑似フォームがサブミットされたら
+$(document).on('click', '.imitateForm .submit', function(){
+	//疑似サブミットの処理の関数をコールする。
+	submitImitateForm($('.imitateForm').has(this));
 });

@@ -29,13 +29,13 @@
         },
         "myPageBlogButton2": {
             "class": "myPageBlogButton",
-            "href":"#",
-            "text":"みんなのブログ"
+            "href":"#myoption.html",
+            "text":"個人設定"
         },
         "myPageBlogButton3": {
             "class": "myPageBlogButton",
-            "href":"#",
-            "text":"ピックアップ"
+            "href":"#mygallery.html",
+            "text":"Myギャラリー"
         }
     }
 }
