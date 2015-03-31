@@ -173,6 +173,7 @@
         }
     },
     "specialReservedDialog": {
+    	"action":"postmail.cgi",
         "reservedSummary": {
             "text": "予約可能の可否につきましては追ってメールにより返信させていただきます。"
         },
@@ -506,65 +507,6 @@
         }
     },
     "specialReservedConfirmDialog": {
-        "confirmNotice": {
-            "text": "以下の内容で予約希望を承ります。"
-        },
-        "specialConfirmSummary": {
-            "selectedDate": {
-                "dateLabel": {
-                    "text": "予約希望日時"
-                },
-                "dateValue": {}
-            },
-            "selectedConstruct": {
-                "constructLabel": {
-                    "text": "希望作品"
-                },
-                "constructValue": {}
-            },
-            "selectedSchedule": {
-                "scheduleLabel": {
-                    "text": "希望時限"
-                },
-                "scheduleValue": {}
-            },
-            "subWeekOfDay": {
-                "subWeekOfDayLabel": {
-                    "text": "予備希望曜日"
-                },
-                "subWeekOfDayValue": {}
-            },
-            "subWeek": {
-                "subWeekLabel": {
-                    "text": "予備希望週"
-                },
-                "subWeekValue": {}
-            },
-            "subPersonName":{
-                "subPersonNameLabel":{
-                    "text":"氏名"
-                },
-                "subPersonNameValue": {}
-            },
-            "subPersonPhoneNumber":{
-                "subPersonPhoneNumberLabel":{
-                    "text":"電話番号"
-                },
-                "subPersonPhoneNumberValue": {}
-            },
-            "subPersonEmail":{
-                "subPersonEmailLabel":{
-                    "text":"メールアドレス"
-                },
-                "subPersonEmailValue": {}
-            },
-            "subPersonCount":{
-                "subPersonCountLabel":{
-                    "text":"人数"
-                },
-                "subPersonCountValue": {}
-            }
-        }
     },
     "photoGallery": {
         "class":"description contentsTitleBack",

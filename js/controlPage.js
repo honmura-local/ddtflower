@@ -226,8 +226,11 @@ function createFormData(form){
  * 概要   :フォームがsubmitされたときのイベント。
  * 作成日 :2015.03.10
  * 作成者 :T.M
+ * 作成日 :2015.03.31
+ * 作成者 :T.M
+ * 内容 　:.mainの中のフォームに限定しました。
  */
-$(document).on('submit', 'form', function(event){
+$(document).on('submit', '.main form', function(event){
 	//submitイベントをキャンセルする。
 	event.preventDefault();
 	//フォームのaction属性から送信URLを取得する。
@@ -482,7 +485,7 @@ function sendImitateForm(form){
 	creator.formData = {};
 	//createTagのインスタンスの連想配列メンバにフォームデータを格納する。
 	creator.formData['formData'] = formData;
-	
+
 	//フォームを送信する先のページに切り替える。
 	callPage($form.attr('action'));
 };
@@ -512,4 +515,32 @@ $(document).on('submit', '.imitateForm', function(){
 $(document).on('click', '.imitateForm .submit', function(){
 	//疑似サブミットの処理の関数をコールする。
 	submitImitateForm($('.imitateForm').has(this));
+});
+
+/*
+ * イベント:submit
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :予約ダイアログのフォームがsubmitされたときのイベント。
+ * 作成日 :2015.03.31
+ * 作成者 :T.M
+ */
+$(document).on('submit', 'form.specialReservedDialog', function(event){
+	//submitイベントをキャンセルする。
+	event.preventDefault();
+	//フォームのaction属性から送信URLを取得する。
+	var url = $(this).attr('action');
+	
+	//送信するデータを格納する連想配列を作成する。
+	var formData = createFormData($(this));
+	
+	//postメソッドでフォームの送信を行う。
+	$.post(url, formData,
+	// 成功時の処理を記述する。
+	 function(data){
+		//不要なタグを消す。
+		$('link,script', data).remove();
+		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
+		$('.specialReservedConfirmDialog').append($('.main > *', data));
+	});
 });

@@ -99,6 +99,9 @@ function removeInputDialog(dialog, reservedData){
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
+ * 変更者:T.M
+ * 変更日:2015.03.31
+ * 内容　:submitイベントで処理するようにしました。
  */
 function createSpecialReservedDialog(json, array){
 	
@@ -163,10 +166,13 @@ function createSpecialReservedDialog(json, array){
 									 && ($('input[name="personCount"]').val().length > 0)
 			        		 ) {
 				        		 // 予約希望データを作成する。
-			        			 reservedData = createReservedData(reservedData);
+//			        			 reservedData = createReservedData(reservedData);
 				        		 
 				        		 // 入力確認ダイアログを呼び出す。
-				        		 createSpecialReservedConfirmDialog(reservedData);
+				        		 createSpecialReservedConfirmDialog();
+//				        		 createSpecialReservedConfirmDialog(reservedData);
+				        		 //ダイアログ内のフォームをsubmitする。
+				        		 $('form.specialReservedDialog').submit();				        		 
 				        		 // このダイアログの入力要素を一時的に無効化する。
 				        		 disableInputs($(this));
 			        		 } else {
@@ -301,13 +307,13 @@ function removeReservedDialogs(dialogs){
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
+ * 変更者:T.M
+ * 変更日:2015.03.31
+ * 内容　:フォームメール対応
  */
 function createSpecialReservedConfirmDialog(reservedData){
 	// ダイアログの本体となるdivタグを生成する。
 	creator.outputTag('specialReservedConfirmDialog');
-	
-	// 入力された予約内容を一覧表示する。
-	createSpecialConfirmSummary(reservedData);
 	
 	// 生成したdivタグをjQuery UIのダイアログにする。
 	$('.specialReservedConfirmDialog').dialog({
@@ -327,12 +333,7 @@ function createSpecialReservedConfirmDialog(reservedData){
 		create:function(event, ui){
 			// タイトルバーを見えなくする。
 			$(this).prev().children().filter('button').css('display', 'none');
-			$(this).next().css('font-size', '0.5em');
-		},
-		// ダイアログが閉じられる前のイベント
-		beforeClose:function(event, ui){
-			// ロストした分のダイアログのDOMを補填する。
-			creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+//			$(this).next().css('font-size', '0.5em');
 		},
 		// 位置を指定する。
 		position:{
@@ -342,30 +343,7 @@ function createSpecialReservedConfirmDialog(reservedData){
 			at:'center center',
 			// ウィンドウをダイアログを配置する位置の基準に指定する。
 			of:window
-		},
-		// ボタンの生成と設定を行う。
-		buttons:[
-			         {
-			        	 // OKボタンのテキスト。
-			        	 text:'OK',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 // サーバに予約希望データを送信する。
-			        		 sendReservedData(reservedData);
-			        		 
-			        	 }
-			         },
-			         {
-			        	 // キャンセルボタンのテキスト。
-			        	 text:'Cancel',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 // 前のダイアログに戻る。
-			        		 moveToPrevDialog($(this));
-			        		 }
-			        	 }
-			         
-		         ]
+		}
 	});
 }
 
