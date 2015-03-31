@@ -333,7 +333,11 @@ function createSpecialReservedConfirmDialog(reservedData){
 		create:function(event, ui){
 			// タイトルバーを見えなくする。
 			$('reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
-//			$(this).next().css('font-size', '0.5em');
+		},
+		// ダイアログが閉じられる前のイベント
+		beforeClose:function(event, ui){
+			//下のダイアログのロックを解除する。
+			moveToPrevDialog($(this));
 		},
 		// 位置を指定する。
 		position:{
