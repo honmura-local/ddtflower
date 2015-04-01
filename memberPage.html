@@ -137,6 +137,9 @@
 						//テーブルからキャンセルダイアログを開くクラスをインクルードする
 						commonFuncs.getScriptFile('js/reservedLessonTable.js');
 
+						//予約済み授業一覧テーブルのインスタンスを作り、テーブルの操作処理を使えるようにする
+						var reservedLessonTableFuncs = new reservedLessonTable();
+
 						//キャンセルダイアログを予約中授業テーブルから開く処理
 						reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, creator);
 						//予約中授業テーブル絞り込みボタン機能を実装する

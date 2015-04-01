@@ -125,6 +125,9 @@ function reservedLessonTable() {
 		}
 	}
 
+	//インスタンスを保存して「this」の意味が変わっても使えるようにする
+	var tableInstance = this;
+
 	/* 関数名:cancelExecute
 	 * 概要　:予約キャンセル処理を実行する
 	 * 引数　:なし
@@ -134,7 +137,7 @@ function reservedLessonTable() {
 	 */
 	this.cancelExecute = function() {
 		//キャンセル処理を実装する
-		reservedLessonTableFuncs.registerReserved(this.instance, this.instance.argumentObj.data.create_tag, this.dialogBuilder);
+		tableInstance.registerReserved(this.instance, this.instance.argumentObj.data.create_tag, this.dialogBuilder);
 	}
 
 	/* 
@@ -156,6 +159,3 @@ function reservedLessonTable() {
 	}
 
 }	//クラス定義ここまで
-
-//どこでも当クラスインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する
-reservedLessonTableFuncs = new reservedLessonTable();//どこでも当クラスインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する
