@@ -194,11 +194,11 @@ function createFormData(form){
 		
 		//name属性で括られた最初のチェックボックスなら
 		if($(this).attr('type') == 'checkbox' 
-			&& $(this).index('[name="' + name + '"]') == 0){
+			&& $(this).index('[name="' + name + '"]:checked') == 0){
 			//valを配列として扱う。
 			val = [];
 			//name属性で括られたチェックボックスを走査していく。
-			$('input:checkbox[name="' + name + '"]').each(function(i){
+			$('input:checkbox[name="' + name + '"]:checked').each(function(i){
 				//配列にチェックボックスの値を格納していく。
 				val[i] = $(this).val();
 			});

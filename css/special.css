@@ -301,12 +301,12 @@
 }
 
 /* 
- * セレクタ:.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(3) td
  * 概要   :希望時限のセル。
  * 作成者 :T.Masuda
  * 作成日 :2015.04.01
  */
-.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td{
+.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(3) td{
 	word-break: normal;		/* 文字列を適切な区切りの位置で改行する。 */
 	padding: 0px 15% 0 0;	/*  右にpaddingを挿入し、データが2項目以上1行に並ばない様にする。 */
 }
