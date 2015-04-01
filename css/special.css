@@ -285,7 +285,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.04.01
  */
-.specialReservedConfirmDialog .confirmSendMail table{
+.specialReservedConfirmDialog .confirmSendMail ul{
 	font-size: 14px;		/* 入力部分と同じフォントサイズを指定する。 */
 	margin-bottom: 5px;		/* 下のテーブルとの間に余白を作る。 */
 }
@@ -317,6 +317,6 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.04.01
  */
-.specialReservedConfirmDialog .confirmSendMail table th{
+.specialReservedConfirmDialog .confirmSendMail form{
 	text-align: right;	/* 中のボタンを右に寄せる。 */
 }

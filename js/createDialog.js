@@ -209,7 +209,7 @@ function createSpecialDate(year, month, day){
 	var weekChars = [ '日', '月', '火', '水', '木', '金', '土' ];
 	// 予約希望ダイアログに予約希望日時が書かれたタグを追加する。
 	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
-	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + '曜日)';
+	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + ')';
 	$('.specialReservedDialog').attr('title', date);
 	//日付のinputタグにも日付を追加する。
 	$('.reservedDate').val(date);
