@@ -483,7 +483,8 @@
                 },
                 "personTextbox": {
                     "name": "personPhoneNumber",
-                    "size": "27"
+                    "size": "27",
+                    "style":"ime-mode:disabled"
                 }
             }
         },
@@ -494,7 +495,8 @@
                 },
                 "personTextbox": {
                     "name": "personEmail",
-                    "size": "27"
+                    "size": "27",
+                    "style":"ime-mode:disabled"
                 }
             }
         },
@@ -505,7 +507,8 @@
                 },
                 "personTextbox": {
                     "name": "personCount",
-                    "size": "2"
+                    "size": "2",
+                    "style":"ime-mode:disabled"
                 }
             }
         },

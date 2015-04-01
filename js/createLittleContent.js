@@ -736,3 +736,69 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
 		    }
 		})
 	});
+	
+	
+	/*
+	 * 関数名:disableMultiByteCode(selector)
+	 * 概要  :指定した入力フォームの日本語入力を無効にする。
+	 * 引用  :http://qiita.com/ttake/items/072508219af6e32a263a
+	 * 引数  :String selector:対象のセレクタ
+	 * 戻り値:なし
+	 * 作成日:2015.04.01
+	 * 作成者:T.Masuda、ttake
+	 */
+	function disableMultiByteCode(selector){
+	   var supportIMEMode = ('ime-mode' in document.body.style);
+
+	    // 1バイト文字専用フィールド
+	    $(selector)
+	    // ime-modeが使えないブラウザ：入力、フォーカスアウト
+	    .on('keydown blur', function() {
+
+	        // ime-modeが使えるブラウザならスキップ
+	        if (supportIMEMode) return;
+
+	        // マルチバイト文字が入力されたら削除
+	        var target = $(this);
+	        window.setTimeout( function() {
+	            var v = target.val();
+	            target.val( filterMBC(v) );
+
+	        }, 1);
+	    })
+	    // 全ブラウザ：貼り付け
+	    .on('paste', function() {
+	        // マルチバイト文字が入力されたら削除
+	        var target = jQuery(this);
+	        window.setTimeout( function() {
+	            var v = target.val();
+	            target.val( filterMBC(v) );
+
+	        }, 1);
+	    });
+	}
+
+	    // 日本語(マルチバイト文字)を削除した値を返す
+	    function filterMBC(src){
+	        var str = '';
+	        src = escape(src); // abあcd => ab%u3042cd 
+	        for(i = 0; i < src.length; i++){
+	            var chr = src.charAt(i);
+	            if(chr == '%'){
+	                var nchr = src.charAt(++i);
+	                if(nchr == 'u'){
+	                    // 2バイト文字をスキップ
+	                    i += 4;
+	                } else {
+	                    // 1バイト文字を追加
+	                    str += chr
+	                    str += nchr
+	                    str += src.charAt(++i);
+	                }
+	                continue;
+	            }
+
+	            str += chr;
+	        }
+	        return unescape(str);
+	    }

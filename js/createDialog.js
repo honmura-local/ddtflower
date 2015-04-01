@@ -93,6 +93,86 @@ function removeInputDialog(dialog, reservedData){
 }
 
 /* 
+ * 関数名:checkEmptyInput(names)
+ * 概要  :入力フォームの空チェックを行う。
+ * 引数  :Array names:チェックするフォームのname属性をまとめた配列。
+ * 返却値:null or Array
+ * 作成者:T.M
+ * 作成日:2015.04.01
+ */
+function checkEmptyInput(names){
+	//namesの要素数を取得する。
+	var nameslength = names.length;
+	//返す配列を作成する。
+	var retArray = [];
+	//namesを走査する。
+	for(var i = 0; i < nameslength; i++){
+		//入力フォームのタイプを取得する。
+		var type = $('input[name="' + names[i] + '"]').attr('type');
+		//typeがチェックするものであれば
+		if(type == 'radio' || type == 'checkbox'){
+			//チェックが入っているものがないなら
+			if($('input[name="' + names[i] + '"]:checked').length <= 0){
+				//配列にname属性の値を入れる。
+				retArray[retArray.length] = names[i];
+			}
+		//テキストボックス等なら
+		} else {
+			//何も入力されていなければ
+			if($('input[name="' + names[i] + '"]').val() == ''){
+				//配列にname属性の値を入れる。
+				retArray[retArray.length] = names[i];
+			}
+		}
+	}
+	
+	//結果を返す。未入力のname属性の配列か、未入力なしのnullを返す。
+	return retArray.length > 0 ? retArray: null;
+}
+
+/* 
+ * 関数名:replaceJpName(names, jpNames)
+ * 概要  :配列の英語名を日本語する。
+ * 引数  :Array names:英語名の配列。
+ * 　　　 :Object jpNames:キーが英語名、値が日本語名の連想配列。
+ * 返却値:Array
+ * 作成者:T.M
+ * 作成日:2015.04.01
+ */
+function replaceJpName(names, jpNames){
+	var retArray = [];				//返す配列を宣言する。
+	var nameslength = names.length;	//namesの要素数を取得する。
+	
+	//namesを走査する。
+	for(var i = 0; i < nameslength; i++){
+		var key = names[i];
+		//返す配列に日本語名を順次格納していく。
+		retArray[i] = jpNames[key];
+	}
+	
+	//jpNamesを走査する。
+//	for(key in jpNames){
+//		//namesを走査する。
+//		for(var i = 0; i < nameslength; i++){
+//			//keyとnamesの要素の値が同じであれば
+//			if(key == names[i]){
+//				//返すための配列に
+//				retArray[retArray.length] = jpNames[key];
+//			}
+//		}
+//	}
+	
+	//作成した配列を返す。
+	return retArray;
+}
+
+
+//必須入力を行う入力フォームのname属性を配列に入れる。
+var checkNames = ['construct', 'schedule', 'personName', 'personPhoneNumber', 'personEmail', 'personCount'];
+//必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
+var checkNamesJp = {construct:'希望作品', schedule:'希望時限', personName:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personCount:'人数'};
+
+/* 
  * 関数名:createSpecialReservedDialog(json, array)
  * 概要  :特別レッスン予約用ダイアログを生成する。
  * 引数  :Object json, Array array
@@ -137,9 +217,8 @@ function createSpecialReservedDialog(json, array){
 			// タイトルバーを見えなくする。
 			$(this).prev().children().filter('.ui-dialog-titlebar-close').remove();
 			$(this).next().css('font-size', '0.5em');
-		},
-		// ダイアログが閉じられる前のイベント
-		beforeClose:function(event, ui){
+			//該当するテキストボックスの日本語入力を無効にする。
+			disableMultiByteCode('input[name="personPhoneNumber"],input[name="personEmail"],input[name="personCount"]');
 		},
 		// 位置を指定する。
 		position:{
@@ -157,26 +236,24 @@ function createSpecialReservedDialog(json, array){
 			        	 text:'OK',
 			        	 // ボタン押下時の処理を記述する。
 			        	 click:function(event, ui){
+			        		 //必須入力チェックを行う。
+			        		 var emptyList = checkEmptyInput(checkNames);
 			        		 // 必須入力項目が皆入力済みであれば
-			        		 if($('input[name="construct"]:checked' ,this).length > 0 
-			        				 && $('input[name="schedule"]:checked' ,this).length > 0
-			        		 		 && ($('input[name="personName"]').val().length > 0)
-									 && ($('input[name="personPhoneNumber"]').val().length > 0)
-									 && ($('input[name="personEmail"]').val().length > 0)
-									 && ($('input[name="personCount"]').val().length > 0)
-			        		 ) {
-				        		 // 予約希望データを作成する。
-//			        			 reservedData = createReservedData(reservedData);
+			        		 if(emptyList == null) {
 				        		 
 				        		 // 入力確認ダイアログを呼び出す。
 				        		 createSpecialReservedConfirmDialog();
-//				        		 createSpecialReservedConfirmDialog(reservedData);
 				        		 //ダイアログ内のフォームをsubmitする。
 				        		 $('form.specialReservedDialog').submit();				        		 
 				        		 // このダイアログの入力要素を一時的に無効化する。
 				        		 disableInputs($(this));
 			        		 } else {
-			        			 alert('未入力の項目があります。');
+			        			 //未入力項目のリストを日本語に訳す。
+			        			 emptyList = replaceJpName(emptyList, checkNamesJp);
+			        			 //未入力項目のリストを1つの文字列にする。
+			        			 var emptyListString = emptyList.join("\n")
+			        			 //アラートを出す。
+			        			 alert('以下の項目が未入力となっています。\n' + emptyListString);
 			        		 }
 			        	 }
 			         },
@@ -355,38 +432,6 @@ function createSpecialReservedConfirmDialog(reservedData){
 			of:window
 		}
 	});
-}
-
-/* 
- * 関数名:createSpecialConfirmSummary(reservedData)
- * 概要  :予約データを予約内容確認ダイアログに書き出す。
- * 引数  :Object reservedData
- * 返却値  :なし
- * 作成者:T.M
- * 作成日:2015.02.09
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.10
- * 内容   :389行目のtextメソッドをhtmlメソッドに変更しました
- */
-function createSpecialConfirmSummary(reservedData){
-	// 予約希望日時を書き出す。
-	$('.dateValue').text(reservedData['year'] + '年' + reservedData['month'] + '月' + reservedData['day'] + '日')
-	// 希望作品を書き出す。
-	$('.constructValue').text(reservedData['construct']);
-	// 希望の時限を書き出す。
-	$('.scheduleValue').html(reservedData['schedule']);
-	// 予備の希望曜日を書き出す。
-	$('.subWeekOfDayValue').text(reservedData['weekDay']);
-	// 予備の希望週を書き出す。
-	$('.subWeekValue').text(reservedData['weekNumber']);
-	// 個人情報の氏名を書き出す。
-	$('.subPersonNameValue').text(reservedData['personName']);
-	// 個人情報の電話番号を書き出す。
-	$('.subPersonPhoneNumberValue').text(reservedData['personPhoneNumber']);
-	// 個人情報のメールアドレスを書き出す。
-	$('.subPersonEmailValue').text(reservedData['personEmail']);
-	// 個人情報の人数を書き出す。
-	$('.subPersonCountValue').text(reservedData['personCount']);
 }
 
 /* 
