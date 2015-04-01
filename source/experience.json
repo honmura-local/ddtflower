@@ -520,7 +520,8 @@
     },
     "specialReservedConfirmDialog": {},
     "photoGallery": {
-        "class": "descriptioncontentsTitleBack",
+        "class": "description contentsTitleBack",
+        
         "contentsTitle": {
             "contentsImgLeftL": {
                 "src": "image/icon(bluesmallbird).png"
