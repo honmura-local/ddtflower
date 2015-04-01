@@ -200,14 +200,19 @@ function createSpecialReservedDialog(json, array){
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
+ * 変更者:T.M
+ * 変更日:2015.04.01
+ * 内容　:体験レッスン予約希望メールの仕組みの変更により、inputタグへも日付を渡す様に変更しました。
  */
 function createSpecialDate(year, month, day){
 	// 曜日の配列を宣言、初期化する。
 	var weekChars = [ '日', '月', '火', '水', '木', '金', '土' ];
 	// 予約希望ダイアログに予約希望日時が書かれたタグを追加する。
-			// 年月日と曜日のテキストデータを流し込む。月は日付型で0〜11で表現されているので、-1する。
-			$('.specialReservedDialog').attr('title', year + '年' + month + '月' + day + '日' 
-					+ '(' + weekChars[new Date(year, month - 1, day).getDay()] + '曜日)')
+	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
+	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + '曜日)';
+	$('.specialReservedDialog').attr('title', date);
+	//日付のinputタグにも日付を追加する。
+	$('.reservedDate').val(date);
 }
 
 /* 

@@ -280,6 +280,17 @@
 }
 
 /* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail ul
+ * 概要   :体験レッスン予約希望ダイアログの前書き。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table{
+	font-size: 14px;		/* 入力部分と同じフォントサイズを指定する。 */
+	margin-bottom: 5px;		/* 下のテーブルとの間に余白を作る。 */
+}
+
+/* 
  * セレクタ:.specialReservedConfirmDialog .confirmSendMail table th
  * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブルの見出しセル。。
  * 作成者 :T.Masuda
@@ -298,4 +309,14 @@
 .specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td{
 	word-break: normal;		/* 文字列を適切な区切りの位置で改行する。 */
 	padding: 0px 15% 0 0;	/*  右にpaddingを挿入し、データが2項目以上1行に並ばない様にする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail form
+ * 概要   :体験レッスン予約希望ダイアログのフォーム部分。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table th{
+	text-align: right;	/* 中のボタンを右に寄せる。 */
 }

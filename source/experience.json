@@ -174,6 +174,10 @@
     },
     "specialReservedDialog": {
         "action": "postmail.cgi",
+        "reservedDate":{
+        	"type":"hidden",
+        	"name":"reservedDate"
+        },
         "reservedSummary": {
             "text": "予約可能の可否につきましては追ってメールにより返信させていただきます。"
         },
