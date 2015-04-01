@@ -301,6 +301,16 @@
 }
 
 /* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail table td
+ * 概要   :予約希望ダイアログのデータセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table td{
+	word-break: break-all;	/* テキストが端に着くまで改行しない。 */
+}
+
+/* 
  * セレクタ:.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(3) td
  * 概要   :希望時限のセル。
  * 作成者 :T.Masuda
