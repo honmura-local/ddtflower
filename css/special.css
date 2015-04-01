@@ -280,27 +280,17 @@
 }
 
 /* 
- * セレクタ:.specialReservedConfirmDialog .confirmSendMail th
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail table th
  * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブルの見出しセル。。
  * 作成者 :T.Masuda
  * 作成日 :2015.04.01
  */
-.specialReservedConfirmDialog .confirmSendMail table{
+.specialReservedConfirmDialog .confirmSendMail table th{
 	width: 40%;	/* 見出しセルの幅を全体の40%にする。 */
 }
 
 /* 
- * セレクタ:.specialReservedConfirmDialog .confirmSendMail th
- * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブルの見出しセル。。
- * 作成者 :T.Masuda
- * 作成日 :2015.04.01
- */
-.specialReservedConfirmDialog .confirmSendMail th{
-	width: 35%;	/* 見出しセルの幅を全体の35%にする。 */
-}
-
-/* 
- * セレクタ:.specialReservedConfirmDialog .confirmSendMail td
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td
  * 概要   :希望時限のセル。
  * 作成者 :T.Masuda
  * 作成日 :2015.04.01
