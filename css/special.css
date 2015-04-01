@@ -267,3 +267,44 @@
 .weekOfDay, .monthOfWeek {
     line-height: 2;         /* 1行の行間を2行分にする */
 }
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail table
+ * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table{
+	font-size: 13px;		/* 入力部分と同じフォントサイズを指定する。 */
+	table-layout: fixed;	/* セルのサイズを指定できるようにする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail th
+ * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブルの見出しセル。。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table{
+	width: 40%;	/* 見出しセルの幅を全体の40%にする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail th
+ * 概要   :体験レッスン予約希望ダイアログの送信情報のテーブルの見出しセル。。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail th{
+	width: 35%;	/* 見出しセルの幅を全体の35%にする。 */
+}
+
+/* 
+ * セレクタ:.specialReservedConfirmDialog .confirmSendMail td
+ * 概要   :希望時限のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.01
+ */
+.specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td{
+	width: 45%;	/* セルの幅を全体の45%にする。 */
+}
