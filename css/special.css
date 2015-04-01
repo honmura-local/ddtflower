@@ -296,5 +296,6 @@
  * 作成日 :2015.04.01
  */
 .specialReservedConfirmDialog .confirmSendMail table tr:nth-child(2) td{
-	width: 45%;	/* セルの幅を全体の45%にする。 */
+	word-break: normal;		/* 文字列を適切な区切りの位置で改行する。 */
+	padding: 0px 15% 0 0;	/*  右にpaddingを挿入し、データが2項目以上1行に並ばない様にする。 */
 }
