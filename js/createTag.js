@@ -449,6 +449,293 @@ function createTag(){
 		//選択中のページナンバーのタグにselectクラスを付与して色を変える。
 		$('.numbering li:contains(' + displayPage + ')').addClass('select');
 	}
+
+
+	/*
+	 * 関数名:this.createElementTag = function(stackKey, curMapNode, topDomNode)
+	 * 概要  :JSONのノードに対応したタグを作る。
+	 * 引数  :String stackKey:
+	 * 　　　:Object curMapNode:
+	 * 　　　:Element topDomNode:
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.createElementTag = function(stackKey, curMapNode, topDomNode){
+		//curMapNodeがnullであれば
+		if(curMapNode == null){
+			return;	//処理を終える。
+		}
+		
+		//ノードがある限りループする。
+		for(key in curMapNode){
+			//ループで走査しているキーの値を取得する。
+			var mapNode = curMapNode[key];
+			
+			//mapNodeがオブジェクトであれば
+			if(typeof mapNode == "object"){
+				curStackKey = key;	//curStackKeyにkeyを追加する。
+				createElementTag(key, curstackKey);	//再帰呼び出しを行う。
+			//textであれば
+			} else if(key == 'text'){
+				//スタックしたkey文字列をタグ化する。
+				//textをタグ化する。
+			//htmlであれば
+			} else if(key == 'html'){
+				
+			//配列であれば
+			} else if($.isArray(mapNode)){
+				//スタックしたkey文字列をタグ化する。
+				//配列分ループ
+				$(mapNode).each(function(){
+					//配列の文字列をタグ化する。
+					
+				});
+			//現在指しているDOMがあれば
+			} else if(curDomNode != null){
+				//topDomNodeの最後尾にcurDomNodeを追加する。
+				$(topDomNode).append(curDomNode);
+			}
+		}
+	}	
+	
+	/*
+	 * 関数名:this.createElementTag = function(stackKey, curMapNode, topDomNode)
+	 * 概要  :JSONのノードに対応したタグを作る。
+	 * 引数  :String stackKey:
+	 * 　　　:Object curMapNode:
+	 * 　　　:Element topDomNode:
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.createElementTag = function(stackKey, curMapNode, topDomNode){
+		//curMapNodeがnullであれば
+		if(curMapNode == null){
+			return;	//処理を終える。
+		}
+		
+		//ノードがある限りループする。
+		for(key in curMapNode){
+			var mapNode = curMapNode[key];	//ループで走査しているキーの値を取得する。
+			var curDomNode = null;			//カレントのDOMノードを格納する変数を宣言、nullで初期化する。
+			
+			//mapNodeがオブジェクトであれば
+			if(typeof mapNode == "object"){
+				curStackKey.push(key);				//curStackKeyにkeyを追加する。
+				this.createElementTag(key, curStackKey);	//再帰呼び出しを行う。
+			//textであれば
+			} else if(key == 'text'){
+				//スタックしたkey文字列をタグ化する。
+				curDomNode = this.createKeysToTag(curStackKey, mapNode, key);
+				//textをタグ化する。
+			//htmlであれば
+			} else if(key == 'html'){
+				//スタックしたkey文字列をタグ化する。
+				curDomNode = this.createKeysToTag(curStackKey, mapNode, key);
+			//配列であれば
+			} else if($.isArray(mapNode)){
+				//スタックした文字列とテキストの配列からタグ群を作り出す。
+				curDomNode = this.createKeysToTagArray(curStackKey, mapNode);
+			}
+			//DOMが生成されていたら
+			if(curDomNode != null){
+				//topDomNodeの最後尾にcurDomNodeを追加する。
+				$(topDomNode).append($(curDomNode));
+			}
+		}
+	}	
+
+	/*
+	 * 関数名:this.createKeysToTag = function(curStackKey, mapNode, key)
+	 * 概要  :スタックからキーのタグ、テキストから編集用のタグを作る。
+	 * 引数  :Array curStackKey:キー名のスタック。
+	 * 　　　:String mapNode:JSONのテキスト。
+	 * 　　　:String key:キー。。
+	 * 返却値  :Element
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.createKeysToTag = function(curStackKey, mapNode, key){
+		//retDomに外枠となるタグを格納する。
+		var retDom = $('<div></div>')
+						.addClass('keyAndValue')
+						.append($('<span></span>')
+								.addClass('keys'))
+						.append($('<span></span>')
+								.addClass('values')
+						);
+		//キーのタグ群を作り、キーのタグをまとめるタグに追加する。
+		$('.keys', retDom).append(this.createKeyTags(curStackKey));
+		
+		//スタックの文字列を連結する。
+		var connectedKey = curStackKey.join('_');
+		//編集用テキストエリアのラベルを追加する。
+		$('.values', retDom).append($('<label></label>').adddClass('valueLabel').text(key));
+		//編集用テキストエリアを追加する。
+		$('.values', retDom).append($('<textarea></textarea>').adddClass('editValue').val(mapNode).attr('name', connectedKey));
+		
+		//作成したDOMを返す。
+		return retDom;
+	}
+	
+	/*
+	 * 関数名:this.createKeysToTagArray = function(curStackKey, mapNode)
+	 * 概要  :スタックからキーのタグ、テキストから編集用のタグを複数作る。
+	 * 引数  :Array curStackKey:キー名のスタック。
+	 * 　　　:String mapNode:JSONのテキスト。
+	 * 返却値  :Element
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.createKeysToTagArray = function(curStackKey, mapNode){
+		//retDomに外枠となるタグを格納する。
+		var retDom = $('<div></div>')
+						.addClass('keyAndValue')
+						.append($('<span></span>')
+								.addClass('keys'))
+						.append($('<span></span>')
+								.addClass('values')
+						);
+		//キーのタグ群を作り、キーのタグをまとめるタグに追加する。
+		$('.keys', retDom).append(this.createKeyTags(curStackKey));
+		
+		//スタックの文字列を連結する。
+		var connectedKey = curStackKey.join('_');
+		//テキスト編集用のタグを入れるタグのjQueryオブジェクトを生成、保存する。
+		var $values = $('.values', retDom);
+		//ループのカウント用にmapNodeの要素数を取得する。
+		var mapNodeLength = mapNode.length;
+		
+		//mapNodeを走査する。
+		for(var i = 0; i < mapNode; i++){
+			//編集用テキストエリアを追加する。
+			$values.append($('<textarea></textarea>').adddClass('editValue').val(mapNode[i]).attr('name', connectedKey));
+		}
+		
+		//作成したDOMを返す。
+		return retDom;		
+	}
+
+	/*
+	 * 関数名:this.createKeyTags = function(curStackKey)
+	 * 概要  :キーのタグ群を作る。
+	 * 引数  :Array curStackKey:キーのスタック。
+	 * 返却値  :Element
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.createKeyTags = function(curStackKey){
+		//返却用の変数を宣言、初期化する。
+		var retDom = "";
+		//スタックの要素数を取得する。
+		var stackLength = curStackKey.length;
+		
+		//curStackKeyを走査する。
+		for(var i = 0; i < stackLength; i++){
+			//最後の要素でなければ
+			if(i < stackLength - 1){
+				//キーのタグをretDomに追加する。
+				$(retDom).append($('<span></span>').addClass('key').text(stackLength[i]));
+			//最後の要素なら
+			} else {
+				//キーのタグをretDomに追加する。
+				$(retDom).append($('<span></span>').addClass('key currentKey').text(stackLength[i]));
+				
+			}
+		}
+		
+		//作成したDOMを返す。
+		return retDom;
+	}
+	
+	/*
+	 * 関数名:this.updateElementJson = function(topMapNode, topDomNode)
+	 * 概要  :タグの内容をJSONに反映させる。
+	 * 引数  :Object topMapNode:JSONの先頭のノード
+	 * 　　　:Element topDomNode:先頭のDOM
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.updateElementJson = function(topMapNode, topDomNode){
+		//弟DOMがある限りループする。
+		$('> .editValue', topDomNode).each(function(){
+			//テキストエリアのname属性からスタックキーを生成する。
+			var stackKey = $(this).attr('name').split('_');
+			//スタックキーからカレントのキーを取り出す。。
+			var key = stackKey[stackKey.length - 1];
+			
+			//スタックkeyに一致するノードを返す。
+			var mapNode = findMapNode(stackKey, topMapNode);
+			
+			//ノードがtextであれば
+			if(key == 'text'){
+				//タグの文字列をJSONノードにセットする。
+				mapNode[key] = $(this).val();
+			//htmlであれば
+			} else if(key == 'html'){
+				//タグの文字列をJSONノードにセットする。
+				mapNode[key] = $(this).val();
+			//配列であれば
+			} else if($.isArray(mapNode[key])){
+				//DOMの配列の要素数を取得する。
+				var arrayLength = $(key, this).length;
+				//JSONの配列にリサイズが必要であれば、DOM配列の要素数と一致させる(リサイズする)。
+				mapNode[key] = new Array(arrayLength);
+				//配列数分ループ
+				$(key, this).each(function(i){
+					//JSON配列にDOM配列の文字列をコピーする。
+					mapNode[key][i] = $(this).val();
+				});
+			}
+		});
+	}
+
+	/*
+	 * 関数名:this.findMapNode = function(curStackKey, curMapNode)
+	 * 概要  :トークン文字列に該当するJSONノードを探し返す。
+	 * 引数  :string curStackKey:最新のスタックキー
+	 * 　　　:Object curMapNode:最新の連想配列のノード
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.01
+	 */
+	this.findMapNode = function(curStackKey, curMapNode){
+		//連想配列のノードを返却するための変数を宣言、nullで初期化する。
+		var returnMapNode = null;
+		
+		//引数がnullなら
+		if(curStackKey == null || curMapNode == null){
+			return;	//処理を終える。
+		}
+		
+		//先頭のトークンを取得する。
+		var key = curStackKey[0];
+		//keyに一致したNodeがあれば
+		if(key in curMapNode){
+			//curStackKeyから先頭トークンを取り除く
+			curStackKey.shift();
+			//keyに該当するノードを取得する。
+			var mapNode = curMapNode[key];
+			//curStackKeyが空であれば
+			if(curStackKey.length == 0){
+				//現在のノードを返却用の変数に格納する。
+				returnMapNode = mapNode;
+			//そうでなければ
+			} else {
+				//再帰する。
+				findMapNode(stackKey, mapNode);
+			}
+		}
+		
+		//ノードを返す。
+		return returnMapNode;
+	}
 	
 }
 	
