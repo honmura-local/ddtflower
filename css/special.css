@@ -277,6 +277,7 @@
 .specialReservedConfirmDialog .confirmSendMail table{
 	font-size: 13px;		/* 入力部分と同じフォントサイズを指定する。 */
 	table-layout: fixed;	/* セルのサイズを指定できるようにする。 */
+	width: 100%;			/* 幅を指定する。 */
 }
 
 /* 
@@ -307,6 +308,7 @@
  * 作成日 :2015.04.01
  */
 .specialReservedConfirmDialog .confirmSendMail table td{
+	width: 60%;				/* 幅を60%に設定する。 */
 	word-break: break-all;	/* テキストが端に着くまで改行しない。 */
 }
 
