@@ -323,6 +323,8 @@ function createSpecialReservedConfirmDialog(reservedData){
 		autoOpen		: true,
 		// Escキーを押してもダイアログが閉じないようにする。
 		closeOnEscape	: false,
+		//タイトルをつける。
+		title:"体験レッスン 送信内容確認",
 		// モーダルダイアログとして生成する。
 		modal			: true,
 		// リサイズしない。

@@ -544,6 +544,8 @@ $(document).on('submit', 'form.specialReservedDialog', function(event){
 		$('link,script', data).remove();
 		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
 		$('.specialReservedConfirmDialog').append($block);
+		//ページのタイトル部分が不適切なので消しておく。
+		$('strong.ttl').remove();
 	});
 });
 
