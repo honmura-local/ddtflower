@@ -280,8 +280,6 @@ function moveToPrevDialog(current){
 	var $prevDialog = $('.ui-dialog-content').eq(current.index('.ui-dialog-content') - 1);
 	// currentの前のダイアログの入力要素を有効にする。
 	$('input' ,$prevDialog).removeAttr('disabled');
-	// ダイアログを消去する。
-	current.dialog('close').dialog('destroy').remove();
 }
 
 /* 
@@ -331,8 +329,9 @@ function createSpecialReservedConfirmDialog(reservedData){
 		resizable		: false, 
 		// 作成完了時のコールバック関数。
 		create:function(event, ui){
+			var c = this;
 			// タイトルバーを見えなくする。
-			$('reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
+			$('.reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
 		},
 		// ダイアログが閉じられる前のイベント
 		beforeClose:function(event, ui){

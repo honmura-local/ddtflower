@@ -1,102 +1,101 @@
 {
-    "pageTitle":{
-    	"class":"pageTitle cf",
-        "image":{
-            "src"   :"image/icon(mailbird).png"
+    "pageTitle": {
+        "class": "pageTitle cf",
+        "image": {
+            "src": "image/icon(mailbird).png"
         },
-        "title"     : {
-            "text"  :   "お問い合わせフォーム"
+        "title": {
+            "text": "お問い合わせフォーム"
         },
-        "summary"   : {
-            "text"  :   ""
+        "summary": {
+            "text": ""
         }
     },
-    "contactForm":{
-        "action":"postmail.cgi",
+    "contactForm": {
+        "action": "postmail.cgi",
         "method": "post",
-        "formBody.cf":{
-            "name":{
-                "formContent":{
-                    "text":"氏名"
+        "formBody.cf": {
+            "name": {
+                "formContent": {
+                    "text": "氏名"
                 },
-                "textRed":{
-                    "text":"*"
+                "textRed": {
+                    "text": "*"
                 },
-                "formRuby":{
-                    "text":"Name"
+                "formRuby": {
+                    "text": "Name"
                 }
             },
-            "nameTextBox":{
-                "textBox1":{
-                    "type":"text",
-                    "name":"name",
-                    "size":"60",
-                    "required":""
+            "nameTextBox": {
+                "textBox1": {
+                    "type": "text",
+                    "name": "name",
+                    "size": "60",
+                    "required": ""
                 }
             },
-            "sex":{
-                "formContent":{
-                    "text":"性別"
+            "sex": {
+                "formContent": {
+                    "text": "性別"
                 },
-                "textRed":{
-                    "text":"*"
+                "textRed": {
+                    "text": "*"
                 },
-                "formRuby":{
-                    "text":"Sex"
+                "formRuby": {
+                    "text": "Sex"
                 }
             },
-            "sexRadioButton":{
-                "sexRadioButtonFemale":{
+            "sexRadioButton": {
+                "sexRadioButtonFemale": {
                     "type": "radio",
                     "name": "sex",
                     "value": "女",
                     "checked": ""
                 },
-                "sexRadioButtonFemaleLabel":{
+                "sexRadioButtonFemaleLabel": {
                     "text": "女"
                 },
-                "sexRadioButtonMale":{
+                "sexRadioButtonMale": {
                     "type": "radio",
                     "name": "sex",
                     "value": "男"
                 },
-                "sexRadioButtonMaleLabel":{
-                    "text":"男"
+                "sexRadioButtonMaleLabel": {
+                    "text": "男"
                 }
             },
-            "eMail":{
-                "formContent":{
-                    "text":"メールアドレス"
+            "eMail": {
+                "formContent": {
+                    "text": "メールアドレス"
                 },
-                "textRed":{
-                    "text":"*"
+                "textRed": {
+                    "text": "*"
                 },
-                "formRuby":{
-                    "text":"E-mail"
+                "formRuby": {
+                    "text": "E-mail"
                 }
-                
             },
-            "eMailTextBox":{
-                "textBox2":{
+            "eMailTextBox": {
+                "textBox2": {
                     "type": "email",
                     "name": "eMail",
                     "size": "60",
                     "required": ""
                 }
             },
-            "content":{
-                "formContent":{
-                    "text":"問い合わせ内容"
+            "content": {
+                "formContent": {
+                    "text": "問い合わせ内容"
                 },
-                "textRed":{
-                    "text":"*"
+                "textRed": {
+                    "text": "*"
                 },
-                "formRuby":{
-                    "text":"content"
+                "formRuby": {
+                    "text": "content"
                 }
             },
-            "contentTextArea":{
-                "textArea1":{
+            "contentTextArea": {
+                "textArea1": {
                     "name": "content",
                     "cols": "60",
                     "rows": "10",
@@ -104,14 +103,14 @@
                 }
             }
         },
-        "submitButton":{
+        "submitButton": {
             "type": "submit",
             "text": "送信内容の確認"
         },
-        "mailSubject":{
-        	"type":"hidden",
-        	"value":"2",
-        	"name":"subject
+        "mailSubject": {
+            "type": "hidden",
+            "value": "2",
+            "name": "subject"
         }
     }
 }

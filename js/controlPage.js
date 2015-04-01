@@ -603,6 +603,5 @@ $(document).on('click', '.main .confBackButton', function(){
 $(document).on('click', '.specialReservedConfirmDialog .confBackButton', function(){
 	//ダイアログを消す。
 	$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
-	$('.specialReservedDialog').dialog('close').dialog('destroy').remove();
 });
 
