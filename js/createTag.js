@@ -768,17 +768,18 @@ function createTag(){
 		
 		//Ajax通信でJSONをファイルに保存する。
 		$.ajax({
-			url:'http://localhost/flower/savetextfile.php',	//保存するプログラムのパスを指定する。
+			url:'savetextfile.php',	//保存するプログラムのパスを指定する。
 			method:'POST',			//POSTメソッドで送信する。
 			//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
 			data:{text:jsonString, path:'source/' + topNodeName + '.json'},
-			//dataType:'json',	//JSONデータを返してもらう。
+			dataType:'text',		//テキストデータを返してもらう。
 			async:false,	//同期通信
-			success:function(json){	//通信成功時
-				console.log('通信成功');	//通信成功のログを出す。
+			success:function(text){	//通信成功時
+				alert(text);	//保存結果のログを出す。
 			},
-			error:function(){
-				console.log('通信失敗');	//通信失敗のログを出す。
+			error:function(){		//通信失敗時
+				//通信失敗のログを出す。
+				alert('通信に失敗しました。時間をおいて試してください。');
 			}
 		});
 	});
