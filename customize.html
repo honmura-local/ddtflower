@@ -8,16 +8,59 @@
 	<div id="container">
 		<div class="main">
 			<script>
-				creator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
-				creator.getJsonFile('source/commonJson.json');			// 共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/customize.json');			// カスタマイズタブのJSONを読み込む。
+				creator.getJsonFile('source/admin.json');		// 管理者画面のJSONを取得する。
+				creator.getJsonFile('source/commonJson.json');	// 共通のパーツのJSONを取得する。
+				creator.getJsonForCustomize('preserved', 'source/preserved.json');	// プリザページのJSONを編集用に読み込む。
+				creator.getJsonFile('source/customize.json');	// カスタマイズタブのJSONを読み込む。
 				creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+
+				//各コンテンツのJSONファイルを編集用に読み込む。
+				creator.getJsonForCustomize('commonJson', 'source/commonJson.json');	
+				creator.getJsonForCustomize('preserved', 'source/preserved.json');	
+				creator.getJsonForCustomize('fresh', 'source/fresh.json');		
+				creator.getJsonForCustomize('nfd', 'source/nfd.json');		
+				creator.getJsonForCustomize('national', 'source/national.json');	
+				creator.getJsonForCustomize('franchise', 'source/franchise.json');	
+				creator.getJsonForCustomize('bridal', 'source/bridal.json');		
+				creator.getJsonForCustomize('gallery', 'source/gallery.json');	
+				creator.getJsonForCustomize('contact', 'source/contact.json');	
+				creator.getJsonForCustomize('contact', 'source/contact.json');	
+				creator.getJsonForCustomize('access', 'source/access.json');		
+				creator.getJsonForCustomize('experience', 'source/experience.json');	
+				creator.getJsonForCustomize('blog', 'source/blog.json');		
+				
 				
 				// 管理者画面のコンテンツを作る。
 				creator.outputTag('contentManagement', 'tabContainer', '#customize');
 				creator.outputTag('customizeTabs', 'customizeTabs', '#customize .contentManagement');
 				creator.outputTag('customizePanels', 'customizePanels', '#customize .contentManagement');
-		
+
+				//編集要素のタグを作る。
+				//共通
+				creator.createElementTag(new Array(), creator.json['commonJson'], $('#commonJson'));
+				//プリザ
+				creator.createElementTag(new Array(), creator.json['preserved'], $('#preserved'));
+				//生花
+				creator.createElementTag(new Array(), creator.json['fresh'], $('#fresh'));
+				//NFD
+				creator.createElementTag(new Array(), creator.json['nfd'], $('#nfd'));
+				//国家資格
+				creator.createElementTag(new Array(), creator.json['national'], $('#national'));
+				//フランチャイズ
+				creator.createElementTag(new Array(), creator.json['franchise'], $('#franchise'));
+				//ブライダル
+				creator.createElementTag(new Array(), creator.json['bridal'], $('#bridal'));
+				//ギャラリー
+				creator.createElementTag(new Array(), creator.json['gallery'], $('#gallery'));
+				//お問い合わせ
+				creator.createElementTag(new Array(), creator.json['contact'], $('#contact'));
+				//アクセス
+				creator.createElementTag(new Array(), creator.json['access'], $('#access'));
+				//体験レッスン
+				creator.createElementTag(new Array(), creator.json['experience'], $('#experience'));
+				//ブログ
+				creator.createElementTag(new Array(), creator.json['blog'], $('#blog'));
+				
 				//タブのコンテンツを作成する。
 				createTab('#customize .contentManagement');
 				//アップロードボタンを押してファイルを選択するイベントを定義する関数をコールする。

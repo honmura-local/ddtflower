@@ -4,94 +4,18 @@
     },
     "customizePanels": {
         "class": "panelContainer editContent",
+        "commonJson": {
+            "class": "commonJson tabPanel",
+            "id": "commonJson",
+            "saveButton":{
+            	"text":"保存",
+            	"type":"button",
+            	"target":"commonJson"
+            }
+        },
         "preserved": {
             "class": "preserved tabPanel",
-            "id": "preserved",
-            "pageTitleImage": {
-                "class": "pageTitleImage keyAndValue",
-                "keys": {
-                    "pageTitle": {
-                        "class": "pageTitle key",
-                        "text": "pageTitle"
-                    },
-                    "image": {
-                        "class": "image key currentKey",
-                        "text": "image"
-                    }
-                },
-                "values": {
-                    "src": {
-                        "class": "value src",
-                        "valueLabel": {
-                            "text": "src"
-                        },
-                        "editValue": {
-                            "value": "image/icon(tulip).png"
-                        },
-                        "setSrc": {
-                            "type": "file"
-                        },
-                        "setSrcButton": {
-                            "text": "選択"
-                        }
-                    },
-                    "id": {
-                        "class": "value id",
-                        "valueLabel": {
-                            "text": "id"
-                        },
-                        "editValue": {
-                            "value": "titleImage"
-                        }
-                    }
-                }
-            },
-            "pageTitleTitle": {
-                "class": "pageTitleTitle keyAndValue",
-                "keys": {
-                    "pageTitle": {
-                        "class": "pageTitle key",
-                        "text": "pageTitle"
-                    },
-                    "title": {
-                        "class": "title key currentKey",
-                        "text": "title"
-                    }
-                },
-                "values": {
-                    "value": {
-                        "valueLabel": {
-                            "text": "text"
-                        },
-                        "editValue": {
-                            "value": "プリザーブドフラワーアレンジメントコース"
-                        }
-                    }
-                }
-            },
-            "pageTitleSummary": {
-                "class": "pageTitleSummary keyAndValue",
-                "keys": {
-                    "pageTitle": {
-                        "class": "pageTitle key",
-                        "text": "pageTitle"
-                    },
-                    "summary": {
-                        "class": "summary key currentKey",
-                        "text": "summary"
-                    }
-                },
-                "values": {
-                    "value": {
-                        "valueLabel": {
-                            "text": "text"
-                        },
-                        "editValue": {
-                            "value": "プリザーブドフラワーはお手入れ不要、数年間綺麗な状態で楽しむこと出来ます。この事からウェディングブーケを前もって準備出来たり、使用後作りかえることも簡単で、高価なプリザも結果的には経済的だったりします。また生花には不可能な形や、写真立てやバックに付けることも出来てアイデアは無限に広がります。お店で買えば高価なプリザも自分で作ればリーズナブル。お友達へのギフトにも最適です！"
-                        }
-                    }
-                }
-            }
+            "id": "preserved"
         },
         "fresh": {
             "class": "fresh tabPanel",
@@ -135,6 +59,12 @@
         }
     },
     "customizeTabs": {
+        "commonJsonButton": {
+            "commonJsonLink": {
+                "href": "#commonJson",
+                "text": "commonJson"
+            }
+        },
         "preservedButton": {
             "preservedLink": {
                 "href": "#preserved",

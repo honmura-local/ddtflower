@@ -338,11 +338,11 @@ $(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPane
 	var pagedrawer = $('script, link', response);
 	//コードを順番に実行する。
 	$.when(
+			//createTagのJSONを初期化する。
+			creator.json = '',
 		//読み込み先のタブパネル内に取得したタグを展開する。
 		$($targetPanel).html(pagedrawer)
 	).done(function(){
-		//createTagのJSONを初期化する。
-		creator.json = '';
 	});
 });
 

@@ -110,6 +110,7 @@
 	display		:inline-block;	/*インラインブロックとして扱い、横に並べる。*/
 	line-height: 150%;
 	padding-left: 5px;
+	margin-bottom: 2px;
 }
 
 /* 
@@ -123,28 +124,42 @@
 }
 
 /* 
- * セレクタ:.value label
+ * セレクタ:.values label
  * 概要   :プロパティ名のラベル。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.17
  */
-.value label {
+.values label {
 	width: 20%;			/* 80px程度の幅を取る。 */
 	display		:inline-block;	/* 3行程度の高さにする。*/
 	font-size	:16px;			/* 親要素のフォントサイズを0にするため、要素のフォントサイズを指定し直す。*/
 }
 /* 
- * セレクタ:.value textarea
- * 概要   :プロパティの値を編集するテキストボックス。
+ * セレクタ:.values textarea
+ * 概要   :プロパティの値を編集するテキストボックス。ラベルがない版
  * 作成者 :T.Masuda
  * 作成日 :2015.03.17
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.02
+ * 内容　 :ラベルがないのを前提にしたレイアウトに変更しました。
  */
-.value textarea {
-	width: 70%;		/*幅をラベルの幅を考慮した上で十分に広げる*/
-	margin-right: 1%;
+.values textarea {
+	width: 70%;				/*幅をラベルの幅を考慮した上で十分に広げる*/
+	margin-left: 20%;		/* ラベルがない分のインデントをする。 */
 	height		:50px;		/*3行程度の高さにする。*/
 	font-size	:16px;		/*50pxで3行入るフォントサイズにする。*/
 	vertical-align: top;	/* 隣り合うラベルを上端で揃える。 */
+	margin-bottom: 5px;		/* 最低限の間隔を取る。 */
+}
+
+/* 
+ * セレクタ:.values label+textarea
+ * 概要   :プロパティの値を編集するテキストボックス。ラベルがある版
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.17
+ */
+.values label+textarea {
+	margin-left: 0;	/* 左marginをなくす。 */
 }
 
 /* 
@@ -185,34 +200,34 @@
 }
 
 /* 
- * セレクタ:.value
+ * セレクタ:.values
  * 概要   :プロパティに対する値を設定する要素をまとめたタグのクラス。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.18
  */
-.value{
+.values{
 	font-size: 0px;	/* 中の要素をインラインブロックで横に並べるため、自動で出る余白を消す。 */
 	margin-bottom: 5px;
 	display: block;
 }
 
 /* 
- * セレクタ:.value input[type="file"]
+ * セレクタ:.values input[type="file"]
  * 概要   :画像アップロードのボタン本体。見えない。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.18
  */
-.value input[type="file"]{
+.values input[type="file"]{
 	display: none;	/* ボタンの押下の処理を別のボタンに任せるため、このボタンは非表示にする。 */
 }
 
 /* 
- * セレクタ:.value button
+ * セレクタ:.values button
  * 概要   :画像アップロードのイベント開始ボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.18
  */
-.value button{
+.values button{
 	display: inline-block;	/* インラインブロックにして並べる。 */
 }
 
@@ -817,41 +832,41 @@
 		width	:100%;		/*枠一杯に幅を広げる。*/
 	}
 	/* 
-	 * セレクタ:.value input[type="file"]
+	 * セレクタ:.values input[type="file"]
 	 * 概要   :画像アップロードのボタン。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.18
 	 */
-	.value input[type="file"]{
+	.values input[type="file"]{
 		width		: 100%;	/* 段組みが解除されたので、十分に幅を取る。 */
 	}
 
 	/* 
-	 * セレクタ:.value label
+	 * セレクタ:.values label
 	 * 概要   :プロパティ名のラベル。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.17
 	 */
-	.value label {
+	.values label {
 		width		:100%	;			/* 幅を広げて段組みを崩す。 */
 	}
 	/* 
-	 * セレクタ:.value textarea
+	 * セレクタ:.values textarea
 	 * 概要   :プロパティの値を編集するテキストボックス。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.17
 	 */
-	.value textarea {
+	.values textarea {
 		width		:100%;		/* 広げられるだけ幅を広げる。*/
 	}
 	
 	/* 
-	 * セレクタ:.value button
+	 * セレクタ:.values button
 	 * 概要   :画像アップロードのイベント開始ボタン。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.18
 	 */
-	.value button{
+	.values button{
 		margin-top: 3px;	/* 上にあるテキストリアとの間に間隔を取る。 */
 	}
 	/* 
@@ -986,6 +1001,26 @@
 	.optionsMyMail {
 		width: 80%;		/* 更新ボタンと並べるため、他の要素より幅を狭くする。 */
 	}
+	/* 
+	 * セレクタ:.values textarea
+	 * 概要   :プロパティの値を編集するテキストボックス。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.02
+	 */
+	.values textarea {
+		margin-left: 0;	/* 左marginをなくす。 */
+	}
+
+	/* 
+	 * セレクタ:.keys
+	 * 概要   :キー名のまとまり。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.02
+	 */
+	.keys {
+		margin-bottom: 2px;	/* スマホ版では並びが変わるので、間隔を調整する。 */
+	}
+	
 }
 
 /* スマホ用微調整 */
