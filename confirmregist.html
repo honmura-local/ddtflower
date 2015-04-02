@@ -10,24 +10,31 @@
 		<!-- 管理者画面のCSSファイルを読み込む。 -->
 		<link href="css/admin.css" rel="stylesheet" type="text/css" />
 		<script>
-			creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
-			creator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のJSONを取得する。
-			creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
-			creator.outputTag('headImage', 'createImage');			// 天の画像を作る
-			//フォームデータがあれば
-			if('formData' in creator.formData){
-				creator.outputTag('confirmRegistration');			// 送信された生徒さんの登録情報を受け取るコンテンツを作る。
-				//テーブルにフォームのデータを流し込む。
-				injectionTableData('.confirmRegistrationTable', creator.formData['formData']);
+			//管理者タブ内でなければ
+			if($('#contentManagement').length > 0){
+				creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
+				creator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のJSONを取得する。
+				creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
+				creator.outputTag('headImage', 'createImage');			// 天の画像を作る
+				//フォームデータがあれば
+				if('formData' in creator.formData){
+					creator.outputTag('confirmRegistration');			// 送信された生徒さんの登録情報を受け取るコンテンツを作る。
+					//テーブルにフォームのデータを流し込む。
+					injectionTableData('.confirmRegistrationTable', creator.formData['formData']);
+				} else {
+					creator.json['errorConfirm']['secondLine']['text'] = 'エラーが発生しました。';	//前のページに戻って入力をやり直す様に促す。
+					creator.outputTag('errorConfirm', 'showMessage');			// エラー発生のメッセージを出す。
+				}
+				creator.outputTag('footImage', 'createImage');			// 地の画像を作る
+				creator.outputTag('footer');							// フッターを作る
+				$('.main input:button,.main input:submit').button();									//ボタンをリッチにする。
+				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+				fixYCoordinate('header', '.main');
+			//管理者タブ内であれば
 			} else {
-				creator.json['errorConfirm']['secondLine']['text'] = 'エラーが発生しました。';	//前のページに戻って入力をやり直す様に促す。
-				creator.outputTag('errorConfirm', 'showMessage');			// エラー発生のメッセージを出す。
+				//確認画面を経ずに一覧へ戻る。
+				callPageInTab("studentmanagement.html", "#studentManagement");
 			}
-			creator.outputTag('footImage', 'createImage');			// 地の画像を作る
-			creator.outputTag('footer');							// フッターを作る
-			$('.main input:button,.main input:submit').button();									//ボタンをリッチにする。
-			// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-			fixYCoordinate('header', '.main');
 			</script>
 		</div>
 	</div>

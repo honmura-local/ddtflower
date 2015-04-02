@@ -763,6 +763,24 @@ function createTag(){
 		//トップノード名からDOMのトップのIDを指定し、JSONを更新する。
 		//thisの中身がボタンなので、ownに保存したクラスのインスタンスで関数を呼び出す。
 		own.updateElementJson(own.json[topNodeName], $('#'+topNodeName));
+		//JSONを保存用に文字列に変換する。
+		var jsonString = JSON.stringify(own.json[topNodeName]);
+		
+		//Ajax通信でJSONをファイルに保存する。
+		$.ajax({
+			url:'http://localhost/flower/savetextfile.php',	//保存するプログラムのパスを指定する。
+			method:'POST',			//POSTメソッドで送信する。
+			//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
+			data:{text:jsonString, path:'source/' + topNodeName + '.json'},
+			//dataType:'json',	//JSONデータを返してもらう。
+			async:false,	//同期通信
+			success:function(json){	//通信成功時
+				console.log('通信成功');	//通信成功のログを出す。
+			},
+			error:function(){
+				console.log('通信失敗');	//通信失敗のログを出す。
+			}
+		});
 	});
 	
 }

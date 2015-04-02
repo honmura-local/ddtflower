@@ -773,16 +773,18 @@ function useEditDialog(selector){
     	hideOnPopupClick:false,		//ポップアップをクリックしても消えないようにする。
     	triggerOnClick:true,		//対象をクリックすることでポップアップが出るようにする。
     	windowPadding:0,			//ウィンドウに対する最低限のpaddinをなくす。
-    	onAfterShow:function(from){	//ポップアップ表示前の処理。
+    	handleInputs:false,			//表示後にテキストエリアにフォーカスを移すとポップアップが消える問題への対応。
+    	onAfterShow:function(from){	//ポップアップ表示直後の処理。
     		//ポップアップのテキストエリアのjQueryオブジェクトを取得する。
     		textarea = $('.textEditPopupBody textarea', document).eq(1);
+    		textarea.focus();
     		//ポップアップの呼び出し元のテキストエリアの内容をコピーする。
-			textarea.val($(from).val());
-			//2つのテキストエリアの内容が連動するようにイベント登録する。
-			textarea.on('change', function(){
-				//呼び出し元のテキストエリアの値をポップアップのテキストエリアの値で上書きする。
-				from.val(textarea.val());
-			});    		
+    		textarea.val($(from).val());
+    		//2つのテキストエリアの内容が連動するようにイベント登録する。
+    		textarea.on('change', function(){
+    			//呼び出し元のテキストエリアの値をポップアップのテキストエリアの値で上書きする。
+    			from.val(textarea.val());
+    		});    		
     	},
     	onAfterHide:function(){		//ポップアップが消えた後の処理。
     		textarea.off('change');	//テキストエリアのイベントを解除する。

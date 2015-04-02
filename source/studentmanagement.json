@@ -191,7 +191,7 @@
             }
         },
         "submit": {
-            "text": "登録へ",
+            "value": "登録へ",
             "href": "studentmanagement.html",
             "onclick":""
         },

@@ -84,6 +84,16 @@
 }
 
 /* 
+ * セレクタ:.saveButton
+ * 概要   :編集したJSONを保存するボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.02
+ */
+.saveButton{
+	float:right;	/* 右に寄せる。 */
+}
+
+/* 
  * セレクタ:.keyAndValue
  * 概要   :JSONのキー名のタグと値のテキストエリア1つずつを1組にしてまとめるタグのクラス。
  * 設計者 :T.Masuda
@@ -93,6 +103,7 @@
 .keyAndValue {
 	width		:95%;		/*多少余白が出る幅に設定する。*/
 	margin: 0 auto 10px;	/*中央に寄せる。*/
+	clear: both	;			/* 保存ボタンの回り込みを防ぐ。 */
 }
 
 /* 
@@ -580,7 +591,8 @@
 	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
 	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
 	border-style: none;		/* 初期設定されている枠線を消す */	
-	vertical-align: middle;
+	vertical-align: middle;	/* 高さを行の中心に合わせる。 */
+	text-align: center;		/* ボタンのテキストを中央に寄せる。 */
 }
 
 /* 
@@ -902,9 +914,10 @@
 	 */
 	.confirmRegistration dd{
 		width: 60%;					/* 幅を画面の60%に指定する。 */
-		padding-left: 10px;
-		margin-left: 0px;
+		padding-left: 10px;			/* 左にpaddingを入れる。 */
+		margin-left: 0px;			/* 右のmarginをなくす。 */
 	}
+	
 	/* 
 	 * セレクタ:.confirmRegistration textarea, .confirmRegistration input[type="text"], .confirmRegistration input[type="email"], .confirmSendMail {
 	 * 概要   :入力項目
