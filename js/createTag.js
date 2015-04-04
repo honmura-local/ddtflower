@@ -237,13 +237,27 @@ function createTag(){
 			$(domNode[0]).after($(domNode[0]).clone(false));
 		}
 
-		//domNodeの兄弟要素を全て取得する。
-		
-		
 		//mapNodeの配列分ループする。
 		for(var i = 0; i < mapNode.length; i++){
-			//keyでタグを生成する。
-			$(domNode).text(mapNode[i]);
+			//mapNode[i]が配列であれば
+			if($.isArray(mapNode[i])){
+				//キー名でタグを作成し、そのテキストにキー値をセットする。
+				this.createTagArray(key, mapNode, curDomNode);
+			//mapNode[i]が子であれば
+			} else if(typeof mapNode[i] == 'object'){
+				//カレントのDOMノードの子ノードを取得する。子ノードは属性で特定する。
+				var childDomNode = this.getDomChild(' > [' + domNode[0].children[0].attributes[0].name + ']', domNode);
+				//childDomNodeがnullでなければ
+				if(childDomNode){
+					//子ノードへ再帰する。
+					this.createTag(mapNode[i], childDomNode);
+				}
+			//ただのテキストであれば
+			} else {
+				//テキストを書き込む。
+				$(domNode).text(mapNode[i]);
+			}
+			
 			//domNodeを次に移動する。
 			domNode = $(domNode).next();
 		}
@@ -261,7 +275,13 @@ function createTag(){
 	 */
 	this.getDomChild = function(key, domNode){
 		var domNodeReturn;							//domNodeの返却用変数を作る。
-		var domNodeReturn = $('.' + key, domNode);	//domNodeの子の階層からkeyのクラスを持つノードを取得する。
+		//子要素の識別子が記述されていなければ
+		if(key.indexOf('>') == -1){
+			domNodeReturn = $('.' + key, domNode);	//domNodeの子の階層からkeyのクラスを持つノードを取得する。
+		//子要素のセレクタであったら
+		}else{
+			domNodeReturn = $(key, domNode);	//domNodeの子の階層から指定した属性を持つノードを取得する。
+		}
 		//DOMの取得に失敗したら
 		if(domNodeReturn[0] == null){
 			//domNodeの子の階層からkeyのタグ名を持つノードを取得する。
