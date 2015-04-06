@@ -719,6 +719,7 @@ footer{
 	max-width:none!important;	/* プラグインのCSSで定義されている最大幅を上書きして無効にする。 */
 }
 
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
     

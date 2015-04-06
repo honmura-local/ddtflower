@@ -31,7 +31,8 @@
 	background		: #e9ffbc;					/*サイトのメインで使っている背景色を適用する。*/
 	position		: absolute;					/*絶対位置を指定する。座標はJavaScriptで指定する。*/
 	border-radius	: 10px;						/* 角に丸みをつける。 */
-	box-shadow		: 5px 5px 5px 0px #666;	/* 上と左に影をつける。 */
+	box-shadow		: 5px 5px 5px 0px #666;		/* 上と左に影をつける。 */
+	z-index			: 2;						/* 重なり順を指定する。開閉ボタンより優先度を高くする。 */
 }
 
  /*
@@ -156,6 +157,27 @@
 .topic:nth-of-type(3){
 	top: 100px;
 	right: 30px;
+}
+
+/* 
+ * セレクタ:.topicShow
+ * 概要   :トピックを開閉するボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.06
+ */
+.topicShow {
+	height: 60px;		/* 高さ60px、paddingを入れて75px */
+	width: 75px;		/* 横幅75pxの丸 */
+	background: #CCC;	/* 灰色の背景にする。 */
+	border-radius: 50px;/* 丸くする */
+	position:absolute;	/* 絶対位置を指定する。 */
+	top:5px;			/* 上から少しずらす。 */
+	right:5px;			/* 右端からもずらす。 */
+	z-index:1;			/* 重なりの順番を低くする。 */
+	color:	white;		/* 白抜き文字にする。 */
+	line-height: 22px;	/* 文字の高さ22px */
+	text-align: center;	/* 文字を中心に寄せる。 */
+	padding-top: 15px;	/* 上にpaddingを入れる。 */
 }
 
 /* スマホ・タブレットレイアウト */

@@ -90,7 +90,11 @@ $(document).ready(function(){
 	creator.outputTag('topicGallery','topic', '.flowerBackground');
 	creator.outputTag('topicCampaign','topic', '.flowerBackground');
 	creator.outputTag('topicBlog','topic', '.flowerBackground');
+	creator.outputTag('topicShow','topicShow', '.flowerBackground');
+	
 	creator.outputTag('footer');							// フッターを作る
+	
+	$('.topic').css('display', 'none');	//トピックをトリガーが押されるまで見えなくしておく。
 	
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');

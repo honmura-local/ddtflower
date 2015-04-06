@@ -63,6 +63,10 @@
             }
         }
     },
+    "topicShow":{
+    	"text":"Click Here",
+    	"onclick":"$('.topic').fadeToggle(500);"
+    },
     "topicCampaign": {
         "class": "topic",
         "topicTitle": {
