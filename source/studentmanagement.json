@@ -1,4 +1,13 @@
 {
+    "memberNumSearch": {
+        "articleSearchLabel": {
+            "text": "会員番号"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "memberNumSearch"
+        }
+    },
     "nameSearch": {
         "articleSearchLabel": {
             "text": "氏名"
@@ -24,6 +33,60 @@
         "articleSearchTextBox": {
             "type": "text",
             "name": "telSearch"
+        }
+    },
+    "ageSearch": {
+        "articleSearchLabel": {
+            "text": "年齢"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "ageSearch"
+        }
+    },
+    "stageSearch": {
+        "articleSearchLabel": {
+            "text": "ステージ"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "stageSearch"
+        }
+    },
+    "levelSearch": {
+        "articleSearchLabel": {
+            "text": "レベル"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "levelSearch"
+        }
+    },
+    "sexSearch": {
+        "articleSearchLabel": {
+            "text": "性別"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "sexSearch"
+        }
+    },
+    "jobSearch": {
+        "articleSearchLabel": {
+            "text": "職業"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "jobSearch"
+        }
+    },
+    "bloodTypeSearch": {
+        "articleSearchLabel": {
+            "text": "血液型"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "bloodTypeSearch"
         }
     },
     "studentListHeadWrap": {
