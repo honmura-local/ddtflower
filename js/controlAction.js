@@ -59,13 +59,16 @@ function checkAllRecord(){
  * 作成者:T.M
  */
 function showRightOutOfDisplayButton(selector, timeout, speed){
+	var b = $("#container").width();
+	var c = $(".main").width();
+	var a = $("#container").width() - $(".main").width() / 2 + $(selector).width();
 	//画面外に置く。
-	$(selector).css("right", -($("#container").width() - $(".main").width() / 2 + $('.topicShow').width()) + "px");
+	$(selector).css("right", -($("#container").width() - $(".main").width() / 2 + $(selector).width()) + "px");
 	$(selector).css("display", "block");	//表示する。
 	
 	//時間を置いてコードを実行する。
 	window.setTimeout(function(){
-		$(selector).animate({right:"5px"}, speed);	//対象を移動させて表示する。
+		$(selector).animate({right:"5px"}, speed, "easeOutCubic");	//対象を移動させて表示する。
 	}, timeout);	//timeoutミリ秒後にスタートする。
 }
 
@@ -81,17 +84,27 @@ function showRightOutOfDisplayButton(selector, timeout, speed){
  * 作成者:T.M
  */
 function fadeToggleSet(clicked, target, setClass, delay){
+
+	//clicked以外をクリックしたらtargetが消えるイベント。何かしらクリックしたら判定を行う。
+	$(document).on('click touchend',function(event){
+		//clicked以外をクリックしていたら
+		if (!$.contains($(clicked)[0], event.target)) {
+			$(target).fadeOut(delay);	//targetを隠す。
+		}
+	});
+
 	//clickedのクリックイベントを登録する。
 	$(clicked).on('click' , function(){
-		//クラスでくくっている要素が表示されていれば
-		if($(setClass + ':visible').length > 0){
+		//他に表示されていれば
+		if($(setClass + ':visible:not(' + target + ')').length > 0){
 			//フェードアウトさせる。
 			$(setClass + ':visible').fadeOut(delay);
-			//targetがdelayミリ秒かけてフェードアウト・インをする。
-			$(target).fadeIn(delay);
+			$(target).fadeIn(delay);	//自分だけ表示する。
+		//そうでなければ
 		} else {
 			//targetがdelayミリ秒かけてフェードアウト・インをする。
 			$(target).fadeToggle(delay);
 		}
 	});
+	
 }

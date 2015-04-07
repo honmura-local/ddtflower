@@ -110,12 +110,12 @@ $(document).ready(function(){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 
-	//100ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowCampaign', 100, 5000);
+	//0ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
+	showRightOutOfDisplayButton('.topicShowCampaign', 0, 3000);
 	//400ミリ秒後にギャラリーお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowGallery', 400, 5000);
+	showRightOutOfDisplayButton('.topicShowGallery', 200, 3000);
 	//900ミリ秒後にブログお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowBlog', 900, 5000);
+	showRightOutOfDisplayButton('.topicShowBlog', 400, 3000);
 	
 	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。
 	fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);

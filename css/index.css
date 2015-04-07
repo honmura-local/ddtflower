@@ -22,18 +22,20 @@
  * 内容　 :背景色を変更しました。
  */
 .topic {
-	width			: 280px;					/*幅を内容に合わせる。*/
-	padding			: 2px 10px 5px;				/*内側に余白を作る。*/
-	border			: 1px solid #FFF;			/*灰色の枠線を引く。*/
+	width			: 280px;			/*幅を内容に合わせる。*/
+	padding			: 2px 10px 5px;		/*内側に余白を作る。*/
+	border			: 1px solid #FFF;	/*灰色の枠線を引く。*/
+	top				: 50px;				/* 上から50pxの位置に配置する */
+	right			: 50px;				/* 右から50pxの位置に配置する */
 	/* 影がかかる方向には枠線を引かない。 */
-	border-right		:none;
-	border-bottom		:none;
-	background: white;					/*サイトのメインで使っている背景色を適用する。*/
-	position		: absolute;					/*絶対位置を指定する。座標はJavaScriptで指定する。*/
-	border-radius	: 10px;						/* 角に丸みをつける。 */
-	box-shadow: 0px 0px 5px 2px #666;		/* 上と左に影をつける。 */
-	z-index			: 2;						/* 重なり順を指定する。開閉ボタンより優先度を高くする。 */
-	display			: none;						/* 初期状態では非表示にする。 */
+	border-right	:none;
+	border-bottom	:none;
+	background		: white;			/*サイトのメインで使っている背景色を適用する。*/
+	position		: absolute;			/*絶対位置を指定する。座標はJavaScriptで指定する。*/
+	border-radius	: 10px;				/* 角に丸みをつける。 */
+	box-shadow: 4px 4px 5px 2px #666;	/* 上と左に影をつける。 */
+	z-index			: 2;				/* 重なり順を指定する。開閉ボタンより優先度を高くする。 */
+	display			: none;				/* 初期状態では非表示にする。 */
 }
 
  /*
@@ -144,20 +146,6 @@
 	white-space		: nowrap; 	/* 改行・連続するスペースを無視する。 */
 	text-overflow	: ellipsis;	/* テキストがはみ出したら点を表示する。 */
 	/* ここまで一連の設定。 */
-}
-
-/* 以下3個のスタイルシートはtopicの絶対位置指定のテストです。実際にはJavaScriptで位置を指定すべきです。 */
-.topic:nth-of-type(1){
-	top: 50px;
-	right: 50px;
-}
-.topic:nth-of-type(2){
-	top: 75px;
-	right: 40px;
-}
-.topic:nth-of-type(3){
-	top: 100px;
-	right: 30px;
 }
 
 /* 
