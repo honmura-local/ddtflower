@@ -5,6 +5,10 @@
             "src": "image/top(800).png"
         }
     },
+    "topicShow":{
+    	"text":" Click   Here ",
+    	"onclick":"$('.topic').fadeToggle(500);"
+    },
     "topicBlog": {
         "class": "topic",
         "topicTitle": {
@@ -62,10 +66,6 @@
                 "text": "今日も一日"
             }
         }
-    },
-    "topicShow":{
-    	"text":"Click Here",
-    	"onclick":"$('.topic').fadeToggle(500);"
     },
     "topicCampaign": {
         "class": "topic",
