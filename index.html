@@ -94,8 +94,6 @@ $(document).ready(function(){
 	
 	creator.outputTag('footer');							// フッターを作る
 	
-	$('.topic').css('display', 'none');	//トピックをトリガーが押されるまで見えなくしておく。
-	
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
 
@@ -110,6 +108,8 @@ $(document).ready(function(){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 
+	//500ミリ秒後にお知らせ表示ボタンをスライド表示する。
+	showRightOutOfDisplayButton('.topicShow', 500);
 });
 
 </script>

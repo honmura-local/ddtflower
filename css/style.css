@@ -157,6 +157,7 @@ h1,h2,h3,h4,h5,th{
 #container{
     width: 100%;            /* 横幅を画面一杯に広げる */
     background: inherit;    /* bodyの背景色を継承する。 */
+    overflow: hidden;
 }
 
 /* ヘッダー領域。 */
@@ -721,7 +722,7 @@ footer{
 
 
 /* スマホ・タブレットレイアウト */
-@media(max-width:680px){
+@media(max-width:680px) {
     
 	/* 
 	 * セレクタ:.main
@@ -914,22 +915,22 @@ footer{
 		min-width: 280px;	/*  */
 	}
 
- /* 
- * セレクタ:.tabContainer ul li
- * 概要   :jqueryプラグイン「easytabs」のタブのボタン。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
- * 作成日 :2015.03.13
- * 変更者 :T.Masuda
- * 変更日 :2015.03.23
- * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
- */
-.tabContainer ul li {
-	font-size		:	13px;	/* デフォルトのフォントサイズを再指定。 */
+	 /* 
+	 * セレクタ:.tabContainer ul li
+	 * 概要   :jqueryプラグイン「easytabs」のタブのボタン。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.13
+	 * 変更者 :T.Masuda
+	 * 変更日 :2015.03.23
+	 * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
+	 */
+	.tabContainer ul li {
+		font-size		:	13px;	/* デフォルトのフォントサイズを再指定。 */
+	}
 }
-	
-	/* 画面がタブレットの幅であれば */
-	@media screen and (min-width: 430px) {
+	/* 画面がタブレットのみの幅であれば */
+	@media screen and (min-width: 430px) and (max-width: 679px){
 		/* 
 		 * セレクタ:.main
 		 * 概要   :コンテンツ領域。
@@ -948,5 +949,10 @@ footer{
 		.header{
 		    min-width: 610px;  /* 画面を一定サイズ以上縮小しない。 */
 		}
+		#container{
+			overflow: visible;
+		}
+		.flowerBackground{
+			overflow: hidden;
+		}
 	}	
-}
