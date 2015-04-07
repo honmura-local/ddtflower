@@ -52,18 +52,46 @@ function checkAllRecord(){
  * 関数名:function showRightOutOfDisplayButton(selector, timeout)
  * 引数  :String selector:対象となる要素のセレクタ。
  * 		:int timeout:ボタンの表示を始めるまでの時間。ミリ秒。
+ * 		:int speed:メソッドが実行されてから変化が終わるまでの時間。
  * 戻り値:なし
  * 概要  :対象を右の画面外において、一定時間後に移動しながら表示する。
  * 作成日:2015.04.07
  * 作成者:T.M
  */
-function showRightOutOfDisplayButton(selector, timeout){
+function showRightOutOfDisplayButton(selector, timeout, speed){
 	//画面外に置く。
 	$(selector).css("right", -($("#container").width() - $(".main").width() / 2 + $('.topicShow').width()) + "px");
 	$(selector).css("display", "block");	//表示する。
 	
 	//時間を置いてコードを実行する。
 	window.setTimeout(function(){
-		$(selector).animate({right:"5px"}, "slow");	//対象を移動させて表示する。
+		$(selector).animate({right:"5px"}, speed);	//対象を移動させて表示する。
 	}, timeout);	//timeoutミリ秒後にスタートする。
+}
+
+/*
+ * 関数名:function fadeToggleSet(clicked, target, setClass, delay)
+ * 引数  :String clicked:クリックイベントの対象となる要素のセレクタ。
+ * 		:String target:クリックして表示/非表示が切り替わる要素のセレクタ。
+ * 		:String setClass:targetをくくるクラスのセレクタ。
+ * 		:int delay:フェードイン・アウトにかかる時間。ミリ秒。
+ * 戻り値:なし
+ * 概要  :clickedを押すとtargetがフェードイン・フェードアウトするイベントを登録する。
+ * 作成日:2015.04.07
+ * 作成者:T.M
+ */
+function fadeToggleSet(clicked, target, setClass, delay){
+	//clickedのクリックイベントを登録する。
+	$(clicked).on('click' , function(){
+		//クラスでくくっている要素が表示されていれば
+		if($(setClass + ':visible').length > 0){
+			//フェードアウトさせる。
+			$(setClass + ':visible').fadeOut(delay);
+			//targetがdelayミリ秒かけてフェードアウト・インをする。
+			$(target).fadeIn(delay);
+		} else {
+			//targetがdelayミリ秒かけてフェードアウト・インをする。
+			$(target).fadeToggle(delay);
+		}
+	});
 }

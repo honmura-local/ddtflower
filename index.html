@@ -90,7 +90,9 @@ $(document).ready(function(){
 	creator.outputTag('topicGallery','topic', '.flowerBackground');
 	creator.outputTag('topicCampaign','topic', '.flowerBackground');
 	creator.outputTag('topicBlog','topic', '.flowerBackground');
-	creator.outputTag('topicShow','topicShow', '.flowerBackground');
+	creator.outputTag('topicShowCampaign','topicShow', '.flowerBackground');
+	creator.outputTag('topicShowGallery','topicShow', '.flowerBackground');
+	creator.outputTag('topicShowBlog','topicShow', '.flowerBackground');
 	
 	creator.outputTag('footer');							// フッターを作る
 	
@@ -108,8 +110,17 @@ $(document).ready(function(){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 
-	//500ミリ秒後にお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShow', 500);
+	//100ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
+	showRightOutOfDisplayButton('.topicShowCampaign', 100, 5000);
+	//400ミリ秒後にギャラリーお知らせ表示ボタンをスライド表示する。
+	showRightOutOfDisplayButton('.topicShowGallery', 400, 5000);
+	//900ミリ秒後にブログお知らせ表示ボタンをスライド表示する。
+	showRightOutOfDisplayButton('.topicShowBlog', 900, 5000);
+	
+	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。
+	fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
+	fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);
+	fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
 });
 
 </script>

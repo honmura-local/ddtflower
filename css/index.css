@@ -28,10 +28,10 @@
 	/* 影がかかる方向には枠線を引かない。 */
 	border-right		:none;
 	border-bottom		:none;
-	background		: #e9ffbc;					/*サイトのメインで使っている背景色を適用する。*/
+	background: white;					/*サイトのメインで使っている背景色を適用する。*/
 	position		: absolute;					/*絶対位置を指定する。座標はJavaScriptで指定する。*/
 	border-radius	: 10px;						/* 角に丸みをつける。 */
-	box-shadow		: 5px 5px 5px 0px #666;		/* 上と左に影をつける。 */
+	box-shadow: 0px 0px 5px 2px #666;		/* 上と左に影をつける。 */
 	z-index			: 2;						/* 重なり順を指定する。開閉ボタンより優先度を高くする。 */
 	display			: none;						/* 初期状態では非表示にする。 */
 }
@@ -167,21 +167,39 @@
  * 作成日 :2015.04.06
  */
 .topicShow {
-	height: 60px;		/* 高さ60px、paddingを入れて75px */
+	height: 75px;		/* 高さ60px、paddingを入れて75px */
 	width: 75px;		/* 横幅75pxの丸 */
-	background: #CCC;	/* 灰色の背景にする。 */
+	background: #CCC;	/* 白の背景にする。 */
 	border-radius: 50px;/* 丸くする */
 	position:absolute;	/* 絶対位置を指定する。 */
-	top:-100px;			/* トップメニューの領域に隠しておく。 */
-	top:5px;			/* 上から少しずらす。 */
-	/*right:5px;*/			/* 右端からもずらす。 */
 	z-index:1;			/* 重なりの順番を低くする。 */
-	color:	white;		/* 白抜き文字にする。 */
-	line-height: 22px;	/* 文字の高さ22px */
+	color:	WHITE;		/* 白抜きの文字にする。 */
 	text-align: center;	/* 文字を中心に寄せる。 */
-	padding-top: 15px;	/* 上にpaddingを入れる。 */
-	font-size: 16px;	/* フォントサイズを固定する。 */
+	font-size: 15px;	/* フォントサイズを固定する。 */
 	display:none;		/* はじめは非表示にする。 */
+	cursor:pointer;		/* カーソルを指差しにする。 */
+}
+
+/* 以下3個のスタイルシートはtopicShow:nthの絶対位置指定のテストです。 */
+.topicShowCampaign{
+	top: 10px;
+}
+.topicShowGallery{
+	top: 95px;
+}
+.topicShowBlog{
+	top: 175px;
+}
+
+/* 
+ * セレクタ:.topicShow1line
+ * 概要   :topicShowの1行目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.07
+ */
+.topicShow1line {
+	line-height: 33px;	/* 行の高さを指定し、縦のレイアウトをそろえる */
+	color: #FFF100;		/* 黄色の文字にする。 */
 }
 
 /* スマホ・タブレットレイアウト */

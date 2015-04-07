@@ -581,19 +581,19 @@
  */
 .editStudent .submit, .editStudent .back{
 	-webkit-appearance: none;	/* iosの初期設定のスタイルシートを無効にする。 */
-	margin: 20px auto 50px;	/* 中央に寄せる */
-	display: inline-block;	/* インラインブロック要素として扱う。 */
-	clear: both;			/* 要素の回り込みを阻止する。 */
-	background-color: #000;	/* 背景色を黒にする */
-	color: #FFF;			/* 白抜き文字に指定する。 */
-	font-weight: bold;		/* 通常のfont-weightでは大分細くなってしまうので、太字にする */
-	width: 100px;			/* 幅を100pxに指定する。 */
-	height: 35px;			/* 高さを35pxに指定する。 */
-	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
-	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
-	border-style: none;		/* 初期設定されている枠線を消す */	
-	vertical-align: middle;	/* 高さを行の中心に合わせる。 */
-	text-align: center;		/* ボタンのテキストを中央に寄せる。 */
+	margin: 20px auto 50px;		/* 中央に寄せる */
+	display: inline-block;		/* インラインブロック要素として扱う。 */
+	clear: both;				/* 要素の回り込みを阻止する。 */
+	background-color: #000;		/* 背景色を黒にする */
+	color: #FFF;				/* 白抜き文字に指定する。 */
+	font-weight: bold;			/* 通常のfont-weightでは大分細くなってしまうので、太字にする */
+	width: 100px;				/* 幅を100pxに指定する。 */
+	height: 35px;				/* 高さを35pxに指定する。 */
+	letter-spacing: 2px;		/* 文字の間に2pxの空白を挿入する。 */
+	font-size: 14px;			/* フォントの大きさを14pxに指定する。 */
+	border-style: none;			/* 初期設定されている枠線を消す */	
+	vertical-align: middle;		/* 高さを行の中心に合わせる。 */
+	text-align: center;			/* ボタンのテキストを中央に寄せる。 */
 }
 
 /* 

@@ -5,12 +5,35 @@
             "src": "image/top(800).png"
         }
     },
-    "topicShow":{
-    	"text":"　Click　Here",
-    	"onclick":"$('.topic').fadeToggle(500);"
+    "topicShowBlog":{
+    	"class":"topicShow topicShowBlog",
+    	"topicShow1line":{
+    		"text":"New!"
+    	},
+    	"topicShow2line":{
+    		"text":"Blog"
+    	}
+    },
+    "topicShowCampaign":{
+    	"class":"topicShow topicShowCampaign",
+    	"topicShow1line":{
+    		"text":"New!"
+    	},
+    	"topicShow2line":{
+    		"text":"Campaign"
+    	}
+    },
+    "topicShowGallery":{
+    	"class":"topicShow topicShowGallery",
+    	"topicShow1line":{
+    		"text":"New!"
+    	},
+    	"topicShow2line":{
+    		"text":"Gallery"
+    	}
     },
     "topicBlog": {
-        "class": "topic",
+        "class": "topic topicBlog",
         "topicTitle": {
             "text": "Blog"
         },
@@ -68,7 +91,7 @@
         }
     },
     "topicCampaign": {
-        "class": "topic",
+        "class": "topic topicCampaign",
         "topicTitle": {
             "text": "Campaign"
         },
@@ -126,7 +149,7 @@
         }
     },
     "topicGallery": {
-        "class": "topic",
+        "class": "topic topicGallery",
         "topicTitle": {
             "text": "Gallery"
         },
