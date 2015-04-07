@@ -567,6 +567,16 @@ footer{
 }
 
 /* 
+ * セレクタ:.userName,.password
+ * 概要   :ログインダイアログのテキストボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.07
+ */
+.userName,.password {
+	width: 160px;			/* どの環境でも幅を一定にするため、幅を指定する。 */
+}
+
+/* 
  * セレクタ :.loading
  * 概要    :ローディング画面。
  * 作成者  :T.Masuda

@@ -6,7 +6,7 @@
         }
     },
     "topicShow":{
-    	"text":" Click   Here ",
+    	"text":"　Click　Here",
     	"onclick":"$('.topic').fadeToggle(500);"
     },
     "topicBlog": {

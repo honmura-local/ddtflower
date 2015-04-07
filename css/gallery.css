@@ -75,9 +75,13 @@
  * 概要   :写真の情報テキストの最後尾以外の要素のクラス。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.20
+ * 変更者 :T.Masuda
+ * 変更日 :2015.04.07
+ * 内容　 :幅を指定しました。
  */
 .photoDate, .photoUserName, .photoTitle{
 	margin-right: 1em;	/* 右に1文字分の間隔を取る。 */
+	width		: 100%;	/* 幅を親にあわせる。 */
 	/* 文字幅がオーバーしたら...を表示する設定。 */
 	overflow		: hidden; 	/* はみ出した文字を隠す。 */
 	white-space		: nowrap; 	/* 改行・連続するスペースを無視する。 */

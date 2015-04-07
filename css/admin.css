@@ -580,6 +580,7 @@
  * 作成日 :2015.03.25
  */
 .editStudent .submit, .editStudent .back{
+	-webkit-appearance: none;	/* iosの初期設定のスタイルシートを無効にする。 */
 	margin: 20px auto 50px;	/* 中央に寄せる */
 	display: inline-block;	/* インラインブロック要素として扱う。 */
 	clear: both;			/* 要素の回り込みを阻止する。 */
