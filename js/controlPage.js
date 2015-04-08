@@ -573,6 +573,7 @@ $(document).on('submit', '.specialReservedConfirmDialog form', function(event){
 		function(){
 			//ダイアログを消す。
 			$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
+			$('.specialReservedDialog').dialog('close').dialog('destroy').remove();
 			//送信完了のダイアログを出す。
 			alert('以上の内容でご予約の希望を承りました。追ってメールでの連絡をいたします。');
 	});
