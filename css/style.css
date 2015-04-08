@@ -622,10 +622,12 @@ footer{
  * 変更者 :T.Masuda
  * 変更日 :2015.03.23
  * 内容　 :余計な間隔を消すため、フォントサイズを0にしました。
+ * 変更者 :T.Masuda
+ * 変更日 :2015.04.08
+ * 内容　 :marginの指定をなくしました。
  */
 .tabContainer ul {
 	padding		: 0;	/*ulタグにデフォルトで付いてくるpaddingをなくす。*/
-	margin		: 0;	/*marginをなくす。*/
 	font-size	: 0px;	/*フォントサイズを0に指定してインラインブロックの余白を消す。*/
 }
 
@@ -966,3 +968,18 @@ footer{
 			overflow: hidden;
 		}
 	}	
+	
+/* コンテンツの伸縮が行われる幅になったら */
+@media screen and (max-width: 799px){
+
+	/* 
+	 * セレクタ:#container
+	 * 概要   :画面の幅に合わせて伸縮する、最上階層のdivタグ
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.08
+	 */
+	#container{
+		overflow:visible;
+	}
+}
+	

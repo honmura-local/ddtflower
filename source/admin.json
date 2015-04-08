@@ -149,8 +149,11 @@
             "text": "クレーム"
         }
     },
-    "contentSearch": {},
+    "contentSearch": {
+    	"class":"contentSearch cf"
+    },
     "managementList": {
+    	"class":"managementList",
         "table": {}
     },
     "contentManagement": {

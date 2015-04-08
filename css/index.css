@@ -229,16 +229,16 @@
 	}
 }
 
-/* 画面がタブレットのみの幅であれば */
-@media screen and (min-width: 430px) and (max-width: 679px){
+/* コンテンツの伸縮が行われる幅になったら */
+@media screen and (max-width: 799px){
 
 	/* 
 	 * セレクタ:.flowerBackground
 	 * 概要   :お花背景。
 	 * 作成者 :T.Masuda
-	 * 作成日 :2015.04.07
+	 * 作成日 :2015.04.08
 	 */
 	.flowerBackground{
 			overflow: hidden;	/* この時だけはみでたものを非表示にする。 */
-		}
+	}
 }

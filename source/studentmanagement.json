@@ -1,94 +1,67 @@
-{
-    "memberNumSearch": {
-        "articleSearchLabel": {
-            "text": "会員番号"
-        },
-        "articleSearchTextBox": {
+{	
+	"searchTitle":{
+		"text":"検索"
+	},
+	"studentSelectSearchContent":{
+		"class":"studentSelectSearchContent selectSearchContent",
+		"searchContent":{
+			"memberId":{
+				"text":"会員番号",
+				"value":"memberId"
+			},
+			"name":{
+				"text":"氏名",
+				"value":"name"
+			},
+			"email":{
+				"text":"メールアドレス",
+				"value":"email"
+			},
+			"tel":{
+				"text":"電話番号",
+				"value":"tel"
+			},
+			"address":{
+				"text":"住所",
+				"value":"address"
+			},
+			"stage":{
+				"text":"ステージ",
+				"value":"stage"
+			},
+			"level":{
+				"text":"レベル",
+				"value":"level"
+			},
+			"sex":{
+				"text":"性別",
+				"value":"sex"
+			},
+			"job":{
+				"text":"職業",
+				"value":"job"
+			},
+			"bloodType":{
+				"text":"血液型",
+				"value":"bloodType"
+			}
+		},
+    	"articleSearchTextBox": {
             "type": "text",
-            "name": "memberNumSearch"
-        }
-    },
-    "nameSearch": {
-        "articleSearchLabel": {
-            "text": "氏名"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "nameSearch"
-        }
-    },
-    "emailSearch": {
-        "articleSearchLabel": {
-            "text": "メールアドレス"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "emailSearch"
-        }
-    },
-    "telSearch": {
-        "articleSearchLabel": {
-            "text": "電話番号"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "telSearch"
-        }
-    },
-    "ageSearch": {
-        "articleSearchLabel": {
-            "text": "年齢"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "ageSearch"
-        }
-    },
-    "stageSearch": {
-        "articleSearchLabel": {
-            "text": "ステージ"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "stageSearch"
-        }
-    },
-    "levelSearch": {
-        "articleSearchLabel": {
-            "text": "レベル"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "levelSearch"
-        }
-    },
-    "sexSearch": {
-        "articleSearchLabel": {
-            "text": "性別"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "sexSearch"
-        }
-    },
-    "jobSearch": {
-        "articleSearchLabel": {
-            "text": "職業"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "jobSearch"
-        }
-    },
-    "bloodTypeSearch": {
-        "articleSearchLabel": {
-            "text": "血液型"
-        },
-        "articleSearchTextBox": {
-            "type": "text",
-            "name": "bloodTypeSearch"
-        }
-    },
+            "name": "search"
+    	}
+	},
+	"searchButtonSet":{
+		"executeSearch":{
+			"text":"検索"
+		},
+		"addSearchContent":{
+			"text":"検索項目追加"
+		},
+		"deleteSearchContent":{
+			"text":"検索項目削除"
+		}
+	},
     "studentListHeadWrap": {
         "class": "recordWrapper",
         "studentListHead": {

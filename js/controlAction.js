@@ -106,5 +106,49 @@ function fadeToggleSet(clicked, target, setClass, delay){
 			$(target).fadeToggle(delay);
 		}
 	});
-	
 }
+
+
+/*
+ * イベント名:$(document).on('click', '#studentManagement .addSearchContent', function()
+ * 引数  　 	:なし
+ * 戻り値　 :なし
+ * 概要  　 :生徒さん登録・編集タブの検索ボックスを増やすボタンのイベント。
+ * 作成日　　:2015.04.07
+ * 作成者　　:T.Masuda
+ */
+$(document).on('click', '#studentManagement .addSearchContent', function(){
+	var makeLimit = 10;	//作成できる限界の数を設定する。
+	var $formParent = $(this).parent().parent();	//フォームの親要素を取得する。
+	
+	//まだ作れるなら
+	if($('.selectSearchContent', $formParent).length <= makeLimit){
+		//現状の最後の検索ボックスを取得する。
+		var $sinceLast = $('.selectSearchContent:last', $formParent);
+		
+		//createTagで新たな検索ボックスを作る。
+		creator.outputTag('studentSelectSearchContent', 'studentSelectSearchContent', $formParent);
+		//新たな検索ボックスを取得する。
+		var $newLast = $('.selectSearchContent:last', $formParent);
+		$sinceLast.after($newLast);	//以前の最後の検索ボックスの後ろに新しい検索ボックスを配置する。
+	}
+});
+
+/*
+ * イベント名:$(document).on('click', '#studentManagement .deleteSearchContent', function()
+ * 引数  　 	:なし
+ * 戻り値　 :なし
+ * 概要  　 :生徒さん登録・編集タブの検索ボックスを減らすボタンのイベント。
+ * 作成日　　:2015.04.08
+ * 作成者　　:T.Masuda
+ */
+$(document).on('click', '#studentManagement .deleteSearchContent', function(){
+	var deleteLimit = 1;	//作成できる限界の数を設定する。
+	var $formParent = $(this).parent().parent();	//フォームの親要素を取得する。
+	
+	//まだ消せる
+	if($('.selectSearchContent', $formParent).length > deleteLimit){
+		//最後の検索ボックスを削除する。
+		var $sinceLast = $('.selectSearchContent:last', $formParent).remove();
+	}
+});
