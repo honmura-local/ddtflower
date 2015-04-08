@@ -2,6 +2,16 @@
  * 小規模のパーツ、コンテンツを作るためのJSファイル。
  */
 
+//Optionタグを生成するための連想配列。createOptions関数で使う。
+var options = {
+				"publifications":{
+					"0":{"text":"全体に公開"},
+					"1":{"text":"友達にのみ公開"},
+					"2":{"text":"非公開"}
+				}
+			};
+
+
 //Datepickerの日本語用設定。
 var dpJpSetting = {
 		closeText: '閉じる',
@@ -353,23 +363,30 @@ $(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPane
  * 引数  :Object json:走査対象のJSONの連想配列
  * 		 String domkey:DOMのキー
  * 		 String target:作成したDOMのappend先
+ * 		 int showNum:生成するパーツの数。
+ * 		 int page:ブログ等、ページャを使っているコンテンツのページ数。
  * 戻り値:なし
  * 作成日:2015.03.20
  * 作成者:T.Masuda
+ * 変更日:2015.04.08
+ * 変更者:T.Masuda
+ * 内容　:ブログ記事に対応しました。
  */
-function outputKeyNumberObject(json, domkey, target){
-	//取得したJSONを走査する。
-	for(key in json){
-		//キーが数値なら
-		if(!(isNaN(key))){
+function outputKeyNumberObject(json, domkey, target, showNum, page){
+	//showNum、pageが未入力であれば初期化する。
+	showNum = showNum === void(0)? 100: showNum;
+	page = page === void(0)? 1: page;
+	//表示開始のインデックスの数値を作る。
+	var startIndex = showNum * (page - 1); 
+	
+	//取得したJSONを走査する。引数に入力された数だけループする。
+	for(var i = 1; ((i + startIndex).toString() in json) && i <= showNum; i++){
 			//キーを一時保存して利用する。
-			var keytmp = key;
+			var key = i + startIndex;
 			//パーツを生成し、指定先に追加する。
-			creator.outputTag(keytmp, domkey, target);
-			//追加したキーを削除する。
-			delete json[keytmp];
-		}
+			creator.outputTag(key, domkey, target);
 	}
+	
 	//trタグを追加したなら
 	if($('.recordWrapper').length > 0){
 		//trタグを取得する
@@ -530,6 +547,17 @@ function createPhotoData(photo){
  * 作成者:T.Masuda
  */
 function startEditText(textElem){
+}
+
+/*
+ * 関数名:startEditText(textElem)
+ * 概要  :テキストを編集するモードに移行する。
+ * 引数  :elemental textElem:対象となる要素。
+ * 戻り値:なし
+ * 作成日:2015.03.27
+ * 作成者:T.Masuda
+ */
+function startEditText(textElem){
 	var currentText = $(textElem).text()		//テキストの値を取得する。
 	var className = $(textElem).attr('class');	//クラス名を取得する。
 	
@@ -540,7 +568,15 @@ function startEditText(textElem){
 				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
 				.val(currentText)				//テキストを引き継ぐ。
 			);
-	} else {
+	//公開設定であれば
+	} else if(className == 'myPhotoPublication'){
+		var publifications = createOptions('publifications');//option要素を作成する。
+		//編集用のテキストエリアを配置する。
+		$(textElem).after($('<select></select>')
+				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
+				.val(currentText)				//テキストを引き継ぐ。
+			);
+	}else {
 		//編集用のテキストエリアを配置する。
 		$(textElem).after($('<input>')
 				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。

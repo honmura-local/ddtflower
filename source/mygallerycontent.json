@@ -20,6 +20,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -44,6 +47,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -70,6 +76,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -94,6 +103,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -120,6 +132,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -144,6 +159,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -170,6 +188,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -194,6 +215,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -220,6 +244,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -241,6 +268,9 @@
         },
         "myPhotoUser": {
             "text": "FlowerMaster"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoComment": {
             "text": "コメントです。"
@@ -270,6 +300,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -295,6 +328,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -316,6 +352,9 @@
         },
         "myPhotoUser": {
             "text": "FlowerMaster"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -342,6 +381,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -366,6 +408,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+         "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -392,6 +437,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+         "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -417,6 +465,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
+        "myPhotoPublication": {
+            "text": "全体"
+        },
         "myPhotoCheck": {
             "type": "checkbox"
         }
@@ -441,6 +492,9 @@
         },
         "myPhotoComment": {
             "text": "コメントです。"
+        },
+        "myPhotoPublication": {
+            "text": "全体"
         },
         "myPhotoCheck": {
             "type": "checkbox"

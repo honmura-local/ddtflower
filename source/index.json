@@ -42,7 +42,7 @@
         },
         "topicBorder": {},
         "topicContent1": {
-            "href": "#",
+            "href": "#blog.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_1086.jpg')"
@@ -58,7 +58,7 @@
             }
         },
         "topicContent2": {
-            "href": "#",
+            "href": "#blog.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_1061.jpg')"
@@ -74,7 +74,7 @@
             }
         },
         "topicContent3": {
-            "href": "#",
+            "href": "#blog.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_1038.jpg')"
@@ -100,7 +100,7 @@
         },
         "topicBorder": {},
         "topicContent1": {
-            "href": "#",
+            "href": "#experience.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_1025.jpg')"
@@ -116,7 +116,7 @@
             }
         },
         "topicContent2": {
-            "href": "#",
+            "href": "#experience.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_1008.jpg')"
@@ -132,7 +132,7 @@
             }
         },
         "topicContent3": {
-            "href": "#",
+            "href": "#experience.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_0985.jpg')"
@@ -158,7 +158,7 @@
         },
         "topicBorder": {},
         "topicContent1": {
-            "href": "#",
+            "href": "#gallery.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_0947.jpg')"
@@ -174,7 +174,7 @@
             }
         },
         "topicContent2": {
-            "href": "#",
+            "href": "#gallery.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_0898.jpg')"
@@ -190,7 +190,7 @@
             }
         },
         "topicContent3": {
-            "href": "#",
+            "href": "#gallery.html",
             "class": "topicContent",
             "topicContentImage": {
                 "style": "background-image:url('photo/general/web120/DSC_0894.jpg')"

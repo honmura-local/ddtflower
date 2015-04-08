@@ -3,7 +3,7 @@
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログはじめました!1"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/01"
@@ -24,14 +24,14 @@
             }
         },
         "blogArticleText": {
-            "text": "はじめまして、FlowerMasterです！本日からブログはじめました！"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "2": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト2"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -52,14 +52,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "3": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト3"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -80,14 +80,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "4": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト4"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -108,14 +108,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "5": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト5"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -136,14 +136,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "6": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト6"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -164,14 +164,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "7": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト7"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -192,14 +192,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "8": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト8"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -220,14 +220,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "9": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト9"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -248,14 +248,14 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "10": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "テスト10"
+                "text": "ブログ テストタイトル"
             },
             "blogArticleDate": {
                 "text": "2015/03/02"
@@ -276,7 +276,931 @@
             }
         },
         "blogArticleText": {
-            "text": "記事の投稿テストです。"
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "11": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "12": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "13": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "14": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "15": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "16": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },
+    "17": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "18": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "19": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "20": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "21": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "22": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "23": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "24": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "25": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "26": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "27": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "28": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "29": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "30": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "31": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "32": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "33": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "34": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "35": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "36": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "37": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "38": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "39": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "40": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "41": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "42": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
+        }
+    },    
+    "43": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "ブログ テストタイトル"
+            },
+            "blogArticleDate": {
+                "text": "2015/03/02"
+            },
+            "blogArticleUserName": {
+                "text": "FlowerMaster"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "photo/web/FlowerMaster/000004.png"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "この記事はテスト用のものとなっております。"
         }
     },
     "currentArticleList": {
@@ -294,7 +1218,7 @@
                     "text": "FlowerMaster"
                 },
                 "currentArticleListContentTitle": {
-                    "text": "お疲れさまでした。"
+                    "text": "ブログ テストタイトル"
                 }
             }
         },
@@ -309,7 +1233,7 @@
                     "text": "FlowerMaster"
                 },
                 "currentArticleListContentTitle": {
-                    "text": "授業中の一幕"
+                    "text": "ブログ テストタイトル"
                 }
             }
         },
@@ -324,7 +1248,7 @@
                     "text": "FlowerMaster"
                 },
                 "currentArticleListContentTitle": {
-                    "text": "今日も一日"
+                    "text": "ブログ テストタイトル"
                 }
             }
         },
@@ -339,7 +1263,7 @@
                     "text": "FlowerMaster"
                 },
                 "currentArticleListContentTitle": {
-                    "text": "満員御礼"
+                    "text": "ブログ テストタイトル"
                 }
             }
         },
@@ -354,7 +1278,7 @@
                     "text": "FlowerMaster"
                 },
                 "currentArticleListContentTitle": {
-                    "text": "今日のピックアップ"
+                    "text": "ブログ テストタイトル"
                 }
             }
         }

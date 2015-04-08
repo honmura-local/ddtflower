@@ -267,10 +267,13 @@ sub send_mail {
 		$reply =~ s/!date!/$date1/g;
 	}
 
+  #氏名を取得する変数を宣言する。
+  my $name = "氏名";
+
 	# 本文キーを展開
 	my ($bef,$mbody,$log);
 	foreach (@$key) {
-
+    
 		# 本文に含めない部分を排除
 		next if ($_ eq "mode");
 		next if ($_ eq "need");
@@ -309,8 +312,18 @@ sub send_mail {
 		my $tmp;
 		if ($$in{$_} =~ /\n/) {
 			$tmp = "$key_name = \n$$in{$_}\n";
+			#名前であれば
+			if ($_ eq "name"){
+        #名前を変数にセットする。
+        $name = "$key_name = \n$$in{$_}\n";
+      }
 		} else {
 			$tmp = "$key_name = $$in{$_}\n";
+			#名前であれば
+			if ($_ eq "name"){
+        #名前を変数にセットする。
+        $name = "$$in{$_}\n";
+      }
 		}
 		$mbody .= $tmp;
 
@@ -319,9 +332,11 @@ sub send_mail {
 	
 	# 本文テンプレ内の変数を置き換え
 	$mail =~ s/!message!/$mbody/;
+	$mail =~ s/!name!/$name/;
 	
 	# 返信テンプレ内の変数を置き換え
 	$reply =~ s/!message!/$mbody/ if ($cf{auto_res});
+	$reply =~ s/!name!/$name/ if ($cf{auto_res});
 	
 	# コード変換
 	$mail  = $cf{send_b64} == 1 ? conv_b64($mail)  : conv_jis($mail);
@@ -927,4 +942,3 @@ sub conv_code {
 	$key = \@tmp;
 	$in  = \%tmp;
 }
-
