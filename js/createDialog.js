@@ -29,7 +29,7 @@ function createReservedData(reservedData){
 	// 選択した予備日程の週を配列で取得してreservedDataに格納する。
 	reservedData['weekNumber'] = getCheckBoxValue('week');
 	// 入力された氏名を取得する
-	reservedData['personName'] = $('input[name="personName"]').val();
+	reservedData['name'] = $('input[name="name"]').val();
 	// 入力された電話番号を取得する
 	reservedData['personPhoneNumber'] = $('input[name="personPhoneNumber"]').val();
 	// 入力されたメールアドレスを取得する
@@ -168,9 +168,9 @@ function replaceJpName(names, jpNames){
 
 
 //必須入力を行う入力フォームのname属性を配列に入れる。
-var checkNames = ['construct', 'schedule', 'personName', 'personPhoneNumber', 'personEmail', 'personCount'];
+var checkNames = ['construct', 'schedule', 'name', 'personPhoneNumber', 'personEmail', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
-var checkNamesJp = {construct:'希望作品', schedule:'希望時限', personName:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personCount:'人数'};
+var checkNamesJp = {construct:'希望作品', schedule:'希望時限', name:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personCount:'人数'};
 
 /* 
  * 関数名:createSpecialReservedDialog(json, array)

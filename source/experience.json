@@ -471,7 +471,7 @@
                     "html": "氏名<br>"
                 },
                 "personTextbox": {
-                    "name": "personName",
+                    "name": "name",
                     "size": "27"
                 }
             }
