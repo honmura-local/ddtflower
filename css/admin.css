@@ -310,7 +310,7 @@
  * 作成日 :2015.03.25
  */
 .articleSearch{
-	margin-right: 1em;		/* 次に来る検索ボックスとの間に間隔を取る。 */
+	margin-left: 0.5em;		/* 次に来る検索ボックスとの間に間隔を取る。 */
 	display: inline-block;	/* インラインブロックにして横に並べる。 */
 }
 
@@ -345,7 +345,7 @@
  */
  .managementList{
  	width		:auto;				/* スマホ相当の幅に指定する。 */
- 	margin		:10px 5%;			/* 左5%のmarginをとる。 */
+ 	margin		:10px 1%;			/* 左1%のmarginをとる。 */
  	overflow-x	:scroll;/*横にはみ出たセルをスクロールで表示できるようにする。 */
 	max-width	: 90%;				/* 最大幅を設定し、それからはみ出たらスクロールするようにする。 */
 	display		:inline-block;		/* インラインブロックにして、中の要素の幅で自身の幅を変える。 */
@@ -1042,4 +1042,44 @@
 	.articleSearchLabel{
 		width: 100px;	/* 画面幅が狭くなってきたら検索ボックスを1行1列にする。その際にラベルの幅も統一する */
 	}
+}
+
+ * セレクタ:.contentManagement > *
+ * 概要   :管理者画面のタブ外枠の直下要素。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.08
+ */
+.contentManagement > * {
+	width: 95%;		/* 幅を95%に指定し、少々の余白ができるようにする。 */
+	margin: 0 auto;	/* 中央に寄せる。 */
+}
+/* 
+ * セレクタ:.searchButtonSet
+ * 概要   :検索ボックスのボタン群の領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.08
+ */
+.searchButtonSet{
+	margin-bottom:5px;	/* 下にmarginを指定し、余白を作る。 */
+	margin-left: 1%;	/* 左に1%の余白を作る。 */
+}
+
+/* 
+ * セレクタ:.searchButtonSet button
+ * 概要   :検索ボックスのボタン群のボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.08
+ */
+.searchButtonSet button{
+	margin-bottom:3px;	/* 下にmarginを指定し、余白を作る。 */
+}
+
+/* 
+ * セレクタ:.searchButtonSet .ui-button-text-only span.ui-button-text 
+ * 概要   :検索ボックスのボタン群の領域のボタンのテキスト。jQueryUIで指定されたスタイルを上書きする。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.08
+ */
+.searchButtonSet .ui-button-text-only span.ui-button-text {
+	padding: .2em 1.6em;	/* 縦方向のpaddingを減らし、高さを落とす。 */
 }

@@ -1,4 +1,18 @@
 {
+    "searchButtonSet": {
+        "executeSearch": {
+            "text": "検索"
+        }
+    },
+    "memberIdSearch": {
+        "articleSearchLabel": {
+            "text": "会員番号"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "memberIdSearch"
+        }
+    },
     "nameSearch": {
         "articleSearchLabel": {
             "text": "氏名"
