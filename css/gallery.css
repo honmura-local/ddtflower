@@ -23,7 +23,7 @@
  */
 .photo{
 	width: 170px;				/* 1行で6枚の写真を並べる。 */
-	height: 270px;			/* 内容に関わらず高さを揃える。 */
+	height: 210px;			/* 内容に関わらず高さを揃える。 */
 	margin			: 5px;				/* 全方向にmarginを配置する。 */
 	padding			: 5px 10px;			/* 内側の余白を指定する。 */
 	box-sizing		: border-box;		/* paddingとborderを幅計算に入れる。 */

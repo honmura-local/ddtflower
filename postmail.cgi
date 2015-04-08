@@ -268,7 +268,7 @@ sub send_mail {
 	}
 
   #氏名を取得する変数を宣言する。
-  my $name = "氏名";
+  my $name = "";
 
 	# 本文キーを展開
 	my ($bef,$mbody,$log);
