@@ -49,6 +49,9 @@
                     "type": "checkbox"
                 }
             },
+            "memberIdHead": {
+                "text": "会員番号"
+            },
             "nameHead": {
                 "text": "氏名"
             },

@@ -7,6 +7,9 @@
                     "type": "checkbox"
                 }
             },
+            "memberId": {
+                "text": "000001"
+            },
             "name": {
                 "text": "西島尚子"
             },
@@ -25,6 +28,9 @@
                 "check": {
                     "type": "checkbox"
                 }
+            },
+            "memberId": {
+                "text": "000002"
             },
             "name": {
                 "text": "三崎亮子"
@@ -45,6 +51,9 @@
                     "type": "checkbox"
                 }
             },
+            "memberId": {
+                "text": "000003"
+            },
             "name": {
                 "text": "佐伯玲子"
             },
@@ -63,6 +72,9 @@
                 "check": {
                     "type": "checkbox"
                 }
+            },
+            "memberId": {
+                "text": "000004"
             },
             "name": {
                 "text": "速水晶良"
@@ -83,6 +95,9 @@
                     "type": "checkbox"
                 }
             },
+            "memberId": {
+                "text": "000005"
+            },
             "name": {
                 "text": "黒川美玲"
             },
@@ -101,6 +116,9 @@
                 "check": {
                     "type": "checkbox"
                 }
+            },
+            "memberId": {
+                "text": "000006"
             },
             "name": {
                 "text": "天城亜衣"

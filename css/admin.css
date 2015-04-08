@@ -312,6 +312,8 @@
 .articleSearch{
 	margin-left: 0.5em;		/* 次に来る検索ボックスとの間に間隔を取る。 */
 	display: inline-block;	/* インラインブロックにして横に並べる。 */
+	margin-bottom: 2px;
+	/* margin: 5px 0 2px 0.5em; */
 }
 
 
@@ -1062,6 +1064,7 @@
 .searchButtonSet{
 	margin-bottom:5px;	/* 下にmarginを指定し、余白を作る。 */
 	margin-left: 1%;	/* 左に1%の余白を作る。 */
+	margin: 5px 1% 0px;
 }
 
 /* 
