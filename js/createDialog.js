@@ -217,8 +217,6 @@ function createSpecialReservedDialog(json, array){
 			// タイトルバーを見えなくする。
 			$(this).prev().children().filter('.ui-dialog-titlebar-close').remove();
 			$(this).next().css('font-size', '0.5em');
-			//該当するテキストボックスの日本語入力を無効にする。
-			disableMultiByteCode('input[name="personPhoneNumber"],input[name="personEmail"],input[name="personCount"]');
 		},
 		// 位置を指定する。
 		position:{
@@ -238,8 +236,18 @@ function createSpecialReservedDialog(json, array){
 			        	 click:function(event, ui){
 			        		 //必須入力チェックを行う。
 			        		 var emptyList = checkEmptyInput(checkNames);
-			        		 // 必須入力項目が皆入力済みであれば
-			        		 if(emptyList == null) {
+			        		 var onlyAlphabetList = [];	//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
+			        		 //全角入力チェックを行う。
+			        		 $('input[name="personPhoneNumber"], input[name="personEmail"], input[name="personCount"]').each(function(){
+			        			 var onlyAlphabet = checkAlphabet($(this).val());	//アルファベットオンリーでないかのチェックをする。
+			        			 //有効でない文字があったら
+			        			 if(onlyAlphabet == false){
+			        				 onlyAlphabetList.push($(this).attr('name'));	//name属性を配列に入れる。
+			        			 }
+			        		 });
+			        		 
+			        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
+			        		 if(emptyList == null && onlyAlphabetList.length == 0) {
 				        		 
 				        		 // 入力確認ダイアログを呼び出す。
 				        		 createSpecialReservedConfirmDialog();
@@ -248,12 +256,28 @@ function createSpecialReservedDialog(json, array){
 				        		 // このダイアログの入力要素を一時的に無効化する。
 				        		 disableInputs($(this));
 			        		 } else {
-			        			 //未入力項目のリストを日本語に訳す。
-			        			 emptyList = replaceJpName(emptyList, checkNamesJp);
-			        			 //未入力項目のリストを1つの文字列にする。
-			        			 var emptyListString = emptyList.join("\n")
+			        			 var alerts = "";	//警告の文字列を格納する変数を宣言、初期化する。
+			        			 
+				        		 if(emptyList != null){	//未入力項目リストがNGであったら
+				        			 //未入力項目のリストを日本語に訳す。
+				        			 emptyList = replaceJpName(emptyList, checkNamesJp);
+				        			 //未入力項目のリストを1つの文字列にする。
+				        			 var emptyListString = emptyList.join("\n");
+				        			 //警告を追加する。
+				        			 alerts += "以下の項目が未入力となっています。\n" + emptyListString + '\n';
+				        			 
+				        		 }
+				        		 //英数字チェックリストがNGであったら
+				        		 if(onlyAlphabetList.length != 0){
+				        			 //英数字チェックリストを訳す。
+				        			 onlyAlphabetList = replaceJpName(onlyAlphabetList, checkNamesJp);
+				        			 //英数字チェックリストを1つの文字列にする。
+				        			 var onlyAlphabetListString = onlyAlphabetList.join("\n");
+				        			 //警告を追加する。
+				        			 alerts += "以下の項目は半角英数字記号のみを入力してください。\n" + onlyAlphabetListString;
+				        		 }
 			        			 //アラートを出す。
-			        			 alert('以下の項目が未入力となっています。\n' + emptyListString);
+			        			 alert(alerts);
 			        		 }
 			        	 }
 			         },
@@ -378,6 +402,29 @@ function removeReservedDialogs(dialogs){
 		// ダイアログを消去する。
 		$(this).dialog('close').dialog('destroy').remove();
 	});
+}
+
+/* 
+ * 関数名:checkAlphabet(str)
+ * 概要  :英数字と最低限の記号が文字列に含まれているかをチェックする。
+ * 引数  :String str:チェックする文字列
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.04.08
+ */
+function checkAlphabet(str){
+	var retBool = true;	//返却する真理値を格納する変数を宣言、falseで初期化する。
+	
+	//for文で文字列を走査する。
+	for(var i = 0; i < str.length; i++){
+		//この文字列に含まれない文字が含まれていたら
+		if (!(' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~'.indexOf(str[i]) >= 0)){
+			retBool = false;	//チェックにひっかかったということで、falseを返す。
+			break;			//チェックを終える。
+		}
+	}
+	
+	return retBool;	//判定を返す。
 }
 
 /* 
