@@ -289,7 +289,7 @@ sub send_mail {
 		# name値の名前置換
 		if (defined($cf{replace}->{$_})) {
 			$key_name = $cf{replace}->{$_};
-			$reply =~ s/$_/$$in{$_}/g;
+			$reply =~ s/"!".$_."!"/$$in{$_}/g;
 		} else {
 			$key_name = $_;
 		}
