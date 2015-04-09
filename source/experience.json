@@ -472,7 +472,8 @@
                 },
                 "personTextbox": {
                     "name": "name",
-                    "size": "27"
+                    "size": "27",
+                    "autocomplete":"off"
                 }
             }
         },
@@ -484,7 +485,8 @@
                 "personTextbox": {
                     "name": "personPhoneNumber",
                     "size": "27",
-                    "style":"ime-mode:disabled"
+                    "style":"ime-mode:disabled",
+                    "autocomplete":"off"
                 }
             }
         },
@@ -496,7 +498,21 @@
                 "personTextbox": {
                     "name": "personEmail",
                     "size": "27",
-                    "style":"ime-mode:disabled"
+                    "style":"ime-mode:disabled",
+                    "autocomplete":"off"
+                }
+            }
+        },
+        "personEmailCheck": {
+            "textboxLabel": {
+                "personLabel": {
+                    "html": "メールアドレス(確認)<br>"
+                },
+                "personTextbox": {
+                    "name": "personEmailCheck",
+                    "size": "27",
+                    "style":"ime-mode:disabled",
+                    "autocomplete":"off"
                 }
             }
         },
@@ -508,7 +524,8 @@
                 "personTextbox": {
                     "name": "personCount",
                     "size": "2",
-                    "style":"ime-mode:disabled"
+                    "style":"ime-mode:disabled",
+                    "autocomplete":"off"
                 }
             }
         },

@@ -25,8 +25,10 @@
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。
 				creator.outputTag('myGallery');						// ギャラリーページ用のギャラリーを作る。
+				// ナンバリング領域を作る
+				creator.outputTag('numberingOuter');
 				//ギャラリーの内容を追加する。
-				outputKeyNumberObject(creator.json, 'myPhoto', '.myGallery');
+				creator.outputNumberingTag('myPhoto', 1, 4, 1, 8, '.myGallery');	// ブログの記事を作る。
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
 			

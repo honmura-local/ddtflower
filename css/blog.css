@@ -339,59 +339,6 @@
 	background	:#CEDC3A;		/*サイトのメインで使っている背景色を適用する。*/
 }
 
- /* 
- * セレクタ:.numbering
- * 概要   :ナンバリング
- * 作成者 :T.Masuda
- * 作成日 :2015.03.12
- */
- .numbering {
- 	width:auto;				/*フォントサイズに合わせた幅を指定する。*/
- 	display: block;			/* ブロック要素にする。 */
- 	margin: 10px auto;		/* 中心に揃える。 */
- 	text-align:	center;		/* ボタンを中心に寄せる。 */
- 	clear: both;			/* 回り込みをなくす。 */
- }
-
- /* 
- * セレクタ:.numbering li
- * 概要   :ナンバリングのボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.12
- */
- .numbering li{
- 	width:auto;					/* フォントサイズに合わせた幅を指定する。*/
- 	display: inline-block;		/* ブロック要素にする。 */
- 	margin: 0 0.1%;				/* ボタン同士を離す。 */
- 	padding: 0.3em 1em;			/* ボタンを広げる。 */
- 	color: BLACK;				/* 黒文字にする。 */
- 	cursor: pointer;			/* カーソルを指差しにする。 */
- }
-
- /* 
- * セレクタ:.numbering li
- * 概要   :選択中のナンバリングのボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.13
- */
- .numbering li.select{
- 	font-weight: bold;	/* 太字にする。 */
- 	color		: RED;	/* グレー文字にする。 */
- }
-
- /* 
- * セレクタ:.numbering li:empty
- * 概要   :空のナンバリングのボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.12
- */
- .numbering li:empty{
- 	/* 非表示3セット */
- 	width:0px;
- 	height:0px;
- 	display: none;
- }
- 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 

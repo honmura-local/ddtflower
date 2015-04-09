@@ -293,13 +293,14 @@ function createTag(){
 	}
 	
 	/* 
-	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum)
+	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea)
 	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
 	 * 引数  :String jsonName:処理対象となるJSONのキー名。
 	 * 		 int startPage:表示する1つ目のナンバリングの数
 	 * 		 int displayPageMax:表示するナンバリングの最大数
 	 * 		 int displayPage:表示するブログのページ番号
 	 * 		 int pageNum:1ページに表示する記事数。
+	 * 		 String targetArea:記事の追加先のセレクタ。
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -307,19 +308,22 @@ function createTag(){
 	 * 変更者:T.Masuda
 	 * 変更日:2015.04.08
 	 * 内容　:引数を追加して1ページに複数の記事を表示するのに対応しました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.04.09
+	 * 内容　:引数に作成した記事の追加先を追加しました。
 	 */
-	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum){
+	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		
 		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
 		this.numbering = {};		
 
 		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum);
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea);
 		
 		//記事を消す
-		$('.blog').empty();
+		$(targetArea).empty();
 		//コンテンツ表示
-		outputKeyNumberObject(this.json, jsonName, '.blog', pageNum, displayPage)
+		outputKeyNumberObject(this.json, jsonName, targetArea, pageNum, displayPage)
 		
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
@@ -345,7 +349,7 @@ function createTag(){
 	 * 変更日:2015.04.08
 	 * 内容　:引数pageNumを追加し、1ページに複数の記事を載せることに対応しました。
 	 */
-	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum){
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		//ページ数を取得する。
 		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName) / pageNum);
 		
@@ -356,7 +360,7 @@ function createTag(){
 		
 		// <<ボタンを作る。(1ページ前に進める)
 		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
-										displayPageMax, displayPage-1, pageMax, jsonName, pageNum);
+										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea);
 
 		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
 		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
@@ -371,14 +375,14 @@ function createTag(){
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
 			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
-				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ')';
+				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
 		}
 			
 		// <<ボタンを作る。(1ページ後に進める)
 		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
-										displayPageMax, displayPage+1, pageMax, jsonName, pageNum);
+										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea);
 			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
 		this.json['numbering'] = this.numbering;
@@ -387,7 +391,7 @@ function createTag(){
 	}
 	
 	/* 
-	 * 関数名:this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax)
+	 * 関数名:this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax,, jsonName, pageNum, targetArea)
 	 * 概要  :ナンバリングの<<、>>を作る。
 	 * 引数  :object numbering:ナンバリングが格納されている連想配列
 	 * 		 string key:キー名。'pre'または'next'が入っている。
@@ -398,12 +402,13 @@ function createTag(){
 	 * 		 int pageMax:全ページ数。
 	 * 		String jsonName:JSON名。
 	 * 		int pageNum:1ページに表示する記事数。
+	 * 		String targetArea:記事の追加先。
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum){
+	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea){
 		var startAroundPage;
 		
 		//開始ページを算出する
@@ -430,7 +435,7 @@ function createTag(){
 		
 		//関数実行属性をoutputNumberingTagに設定する。
 		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
-			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ')';
+			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '")';
 		
 		//numberingオブジェクトの中に追加する。
 		numbering[key] = keyObj[key];

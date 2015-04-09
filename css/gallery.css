@@ -12,7 +12,6 @@
 		width		: 90%;		/* スマホコンテンツに対応できる幅にする。 */
 		margin		: 0 auto;	/* 中央に寄せる。 */
 		font-size	: 0px;		/* .photoをインラインブロックにするので、余計な余白消しの設定をする。 */
-		text-align	: center;	/* 写真を中央に寄せる。 */
 }
 
 /* 
@@ -213,25 +212,16 @@
     margin-left: 0.5em;		/* 各方向に余白を取る。 */
 }
 
-/* スマホ・タブレットレイアウト */
-@media(max-width:680px){
+/* スマホ */
+@media screen and (max-width:415px){
 
 	/* 
-	 * セレクタ:.photo
-	 * 概要   :ギャラリーの写真。
+	 * セレクタ:.gallery,.myGallery
+	 * 概要   :ギャラリー。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.04.08
 	 */
-	.photo {
-		text-align: left;	/* 内容を左に寄せる。 */
-	}	
-	/* 
-	 * セレクタ:.myPhoto
-	 * 概要   :Myギャラリーの写真。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.27
-	 */
-	.myPhoto {
-		text-align: left;	/* 内容を左に寄せる。 */
+	.gallery,.myGallery {
+		text-align: center;	/* 内容を左に寄せる。 */
 	}	
 }

@@ -22,9 +22,14 @@
 	border-radius: 5px;
 }
 
-
+ /* 
+ * セレクタ:.reservedData
+ * 概要   :予約一覧。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.09
+ */
 .reservedData{
-	margin-bottom: 10px;
+	margin-bottom: 10px;	/* 下に余白を入れる。 */
 }
 
  /* 
@@ -178,8 +183,7 @@
 .blogEditText {
 	width:75%;				/*mainの3/4の幅を取る。*/
 	margin-bottom:10px;		/*下に余白を入れる。*/
-	/* clear: left; */
-	float: right;
+	float: right;			/* 右に寄せる。 */
 }
 
  /* 
@@ -197,6 +201,38 @@
 }
 
  /* 
+ * セレクタ:.blogPublication
+ * 概要   :ブログ記事の公開設定のラジオボタンの領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.09
+ */
+.blogPublication {
+	float		: left;			/* 左に寄せる。 */
+	box-sizing	: border-box;	/* paddingを幅の計算に入れる。 */
+	padding-left: 3%;			/* 左にpaddingを挿入してインデントをかける。 */
+	margin-bottom: 10px;		/* 下にmarginを入れ、スマホレイアウト時にボタン領域と間隔を取る。 */
+}
+
+ /* 
+ * セレクタ:.blogPublicationRadio
+ * 概要   :ブログ記事の公開設定のラジオボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.09
+ */
+.blogPublicationRadio {
+	vertical-align: text-bottom;	/* 垂直位置が中央にそろう様に調整する。 */
+}
+
+ /* 
+ * セレクタ:.blogPublicationLabel
+ * 概要   :ブログ記事の公開設定のラジオボタンのラベル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.09
+ */
+.blogPublicationLabel {
+	font-size: 15px;	/* フォントを少しだけ小さめにする。 */
+}
+ /* 
  * セレクタ:.blogEditButtons
  * 概要   :ブログ記事作成の確定・キャンセルボタンの領域。
  * 設計者 :T.Masuda
@@ -204,11 +240,10 @@
  * 作成日 :2015.03.12
  */
 .blogEditButtons {
-	width		:75%;		/*本文入力の部分と同じく、3/4の幅を取る。*/
 	padding:	:20px;		/*内側に余白を取る。*/
 	box-sizing	:border-box;/*サイズ計算にpaddingとborderを込みにする。*/
 　　text-align	:right;		/*子要素となるボタンを右に寄せる。*/
-	float: right;
+	float: right;			/* 右に寄せる。 */
 }
 
  /* 
@@ -219,7 +254,6 @@
  * 作成日 :2015.03.12
  */
 .blogEditButtonsOKButton {
-	margin-left	:2em	;	/*OKボタンとの間に2文字分の間隔を取る。*/
 	float:right;			/* 右に寄せる。 */
 }
 
@@ -246,9 +280,9 @@
  * 作成日 :2015.03.12
  */
 .myPageReserved {
-	width		:100%;			/*.mainの幅に合わせる。*/
-	margin: 10px auto 30px;/*上下に適切なmarginを挿入する。*/
-	font-size: 0px;
+	width		:100%;		/*.mainの幅に合わせる。*/
+	margin: 10px auto 30px;	/*上下に適切なmarginを挿入する。*/
+	font-size: 0px;			/* 子のインラインブロックの余白消し。 */
 }
 
  /* 
@@ -265,13 +299,28 @@
 	font-weight	:bold;		/*太字にする。*/
 }
 
+ /* 
+ * セレクタ:.blogEditImages:before
+ * 概要   :ブログ画像領域のタイトル部分。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
 .blogEditImages:before {
-	content: "画像選択";
-	padding-left: 0.5em;
+	content: "画像選択";		/* タイトルの文字を入れる */
+	padding-left: 0.5em;	/* 少しインデントをつける */
 }
+
+ /* 
+ * セレクタ:.myPageReservedTitle
+ * 概要   :マイページの予約一覧のタイトル。
+ * 設計者 :T.Masuda
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.12
+ */
 .blogEditText:before {
-	content: "本文編集";
-	padding-left: 1.5em;
+	content: "本文編集";		/* タイトルの文字を入れる。 */
+	padding-left: 1.5em;	/* 少しインデントを付ける。 */
 }
 
 
@@ -481,7 +530,6 @@
 	 * 作成日 :2015.03.12
 	 */
 	 .blogEditButtons {
-	 	width		:90%;	/*本文入力の部分と同じく、3/4の幅を取る。*/
 		padding:	:0;		/*paddingが必要なくなったため、0にする。*/
 	 
 	 	float: none;
@@ -553,10 +601,15 @@
 		padding-left: 0;
 	}
 
-	.blogEditImagesSection {
+	 /* 
+	 * セレクタ:.blogEditImagesSection
+	 * 概要   :画像サムネイル領域。
+	 * 設計者 :T.Masuda
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.03.12
+	 */	.blogEditImagesSection {
 		width: 210px;
 		margin: 0 auto 10px;
-	
 		display: inline-block;
 	}	
 	

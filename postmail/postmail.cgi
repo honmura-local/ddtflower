@@ -288,8 +288,11 @@ sub send_mail {
 		my $keytmp = "!".$_."!";
 		
 		# name値の名前置換
+		#init.cgiの$cf{replace}に登録してあるキーであれば
 		if (defined($cf{replace}->{$_})) {
+			#キーを登録された文字列に変換する。
 			$key_name = $cf{replace}->{$_};
+			#返信テンプレートでキー名を指定して値を利用できるようにする。
 			$reply =~ s/$keytmp/$$in{$_}/g;
 		} else {
 			$key_name = $_;
@@ -322,6 +325,7 @@ sub send_mail {
 		} else {
 			$tmp = "$key_name = $$in{$_}\n";
 		}
+		
 		$mbody .= $tmp;
 
 		$bef = $_;
@@ -343,6 +347,7 @@ sub send_mail {
 	# MIMEエンコード
 	my $sub_me = $$in{subject} ne '' && defined($cf{multi_sub}->{$$in{subject}}) ? $cf{multi_sub}->{$$in{subject}} : $cf{subject};
 	$sub_me = mime_unstructured_header($sub_me);
+	
 	my $from;
 	if ($$in{name}) {
 		$$in{name} =~ s/[\r\n]//g;

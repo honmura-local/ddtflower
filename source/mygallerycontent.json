@@ -21,7 +21,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "友達のみ",
+            "value": "1"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -49,7 +50,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "非公開",
+            "value": "2"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -77,7 +79,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -105,7 +108,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -133,7 +137,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -161,7 +166,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -189,7 +195,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -217,7 +224,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -245,7 +253,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -270,7 +279,8 @@
             "text": "FlowerMaster"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoComment": {
             "text": "コメントです。"
@@ -301,7 +311,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -329,7 +340,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -354,7 +366,8 @@
             "text": "FlowerMaster"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -382,7 +395,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -409,8 +423,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
-         "myPhotoPublication": {
-            "text": "全体"
+        "myPhotoPublication": {
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -437,8 +452,9 @@
         "myPhotoComment": {
             "text": "コメントです。"
         },
-         "myPhotoPublication": {
-            "text": "全体"
+        "myPhotoPublication": {
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -466,7 +482,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"
@@ -494,7 +511,8 @@
             "text": "コメントです。"
         },
         "myPhotoPublication": {
-            "text": "全体"
+            "text": "全体",
+            "value": "0"
         },
         "myPhotoCheck": {
             "type": "checkbox"

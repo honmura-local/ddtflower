@@ -830,7 +830,7 @@
 				<!-- ラベルテキスト -->
 				<span class="personLabel"></span>
 				<!-- テキストボックス -->
-				<input type="text" class="personTextbox" name="" size="" required align="right" style="">
+				<input type="text" class="personTextbox" name="" autocomplete="" size="" required align="right" style="">
 			</label>
 		</li>
 		<!-- 3行目、電話番号領域 -->
@@ -840,7 +840,7 @@
 				<!-- ラベルテキスト -->
 				<span class="personLabel"></span>
 				<!-- テキストボックス -->
-				<input type="text" class="personTextbox" name="" size="" required style="">
+				<input type="text" class="personTextbox" name="" autocomplete="" size="" required style="">
 			</label>
 		</li>
 		<!-- 4行目、メールアドレス領域 -->
@@ -850,7 +850,17 @@
 				<!-- ラベルテキスト -->
 				<span class="personLabel"></span>
 				<!-- テキストボックス -->
-				<input type="text" class="personTextbox" name="email" size="" required style="">
+				<input type="text" class="personTextbox" name="email" autocomplete="" size="" required style="">
+			</label>
+		</li>
+		<!-- 4行目、メールアドレス再入力領域 -->
+		<li class="personEmailCheck">
+			<!-- ラベル -->
+			<label class="textboxLabel">
+				<!-- ラベルテキスト -->
+				<span class="personLabel"></span>
+				<!-- テキストボックス -->
+				<input type="text" class="personTextbox" name="emailCheck" autocomplete="" size="" required style="">
 			</label>
 		</li>
 		<!-- 10行目、人数領域 -->
@@ -860,7 +870,7 @@
 				<!-- ラベルテキスト -->
 				<span class="personLabel"></span>
 				<!-- テキストボックス -->
-				<input type="text" class="personTextbox" name="count" size="" required style="">
+				<input type="text" class="personTextbox" name="count" size="" autocomplete="" required style="">
 			</label>
 		</li>
 	</ul>
@@ -1219,6 +1229,17 @@
 <div class="blogEditText">
 	<!-- 本文を編集するためのテキストエリア -->
 	<textarea class="blogEditTextarea" />
+</div>
+
+<!-- ブログの公開設定 -->
+<div class="blogPublication">
+	<!-- 公開設定のラジオボタンとラベル3セット -->
+	<input type="" class="blogPublicationRadio1" name="" checked="">
+	<label class="blogPublicationLabel1"></label>
+	<input type="" class="blogPublicationRadio2" name="">
+	<label class="blogPublicationLabel2"></label>
+	<input type="" class="blogPublicationRadio3" name="">
+	<label class="blogPublicationLabel3"></label>
 </div>
 
 <!-- ブログ記事作成の確定・キャンセルボタンの領域 -->
@@ -1606,7 +1627,7 @@
 	<!-- コメント -->
 	<p class="myPhotoComment"></p>
 	<!-- 公開設定 -->
-	<p class="myPhotoPublication"></p>
+	<p class="myPhotoPublication" value=""></p>
 	<!-- チェックボックス -->
 	<input type="" class="myPhotoCheck">
 </div>
@@ -1622,7 +1643,6 @@
 	<!-- 削除ボタン -->
 	<button class="back"></button>
 </div>
-
 
 
 <!-- 個人設定ページ。 -->

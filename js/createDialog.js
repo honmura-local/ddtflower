@@ -168,9 +168,31 @@ function replaceJpName(names, jpNames){
 
 
 //必須入力を行う入力フォームのname属性を配列に入れる。
-var checkNames = ['construct', 'schedule', 'name', 'personPhoneNumber', 'personEmail', 'personCount'];
+var checkNames = ['construct', 'schedule', 'name', 'personPhoneNumber', 'personEmail', 'personEmailCheck', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
-var checkNamesJp = {construct:'希望作品', schedule:'希望時限', name:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personCount:'人数'};
+var checkNamesJp = {construct:'希望作品', schedule:'希望時限', name:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personEmailCheck:'メールアドレス(確認)', personCount:'人数'};
+
+/* 
+ * 関数名:function checkAllAlphabet(selector)
+ * 概要  :全角文字の入力チェックを行う。
+ * 引数  :String selector:対象となる要素のセレクタ。
+ * 返却値:Array
+ * 作成者:T.M
+ * 作成日:2015.04.09
+ */
+function checkAllAlphabet(selector){
+	var retArray = [];	//返却値を格納する配列を宣言、空の配列で初期化する。
+	 //全角入力チェックを行う。
+	 $(selector).each(function(){
+		 var onlyAlphabet = checkAlphabet($(this).val());	//アルファベットオンリーでないかのチェックをする。
+		 //有効でない文字があったら
+		 if(onlyAlphabet == false){
+			 retArray.push($(this).attr('name'));	//name属性を配列に入れる。
+		 }
+	 });
+	 
+	 return retArray;	//作成した配列を返す。
+}
 
 /* 
  * 関数名:createSpecialReservedDialog(json, array)
@@ -236,19 +258,13 @@ function createSpecialReservedDialog(json, array){
 			        	 click:function(event, ui){
 			        		 //必須入力チェックを行う。
 			        		 var emptyList = checkEmptyInput(checkNames);
-			        		 var onlyAlphabetList = [];	//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
-			        		 //全角入力チェックを行う。
-			        		 $('input[name="personPhoneNumber"], input[name="personEmail"], input[name="personCount"]').each(function(){
-			        			 var onlyAlphabet = checkAlphabet($(this).val());	//アルファベットオンリーでないかのチェックをする。
-			        			 //有効でない文字があったら
-			        			 if(onlyAlphabet == false){
-			        				 onlyAlphabetList.push($(this).attr('name'));	//name属性を配列に入れる。
-			        			 }
-			        		 });
+		        			//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
+			        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="personEmail"], input[name="personCount"]');
+			        		 //メールアドレスの再入力が行われているかをチェックする。
+			        		 var emailCheck = $('.personEmail input').val() == $('.personEmailCheck input').val()? true: false;
 			        		 
 			        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-			        		 if(emptyList == null && onlyAlphabetList.length == 0) {
-				        		 
+			        		 if(emptyList == null && onlyAlphabetList.length == 0 && emailCheck == true) {
 				        		 // 入力確認ダイアログを呼び出す。
 				        		 createSpecialReservedConfirmDialog();
 				        		 //ダイアログ内のフォームをsubmitする。
@@ -264,7 +280,7 @@ function createSpecialReservedDialog(json, array){
 				        			 //未入力項目のリストを1つの文字列にする。
 				        			 var emptyListString = emptyList.join("\n");
 				        			 //警告を追加する。
-				        			 alerts += "以下の項目が未入力となっています。\n" + emptyListString + '\n';
+				        			 alerts += "以下の項目が未入力となっています。\n" + emptyListString + '\n\n';
 				        			 
 				        		 }
 				        		 //英数字チェックリストがNGであったら
@@ -274,7 +290,11 @@ function createSpecialReservedDialog(json, array){
 				        			 //英数字チェックリストを1つの文字列にする。
 				        			 var onlyAlphabetListString = onlyAlphabetList.join("\n");
 				        			 //警告を追加する。
-				        			 alerts += "以下の項目は半角英数字記号のみを入力してください。\n" + onlyAlphabetListString;
+				        			 alerts += "以下の項目は半角英数字記号のみを入力してください。\n" + onlyAlphabetListString + '\n\n';
+				        		 }
+				        		 //メールの再入力が行われていなかったら
+				        		 if(emailCheck == false){
+				        			 alerts += "確認のため、同じメールアドレスもう一度入力してください。";
 				        		 }
 			        			 //アラートを出す。
 			        			 alert(alerts);

@@ -5,8 +5,8 @@
 //Optionタグを生成するための連想配列。createOptions関数で使う。
 var options = {
 				"publifications":{
-					"0":{"text":"全体に公開"},
-					"1":{"text":"友達にのみ公開"},
+					"0":{"text":"全体"},
+					"1":{"text":"友達のみ"},
 					"2":{"text":"非公開"}
 				}
 			};
@@ -539,15 +539,40 @@ function createPhotoData(photo){
 }
 
 /*
- * 関数名:startEditText(textElem)
- * 概要  :テキストを編集するモードに移行する。
- * 引数  :elemental textElem:対象となる要素。
- * 戻り値:なし
- * 作成日:2015.03.27
+ * 関数名:function createOptions(key)
+ * 概要  :連想配列からoption要素を作成する。
+ * 引数  :String key:連想配列のキー。
+ * 戻り値:Element:作成したoption要素
+ * 作成日:2015.04.09
  * 作成者:T.Masuda
  */
-function startEditText(textElem){
+function createOptions(key){
+	//キーに応じた連想配列を取得する。
+	var map = options[key];
+	var retElem = document.createElement('div');	//返却する値を格納する変数を宣言する。外枠となるdivタグを生成しておく。
+	//連想配列を走査する。
+	for(key in map){
+		//optionタグを生成して変数に格納する。keyをoptionの値とする。
+		var option = $('<option></option>').attr('value', key);
+		//更に連想配列を進んでいく。
+		for(childKey in map[key]){
+			//キーがテキストなら
+			if(childKey == 'text'){
+				//optionにテキストを追加する。
+				option.text(map[key][childKey]);
+			//属性なら
+			}else{
+				//optionタグにキーと値を設定していく。
+				option.attr(childKey, map[key][childKey]);
+			}
+		//生成したoptionタグをretElemに追加していく。
+		$(retElem).append(option);
+		}
+	}	
+	
+	return $('option', retElem);	//生成した要素を返す。
 }
+	
 
 /*
  * 関数名:startEditText(textElem)
@@ -570,12 +595,14 @@ function startEditText(textElem){
 			);
 	//公開設定であれば
 	} else if(className == 'myPhotoPublication'){
-		var publifications = createOptions('publifications');//option要素を作成する。
 		//編集用のテキストエリアを配置する。
 		$(textElem).after($('<select></select>')
-				.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
-				.val(currentText)				//テキストを引き継ぐ。
+				.addClass(className + 'Edit')				//編集テキストエリア用のクラスをセットする。
+				.val(currentText)							//テキストを引き継ぐ。
+				.append(createOptions('publifications'))	//optionタグをセットする。
 			);
+		//選択済みにする。
+		$('.' + className + 'Edit').val($(textElem).attr('value'));
 	}else {
 		//編集用のテキストエリアを配置する。
 		$(textElem).after($('<input>')
@@ -607,11 +634,23 @@ function endEditText(textElem){
 	//編集モードになる前のクラス名を取得する。
 	var pastClass = $this.attr('class').replace('Edit', '');
 	
-	//編集モードになる前のタグを生成する。
-	$this.after($('<p></p>')
-			.text(currentText)
-			.addClass(pastClass)
+	//セレクトメニューであれば
+	if($this[0].tagName == 'SELECT'){
+		//編集モードになる前のタグを生成する。
+		$this.after($('<p></p>')
+				.attr('value', currentText)	//value属性を設定する。
+				//テキストを反映する。
+				.text($('option[value="' + currentText + '"]', $this).text())
+				.addClass(pastClass)	//元のクラスを設定する。
 		);
+	//それ以外であれば
+	} else {
+		//編集モードになる前のタグを生成する。
+		$this.after($('<p></p>')
+				.text(currentText)		//テキストを反映する。
+				.addClass(pastClass)	//元のクラスを設定する。
+		);
+	}
 	
 	//用済みになった編集要素を消す。
 	$this.remove();
@@ -677,7 +716,7 @@ $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('dblclick', '.myGallery .myPhotoTitle', function(){
+$(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
 	//タイトルを編集モードにする。
 	startEditText(this);
 });
@@ -691,37 +730,7 @@ $(document).on('dblclick', '.myGallery .myPhotoTitle', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('blur', '.myGallery .myPhotoTitleEdit', function(){
-	//編集モードを解除する。
-	endEditText(this);
-	//編集したデータを送信する。
-	postPhoto($('.myPhoto').has(this));
-});
-
-/*
- * イベント名:$(document).on('dblclick', '.myGallery .myPhotoComment')
- * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
- * 			:string '.myGallery .myPhotoComment':写真のコメントのセレクタ。
- * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のコメントをダブルクリックしたときのイベント。
- * 作成日　　:2015.03.27
- * 作成者　　:T.Masuda
- */
-$(document).on('dblclick', '.myGallery .myPhotoComment', function(){
-	//コメントを編集モードにする。
-	startEditText(this);
-});
-
-/*
- * イベント名:$(document).on('blur', '.myGallery .myPhotoCommentEdit')
- * 引数  　 	:string 'blur':フォーカスが外れたときのイベントの文字列
- * 			:string '.myGallery .myPhotoCommentEdit':写真のコメント編集のセレクタ。
- * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
- * 作成日　　:2015.03.27
- * 作成者　　:T.Masuda
- */
-$(document).on('blur', '.myGallery .myPhotoCommentEdit', function(){
+$(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit', function(){
 	//編集モードを解除する。
 	endEditText(this);
 	//編集したデータを送信する。

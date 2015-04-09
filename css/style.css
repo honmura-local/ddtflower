@@ -732,7 +732,59 @@ footer{
 	max-width:none!important;	/* プラグインのCSSで定義されている最大幅を上書きして無効にする。 */
 }
 
+ /* 
+ * セレクタ:.numbering
+ * 概要   :ナンバリング
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.12
+ */
+ .numbering {
+ 	width:auto;				/*フォントサイズに合わせた幅を指定する。*/
+ 	display: block;			/* ブロック要素にする。 */
+ 	margin: 10px auto;		/* 中心に揃える。 */
+ 	text-align:	center;		/* ボタンを中心に寄せる。 */
+ 	clear: both;			/* 回り込みをなくす。 */
+ }
 
+ /* 
+ * セレクタ:.numbering li
+ * 概要   :ナンバリングのボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.12
+ */
+ .numbering li{
+ 	width:auto;					/* フォントサイズに合わせた幅を指定する。*/
+ 	display: inline-block;		/* ブロック要素にする。 */
+ 	margin: 0 0.1%;				/* ボタン同士を離す。 */
+ 	padding: 0.3em 1em;			/* ボタンを広げる。 */
+ 	color: BLACK;				/* 黒文字にする。 */
+ 	cursor: pointer;			/* カーソルを指差しにする。 */
+ }
+
+ /* 
+ * セレクタ:.numbering li
+ * 概要   :選択中のナンバリングのボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.13
+ */
+ .numbering li.select{
+ 	font-weight: bold;	/* 太字にする。 */
+ 	color		: RED;	/* グレー文字にする。 */
+ }
+
+ /* 
+ * セレクタ:.numbering li:empty
+ * 概要   :空のナンバリングのボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.12
+ */
+ .numbering li:empty{
+ 	/* 非表示3セット */
+ 	width:0px;
+ 	height:0px;
+ 	display: none;
+ }
+ 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {
     
@@ -887,13 +939,27 @@ footer{
 	 * 修正者 :T.Masuda
 	 * 修正日 :2015.03.04
 	 * 内容 　:paddingを変更しました。
+	 * 修正者 :T.Masuda
+	 * 修正日 :2015.04.09
+	 * 内容 　:paddingを変更しました。
 	 */
 	.topMenu li{
 	    width:          auto;       /* 幅を文字のサイズに合わせる。 */
 	    font-size:      13px;       /*  PCレイアウトより小さめのフォントにする。 */
-	    padding: 5px 0.85em;		/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
+	    padding: 0;		/* 上下にpaddingを設定する。左右にも1文字弱分のpaddingを入れる。 */
 	}
 	
+	/* 
+	 * セレクタ:.topMenu .button a
+	 * 概要   :トップメニューのボタンのリンク。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.02.05
+	 */
+	.topMenu li a{
+	    width:      auto;   	/* 幅をテキストによる自動調整にする。 */
+		padding: 5px 0.85em;	/* 余白を取る。 */
+	}
+
 	/* 
 	 * セレクタ:.topMenu p
 	 * 概要   :トップメニューのボタンのリンクの文字。
@@ -967,6 +1033,7 @@ footer{
 		.flowerBackground{
 			overflow: hidden;
 		}
+		
 	}	
 	
 /* コンテンツの伸縮が行われる幅になったら */
