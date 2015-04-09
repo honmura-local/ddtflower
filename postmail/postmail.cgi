@@ -285,10 +285,12 @@ sub send_mail {
 		$$in{$_} = hex_decode($$in{$_});
 
 		my $key_name;
+		my $keytmp = "!".$_."!";
+		
 		# name値の名前置換
 		if (defined($cf{replace}->{$_})) {
 			$key_name = $cf{replace}->{$_};
-			$reply =~ s/"!".$_."!"/$$in{$_}/g;
+			$reply =~ s/$keytmp/$$in{$_}/g;
 		} else {
 			$key_name = $_;
 		}
