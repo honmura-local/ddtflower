@@ -211,9 +211,10 @@ function createFormData(form){
 		//それ以外であれば
 		} else {
 			//name属性がnameであれば
-			if(name == 'name'){
-				val = val + ' 様';
-			}
+			//送信確認と送信時に文字列追加が行われてしまうため、一時凍結しました。
+//			if(name == 'name'){		
+//				val = val + ' 様';
+//			}
 			//formDataを連想配列として扱い、keyとvalueを追加していく。
 			formDataReturn[name] = val;
 		}

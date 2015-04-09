@@ -161,7 +161,7 @@ $cf{sestime} = 5;
 $cf{reload} = 1;
 
 # 送信後の戻り先【URLパス】
-$cf{back} = 'index.html';
+$cf{back} = '../index.html';
 
 # フォームのname値の正当性をチェックする（セキュリティ強化策）
 # → 半角文字は英数字、アンダーバー、ハイフンはOK。全角は全てOK
