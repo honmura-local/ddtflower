@@ -264,8 +264,7 @@ sub send_mail {
 		$reply =~ s/\r/\n/g;
 
 		# 変数変換
-		$reply =~ s/!name!/$date1/g;
-#		$reply =~ s/!date!/$date1/g;
+		$reply =~ s/!date!/$date1/g;
 	}
 
 	# 本文キーを展開
@@ -293,10 +292,8 @@ sub send_mail {
 		} else {
 			$key_name = $_;
 		}
-
-
-		# name値の名前置換
-#		my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
+		
+		# my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
 
 		# エスケープ
 		$$in{$_} =~ s/\.\n/\. \n/g;
