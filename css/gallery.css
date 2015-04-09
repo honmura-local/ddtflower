@@ -201,7 +201,16 @@
  * 作成日 :2015.03.27
  */
 .myGalleryEditButtons button{
-    margin		: 0.5em;		/* 全方向に余白を取る。 */
+    margin: 0 0.2em 0.5em 0.2em;		/* 各方向に余白を取る。 */
+}
+/* 
+ * セレクタ:.myGalleryEditButtons button.back
+ * 概要   :Myギャラリーのバックボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.27
+ */
+.myGalleryEditButtons button.back{
+    margin-left: 0.5em;		/* 各方向に余白を取る。 */
 }
 
 /* スマホ・タブレットレイアウト */

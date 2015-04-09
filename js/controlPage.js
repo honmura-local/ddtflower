@@ -210,6 +210,10 @@ function createFormData(form){
 			//何もしない。
 		//それ以外であれば
 		} else {
+			//name属性がnameであれば
+			if(name == 'name'){
+				val = val + ' 様';
+			}
 			//formDataを連想配列として扱い、keyとvalueを追加していく。
 			formDataReturn[name] = val;
 		}
@@ -247,7 +251,7 @@ $(document).on('submit', '.main form', function(event){
 		//お問い合わせフォームであったら
 		if($('.main .confirmSendMail').length > 0){
 			//送信完了のメッセージを出す。
-			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。');
+			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してお問い合わせの操作を行ってください。');
 		}
 
 		//mainのタグを空にする。
@@ -616,3 +620,15 @@ $(document).on('click', '.specialReservedConfirmDialog .confBackButton', functio
 	$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
 });
 
+/*
+ * イベント:$(document).on('click', '.back:not(.tabPanel button)')
+ * 引数   :String 'click':クリックイベントを登録する。
+ * 		 :String '.back:not(.tabPanel button)':タブパネル外のbackクラスのボタンのセレクタ。
+ * 戻り値 :なし
+ * 概要   :タブパネル外でbackクラスのボタンがクリックされたときのイベント。
+ * 作成日 :2015.04.09
+ * 作成者 :T.M
+ */
+$(document).on('click', '.back:not(.tabPanel button)', function(){
+		history.back();	//ブラウザバックを行う。
+});

@@ -22,6 +22,9 @@
         "uploader":{
         	"type":"file",
         	"style":"display:none"
+        },
+        "back": {
+            "text": "戻る"
         }
     },
     "blankPhoto": {

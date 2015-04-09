@@ -294,7 +294,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.03.30
  */
-.myOptionConfirmChange{
+.myOptionButtons{
 	text-align: right;		/* ボタンを右端に寄せる。 */
 }
 	
@@ -305,7 +305,7 @@
  * 作成日 :2015.03.25
  */
 .myOptionConfirmChangeButton{
-	margin:0 2em;	/* 右からずらす。 */
+	margin:0 2em 0 0.2em;	/* 右からずらす。 */
 }
 
 /* 

@@ -12,7 +12,11 @@
         }
     },
     "myOption":{},
-    "myOptionConfirmChange": {
+    "myOptionButtons": {
+        "myOptionBackButton": {
+        	"class":"myOptionBackButton back",
+            "text": "戻る"
+        },
         "myOptionConfirmChangeButton": {
             "text": "更新"
         }
