@@ -313,17 +313,17 @@ sub send_mail {
 		if ($$in{$_} =~ /\n/) {
 			$tmp = "$key_name = \n$$in{$_}\n";
 			#名前であれば
-			if ($_ eq "name"){
-        #名前を変数にセットする。
-        $name = "$key_name = \n$$in{$_}";
-      }
+			#if ($_ eq "name"){
+	        #名前を変数にセットする。
+       			 #$name = "$key_name = \n$$in{$_}";
+      		#}
 		} else {
 			$tmp = "$key_name = $$in{$_}\n";
 			#名前であれば
-			if ($_ eq "name"){
-        #名前を変数にセットする。
-        $name = "$$in{$_}";
-      }
+			#if ($_ eq "name"){
+		        #名前を変数にセットする。
+    		#    $name = "$$in{$_}";
+     		# }
 		}
 		$mbody .= $tmp;
 
