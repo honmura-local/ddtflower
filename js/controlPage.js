@@ -243,6 +243,13 @@ $(document).on('submit', '.main form', function(event){
 	$.post(url, formData,
 	// 成功時の処理を記述する。
 	 function(data){
+
+		//お問い合わせフォームであったら
+		if($('.main .confirmSendMail').length > 0){
+			//送信完了のメッセージを出す。
+			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。');
+		}
+
 		//mainのタグを空にする。
 		$('.main').empty();
 		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
@@ -261,6 +268,7 @@ $(document).on('submit', '.main form', function(event){
 			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
 			$('.main').append($(this));
 		});
+		
 		//カレントのURLを更新する。
 		currentLocation = url;
 	});
