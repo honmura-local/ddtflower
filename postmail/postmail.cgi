@@ -285,8 +285,18 @@ sub send_mail {
 		# hexデコード
 		$$in{$_} = hex_decode($$in{$_});
 
+		my $key_name;
 		# name値の名前置換
-		my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
+		if (defined($cf{replace}->{$_})) {
+			$key_name = $cf{replace}->{$_};
+			$reply =~ s/$_/$$in{$_}/g;
+		} else {
+			$key_name = $_;
+		}
+
+
+		# name値の名前置換
+#		my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
 
 		# エスケープ
 		$$in{$_} =~ s/\.\n/\. \n/g;
