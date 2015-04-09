@@ -264,7 +264,8 @@ sub send_mail {
 		$reply =~ s/\r/\n/g;
 
 		# 変数変換
-		$reply =~ s/!date!/$date1/g;
+		$reply =~ s/!name!/$date1/g;
+#		$reply =~ s/!date!/$date1/g;
 	}
 
 	# 本文キーを展開
