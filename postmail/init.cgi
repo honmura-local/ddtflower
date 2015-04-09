@@ -140,16 +140,16 @@ $cf{multi_sub} = {
 $cf{sub_reply} = '　DDTフラワーズ 体験レッスンのご予約の希望を承りました。';
 
 # 本体プログラム【URLパス】
-$cf{mail_cgi} = '../postmail.cgi';
+$cf{mail_cgi} = './postmail.cgi';
 
 # ログファイル【サーバパス】
-$cf{logfile} = 'postmail/data/log.cgi';
+$cf{logfile} = './data/log.cgi';
 
 # セッションファイル【サーバパス】
-$cf{sesfile} = 'postmail/data/ses.cgi';
+$cf{sesfile} = './data/ses.cgi';
 
 # テンプレートディレクトリ【サーバパス】
-$cf{tmpldir} = './';
+$cf{tmpldir} = './tmpl';
 
 # セッションの許容時間（分単位）
 # → 確認画面表示後、送信ボタンを押すまでの時間
