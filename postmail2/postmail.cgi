@@ -288,8 +288,8 @@ sub send_mail {
 		my $keytmp = "!".$_."!";
 		
 		#正規表現にかけるまえに括弧があればエスケープする。
-		my $keytmp2 = $keytmp =~ tr/[/\[/;
-		my $keytmp3 = $keytmp2 =~ tr/]/\]/;
+		$keytmp =~ tr/[/\[/;
+		$keytmp =~ tr/]/\]/;
 
 		
 		# name値の名前置換
@@ -298,7 +298,7 @@ sub send_mail {
 			#キーを登録された文字列に変換する。
 			$key_name = $cf{replace}->{$_};
 			#返信テンプレートでキー名を指定して値を利用できるようにする。
-			$reply =~ s/$keytmp3/$$in{$_}/g;
+			$reply =~ s/$keytmp/$$in{$_}/g;
 		} else {
 			$key_name = $_;
 		}
