@@ -393,7 +393,7 @@ sub send_mail {
 
 		# 件名MIMEエンコード （init.cgiに設定した件名を展開する）mod 2015/0410 H.Kaneko
 		# my $re_sub = mime_unstructured_header($cf{sub_reply});
-		my $re_sub = $$in{subject} ne '' defined($cf{multi_sub_reply}->{$$in{subject}}) ? $cf{multi_sub_reply}->{$$in{subject}} : $cf{subject_reply};
+		my $re_sub = $$in{subject} ne '' && defined($cf{multi_sub_reply}->{$$in{subject}}) ? $cf{multi_sub_reply}->{$$in{subject}} : $cf{subject_reply};
 		$re_sub = mime_unstructured_header($re_sub);
 		
 		$res_body .= "To: $email\n";
