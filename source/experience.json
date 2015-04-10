@@ -173,7 +173,7 @@
         }
     },
     "specialReservedDialog": {
-        "action": "postmail2/postmail.cgi",
+        "action": "postmail/postmail.cgi",
         "reservedDate":{
         	"type":"hidden",
         	"name":"reservedDate"

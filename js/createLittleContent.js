@@ -64,6 +64,9 @@ function createCalendar (selector) {
  * 概要  :予約のカレンダーを作る。
  * 作成日:2015.03.18
  * 作成者:T.Masuda
+ * 修正日:2015.04.10
+ * 修正者:T.Masuda
+ * 内容  :自信に予約用カレンダーのクラスを付加するように変更しました。
  */
 function createReservedCalendar (selector) {
 	// jqueryの記述の始まり
@@ -71,11 +74,16 @@ function createReservedCalendar (selector) {
 		$.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 		
+		//自身にreservedCalendarクラスを追加する。
+		$(selector).addClass('reservedCalendar');
 		$(selector).datepicker({
 			// カレンダーの日付を選択したら
 			onSelect: function(dateText, inst){
-				// 予約のダイアログを出す。
-				callReservedDialog(dateText);
+				//日付をチェックする
+				if(checkDate(dateText, $(selector))){
+					// 予約のダイアログを出す。
+					callReservedDialog(dateText);
+				}
 			}
 		});
 		// ここまで追加・修正しました。
@@ -98,6 +106,34 @@ function setCallCalendar (selector) {
         $(selector).datepicker();
 }
 
+/*
+ * 関数名:function checkDate(dateText, calendar)
+ * 引数  :string dateText:日付のテキスト。
+ * 　　  :element calendar:この関数をコールしたdatepicker。
+ * 戻り値:booelan:判定結果を返す。
+ * 概要  :選択したカレンダーの日付が今日より前かどうかをチェックすり。
+ * 作成日:2015.04.10
+ * 作成者:T.Masuda
+ */
+function checkDate(dateText, calendar){
+	var retBoo = true;	//返却値を格納する変数を宣言、trueで初期化する。
+	//予約カレンダーであれば
+	if(calendar.hasClass('reservedCalendar')){
+		//本日の日付のインスタンスを生成する。
+		var today = new Date();
+		//本日の0時0分0秒の日付を作成する。
+		var today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+		
+		//選択した日付のインスタンスを生成する。
+		var selectedDay = new Date(dateText);
+		//今日より前の日付なら
+		if(today.getTime() > selectedDay.getTime()){
+			retBoo = false;	//falseを返すようにする。
+		}
+	}
+	
+	return retBoo;	//retBooを返す。
+}
 
 /*
  * 関数名:toolTip

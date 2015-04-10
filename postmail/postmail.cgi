@@ -249,6 +249,12 @@ sub send_mail {
 	$mail =~ s/!date!/$date1/g;
 	$mail =~ s/!agent!/$agent/g;
 	$mail =~ s/!host!/$host/g;
+	
+	# 概要を展開する（init.cgiに設定してある）　add 2015/0410 H.Kaneko
+	my $summary = $$in{subject} ne '' && defined($cf{multi_summary}->{$$in{subject}}) ?
+						$cf{multi_summary}->{$$in{subject}} : $cf{summary};
+	$summary = mime_unstructured_header($summary);
+	$reply =~ s/!summary!/$summary/g;
 
 	# 自動返信ありのとき
 	my $reply;
@@ -265,6 +271,12 @@ sub send_mail {
 
 		# 変数変換
 		$reply =~ s/!date!/$date1/g;
+		
+		# 概要を展開する（init.cgiに設定してある）add 2015/0410 H.Kaneko
+		my $summary_reply = $$in{subject} ne '' && defined($cf{multi_summary_reply}->{$$in{subject}}) ?
+							$cf{multi_summary_reply}->{$$in{subject}} : $cf{summary};
+		$summary_reply = mime_unstructured_header($summary_reply);
+		$reply =~ s/!summary!/$summary_reply/g;
 	}
 
 	# 本文キーを展開
@@ -287,7 +299,7 @@ sub send_mail {
 		my $key_name;
 		my $keytmp = "!".$_."!";
 		
-		# name値の名前置換
+		# name値の名前置換 add 2015/0409 H.Kaneko
 		#init.cgiの$cf{replace}に登録してあるキーであれば
 		if (defined($cf{replace}->{$_})) {
 			#キーを登録された文字列に変換する。
@@ -325,7 +337,6 @@ sub send_mail {
 		} else {
 			$tmp = "$key_name = $$in{$_}\n";
 		}
-		
 		$mbody .= $tmp;
 
 		$bef = $_;
@@ -347,7 +358,6 @@ sub send_mail {
 	# MIMEエンコード
 	my $sub_me = $$in{subject} ne '' && defined($cf{multi_sub}->{$$in{subject}}) ? $cf{multi_sub}->{$$in{subject}} : $cf{subject};
 	$sub_me = mime_unstructured_header($sub_me);
-	
 	my $from;
 	if ($$in{name}) {
 		$$in{name} =~ s/[\r\n]//g;
@@ -381,9 +391,11 @@ sub send_mail {
 	my $res_body;
 	if ($cf{auto_res}) {
 
-		# 件名MIMEエンコード
-		my $re_sub = mime_unstructured_header($cf{sub_reply});
-
+		# 件名MIMEエンコード （init.cgiに設定した件名を展開する）mod 2015/0410 H.Kaneko
+		# my $re_sub = mime_unstructured_header($cf{sub_reply});
+		my $re_sub = $$in{subject} ne '' defined($cf{multi_sub_reply}->{$$in{subject}}) ? $cf{multi_sub_reply}->{$$in{subject}} : $cf{sub_reply};
+		$re_sub = mime_unstructured_header($re_sub);
+		
 		$res_body .= "To: $email\n";
 		$res_body .= "From: $cf{mailto}\n";
 		$res_body .= "Subject: $re_sub\n";

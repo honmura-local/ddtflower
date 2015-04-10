@@ -290,8 +290,6 @@ sub send_mail {
 		#正規表現にかけるまえに括弧があればエスケープする。
 		$keytmp =~ tr/[/\[/;
 		$keytmp =~ tr/]/\]/;
-
-		print $keytmp;
 		
 		# name値の名前置換
 		#init.cgiの$cf{replace}に登録してあるキーであれば
