@@ -291,6 +291,7 @@ sub send_mail {
 		$keytmp =~ tr/[/\[/;
 		$keytmp =~ tr/]/\]/;
 
+		print $keytmp;
 		
 		# name値の名前置換
 		#init.cgiの$cf{replace}に登録してあるキーであれば
