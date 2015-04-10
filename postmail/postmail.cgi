@@ -273,7 +273,7 @@ sub send_mail {
 		
 		# 概要を展開する（init.cgiに設定してある）add 2015/0410 H.Kaneko
 		my $summary_reply = $$in{subject} ne '' && defined($cf{multi_summary_reply}->{$$in{subject}}) ?
-							$cf{multi_summary_reply}->{$$in{subject}} : $cf{summary};
+							$cf{multi_summary_reply}->{$$in{subject}} : $cf{summary_reply};
 		$reply =~ s/!summary!/$summary_reply/g;
 	}
 
