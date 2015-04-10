@@ -185,8 +185,9 @@ function createFormData(form){
 	//返却するデータを格納する変数を宣言する。
 	var formDataReturn = {};
 	
-	//フォーム内の入力要素を走査する。
-	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden', form).each(function(){
+	//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
+	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden', form)
+		.not('[disabled]').each(function(){
 		//値を取得する。
 		var val = $(this).val();
 		//name属性の値を取得する。

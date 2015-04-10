@@ -267,6 +267,8 @@ function createSpecialReservedDialog(json, array){
 			        		 if(emptyList == null && onlyAlphabetList.length == 0 && emailCheck == true) {
 				        		 // 入力確認ダイアログを呼び出す。
 				        		 createSpecialReservedConfirmDialog();
+				        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
+				        		 $('.personEmailCheck input').attr('disabled', 'disabled');
 				        		 //ダイアログ内のフォームをsubmitする。
 				        		 $('form.specialReservedDialog').submit();				        		 
 				        		 // このダイアログの入力要素を一時的に無効化する。
