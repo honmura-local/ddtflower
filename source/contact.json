@@ -12,7 +12,7 @@
         }
     },
     "contactForm": {
-        "action": "postmail/postmail.cgi",
+        "action": "postmail1/postmail.cgi",
         "method": "post",
         "formBody.cf": {
             "name": {
