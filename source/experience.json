@@ -306,11 +306,11 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "schedule",
-                        "value": "19:30 〜 21:00",
+                        "value": "19:30 〜 21:30",
                         "type": "checkbox"
                     },
                     "buttonTopText": {
-                        "text": "19:30 〜 21:00"
+                        "text": "19:30 〜 21:30"
                     }
                 }
             }
