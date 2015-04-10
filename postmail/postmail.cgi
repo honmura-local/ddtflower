@@ -253,7 +253,6 @@ sub send_mail {
 	# 概要を展開する（init.cgiに設定してある）　add 2015/0410 H.Kaneko
 	my $summary = $$in{subject} ne '' && defined($cf{multi_summary}->{$$in{subject}}) ?
 						$cf{multi_summary}->{$$in{subject}} : $cf{summary};
-#	$summary = mime_unstructured_header($summary);
 	 $mail =~ s/!summary!/$summary/g;
 
 	# 自動返信ありのとき mod 2015/0410 T.Masuda 変数宣言のトークン
@@ -275,7 +274,6 @@ sub send_mail {
 		# 概要を展開する（init.cgiに設定してある）add 2015/0410 H.Kaneko
 		my $summary_reply = $$in{subject} ne '' && defined($cf{multi_summary_reply}->{$$in{subject}}) ?
 							$cf{multi_summary_reply}->{$$in{subject}} : $cf{summary};
-#		$summary_reply = mime_unstructured_header($summary_reply);
 		$reply =~ s/!summary!/$summary_reply/g;
 	}
 
