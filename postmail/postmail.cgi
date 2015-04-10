@@ -254,9 +254,9 @@ sub send_mail {
 	my $summary = $$in{subject} ne '' && defined($cf{multi_summary}->{$$in{subject}}) ?
 						$cf{multi_summary}->{$$in{subject}} : $cf{summary};
 	$summary = mime_unstructured_header($summary);
-	$reply =~ s/!summary!/$summary/g;
+	 $mail =~ s/!summary!/$summary/g;
 
-	# 自動返信ありのとき
+	# 自動返信ありのとき mod 2015/0410 T.Masuda 変数宣言のトークン
 	my $reply;
 	if ($cf{auto_res}) {
 
@@ -393,7 +393,7 @@ sub send_mail {
 
 		# 件名MIMEエンコード （init.cgiに設定した件名を展開する）mod 2015/0410 H.Kaneko
 		# my $re_sub = mime_unstructured_header($cf{sub_reply});
-		my $re_sub = $$in{subject} ne '' defined($cf{multi_sub_reply}->{$$in{subject}}) ? $cf{multi_sub_reply}->{$$in{subject}} : $cf{sub_reply};
+		my $re_sub = $$in{subject} ne '' defined($cf{multi_sub_reply}->{$$in{subject}}) ? $cf{multi_sub_reply}->{$$in{subject}} : $cf{subject_reply};
 		$re_sub = mime_unstructured_header($re_sub);
 		
 		$res_body .= "To: $email\n";
