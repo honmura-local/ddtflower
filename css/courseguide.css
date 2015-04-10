@@ -494,6 +494,8 @@
  */
 .annotation {
     clear: left;      /* 左側の回り込みを解除する */
+    padding-left: 1em;/* 左から1文字分余白を空ける */
+    text-indent: -1em;/* 文字のインデントを1文字はみ出る形にする */
 }
 
 /* 
@@ -759,7 +761,7 @@
      * 追加日 :2015.03.08
      * 内容   :font-sizeの削除
      */
-    .itemList .listContent {
+    .itemList .listContent, .annotation {
         text-indent: -8px;      /* 字下げのためにインデントをとる */
     }
 }
