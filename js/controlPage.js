@@ -203,8 +203,8 @@ function createFormData(form){
 				//配列にチェックボックスの値を格納していく。
 				val[i] = $(this).val();
 			});
-			//formDataを連想配列として扱い、keyとvalueを追加していく。
-			formDataReturn[name] = val;
+			//formDataを連想配列として扱い、keyとvalueを追加していく。name属性の[]は消しておく。
+			formDataReturn[name.replace('[]', '')] = val;
 		//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
 		} else if(($(this).attr('type') == 'checkbox' 
 			&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
