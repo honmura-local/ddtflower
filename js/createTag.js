@@ -1120,7 +1120,7 @@ function createTag(){
 		
 		//colNameNodeを行の先頭に配置する
 		$table.prepend(colNameNode);
-		
+
 		return $table;	//作成したテーブルを返す
 	}
 	

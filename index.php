@@ -177,6 +177,8 @@ $(document).ready(function(){
 			fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
 			fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);		
 			fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
+			// ログインダイアログを作る
+			var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
 });
 
 </script>

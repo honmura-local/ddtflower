@@ -38,17 +38,65 @@ var fullHouse = "満席";
 * @param mixed timeTableRows 授業情報を(1時間割分全部)格納した連想配列
 * @return int timeTableStudents 時間割全体の予約人数
 */ 
-var getTotalStudentsOfTimeTable = function(timeTableRows) {
-	// 生徒の数を0で初期化する
-	var students = 0;
-	// ループで生徒の人数の合計を求める
-	for (var key in timeTableRows) {
-		// 生徒の数を合計の変数に足す
-		students += timeTableRows[key].students;
-	}
+// var getTotalStudentsOfTimeTable = function(timeTableRows) {
+// 	// 生徒の数を0で初期化する
+// 	var students = 0;
+// 	// ループで生徒の人数の合計を求める
+// 	for (var key in timeTableRows) {
+// 		// 生徒の数を合計の変数に足す
+// 		students += timeTableRows[key].students;
+// 	}
+// 	// 生徒の合計人数を返す
+// 	return students;
+// }
+
+/* 
+ * 関数名:getTotalStudentsOfTimeTable
+ * 概要  :時間割ごとの生徒の合計人数を求める
+ * 引数  :rowData:テーブル1行のデータ
+ * 返却値:時間ごとの合計人数が入った連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.23
+ */
+var getTotalStudentsOfTimeTable = function(rowData, tableName) {
+	//生徒の数を0で初期化する
+	var students = {};
+	//カウンターを作る
+	var counter = 0;
+	//背景色のフラグを0で初期化する
+	var backgroundColorFlag = 0;
+	// 時限の値を変数に入れる
+	var lessonTime = rowData[counter]['start_time'];
+	//取り出した行の数だけループする
+	$.each(rowData, function() {
+		// 時限が同じときは合計の変数に足す
+		if(lessonTime === rowData[counter]['start_time']) {
+			// 合計の変数に値を足す
+			students[lessonTime] += Number(rowData[counter]['order_students']);
+		// 違う時限になった時の処理
+		} else {
+			// 時限の値を変数に入れる
+			lessonTime = rowData[counter]['start_time'];
+			//生徒の数を0で初期化する
+			// students = 0;
+			// 背景のフラグを変更する
+			if(backgroundColorFlag === 0) {
+				backgroundColorFlag = 1;
+			} else {
+				backgroundColorFlag = 0;
+			}
+		}
+		if (backgroundColorFlag === 1) {
+			// 背景を変える
+			$(tableName + ' tr').css('background', '#F2F2F2');
+		}
+		//カウンタ変数をインクリメントする
+		counter++;
+	});
 	// 生徒の合計人数を返す
 	return students;
-}
+};
+
 
 /**
  * 授業が中止かどうか判定する
@@ -107,12 +155,12 @@ function getRestOfSheets(rowData, timeTableStudents) {
 	// 授業コマの最大人数
 	var maxStudents = rowData["max_students"];	//最大人数(授業コマ)
 	// students列がなければ例外処理をする
-	isExist(rowData, "students");
+	isExist(rowData, "order_students");
 	// 現在の予約人数を変数に入れる
-	var students = rowData["students"];	// 現予約人数
+	var students = rowData["order_students"];	// 現予約人数
 	// 時間割としての残りの人数
 	var timeTableRest = maxNum - students;	// 時間割としての残り
-	var classworkRest = maxStudents - rowData['students'];	// 授業コマとしての残り
+	var classworkRest = maxStudents - rowData['order_students'];	// 授業コマとしての残り
 	// 時間割としてのが授業コマとしての数以下であるなら時間割基準の人数を返す
 	if(timeTableRest <= classworkRest) {
 		return timeTableRest;
@@ -232,7 +280,7 @@ function getRestMark(rowData, timeTableStudents) {
 		restMark = restMarks[key];
     }
 	return restMark;
-}
+};
 
 /* 
  * 関数名:getPoint
@@ -243,7 +291,7 @@ function getRestMark(rowData, timeTableStudents) {
  * 作成者:T.Yamamoto
  * 作成日:2015.06.14
  */
-function getPoint(targetTable, sumCost) {
+var getPoint = function (targetTable, sumCost) {
 	// 列にあるポイントレートを変数に入れる
 	var pointRate = targetTable["point_rate"];
 	// 料金とレートをかけて100で割り、結果を求める
@@ -251,8 +299,8 @@ function getPoint(targetTable, sumCost) {
 	// 四捨五入する
 	resultPoint = Math.round(resultPoint);
 	// 求めたポイントを返す
-	return resultPoint
-}
+	return resultPoint;
+};
 
 /* 
  * 関数名:sumCost
@@ -263,7 +311,7 @@ function getPoint(targetTable, sumCost) {
  * 作成者:T.Yamamoto
  * 作成日:2015.06.14
  */
-function sumCost(rowData, rowNumber) {
+var sumCost = function(rowData, rowNumber) {
 	// 合計の結果変数を作る
 	var sumResult = 0;
 	// key名にcostがつくものがあれば合計の変数に足す
@@ -276,7 +324,7 @@ function sumCost(rowData, rowNumber) {
 	}
 	// 合計の変数を返す
 	return sumResult;
-}
+};
 
 /* 
  * 関数名:backThreeStringDelete
@@ -344,7 +392,7 @@ var buildHourFromTo = function(rowData) {
  * 作成者:T.Yamamoto
  * 作成日:2015.06.13
  */
-function　allDateTime(rowData) {
+var allDateTime = function (rowData) {
 	var result;
 	result = frontTwoStringDelete(rowData, 'lesson_date');
 	result += ' ';
@@ -355,7 +403,10 @@ function　allDateTime(rowData) {
 /* 
  * 関数名:reservedLessonValueInput
  * 概要  :予約テーブルについてデータベースから取り出した値を入れる関数をコールする
- * 引数  :
+ * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+ 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 counter:カウンタ変数
+ 		 rowNumber:行番号
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.06.13
@@ -379,7 +430,7 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber) 
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(rest);
 	// 残席の表示を正規の表示にする
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(5).text(lessonStatus);
-}
+};
 
 /* 
  * 関数名:callMemberLessonValue
@@ -407,7 +458,7 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(cost);
 	// ポイントの表示を正規の表示にする
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(5).text(point);
-}
+};
 
 /* 
  * 関数名:callEachDayReservedValue
@@ -433,7 +484,7 @@ var callEachDayReservedValue = function(tableName, roopData, counter, rowNumber)
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(start_time);
 	// 終了時間を表示する
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(end_time);
-}
+};
 
 
 /* 

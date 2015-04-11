@@ -20,7 +20,7 @@ $KEY_LIST = array('text', 'html', 'src');
 // データベースに接続するための値を定数として宣言する
 define('DSN', 'mysql:host=localhost;dbname=ddthink-com00006');		// データソースネーム(ホスト名、DB名)
 define('DB_USER', 'root');								// データベースユーザ
-define('DB_PASSWORD', 'root');						// データベースパスワード
+define('DB_PASSWORD', 'bnp2525');						// データベースパスワード
 
 /*
  * クラス名:DB_ResultTree
