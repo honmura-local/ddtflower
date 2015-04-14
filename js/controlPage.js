@@ -237,48 +237,169 @@ function createFormData(form){
  * 内容 　:.mainの中のフォームに限定しました。
  */
 $(document).on('submit', '.main form', function(event){
+	var confirmEvent = true;	//submitを実行するかどうかの判定の変数を用意する。
+	var $this = $(this);		//処理高速化のためthisのjQueryオブジェクトを変数に入れる。
 	//submitイベントをキャンセルする。
 	event.preventDefault();
-	//フォームのaction属性から送信URLを取得する。
-	var url = $(this).attr('action');
 	
+	//submitボタンにconfirm属性が指定してありかつ、trueであれば
+	if($(('input:submit[confirm="true"]'), $this).length){
+		//formタグにメッセージが書いてあれば、取得してダイアログに渡す準備をする。
+		var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
+		//同様にタイトルも準備する。
+		var title = $this.attr("title") !== void(0)? $this.attr("title"):"";
+		//OKボタン、キャンセルボタンでtrue、falseを返すダイアログを表示する。
+		chooseOKBeforeCallFunc(message, title, postForm, $this);
+	} else {
+		//チェックの必要がなければ通常通りフォームをsubmitする。
+		postForm($this);
+	}
+});
+
+/*
+ * 関数名:function postForm(form)
+ * 引数  :element form:フォームの要素。
+ * 戻り値:なし
+ * 概要  :フォームを送信する。
+ * 作成日:2015.04.13
+ * 作成者:T.Y
+ */
+function postForm(form){
+	$form = $(form);	//高速化のため、フォームの要素をjQueryオブジェクトにして変数に格納する。
+	//フォームのaction属性から送信URLを取得する。
+	var url = $form.attr('action').split(',');
 	//送信するデータを格納する連想配列を作成する。
-	var formData = createFormData($(this));
+	var formData = createFormData($form);
+	//creatorのメンバにフォームデータを保存する。
+	creator.formData['formData'] = formData;
 	
 	//postメソッドでフォームの送信を行う。
-	$.post(url, formData,
+	$.post(url[0], formData,
 	// 成功時の処理を記述する。
 	 function(data){
-
 		//お問い合わせフォームであったら
 		if($('.main .confirmSendMail').length > 0){
 			//送信完了のメッセージを出す。
 			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してお問い合わせの操作を行ってください。');
 		}
-
-		//mainのタグを空にする。
-		$('.main').empty();
-		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
-		$('.main').append($('.main > *', data));
-		//linkタグを収集する。
-		var links = $(data).filter('link');
-		//scriptタグを収集する。
-		var scripts = $(data).filter('script:parent');
-		//linkタグを展開する。
-		links.each(function(){
-			//headタグ内にlinkタグを順次追加していく。
-			$('.main').append($(this));
-		});
-		//scriptタグを展開する。
-		scripts.each(function(){
-			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
-			$('.main').append($(this));
-		});
+	
+		var $target = $('.main');	//書き込み先を指定する。
 		
-		//カレントのURLを更新する。
-		currentLocation = url;
+		//URLが二つあれば
+		if(url.length > 1){
+			alert('更新に成功しました。');	//返ってきたデータをダイアログに出す。
+//			alert(data);	//返ってきたデータをダイアログに出す。
+			//タブがあれば
+			if($target.has('.tabContainer').length){
+				$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
+				callPageInTab(url[1], $target);			//タブにページを書き込む。
+				//タブでなかったら
+			} else {
+				callPage(url[1]); //画面を切り替える。
+			}			
+		} else {
+			//タブがあれば
+			if($target.has('.tabContainer').length){
+				$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
+				callPageInTab(url[0], $target);			//タブにページを書き込む。
+				//タブでなかったら
+			} else {
+				//mainのタグを空にする。
+				$target.empty();
+				//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
+				$target.append($('.main > *', data));
+				//linkタグを収集する。
+				var links = $(data).filter('link');
+				//scriptタグを収集する。
+				var scripts = $(data).filter('script:parent');
+				//linkタグを展開する。
+				links.each(function(){
+					//headタグ内にlinkタグを順次追加していく。
+					$target.append($(this));
+				});
+				//scriptタグを展開する。
+				scripts.each(function(){
+					//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+					$target.append($(this));
+				});
+				
+				//カレントのURLを更新する。
+				currentLocation = url;
+			}
+		}
 	});
-});
+}
+
+
+/* 
+ * 関数名:function chooseOKBeforeCallFunc(message, title, func, arg)
+ * 概要  :関数を実行するかどうか確認するダイアログを出す。
+ * 引数  :String message:ダイアログに書き出すテキスト。
+ * 		:String title:ダイアログのタイトル。
+ * 		:function func:OKボタンを押した後にコールされる関数。
+ * 		:?	arg:関数の引数。
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.04.13
+ * 変更者:T.M
+ */
+function chooseOKBeforeCallFunc(message, title, func, arg){
+	//共通コンテンツのJSONを取得する。
+	creator.getJsonFile('source/commonJson.json');
+	// ダイアログの本体となるdivタグを生成する。
+	creator.outputTag('funcConfirmDialog', 'funcConfirmDialog', 'body');
+	$('.funcConfirmDialog:last').text(message);	//ダイアログにテキストを書き込む。
+	// 生成したdivタグをjQuery UIのダイアログにする。
+	$('.funcConfirmDialog:last').dialog({
+		// 幅を設定する。
+		width			: '300px',
+		// ダイアログを生成と同時に開く。
+		autoOpen		: true,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		//タイトルをつける。
+		title:title,
+		//ダイアログにクラスを設定する。
+		dialogClass		:'confirmDialog',
+		// モーダルダイアログとして生成する。
+		modal			: true,
+		// リサイズしない。
+		resizable		: false, 
+		// 作成完了時のコールバック関数。
+		create:function(event, ui){
+			// タイトルバーを見えなくする。
+			$('.confirmDialog .ui-dialog-titlebar-close').css('display', 'none');
+		},
+		// 位置を指定する。
+		position:{
+			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+			my:'center center',
+			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+			at:'center center',
+			// ウィンドウをダイアログを配置する位置の基準に指定する。
+			of:window
+		},
+		buttons:[	//ボタンを配置する。
+		         {
+		        	 text:"OK",	//OKボタン
+		        	 click:function(event, ui){	//クリック時のコールバック
+		        		 func(arg);	//関数をコールする。
+		        		 //ダイアログを消す。
+		        		 $(this).dialog("close").dialog("destroy").remove()
+		        	 }
+		         },
+		         {
+		        	 text:"キャンセル",	//キャンセルボタン
+		        	 click:function(event, ui){	//クリック時のコールバック
+		        		 //ダイアログを消す。
+		        		 $(this).dialog("close").dialog("destroy").remove()
+		        	 }
+		         }
+		]
+	});
+}
+
+
 
 /*
  * 関数名:functionFilter
@@ -512,10 +633,10 @@ function sendImitateForm(form){
  * 作成日　　:2015.03.26
  * 作成者　　:T.Masuda
  */
-$(document).on('submit', '.imitateForm', function(){
-	event.preventDefault();	//submitイベント本来の画面遷移をキャンセルする。
-	sendImitateForm(this);	//自己定義の関数でフォームの送信を行う。
-});
+//$(document).on('submit', '.imitateForm', function(){
+//	event.preventDefault();	//submitイベント本来の画面遷移をキャンセルする。
+//	sendImitateForm(this);	//自己定義の関数でフォームの送信を行う。
+//});
 
 /*
  * イベント名:$(document).on('click')
@@ -526,10 +647,10 @@ $(document).on('submit', '.imitateForm', function(){
  * 作成者　　:T.Masuda
  */
 //表示中のタブパネル内で疑似フォームがサブミットされたら
-$(document).on('click', '.imitateForm .submit', function(){
-	//疑似サブミットの処理の関数をコールする。
-	submitImitateForm($('.imitateForm').has(this));
-});
+//$(document).on('click', '.imitateForm .submit', function(){
+//	//疑似サブミットの処理の関数をコールする。
+//	submitImitateForm($('.imitateForm').has(this));
+//});
 
 /*
  * イベント:$(document).on('submit', 'form.specialReservedDialog')

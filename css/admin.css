@@ -609,12 +609,12 @@
 }
 
 /* 
- * セレクタ:.editStudent input[type="text"]
+ * セレクタ:.editStudent input[type="text"],.editStudent input[type="text"]
  * 概要   :生徒さん登録画面のテキストボックス。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.editStudent input[type="text"]{
+.editStudent input[type="text"],.editStudent input[type="text"]{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
 }
  
@@ -654,6 +654,21 @@
 	border-left	: solid 5px rgb(206,220,58);	/* 左に傍線を引く。 */
 	background	: #EEE;							/* 背景をグレーにし、帯化する */
 	display		: block;						/* ブロック要素として扱い、1行分の幅を取る。 */
+}
+
+
+/* 
+ * セレクタ:ul li.notice
+ * 概要   :送信内容確認のブロックの箇条書きメッセージ部分。.tabContainer ul liとの重複の対策。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.13
+ */
+ul li.notice{
+	background: transparent;			/* 背景色を透過色にする。 */
+	border: none;						/* 枠線を消す。 */
+	border-top-left-radius: 0px 0px;	/* 左上の角丸をなくす。 */
+	border-top-right-radius: 0px 0px;	/* 右上の角丸をなくす */
+	font-size: 14px;					/* フォントサイズを小さくする */
 }
 
 /* 

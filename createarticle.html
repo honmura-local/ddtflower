@@ -19,14 +19,16 @@
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				
-				creator.outputTag('blogEditImages');				//ブログ記事画像編集領域を作る。
+				creator.outputTag('blogEdit');						//ブログ記事タイトル編集領域を作る。
+				creator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');					//ブログ記事タイトル編集領域を作る。
+				creator.outputTag('blogEditImages', 'blogEditImages','.blogEdit');				//ブログ記事画像編集領域を作る。
 				//ブログ記事画像編集パーツを3つ作る。
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditText');					//ブログの本文作成領域を作る。
-				creator.outputTag('blogPublication');				//ブログの公開設定のパーツを作る。
-				creator.outputTag('blogEditButtons');				//編集確定か否かを選択するボタン群を作る。
+				creator.outputTag('blogEditText', 'blogEditText','.blogEdit');					//ブログの本文作成領域を作る。
+				creator.outputTag('blogPublication', 'blogPublication','.blogEdit');				//ブログの公開設定のパーツを作る。
+				creator.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');				//編集確定か否かを選択するボタン群を作る。
 				
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
@@ -38,6 +40,7 @@
 				
 				//ボタンをjQueryUIのリッチなボタンにする。
 				$('.main button').button();
+				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionImage');
 			</script>
 		</div>
 	</div>

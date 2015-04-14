@@ -98,6 +98,16 @@
 	padding: 20px 0px;
 }
 
+.blogEditTitle:before {
+	content: "タイトル編集";
+	display: block;
+	margin-left: 5px;
+}
+.blogEditTitleText {
+	width: 250px;
+	padding: 3px 0px;
+	margin: 0px 5px 10px;
+}
 
  /* 
  * セレクタ:.blogEditImages
@@ -459,14 +469,23 @@
 	 */
 	 .myPageBlogButton {
 	 	width: 90%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
-		
 	 	margin: 0 auto 10px;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
-		
 	 	display: block;	/*インラインブロックにして横に並ぶ様にする。*/
-	 
 	 	padding: 5px 0;
-}
+	}
 
+	.blogEditTitle {
+		width: 90%;
+		margin: 0 auto;
+	}
+	.blogEditTitle:before {
+		content: "タイトル編集";
+		display: block;
+		margin-left: 0;
+	}
+	.blogEditTitleText {
+		margin-left: 0px;
+	}
 	 /* 
 	 * セレクタ:.blogEditImages
 	 * 概要   :ブログの画像編集領域。
@@ -492,7 +511,7 @@
 	
 		width: 130px;
 		margin-left: 0px;
-}
+	}
 
 	 /* 
 	 * セレクタ:.blogEditText
@@ -506,7 +525,7 @@
 		margin		:0 auto 10px;	/*中央に寄せる。*/
 	
 		float: none;
-}
+	}
 
 	 /* 
 	 * セレクタ:.blogEditTextarea
@@ -520,7 +539,7 @@
 	
 		box-sizing: border-box;
 		height: 150px;
-}
+	}
 
 	 /* 
 	 * セレクタ:.blogEditButtons
@@ -587,7 +606,7 @@
 		padding-left: 0;
 	
 		display: block;
-}
+	}
 
 	 /* 
 	 * セレクタ:.blogArticleTitle

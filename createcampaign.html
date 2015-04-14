@@ -11,11 +11,12 @@
 				creator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
 				creator.getJsonFile('source/campaignmanagement.json');
 				creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-				// オプションタブのコンテンツを作る。
-				creator.outputTag('campaignTitle', 'campaignTitle', '#campaignManagement');
-				creator.outputTag('campaignDates', 'campaignDates', '#campaignManagement');
-				creator.outputTag('campaignMaxEntry', 'campaignMaxEntry', '#campaignManagement');
-				creator.outputTag('confirmEditCampaign', 'confirmEditCampaign', '#campaignManagement');
+				// キャンペーン作成画面のコンテンツを作る。
+				creator.outputTag('editCampaign', 'editCampaign', '#campaignManagement');
+				creator.outputTag('campaignTitle', 'campaignTitle', '.editCampaign');
+				creator.outputTag('campaignDates', 'campaignDates', '.editCampaign');
+				creator.outputTag('campaignMaxEntry', 'campaignMaxEntry', '.editCampaign');
+				creator.outputTag('confirmEditCampaign', 'confirmEditCampaign', '.editCampaign');
 				//日付入力テキストボックスをクリックするとカレンダーが出る様にする。
 				setCallCalendar('.tabPanel.active input.calendar');
 				$('#campaignManagement button').button();	//ボタンをリッチなものにする。	

@@ -77,8 +77,9 @@
         }
     },
     "editStudent": {
-        "class": "editStudent imitateForm",
         "action": "confirmregist.html",
+        "value": "個人情報の送信確認画面に移動します。",
+        "title": "情報入力",
         "formBody": {
             "class": "formBody cf",
             "name": {
@@ -210,7 +211,8 @@
         "submit": {
             "value": "登録へ",
             "type": "submit",
-            "onclick":""
+            "onclick": "",
+            "confirm": "true"
         },
         "back": {
             "href": "studentmanagement.html",
@@ -219,8 +221,10 @@
         }
     },
     "entryStudent": {
-        "class": "entryStudent editStudent imitateForm",
+        "class": "entryStudent editStudent",
         "action": "confirmregist.html",
+        "value": "個人情報の送信確認画面に移動します。",
+        "title": "情報入力",
         "formBody": {
             "class": "formBody cf",
             "name": {
@@ -352,9 +356,10 @@
         "submit": {
             "text": "登録へ",
             "href": "",
-            "onclick":"",
-            "type":"submit",
-            "value":"登録へ"
+            "onclick": "",
+            "type": "submit",
+            "value": "登録へ",
+            "confirm": "true"
         },
         "back": {
             "text": "戻る",
@@ -427,37 +432,37 @@
                 "class": "sendButtonbutton submit",
                 "type": "submit",
                 "value": "送信する>",
-                "onclick":""
+                "onclick": ""
             },
             "sendValue1": {
-            	"class":"sendValue",
-            	"type":"hidden",
-            	"name":"name",
-            	"value":""
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "name",
+                "value": ""
             },
             "sendValue2": {
-            	"class":"sendValue",
-            	"type":"hidden",
-            	"name":"sex",
-            	"value":""
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "sex",
+                "value": ""
             },
             "sendValue3": {
-            	"class":"sendValue",
-            	"type":"hidden",
-            	"name":"eMail",
-            	"value":""
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "eMail",
+                "value": ""
             },
             "sendValue4": {
-            	"class":"sendValue",
-            	"type":"hidden",
-            	"name":"tel",
-            	"value":""
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "tel",
+                "value": ""
             },
             "sendValue5": {
-            	"class":"sendValue",
-            	"type":"hidden",
-            	"name":"address",
-            	"value":""
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "address",
+                "value": ""
             }
         }
     },

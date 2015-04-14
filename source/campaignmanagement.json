@@ -1,4 +1,9 @@
 {
+    "searchButtonSet": {
+        "executeSearch": {
+            "text": "検索"
+        }
+    },
     "titleSearch": {
         "articleSearchLabel": {
             "text": "キャンペーン名"
@@ -31,7 +36,7 @@
     "campaignListHeadWrap": {
         "class": "recordWrapper",
         "campaignListHead": {
-        "class":"campaignListHead tableHead",
+            "class": "campaignListHead tableHead",
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
@@ -57,9 +62,16 @@
             "text": "編集",
             "href": "createcampaign.html"
         },
-        "delete":{
-        	"text":"削除"
+        "delete": {
+            "text": "削除"
         }
+    },
+    "editCampaign": {
+        "name": "editCampaign",
+        "method": "post",
+        "action": ",campaignmanagement.html",
+        "value": "キャンペーンの編集を確定します。",
+        "title": "キャンペーン編集"
     },
     "campaignTitle": {
         "campaignLabel": {
@@ -73,24 +85,24 @@
     },
     "campaignDates": {
         "campaignLabelInline1": {
-        	"class":"campaignLabelInline",
+            "class": "campaignLabelInline",
             "text": "開始日"
         },
         "campaignStartDate": {
             "type": "text",
             "name": "startDate",
             "value": "",
-            "class": "campaignStartDate calendar"
+            "class": "campaignStartDatecalendar"
         },
         "campaignLabelInline2": {
-        	"class":"campaignLabelInline",
+            "class": "campaignLabelInline",
             "text": "終了日"
         },
         "campaignEndDate": {
             "type": "text",
             "name": "endDate",
             "value": "",
-            "class": "campaignEndDate calendar"
+            "class": "campaignEndDatecalendar"
         }
     },
     "campaignMaxEntry": {
@@ -109,7 +121,9 @@
     "confirmEditCampaign": {
         "confirmEditCampaignButton": {
             "text": "確定",
-            "href": "campaignmanagement.html"
+            "onclick": "",
+            "type": "submit",
+            "confirm": "true"
         },
         "cancelEditCampaignButton": {
             "text": "戻る",

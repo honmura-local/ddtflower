@@ -1,4 +1,9 @@
 {
+    "searchButtonSet": {
+        "executeSearch": {
+            "text": "検索"
+        }
+    },
     "titleSearch": {
         "articleSearchLabel": {
             "text": "タイトル"

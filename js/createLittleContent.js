@@ -66,25 +66,22 @@ function createCalendar (selector) {
  * 作成者:T.Masuda
  * 修正日:2015.04.10
  * 修正者:T.Masuda
- * 内容  :自信に予約用カレンダーのクラスを付加するように変更しました。
+ * 内容  :自身に予約用カレンダーのクラスを付加するように変更しました。
  */
-function createReservedCalendar (selector) {
+function createReservedCalendar (selector, dateRange) {
 	// jqueryの記述の始まり
 	$(function() {
 		$.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 		
-		//自身にreservedCalendarクラスを追加する。
-		$(selector).addClass('reservedCalendar');
 		$(selector).datepicker({
 			// カレンダーの日付を選択したら
 			onSelect: function(dateText, inst){
-				//日付をチェックする
-				if(checkDate(dateText, $(selector))){
-					// 予約のダイアログを出す。
-					callReservedDialog(dateText);
-				}
-			}
+				// 予約のダイアログを出す。
+				callReservedDialog(dateText);
+			},
+			maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+			minDate:0			//過去はクリックできなくする。
 		});
 		// ここまで追加・修正しました。
 	});// jqueryの記述の終わり
@@ -737,7 +734,7 @@ function beforeConfirmButtonPush(func, message, arg){
  */
 $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
 	//チェックが入っている写真があれば
-	if($('myPhotoCcheck')){
+	if($('.myPhotoCheck:checked').length){
 		//確認ダイアログを出して同意を得てから画像を消す。
 		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
 	}

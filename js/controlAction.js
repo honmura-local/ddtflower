@@ -86,12 +86,12 @@ function showRightOutOfDisplayButton(selector, timeout, speed){
 function fadeToggleSet(clicked, target, setClass, delay){
 
 	//clicked以外をクリックしたらtargetが消えるイベント。何かしらクリックしたら判定を行う。
-	$(document).on('click touchend',function(event){
-		//clicked以外をクリックしていたら
-		if (!$.contains($(clicked)[0], event.target)) {
-			$(target).fadeOut(delay);	//targetを隠す。
-		}
-	});
+//	$(document).on('click touchend',function(event){
+//		//clicked以外をクリックしていたら
+//		if ($(event.target).attr('class') != clicked) {
+//			$(target).fadeOut(delay);	//targetを隠す。
+//		}
+//	});
 
 	//clickedのクリックイベントを登録する。
 	$(clicked).on('click' , function(){
