@@ -380,6 +380,7 @@ COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
 COLUMN_NAME_TODAY					= 'today';						// 今日の日付
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
+COLUMN_LESSON_LEY					= 'lesson_key';
 
 COLUMN_CLASSWORK_KEY				= 'COLUMN_NAME_TODAY';			// 授業id
 
@@ -599,8 +600,9 @@ SEL_MAIL_ADDRESS 							= '.mail_address';
 SEL_USER_NUMBER 							= '.user_number';
 
 //会員、確認ダイアログ
+CLASS_LESSON_CONFIRM_CONTENT 				= 'lessonConfirmContent';
 CLASS_LESSON_INFO 							= 'lessonConfirmInfo';		//会員、確認ダイアログ、授業情報クラス名
-CLASS_INFO_ACCORDION 						= 'infoAccordion';			//会員、確認ダイアログ、アコーディオンを開くきっかけとなるリンククラス名
+CLASS_INFO_ACCORDION 						= 'lessonAccordion';			//会員、確認ダイアログ、アコーディオンを開くきっかけとなるリンククラス名
 CLASS_LESSON_ACCORDION 						= 'attention';				//会員、確認ダイアログ、アコーディオンの親となる要素のクラス名
 CLASS_MEMBER_CONFIRM 						= "confirmText";			//会員、確認ダイアログ、確認テキストのクラス名
 

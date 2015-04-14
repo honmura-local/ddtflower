@@ -1208,7 +1208,6 @@ this.defaultClassworkCostColumns = [
 		return formDataReturn;
 	}
 	
-	
 	/* 
 	 * 関数名:disableInputs(dialog)
 	 * 概要  :対象のダイアログの入力要素を一時無効にする。
@@ -1536,23 +1535,12 @@ this.defaultClassworkCostColumns = [
 		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
 		var argumentObj = dialogClass.getArgumentDataObject();
 		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
-		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
-		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);			//受講時間
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];	//店舗名
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];	//授業テーマ
 		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
-		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
-		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
-//		//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
-//		var setToObject = create_tag.json.lessonConfirmContent;
-//		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
-//		var argumentObj = dialogClass.getArgumentDataObject();
-//		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-//		setToObject.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
-//		setToObject.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
-//		setToObject.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
-//		setToObject.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
-//		setToObject.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
-//		setToObject.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
+		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_LESSON_LEY][VALUE] 	= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(キャンセル)
+		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_LESSON_LEY][VALUE] 		= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(加算ポイント)
 	}	 
 	 
 	
