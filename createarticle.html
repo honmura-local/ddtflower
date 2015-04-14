@@ -19,8 +19,9 @@
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				
+				creator.outputTag('blogEditImageUploader');			//画像アップロードのボタンを配置する。
 				creator.outputTag('blogEdit');						//ブログ記事タイトル編集領域を作る。
-				creator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');					//ブログ記事タイトル編集領域を作る。
+				creator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');				//ブログ記事タイトル編集領域を作る。
 				creator.outputTag('blogEditImages', 'blogEditImages','.blogEdit');				//ブログ記事画像編集領域を作る。
 				//ブログ記事画像編集パーツを3つ作る。
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
@@ -39,8 +40,9 @@
 				fixXCoordinateOnScroll('header');
 				
 				//ボタンをjQueryUIのリッチなボタンにする。
-				$('.main button').button();
-				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionImage');
+				$('.main button, .main input:submit').button();
+				//ボタンをクリックしてファイルを選択するイベントを設定する。
+				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImage');
 			</script>
 		</div>
 	</div>

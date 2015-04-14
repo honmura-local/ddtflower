@@ -114,7 +114,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm input{
+.contactForm input[type="text"], .contactForm input[type="email"]{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
 }
 
@@ -239,7 +239,7 @@
 		margin-left: 0px;
 	}
 	/* 
-	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail {
+	 * セレクタ:.contactForm textarea, .contactForm input[type="text"], .contactForm input[type="email"], .confirmSendMail
 	 * 概要   :入力項目
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.11

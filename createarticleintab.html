@@ -13,18 +13,24 @@
 			<link href="css/mypage.css" rel="stylesheet" type="text/css">
 			<script>
 				creator.getJsonFile('source/createarticle.json');	// マイページのJSONを取得する。
-				creator.outputTag('blogEditImages', 'blogEditImages', '#adminBlogManagement');		//ブログ記事画像編集領域を作る。
+				creator.outputTag('blogEditImageUploader','blogEditImageUploader', '#adminBlogManagement');			//画像アップロードのボタンを配置する。
+				creator.outputTag('blogEdit','blogEdit', '#adminBlogManagement');						//ブログ記事タイトル編集領域を作る。
+
+				creator.outputTag('blogEditImages', 'blogEditImages', '#adminBlogManagement .blogEdit');		//ブログ記事画像編集領域を作る。
+
 				//ブログ記事画像編集パーツを3つ作る。
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','#adminBlogManagement .blogEditImages');
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','#adminBlogManagement .blogEditImages');
 				creator.outputTag('blogEditImagesSection','blogEditImagesSection','#adminBlogManagement .blogEditImages');
 				
-				creator.outputTag('blogEditText', 'blogEditText', '#adminBlogManagement');			//ブログの本文作成領域を作る。
-				creator.outputTag('blogPublication', 'blogPublication', '#adminBlogManagement');	//ブログの公開設定のパーツを作る。
-				creator.outputTag('blogEditButtons', 'blogEditButtons', '#adminBlogManagement');	//編集確定か否かを選択するボタン群を作る。
+				creator.outputTag('blogEditText', 'blogEditText', , '#adminBlogManagement .blogEdit');			//ブログの本文作成領域を作る。
+				creator.outputTag('blogPublication', 'blogPublication', , '#adminBlogManagement .blogEdit');	//ブログの公開設定のパーツを作る。
+				creator.outputTag('blogEditButtons', 'blogEditButtons', , '#adminBlogManagement .blogEdit');	//編集確定か否かを選択するボタン群を作る。
 				
 				//ボタンをjQueryUIのリッチなボタンにする。
-				$('#adminBlogManagement button').button();
+				$('.main button, .main input:submit').button();
+				//ボタンをクリックしてファイルを選択するイベントを設定する。
+				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImage');
 			</script>
 		</div>
 	</div>

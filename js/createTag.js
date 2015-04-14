@@ -590,7 +590,7 @@ function createTag(){
 						.append($('<span></span>')	//値の要素を格納するタグを生成する。
 								.addClass('values')
 						);
-		
+	
 		curStackKey.push(key);	//スタックにカレントのキーを加える。
 		//キーのタグを群を作る。
 		var keys = this.createKeyTags(curStackKey);

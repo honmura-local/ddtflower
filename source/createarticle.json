@@ -11,6 +11,11 @@
             "text": ""
         }
     },
+    "blogEditImageUploader":{
+    	"class":"uploader blogEditImageUploader",
+    	"type":"file",
+    	"style":"display:none;"
+    },
     "blogEdit":{
     	"name":"blogEdit",
     	"method":"post",
@@ -32,14 +37,18 @@
         },
         "blogEditImagesSectionAddButton": {
         	"text":"選択",
-        	"onclick":"$(this).next().click();"
+        	"onclick":"",
+        	"type":"button"
         },
-        "blogEditImagesSectionAddButtonMain":{
-        	"type":"file",
-        	"style":"display:none;"
+        "blogblogEditImagesSectionImagePath":{
+        	"name":"imagePath",
+        	"type":"hidden",
+        	"value":""
         },
         "blogEditImagesSectionDeleteButton": {
-        	"text":"削除"
+        	"text":"削除",
+        	"type":"button",
+        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',deleteSiblingSrc,this,'.blogblogEditImagesSectionImagePath,.blogEditImagesSectionImage')"
         }
     },
     "blogEditText": {
@@ -92,7 +101,8 @@
         	"class":"blogEditButtonsCancelButton back",
         	"text":"キャンセル",
         	"href":"adminblogmanagement.html",
-        	"onclick":""
+        	"onclick":"",
+        	"type":"button"
         }
     }
 }

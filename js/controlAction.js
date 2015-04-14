@@ -3,26 +3,33 @@
 /*
  * 関数名:clickButtonToFile(parentClass)
  * 引数  :String parentClass:対象となる要素の親要素。
- * 　　　　String sendValTarget:アップロードされたファイルを渡す対象。ボタンと同じ階層。
+ * 　　　　String button:ボタンのクラス、またはIDのセレクタ。
+ * 　　　　String uploader:アップロードを行う要素のクラス、またはIDのセレクタ。
+ * 　　　　function callBack: コールバック関数。
+ * 　　　　? arg: 任意の引数。
  * 戻り値:なし
  * 概要  :ボタンを押したら同階層のファイルアップロードのボタンを押した事にする。
  * 作成日:2015.03.18
  * 作成者:T.M
  */
-function clickButtonToFile(parentClass, sendValTarget){
+function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, arg3){
+	var $parent = '';	//ボタンの親要素を格納する変数を宣言する。
+	
 	//アップロードボタンのchangeイベントを定義する。
-	$(document).on('change', parentClass + ' > input[type="file"]', function(){
-		//指定した対象に値を渡す。
-		$(sendValTarget, $(this).parent()).val($(this).val());
+	$(document).on('change', uploader, function(){
+		if(callBack !== void(0)){	//引数で関数が指定されていれば
+			callBack(this, $parent, arg1, arg2, arg3);	//コールバック関数を実行する。
+		}
 	});
 	
 	//ボタンのクリックイベントを登録する。
-	$(document).on('click', parentClass + ' > button', function(){
+	$(document).on('click', parentClass + ' > button' + button!== void(0)? button : '', function(){
+		$parent = $(this).parent();
+		$(uploader);
 		//アップロードボタンをクリックする。
-		$('input[type="file"]', $(this).parent()).click();
+		$(uploader, document).click();
 	});
 }
-
 
 /*
  * 関数名:checkAllRecord()
@@ -85,14 +92,6 @@ function showRightOutOfDisplayButton(selector, timeout, speed){
  */
 function fadeToggleSet(clicked, target, setClass, delay){
 
-	//clicked以外をクリックしたらtargetが消えるイベント。何かしらクリックしたら判定を行う。
-//	$(document).on('click touchend',function(event){
-//		//clicked以外をクリックしていたら
-//		if ($(event.target).attr('class') != clicked) {
-//			$(target).fadeOut(delay);	//targetを隠す。
-//		}
-//	});
-
 	//clickedのクリックイベントを登録する。
 	$(clicked).on('click' , function(){
 		//他に表示されていれば
@@ -106,5 +105,4 @@ function fadeToggleSet(clicked, target, setClass, delay){
 			$(target).fadeToggle(delay);
 		}
 	});
-	
 }

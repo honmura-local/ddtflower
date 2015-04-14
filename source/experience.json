@@ -525,7 +525,8 @@
                     "name": "personCount",
                     "size": "2",
                     "style":"ime-mode:disabled",
-                    "autocomplete":"off"
+                    "autocomplete":"off",
+                    "onkeyDown":"return numOnly();"
                 }
             }
         },

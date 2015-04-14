@@ -478,10 +478,13 @@ function createNewPhoto(){
 	var $new = $('.myPhoto:last');	//新規の写真を変数に入れる。
 	var cookieData = GetCookies();	//ユーザ名取得のため、クッキーのデータを連想配列で取得する。
 	
-	//ユーザ名を写真に追加する。
-	$('.myPhotoUser', $new).text(cookieData['userName']);
+	//ユーザ名を写真に追加する。ログインしていない状態なら、ゲスト名を入れる。
+	$('.myPhotoUser', $new).text('userName' in cookieData 
+			&& cookieData['userName'] != "" ? cookieData['userName'] : "Guest");
 	//今日の日付を取得し、写真に追加する。
 	$('.myPhotoDate', $new).text(getDateTime());
+	//公開設定を追加する。
+	$('.myPhotoPublication', $new).text('全体').attr('value', '0');
 }
 
 /*
@@ -794,24 +797,124 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
  * 作成者　　:T.Masuda
  */
 	//アップロードボタンの値が変わったときのイベント(=アップロードを行った後のイベント)
-	$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
-			//ファイルを取得する
-		 	var file = event.target.files[0];
-		  	//画像の縮小を行う。
-			canvasResize(file, {
-		   	 crop: false,	//画像を切り取るかを選択する
-		   	 quality: 80,	//画像の品質
-		   	 //コールバック関数。画像パスを引数として受け取る。
-		   	 callback: function(data) {
-		 		//createTagで新たな写真を作成する。
-		 		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-		 		//新たな写真を初期化する。
-		 		createNewPhoto();
-		 		//画像拡大用のタグにソースをセットする。
-		 		$('.myPhotoLink:last').attr('href', data);
-		 		//画像サムネイルに使う要素の画像を設定する。
-		 		$('.myPhotoImage:last').css('background-image', 'url('  +  data + ')');
-		    }
-		})
-	});
+//	$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
+//			//ファイルを取得する
+//		 	var file = event.target.files[0];
+//		  	//画像の縮小を行う。
+//			canvasResize(file, {
+//		   	 crop: false,	//画像を切り取るかを選択する
+//		   	 quality: 80,	//画像の品質
+//		   	 //コールバック関数。画像パスを引数として受け取る。
+//		   	 callback: function(data) {
+//		 		//createTagで新たな写真を作成する。
+//		 		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+//		 		//新たな写真を初期化する。
+//		 		createNewPhoto();
+//		 		//画像拡大用のタグにソースをセットする。
+//		 		$('.myPhotoLink:last').attr('href', data);
+//		 		//画像サムネイルに使う要素の画像を設定する。
+//		 		$('.myPhotoImage:last').css('background-image', 'url('  +  data + ')');
+//		    }
+//		})
+//	});
+$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
+	//保存先を指定して画像のアップロードを行う。
+    $(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
+    	//返ってきたデータから成否判定の値を取り出す。
+    	var issuccess = parseInt($(xml).find('issuccess').text());
+    	if(issuccess){	//保存に成功していたら
+    		var src = $(xml).find('src').text();	//画像の保存先を取得する。
+    		//createTagで新たな写真を作成する。
+    		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+    		//新たな写真を初期化する。
+    		createNewPhoto();
+    		//画像拡大用のタグにソースをセットする。
+    		$('.myPhotoLink:last').attr('href', src);
+    		//画像サムネイルに使う要素の画像を設定する。
+    		$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+    	//保存に失敗していたら
+    	} else {
+    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
+    	}
+    //サーバから返されたデータをXMLとして扱う。
+    },"xml");
+});
 	
+/*
+ * 関数名:function uploadImage(uploader, parent, srcReturn)
+ * 引数  :element uploader:input type="file"の要素
+ * 		:element parent: 画像パスの追加を行う要素の親要素。
+ * 　　　:String srcReturn:取得した画像パスを追加する要素のセレクタ。
+ * 戻り値:なし
+ * 概要  :画像をアップロードし、指定した要素に画像パスを追加する。
+ * 作成日:2015.04.14
+ * 作成者:T.Masuda
+ */
+//アップロードボタンの値が変わったときのイベント(=アップロードを行った後のイベント)
+function uploadImage(uploader, parent, srcReturn){
+	$uploader = $(uploader);	//アップローダーの要素をjQueryオブジェクトにして変数に格納する。
+	//保存先を指定して画像のアップロードを行う。
+	$uploader.upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
+		//返ってきたデータから成否判定の値を取り出す。
+//		var issuccess = parseInt($(xml).find('issuccess').text());
+		var issuccess = "true";
+		if(issuccess == "true"){	//保存に成功していたら
+//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
+			var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
+			$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
+				//画像タグであれば
+				if($(this)[0].tagName == 'IMG'){
+					$(this).attr('src', src);	//ソースパスを設定する。
+				//特別処理の指定がないタグなら
+				} else {
+					$(this).val(src);	//画像パスをvalue属性にセットする。
+				}
+			});
+		} else {
+			alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
+		}
+		//サーバから返されたデータをXMLとして扱う。
+	},"xml");
+}
+
+/*
+ * 関数名:function deleteSiblingSrc(button, targets)
+ * 引数  :element button:画像削除のイベントをバインドした要素。
+ * 　　　:String targets:画像パスを削除する対象の要素のセレクタ。
+ * 戻り値:なし
+ * 概要  :削除ボタンの指定した兄弟要素の画像パスを削除する。
+ * 作成日:2015.04.14
+ * 作成者:T.Masuda
+ */
+function deleteSiblingSrc(button, targets){
+	var $siblings = $(button).siblings(targets);	//指定した兄弟要素を取得する。
+	$($siblings).each(function(){					//画像パスを削除する要素を走査する。
+		//画像タグであれば
+		if($(this)[0].tagName == 'IMG'){
+			$(this).attr('src', "");	//ソースパスを空にする。
+		//特別処理の指定がないタグなら
+		} else {
+			$(this).val("");	//value属性を空にする。
+		}
+	});
+}
+
+/*
+ * 関数名:function numOnly()
+ * 引数  :なし
+ * 戻り値:boolean
+ * 概要  :onkeyDownイベントでコールされ、数字、バックスペース、左右のキーの移動以外の打鍵をキャンセルする。
+ * 引用　:http://javascript.eweb-design.com/1205_no.html
+ * 作成日:2015.04.14
+ * 作成者:T.Masuda
+ */
+function numOnly() {
+	  //押されたキーのコードを取得する。
+	  m = String.fromCharCode(event.keyCode);
+	  //指定されたキーコード以外であれば
+	  if("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\b\r".indexOf(m, 0) < 0){
+		  return false;	//処理を途中終了する。
+	  }
+	  
+	  return true;	//処理を通常通りに行う。
+	}

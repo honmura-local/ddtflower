@@ -232,11 +232,14 @@ function createFormData(form){
  * 概要   :フォームがsubmitされたときのイベント。
  * 作成日 :2015.03.10
  * 作成者 :T.M
- * 作成日 :2015.03.31
- * 作成者 :T.M
+ * 変更日 :2015.03.31
+ * 変更者 :T.M
  * 内容 　:.mainの中のフォームに限定しました。
+ * 変更日 :2015.04.14
+ * 変更者 :T.M
+ * 内容 　:jQuery.Uploadで生成されたformタグを除外する記述を追加しました。
  */
-$(document).on('submit', '.main form', function(event){
+$(document).on('submit', '.main form:not([target^="jquery_upload"])', function(event){
 	var confirmEvent = true;	//submitを実行するかどうかの判定の変数を用意する。
 	var $this = $(this);		//処理高速化のためthisのjQueryオブジェクトを変数に入れる。
 	//submitイベントをキャンセルする。
@@ -332,18 +335,18 @@ function postForm(form){
 
 
 /* 
- * 関数名:function chooseOKBeforeCallFunc(message, title, func, arg)
+ * 関数名:function chooseOKBeforeCallFunc(message, title, func, arg3, arg2, arg3)
  * 概要  :関数を実行するかどうか確認するダイアログを出す。
  * 引数  :String message:ダイアログに書き出すテキスト。
  * 		:String title:ダイアログのタイトル。
  * 		:function func:OKボタンを押した後にコールされる関数。
- * 		:?	arg:関数の引数。
+ * 		:?	arg1~3:関数の引数。
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.04.13
  * 変更者:T.M
  */
-function chooseOKBeforeCallFunc(message, title, func, arg){
+function chooseOKBeforeCallFunc(message, title, func, arg1, arg2, arg3){
 	//共通コンテンツのJSONを取得する。
 	creator.getJsonFile('source/commonJson.json');
 	// ダイアログの本体となるdivタグを生成する。
@@ -383,7 +386,7 @@ function chooseOKBeforeCallFunc(message, title, func, arg){
 		         {
 		        	 text:"OK",	//OKボタン
 		        	 click:function(event, ui){	//クリック時のコールバック
-		        		 func(arg);	//関数をコールする。
+		        		 func(arg1, arg2, arg3);	//関数をコールする。
 		        		 //ダイアログを消す。
 		        		 $(this).dialog("close").dialog("destroy").remove()
 		        	 }

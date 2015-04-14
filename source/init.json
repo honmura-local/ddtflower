@@ -2,5 +2,7 @@
     "sendReservedPhp": "php/sendreserved.php",
     "jsonDirectory": "source/",
     "jsonIdentifier": "json",
-    "cookieLimitTime":"3600000"
+    "cookieLimitTime":"3600000",
+    "photoDirectory":"",
+    "saveJSON":""
 }

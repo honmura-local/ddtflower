@@ -880,7 +880,7 @@
 				<!-- ラベルテキスト -->
 				<span class="personLabel"></span>
 				<!-- テキストボックス -->
-				<input type="text" class="personTextbox" name="count" size="" autocomplete="" required style="">
+				<input type="text" class="personTextbox" name="count" size="" autocomplete="" required style="" onkeyDown="">
 			</label>
 		</li>
 	</ul>
@@ -1223,9 +1223,14 @@
 </div>
 <!-- マイページのブログの領域 おわり -->
 
+
+
 <!-- ブログ編集ページ 編集コンテンツ全体の領域 -->
 <form class="blogEdit" name="" method="" action="" value="" title="">
 </form>
+
+<!-- 画像アップロードのボタン。隠す。 -->
+<input type="" style="" class="blogEditImageUploader">
 
 <!-- ブログ編集ページ タイトル編集の領域とテキストボックス。 -->
 <div class="blogEditTitle">
@@ -1239,11 +1244,11 @@
 	<!-- 画像サムネイル -->
 	<img class="blogEditImagesSectionImage" src="">
 	<!-- 画像の追加ボタン。 -->
-	<button class="blogEditImagesSectionAddButton" onclick=""></button>
-	<!-- 画像の追加ボタンの本体。隠す。 -->
-	<input type="" style="" class="blogEditImagesSectionAddButtonMain">
+	<button type="" class="blogEditImagesSectionAddButton" onclick=""></button>
+	<!-- 画像パスを保持する要素。隠す。 -->
+	<input type="" value="" class="blogblogEditImagesSectionImagePath">
 	<!-- 画像の削除ボタン。 -->
-	<button class="blogEditImagesSectionDeleteButton"></button>
+	<button type="" class="blogEditImagesSectionDeleteButton" onclick=""></button>
 </section>
 
 <!-- ブログの本文編集領域。 -->
@@ -1266,7 +1271,7 @@
 <!-- ブログ記事作成の確定・キャンセルボタンの領域 -->
 <div class="blogEditButtons">
 	<!-- ブログ記事作成をキャンセルするボタン -->
-	<button href="" class="blogEditButtonsCancelButton" onclick=""></button>
+	<button type="" href="" class="blogEditButtonsCancelButton" onclick=""></button>
 	<!-- ブログ記事作成を確定するボタン。 -->
 	<input href="" class="blogEditButtonsOKButton" onclick="" type="" confirm=""></button>
 </div>
@@ -1376,7 +1381,6 @@
 </tr>
 </table>
 
-
 <!-- キャンペーン一覧の見出し -->
 <table class="campaignListHeadWrap">
 <tr class="campaignListHead">
@@ -1407,6 +1411,7 @@
 	<th class="telHead"></th>
 </tr>
 </table>
+
 <!-- 生徒さん一覧のデータ行 -->
 <table class="studentListContentWrap">
 <tr class="studentListContent">

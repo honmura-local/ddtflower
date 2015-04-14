@@ -609,12 +609,12 @@
 }
 
 /* 
- * セレクタ:.editStudent input[type="text"],.editStudent input[type="text"]
+ * セレクタ:.editStudent input[type="text"],.editStudent input[type="email"]
  * 概要   :生徒さん登録画面のテキストボックス。
  * 作成者 :T.Masuda
- * 作成日 :2015.02.18
+ * 作成日 :2015.04.14
  */
-.editStudent input[type="text"],.editStudent input[type="text"]{
+.editStudent input[type="text"],.editStudent input[type="email"]{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
 }
  
