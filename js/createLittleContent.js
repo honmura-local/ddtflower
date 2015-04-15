@@ -2440,6 +2440,8 @@ replaceTableOption['reservedLessonTable'] = {
 	replaceFlag:'replace',
 	//テーブルのafterでの追加先
 	addDomPlace:'#alreadyReserved .selectTheme',
+	//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
+	afterReloadFunc:afterReloadReservedLessonTable,
 	//置換のvalueが入ったdom名
 	replaceValueDom:'#alreadyReserved .selectThemebox',
 	//置換するkey名
@@ -4010,6 +4012,19 @@ function sendMail(mailInfoArray, mailSubject, mailContent) {
 			alert(MESSAGE_FAILED_CONNECT);
 		}
 	});
+}
+
+/* 
+ * 関数名:afterReloadReservedLessonTable
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadReservedLessonTable() {
+	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 }
 
 /* 
