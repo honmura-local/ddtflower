@@ -1001,14 +1001,16 @@ ul li.notice{
 		margin-left: 0px;
 	}
 	/* 
-	 * セレクタ:.editStudent textarea, .editStudent input[type="text"], .editStudent input[type="email"] {
+	 * セレクタ:.editStudent textarea, .editStudent input[type="text"], .editStudent input[type="email"], .editStudent input[type="tel"], .editStudent input[type="number"]
 	 * 概要   :入力項目
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.26
 	 */
 	 .editStudent .contentTextArea textarea,
 	 .editStudent input[type="text"],
-	 .editStudent input[type="email"]
+	 .editStudent input[type="email"],
+	 .editStudent input[type="tel"],
+	 .editStudent input[type="number"]
 	 {
 	 	 width: 95%; 		/* 幅を95%にする */
 	 }

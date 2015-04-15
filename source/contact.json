@@ -99,7 +99,7 @@
             "contentTextArea": {
                 "textArea1": {
                     "name": "content",
-                    "cols": "60",
+                    "cols": "43",
                     "rows": "10",
                     "required": ""
                 }

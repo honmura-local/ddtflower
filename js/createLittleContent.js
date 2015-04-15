@@ -796,27 +796,6 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-	//アップロードボタンの値が変わったときのイベント(=アップロードを行った後のイベント)
-//	$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
-//			//ファイルを取得する
-//		 	var file = event.target.files[0];
-//		  	//画像の縮小を行う。
-//			canvasResize(file, {
-//		   	 crop: false,	//画像を切り取るかを選択する
-//		   	 quality: 80,	//画像の品質
-//		   	 //コールバック関数。画像パスを引数として受け取る。
-//		   	 callback: function(data) {
-//		 		//createTagで新たな写真を作成する。
-//		 		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-//		 		//新たな写真を初期化する。
-//		 		createNewPhoto();
-//		 		//画像拡大用のタグにソースをセットする。
-//		 		$('.myPhotoLink:last').attr('href', data);
-//		 		//画像サムネイルに使う要素の画像を設定する。
-//		 		$('.myPhotoImage:last').css('background-image', 'url('  +  data + ')');
-//		    }
-//		})
-//	});
 $(document).on('change', '.myGalleryEditButtons .uploader', function(event){
 	//保存先を指定して画像のアップロードを行う。
     $(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
@@ -913,11 +892,9 @@ function numOnly() {
 	  m = String.fromCharCode(event.keyCode);
 	  //指定されたキーコード以外であれば
 	  if("0123456789\b\r%\'".indexOf(m, 0) < 0){
-//		  alert("number invalidate");
 		  return false;	//処理を途中終了する。
 	  }
 	  
-//	  alert("number valid");
 	  return true;	//処理を通常通りに行う。
 	}
 
@@ -950,7 +927,6 @@ function controllInputChar(evt){
 	
 	//押されたキーのコードを1文字に変換する。
 	m = String.fromCharCode(keyCode);
-	console.log(keyCode +':'+m);
 	//指定されたキーコード以外であれば。tabキーのコードは許可する。
 	if(limitInput[$(evt.target).attr('type')].indexOf(m, 0) < 0 && !(parseInt(keyCode) == 9)){
 		return false;	//処理を途中終了する。
@@ -974,7 +950,7 @@ var errorJpNames = {name:'氏名',
 					blogText:'本文',
 					blogTitle:'ブログタイトル',
 					imagePath:'画像'
-						};
+					};
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {
 		invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
@@ -1029,10 +1005,11 @@ function createErrorText(errors, jpNames){
 	for(var i = 0; i < messageLength; i++){
 		//エラー文を追加する。
 		retText += errorMessages[i] + '\n';
-		//エラーメッセージごとに要素を走査する。。
+		//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
 		$(errors).filter(function(){
-			return this.message == errorMessages[i];
-		}).each(function(){
+			return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
+		}).each(function(){	//each関数で対象を走査する。
+			//retTextに名前を箇条書きする。
 			retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
 		});
 		//項目ごとに改行する。
