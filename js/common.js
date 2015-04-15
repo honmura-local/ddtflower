@@ -1686,7 +1686,7 @@ this.defaultClassworkCostColumns = [
 		//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
 		$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
 			//キャンセルダイアログを開く
-			thisElem.openCancelDialog(this, memberNumber, create_tag);
+			thisElem.openCancelDialog(this, memberInfo, create_tag);
 		});
 	}
 
