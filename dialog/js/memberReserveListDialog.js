@@ -376,6 +376,8 @@ function memberReserveListDialog(dialog){
 				parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 				$(parentDialogBuilder.dialog).empty();
 				parentDialogBuilder.dispContents();	//予約一覧ダイアログの中身を更新する
+				//予約中授業テーブルをリロードして予約状況を最新にする
+				data.creator.tableReload(RESERVED_LESSON_TABLE);
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
 				break;	//switchを抜ける

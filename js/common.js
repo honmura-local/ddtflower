@@ -1575,8 +1575,8 @@ this.defaultClassworkCostColumns = [
 	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数(内容はオーバーライドして定義されたし)
 	 * 引数　:Element clicked:クリックされた行の要素
 	 * 返却値:なし
-	 * 作成日　:015.08.22
-	 * 作成者　:T.Masuda
+	 * 作成日　:2015.09.12
+	 * 作成者　:T.Yamamoto
 	 */
 	this.openCancelDialog = function(clicked, memberNumber, create_tag) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
@@ -1607,7 +1607,7 @@ this.defaultClassworkCostColumns = [
 	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName, create_tag) {
 		//クリックされた行番号を取得する。見出しの行は除外する
 		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(':not(:first)').index(clickTarget);
-		//次のダイアログに渡すデータを変数に入れる
+		//次イアログに渡すデータを変数に入れる
 		var recordObject = create_tag.json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する
 		return returnObject = {
@@ -1615,13 +1615,12 @@ this.defaultClassworkCostColumns = [
 		}
 	}
 
-	/* 関数名:updateJson
+	/* 関数名:cancelUpdateJson
 	 * 概要　:サーバへクエリを投げる前に、送信するJSONデータを加工する
 	 * 引数　:baseDialog dialogBuilder:ダイアログ専用クラスインスタンス
 	 * 返却値:Object:DB更新用データをまとめたオブジェクトを返す
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0823
-	 * 作成者　:T.Masuda
+	 * 作成日　:2015.09.12
+	 * 作成者　:T.Yamamoto
 	 */
 	this.cancelUpdateJson = function(dialogClass, create_tag){
 		//インプット用データオブジェクトを取り出す
@@ -1634,26 +1633,22 @@ this.defaultClassworkCostColumns = [
 	
 	/* 関数名:registerReserved
 	 * 概要　:DBにデータを送信して授業の予約を行う
-	 * 引数　:なし
+	 * 引数　:dialogClass:ダイアログのインスタンス
+	 		create_tag:クリエイトタグのインスタンス
+	 		dialogBuilder:baseDialogのインスタンス
 	 * 返却値:なし
 	 * 作成日　:2015.0823
 	 * 作成者　:T.Masuda
 	 */
 	this.registerReserved = function(dialogClass, create_tag, dialogBuilder){
-		//var dialogClass = this.instance;	//ダイアログのクラスインスタンスを取得する
-
 		//予約確認、またはキャンセルダイアログを破棄する
 		dialogClass.destroy();
 		//押されたボタンで処理を分岐させる
 		switch(dialogClass.getPushedButtonState()){
-		//はいボタンが押されたパターン
-		case YES:
-				var data = dialogClass.getArgumentDataObject();
-				//親のダイアログ専用クラスインスタンスを取得する
-				// var parentDialogBuilder = data.parentDialogEx.dom.dialogBuilder;
-				//親ダイアログでDB更新用JSONをまとめる
+			//はいボタンが押されたパターン
+			case YES:
+				//DB更新用JSONをまとめる
 				var sendObject = this.cancelUpdateJson(dialogClass, create_tag);
-
 				//クエリを発行してキャンセル処理を行う
 				dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 				//予約中授業一覧テーブルを更新する
@@ -1661,7 +1656,7 @@ this.defaultClassworkCostColumns = [
 				//キャンセルに応じた通知のアラートを出す
 				alert(LESSON_CANCEL_TEXT);
 				break;	//switchを抜ける
-		default:break;	//switchを抜ける
+			default:break;	//switchを抜ける
 		}
 	}
 
@@ -1680,16 +1675,13 @@ this.defaultClassworkCostColumns = [
 	/* 
 	 * 関数名:cancelDialogOpenFromReservedTable
 	 * 概要  :予約キャンセルダイアログを予約済み授業から開くための関数
-	 * 引数  :int memberNumber:会員番号
-	 * 　　  :createLittleContents creator:createLittleContentsクラスインスタンス
+	 * 引数  :int memberInfo:会員番号
+	 * 　　  :create_tag :createLittleContentsクラスインスタンス
 	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.31
-	 * 変更者:T.Masuda
-	 * 変更日:2015.08.09
-	 * 内容	:改修したdialogExクラスに対応しました。
+	 * 作成日　:2015.0912
+	 * 作成者　:T.Yamamoto	 
 	 */
-	this.cancelDialogOpenFromReservedTable =  function(memberNumber, create_tag) {
+	this.cancelDialogOpenFromReservedTable =  function(memberInfo, create_tag) {
 		var thisElem = this;
 		//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
 		$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
