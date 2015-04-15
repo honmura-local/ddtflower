@@ -43,6 +43,8 @@
 				$('.main button, .main input:submit').button();
 				//ボタンをクリックしてファイルを選択するイベントを設定する。
 				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImage');
+				//フォームに入力チェックをかける。
+				$('form').validate(showAlert);
 			</script>
 		</div>
 	</div>

@@ -901,7 +901,7 @@ function deleteSiblingSrc(button, targets){
 
 /*
  * 関数名:function numOnly()
- * 引数  :なし
+ * 引数  :event evt: onkeyDownイベントのeventオブジェクト。
  * 戻り値:boolean
  * 概要  :onkeyDownイベントでコールされ、数字、バックスペース、左右のキーの移動以外の打鍵をキャンセルする。
  * 引用　:http://javascript.eweb-design.com/1205_no.html
@@ -909,12 +909,135 @@ function deleteSiblingSrc(button, targets){
  * 作成者:T.Masuda
  */
 function numOnly() {
-	  //押されたキーのコードを取得する。
+	  //押されたキーのコードを1文字に変換する。
 	  m = String.fromCharCode(event.keyCode);
 	  //指定されたキーコード以外であれば
-	  if("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\b\r".indexOf(m, 0) < 0){
+	  if("0123456789\b\r%\'".indexOf(m, 0) < 0){
+//		  alert("number invalidate");
 		  return false;	//処理を途中終了する。
 	  }
 	  
+//	  alert("number valid");
 	  return true;	//処理を通常通りに行う。
 	}
+
+//入力制限の文字列を連想配列に格納する。キーは要素のtype属性の値が相当する。
+var limitInput = {
+		email:"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\b\r%\'½¾ÛÞ»¿ÀÝºâÜ",
+		number:"0123456789\b\r%\'",
+		tel:"0123456789\b\r%\'½"
+}
+
+/*
+ * 関数名:function controllInputChar(evt)
+ * 引数  :event evt: onkeyDownイベントのeventオブジェクト。
+ * 戻り値:boolean
+ * 概要  :入力する文字の制限をかける。
+ * 作成日:2015.04.15
+ * 作成者:T.Masuda
+ */
+function controllInputChar(evt){
+	var keyCode;	//押下されたキーのコードを受け取る変数を宣言する。
+	//document.allはInternet Explorerでのみ使用可能
+	if (document.all)  //IEなら
+	{
+		keyCode = event.keyCode;	//event.keyCodeからキーコードを取得する。
+	} else	//IE以外なら
+	{
+		keyCode = evt.which;		//引数で渡されたイベントオブジェクトからキーコードを取得する。
+	}
+	
+	
+	//押されたキーのコードを1文字に変換する。
+	m = String.fromCharCode(keyCode);
+	console.log(keyCode +':'+m);
+	//指定されたキーコード以外であれば。tabキーのコードは許可する。
+	if(limitInput[$(evt.target).attr('type')].indexOf(m, 0) < 0 && !(parseInt(keyCode) == 9)){
+		return false;	//処理を途中終了する。
+	}
+	
+	return true;	//処理を通常通りに行う。	
+}
+
+//テキストボックス等のname属性の日本語版を格納する連想配列。
+var errorJpNames = {name:'氏名',
+					eMail:'メールアドレス',
+					sex:'性別',
+					content:'お問い合わせ内容',
+					tel:"電話番号",
+					address:'住所',
+					eMailConfirm:"メールアドレス(確認)",
+					campaignTitle:'キャンペーン名',
+					startDate:'開始日',
+					endDate:'終了日',
+					maxEntry:'上限人数',
+					blogText:'本文',
+					blogTitle:'ブログタイトル',
+					imagePath:'画像'
+						};
+//validate.jsでチェックした結果を表示する記述をまとめた連想配列。
+var showAlert = {
+		invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
+			var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
+			//エラー文を表示する。
+			alert(createErrorText(errors, errorJpNames));
+		},
+		rules:{	//ルールを設定する。
+			eMailConfirm:{	//メールアドレス入力確認欄
+				equalTo: '[name="eMail"]'	//メールアドレス入力欄と同じ値を要求する。
+			}
+		}
+	}
+
+/*
+ * 関数名:function createErrorText
+ * 引数  :jQuery errors: エラーがあった要素。
+ * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
+ * 戻り値:String:エラーメッセージの文字列。
+ * 概要  :エラーメッセージを作成する。
+ * 作成日:2015.04.15
+ * 作成者:T.Masuda
+ */
+function createErrorText(errors, jpNames){
+	//返却する文字列を格納する変数を用意する。
+	var retText = "";
+	//エラーメッセージの数を取得する。
+	var errorLength = errors.length;
+	//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
+	var errorMessages = [errors[0].message];
+
+	//エラーメッセージの数を取得する。
+	var messageLength;
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < errorLength; i++){
+		messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
+		//エラーメッセージの重複をチェックする。
+		for(var j = 0; j < messageLength; j++){
+			//エラーメッセージが重複していれば
+			if(errorMessages[j] == errors[i].message){
+				break;	//追加せずに抜ける。
+			//エラーメッセージの重複がなかったら
+			} else if(errorMessages.length >= j){
+				//エラーメッセージを配列に追加する。
+				errorMessages.push(errors[i].message);	
+			}
+		}
+	}
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < messageLength; i++){
+		//エラー文を追加する。
+		retText += errorMessages[i] + '\n';
+		//エラーメッセージごとに要素を走査する。。
+		$(errors).filter(function(){
+			return this.message == errorMessages[i];
+		}).each(function(){
+			retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
+		});
+		//項目ごとに改行する。
+		retText +='\n';
+	}
+	
+	return retText;	//作成したメッセージを返す。
+}

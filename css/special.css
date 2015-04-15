@@ -167,6 +167,15 @@
 }
 
 /* 
+ * セレクタ:.personCount input[type="number"]
+ * 概要   :人数入力のテキストボックス。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.15
+ */
+.personCount input[type="number"]{
+	width: 50px;	/* 必要な幅を明確に指定する。 */
+}
+/* 
  * セレクタ:.personTextbox
  * 概要   :ダイアログ上部のテキストボックスのスタイル
  * 作成者 :T.Yamamoto

@@ -19,7 +19,9 @@
 				creator.outputTag('confirmEditCampaign', 'confirmEditCampaign', '.editCampaign');
 				//日付入力テキストボックスをクリックするとカレンダーが出る様にする。
 				setCallCalendar('.tabPanel.active input.calendar');
-				$('#campaignManagement button').button();	//ボタンをリッチなものにする。	
+				$('#campaignManagement button,#campaignManagement input:submit').button();	//ボタンをリッチなものにする。	
+				//フォームに入力チェックをかける。
+				$('form').validate(showAlert);
 				creator.json = '';
 			</script>
 		</div>

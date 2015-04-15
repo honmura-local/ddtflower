@@ -109,12 +109,12 @@
 }
 
 /* 
- * セレクタ:.contactForm input
+ * セレクタ:.contactForm input[type="text"], .contactForm input[type="email"], .contactForm input[type="number"], .contactForm input[type="tel"]
  * 概要   :問い合わせフォームのinput要素。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm input[type="text"], .contactForm input[type="email"]{
+.contactForm input[type="text"], .contactForm input[type="email"], .contactForm input[type="number"], .contactForm input[type="tel"]{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
 }
 

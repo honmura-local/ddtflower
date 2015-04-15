@@ -123,7 +123,8 @@
             "text": "確定",
             "onclick": "",
             "type": "submit",
-            "confirm": "true"
+            "confirm": "true",
+            "value":"保存"
         },
         "cancelEditCampaignButton": {
             "text": "戻る",

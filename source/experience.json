@@ -473,7 +473,23 @@
                 "personTextbox": {
                     "name": "name",
                     "size": "27",
-                    "autocomplete":"off"
+                    "autocomplete":"off",
+                    "type":"text",
+                    "align":"right"
+                }
+            }
+        },
+        "personNameKana": {
+            "textboxLabel": {
+                "personLabel": {
+                    "html": "氏名(カナ)<br>"
+                },
+                "personTextbox": {
+                    "name": "nameKana",
+                    "size": "27",
+                    "autocomplete":"off",
+                    "type":"text",
+                    "align":"right"
                 }
             }
         },
@@ -486,7 +502,9 @@
                     "name": "personPhoneNumber",
                     "size": "27",
                     "style":"ime-mode:disabled",
-                    "autocomplete":"off"
+                    "autocomplete":"off",
+                    "type":"tel",
+                    "onkeyDown":"return controllInputChar(event);"
                 }
             }
         },
@@ -498,8 +516,9 @@
                 "personTextbox": {
                     "name": "personEmail",
                     "size": "27",
-                    "style":"ime-mode:disabled",
-                    "autocomplete":"off"
+                    "autocomplete":"off",
+                    "onkeyDown":"return controllInputChar(event);",
+                    "type":"email"
                 }
             }
         },
@@ -509,10 +528,16 @@
                     "html": "メールアドレス(確認)<br>"
                 },
                 "personTextbox": {
+                	"class":"personTextbox",
                     "name": "personEmailCheck",
                     "size": "27",
                     "style":"ime-mode:disabled",
-                    "autocomplete":"off"
+                    "autocomplete":"off",
+                    "type":"email",
+                    "oncopy":"return false",
+                    "onpaste":"return false",
+                    "ononcontextmenu":"return false",
+                    "onkeyDown":"return controllInputChar(event);"
                 }
             }
         },
@@ -526,7 +551,8 @@
                     "size": "2",
                     "style":"ime-mode:disabled",
                     "autocomplete":"off",
-                    "onkeyDown":"return numOnly();"
+                    "onkeyDown":"return controllInputChar(event);",
+                    "type":"number"
                 }
             }
         },

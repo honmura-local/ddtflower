@@ -26,7 +26,7 @@
     "blogEditTitle":{
     	"blogEditTitleText":{
     		"type":"text",
-    		"name":"blogEditTitleText"
+    		"name":"blogTitle"
     	}
     },
     "blogEditImages": {},
@@ -95,7 +95,8 @@
         	"class":"blogEditButtonsOKButton",
         	"type":"submit",
         	"text":"　 OK 　",
-            "confirm":"true"
+            "confirm":"true",
+            "value":"保存"
         },
         "blogEditButtonsCancelButton": {
         	"class":"blogEditButtonsCancelButton back",

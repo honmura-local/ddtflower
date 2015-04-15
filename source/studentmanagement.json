@@ -147,7 +147,8 @@
                     "type": "email",
                     "name": "eMail",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "eMailConfirm": {
@@ -166,7 +167,11 @@
                     "type": "email",
                     "name": "eMailConfirm",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "oncopy": "return false",
+                    "onpaste": "return false",
+                    "ononcontextmenu": "return false",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "tel": {
@@ -182,10 +187,11 @@
             },
             "telTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "tel",
                     "name": "tel",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "address": {
@@ -292,7 +298,8 @@
                     "type": "email",
                     "name": "eMail",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "eMailConfirm": {
@@ -311,7 +318,11 @@
                     "type": "email",
                     "name": "eMailConfirm",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);",
+                    "oncopy": "return false",
+                    "onpaste": "return false",
+                    "ononcontextmenu": "return false"
                 }
             },
             "tel": {
@@ -327,10 +338,11 @@
             },
             "telTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "tel",
                     "name": "tel",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "address": {

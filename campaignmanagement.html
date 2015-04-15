@@ -37,6 +37,8 @@
 				$('#campaignManagement button').button();	//ボタンをリッチなものにする。	
 				//日付入力テキストボックスをクリックするとカレンダーが出る様にする。
 				setCallCalendar('.tabPanel.active input.calendar');
+				//フォームに入力チェックをかける。
+				$('form').validate(showAlert);
 			</script>
 		</div>
 	</div>

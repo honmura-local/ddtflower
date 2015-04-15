@@ -150,18 +150,6 @@ function replaceJpName(names, jpNames){
 		retArray[i] = jpNames[key];
 	}
 	
-	//jpNamesを走査する。
-//	for(key in jpNames){
-//		//namesを走査する。
-//		for(var i = 0; i < nameslength; i++){
-//			//keyとnamesの要素の値が同じであれば
-//			if(key == names[i]){
-//				//返すための配列に
-//				retArray[retArray.length] = jpNames[key];
-//			}
-//		}
-//	}
-	
 	//作成した配列を返す。
 	return retArray;
 }
@@ -219,7 +207,6 @@ function createSpecialReservedDialog(json, array){
 
 	// ダイアログに日付欄を追加する。
 	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
-
 	// 生成したdivタグをjQuery UIのダイアログにする。
 	$('.specialReservedDialog').dialog({
 		// 幅を設定する。

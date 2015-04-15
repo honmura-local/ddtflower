@@ -50,7 +50,8 @@
                     "type": "radio",
                     "name": "sex",
                     "value": "女",
-                    "checked": ""
+                    "checked":"",
+                    "required":"true"
                 },
                 "sexRadioButtonFemaleLabel": {
                     "text": "女"
@@ -80,7 +81,8 @@
                     "type": "email",
                     "name": "eMail",
                     "size": "60",
-                    "required": ""
+                    "required": "",
+                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "content": {
@@ -105,7 +107,8 @@
         },
         "submitButton": {
             "type": "submit",
-            "text": "送信内容の確認"
+            "text": "送信内容の確認",
+            "value": "送信確認"
         },
         "mailSubject": {
             "type": "hidden",

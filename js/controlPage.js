@@ -35,12 +35,12 @@ $(document).ready(function(){
 	// リンクをクリックしたら
 	$(document).on('click', 'a[href$=".html"]', function(event){
 		//pushState対応ブラウザであれば
-		if(isSupportPushState()){
+//		if(isSupportPushState()){
 			//URLを引数にしてページを切り替える関数をコールする。
 			callPage($(this).attr('href'));
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
-		}
+//		}
 	});
 });
 

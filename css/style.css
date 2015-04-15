@@ -784,6 +784,16 @@ footer{
  	height:0px;
  	display: none;
  }
+
+ /* 
+ * セレクタ:label.error
+ * 概要   :validate.jsのエラーメッセージ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.15
+ */
+label.error{
+	display:none!important;	/* 非表示にする。 */
+}
  
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {
