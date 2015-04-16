@@ -583,7 +583,8 @@ function postPhoto(photo){
 	//Ajax通信でサーバに写真のデータを送信する。
 	$.ajax({
 		url:init['photoPost'],	//初期化データの連想配列にあるURLに送信する
-		dataType:'json',		//JSONで返してもらう。
+//		dataType:'json',		//JSONで返してもらう。
+		dataType:'text',		
 		data:photoData,			//作成した写真データを送信する。
 		//通信が成功したら
 		success:function(json){
@@ -608,15 +609,17 @@ function postPhoto(photo){
 function createPhotoData(photo){
 	var retMap = {};	//返す連想配列を用意する。
 	//画像ソースを格納する。
-	retMap['src'] = $('.myPhotoLink', photo);
+	retMap['src'] = $('.myPhotoLink', photo).attr('href');
 	//日付を格納する。
-	retMap['date'] = $('.myPhotoDate', photo);
+	retMap['date'] = $('.myPhotoDate', photo).text();
 	//ユーザ名を格納する。
-	retMap['user'] = $('.myPhotoUser', photo);
+	retMap['user'] = $('.myPhotoUser', photo).text();
 	//タイトルを格納する。
-	retMap['title'] = $('.myPhotoTitle', photo);
+	retMap['title'] = $('.myPhotoTitle', photo).text();
 	//コメントを格納する。
-	retMap['comment'] = $('.myPhotoComment', photo);
+	retMap['comment'] = $('.myPhotoComment', photo).text();
+	//公開設定を格納する。
+	retMap['publication'] = $('.myPhotoPublication', photo).attr('value');
 	
 	//作成した連想配列を返す。
 	return retMap;
@@ -815,10 +818,12 @@ $(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication', 
  * 作成者　　:T.Masuda
  */
 $(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit', function(){
+	//自身を持つ写真要素のセレクタを取得する。
+	var myphoto = $('.myPhoto').has(this);
 	//編集モードを解除する。
 	endEditText(this);
 	//編集したデータを送信する。
-	postPhoto($('.myPhoto').has(this));
+	postPhoto(myphoto);
 });
 
 /*
@@ -846,9 +851,19 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
  */
 $(document).on('change', '.myGalleryEditButtons .uploader', function(event){
 	//保存先を指定して画像のアップロードを行う。
-    $(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
+    $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
+//    	$(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
     	//返ってきたデータから成否判定の値を取り出す。
-    	var issuccess = parseInt($(xml).find('issuccess').text());
+    	//var issuccess = parseInt($(xml).find('issuccess').text());
+    	//ローカルでのテスト用のxmlデータを作る。
+    	var issuccess = 1;
+    	xml = $('<root></root>')
+    			.append($('<src></src>')
+    					.text('photo/general/web/DSC_0682.jpg')
+    			)
+    			.append($('<message></message>')
+    					.text('success')
+    			);
     	if(issuccess){	//保存に成功していたら
     		var src = $(xml).find('src').text();	//画像の保存先を取得する。
     		//createTagで新たな写真を作成する。
