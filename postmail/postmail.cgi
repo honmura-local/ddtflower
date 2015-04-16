@@ -296,6 +296,10 @@ sub send_mail {
 
 		my $key_name;
 		my $keytmp = "!".$_."!";
+
+
+		#[]が s/$keytmp/$$in{$_}/g; の正規表現にひっかかるため、[]を抜く。 mod T.Masuda 2015/0416
+		$keytmp =~ s/[\[-\]]//g;
 		
 		# name値の名前置換 add 2015/0409 H.Kaneko
 		#init.cgiの$cf{replace}に登録してあるキーであれば

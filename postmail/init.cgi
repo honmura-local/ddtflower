@@ -104,6 +104,7 @@ $cf{send_b64} = 0;
 # フォームのname値の置き換えをする場合（任意オプション）
 # → 英字のname値を日本語に自動的に置き換えます。
 # 例: 「email = xx@xx.xx」→「メールアドレス = xx@xx.xx」
+# add T.Masuda 2015/0416 name値をメールテンプレートの変数として使う場合は、[]を抜いてください。
 $cf{replace} = {
 		'name'    => 'ご氏名',
 		'sex'   => '性別',
@@ -117,6 +118,7 @@ $cf{replace} = {
 		'personEmail' => 'メールアドレス',
 		'personPhoneNumber' => '電話番号',
 		'personCount' => '人数',
+		'nameKana'=> 'ご氏名(カナ)',
 		'content' => 'お問い合わせ内容'
 	};
 

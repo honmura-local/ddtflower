@@ -1,7 +1,14 @@
 {
+    "managementList": {
+    	"class":"managementList",
+    	"action":"createcampaign.html",
+    	"method":"post"
+        "table": {}
+    },
     "searchButtonSet": {
         "executeSearch": {
-            "text": "検索"
+            "value": "検索",
+            "type":"submit"
         }
     },
     "titleSearch": {
@@ -55,12 +62,12 @@
     },
     "listEditButtons": {
         "createNew": {
-            "text": "作成",
-            "href": "createcampaign.html"
+            "value": "作成",
+            "type":"submit"
         },
         "edit": {
-            "text": "編集",
-            "href": "createcampaign.html"
+            "value": "編集",
+            "type":"submit"
         },
         "delete": {
             "text": "削除"
