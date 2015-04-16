@@ -8,18 +8,21 @@
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.12
+ * 変更者 :T.Masuda
+ * 変更日 :2015.04.16
+ * 内容　 :細かくレイアウトを変えました。
  */
 .myPageReservedList {
 	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
 	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
 	overflow-y	:scroll;		/*予約関係のテキストを縦スクロールするようにする。*/
 	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-	font-size: 14px;
-	height: 230px;
-	border: 1px solid #AAA;
-	box-sizing: border-box;
-	padding: 10px;
-	border-radius: 5px;
+	font-size: 14px;			/* フォントサイズをしっかり指定する。 */
+	height: 230px;				/* 高さを決める */
+	border: 1px solid #AAA;		/* 灰色の枠で囲む */
+	box-sizing: border-box;		/* 幅高さの計算にpaddingとborderを加える */
+	padding: 10px;				/* 内側の幅を広げる */
+	border-radius: 5px;			/* 角丸にする */
 }
 
  /* 
@@ -33,70 +36,96 @@
 }
 
  /* 
- * セレクタ:myPageReservedCalendar(Datepicker)
+ * セレクタ:.myPageReservedCalendar(Datepicker)
  * 概要   :Datepickerによるカレンダー。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.12
  */
 .myPageReservedCalendar {
-	width		:44%;		/*marginと合わせて画面の半分の幅を取る。*/
-	margin 		:0 3%; 		/*widthと合わせて幅を50%にする。*/
+	width		:44%;			/*marginと合わせて画面の半分の幅を取る。*/
+	margin 		:0 3%; 			/*widthと合わせて幅を50%にする。*/
 	display		:inline-block;	/*インラインブロックにして横に並ぶ様にする。*/
-	font-size: 14px;
-	vertical-align: top;
-}
-.myPageReservedCalendar > div{
-	margin: 0 auto;
+	font-size: 14px;			/* フォントサイズでカレンダーの大きさを調整する。 */
+	vertical-align: top;		/* 垂直位置を上に合わせる。 */
 }
  /* 
- * セレクタ:.myPageBlog
- * 概要   :マイページのブログの領域。
+ * セレクタ:.myPageReservedCalendar > div(Datepicker)
+ * 概要   :Datepickerによるカレンダー本体。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+.myPageReservedCalendar > div{
+	margin: 0 auto;	/* 中央に寄せる。 */
+}
+ /* 
+ * セレクタ:.myPageContent
+ * 概要   :マイページのコンテンツの領域。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.12
  */
-.myPageBlog {
-	width:100%;		/*.mainの幅に合わせる。*/
-　　　	margin-bottom:10px;	/*下に適切なmarginを挿入する。*/
-	font-size: 0px;
+.myPageContent {
+	width:100%;				/*.mainの幅に合わせる。*/
+　　margin-bottom:10px;		/*下に適切なmarginを挿入する。*/
+	font-size: 0px;			/* インラインブロックの子要素に対応する */
+	margin-bottom: 25px;	/* 各項目の下に十分な間隔をあける */
 }
 
  /* 
- * セレクタ:myPageBlogTitle
- * 概要   :マイページのブログの領域のタイトル。
- * 設計者 :T.Masuda
- * 作成者 :T.Yamamoto
+ * セレクタ:.myPageTitle
+ * 概要   :マイページのコンテンツ領域のタイトル。
+ * 作成者 :T.Masuda
  * 作成日 :2015.03.12
  */
-.myPageBlogTitle {
+.myPageTitle {
 	font-size	:20px;			/*フォントをタイトル用のサイズにする。*/
 	padding-left:1em;			/*1文字分インデントする。*/
-	margin: 0px 0 10px;	/*上下に余白をつける。*/
+	margin: 0px 0 10px;			/*上下に余白をつける。*/
 	font-weight	:bold;			/*太字にする。*/
 }
 
  /* 
- * セレクタ:myPageBlogButton
- * 概要   :ブログ関連のボタン。
+ * セレクタ:.myPageBlog .managementList
+ * 概要   :マイページのブログ記事一覧。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+.myPageBlog .managementList{
+	margin-left: 1.5em;		/* 左のmarginを多めにする */
+}
+
+ /* 
+ * セレクタ:.myPageButton
+ * 概要   :マイページのコンテンツのボタン。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.12
  */
-.myPageBlogButton {
+.myPageButton {
 	width		:27.3%;		/*3個のボタンを横並べにするためのサイズを指定する。*/
 	margin		:0 3%;		/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
 	display		:inline-block;/*インラインブロックにして横に並ぶ様にする。*/
 	/* height: 55px; */
 	background: #999;
 	color: white;
-	font-size: 20px;
+	font-size: 20px!important;
 	vertical-align: middle;
 	border-radius: 10px;
 	text-align: center;
-	/* line-height: 55px; */
 	padding: 20px 0px;
 }
+
+ /* 
+ * セレクタ:.myPageButton:hover
+ * 概要   :.myPageButtonのhoverイベント。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+.myPageButton:hover {
+	opacity: 0.8;	/* 透過して色を薄くする。 */
+}
+
 
 .blogEditTitle:before {
 	content: "タイトル編集";
@@ -468,24 +497,45 @@
 	 * 作成日 :2015.03.12
 	 */
 	 .myPageBlogButton {
-	 	width: 90%;			/*3個のボタンを横並べにするためのサイズを指定する。*/
-	 	margin: 0 auto 10px;			/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
-	 	display: block;	/*インラインブロックにして横に並ぶ様にする。*/
-	 	padding: 5px 0;
+	 	width: 90%;				/*3個のボタンを横並べにするためのサイズを指定する。*/
+	 	margin: 0 auto 10px;	/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
+	 	display: block;			/*インラインブロックにして横に並ぶ様にする。*/
+	 	padding: 5px 0;			/*上下にpaddingを入れる */
 	}
 
+	 /* 
+	 * セレクタ:.blogEditTitle
+	 * 概要   :ブログのタイトル編集領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.16
+	 */
 	.blogEditTitle {
-		width: 90%;
-		margin: 0 auto;
+		width: 90%;		/* 幅90% */
+		margin: 0 auto;	/* 中央に寄せる */
 	}
+
+	 /* 
+	 * セレクタ:.blogEditTitle:before
+	 * 概要   :ブログのタイトル領域の前に置く疑似要素。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.16
+	 */
 	.blogEditTitle:before {
-		content: "タイトル編集";
-		display: block;
-		margin-left: 0;
+		content: "タイトル編集";	/* 配置する文字を指定する */
+		display: block;			/* ブロック要素として扱う */
+		margin-left: 0;			/* 左marginをなくす */
 	}
+	
+	 /* 
+	 * セレクタ:.blogEditTitleText
+	 * 概要   :ブログのタイトル領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.16
+	 */
 	.blogEditTitleText {
-		margin-left: 0px;
+		margin-left: 0px;	/* 左marginを消す */
 	}
+
 	 /* 
 	 * セレクタ:.blogEditImages
 	 * 概要   :ブログの画像編集領域。
@@ -508,9 +558,8 @@
 	 */
 	.blogEditImagesSectionImage {
 		height: 130px;		/*高さを自動で調整する。*/
-	
-		width: 130px;
-		margin-left: 0px;
+		width: 130px;		/* 正方形にする */
+		margin-left: 0px;	/* 左marginを消す */
 	}
 
 	 /* 
@@ -523,8 +572,7 @@
 	.blogEditText {
 		width		:90%;			/*mainの90%の幅を取る。*/
 		margin		:0 auto 10px;	/*中央に寄せる。*/
-	
-		float: none;
+		float: none;	/* floatをなくす */
 	}
 
 	 /* 
@@ -536,7 +584,6 @@
 	 */
 	.blogEditTextarea {
 		width		:100%;		/*枠一杯に幅を取る。*/
-	
 		box-sizing: border-box;
 		height: 150px;
 	}

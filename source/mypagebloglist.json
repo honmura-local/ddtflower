@@ -1,13 +1,15 @@
 {
     "1": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"1"},
+            "number":{
+            	"text":"1"
+            },
             "date": {
                 "text": "2015/03/20"
             },
@@ -21,13 +23,15 @@
     },
     "2": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"2"},
+            "number":{
+            	"text":"2"
+            },
             "date": {
                 "text": "2015/03/19"
             },
@@ -41,13 +45,15 @@
     },
     "3": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"3"},
+            "number":{
+            	"text":"3"
+            },
             "date": {
                 "text": "2015/03/18"
             },
@@ -61,13 +67,15 @@
     },
     "4": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"4"},
+            "number":{
+            	"text":"4"
+            },
             "date": {
                 "text": "2015/03/17"
             },
@@ -81,13 +89,15 @@
     },
     "5": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"5"},
+            "number":{
+            	"text":"5"
+            },
             "date": {
                 "text": "2015/03/16"
             },
@@ -101,13 +111,15 @@
     },
     "6": {
         "class": "recordWrapper",
-        "adminBlogListContent": {
+        "blogListContent": {
             "checkWrap": {
                 "check": {
                     "type": "checkbox"
                 }
             },
-            "number":{"text":"6"},
+            "number":{
+            	"text":"6"
+            },
             "date": {
                 "text": "2015/03/15"
             },

@@ -346,5 +346,9 @@
         }
     },
     "numberingOuter": {},
-    "funcConfirmDialog": {}
+    "funcConfirmDialog": {},
+    "managementList": {
+        "class": "managementList",
+        "table": {}
+    }
 }

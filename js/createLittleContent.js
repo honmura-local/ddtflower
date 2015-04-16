@@ -58,8 +58,9 @@ function createCalendar (selector) {
 }
 
 /*
- * 関数名:createReservedCalendar(selector)
+ * 関数名:createReservedCalendar(selector, dateRange)
  * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :int dateRange:本日を基準にした予約可能な日数
  * 戻り値:なし
  * 概要  :予約のカレンダーを作る。
  * 作成日:2015.03.18
@@ -85,6 +86,53 @@ function createReservedCalendar (selector, dateRange) {
 		});
 		// ここまで追加・修正しました。
 	});// jqueryの記述の終わり
+}
+
+/*
+ * 関数名:createMyPageReservedCalendar(selector, dateRange)
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :int dateRange:本日を基準にした予約可能な日数
+ * 戻り値:なし
+ * 概要  :マイページ予約のカレンダーを作る。
+ * 作成日:2015.04.16
+ * 作成者:T.Masuda
+ */
+function createMyPageReservedCalendar(selector, dateRange) {
+	//datepickerのロケール設定を行う。
+	$.datepicker.regional['ja'] = dpJpSetting;
+	$.datepicker.setDefaults($.datepicker.regional['ja']);
+		
+	$(selector).datepicker({
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			// 開発中のメッセージを出す。
+			alert('現在この機能は開発中となっています。');
+		},
+		maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		minDate:0			//過去はクリックできなくする。
+	});
+}
+
+/*
+ * 関数名:createBlogCalendar(selector)
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 戻り値:なし
+ * 概要  :ブログページのカレンダーを作る。
+ * 作成日:2015.04.16
+ * 作成者:T.Masuda
+ */
+function createBlogCalendar(selector) {
+	//datepickerのロケール設定を行う。
+	$.datepicker.regional['ja'] = dpJpSetting;
+	$.datepicker.setDefaults($.datepicker.regional['ja']);
+	
+	$(selector).datepicker({
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			// 開発中のメッセージを出す。
+			alert('現在この機能は開発中となっています。');
+		}
+	});
 }
 
 /*
@@ -949,7 +997,15 @@ var errorJpNames = {name:'氏名',
 					maxEntry:'上限人数',
 					blogText:'本文',
 					blogTitle:'ブログタイトル',
-					imagePath:'画像'
+					imagePath:'画像',
+					campaignTitle:'キャンペーン名',
+					campaignType:'種別',
+					campaignContent:'内容',
+					campaignPrice:'金額',
+					campaignCopy:'コピー',
+					startDate:'開始日',
+					endDate:'終了日',
+					maxEntry:'上限人数'
 					};
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {
@@ -964,6 +1020,159 @@ var showAlert = {
 			}
 		}
 	}
+
+//デフォルトのsubmitHandlerを定義する連想配列。
+var defaultSubmitHandler = {
+	submitHandler:function(form){
+		afterSubmitForm(this, event);	//フォームをsubmitした後の処理を行う。
+	}
+}
+
+//記事の管理ボタン用のsubmitHandler。新規作成ならページを読み込むだけ、編集ならデータを取得
+//してテキストボックス等に格納する。
+var articleSubmitHandler = {
+	submitHandler:function(form){
+		//hiddenのinputタグからrole属性の値を受け取る。
+		var command = parseInt($('.valueHolder:first', form).attr('data-role'));
+		//チェック済みのチェックボックスの数を数える。
+		var checked = $('input:checkbox:checked' ,form).length;
+		var userId = getUserId();				//ユーザIDを取得する。
+		var contentNum = $(form).attr('data-role');	//コンテンツ番号を取得する。
+		
+		//編集ボタンをクリックされてかつ、リストのチェックボックスに2つ以上チェックが入っていれば
+		if(command == 1 && checked > 1){
+			alert('編集する記事を1つ選んでください');
+		//編集ボタンかつチェックがなければ
+		} else if(command == 1 && checked <= 0){
+			alert('編集する記事を1つ選んでください');
+		//以上の条件に引っかからなければ
+		} else {
+			//Ajax通信とそのコールバック関数の実行の順番を制御するため、when関数を利用する。
+			$.when(
+					afterSubmitForm(form)	//フォームをsubmitした後の処理を行う。
+			//whenのコードが終了したら
+			).done(function(){
+				//記事番号を取得する。記事番号でなければ会員IDを取得する。
+				var number = $('tr:has(input:checkbox:checked) .number' ,form).length > 0?
+						$('tr:has(input:checkbox:checked) .number' ,form).text() 
+						: parseInt($('tr:has(input:checkbox:checked) .memberId' ,form).text());
+				//commandが1(編集ボタンで画面遷移をしている)なら
+				if(command == 1){
+					
+					//サーバ側の用意が2015/4/16の時点でできていないので、サンプルのJSONのパスを用意する。
+					var url="";
+					//コンテンツ番号で分岐する。
+					switch(parseInt(contentNum)){
+					case 4:url = 'source/blogeditsample.json';	//ブログ
+						break;
+					case 5:url = 'source/campaigneditsample.json';	//キャンペーン
+						break;
+					case 6:url = 'source/studenteditsample.json';	//生徒さん
+						break;
+					default:	//当てはまらなければそのまま
+						break;
+					}
+					//Ajax通信で該当する記事のJSONを取得する。
+					$.ajax({
+						//ブログ記事を1つだけ取得するサーバのファイルにアクセスする。
+						url:url,
+//					url:init['getSelectedBlog'],
+						method:'post',	//postメソッドで送信する。
+						//ユーザIDと記事番号とコンテンツ番号を送る。
+						data:{'userId':userId, 'number':number, 'contentNum':contentNum},
+						dataType:'JSON',	//JSONを返してもらう。
+						success:function(json){	//通信が成功したら
+							//実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
+							//ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
+							json = json[number];
+							//jsonを走査する。
+							for(key in json){
+								var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
+								//domが画像タグならば
+								if(dom[0].tagName == 'IMG'){
+									//キーに対応したクラスの要素にテキストを追加していく。
+									dom.attr('src',json[key]);
+								//ラジオボタンなら
+								} else if(dom.attr('type') == 'checkbox'){
+									//対象となるラジオボタンにチェックを入れる。
+									dom.filter('[value="' + json[key] + '"]').prop('check', 'true');
+								//日付テキストボックスなら
+								} else if(dom.attr('type') == 'date'){
+									//日付のフォーマットを整えてテキストボックスに値を入れる。
+									dom.val(json[key].replace(/\//g, "-"));
+									//単にテキストを入れるだけであれば
+								} else {
+									dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
+								}
+							}
+						}
+					})
+				}
+			});
+		}
+	}
+}
+
+//リストに対する検索フォームのsubmitHandlerの連想配列。
+var listSearchSubmitHandler = {
+		submitHandler:function(form){	//submitHandlerのコールバック関数
+			//現在未定義。
+		}
+}
+
+/*
+ * 関数名:function deleteRowData(form)
+ * 引数  :element form: フォームの要素。
+ * 戻り値:なし
+ * 概要  :レコードを消すイベントを定義する。
+ * 作成日:2015.04.16
+ * 作成者:T.Masuda
+ */
+function deleteRowData(form){
+	//削除ボタンが押されたら
+	$('.deleteRecord').on('click', function(){
+		var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
+		//記事番号か、会員番号かを判別する。
+		var numberString = $('table td.number' ,form).length > 0? 'number':'memberId';
+		//チェックが入っている行を取得する。
+		var $checkedRecord = $('table tr:has(input:checkbox:checked)', form);
+		//フォームのテーブルのチェックボックスが入っている行を走査する。
+		$checkedRecord.each(function(){
+			//記事番号、または会員番号を配列に追加していく。
+			numberArray.push($('.' + numberString,this).text());
+		});
+		
+		//チェックがなければ
+		if(numberArray.length <= 0){
+			alert('必ず1行以上選択してください。');
+			return;	//処理を終える。
+		}
+		
+		//確認ダイアログを出して、OKならば
+		if(window.confirm('選択した行を削除しますか?')){
+			//先ほど選択した行を削除する。
+			$checkedRecord.remove();
+			//削除完了の旨を伝える。
+			alert('選択した行を削除しました。');
+		}
+	});
+}
+
+/*
+ * 関数名:function sendButtonRole(form)
+ * 引数  :element form: フォームの要素。
+ * 戻り値:String:エラーメッセージの文字列。
+ * 概要  :ボタンに設定されたroleの値を隠しフォームにセットする。
+ * 作成日:2015.04.15
+ * 作成者:T.Masuda
+ */
+function sendButtonRole(form){
+	//submitボタンのクリックイベントを設定する。
+	$('input:submit').on('click', function(){
+		//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
+		$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
+	});
+}
 
 /*
  * 関数名:function createErrorText
@@ -1017,4 +1226,22 @@ function createErrorText(errors, jpNames){
 	}
 	
 	return retText;	//作成したメッセージを返す。
+}
+
+/*
+ * 関数名:function deleteNumberKey(map)
+ * 引数  :map map: 処理対象とする連想配列。
+ * 戻り値:なし
+ * 概要  :数字のキーを消す。
+ * 作成日:2015.04.16
+ * 作成者:T.Masuda
+ */
+function deleteNumberKey(map){
+	//キーが数字かどうかのチェックを行いながら走査する。
+	for(key in map){
+		//キーが数字であれば
+		if(!(isNaN(key))){
+			delete map[key];	//キーを削除する。
+		}
+	}
 }

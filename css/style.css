@@ -140,12 +140,36 @@ input, select {
 /* 各タグの基本設定 */
 /* 
  * セレクタ:h1,h2,h3,h4,h5
- * 概要   :見出した具
+ * 概要   :見出しタグ
  * 作成者 :T.Masuda
  * 作成日 :2015.02.03
  */
 h1,h2,h3,h4,h5,th{
     font-weight: normal;    /* 個別に指定しなければフォントを太字にしない。 */
+}
+
+/* 
+ * セレクタ:button,input[type="submit"],input[type="button"]
+ * 概要   :ボタン。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+button,input[type="submit"],input[type="button"]{
+	cursor:pointer;	/* カーソルを合わせたら指差しポインターを表示する。 */
+	outline:none;	/* クリック後の枠線をなくす。 */
+	font-size: 15px;/* 統一したボタンのフォントサイズを設定する。 */
+}
+
+/* 
+ * セレクタ:.ui-button-text-only .ui-button-text
+ * 概要   :jQueryUIのbuttonタグのボタンのテキスト部分。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+button.ui-button-text-only span.ui-button-text {
+	padding: 0.4em 1.0em;	/* paddingを調整し、ボタンのサイズを変える	 */
+	font-weight: normal;	/* フォントの太さを通常にする。 */
+	font-size: 15px;		/* 統一したフォントサイズにする。 */
 }
 
 /* 
@@ -572,7 +596,7 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.04.07
  */
-.userName,.password {
+.loginDialog .userName,.loginDialog  .password {
 	width: 160px;			/* どの環境でも幅を一定にするため、幅を指定する。 */
 }
 
@@ -794,6 +818,95 @@ footer{
 label.error{
 	display:none!important;	/* 非表示にする。 */
 }
+ 
+/* 
+ * セレクタ:.managementList
+ * 概要   :管理対象の一覧。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+ .managementList{
+ 	width		:auto;				/* スマホ相当の幅に指定する。 */
+ 	margin		:10px 1%;			/* 左1%のmarginをとる。 */
+ 	overflow-x	:scroll;/*横にはみ出たセルをスクロールで表示できるようにする。 */
+	max-width	: 90%;				/* 最大幅を設定し、それからはみ出たらスクロールするようにする。 */
+	display		:inline-block;		/* インラインブロックにして、中の要素の幅で自身の幅を変える。 */
+ 	border	:1px solid #666;		/* 左の線を引く。 */
+ 	font-size: 15px;				/* フォントサイズを明確に指定する。 */
+ 	border-right-width: 2px;		/* 左の枠線をふとめにする。 */
+}
+ 
+/* 
+ * セレクタ:.managementList .table
+ * 概要   :管理対象の一覧テーブル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+ .managementList .table{
+ 	table-layout: fixed;			/* セルの幅を指定できる様にする。 */
+ 	border-spacing: 0;				/* テーブルに余計な空白を作らない。 */
+}
+ 
+/* 
+ * セレクタ:.tableHead th
+ * 概要   :テーブルの見出し行のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+ .tableHead th{
+ 	font-size: 16px;	/* 見出し用のフォントサイズにする。 */
+ 	background:#D0D0AC;	/* 背景色を黄緑色にする。 */
+ }
+
+/* 
+ * セレクタ:.managementList td
+ * 概要   :データのセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.26
+ */
+.managementList td {
+	background: #FFF;	/* 背景色を明示的に白にする。 */
+}	
+
+/* 
+ * セレクタ:.managementList td, .managementList th
+ * 概要   :一覧のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.25
+ */
+.managementList td, .managementList th{
+	padding: 2px;					/* paddingをつけて余裕を出す。 */
+	/* 右、下に灰色の罫線を引く。 */
+	border-right	: 1px solid #666;
+	border-bottom	: 1px solid #666;
+	overflow		: hidden;		/* はみ出たテキストを見えなくする。 */
+	white-space		: nowrap;		/* テキストの改行文字を機能させない。 */
+	max-width		: 250px;		/* 1列ごとの最大幅を設定する。 */
+}
+.managementList tr *:last-child{
+	border-right:none;
+}
+
+/* 
+ * セレクタ: .managementList tr:last-child *
+ * 概要   :最後の行のセル。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.03.26
+ */
+ .managementList tr:last-child *{
+ 	border-bottom-color: #CCC;	/* 下線を薄くする。 */
+}
+ 
+/* 
+ * セレクタ: .managementList .numberHead, .managementList .number
+ * 概要   :番号の列。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.16
+ */
+ .managementList .numberHead, .managementList .number{
+ 	display: none;	/* 非表示にする */
+}
+ 
  
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {

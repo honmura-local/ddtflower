@@ -4,5 +4,6 @@
     "jsonIdentifier": "json",
     "cookieLimitTime":"3600000",
     "photoDirectory":"",
-    "saveJSON":""
+    "saveJSON":"",
+    "getSelectedBlog":""
 }

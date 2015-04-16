@@ -16,7 +16,7 @@
         "optionButton": {
             "class": "optionButton tab",
             "optionLink": {
-            	"text":"オプション",
+                "text": "オプション",
                 "data-target": "#options",
                 "href": "option.html .main"
             }
@@ -24,7 +24,7 @@
         "customizeButton": {
             "class": "customizeButton tab",
             "customizeLink": {
-            	"text":"カスタマイズ",
+                "text": "カスタマイズ",
                 "data-target": "#customize",
                 "href": "customize.html .main"
             }
@@ -32,7 +32,7 @@
         "adminBlogButton": {
             "class": "adminBlogButton tab",
             "adminBlogLink": {
-            	"text":"管理者ブログ",
+                "text": "管理者ブログ",
                 "data-target": "#adminBlogManagement",
                 "href": "adminblogmanagement.html .main"
             }
@@ -40,7 +40,7 @@
         "campaignButton": {
             "class": "campaignButton tab",
             "campaignLink": {
-            	"text":"キャンペーン管理",
+                "text": "キャンペーン管理",
                 "data-target": "#campaignManagement",
                 "href": "campaignmanagement.html .main"
             }
@@ -48,7 +48,7 @@
         "studentButton": {
             "class": "studentButton tab",
             "studentLink": {
-            	"text":"生徒さん登録・編集",
+                "text": "生徒さん登録・編集",
                 "data-target": "#studentManagement",
                 "href": "studentmanagement.html .main"
             }
@@ -57,23 +57,23 @@
     "adminPanels": {
         "class": "panelContainer",
         "options": {
-			"class":"options tabPanel",
+            "class": "options tabPanel",
             "id": "options"
         },
         "customize": {
-			"class":"customize tabPanel",
+            "class": "customize tabPanel",
             "id": "customize"
         },
         "adminBlogManagement": {
-			"class":"adminBlogManagement tabPanel",
+            "class": "adminBlogManagement tabPanel",
             "id": "adminBlogManagement"
         },
         "campaignManagement": {
-			"class":"campaignManagement tabPanel",
+            "class": "campaignManagement tabPanel",
             "id": "campaignManagement"
         },
         "studentManagement": {
-			"class":"studentManagement tabPanel",
+            "class": "studentManagement tabPanel",
             "id": "studentManagement"
         }
     },
@@ -150,13 +150,13 @@
         }
     },
     "contentSearch": {
-    	"class":"contentSearch cf"
-    },
-    "managementList": {
-    	"class":"managementList",
-        "table": {}
+        "class": "contentSearch cf"
     },
     "contentManagement": {
-    	"class":"tabContainer contentManagement"
+        "class": "tabContainer contentManagement"
+    },
+    "managementList": {
+        "class": "managementList",
+        "table": {}
     }
 }

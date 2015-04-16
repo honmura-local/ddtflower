@@ -13,29 +13,93 @@
     },
     "myPageReserved": {
         "myPageReservedTitle": {
-        	"text":"予約一覧"
+            "text": "予約一覧"
         },
         "myPageReservedList": {},
         "myPageReservedCalendar": {}
     },
     "myPageBlog": {
-        "myPageBlogTitle": {
-        	"text":"ブログ"
-        },
+        "class":"myPageBlog myPageContent",
+        "action": "createarticle.html",
+        "method": "post",
+        "data-role": "4"
+    },
+    "myPageBlogTitle": {
+        "class": "myPageBlogTitle myPageTitle",
+        "text": "ブログ"
+    },
+    "myPageBlogButtons": {
         "myPageBlogButton1": {
-            "class": "myPageBlogButton",
-            "href":"createarticle.html",
-            "text":"記事編集"
+            "class": "myPageBlogButton myPageButton",
+            "value": "記事作成",
+            "type": "submit",
+            "data-role": "0"
         },
         "myPageBlogButton2": {
-            "class": "myPageBlogButton",
-            "href":"#myoption.html",
-            "text":"個人設定"
+            "class": "myPageBlogButton myPageButton",
+            "value": "記事編集",
+            "type": "submit",
+            "data-role": "1"
         },
         "myPageBlogButton3": {
-            "class": "myPageBlogButton",
-            "href":"#mygallery.html",
-            "text":"Myギャラリー"
+            "class": "myPageBlogButton myPageButton deleteRecord",
+            "text": "記事削除",
+            "type": "button"
+        },
+        "myPageBlogButtonHidden": {
+            "class": "valueHolder myPageBlogButtonHidden",
+            "type": "hidden",
+            "value": "",
+            "name": "command"
+        }
+    },
+    "blogListHeadWrap": {
+        "class": "recordWrapper",
+        "blogListHead": {
+            "class": "blogListHead tableHead",
+            "checkWrap": {
+                "check": {
+                    "type": "checkbox"
+                }
+            },
+            "articleNum": {},
+            "dateHead": {
+                "text": "日付"
+            },
+            "authorHead": {
+                "text": "著者"
+            },
+            "titleHead": {
+                "text": "タイトル"
+            }
+        }
+    },
+    "myPageMyGallery": {
+    	"class":"myPageMyGallery myPageContent"
+    },
+    "myPageMyGalleryTitle": {
+    	"class":"myPageMyGalleryTitle myPageTitle",
+        "text": "Myギャラリー"
+    },
+    "myPageMyGalleryButtons": {
+        "myPageMyGalleryButton1": {
+            "class": "myPageButton myPageMyGalleryButton",
+            "text": "Myギャラリーへ",
+            "href": "#mygallery.html"
+        }
+    },
+    "myPageOption": {
+    	"class":"myPageOption myPageContent"
+    },
+    "myPageOptionTitle": {
+        "class": "myPageOptionTitle myPageTitle",
+        "text": "設定"
+    },
+    "myPageOptionButtons": {
+        "myPageOptionButton1": {
+            "class": "myPageOptionButtons myPageButton",
+            "text": "個人設定",
+            "href": "#myoption.html"
         }
     }
 }

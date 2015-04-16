@@ -1,0 +1,44 @@
+{
+    "1": {
+        "nameTextBox input": "西島尚子",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "東京都"
+    },
+    "2": {
+        "nameTextBox input": "三崎亮子",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "兵庫県"
+    },
+    "3": {
+        "nameTextBox input": "佐伯玲子",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "福井県"
+    },
+    "4": {
+        "nameTextBox input": "速水晶良",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "神奈川県"
+    },
+    "5": {
+        "nameTextBox input": "黒川美玲",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "埼玉県"
+    },
+    "6": {
+        "nameTextBox input": "天城亜衣",
+        "sexRadioButton input": "0",
+        "eMailTextBox input": "xxx@yyy.zzz",
+        "telTextBox input": "000-0000-0000",
+        "addressTextBox input": "茨城県"
+    }
+}

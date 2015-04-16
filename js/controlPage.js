@@ -238,12 +238,30 @@ function createFormData(form){
  * 変更日 :2015.04.14
  * 変更者 :T.M
  * 内容 　:jQuery.Uploadで生成されたformタグを除外する記述を追加しました。
+ * 変更日 :2015.04.17
+ * 変更者 :T.M
+ * 内容 　:処理内容を関数化しました。
  */
 $(document).on('submit', '.main form:not([target^="jquery_upload"])', function(event){
-	var confirmEvent = true;	//submitを実行するかどうかの判定の変数を用意する。
-	var $this = $(this);		//処理高速化のためthisのjQueryオブジェクトを変数に入れる。
-	//submitイベントをキャンセルする。
-	event.preventDefault();
+	afterSubmitForm(this, event);	//フォームをsubmitした後の処理を行う。
+});
+
+/*
+ * 関数名:afterSubmitForm
+ * 引数   :element form:submitを行ったフォームのタグ。
+ * 　　   :event event:イベントオブジェクト。
+ * 戻り値 :なし
+ * 概要   :フォームがsubmitされたときの処理の関数。
+ * 作成日 :2015.04.16
+ * 作成者 :T.M
+ */
+function afterSubmitForm(form, event){
+	var $this = $(form);		//処理高速化のためthisのjQueryオブジェクトを変数に入れる。
+	//イベントオブジェクトがあれば
+	if(event !== void(0)){
+		//submitイベントをキャンセルする。
+		event.preventDefault();
+	}
 	
 	//submitボタンにconfirm属性が指定してありかつ、trueであれば
 	if($(('input:submit[confirm="true"]'), $this).length){
@@ -257,7 +275,8 @@ $(document).on('submit', '.main form:not([target^="jquery_upload"])', function(e
 		//チェックの必要がなければ通常通りフォームをsubmitする。
 		postForm($this);
 	}
-});
+}
+
 
 /*
  * 関数名:function postForm(form)

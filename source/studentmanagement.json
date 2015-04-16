@@ -1,7 +1,9 @@
 {
     "searchButtonSet": {
         "executeSearch": {
-            "text": "検索"
+            "text": "検索",
+            "value": "検索",
+            "type": "submit"
         }
     },
     "memberIdSearch": {
@@ -65,16 +67,31 @@
     },
     "listEditButtons": {
         "createNew": {
-            "text": "登録",
-            "href": "studentregistration.html"
+            "value": "作成",
+            "type": "submit",
+            "data-role": "0"
         },
         "edit": {
-            "text": "編集",
-            "href": "studentregistration.html"
+            "value": "編集",
+            "type": "submit",
+            "data-role": "1"
         },
         "delete": {
-            "text": "削除"
+        	"class":" deleteRecord delete",
+            "text": "削除",
+            "type": "button"
+        },
+        "hidden": {
+            "class": "valueHolder hidden",
+            "type": "hidden",
+            "value": "",
+            "name": "command"
         }
+    },
+    "managementForm": {
+        "data-role": "6",
+        "action": "studentregistration.html",
+        "method": "post"
     },
     "editStudent": {
         "action": "confirmregist.html",
@@ -223,6 +240,7 @@
         "back": {
             "href": "studentmanagement.html",
             "text": "戻る",
+            "type": "button",
             "onclick": ""
         }
     },

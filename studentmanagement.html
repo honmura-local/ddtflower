@@ -26,17 +26,23 @@
 				//ボタン領域を作る。
 				creator.outputTag('searchButtonSet', 'searchButtonSet', '#studentManagement .contentSearch');
 				//表形式のリストの外枠を作る。
-				creator.outputTag('managementList', 'managementList', '#studentManagement');
+				creator.outputTag('managementForm', 'managementForm', '#studentManagement');
+				creator.outputTag('managementList', 'managementList', '#studentManagement .managementForm');
 				//一覧の見出しを作る。
 				creator.outputTag('studentListHeadWrap', 'studentListHeadWrap', '#studentManagement .table');
 				unwrapTable('.studentListHead');
 				//一覧の内容を作る。
 				outputKeyNumberObject(creator.json, 'studentListContentWrap', '#studentManagement .table');
 				//編集ボタン群を作る。
-				creator.outputTag('listEditButtons', 'listEditButtons', '#studentManagement');
-				$('#studentManagement button').button();	//ボタンをリッチなものにする。	
+				creator.outputTag('listEditButtons', 'listEditButtons', '#studentManagement .managementForm');
+				$('#studentManagement input:submit, #studentManagement button').button();	//ボタンをリッチなものにする。	
 				//日付入力テキストボックスをクリックするとカレンダーが出る様にする。
 				setCallCalendar('.tabPanel.active input.calendar');
+				sendButtonRole($('#studentManagement .managementForm'));	//押されたsubmitボタンを検出する関数。
+				//submitイベントを登録する。
+				$('#studentManagement .managementForm').validate(articleSubmitHandler);
+				$('#studentManagement .contentSearch').validate(listSearchSubmitHandler);
+				deleteRowData('#studentManagement .managementForm');	//行の削除イベントを登録する。
 			</script>
 		</div>
 	</div>

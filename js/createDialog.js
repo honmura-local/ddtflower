@@ -735,6 +735,21 @@ function checkLogin(){
 }
 
 /* 
+ * 関数名:function getUserId()
+ * 概要  :cookieからユーザIDを取得して返す。
+ * 引数  :なし
+ * 返却値  :String:ユーザIDの文字列。
+ * 作成者:T.Masuda
+ * 作成日:2015.04.16
+ */
+function getUserId(){
+	// クッキーを連想配列で取得する。
+	var cookies = GetCookies();
+	//ユーザIDを取得して返す。なければゲスト用IDを返す。
+	return 'userId' in cookies? cookies['userId']: '999999';
+}
+
+/* 
  * 関数名:function checkLoginState()
  * 概要  :ログイン状態をチェックする。
  * 引数  :なし

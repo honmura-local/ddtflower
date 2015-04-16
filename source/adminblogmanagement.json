@@ -1,7 +1,9 @@
 {
     "searchButtonSet": {
         "executeSearch": {
-            "text": "検索"
+            "text": "検索",
+            "value":"検索",
+            "type":"submit"
         }
     },
     "titleSearch": {
@@ -41,6 +43,7 @@
                     "type": "checkbox"
                 }
             },
+            "numberHead":{},
             "dateHead": {
                 "text": "日付"
             },
@@ -54,15 +57,30 @@
     },
     "listEditButtons": {
         "createNew": {
-            "text": "作成",
-            "href": "createarticleintab.html"
+            "value": "作成",
+            "type": "submit",
+            "data-role": "0"
         },
         "edit": {
-            "text": "編集",
-            "href": "createarticleintab.html"
+            "value": "編集",
+            "type": "submit",
+            "data-role": "1"
         },
         "delete": {
-            "text": "削除"
+        	"class":" deleteRecord delete",
+            "text": "削除",
+            "type": "button"
+        },
+		"hidden": {
+            "class": "valueHolder hidden",
+            "type": "hidden",
+            "value": "",
+            "name": "command"
         }
+    },
+    "managementForm":{
+    	"data-role":"4",
+    	"action":"createarticleintab.html",
+    	"method":"post"
     }
 }
