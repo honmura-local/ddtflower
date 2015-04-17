@@ -309,6 +309,26 @@ function useZoomImage(selector){
 }
 
 /*
+ * 関数名:function isTouchDevice()
+ * 引数  :String selector
+ * 戻り値:なし
+ * 概要  :スマホ・タブレットかPCかを判別する。
+ * 作成日:2015.04.17
+ * 作成者:T.M
+ */
+function isTouchDevice(){
+	var retBoo = false;	//返却する真理値を格納する変数を宣言、falseで初期化する。
+	if ((navigator.userAgent.indexOf('iPhone') > 0 				//UAがIPhoneか
+			|| navigator.userAgent.indexOf('iPad') > 0) 		//iPadか
+			|| navigator.userAgent.indexOf('iPod') > 0 			//iPodか
+			|| navigator.userAgent.indexOf('Android') > 0) {	//Androidであれば
+		retBoo = true;	//trueを返すようにする。
+	}
+	
+	return retBoo;	//結果を返す。
+}
+
+/*
  * 関数名:createGallery(selector)
  * 引数  :String selector
  * 戻り値:なし
@@ -320,8 +340,10 @@ function useZoomImage(selector){
  * 内容　:setTimeoutを利用してAjax通信でのページ読み込みに対応しました。
  */
 function createGallery(selector){
-	//該当する要素を取得する。
-	var $gallery = $('.' + selector);
+	//タッチ端末かどうかを判定する。
+	var touchDevice = isTouchDevice();
+	//要素を取得して変数に格納する。
+	$gallery = $('.'+selector);
 	//一旦ギャラリーを隠す。
 	$gallery.hide();
 	//時間をおいて関数を実行する。
@@ -331,14 +353,16 @@ function createGallery(selector){
 		
 		//SmoothDivScrollの関数をコールしてギャラリーを作る。
 		$gallery.smoothDivScroll({
-			//カーソル合わせでスクロールする領域を表示する。
-			hotSpotScrolling: true,
+			//スマホなら両端のHotSpotによるスクロールを無効にする。
+			hotSpotScrolling: !touchDevice,
 			//タッチでのスクロールを有効にする。
 			touchScrolling: true,
+			//手動の無限スクロールをオンにする。
 			manualContinuousScrolling: true,
+			//スマホならホットスポットの背景をを出さない、PCなら出す。
+			visibleHotSpotBackgrounds:touchDevice? "":"always",
 			//マウスホイールによるスクロールを無効にする。
-			mousewheelScrolling: false,
-			visibleHotSpotBackgrounds:"always"
+			mousewheelScrolling: false
 		});
 		//fancyboxで画像を拡大できるようにする。
 		useZoomImage(selector);
