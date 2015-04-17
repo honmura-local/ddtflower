@@ -761,7 +761,18 @@
      * 追加日 :2015.03.08
      * 内容   :font-sizeの削除
      */
-    .itemList .listContent, .annotation {
+    .itemList .listContent {
         text-indent: -8px;      /* 字下げのためにインデントをとる */
+    }
+
+    /* 
+     * セレクタ:.bridalAnnotion
+     * 概要   :スマホ用ブライダルコース案内の注釈
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.04.17
+     * 変更者 :T.Yamamoto
+     */
+    .braidalAnnotation {
+        text-indent: -10px;      /* 字下げのためにインデントをとる */
     }
 }
