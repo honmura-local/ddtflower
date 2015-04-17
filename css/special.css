@@ -59,6 +59,26 @@
 }
 
 /* 
+ * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+0)
+ * 概要   :作品選択のテーブルの作品名。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct tr td:nth-child(2n+0){
+    width: 80px;        /* 4最大文字が入ることを想定した幅を指定する。 */
+}
+
+/* 
+ * セレクタ:.specialRadioButtonConstruct tr td:nth-child(2n+1)
+ * 概要   :作品選択のテーブルの作品名。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.02.06
+ */
+.specialRadioButtonConstruct tr td:nth-child(2n+1){
+    width: 20px;        /* ラジオボタン1個が入る幅を指定する。 */
+}
+
+/* 
  * セレクタ:.specialRadioButtonConstruct, .radioButtonSpecialSchedule, .subInfo
  * 概要   :希望作品のテーブル。予約日時のテーブル。予備情報。
  * 作成者 :T.Masuda
@@ -124,12 +144,12 @@
 }
 
 /* 
- * セレクタ:.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo
+ * セレクタ:.radioButtonSpecialConstruct, .radioButtonUsuallyCourse,.radioButtonSpecialSchedule, .subInfo,.personInformation
  * 概要   :ダイアログのコンテンツ部分のスタイル。
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
-.radioButtonSpecialConstruct, .radioButtonSpecialSchedule, .subInfo,.personInformation {
+.radioButtonSpecialConstruct, .radioButtonUsuallyCourse,.radioButtonSpecialSchedule, .subInfo,.personInformation {
     border-top: 1px solid #D0D0AC;  /* 灰色の線を入れる */
     display: block;                 /* ブロックレベル要素にする */
     padding: 10px;                  /* 要素の幅を10px広げる */
@@ -137,12 +157,12 @@
 }
 
 /* 
- * セレクタ:.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input 
+ * セレクタ:.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonUsuallyCourse tr td:nth-child(even),.radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input 
  * 概要   :左側のラジオボタンについてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
-.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input {
+.radioButtonSpecialConstruct tr td:nth-child(even), .radioButtonUsuallyCourse tr td:nth-child(even), .radioButtonSpecialSchedule tr td:nth-child(even), .radioButtonSpecialConstruct tr td input, .radioButtonSpecialSchedule tr td input {
     padding-left: 5px;  /* 左向きに5px要素を広げる */
 }
 
@@ -157,12 +177,22 @@
 }
 
 /* 
- * セレクタ:.radioButtonSpecialConstruct tr td, .radioButtonSpecialSchedule tr td{
+ * セレクタ:.radioButtonUsuallyCourse tr td
+ * 概要   :コース選択
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.17
+ */
+.radioButtonUsuallyCourse tr td {
+    padding-left: 10px; /* 左向きに10px要素を広げる */
+}
+
+/* 
+ * セレクタ:.radioButtonSpecialConstruct tr td, .radioButtonUsuallyCourse tr td, .radioButtonSpecialSchedule tr td{
  * 概要   :ラジオボタンについてのスタイル
  * 作成者 :T.Yamamoto
  * 作成日 :2015.02.27
  */
-.radioButtonSpecialConstruct tr td, .radioButtonSpecialSchedule tr td{
+.radioButtonSpecialConstruct tr td, .radioButtonUsuallyCourse tr td, .radioButtonSpecialSchedule tr td{
     padding-top: 3px;   /* 上向きに3px要素を広げる */
 }
 

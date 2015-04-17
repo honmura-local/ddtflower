@@ -4,12 +4,13 @@
 CREATETAG_FIRST = -1;
 
 function createTag(){
-	this.json = null;		//JSONデータを格納する変数。
-	this.dom = '';			//ひな形のHTMLのDOMを格納する変数。
-	this.numbering = '';	//ブログページのナンバリングのJSON連想配列。
-	this.formData = {};		//フォームデータを格納する連想配列。
-	var own = this;			//自分自身の要素を変数に入れる
-	
+	this.json = null;			//JSONデータを格納する変数。
+	this.dom = '';				//ひな形のHTMLのDOMを格納する変数。
+	this.numbering = '';		//ブログページのナンバリングのJSON連想配列。
+	this.formData = {};			//フォームデータを格納する連想配列。
+	var own = this;				//自分自身の要素を変数に入れる
+	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
+	this.reservedDialog = {};	
 	/*
 	 * 関数名:this.getJsonFile = function((jsonPath))
 	 * 概要  :JSONファイルを取得して返す。
@@ -374,7 +375,7 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
-			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
+			map[indexText]['onclick'] = 'this.outputNumberingTag("' 
 				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
@@ -434,7 +435,7 @@ function createTag(){
 		keyObj[key]['text'] = numberingString;
 		
 		//関数実行属性をoutputNumberingTagに設定する。
-		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
+		keyObj[key]['onclick'] = 'this.outputNumberingTag("' + jsonName +'",'
 			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '")';
 		
 		//numberingオブジェクトの中に追加する。
@@ -818,5 +819,54 @@ function createTag(){
 		});
 	});
 	
+	
+	/*
+	 * 関数名:this.reservedDialog['experience'] = function()
+	 * 概要  :体験レッスン予約希望ダイアログのタグを作る。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.17
+	 */
+	this.reservedDialog['experience'] = function(){
+		//体験レッスン予約ダイアログ用のJSONを取得する。。
+		own.getJsonFile(init['experienceLesson']);
+		
+		//createTagでダイアログに必要なタグを生成する。
+		own.outputTag('specialReservedDialog','specialReservedDialog','body');
+		own.outputTag('reservedDate','reservedDate','.specialReservedDialog');
+		own.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
+		own.outputTag('radioButtonSpecialConstruct','radioButtonSpecialConstruct','.specialReservedDialog');
+		own.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
+		own.outputTag('subInfo','subInfo','.specialReservedDialog');
+		own.outputTag('personInformation','personInformation','.specialReservedDialog');
+		own.outputTag('mailSubject','mailSubject','.specialReservedDialog');
+	}
+
+	/*
+	 * 関数名:this.reservedDialog['usually'] = function()
+	 * 概要  :通常レッスン予約希望ダイアログのタグを作る。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.17
+	 */
+	this.reservedDialog['usually'] = function(){
+		//体験レッスン予約ダイアログ用のJSONを取得する。。
+		own.getJsonFile(init['usuallyLesson']);
+		
+		//createTagでダイアログに必要なタグを生成する。
+		own.outputTag('specialReservedDialog','specialReservedDialog','body');
+		own.outputTag('reservedDate','reservedDate','.specialReservedDialog');
+		own.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
+		own.outputTag('radioButtonUsuallyCourse','radioButtonUsuallyCourse','.specialReservedDialog');
+		own.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
+		own.outputTag('subInfo','subInfo','.specialReservedDialog');
+		own.outputTag('memberInformation','memberInformation','.specialReservedDialog');
+		own.outputTag('mailSubject','mailSubject','.specialReservedDialog');
+		
+		//DBから会員情報を取得してpersonInformationの各フォームにデータを格納する。
+		getMemberInformation('.specialReservedDialog');
+	}
 }
 	

@@ -11,6 +11,8 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<!-- マイページのCSSファイルを読み込む。 -->
 			<link href="css/mypage.css" rel="stylesheet" type="text/css">
+			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
+			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
 				creator.getJsonFile('source/mypage.json');			// マイページのJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
@@ -59,7 +61,7 @@
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				//datepickerによるカレンダーを作成する。
-				createMyPageReservedCalendar('.myPageReservedCalendar', 30);
+				createReservedCalendar('.myPageReservedCalendar', 90);
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

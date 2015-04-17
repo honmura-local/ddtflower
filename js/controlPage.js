@@ -186,7 +186,7 @@ function createFormData(form){
 	var formDataReturn = {};
 	
 	//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
-	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden', form)
+	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"]', form)
 		.not('[disabled]').each(function(){
 		//値を取得する。
 		var val = $(this).val();

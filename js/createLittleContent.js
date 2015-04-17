@@ -75,11 +75,13 @@ function createReservedCalendar (selector, dateRange) {
 		$.datepicker.regional['ja'] = dpJpSetting;
 		$.datepicker.setDefaults($.datepicker.regional['ja']);
 		
-		$(selector).datepicker({
+		//カレンダー化するタグを取得する。
+		var $calendar = $(selector);
+		$calendar.datepicker({		//カレンダーを作る。
 			// カレンダーの日付を選択したら
 			onSelect: function(dateText, inst){
 				// 予約のダイアログを出す。
-				callReservedDialog(dateText);
+				callReservedDialog(dateText, $calendar);
 			},
 			maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
 			minDate:0			//過去はクリックできなくする。
@@ -276,15 +278,19 @@ function createDateArray(dateText){
 
 /*
  * 関数名:callReservedDialog
- * 引数  :String dateText
+ * 引数  :String dateText:日付テキスト
+ * 　　　 :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
  * 作成日:2015.02.10
  * 作成者:T.M
+ * 修正日:2015.04.17
+ * 修正者:T.M
+ * 内容　:カレンダーのタグからコンテンツ名を取得するようにしました。
  */
-function callReservedDialog(dateText){
-	// コンテンツ名を取得する。
-	var contentName = getContentName();
+function callReservedDialog(dateText, calendar){
+	// カレンダーからコンテンツ名を取得する。
+	var contentName = calendar.attr('name');
 	// 日付配列を取得する。
 	var date = createDateArray(dateText)
 	
@@ -820,7 +826,7 @@ $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
 });
 
 /*
- * イベント名:$(document).on('dblclick', '.myGallery .myPhotoTitle')
+ * イベント名:$(document).on('dblclick dblTap', '.myGallery .myPhotoTitle')
  * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
  * 			:string '.myGallery .myPhotoTitle':写真のタイトルのセレクタ。
  * 戻り値　 :なし
@@ -828,7 +834,7 @@ $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
+$(document).on('dbclick','.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
 	//タイトルを編集モードにする。
 	startEditText(this);
 });

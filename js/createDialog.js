@@ -8,41 +8,6 @@
 
 
 /* 
- * 関数名:createReservedData(reservedData)
- * 概要  :予約希望のデータを作成する。
- * 引数  :Object reservedData
- * 返却値  :Object
- * 作成者:T.M
- * 作成日:2015.02.11
- * 追加者 :T.Yamamoto
- * 追加日 :2015.03.09
- * 内容   :氏名、電話番号、メールアドレス、人数を追加
- */
-function createReservedData(reservedData){
-	
-	// reservedDataに選択作品のデータを格納する。
-	reservedData['construct'] = $('input[name="construct"]:checked').val();
-	// reservedDataに選択した時限のデータを格納する。
-	reservedData['schedule'] = getCheckBoxValue('schedule');
-	// 選択した予備日程の曜日を配列で取得してreservedDataに格納する。
-	reservedData['weekDay'] = getCheckBoxValue('dayOfWeek');
-	// 選択した予備日程の週を配列で取得してreservedDataに格納する。
-	reservedData['weekNumber'] = getCheckBoxValue('week');
-	// 入力された氏名を取得する
-	reservedData['name'] = $('input[name="name"]').val();
-	// 入力された電話番号を取得する
-	reservedData['personPhoneNumber'] = $('input[name="personPhoneNumber"]').val();
-	// 入力されたメールアドレスを取得する
-	reservedData['personEmail'] = $('input[name="personEmail"]').val();
-	// 入力された人数を取得する
-	reservedData['personCount'] = $('input[name="personCount"]').val();
-	
-
-	// reservedDataを返す。
-	return reservedData;
-}
-
-/* 
  * 関数名:disableInputs(dialog)
  * 概要  :対象のダイアログの入力要素を一時無効にする。
  * 引数  :jQuery dialog
@@ -53,28 +18,6 @@ function createReservedData(reservedData){
 function disableInputs(dialog){
 	// dialogのinputタグ、buttonタグにdisabled属性を追加して一時無効化する。
 	$('input,button', dialog).attr('disabled', 'disabled');
-}
-
-/* 
- * 関数名:getCheckBoxValue(className)
- * 概要  :チェックボックスの値を配列で取得する。
- * 引数  :String className
- * 返却値  :Array
- * 作成者:T.M
- * 作成日:2015.02.11
- */
-function getCheckBoxValue(className){
-	// 返却する値を格納する配列を用意する。
-	var checkBoxies = [];
-	var tmp = $('input[name="'+ className +'"]:checked');
-	// チェックが入ったチェックボックスを走査する。
-	$('input[name="'+ className +'"]:checked').each(function(i){
-		// 該当するチェックボックスから値を取得してcheckBoxiesに格納する。
-		checkBoxies[i] = $(this).val();
-	});
-	
-	// checkBoxiesを返す。
-	return checkBoxies;
 }
 
 /* 
@@ -108,20 +51,22 @@ function checkEmptyInput(names){
 	//namesを走査する。
 	for(var i = 0; i < nameslength; i++){
 		//入力フォームのタイプを取得する。
-		var type = $('input[name="' + names[i] + '"]').attr('type');
-		//typeがチェックするものであれば
-		if(type == 'radio' || type == 'checkbox'){
-			//チェックが入っているものがないなら
-			if($('input[name="' + names[i] + '"]:checked').length <= 0){
-				//配列にname属性の値を入れる。
-				retArray[retArray.length] = names[i];
-			}
-		//テキストボックス等なら
-		} else {
-			//何も入力されていなければ
-			if($('input[name="' + names[i] + '"]').val() == ''){
-				//配列にname属性の値を入れる。
-				retArray[retArray.length] = names[i];
+		var type = $('input[name="' + names[i] + '"]:not(:hidden)').attr('type');
+		if(type !== void(0)){	//要素が存在していればチェックを行う
+			//typeがチェックするものであれば
+			if(type == 'radio' || type == 'checkbox'){
+				//チェックが入っているものがないなら
+				if($('input[name="' + names[i] + '"]:checked').length <= 0){
+					//配列にname属性の値を入れる。
+					retArray.push(names[i]);
+				}
+				//テキストボックス等なら
+			} else {
+				//何も入力されていなければ
+				if($('input[name="' + names[i] + '"]').val() == ''){
+					//配列にname属性の値を入れる。
+					retArray.push(names[i]);
+				}
 			}
 		}
 	}
@@ -156,9 +101,18 @@ function replaceJpName(names, jpNames){
 
 
 //必須入力を行う入力フォームのname属性を配列に入れる。
-var checkNames = ['construct', 'schedule', 'name', 'personPhoneNumber', 'personEmail', 'personEmailCheck', 'personCount'];
+var checkNames = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'personEmail', 'personEmailCheck', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
-var checkNamesJp = {construct:'希望作品', schedule:'希望時限', name:'ご氏名', personPhoneNumber:'電話番号', personEmail:'メールアドレス', personEmailCheck:'メールアドレス(確認)', personCount:'人数'};
+var checkNamesJp = {
+			construct:'希望作品', 
+			schedule:'希望時限', 
+			name:'ご氏名', 
+			personPhoneNumber:'電話番号', 
+			personEmail:'メールアドレス', 
+			personEmailCheck:'メールアドレス(確認)', 
+			personCount:'人数',
+			course:'コース'
+		};
 
 /* 
  * 関数名:function checkAllAlphabet(selector)
@@ -185,26 +139,39 @@ function checkAllAlphabet(selector){
 /* 
  * 関数名:createSpecialReservedDialog(json, array)
  * 概要  :特別レッスン予約用ダイアログを生成する。
- * 引数  :Object json, Array array
+ * 引数  :String content:コンテンツ名。通常レッスンや体験レッスンといった意味合いの文字を受け取る
+ * 引数  :Array array:年月日の日付の配列。
  * 返却値  :なし
  * 作成者:T.M
  * 作成日:2015.02.09
  * 変更者:T.M
  * 変更日:2015.03.31
  * 内容　:submitイベントで処理するようにしました。
+ * 変更者:T.M
+ * 変更日:2015.04.17
+ * 内容　:各コンテンツ別のタグを生成するように変更しました。
  */
-function createSpecialReservedDialog(json, array){
+function createSpecialReservedDialog(content, array){
 	
 	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
 	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
-
-	//ダイアログを呼ぶ下準備としてjsonとテンプレートのdomを取得する。
-	creator.getJsonFile('source/experience.json');
-	creator.getDomFile('source/template.html');
+	
+	creator.getDomFile('source/template.html');	//タグを作るためにテンプレートのDOMを取得する。
 	
 	// ダイアログの本体となるdivタグを生成する。
-	creator.outputTag('specialReservedDialog');
+	creator.reservedDialog[content]();
 
+	//希望曜日の選択があれば
+	if($('input[name="dayOfWeek"]').length){
+		// 全ての曜日のチェックボックスにチェックする
+		allCheckbox('.allDayCheckbox', 'input[name="dayOfWeek"]');
+	}
+	//希望週の選択があれば
+	if($('input[name="week"]').length){
+		// 全ての週のチェックボックスにチェックする
+		allCheckbox('.allWeekCheckbox', 'input[name="week"]');
+	}
+	
 	// ダイアログに日付欄を追加する。
 	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
 	// 生成したdivタグをjQuery UIのダイアログにする。
@@ -324,6 +291,44 @@ function createSpecialDate(year, month, day){
 	//日付のinputタグにも日付を追加する。
 	$('.reservedDate').val(date);
 }
+
+/* 
+ * 関数名:function getMemberInformation(form)
+ * 概要  :フォームの会員情報欄に情報を格納する。。
+ * 引数  :String form:対象のフォーム
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.04.17
+ */
+function getMemberInformation(form){
+	var userId = getUserId();	//ユーザIDを取得する。
+	var tmp;					//JSONを一時的に格納する変数を用意する。
+	//Ajax通信で会員情報のJSONを取得する
+	$.ajax({
+		// 予約データ保存用のPHPにデータを送信する。2015.02.19現在該当PHPが無いため自身のURLに送信しています。
+		url: location.href,
+//		url: init["getMemberInformation"],
+		dataType: 'text',			//サーバ側の処理ができるまでの措置
+//		dataType: 'JSON',			// JSONデータを返してもらう。
+		async: false,				// 非同期通信にしない。
+		data: {"userId":userId},	//ユーザIDを送信する。
+		success:function(json){		// 通信成功時の処理。
+			//tmp = json;				//tmpに取得したJSONの連想配列を格納する。
+			tmp = {					//サーバの処理を実装するまでダミーデータを使う。
+					"personName":"ユーザ",
+					"personNameKana":"ユーザ",
+					"personEmail":"user@exampleexampleuser.com",
+					"personTel":"000-0000-0000"
+			}
+		}
+	});
+	
+	//フォームの該当するタグの中にテキストを流し込む。
+	for(key in tmp){
+		$('.' + key).val(tmp[key]);	//連想配列からテキストを取得して流し込む。
+	}
+}
+
 
 /* 
  * 関数名:sendReservedData(reservedData)
@@ -462,7 +467,7 @@ function createSpecialReservedConfirmDialog(reservedData){
 		// Escキーを押してもダイアログが閉じないようにする。
 		closeOnEscape	: false,
 		//タイトルをつける。
-		title:"体験レッスン 送信内容確認",
+		title:"レッスン予約希望 送信内容確認",
 		// モーダルダイアログとして生成する。
 		modal			: true,
 		// リサイズしない。

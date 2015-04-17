@@ -6,5 +6,7 @@
     "photoDirectory":"",
     "saveJSON":"",
     "getSelectedBlog":"",
-    "'photoPost'":""
+    "photoPost":"",
+    "experienceLesson":"source/experiencelesson.json",
+    "usuallyLesson":"source/usuallylesson.json"
 }

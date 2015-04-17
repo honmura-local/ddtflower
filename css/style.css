@@ -158,6 +158,9 @@ button,input[type="submit"],input[type="button"]{
 	cursor:pointer;	/* カーソルを合わせたら指差しポインターを表示する。 */
 	outline:none;	/* クリック後の枠線をなくす。 */
 	font-size: 15px;/* 統一したボタンのフォントサイズを設定する。 */
+	/* iPhone Safariの文字サイズが自動調整される仕様への対策 */
+	-webkit-text-size-adjust: 100%;
+	-webkit-appearance: none;
 }
 
 /* 

@@ -16,7 +16,9 @@
             "text": "予約一覧"
         },
         "myPageReservedList": {},
-        "myPageReservedCalendar": {}
+        "myPageReservedCalendar": {
+        	"name":"usually"
+        }
     },
     "myPageBlog": {
         "class":"myPageBlog myPageContent",
