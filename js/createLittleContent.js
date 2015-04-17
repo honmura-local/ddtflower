@@ -320,15 +320,17 @@ function useZoomImage(selector){
  * 内容　:setTimeoutを利用してAjax通信でのページ読み込みに対応しました。
  */
 function createGallery(selector){
+	//該当する要素を取得する。
+	var $gallery = $('.' + selector);
 	//一旦ギャラリーを隠す。
-	$('.' + selector).hide();
+	$gallery.hide();
 	//時間をおいて関数を実行する。
 	window.setTimeout(function(){
 		//ギャラリーを見える様にする。
-		$('.' + selector).show();
+		$gallery.show();
 		
 		//SmoothDivScrollの関数をコールしてギャラリーを作る。
-		$('.' + selector).smoothDivScroll({
+		$gallery.smoothDivScroll({
 			//カーソル合わせでスクロールする領域を表示する。
 			hotSpotScrolling: true,
 			//タッチでのスクロールを有効にする。
@@ -338,7 +340,6 @@ function createGallery(selector){
 			mousewheelScrolling: false,
 			visibleHotSpotBackgrounds:"always"
 		});
-		
 		//fancyboxで画像を拡大できるようにする。
 		useZoomImage(selector);
 	//1秒置いて実行する。
@@ -1020,7 +1021,8 @@ var errorJpNames = {name:'氏名',
 					campaignCopy:'コピー',
 					startDate:'開始日',
 					endDate:'終了日',
-					maxEntry:'上限人数'
+					maxEntry:'上限人数',
+					nameKana:'氏名(カナ)'
 					};
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {

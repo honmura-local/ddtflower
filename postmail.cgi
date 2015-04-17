@@ -10,11 +10,11 @@
 use strict;
 use CGI::Carp qw(fatalsToBrowser);
 use MIME::Base64;
-use lib 'postmail/lib';
+use lib './lib';
 use CGI::Minimal;
 
 # 設定ファイル認識
-require 'postmail/init.cgi';
+require './init.cgi';
 my %cf = set_init();
 
 # データ受理
@@ -267,13 +267,10 @@ sub send_mail {
 		$reply =~ s/!date!/$date1/g;
 	}
 
-  #氏名を取得する変数を宣言する。
-  my $name = "";
-
 	# 本文キーを展開
 	my ($bef,$mbody,$log);
 	foreach (@$key) {
-    
+
 		# 本文に含めない部分を排除
 		next if ($_ eq "mode");
 		next if ($_ eq "need");
@@ -287,8 +284,18 @@ sub send_mail {
 		# hexデコード
 		$$in{$_} = hex_decode($$in{$_});
 
+		my $key_name;
 		# name値の名前置換
-		my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
+		if (defined($cf{replace}->{$_})) {
+			$key_name = $cf{replace}->{$_};
+			$reply =~ s/"!".$_."!"/$$in{$_}/g;
+		} else {
+			$key_name = $_;
+		}
+
+
+		# name値の名前置換
+#		my $key_name = defined($cf{replace}->{$_}) ? $cf{replace}->{$_} : $_;
 
 		# エスケープ
 		$$in{$_} =~ s/\.\n/\. \n/g;
@@ -312,18 +319,8 @@ sub send_mail {
 		my $tmp;
 		if ($$in{$_} =~ /\n/) {
 			$tmp = "$key_name = \n$$in{$_}\n";
-			#名前であれば
-			#if ($_ eq "name"){
-	        #名前を変数にセットする。
-       			 #$name = "$key_name = \n$$in{$_}";
-      		#}
 		} else {
 			$tmp = "$key_name = $$in{$_}\n";
-			#名前であれば
-			#if ($_ eq "name"){
-		        #名前を変数にセットする。
-    		#    $name = "$$in{$_}";
-     		# }
 		}
 		$mbody .= $tmp;
 
@@ -332,11 +329,9 @@ sub send_mail {
 	
 	# 本文テンプレ内の変数を置き換え
 	$mail =~ s/!message!/$mbody/;
-	$mail =~ s/!name!/$name/;
 	
 	# 返信テンプレ内の変数を置き換え
 	$reply =~ s/!message!/$mbody/ if ($cf{auto_res});
-	$reply =~ s/!name!/$name/ if ($cf{auto_res});
 	
 	# コード変換
 	$mail  = $cf{send_b64} == 1 ? conv_b64($mail)  : conv_jis($mail);
@@ -942,3 +937,4 @@ sub conv_code {
 	$key = \@tmp;
 	$in  = \%tmp;
 }
+

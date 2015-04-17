@@ -24,6 +24,15 @@
             "name": "nameSearch"
         }
     },
+    "nameKanaSearch": {
+        "articleSearchLabel": {
+            "text": "氏名(カナ)"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "nameKanaSearch"
+        }
+    },
     "emailSearch": {
         "articleSearchLabel": {
             "text": "メールアドレス"
@@ -114,6 +123,25 @@
                 "textBox": {
                     "type": "text",
                     "name": "name",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "nameKana": {
+                "formContent": {
+                    "text": "氏名(カナ)"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": ""
+                }
+            },
+            "nameKanaTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "nameKana",
                     "size": "60",
                     "required": ""
                 }
@@ -266,6 +294,25 @@
                 "textBox": {
                     "type": "text",
                     "name": "name",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "nameKana": {
+                "formContent": {
+                    "text": "氏名(カナ)"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": ""
+                }
+            },
+            "nameKanaTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "nameKana",
                     "size": "60",
                     "required": ""
                 }
