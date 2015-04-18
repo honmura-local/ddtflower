@@ -305,8 +305,10 @@ function postForm(form){
 	$.post(url[0], formData,
 	// 成功時の処理を記述する。
 	 function(data){
+		//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
+		var isCgiHistory = $form.attr('state') != ''? true: false;
 		//お問い合わせフォームであったら
-		if($('.main .confirmSendMail').length > 0){
+		if($('.main .confirmSendMail').length > 0 && !(isCgiHistory)){
 			//送信完了のメッセージを出す。
 			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してお問い合わせの操作を行ってください。');
 		}
@@ -354,7 +356,7 @@ function postForm(form){
 				//カレントのURLを更新する。
 				currentLocation = url;
 				//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
-				if($form.attr('state') == '' && isSupportPushState()){
+				if(!(isCgiHistory) && isSupportPushState()){
 					//画面遷移の履歴を追加する。
 					history.pushState({'url':'#' + currentLocation}, '', location.href);
 				}
