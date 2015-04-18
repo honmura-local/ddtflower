@@ -91,7 +91,7 @@ function callPage(url, state){
 	//cgiなら
 	if(url.indexOf('.cgi') > -1){
 		//フォーム用の処理を行う。
-		postForm($('<form></form>').attr({action: url,method:'post'}));
+		postForm($('<form></form>').attr({action: url,method:'post',state:url}));
 		return;	//処理を終える。
 	}
 	//Ajax通信を行う。
@@ -353,8 +353,8 @@ function postForm(form){
 				
 				//カレントのURLを更新する。
 				currentLocation = url;
-				//pushstateに対応していたら
-				if(isSupportPushState()){
+				//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
+				if($form.attr('state') == '' && isSupportPushState()){
 					//画面遷移の履歴を追加する。
 					history.pushState({'url':'#' + currentLocation}, '', location.href);
 				}
