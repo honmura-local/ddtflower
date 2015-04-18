@@ -305,6 +305,7 @@ function postForm(form){
 	$.post(url[0], formData,
 	// 成功時の処理を記述する。
 	 function(data){
+		var a = $form.attr('state');
 		//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
 		var isCgiHistory = $form.attr('state') != ''? true: false;
 		//お問い合わせフォームであったら
