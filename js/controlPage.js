@@ -86,14 +86,14 @@ function overwrightContent(target, data){
  * 内容　:戻るボタンに対応しました。
  */
 function callPage(url, state){
+	//urlから#を抜き取り、有効なURLを形成する。
+	url = url.replace(/#/g, '');
 	//cgiなら
 	if(url.indexOf('.cgi') > -1){
 		//フォーム用の処理を行う。
 		postForm($('<form></form>').attr({action: url,method:'post'}));
 		return;	//処理を終える。
 	}
-	//urlから#を抜き取り、有効なURLを形成する。
-	url = url.replace(/#/g, '');
 	//Ajax通信を行う。
 	$.ajax({
 		//URLを指定する。
