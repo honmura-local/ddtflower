@@ -284,7 +284,7 @@
     "memberInformation":{
     	"personName":{
     		"value":"",
-    		"name":"personName",
+    		"name":"name",
     		"type":"hidden"
     	},
     	"personNameKana":{
