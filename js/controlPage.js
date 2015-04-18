@@ -124,6 +124,9 @@ function callPage(url, state){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + currentLocation}, '', location.href);
 			}
+			
+			//スクロール位置をトップに戻す。
+			window.scroll(0, 0);
 		}
 	});
 }
@@ -363,6 +366,9 @@ function postForm(form){
 			}
 		}
 	});
+	
+	//スクロール位置をトップに戻す。
+	window.scroll(0, 0);
 }
 
 
