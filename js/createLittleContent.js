@@ -84,7 +84,7 @@ function createReservedCalendar (selector, dateRange) {
 				callReservedDialog(dateText, $calendar);
 			},
 			maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-			minDate:0			//過去はクリックできなくする。
+			minDate:1			//今日以前はクリックできなくする。
 		});
 		// ここまで追加・修正しました。
 	});// jqueryの記述の終わり
@@ -111,7 +111,7 @@ function createMyPageReservedCalendar(selector, dateRange) {
 			alert('現在この機能は開発中となっています。');
 		},
 		maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-		minDate:0			//過去はクリックできなくする。
+		minDate:1			//過去はクリックできなくする。
 	});
 }
 

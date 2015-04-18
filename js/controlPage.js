@@ -87,7 +87,7 @@ function overwrightContent(target, data){
  */
 function callPage(url, state){
 	//urlから#を抜き取り、有効なURLを形成する。
-	url = url.replace('#', '');
+	url = url.replace(/#/g, '');
 	//Ajax通信を行う。
 	$.ajax({
 		//URLを指定する。
@@ -116,7 +116,7 @@ function callPage(url, state){
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
 			if(state === void(0) && isSupportPushState()){
 				//画面遷移の履歴を追加する。
-				history.pushState({'url':currentLocation}, '', location.href);
+				history.pushState({'url':'#' + currentLocation}, '', location.href);
 			}
 		}
 	});
@@ -347,6 +347,11 @@ function postForm(form){
 				
 				//カレントのURLを更新する。
 				currentLocation = url;
+				//pushstateに対応していたら
+				if(isSupportPushState()){
+					//画面遷移の履歴を追加する。
+					history.pushState({'url':'#' + currentLocation}, '', location.href);
+				}
 			}
 		}
 	});

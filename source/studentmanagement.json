@@ -446,7 +446,7 @@
     },
     "confirmRegistration": {
         "message": {
-            "text": "会員登録>確認画面"
+            "text": "会員登録 > 確認画面"
         },
         "noticeList": {
             "LI": [
@@ -502,13 +502,13 @@
             "backButton": {
                 "class": "backButtonbutton",
                 "type": "button",
-                "value": "<前に戻る",
+                "value": "戻る",
                 "onclick": "history.back()"
             },
             "sendButton": {
                 "class": "sendButtonbutton submit",
                 "type": "submit",
-                "value": "送信する>",
+                "value": "送信",
                 "onclick": ""
             },
             "sendValue1": {

@@ -120,7 +120,9 @@ $cf{replace} = {
 		'personCount' => '人数',
 		'nameKana'=> 'ご氏名(カナ)',
 		'content' => 'お問い合わせ内容',
-		'course' => 'コース'
+		'course' => 'コース',
+		'personNameKana' => 'ご氏名(カナ)',
+		'personTel' => '電話番号'
 	};
 
 # 送信者へのメール返信

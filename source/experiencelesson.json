@@ -379,7 +379,9 @@
                     "style": "ime-mode:disabled",
                     "autocomplete": "off",
                     "onkeyDown": "return controllInputChar(event);",
-                    "type": "number"
+                    "type": "number",
+                    "min":"1",
+                    "class":"personTextbox count"
                 }
             }
         }

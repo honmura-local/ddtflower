@@ -133,7 +133,72 @@ function checkAllAlphabet(selector){
 		 }
 	 });
 	 
-	 return retArray;	//作成した配列を返す。
+	 //作成した配列、またはnullを返す。
+	return retArray.length > 0? retArray: null;
+}
+
+/* 
+ * 関数名:function numberCheck(selector)
+ * 概要  :指定したクラスのテキストボックスの値が0以下でないかをチェックする。
+ * 引数  :String selector:チェックするクラス。
+ * 返却値  :null || Array:チェックがOKならnullを返し、そうでなければname属性の配列を返す。
+ * 作成者:T.M
+ * 作成日:2015.04.18
+ */
+function numberCheck(selector){
+	//返却する配列を宣言、初期化する。
+	var returns = [];
+	
+	//指定されたクラスの要素を走査する。
+	$(selector).each(function(){
+		//現在さす要素の値が0以下であれば
+		if(parseInt($(this).val()) <= 0 ){
+			//配列にこの要素のname属性を格納する。
+			returns.push($(this).attr('name'));
+		}
+	})
+	
+	//チェックに引っかかった要素があれば配列を返し、なければnullを返す。
+	return returns.length > 0? returns: null;
+}
+
+//入力項目のエラー別メッセージの連想配列。
+var messages = {
+		emptyList:"以下の項目が未入力となっています。\n",
+		onlyAlphabetList	:"以下の項目は半角英数字記号のみを入力してください。\n",
+		emailCheck	:"確認のため、同じメールアドレスもう一度入力してください。\n\n",
+		numberList:"以下の項目の数値を1以上で入力してください。\n"
+}
+
+
+/* 
+ * 関数名:function makeFailedAlertString(list, jpNameMap)
+ * 概要  :入力失敗の警告メッセージを作る。
+ * 引数  :map lists:エラーがあった欄のリストの連想配列。
+ * 　　  :map jpNameMap:英語名のキーと日本語名の値の連想配列。
+ * 　　  :map messages:エラーメッセージの序文の連想配列。
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.04.18
+ */
+function makeFailedAlertString(lists, jpNameMap, messages){
+	var errorString = '';	//エラーメッセージのテキストを格納する変数を宣言、初期化する。
+	
+	//listsのキーを走査する
+	for(key in lists){
+		//チェックが通った項目でなければ
+		if(lists[key] != null){
+			 //エラーのリストを日本語に訳す。
+			 var errorList = replaceJpName(lists[key], jpNameMap);
+			 //エラーのリストを1つの文字列にする。
+			 var errorListString = errorList.join("\n");
+			 //警告を追加する。
+			 errorString += messages[key] + errorListString + '\n\n';
+		}
+	}
+	
+	//エラーメッセージを返す。
+	return errorString;
 }
 
 /* 
@@ -214,11 +279,12 @@ function createSpecialReservedDialog(content, array){
 			        		 var emptyList = checkEmptyInput(checkNames);
 		        			//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
 			        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="personEmail"], input[name="personCount"]');
-			        		 //メールアドレスの再入力が行われているかをチェックする。
-			        		 var emailCheck = $('.personEmail input').val() == $('.personEmailCheck input').val()? true: false;
-			        		 
+			        		 //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
+			        		 var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
+			        		 //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。
+			        		 var numberList = numberCheck('.count');
 			        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-			        		 if(emptyList == null && onlyAlphabetList.length == 0 && emailCheck == true) {
+			        		 if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
 				        		 // 入力確認ダイアログを呼び出す。
 				        		 createSpecialReservedConfirmDialog();
 				        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
@@ -228,30 +294,8 @@ function createSpecialReservedDialog(content, array){
 				        		 // このダイアログの入力要素を一時的に無効化する。
 				        		 disableInputs($(this));
 			        		 } else {
-			        			 var alerts = "";	//警告の文字列を格納する変数を宣言、初期化する。
-			        			 
-				        		 if(emptyList != null){	//未入力項目リストがNGであったら
-				        			 //未入力項目のリストを日本語に訳す。
-				        			 emptyList = replaceJpName(emptyList, checkNamesJp);
-				        			 //未入力項目のリストを1つの文字列にする。
-				        			 var emptyListString = emptyList.join("\n");
-				        			 //警告を追加する。
-				        			 alerts += "以下の項目が未入力となっています。\n" + emptyListString + '\n\n';
-				        			 
-				        		 }
-				        		 //英数字チェックリストがNGであったら
-				        		 if(onlyAlphabetList.length != 0){
-				        			 //英数字チェックリストを訳す。
-				        			 onlyAlphabetList = replaceJpName(onlyAlphabetList, checkNamesJp);
-				        			 //英数字チェックリストを1つの文字列にする。
-				        			 var onlyAlphabetListString = onlyAlphabetList.join("\n");
-				        			 //警告を追加する。
-				        			 alerts += "以下の項目は半角英数字記号のみを入力してください。\n" + onlyAlphabetListString + '\n\n';
-				        		 }
-				        		 //メールの再入力が行われていなかったら
-				        		 if(emailCheck == false){
-				        			 alerts += "確認のため、同じメールアドレスもう一度入力してください。";
-				        		 }
+			        			 //警告のテキストを作る。
+			        			 var alerts = makeFailedAlertString({'emptyList':emptyList,'onlyAlphabetList':onlyAlphabetList,'emailCheck':emailCheck,'numberList':numberList},checkNamesJp, messages);
 			        			 //アラートを出す。
 			        			 alert(alerts);
 			        		 }
