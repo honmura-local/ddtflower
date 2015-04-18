@@ -660,6 +660,10 @@ function baseDialog(dialog){
  * 作成者　:T.Masuda
  */
 function connectErrorException(xhr, status, error){
+	//通信が終了しているのでローディング画面を消す
+	commonFuncs.hideLoadingScreen();
+	//通信失敗のアラートを出す。
+	alert(MESSAGE_FAILED_CONNECT);
 	Error.apply(this);	//エラーを起こす
 }
 
@@ -706,3 +710,9 @@ function cannotGetAnyRecordException(){
 	Error.apply(this);	//エラーを起こす
 }
 
+//各例外クラスの継承の記述
+connectErrorException.prototype			= new Error;
+failedToDBControleException.prototype	= new Error;
+jsonFailedToParseException.prototype	= new Error;
+failedToDisplayException.prototype		= new Error;
+cannotGetAnyRecordException.prototype	= new Error;
