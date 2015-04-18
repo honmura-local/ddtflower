@@ -1098,7 +1098,7 @@ var articleSubmitHandler = {
 			$.when(
 					afterSubmitForm(form)	//フォームをsubmitした後の処理を行う。
 			//whenのコードが終了したら
-			).done(function(){
+			).then(function(){
 				//記事番号を取得する。記事番号でなければ会員IDを取得する。
 				var number = $('tr:has(input:checkbox:checked) .number' ,form).length > 0?
 						$('tr:has(input:checkbox:checked) .number' ,form).text() 

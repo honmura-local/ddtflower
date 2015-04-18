@@ -256,7 +256,7 @@ $(document).on('submit', '.main form:not([target^="jquery_upload"])', function(e
 });
 
 /*
- * 関数名:afterSubmitForm
+ * 関数名:function afterSubmitForm(form, event)
  * 引数   :element form:submitを行ったフォームのタグ。
  * 　　   :event event:イベントオブジェクト。
  * 戻り値 :なし
@@ -600,6 +600,8 @@ function callPageInTab(url, tabPanel){
 			//タブパネル内を書き換える。
 			overwrightContent(tabPanel,html);
 			creator.json = '';	/* JSONをクリアする。 */
+			//スクロール位置をトップに戻す。
+			window.scroll(0, 0);
 		},
 		//通信エラーであれば
 		error:function(XMLHttpRequest, textStatus, errorThrown){

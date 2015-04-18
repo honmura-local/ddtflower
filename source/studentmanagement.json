@@ -51,6 +51,15 @@
             "name": "telSearch"
         }
     },
+    "addressSearch": {
+        "articleSearchLabel": {
+            "text": "住所"
+        },
+        "articleSearchTextBox": {
+            "type": "text",
+            "name": "addressSearch"
+        }
+    },
     "studentListHeadWrap": {
         "class": "recordWrapper",
         "studentListHead": {
@@ -142,6 +151,82 @@
                 "textBox": {
                     "type": "text",
                     "name": "nameKana",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "userId": {
+                "formContent": {
+                    "text": "ユーザID"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "UserID"
+                }
+            },
+            "userIdTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "userId",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "nickname": {
+                "formContent": {
+                    "text": "ニックネーム"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "Nickname"
+                }
+            },
+            "nicknameTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "nickname",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "password": {
+                "formContent": {
+                    "text": "パスワード"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "Password"
+                }
+            },
+            "passwordTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "password",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "passwordConfirm": {
+                "formContent": {
+                    "text": "パスワード(確認)"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": ""
+                }
+            },
+            "passwordConfirmTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "passwordConfirm",
                     "size": "60",
                     "required": ""
                 }
