@@ -2,6 +2,54 @@
  * 小規模のパーツ、コンテンツを作るためのJSファイル。
  */
 
+//ブラウザ判別のためのコード。
+/*
+ * if.useragent.js v0.1
+ * info: http://company.miyanavi.net/archives/808
+ * auther: miyanavi
+ * licence: MIT
+ *
+ */
+var uaName = 'unknown';
+var userAgent = window.navigator.userAgent.toLowerCase();
+var appVersion = window.navigator.appVersion.toLowerCase();
+ 
+if (userAgent.indexOf('msie') != -1) {
+  uaName = 'ie';
+  if (appVersion.indexOf('msie 6.') != -1) {
+    uaName = 'ie6';
+  } else if (appVersion.indexOf('msie 7.') != -1) {
+    uaName = 'ie7';
+  } else if (appVersion.indexOf('msie 8.') != -1) {
+    uaName = 'ie8';
+  } else if (appVersion.indexOf('msie 9.') != -1) {
+    uaName = 'ie9';
+  } else if (appVersion.indexOf('msie 10.') != -1) {
+    uaName = 'ie10';
+  }
+} else if (userAgent.indexOf('chrome') != -1) {
+  uaName = 'chrome';
+} else if (userAgent.indexOf('ipad') != -1) {
+  uaName = 'ipad';
+} else if (userAgent.indexOf('ipod') != -1) {
+  uaName = 'ipod';
+} else if (userAgent.indexOf('iphone') != -1) {
+  uaName = 'iphone';
+  var ios = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+  uaName = [parseInt(ios[1], 10), parseInt(ios[2], 10), parseInt(ios[3] || 0, 10)];
+} else if (userAgent.indexOf('safari') != -1) {
+  uaName = 'safari';
+} else if (userAgent.indexOf('gecko') != -1) {
+  uaName = 'gecko';
+} else if (userAgent.indexOf('opera') != -1) {
+  uaName = 'opera';
+} else if (userAgent.indexOf('android') != -1) {
+  uaName = 'android';
+} else if (userAgent.indexOf('mobile') != -1) {
+  uaName = 'mobile';
+};
+//以上、引用終了。
+
 //Optionタグを生成するための連想配列。createOptions関数で使う。
 var options = {
 				"publifications":{
@@ -994,7 +1042,7 @@ function numOnly() {
 
 //入力制限の文字列を連想配列に格納する。キーは要素のtype属性の値が相当する。
 var limitInput = {
-		email:"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\b\r%\'½¾ÛÞ»¿ÀÝºâÜ",
+		email:"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\b\r%\'½¾ÛÞ»¿ÀÝºâÜ@",
 		number:"0123456789\b\r%\'",
 		tel:"0123456789\b\r%\'½"
 }
@@ -1018,15 +1066,45 @@ function controllInputChar(evt){
 		keyCode = evt.which;		//引数で渡されたイベントオブジェクトからキーコードを取得する。
 	}
 	
-	
+	var type = $(evt.target).attr('type');	//テキストボックスのtype属性を取得する。
 	//押されたキーのコードを1文字に変換する。
 	m = String.fromCharCode(keyCode);
 	//指定されたキーコード以外であれば。tabキーのコードは許可する。
-	if(limitInput[$(evt.target).attr('type')].indexOf(m, 0) < 0 && !(parseInt(keyCode) == 9)){
-		return false;	//処理を途中終了する。
+	if(limitInput[type].indexOf(m, 0) < 0 && !(parseInt(keyCode) == 9)){
+		//Firefox用のバリデーションを行う
+		if(!validateFirefoxKeyCode(keyCode, type)){
+			return false;	//処理を途中終了する。
+		}
 	}
 	
 	return true;	//処理を通常通りに行う。	
+}
+
+/*
+ * 関数名:function validateFirefoxKeyCode(keyCode)
+ * 引数  :String keyCode: キーコード。
+ * 　　  :String type: 判定する入力欄のタイプ。
+ * 戻り値:boolean
+ * 概要  :Firefoxでのキーコードのチェックを行う。
+ * 作成日:2015.04.18
+ * 作成者:T.Masuda
+ */
+function validateFirefoxKeyCode(keyCode,type){
+	if(uaName != 'gecko'){	//Firefoxでなければ
+		return;	//何もしない。
+	}
+	var key = parseInt(keyCode);	//キーコードを数値に変換する。
+	var retBoo = false;				//返却する値を格納する変数を宣言、falseで初期化する。
+	
+	//ハイフンかつ電話番号、メールアドレス
+	if(key == 173 && (type == 'tel' || type == 'email')){
+		retBoo = true;	//trueを返す
+	//アンダーバーかつメールアドレス
+	} else if(key == 167 && type == "email"){
+		retBoo = true;	//trueを返す
+	}
+	
+	return retBoo;	//判定結果を返す。
 }
 
 //テキストボックス等のname属性の日本語版を格納する連想配列。

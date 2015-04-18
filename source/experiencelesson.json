@@ -345,6 +345,7 @@
                     "size": "27",
                     "autocomplete": "off",
                     "onkeyDown": "return controllInputChar(event);",
+                    "style": "ime-mode:disabled",
                     "type": "email"
                 }
             }
