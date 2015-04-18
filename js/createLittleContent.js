@@ -929,6 +929,12 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
  * 作成者　　:T.Masuda
  */
 $(document).on('change', '.myGalleryEditButtons .uploader', function(event){
+	//拡張子チェックを行う。画像の拡張子でなければはじく。
+	if(!checkIdentifier($(this).val())){
+		//有効なファイルを選んでもらうように警告を出す。
+		alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
+		return;	//処理を終える。
+	}
 	//保存先を指定して画像のアップロードを行う。
     $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
 //    	$(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
