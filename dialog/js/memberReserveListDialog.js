@@ -195,6 +195,11 @@ function memberReserveListDialog(dialog){
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//予約不可能な授業情報をグレーアウトする
 		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td:contains('✕')").css('background', '#EDEDED');
+		//料金欄が0の授業もグレーアウトする
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).filter(function(){
+			//料金が0の行だけ抽出する
+			return parseInt($("td.cost", this).text()) <= 0? true : false;
+		}).css('background', '#EDEDED');
 	}
 	
 	
@@ -245,6 +250,11 @@ function memberReserveListDialog(dialog){
 	this.callbackRowClick = function(clicked) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
+		//料金が0であれば
+		if(this.recordData.data.cost == 0){
+			return;	//何もせずに終える
+		}
+		
 		//残席の記号を取得する
 		var restMarkNow = $(DOT + LESSON_TABLE + TAG_TR + ':eq(' + (this.recordData.number + 1) + CLOSE_AND_TD_TAG + '.rest', $(CURRENT_DIALOG)).text();
 
