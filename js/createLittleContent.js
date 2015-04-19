@@ -768,8 +768,6 @@ function postPhoto(photo){
  */
 function createPhotoData(photo){
 	var retMap = {};	//返す連想配列を用意する。
-	//画像ソースを格納する。
-	retMap['src'] = $('.myPhotoLink', photo).attr('href');
 	//日付を格納する。
 	retMap['date'] = $('.myPhotoDate', photo).text();
 	//ユーザ名を格納する。
