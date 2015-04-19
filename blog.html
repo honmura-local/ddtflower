@@ -39,8 +39,11 @@
 				fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
+				
+				var dateArray = extractDateArray(creator.json);	//日付の配列を作る。
+				
 				//datepickerによるカレンダーを作成する。
-				createBlogCalendar('.calendar');
+				createBlogCalendar('.calendar', dateArray);
 			</script>
 		</div>	
 	</div>

@@ -171,24 +171,99 @@ function createMyPageReservedCalendar(selector, dateRange) {
  * 作成日:2015.04.16
  * 作成者:T.Masuda
  */
-function createBlogCalendar(selector) {
+function createBlogCalendar(selector, dateArray) {
 	//datepickerのロケール設定を行う。
 	$.datepicker.regional['ja'] = dpJpSetting;
 	$.datepicker.setDefaults($.datepicker.regional['ja']);
 	
+	//カレンダーを作る。
 	$(selector).datepicker({
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			// 開発中のメッセージを出す。
-			alert('現在この機能は開発中となっています。');
 		},
-		//日付有効の設定を行う。
+		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
-			for(key in creator.json){
-				
+			var ymd = createYMD(date);				//日付の配列を作る。
+			var retArray = [false];					//返却する配列を作る。
+			var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
+			
+			//日付配列を走査する。
+			for(var i = 0; i < dateArray.length; i++){
+				//合致する日付があれば
+				if(compareYMD(ymd, createYMD(dateArray[i]))){
+					retArray[0] = true;	//その日付を有効にする。
+				}
 			}
+			
+			return retArray;	//判定の配列を返す。
 		}
 	});
+}
+
+/*
+ * 関数名:function extractDateArray(map)
+ * 引数  :map map: 処理対象とする連想配列。
+ * 戻り値:Array:日付型の配列。
+ * 概要  :blogのJSONから日付型の配列を作る。現状ではblogcontent.jsonの形式にあわせる。
+ * 作成日:2015.04.19
+ * 作成者:T.Masuda
+ */
+function extractDateArray(map){
+	var retArray = [];		//返却するための配列を用意する。
+	//キーが数字かどうかのチェックを行いながら走査する。
+	for(key in map){
+		//キーが数字であれば
+		if(!(isNaN(key))){
+			console.log(map[key].blogArticleTitle.blogArticleDate.text);
+			//日付のキーを取得して配列に格納する。
+			retArray.push(new Date(map[key].blogArticleTitle.blogArticleDate.text));
+		}
+	}
+	
+	return retArray;	//配列を返す。
+}
+
+/*
+ * 関数名:function createYMD(date)
+ * 引数  :Date date: 日付。
+ * 戻り値:Array:年月日の配列。
+ * 概要  :日付型から年月日の配列を作って返す。
+ * 作成日:2015.04.19
+ * 作成者:T.Masuda
+ */
+function createYMD(date){
+	var retArray = [];	//返却する配列を作成する。
+	
+	retArray.push(date.getFullYear());				//年を取得する。
+	retArray.push(date.getMonth() + 1);				//月を取得する。
+	retArray.push(date.getDate());					//日を取得する。
+	
+	return retArray;	//配列を返す。
+}
+
+/*
+ * 関数名:function compareYMD(target1, target2)
+ * 引数  :Array target1: 比較対象1。
+ * 　　  :Array target2: 比較対象2。
+ * 戻り値:boolean:日付が同じかどうかの判定を返す。
+ * 概要  :2つの日付型の配列が同じかどうかを判定して結果を返す。
+ * 作成日:2015.04.19
+ * 作成者:T.Masuda
+ */
+function compareYMD(target1, target2){
+	var retBoo = true;	//返す真理値を格納する配列を用意する。
+	
+	var ymdLength = target1.length;	//日付の構成要素の数を取得する。
+	
+	//2つの日付を走査する。
+	for(var i = 0; i < ymdLength; i++){
+		if(target1[i] != target2[i]){	//日付が違ったら
+			retBoo = false;				//false判定を返す。
+			break;						//ループを抜ける。
+		}
+	}
+	
+	return retBoo;	//判定を返す。
 }
 
 /*
