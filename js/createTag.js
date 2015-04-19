@@ -11,18 +11,24 @@ function createTag(){
 	var own = this;				//自分自身の要素を変数に入れる
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
+
 	/*
-	 * 関数名:this.getJsonFile = function((jsonPath))
+	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
-	 * 引数  :String jsonPath
+	 * 引数  :String jsonPath:JSONを要求する先。
+	 * 		:Object map:サーバへ渡す値の連想配列。
 	 * 返却値  :Object
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
+	 * 変更者:T.Masuda
+	 * 変更日:2015.03.30
+	 * 内容　:サーバへ連想配列を渡せる様に変更しました。
 	 */
-	this.getJsonFile = function(jsonPath){
+	this.getJsonFile = function(jsonPath, map){
 		//一時的に値を保存する変数tmpを宣言する。
 		var tmp;
-
+		//mapに何も入力されていなければ、空の連想配列を代入する。
+		map = map === undefined ? {"blank":""} : map;
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
 			//jsonファイルのURLを指定する。
@@ -31,6 +37,8 @@ function createTag(){
 			dataType: 'JSON',
 			//同期通信を行う。
 			async: false,
+			//サーバへ連想配列を送信する。
+			data: map,
 			//通信完了時の処理を記述する。
 			success: function(json){
 				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
@@ -50,7 +58,7 @@ function createTag(){
 		//既にJSONが格納されていたら
 		} else {
 			//連想配列を連結する。
-			this.json = $.extend(tmp,this.json);
+			this.json = $.extend(true, this.json, tmp);
 		}
 	};
 

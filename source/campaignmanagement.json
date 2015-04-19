@@ -217,5 +217,10 @@
             "text": "戻る",
             "href": "campaignmanagement.html"
         }
+    },
+    "contentSearch":{
+    	"data-role":"5",
+    	"method":"post",
+    	"data-target":"campaignListContent"
     }
 }

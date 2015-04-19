@@ -9,5 +9,11 @@
     "getSelectedBlog":"",
     "photoPost":"",
     "experienceLesson":"source/experiencelesson.json",
-    "usuallyLesson":"source/usuallylesson.json"
+    "usuallyLesson":"source/usuallylesson.json",
+    "listSetting":{
+    	"startPage":"1",
+    	"displayPageMax":"4",
+    	"displayPage":"1",
+    	"pageNum":"5"
+    }
 }

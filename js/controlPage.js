@@ -597,7 +597,6 @@ function callPageInTab(url, tabPanel){
 		success:function(html, dataType){	//通信に成功したら
 			//タブパネル内を書き換える。
 			overwrightContent(tabPanel,html);
-			creator.json = '';	/* JSONをクリアする。 */
 			//スクロール位置をトップに戻す。
 			window.scroll(0, 0);
 		},

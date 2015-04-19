@@ -31,10 +31,16 @@
 				//表形式のキャンペーンリストの外枠を作る。
 				creator.outputTag('managementList', 'managementList', '#campaignManagement .managementForm');
 				//表の見出しを作る。
-				creator.outputTag('campaignListHeadWrap', 'campaignListHeadWrap', '#campaignManagement .table');
+				creator.outputTag('campaignListHeadWrap', 'campaignListHeadWrap', '#campaignManagement .table > thead');
 				unwrapTable('.campaignListHead');
-				//表のコンテンツを作る。
-				outputKeyNumberObject(creator.json, 'campaignListContentWrap', '#campaignManagement .table');
+				
+				//ナンバリングの領域を作る。
+				creator.outputTag('numberingOuter','numberingOuter','#campaignManagement .managementForm');				//ナンバリング領域を作る
+				//ナンバリングとともにレコードを書き出す。
+				creator.outputNumberingTag('campaignListContentWrap', init.listSetting.startPage, 
+						init.listSetting.displayPageMax, init.listSetting.displayPage, init.listSetting.pageNum,
+						'#campaignManagement .table > tbody');
+				
 				//編集ボタン群を作る。
 				creator.outputTag('listEditButtons', 'listEditButtons', '#campaignManagement .managementForm');
 				$('#campaignManagement button, #campaignManagement input:submit').button();	//ボタンをリッチなものにする。	

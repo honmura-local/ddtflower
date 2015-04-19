@@ -33,10 +33,15 @@
 				creator.outputTag('managementForm', 'managementForm', '#studentManagement');
 				creator.outputTag('managementList', 'managementList', '#studentManagement .managementForm');
 				//一覧の見出しを作る。
-				creator.outputTag('studentListHeadWrap', 'studentListHeadWrap', '#studentManagement .table');
+				creator.outputTag('studentListHeadWrap', 'studentListHeadWrap', '#studentManagement .table > thead');
 				unwrapTable('.studentListHead');
-				//一覧の内容を作る。
-				outputKeyNumberObject(creator.json, 'studentListContentWrap', '#studentManagement .table');
+				
+				creator.outputTag('numberingOuter','numberingOuter','#campaignManagement .managementForm');				//ナンバリング領域を作る
+				//ナンバリングとともにレコードを書き出す。
+				creator.outputNumberingTag('studentListContentWrap', init.listSetting.startPage, 
+						init.listSetting.displayPageMax, init.listSetting.displayPage, init.listSetting.pageNum,
+						'#studentManagement .table > tbody');
+				
 				//編集ボタン群を作る。
 				creator.outputTag('listEditButtons', 'listEditButtons', '#studentManagement .managementForm');
 				$('#studentManagement input:submit, #studentManagement button').button();	//ボタンをリッチなものにする。	

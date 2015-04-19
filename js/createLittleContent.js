@@ -1168,7 +1168,8 @@ var errorJpNames = {name:'氏名',
 					startDate:'開始日',
 					endDate:'終了日',
 					maxEntry:'上限人数',
-					nameKana:'氏名(カナ)'
+					nameKana:'氏名(カナ)',
+					passwordConfirm:'パスワード(確認)'
 					};
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {
@@ -1180,6 +1181,9 @@ var showAlert = {
 		rules:{	//ルールを設定する。
 			eMailConfirm:{	//メールアドレス入力確認欄
 				equalTo: '[name="eMail"]'	//メールアドレス入力欄と同じ値を要求する。
+			},
+			passwordConfirm:{	//パスワード入力確認欄
+				equalTo: '[name="password"]'	//パスワード入力欄と同じ値を要求する。
 			}
 		}
 	}
@@ -1279,7 +1283,45 @@ var articleSubmitHandler = {
 //リストに対する検索フォームのsubmitHandlerの連想配列。
 var listSearchSubmitHandler = {
 		submitHandler:function(form){	//submitHandlerのコールバック関数
-			//現在未定義。
+			//入力された項目がある入力欄のデータを取得する。
+			var formData = createFormData(form);
+			//行のクラス名と同様の文字列をdata-target属性から取得する。
+			var rowName = $(form).attr('data-target');
+			//サーバに送信するデータを作成する。コンテンツ番号、フォームデータを送信する。
+			var sendData = {search:formData,contentNum:$(form).attr('data-role')};
+			//ナンバリングのJSONを消す。
+			deleteNumberKey(creator.json);
+			//サーバへデータを送信する。
+		//	creator.getJsonFile(init['getListData'], sendData);//サーバ側の処理が実装されたらこちらを使います。
+			
+			//現在はダミーの処理です。
+			var jsonurl = '';	//jsonファイルのurlを格納する変数を宣言、初期化する。
+			var dataRole = parseInt($(form).attr('data-role'));	//コンテンツ番号を取得する。
+			switch(dataRole){	//コンテンツ番号で分岐する。
+				case 4: jsonurl = 'source/adminbloglist.json';	//管理者ブログ
+								break;								//switchを抜ける。
+				case 5: jsonurl = 'source/campaignlist.json';	//キャンペーン
+								break;								//switchを抜ける。
+				case 6: jsonurl = 'source/studentlist.json';	//生徒さん
+								break;								//switchを抜ける。
+				default:		break;								//switchを抜ける。
+			}
+			
+			creator.getJsonFile(jsonurl, sendData);
+			//ここまでダミーのJSON取得の処理
+			
+			//ナンバリングのJSONが返ってきていれば
+			if('1' in creator.json){
+				//ナンバリングとともに書き出す。同じdata-roleの値を持つフォームのリストを指定し、レコードを書き出す。
+				creator.outputNumberingTag(rowName + 'Wrap', init.listSetting.startPage, 
+						init.listSetting.displayPageMax, init.listSetting.displayPage, 
+						init.listSetting.pageNum, 
+						'.managementForm[data-role=\'' + $(form).attr('data-role') + '\'] .table > tbody');
+			//何も返ってきていなければ
+			} else {
+				//エラーメッセージを出す
+				alert('検索条件に該当するデータがなかった、または通信に失敗しました。');
+			}
 		}
 }
 

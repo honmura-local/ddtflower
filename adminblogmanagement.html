@@ -29,11 +29,16 @@
 		creator.outputTag('managementForm', 'managementForm', '#adminBlogManagement');
 		creator.outputTag('managementList', 'managementList', '#adminBlogManagement .managementForm');
 		//表の見出しを作る。
-		creator.outputTag('adminBlogListHeadWrap', 'adminBlogListHeadWrap', '#adminBlogManagement .table');
+		creator.outputTag('adminBlogListHeadWrap', 'adminBlogListHeadWrap', '#adminBlogManagement .table thead');
 		//DOM配置の都合上付いてしまった親のtableタグを消す。
 		unwrapTable('.adminBlogListHead');
-		//表の内容を作る。
- 		outputKeyNumberObject(creator.json, 'adminBlogListContentWrap', '#adminBlogManagement .table');
+
+		creator.outputTag('numberingOuter','numberingOuter','#adminBlogManagement .managementForm');				//ナンバリング領域を作る
+		//ナンバリングとともにレコードを書き出す。
+		creator.outputNumberingTag('adminBlogListContentWrap', init.listSetting.startPage, 
+				init.listSetting.displayPageMax, init.listSetting.displayPage, init.listSetting.pageNum,
+				'#adminBlogManagement .table > tbody');
+		
 		//編集ボタンを作る。
 		creator.outputTag('listEditButtons', 'listEditButtons', '#adminBlogManagement .managementForm');
 		$('#adminBlogManagement button,#adminBlogManagement input:submit').button();	//ボタンをリッチなものにする。	

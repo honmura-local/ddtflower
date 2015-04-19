@@ -736,5 +736,10 @@
             "text": "トップへ戻る",
             "href": "index.html"
         }
+    },
+    "contentSearch":{
+    	"data-role":"6",
+    	"method":"post",
+    	"data-target":"studentListContent"
     }
 }

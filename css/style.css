@@ -642,7 +642,7 @@ footer{
 }
 
  /* 
- * セレクタ:.tabContainer ul
+ * セレクタ:.tabContainer > ul
  * 概要   :jqueryプラグイン「easytabs」に指定された、タブのボタンをまとめる領域。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
@@ -654,13 +654,13 @@ footer{
  * 変更日 :2015.04.08
  * 内容　 :marginの指定をなくしました。
  */
-.tabContainer ul {
+.tabContainer > ul {
 	padding		: 0;	/*ulタグにデフォルトで付いてくるpaddingをなくす。*/
 	font-size	: 0px;	/*フォントサイズを0に指定してインラインブロックの余白を消す。*/
 }
 
  /* 
- * セレクタ:.tabContainer ul li
+ * セレクタ:.tabContainer > ul li
  * 概要   :jqueryプラグイン「easytabs」のタブのボタン。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
@@ -669,7 +669,7 @@ footer{
  * 変更日 :2015.03.23
  * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
  */
-.tabContainer ul li {
+.tabContainer > ul li {
 	display			:inline-block;		/*インラインブロックにしてボタンを横に並べる。*/
 	background		:#CCC;				/*背景色をグレーにする。*/
 	border			:solid 1px;			/*細い実線で囲む。*/
@@ -679,13 +679,13 @@ footer{
 }
 
  /* 
- * セレクタ: .tabContainer ul li.active
+ * セレクタ: .tabContainer > ul li.active
  * 概要   :jqueryプラグイン「easytabs」の現在選択されているタブのボタン
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.13
  */
- .tabContainer ul li.active {
+ .tabContainer > ul li.active {
  	background	:#FFF;	/*背景を白くし、このボタンだけ違うとわかりやすくする。*/
 	padding-top	:6px;	/*ボタンの文字を下にずらす。*/
 	position:relative;	/*相対位置指定を有効にする。座標指定が有効になる。*/
@@ -695,13 +695,13 @@ footer{
  }
 
 /* 
- * セレクタ:.tabContainer ul li a
+ * セレクタ:.tabContainer > ul li a
  * 概要   :jqueryプラグイン「easytabs」のタブのボタンの文字。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.13
  */
-.tabContainer ul li a {
+.tabContainer > ul li a {
 	display		:block;		/*ロック要素として表示する。*/
 	padding		:5px;		/*ボタンの外枠と文字の間に少々の余白を持たせる。*/
 	outline		:none;		/*クリックしたときに出る枠線をなくす。*/
@@ -710,13 +710,13 @@ footer{
 }
 
 /* 
- * セレクタ:.tabContainer ul li a:hover
+ * セレクタ:.tabContainer > ul li a:hover
  * 概要   :トップページで最新の記事見出しを表示する小ウィンドウ。
  * 設計者 :T.Masuda
  * 作成者 :T.Yamamoto
  * 作成日 :2015.03.13
  */
-.tabContainer ul li a:hover {
+.tabContainer ul > li a:hover {
 	text-decoration	:underline;		/*ボタンにカーソルを合わせたら下線を出して強調する。*/
 }
 
@@ -1121,7 +1121,7 @@ label.error{
 	}
 
 	 /* 
-	 * セレクタ:.tabContainer ul li
+	 * セレクタ:.tabContainer > ul li
 	 * 概要   :jqueryプラグイン「easytabs」のタブのボタン。
 	 * 設計者 :T.Masuda
 	 * 作成者 :T.Yamamoto
@@ -1130,7 +1130,7 @@ label.error{
 	 * 変更日 :2015.03.23
 	 * 内容　 :下borderをなくす設定を消去、フォントサイズを指定しました。
 	 */
-	.tabContainer ul li {
+	.tabContainer > ul li {
 		font-size		:	13px;	/* デフォルトのフォントサイズを再指定。 */
 	}
 }

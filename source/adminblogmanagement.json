@@ -82,5 +82,10 @@
     	"data-role":"4",
     	"action":"createarticleintab.html",
     	"method":"post"
+    },
+    "contentSearch":{
+    	"data-role":"4",
+    	"method":"post",
+    	"data-target":"adminBlogListContent"
     }
 }
