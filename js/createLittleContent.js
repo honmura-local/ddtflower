@@ -27,8 +27,10 @@ if (userAgent.indexOf('msie') != -1) {
   } else if (appVersion.indexOf('msie 10.') != -1) {
     uaName = 'ie10';
   }
-} else if (userAgent.indexOf('chrome') != -1) {
-  uaName = 'chrome';
+} else if (userAgent.indexOf('android') != -1) {
+	uaName = 'android';
+} else if (userAgent.indexOf('mobile') != -1) {
+  uaName = 'mobile';
 } else if (userAgent.indexOf('ipad') != -1) {
   uaName = 'ipad';
 } else if (userAgent.indexOf('ipod') != -1) {
@@ -36,17 +38,15 @@ if (userAgent.indexOf('msie') != -1) {
 } else if (userAgent.indexOf('iphone') != -1) {
   uaName = 'iphone';
   var ios = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-  uaName = [parseInt(ios[1], 10), parseInt(ios[2], 10), parseInt(ios[3] || 0, 10)];
+//  uaName = [parseInt(ios[1], 10), parseInt(ios[2], 10), parseInt(ios[3] || 0, 10)];
+} else if (userAgent.indexOf('chrome') != -1) {
+	  uaName = 'chrome';
 } else if (userAgent.indexOf('safari') != -1) {
   uaName = 'safari';
 } else if (userAgent.indexOf('gecko') != -1) {
   uaName = 'gecko';
 } else if (userAgent.indexOf('opera') != -1) {
   uaName = 'opera';
-} else if (userAgent.indexOf('android') != -1) {
-  uaName = 'android';
-} else if (userAgent.indexOf('mobile') != -1) {
-  uaName = 'mobile';
 };
 
 alert(uaName);

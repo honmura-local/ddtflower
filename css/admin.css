@@ -91,6 +91,7 @@
  */
 .saveButton{
 	float:right;	/* 右に寄せる。 */
+	margin-bottom: 5px;
 }
 
 /* 
