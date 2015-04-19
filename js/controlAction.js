@@ -114,8 +114,18 @@ function showRightOutOfDisplayButton(selector, timeout, speed){
  */
 function fadeToggleSet(clicked, target, setClass, delay){
 
+	//関数で指定していない場所をクリックすると
+	$(':not(' + clicked + ' ,' + clicked + ' *)').on('click', function(e){
+		//表示中だったら
+		if($(target + ':visible').length){
+			//該当する要素をフェードアウトさせる。
+			$(target + ':visible').fadeOut(delay);
+		}
+	});
+	
 	//clickedのクリックイベントを登録する。
-	$(clicked).on('click' , function(){
+	$(clicked + ' ,' + clicked + ' *').on('click' , function(e){
+		e.stopPropagation();	//イベントのバブリングを阻止する。
 		//他に表示されていれば
 		if($(setClass + ':visible:not(' + target + ')').length > 0){
 			//フェードアウトさせる。

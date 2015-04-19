@@ -31,7 +31,6 @@ function isSupportPushState(){
  * 作成日 :2015.03.10
  * 作成者 :T.M
  */
-$(document).ready(function(){
 	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
 	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
 		//pushState対応ブラウザであれば
@@ -42,7 +41,6 @@ $(document).ready(function(){
 			event.preventDefault();
 //		}
 	});
-});
 
 /*
  * 関数名:overwrightContent(target, data)
