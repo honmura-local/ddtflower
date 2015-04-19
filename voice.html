@@ -18,8 +18,10 @@
 				creator.getDomFile('source/template.html');			// ページのパーツのテンプレートhtmlを取得する。
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
-				//お客さんの声の内容を追加する。
-				outputKeyNumberObject(creator.json, 'blogArticle', '.main');
+				creator.outputTag('voices','blog');					// 生徒さんの声領域を作る
+				creator.outputTag('numberingOuter');				//ナンバリング領域を作る
+				//@mod 2015.03.13 T.Masuda blogコンテンツを作成する記述を追加しました。
+				creator.outputNumberingTag('blogArticle', 1, 4, 1, 4, '.voices');	// 生徒さんの声記事を作る。
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
 				

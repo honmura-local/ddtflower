@@ -202,6 +202,7 @@
 .myGalleryEditButtons button{
     margin: 0 0.2em 0.5em 0.2em;		/* 各方向に余白を取る。 */
 }
+
 /* 
  * セレクタ:.myGalleryEditButtons button.back
  * 概要   :Myギャラリーのバックボタン。
@@ -210,6 +211,17 @@
  */
 .myGalleryEditButtons button.back{
     margin-left: 0.5em;		/* 各方向に余白を取る。 */
+}
+
+/* 
+ * セレクタ:.myGalleryNotice span
+ * 概要   :Myギャラリーのちょっとした説明書き。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.18
+ */
+.myGalleryNotice span{
+   font-size:		11px;		/* 小さな文字にする。 */
+   margin-right:	1em;		/* 右に1文字分余白をとる。 */
 }
 
 /* スマホ */

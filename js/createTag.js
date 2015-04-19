@@ -333,6 +333,12 @@ function createTag(){
 		
 		//現在表示中のページに対応するナンバリングの色を変える。
 		this.selectPageNumber(displayPage);
+		
+		//スクロール位置が低ければ
+		if($(window).scrollTop() > $(".main").offset().top){
+			//スクロール位置を上に戻す。記事が見えなくならないようにするため、.mainの縦座標を基準に移動する。
+			window.scroll(0,$(".main").offset().top);
+		}
 	}
 
 	/* 
@@ -375,7 +381,7 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
-			map[indexText]['onclick'] = 'this.outputNumberingTag("' 
+			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
 				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
@@ -435,7 +441,7 @@ function createTag(){
 		keyObj[key]['text'] = numberingString;
 		
 		//関数実行属性をoutputNumberingTagに設定する。
-		keyObj[key]['onclick'] = 'this.outputNumberingTag("' + jsonName +'",'
+		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
 			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '")';
 		
 		//numberingオブジェクトの中に追加する。

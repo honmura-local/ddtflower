@@ -96,6 +96,7 @@
 	letter-spacing: 2px;	/* 文字の間に2pxの空白を挿入する。 */
 	font-size: 14px;		/* フォントの大きさを14pxに指定する。 */
 	border-style: none;		/* 初期設定されている枠線を消す */	
+ 	border-radius: 0;		/* ios safariでの角丸を消す */
 }
 
 /* 

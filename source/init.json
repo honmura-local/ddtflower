@@ -5,6 +5,7 @@
     "cookieLimitTime":"3600000",
     "photoDirectory":"",
     "saveJSON":"",
+    "postJSON":"",
     "getSelectedBlog":"",
     "photoPost":"",
     "experienceLesson":"source/experiencelesson.json",

@@ -365,7 +365,8 @@
                     "oncopy": "return false",
                     "onpaste": "return false",
                     "ononcontextmenu": "return false",
-                    "onkeyDown": "return controllInputChar(event);"
+                    "onkeyDown": "return controllInputChar(event);",
+                    "placeholder":"手動で入力してください。"
                 }
             }
         },

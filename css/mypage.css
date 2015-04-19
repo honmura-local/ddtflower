@@ -412,7 +412,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.03.25
  */
-.myOptionText input[type="text"]{
+.myOptionText input[type="text"],.myOptionText input[type="email"]{
 	width		: 80%	;	/* 十分な幅を取る。 */
 }
 
@@ -478,25 +478,25 @@
 	 }
 
 	 /* 
-	 * セレクタ:.myPageBlog
-	 * 概要   :マイページのブログの領域。
+	 * セレクタ:.myPageContent
+	 * 概要   :マイページのコンテンツ領域。
 	 * 設計者 :T.Masuda
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.03.12
 	 */
-	 .myPageBlog {
+	 .myPageContent {
 	 	width		:90%;			/*左右の余白を最低限つけるだけの幅を設定する。*/
 		margin 		:0 auto 10px; 	/*中央に寄せ、下にmarginを入れる。*/
 	 }
 
 	 /* 
-	 * セレクタ:myPageBlogButton
-	 * 概要   :ブログ関連のボタン。
+	 * セレクタ:myPageButton
+	 * 概要   :マイページコンテンツのボタン。
 	 * 設計者 :T.Masuda
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.03.12
 	 */
-	 .myPageBlogButton {
+	 .myPageButton {
 	 	width: 90%;				/*3個のボタンを横並べにするためのサイズを指定する。*/
 	 	margin: 0 auto 10px;	/*左右に3%のmarginを配置し、ボタン同士で適切な間隔を取る。*/
 	 	display: block;			/*インラインブロックにして横に並ぶ様にする。*/

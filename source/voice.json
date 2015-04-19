@@ -10,6 +10,8 @@
         "summary": {
             "text": ""
         }
+    },
+    "voices":{
+    	"class":"voices"
     }
-
 }

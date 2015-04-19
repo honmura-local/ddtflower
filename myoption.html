@@ -15,6 +15,7 @@
 			<link type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
 			<script>
 				creator.getJsonFile('source/myoption.json');		// 個人設定ページのJSONを取得する。
+				creator.getJsonFile('source/useroption.json');		// 個人設定ページのJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				creator.getDomFile('source/template.html');			// HTMLのテンプレートデータをを取得する。
 				
@@ -22,15 +23,17 @@
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 		
 			// 設定変更のコンテンツを作る。
-				creator.outputTag('myOption');
-				creator.outputTag('myOptionButtons', 'myOptionButtons', '.myOption');
-				creator.outputTag('myOptionBlogTitle', 'myOptionText', '.myOption');
-				creator.outputTag('myOptionBlogPublication', 'myOptionRadio', '.myOption');
-				creator.outputTag('myOptionGalleryPublication', 'myOptionRadio', '.myOption');
+				creator.outputTag('optionForm');
+				creator.outputTag('myOptionButtons', 'myOptionButtons', '.optionForm');
+				creator.outputTag('myOptionMail', 'myOptionText', '.optionForm');
+				creator.outputTag('myOptionBlogTitle', 'myOptionText', '.optionForm');
+				creator.outputTag('myOptionBlogPublication', 'myOptionRadio', '.optionForm');
 
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
-			
+				
+				loadValue(creator.json);	//セーブ済みの設定を反映する。
+				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。

@@ -139,13 +139,14 @@ input, select {
 
 /* 各タグの基本設定 */
 /* 
- * セレクタ:h1,h2,h3,h4,h5
- * 概要   :見出しタグ
+ * セレクタ:span,label,h1,h2,h3,h4,h5
+ * 概要   :見出しタグとラベルのタグ
  * 作成者 :T.Masuda
- * 作成日 :2015.02.03
+ * 作成日 :2015.04.18
  */
-h1,h2,h3,h4,h5,th{
-    font-weight: normal;    /* 個別に指定しなければフォントを太字にしない。 */
+span,label,h1,h2,h3,h4,h5,th{
+    font-weight: normal;   	 /* 個別に指定しなければフォントを太字にしない。 */
+	vertical-align: middle;	/* 高さを中心に合わせる */
 }
 
 /* 
@@ -599,8 +600,8 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.04.07
  */
-.loginDialog .userName,.loginDialog  .password {
-	width: 160px;			/* どの環境でも幅を一定にするため、幅を指定する。 */
+.loginDialog .userName, .loginDialog .password {
+	width: 150px;			/* どの環境でも幅を一定にするため、幅を指定する。 */
 }
 
 /* 
@@ -1175,4 +1176,28 @@ label.error{
 		overflow:visible;
 	}
 }
+
+@media screen and (max-width: 400px){
 	
+	/* 
+	 * セレクタ:.managementList
+	 * 概要   :記事、生徒さん情報のリスト
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.18
+	 */
+	.managementList {
+		max-width: 90%;			/* 最大幅を調整する。 */
+		box-sizing: border-box;	/* borderを大きさの計算に入れる */
+		margin: 10px 0px;		/* 左右marginをなくす */
+	}
+	
+	/* 
+	 * セレクタ:.tabPanel .managementList
+	 * 概要   :タブ内での記事、生徒さん情報のリスト
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.19
+	 */
+	.tabPanel .managementList {
+		max-width: 100%;		/* 親要素の幅いっぱいに幅を広げられるようにする。 */
+	}
+}	

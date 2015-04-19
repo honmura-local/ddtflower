@@ -181,6 +181,12 @@ function createBlogCalendar(selector) {
 		onSelect: function(dateText, inst){
 			// 開発中のメッセージを出す。
 			alert('現在この機能は開発中となっています。');
+		},
+		//日付有効の設定を行う。
+		beforeShowDay:function(date){
+			for(key in creator.json){
+				
+			}
 		}
 	});
 }
@@ -882,7 +888,7 @@ $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('dbclick','.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
+$(document).on('dblclick','.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
 	//タイトルを編集モードにする。
 	startEditText(this);
 });
@@ -944,21 +950,33 @@ $(document).on('change', '.myGalleryEditButtons .uploader', function(event){
     	var issuccess = 1;
     	xml = $('<root></root>')
     			.append($('<src></src>')
-    					.text('photo/general/web/DSC_0682.jpg')
+    					.text('')
     			)
     			.append($('<message></message>')
     					.text('success')
     			);
     	if(issuccess){	//保存に成功していたら
-    		var src = $(xml).find('src').text();	//画像の保存先を取得する。
-    		//createTagで新たな写真を作成する。
-    		creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-    		//新たな写真を初期化する。
-    		createNewPhoto();
-    		//画像拡大用のタグにソースをセットする。
-    		$('.myPhotoLink:last').attr('href', src);
-    		//画像サムネイルに使う要素の画像を設定する。
-    		$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+    		//ファイルのオブジェクトをを取得する。
+    		var file = event.target.files[0];
+    		//画像の縮小を行う。
+    		canvasResize(file, {
+    			crop: false,	//画像を切り取るかを選択する
+    			quality: 80,	//画像の品質
+    			//コールバック関数。画像パスを引数として受け取る。
+    			callback: function(data) {
+    				$(xml).attr('src', data);	//アップロードした画像をセットする。
+    				var src = data;	//画像の保存先を取得する。
+//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
+    				//createTagで新たな写真を作成する。
+    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+    				//新たな写真を初期化する。
+    				createNewPhoto();
+    				//画像拡大用のタグにソースをセットする。
+    				$('.myPhotoLink:last').attr('href', src);
+    				//画像サムネイルに使う要素の画像を設定する。
+    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+    			}
+    		});
     	//保存に失敗していたら
     	} else {
     		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
@@ -986,17 +1004,31 @@ function uploadImage(uploader, parent, srcReturn){
 //		var issuccess = parseInt($(xml).find('issuccess').text());
 		var issuccess = "true";
 		if(issuccess == "true"){	//保存に成功していたら
-//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
-			var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
-			$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
-				//画像タグであれば
-				if($(this)[0].tagName == 'IMG'){
-					$(this).attr('src', src);	//ソースパスを設定する。
-				//特別処理の指定がないタグなら
-				} else {
-					$(this).val(src);	//画像パスをvalue属性にセットする。
-				}
-			});
+
+    		//ファイルのオブジェクトをを取得する。
+    		var file = uploader.files[0];
+    		var filetmp = '';	//画像パスの一時保存場所のパス用の変数を用意する。
+    		//画像の縮小を行う。
+    		canvasResize(file, {
+    			crop: false,	//画像を切り取るかを選択する
+    			quality: 80,	//画像の品質
+    			//コールバック関数。画像パスを引数として受け取る。
+    			callback: function(data) {
+    				filetmp = data;				//filetmpにdataを一時保存する。
+    				//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
+    				var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
+    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
+    					//画像タグであれば
+    					if($(this)[0].tagName == 'IMG'){
+    						$(this).attr('src', filetmp);	//ソースパスを設定する。
+//					$(this).attr('src', src);	//ソースパスを設定する。
+    						//特別処理の指定がないタグなら
+    					} else {
+    						$(this).val(src);	//画像パスをvalue属性にセットする。
+    					}
+    				});
+    			}
+    		});
 		} else {
 			alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
 		}
@@ -1373,6 +1405,115 @@ function deleteNumberKey(map){
 		//キーが数字であれば
 		if(!(isNaN(key))){
 			delete map[key];	//キーを削除する。
+		}
+	}
+}
+
+/*
+ * 関数名:function saveOptionSetting()
+ * 概要  :オプションの設定を保存する。
+ * 引数  :なし
+ * 戻り値:なし
+ * 作成日:2015.04.19
+ * 作成者:T.Masuda
+ */
+function saveOptionSetting(){
+	//設定のデータを連想配列にして返してもらう。
+	var settingData = JSON.stringify(createOptionData());
+	
+	//Ajax通信でサーバに写真のデータを送信する。
+	$.ajax({
+		url:init['postJSON'],	//初期化データの連想配列にあるURLに送信する
+		method:"POST",			//POSTメソッドで送信量を気にせず送信できるようにする。
+		dataType:'text',		//JSONで返してもらう。	//サーバ側の処理を実装するまでダミーの処理を使う。
+		//dataType:'json',		//JSONで返してもらう。
+		data:{json:settingData, contentNum:"2"},	//作成した設定を送信する。
+		//通信が成功したら
+		success:function(json){
+			var success = 1;	//成功したかどうかのデータを取得する。//ダミーの処理を用意する。
+			//var success = parseInt(json['issuccess']);	//成功したかどうかのデータを取得する。返ってきた数値で判定する。
+			var message = "更新に失敗しました。時間をおいてお試しください。";	//メッセージを格納する変数を宣言する。
+			//取得したデータが成功のものなら
+			if(success){
+				message = "更新が完了しました。";	//成功メッセージを用意する。
+			}
+			
+			alert(message);	//結果をダイアログで表示する。
+		},
+		//通信が失敗したら
+		error:function(){
+			//保存失敗の旨を伝える。
+			alert('通信に失敗しました。時間をおいてお試しください。');
+		}
+	});
+}
+
+/*
+ * 関数名:function createOptionData()
+ * 概要  :オプションページの設定の送信データを作成する。
+ * 引数  :なし
+ * 戻り値:Object : 設定データの連想配列。
+ * 作成日:2015.04.03
+ * 作成者:T.Masuda
+ */
+function createOptionData(){
+	//フォームデータを作る。
+	var retMap = createFormData($('.optionForm'));
+	//ユーザIDを格納する。
+	retMap['userId'] = getUserId();
+	
+	return retMap;	//作成したデータを返す。
+}
+
+/*
+ * イベント名:$(document).on('change', 'myOptionConfirmChangeButton')
+ * 引数  　 	:string 'click':クリックのイベントの文字列
+ * 			:string '.myOptionConfirmChangeButton':Myオプションページの更新ボタンのセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :オプションページでの設定を保存する。
+ * 作成日　　:2015.03.27
+ * 作成者　　:T.Masuda
+ */
+$(document).on('click', '.optionSave', function(event){
+	saveOptionSetting();	//設定を保存する。
+});
+
+/*
+ * 関数名 :function loadValue(settings)
+ * 引数  　:map settings:個人設定情報の連想配列。
+ * 戻り値　:なし
+ * 概要  　:Myオプションページの個人設定をロードする。
+ * 作成日　:2015.04.18
+ * 作成者　:T.Masuda
+ */
+function loadValue(settings){
+	//settingsを走査する
+	for(key in settings){
+		//キーからname属性で対象の要素を取得する。
+		var $elem = $('[name="' + key + '"]');
+		//elemのタイプを取得する。
+		var type = $elem.attr('type');
+		//値を取得する。
+		var value = settings[key]['value'];
+		
+		//ラジオボタンであれば
+		if(type == "radio"){
+			//値に該当する要素をチェックする。
+			$elem.filter('[value="' + settings[key]['value'] + '"]').prop('checked', 'true');
+		//チェックボックスであれば
+		} else if(type == "checkbox"){
+			//チェックが入っているチェックボックスの値の配列の長さを取得する。
+			var valueLength = value.length;
+			
+			//チェックボックスの配列を走査する。
+			for(var i = 0; i < valueLength; i++){
+				//チェックが入っていることになる要素であれば
+				$elem.filter('[value="' + value[i] + '"]').prop('checked', 'true');
+			}
+		//それ以外であれば
+		} else {
+			//普通に値をセットする。
+			$elem.val(value);
 		}
 	}
 }

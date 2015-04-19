@@ -1,0 +1,8 @@
+{
+	"allowMidnightMail":{
+		"value":"allow"
+	},
+    "recieveMailType": {
+        "value": ["alert","rest","claim"]
+    }
+}

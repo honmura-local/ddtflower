@@ -308,12 +308,16 @@
  * 概要   :絞り込みパーツ一組。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.25
+ * 修正者 :T.Masuda
+ * 修正日 :2015.04.19
+ * 内容　 :修正レイアウトをコメントアウトで用意
  */
 .articleSearch{
 	margin-left: 0.5em;		/* 次に来る検索ボックスとの間に間隔を取る。 */
 	display: inline-block;	/* インラインブロックにして横に並べる。 */
 	margin-bottom: 2px;
-	/* margin: 5px 0 2px 0.5em; */
+	/* width: 20%; 幅を1/5にする */
+	/* box-sizing:border-box; */
 }
 
 
@@ -322,10 +326,13 @@
  * 概要   :絞り込みテキストボックスのラベル。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.25
+ * 修正者 :T.Masuda
+ * 修正日 :2015.04.19
+ * 内容　 :修正レイアウトをコメントアウトで用意
  */
 .articleSearchLabel{
 	display			: inline-block;	/* インラインブロックにして横に並べる。 */
-	vertical-align	: middle;		/* パーツの高さを中心で揃える。 */
+	/* width: 100%; */
 }
 
 
@@ -334,12 +341,14 @@
  * 概要   :絞り込みのテキストボックス。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.25
+ * 修正者 :T.Masuda
+ * 修正日 :2015.04.19
+ * 内容　 :修正レイアウトをコメントアウトで用意
  */
 .articleSearchTextBox{
 	height			: 1.2em;	/* 文字サイズよりやや高さを増やす。 */
+	/* width: 100%; */
 }
-
-
 
 /* 
  * セレクタ:.listEditButtons
@@ -528,6 +537,7 @@
 	border-style: none;			/* 初期設定されている枠線を消す */	
 	vertical-align: middle;		/* 高さを行の中心に合わせる。 */
 	text-align: center;			/* ボタンのテキストを中央に寄せる。 */
+ 	border-radius: 0;			/* ios safariでの角丸を消す */
 }
 
 /* 
@@ -991,8 +1001,14 @@ ul li.notice{
 /* スマホ用微調整 */
 @media(max-width:400px){
 	.articleSearchLabel{
-		width: 100px;	/* 画面幅が狭くなってきたら検索ボックスを1行1列にする。その際にラベルの幅も統一する */
+		width: 35%;	/* 画面幅が狭くなってきたら検索ボックスを1行1列にする。その際にラベルの幅も統一する */
 	}
+	input.articleSearchTextBox {
+		width: 55%;
+	}
+	.articleSearch {
+		width: 100%;
+	}	
 }
 
  * セレクタ:.contentManagement > *

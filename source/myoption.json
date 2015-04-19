@@ -11,14 +11,29 @@
             "text": ""
         }
     },
-    "myOption":{},
+    "optionForm":{
+    	"class":"myOption optionForm"
+    },
     "myOptionButtons": {
         "myOptionBackButton": {
         	"class":"myOptionBackButton back",
-            "text": "戻る"
+            "text": "戻る",
+            "type":"button"
         },
         "myOptionConfirmChangeButton": {
-            "text": "更新"
+        	"class":"myOptionConfirmChangeButton optionSave",
+            "text": "更新",
+            "type":"button"
+        }
+    },
+    "myOptionMail": {
+        "class": "myOptionText",
+        "myOptionLabel": {
+            "text": "あなたのメールアドレス"
+        },
+        "myOptionTextbox": {
+            "type": "email",
+            "name": "email"
         }
     },
     "myOptionBlogTitle": {
@@ -28,8 +43,7 @@
         },
         "myOptionTextbox": {
             "type": "text",
-            "name": "blogTitle",
-            "value": ""
+            "name": "blogTitle"
         }
     },
     "myOptionBlogPublication": {
@@ -63,45 +77,6 @@
             "class": "myOptionRadio",
             "type": "radio",
             "name": "blogPublication",
-            "value": "2",
-            "checked":"false"
-        },
-        "myOptionLabelInline3": {
-            "class": "myOptionLabelInline",
-            "text": "非公開"
-        }
-    },
-    "myOptionGalleryPublication": {
-        "class": "myOptionRadio",
-        "myOptionLabel": {
-            "text": "Myギャラリー公開範囲"
-        },
-        "myOptionRadio1": {
-            "class": "myOptionRadio",
-            "type": "radio",
-            "name": "myGalleryPublication",
-            "value": "0",
-            "checked":"false"
-        },
-        "myOptionLabelInline1": {
-            "class": "myOptionLabelInline",
-            "text": "全体"
-        },
-        "myOptionRadio2": {
-            "class": "myOptionRadio",
-            "type": "radio",
-            "name": "myGalleryPublication",
-            "value": "1",
-            "checked":"false"
-        },
-        "myOptionLabelInline2": {
-            "class": "myOptionLabelInline",
-            "text": "友達"
-        },
-        "myOptionRadio3": {
-            "class": "myOptionRadio",
-            "type": "radio",
-            "name": "myGalleryPublication",
             "value": "2",
             "checked":"false"
         },

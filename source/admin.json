@@ -79,17 +79,9 @@
     },
     "optionsConfirmChange": {
         "optionsConfirmChangeButton": {
-            "text": "更新"
-        }
-    },
-    "optionsMyMail": {
-        "optionsLabel": {
-            "text": "あなたのメールアドレス"
-        },
-        "optionsMyEmailForm": {
-            "type": "email",
-            "name": "email",
-            "value": "sample@ddt.com"
+            "text": "更新",
+            "type":"button",
+            "class":"optionsConfirmChangeButton optionSave"
         }
     },
     "optionsAllowMidnightMail": {
@@ -158,5 +150,6 @@
     "managementList": {
         "class": "managementList",
         "table": {}
-    }
+    },
+    "optionForm":{}
 }

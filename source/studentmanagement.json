@@ -301,7 +301,9 @@
                     "oncopy": "return false",
                     "onpaste": "return false",
                     "ononcontextmenu": "return false",
-                    "onkeyDown": "return controllInputChar(event);"
+                    "onkeyDown": "return controllInputChar(event);",
+                    "placeholder":"手動で入力してください。"
+                    
                 }
             },
             "tel": {
@@ -402,6 +404,82 @@
                     "required": ""
                 }
             },
+            "userId": {
+                "formContent": {
+                    "text": "ユーザID"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "UserID"
+                }
+            },
+            "userIdTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "userId",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "nickname": {
+                "formContent": {
+                    "text": "ニックネーム"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "Nickname"
+                }
+            },
+            "nicknameTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "nickname",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "password": {
+                "formContent": {
+                    "text": "パスワード"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": "Password"
+                }
+            },
+            "passwordTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "password",
+                    "size": "60",
+                    "required": ""
+                }
+            },
+            "passwordConfirm": {
+                "formContent": {
+                    "text": "パスワード(確認)"
+                },
+                "textRed": {
+                    "text": "*"
+                },
+                "formRuby": {
+                    "text": ""
+                }
+            },
+            "passwordConfirmTextBox": {
+                "textBox": {
+                    "type": "text",
+                    "name": "passwordConfirm",
+                    "size": "60",
+                    "required": ""
+                }
+            },
             "sex": {
                 "formContent": {
                     "text": "性別"
@@ -472,7 +550,8 @@
                     "onkeyDown": "return controllInputChar(event);",
                     "oncopy": "return false",
                     "onpaste": "return false",
-                    "ononcontextmenu": "return false"
+                    "ononcontextmenu": "return false",
+                    "placeholder":"手動で入力してください。"
                 }
             },
             "tel": {

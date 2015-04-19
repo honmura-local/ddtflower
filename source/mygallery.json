@@ -27,6 +27,14 @@
             "text": "戻る"
         }
     },
+    "myGalleryNotice":{
+    	"notice1":{
+    		"text":"写真のタイトル部分、コメント部分、公開設定は"
+    	},
+    	"notice2":{
+    		"text":"ダブルクリックすることで編集できます。"
+    	}
+    },
     "blankPhoto": {
         "class": "myPhoto",
         "myPhotoLink": {

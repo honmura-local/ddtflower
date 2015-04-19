@@ -32,8 +32,8 @@ function isSupportPushState(){
  * 作成者 :T.M
  */
 $(document).ready(function(){
-	// リンクをクリックしたら
-	$(document).on('click', 'a[href$=".html"]', function(event){
+	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
+	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
 		//pushState対応ブラウザであれば
 //		if(isSupportPushState()){
 			//URLを引数にしてページを切り替える関数をコールする。

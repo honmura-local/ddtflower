@@ -61,13 +61,15 @@
         },
         "guideSns": {
             "facebookLink": {
-                "href": "",
+                "href": "https://www.facebook.com/pages/DDT-Flowers/420501208043272?sk=timeline&ref=page_internal",
+                "target":"_blank",
                 "facebook": {
                     "src": "image/icon(facebook).png"
                 }
             },
             "twitterLink": {
-                "href": "",
+                "href": "https://twitter.com/ddtflowers",
+                "target":"_blank",
                 "twitter": {
                     "src": "image/icon(titter22).png"
                 }
