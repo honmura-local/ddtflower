@@ -48,8 +48,6 @@ if (userAgent.indexOf('msie') != -1) {
 } else if (userAgent.indexOf('opera') != -1) {
   uaName = 'opera';
 };
-
-alert(uaName);
 //以上、引用終了。
 
 //Optionタグを生成するための連想配列。createOptions関数で使う。
@@ -1254,7 +1252,10 @@ var errorJpNames = {name:'氏名',
 					endDate:'終了日',
 					maxEntry:'上限人数',
 					nameKana:'氏名(カナ)',
-					passwordConfirm:'パスワード(確認)'
+					passwordConfirm:'パスワード(確認)',
+					nickname:'ニックネーム',
+					password:'パスワード',
+					userId:'ユーザID'
 					};
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {

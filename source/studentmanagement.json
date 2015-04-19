@@ -605,7 +605,8 @@
         "back": {
             "text": "戻る",
             "href": "",
-            "onclick": "history.back();"
+            "onclick": "history.back();",
+            "type":"button"
         }
     },
     "confirmRegistration": {
