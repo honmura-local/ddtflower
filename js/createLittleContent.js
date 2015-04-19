@@ -48,6 +48,8 @@ if (userAgent.indexOf('msie') != -1) {
 } else if (userAgent.indexOf('mobile') != -1) {
   uaName = 'mobile';
 };
+
+alert(uaName);
 //以上、引用終了。
 
 //Optionタグを生成するための連想配列。createOptions関数で使う。
@@ -953,18 +955,28 @@ $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
 });
 
 /*
- * イベント名:$(document).on('dblclick dblTap', '.myGallery .myPhotoTitle')
+ * イベント名:$(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication')
  * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
- * 			:string '.myGallery .myPhotoTitle':写真のタイトルのセレクタ。
+ * 			:string '.myPhotoTitle,.myPhotoComment,.myPhotoPublication':写真のタイトル、コメント、公開設定のセレクタ。
  * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のタイトルをダブルクリックしたときのイベント。
+ * 概要  　 :Myギャラリーの写真のタイトル、コメント、公開設定をダブルクリックしたときのイベント。
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('dblclick','.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
+$(document).on('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication', function(){
 	//タイトルを編集モードにする。
 	startEditText(this);
 });
+
+/*
+ * イベント名:$(document).hammer().on('doubletap', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication')
+ * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
+ * 			:string '.myPhotoTitle,.myPhotoComment,.myPhotoPublication':写真のタイトル、コメント、公開設定のセレクタ。
+ * 戻り値　 :なし
+ * 概要  　 :Myギャラリーの写真のタイトル、コメント、公開設定をダブルタップしたときのイベント。
+ * 作成日　　:2015.04.19
+ * 作成者　　:T.Masuda
+ */
 
 /*
  * イベント名:$(document).on('blur', '.myGallery .myPhotoTitleEdit')
