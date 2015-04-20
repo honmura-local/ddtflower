@@ -40,46 +40,44 @@
 	<div id="container">
 		<div class="main">
 			<script>
-			//ドキュメント配備後
-			$(document).ready(function(){
 				//ログインチェックして、NGであれば例外処理でログインダイアログを出すためのtry-catch
 				try{
-					hideNormalHeader();	//通常ページのヘッダーを隠す
 					// dom要素を作るクラスをインスタンス化する
-					var suggestionBoxCreator = new createTag();
+					var creator = new createLittleContents();
+					creator.hideNormalHeader();	//通常ページのヘッダーを隠す
 					
 					// 共通のパーツのJSONを取得する。
-					suggestionBoxCreator.getJsonFile('source/memberCommon.json');
+					creator.getJsonFile('source/memberCommon.json');
 					// パスワード変更画面のjsonを読み込む
-					suggestionBoxCreator.getJsonFile('source/memberSuggestionBox.json');
+					creator.getJsonFile('source/memberSuggestionBox.json');
 					//ユーザ情報のテキストをDBから取得する
-					suggestionBoxCreator.getJsonFile('php/GetJSONString.php', suggestionBoxCreator.json['accountHeader'], 'accountHeader');
+					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
 	
 					// パーツのテンプレートのDOMを取得する。
-					suggestionBoxCreator.getDomFile('template/common.html');
+					creator.getDomFile('template/common.html');
 					//目安箱のテンプレートはmemberCommon.htmlに記述
 					// パーツのテンプレートのDOMを取得する。
-					suggestionBoxCreator.getDomFile('template/memberCommon.html');
+					creator.getDomFile('template/memberCommon.html');
 					// 会員ページヘッダーを作る
-					suggestionBoxCreator.outputTag('accountHeader', 'memberHeader');
+					creator.outputTag('accountHeader', 'memberHeader');
 					// バナー領域を作る
-					suggestionBoxCreator.outputTag('userBanner');
+					creator.outputTag('userBanner');
 					// お問い合わせ内容領域外側領域を作る
-					suggestionBoxCreator.outputTag('suggestionArea', 'insertForm');
+					creator.outputTag('suggestionArea', 'insertForm');
 	
 					//目安箱の店舗セレクトボックスを作る
-					suggestionBoxCreator.outputTag('schoolNameSelectArea', 'schoolNameSelectArea', '.suggestionArea');
+					creator.outputTag('schoolNameSelectArea', 'schoolNameSelectArea', '.suggestionArea');
 					//目安箱の種別セレクトボックスを作る
-					suggestionBoxCreator.outputTag('suggestionTypeSelectArea', 'suggestionTypeSelectArea', '.suggestionArea');
+					creator.outputTag('suggestionTypeSelectArea', 'suggestionTypeSelectArea', '.suggestionArea');
 					//目安箱のタイトル領域を作る
-					suggestionBoxCreator.outputTag('labelTextboxArea', 'labelTextboxArea', '.suggestionArea');
+					creator.outputTag('labelTextboxArea', 'labelTextboxArea', '.suggestionArea');
 	
 					// お問い合わせ内容を入力する領域を作る
-					suggestionBoxCreator.outputTag('textareaLabel', 'textareaLabel', '.suggestionArea');
+					creator.outputTag('textareaLabel', 'textareaLabel', '.suggestionArea');
 					//目安箱か通常のメールかを決めるラジオボタンを作る
-					suggestionBoxCreator.outputTag('radioArea', 'radioArea', '.suggestionArea');
+					creator.outputTag('radioArea', 'radioArea', '.suggestionArea');
 					// 入力した内容を送信するボタンの領域を作る
-					suggestionBoxCreator.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
+					creator.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
 					//ボタンをjqueryのボタンにする
 					$('input[type="button"], input[type="reset"]').button();
 					//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
@@ -88,11 +86,11 @@
 							//入力されているデータを取得しクエリを挿入するための値として扱う
 							var sendData = getInputData('suggestionArea');
 							//クエリに送信するデータに会員番号を加える
-							sendData['user_key'] = suggestionBoxCreator.json.memberHeader.user_key.value;
+							sendData['user_key'] = creator.json.memberHeader.user_key.value;
 							//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
 							if($('[name="suggestionRadio"]').val() == "0") {
 								//目安箱テーブルに新たにデータを挿入する
-								setDBdata(suggestionBoxCreator.json.insertSuggestionBox, sendData, '');
+								creator.setDBdata(creator.json.insertSuggestionBox, sendData, '');
 								//目安箱としてメールを送信する
 								//メール送信処理
 							//目安箱でないなら
@@ -111,7 +109,6 @@
 				} catch(e) {
 					console.log(e)
 				}
-			});
 			</script>
 		</div>
 	</div>

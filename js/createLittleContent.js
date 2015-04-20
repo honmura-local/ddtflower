@@ -1389,35 +1389,7 @@ function createLittleContents(){
 			counter++;
 		});
 	}
-	
-	/* 
-	 * 関数名:updatePassword
-	 * 概要  :パスワード変更画面で更新ボタンを押されたときにテキストボックスに
-	 		 入っている値をDBに送信してデータを更新する
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.02
-	 */
-	this.setPasswordUpdate = function() {
-	var thisElem = this;
-		//更新ボタンが押された時の処理
-		$('.updateButton').click(function(){
-			//ユーザが入力した値を取得する
-			var queryReplaceData = thisElem.getInputData('postPass');
-			//ユーザ番号を追加する
-			queryReplaceData['userId'] = json.accountHeader.user_key.value;
-			//新しいパスワードと確認のパスワードが一致すれば登録する
-			if(queryReplaceData.newPass === queryReplaceData.password) {
-				//データべベースにクエリを発行してデータを更新する
-				thisElem.setDBdata(json.updatePassword, queryReplaceData, MESSAGE_SUCCESS_PASSWORD_UPDATE);
-			} else {
-				alert('パスワードが確認と異なります');
-			}
-			
-		});
-	}
-	
+
 	/* 
 	 * 関数名:addCheckbox
 	 * 概要  :チェックボックスを追加する

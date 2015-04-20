@@ -14,7 +14,9 @@
 			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
 			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
-				hideNormalHeader();	//通常ページのヘッダーを隠す
+				// dom要素を作るクラスをインスタンス化する
+				var creator = new createLittleContents();
+				creator.hideNormalHeader();	//通常ページのヘッダーを隠す
 				// 会員共通のパーツのJSONを取得する。
 				creator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
@@ -56,9 +58,9 @@
 					//ブログリストのテーブルを作る
 					creator.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
 					//テーブルの1列目をチェックボックスにする
-					addCheckbox('checkWrap', 'check');
+					creator.addCheckbox('checkWrap', 'check');
 					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
-					allCheckbox('.check:eq(0)', '.check');
+					creator.allCheckbox('.check:eq(0)', '.check');
 				}
 
 				//変更者 T.Yamamoto 日付:2015.07.22
@@ -78,10 +80,10 @@
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
 				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
 				
-				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
+				creator.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。
 				$('form').validate(articleSubmitHandler);
-				deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+				creator.deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
 				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 			</script>
 		</div>
