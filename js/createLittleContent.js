@@ -1255,7 +1255,7 @@ function createLittleContents(){
 		}
 		//置換済みでなければ置換する
 		if(!queryReplaceData[arrayKey].value) {
-			send = $.extend(true, {}, sendQueryJsonArray, replaceValueNode(queryReplaceData))
+			send = $.extend(true, {}, sendQueryJsonArray, this.replaceValueNode(queryReplaceData))
 		//置換済みであれば値をそのまま結合する	
 		} else {
 			send = $.extend(true, {}, sendQueryJsonArray, queryReplaceData);
@@ -1314,86 +1314,6 @@ function createLittleContents(){
 			// 選択できる年は1910年から2100年の範囲にする
 			yearRange: '1910:2100',
 		});
-	}
-	
-	/* 
-	 * 関数名:getInputData
-	 * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
-			:クラス名をkey、入っている値をvalueの連想配列にして返す
-	 * 引数  :string selector:値を走査したい親のセレクター名
-	 * 返却値  :object resultArray:入力データの結果連想配列
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.06.27
-	 */
-	this.getInputData = function(selector) {
-		//結果の変数を初期化する
-		var resultArray = {};
-		//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
-		$('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
-			//入力データのname属性を取得する
-			var name = $(this).attr('name');
-			//入力データの値を取得する
-			var valueData = $(this).val();
-			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
-			var typeAttr = $(this).attr('type');
-			//ラジオボタンに対応する
-			if (typeAttr == 'radio') {
-				//ラジオボタンの値がチェックされているものだけ送信する
-				if($(this).prop('checked')) {
-					//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
-					resultArray[name] = valueData;
-				}
-			} else {
-				//入力データを結果の変数に、key名をクラス名にして保存する
-				resultArray[name] = valueData;
-			}
-		});
-		//結果を返す
-		return resultArray;
-	}
-	
-	/* 
-	 * 関数名:setValueDBdata()
-	 * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
-	 		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
-	 		テキストボックスのname属性値がDBの列名と対応している。
-	 * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
-	 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
-	 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.02
-	 */
-	this.setValueDBdata = function(setArray, setDomParent, targetArrayType) {
-		//ループで連想配列を全てループする
-		for (var key in setArray) {
-			//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
-			if (targetArrayType == 'keyTable') {
-				//テーブルから取り出した値をキーにして値を取得する
-				var resultValue = setArray[key]
-			//テーブルの置換済みの値からデータを読み込む場合の処理
-			} else if (targetArrayType == 'keyValue') {
-				//テーブルの置換済みの値を読み込む
-				var resultValue = setArray[key].value;
-			//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
-			} else {
-				//値を挿入する結果のvalueを変数に入れる
-				var resultValue = setArray[key]['text'];
-			}
-			//対象の要素がテキストエリアのときにtextで値を入れる
-			if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
-				//name属性がkeyのものに対して属性をDBから読み出した値にする
-				$(setDomParent + ' [name=' + key + ']').text(resultValue);
-			//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
-			} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
-				//値が当てはまるチェックボックスに対してチェックを入れる
-				$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
-			//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
-			} else {
-				//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
-				$(setDomParent + ' [name=' + key + ']').val(resultValue);
-			}
-		}
 	}
 	
 	/* 
@@ -1467,58 +1387,6 @@ function createLittleContents(){
 			rowNumber++;
 			//カウンタ変数をインクリメントする
 			counter++;
-		});
-	}
-	
-	/* 
-	 * 関数名:setProfileUpdate
-	 * 概要  :プロフィール画面で更新ボタンを押されたときにテキストボックスに
-	 		 入っている値をDBに送信してデータを更新する
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.02
-	 */
-	this.setProfileUpdate = function() {
-		var thisElem = this;
-		//更新ボタンが押された時の処理
-		$('.updateButton').click(function(){
-			//ユーザが入力した値を取得する
-			var queryReplaceData = thisElem.getInputData('memberInfo');
-			//ユーザ番号を追加する
-			queryReplaceData['userId'] = json.memberHeader.user_key.value;
-			//入力項目に不備があったときにエラーメッセージを出す配列を作る
-			var updateError = [];
-			//メッセージを挿入するための関数を作る
-			function erroeMesseageInput (func ,checkTarget, errorMessage) {
-				//第一引数の関数を実行して第二引数の文字列をチェックをする
-				if(!func(queryReplaceData[checkTarget])) {
-					//エラー内容が初めてのときは改行を挟まずにエラーメッセージを表示する
-					if(updateError.length == 0) {
-						//エラーメッセージを配列に入れる
-						updateError.push(errorMessage);
-					} else {
-						//改行を含めて配列に入れる
-						updateError.push('\n' + errorMessage);
-					}
-				}
-			}
-			//名前の入力された文字をチェックする
-			erroeMesseageInput(checkInputName, 'user_name', '名前に数字や記号が入っています');
-			//カナの入力された文字をチェックする
-			erroeMesseageInput(checkInputName, 'name_kana', '名前(カナ)に数字や記号が入っています');
-			//電話番号の入力された文字をチェックする
-			erroeMesseageInput(checkInputPhone, 'telephone', '電話番号に文字や記号が入っています');
-	
-			//入力内容エラーがあったときにメッセージを表示する
-			if(updateError.length) {
-				//配列を結合してエラーメッセージのアラートを出す
-				alert(updateError.join(','))
-			//入力内容にエラーがなかった時の処理
-			} else {
-				//データべベースにクエリを発行してデータを更新する
-				this.setDBdata(json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
-			}
 		});
 	}
 	
@@ -1761,17 +1629,6 @@ function createLittleContents(){
 		} else if (replaceTableOption[reloadTableClassName].replaceFlag == 'replace') {
 			//クエリの置換を行う関数を実行する
 			this.replaceTableQuery(reloadTableClassName);
-			//ページング機能が実装されているのであればページング処理を行う
-			if(replaceTableOption[reloadTableClassName].addPagingPlace) {
-				//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
-				$(DOT + PAGING).parent().off(CLICK);
-				//テーブルページング領域を消す
-				$(DOT + PAGING_AREA).remove();
-				//テーブルページングを実装する(1ページに15行表示し、5ページが最大表示)
-				this.tablePaging(reloadTableClassName, 15, 6);
-				//処理を終わらせるためにreturnで終える
-				return;
-			}
 		}
 		//テーブルをリロードする
 		this.tableReload(reloadTableClassName);
@@ -1788,7 +1645,6 @@ function createLittleContents(){
 	 * 作成日:2015.07.06
 	 */
 	this.tableReload = function(reloadTableClassName) {
-				console.log(this);
 		//テーブルのjsonの値が既にあれば
 		if(this.json[reloadTableClassName].table){
 			//テーブルのjsonを初期化する
@@ -1909,62 +1765,7 @@ function createLittleContents(){
 			nowDateObject = new Date(changeDate);
 		});
 	}
-	
-	
-	/* 
-	 * 関数名:getPagingCount
-	 * 概要  :ページングの個数を取得する
-	 * 引数  :pagingTargetTable:ページング対象となるテーブル名
-	 *       displayNumber:１つのページングで表示するレコードの件数
-	 *       pagingDisplayCount:ページングを最大何ページまで表示するのかの件数
-	 * 返却値  :pagingCounter:ページングの最大値
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.07
-	 */
-	this.getPagingCount = function(pagingTargetTable, displayNumber, pagingDisplayCount) {
-		//DBからレコードのページングにしたいテーブルを取得する
-		getJsonFile(URL_GET_JSON_ARRAY_PHP, json[pagingTargetTable], pagingTargetTable);
-		//テーブルの行数を取得する
-		var recordCount = json[pagingTargetTable].table.length;
-		//表示件数の変数を作る
-		var displayCount = displayNumber;
-		//ページングの初期値を1にして変数に入れる
-		var pagingCounter = 1;
-		//ページングの値を求めるための結果変数
-		var resultPaging = recordCount - (displayCount * pagingCounter);
-		//ページング領域を作る
-		$(replaceTableOption[pagingTargetTable].addDomPlace).after('<div class="pagingArea textCenter"></div>');
-		//ページングした結果が0以上の時
-		if(resultPaging >= 0) {
-			//ループでページングを作る
-			while(resultPaging = recordCount - (displayCount * pagingCounter) >= 0){
-				//ページングが1以上5以下の時
-				if (pagingCounter >= 1 && pagingCounter < pagingDisplayCount) {
-					//ページングボタンを指定要素の先に追加する
-					$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
-				//ページ数が6以上の時にページングを作らなくする
-				} else if (pagingCounter == pagingDisplayCount) {
-					//ページングの最後に次ページ記号を入れる
-					$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
-				}
-				//ページングボタンが初回の時は
-				if(pagingCounter == 1) {
-					//現在のページを表すクラスを付ける
-					$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
-				}
-				//カウンタをインクリメントする
-				pagingCounter++;
-			}
-		} else {
-			//ページングボタンを指定要素の先に追加する
-			$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
-			//現在のページを表すクラスを付ける
-			$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
-		}
-		//ページングの最大値を返す
-		return Number(pagingCounter)-1;
-	}
-	
+
 	/* 
 	 * 関数名:setTableReloadExecute
 	 * 概要  :テーブルページング機能を実装する
@@ -1982,195 +1783,6 @@ function createLittleContents(){
 		tableReload(tableClassName);
 		//クエリを追加前に戻す
 		json[tableClassName].db_getQuery = defaultQuery;
-	}
-	
-	/* 
-	 * 関数名:getPagingMax
-	 * 概要  :ページングの最大値を取得し、次のページングに行く
-	 * 引数  :paging:ページングのクラス名
-	 		maxPaging:最大のページ番号
-	 *       pagingDisplayCount:ページング領域で表示するページングの件数
-	 * 返却値  :max : 次のページングの値
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.07
-	 */
-	this.getPagingMax = function(paging, maxPaging, pagingDisplayCount) {
-		//最大値を0とする
-		var max = 0;
-		//現在のページのクラスをとる
-		$(paging).removeClass(NOW_PAGE);
-		// 要素から最大値を走査する
-		$(paging).each(function(){
-			//現在の値を取得する
-			var current = $(this).text();
-			//数字にだけ処理をする
-			if(current.match(/\d/g)) {
-				//現在の値を数字に変換する
-				current = Number(current);
-				//現在のテキストに1を足す
-				$(this).text(current + 1);
-				//現在の値がmaxより大きく、かつ数字の場合はmaxに現在の値を代入する
-				if (current > max) {
-					//現在の値が最大値になる
-					max = current;
-				}
-			}
-		});
-		//最大値に1を足す
-		max = Number(max) + 1;
-		//現在の最大値のクラスを付ける
-		$(paging + ':contains(' + max + ')' ).addClass(NOW_PAGE);
-		//最初に次のページへの記号をクリックされたとき
-		if(max == pagingDisplayCount) {
-			//前ページの記号を付け足す
-			$(DOT + PAGING_AREA).prepend('<a class="paging inlineBlock"><<</a>');
-		
-		}
-		//ページングが最大値まで来たとき 
-		if(max >= maxPaging) {
-			//次ページの記号を取り除く
-			$(paging + ':contains(">>")').remove();
-		}
-		//最大値に1を足したものを返す
-		return max;
-	}
-	
-	/* 
-	 * 関数名:getPagingMin
-	 * 概要  :ページングの最小値を取得し、前のページングに行く
-	 * 引数  :paging:ページングのクラス名
-	 		maxPaging:最大のページ番号
-	 *       pagingDisplayCount:ページング領域で表示するページングの件数
-	 * 返却値  :min : 前のページングの値
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.07
-	 */
-	this.getPagingMin = function(paging, maxPaging, pagingDisplayCount) {
-		//最小値を1000とする
-		var min = 1000;
-		//現在のページのクラスをとる
-		$(paging).removeClass(NOW_PAGE);
-		// 要素から最大値を走査する
-		$(paging).each(function(){
-			//現在の値を取得する
-			var current = $(this).text();
-			//数字にだけ処理をする
-			if(current.match(/\d/g)) {
-				//現在の値を数字に変換する
-				current = Number(current);
-				//現在のテキストに1を引く
-				$(this).text(current - 1);
-				//現在の値がminより小さい
-				if (current < min) {
-					//現在の値が最小値になる
-					min = current;
-				}
-			}
-		});
-		//最小値に1を引く
-		min = Number(min) - 1;
-		//現在の最小値にクラスを付ける
-		$(paging + ':contains(' + min + ')' ).addClass(NOW_PAGE);
-		//ページングが最小値まで来たとき 
-		if(min == 1) {
-			//次ページの記号を取り除く
-			$(paging + ':contains("<<")').remove();
-		}
-		//最大のページでない時に次のページの記号を出す
-		if((min+4) != maxPaging) {
-			//クラス名を取得し、なかったときに次のページの記号を作る
-			if (!($(paging + ':contains(">>")').attr('class'))) {
-				//次ページの記号を付け足す
-				$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
-			}
-		}
-		//最小値を返す
-		return min;
-	}
-	
-	/* 
-	 * 関数名:tablePaging
-	 * 概要  :テーブルページング機能を実装する
-	 * 引数  :pagingTargetTable:ページング対象となるテーブル名
-	 *       displayNumber:ページングで表示する件数
-	 *       pagingDisplayCount:ページング領域で表示するページングの件数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.07
-	 */
-	this.tablePaging = function(pagingTargetTable, displayNumber, pagingDisplayCount) {
-		//ページング領域を作る
-		var maxPaging = this.getPagingCount(pagingTargetTable, displayNumber, pagingDisplayCount);
-		//デフォルトのクエリを取得する
-		var defaultQuery = json[pagingTargetTable].db_getQuery;
-		//最大の表示数
-		var maxRecord = displayNumber;
-		//最初の表示数
-		var minRecord = 0;
-		//追加するクエリ
-		var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
-		//クエリを実行してテーブルを作る
-		this.setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery, createatag);
-		//ページングがクリックされた時の処理
-		$(DOT + PAGING).parent().on('click', DOT + PAGING, function(){
-			//全てのページングからnowPageクラスを取り除く
-			$(DOT + PAGING).removeClass(NOW_PAGE);
-			//クリックされた要素の番号を取得する
-			var nowPaging = $(this).text();
-			//クリックされた要素が次のページ記号だった場合
-			if (nowPaging == '>>') {
-				//次のページの値を取得する
-				nowPaging = getPagingMax(DOT + PAGING, maxPaging, pagingDisplayCount);
-			//クリックされた要素が前のページ記号だった場合
-			} else if (nowPaging == '<<') {
-				//前のページの値を取得する
-				nowPaging = getPagingMin(DOT + PAGING, maxPaging, pagingDisplayCount);
-			} else {
-				//クリックされたのが数字であるならば1を引いて正しいページングを行うようにする
-				nowPaging = Number($(this).text())-1;
-				//クリックされた要素にnowPageクラスを追加する
-				$(this).addClass(NOW_PAGE);
-			}
-			//クエリにLIMITを追加する
-			var pagingAddQuery = ' LIMIT ' + (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
-			//クエリを実行してテーブルを作る
-			this.setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
-			//今何件目まで表示しているしているかを取得する
-			// var nowDisplayRecordCount = getPagingRecordCount(recordCount, nowPaging, maxRecord, minRecord);
-			// console.log(nowDisplayRecordCount);
-		});
-	
-		//加える文字列を返す
-		// return nowDisplayRecordCount;
-	}
-	
-	/* 
-	 * 関数名:getPagingRecordCount
-	 * 概要  :取得したテーブルの件数と今何件目まで表示しているかの値を求めて返す
-	 * 引数  :maxResultRecord	:テーブルの最大の表示件数
-	 		:nowPaging 			:ページングが今何ページ目にいるかの値
-	 		:nowMaxRecord	:現在表示している最大の表示件数
-	 		:nowMinRecord	:現在表示している最少の表示件数
-	 * 返却値  :resultDisplayRecord:現在表示している結果の値
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.27
-	 */
-	this.getPagingRecordCount = function(maxResultRecord, nowPaging, nowMaxRecord, nowMinRecord) {
-		//現在表示している結果の値を入れる変数を作る
-		var resultDisplayRecord;
-		//現在表示している最少の値を求め、今何件目から表示しているかを表すのに使う
-		displayMinRecord = nowMinRecord + nowMaxRecord * nowPaging;
-		//現在表示している最大の値を求め、今何件目まで表示しているかを表すのに使う
-		displayMaxRecord = nowMinRecord + nowMaxRecord * (nowPaging + 1) - 1;
-		//表示している件数が最大件数よりも大きい時は
-		if(displayMaxRecord > maxResultRecord) {
-			//最大件数を表示最大件数とする
-			displayMaxRecord = maxResultRecord;
-		}
-		//今何件目から何件目まで表示しているのかを返す
-		resultDisplayRecord = displayMinRecord + '~' + displayMaxRecord + '/' + maxResultRecord;
-		//今何件目まで表示しているかを返す
-		return resultDisplayRecord;
 	}
 	
 	/* 
@@ -2488,6 +2100,25 @@ function createLittleContents(){
 		});
 	}
 	
+	/*
+	 * 関数名:pagingReset
+	 * 概要  :ページング機能をリセットし、再びページングを作り直す時に使う
+	 * 引数  :targetPagingClassName:ページング対象となる領域のクラス名。
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.30
+	 */
+	this.pagingReset = function(targetPagingClassName) {
+		//ユーザ一覧テーブルを削除する
+		$(DOT + targetPagingClassName).remove();
+		//会員一覧テーブルをリセットして検索に備える
+		creator.json[targetPagingClassName].table = {};
+		//ナンバリングのdomを初期化する
+		$('.numbering').remove();
+		//新しくページングを作り直すためにページングの番号一覧をリセットする
+		creator.json.numbering = {};
+	}
+
 	/* 
 	 * 関数名:setDefaultSellingPrice
 	 * 概要  :受講承認テーブルの備品代をページ読み込み時に自動でセットする。
@@ -3579,39 +3210,6 @@ function createLittleContents(){
 					);
 		});
 	}
-	/*
-	 * 関数名:finshedLessonTableAfterPaging
-	 * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.30
-	 */
-	this.finshedLessonTableAfterPaging = function() {
-		//ページングがクリックされた時のイベントを登録する
-		$(STR_BODY).on(CLICK, '.finishedLessonPagingArea .numbering li', function() {
-			//受講済みテーブルを編集が終わるまで表示しなくする
-			$('.finishedLessonTable').hide();
-			//時間差で表現するためにsetTimeOutを使う
-			setTimeout(function(){
-				//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
-				var nowPageNumber = NUMBER($('.select').text());
-				//テーブルの値を編集するループを開始する値を取得する
-				var loopStartCount = nowPageNumber * 10;
-				//テーブルの値を編集するループを終了する値を取得する
-				var loopEndCount = nowPageNumber * 10 + 9;
-				//テーブルのデータを取得する
-				var tableRow = json.finshedLessonTable.table;
-				//ループで受講済みテーブルを編集する
-				for(loopStartCount; loopStartCount<=loopEndCount; loopStartCount++) {
-					//テーブルの値を置換する
-					callMemberLessonValue('.finishedLessonTable', tableRow, loopStartCount, loopStartCount);
-				}
-				//受講済みテーブルを表示する
-				$('.finishedLessonTable').show();
-			},1);
-		});
-	}
 	
 	/*
 	 * 関数名:function deleteRowData(form)
@@ -4574,3 +4172,83 @@ function setTableRecordClass (tableClassName, tableRecordClasssName) {
 	$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
 }
 
+
+/* 
+ * 関数名:setValueDBdata()
+ * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
+ 		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
+ 		テキストボックスのname属性値がDBの列名と対応している。
+ * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
+ 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
+ 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function setValueDBdata(setArray, setDomParent, targetArrayType) {
+	//ループで連想配列を全てループする
+	for (var key in setArray) {
+		//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
+		if (targetArrayType == 'keyTable') {
+			//テーブルから取り出した値をキーにして値を取得する
+			var resultValue = setArray[key]
+		//テーブルの置換済みの値からデータを読み込む場合の処理
+		} else if (targetArrayType == 'keyValue') {
+			//テーブルの置換済みの値を読み込む
+			var resultValue = setArray[key].value;
+		//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
+		} else {
+			//値を挿入する結果のvalueを変数に入れる
+			var resultValue = setArray[key]['text'];
+		}
+		//対象の要素がテキストエリアのときにtextで値を入れる
+		if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
+			//name属性がkeyのものに対して属性をDBから読み出した値にする
+			$(setDomParent + ' [name=' + key + ']').text(resultValue);
+		//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
+		} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
+			//値が当てはまるチェックボックスに対してチェックを入れる
+			$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+		//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
+		} else {
+			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
+			$(setDomParent + ' [name=' + key + ']').val(resultValue);
+		}
+	}
+}
+
+/* 
+ * 関数名:getInputData
+ * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
+		:クラス名をkey、入っている値をvalueの連想配列にして返す
+ * 引数  :string selector:値を走査したい親のセレクター名
+ * 返却値  :object resultArray:入力データの結果連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.27
+ */
+function getInputData(selector) {
+	//結果の変数を初期化する
+	var resultArray = {};
+	//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
+	$('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
+		//入力データのname属性を取得する
+		var name = $(this).attr('name');
+		//入力データの値を取得する
+		var valueData = $(this).val();
+		//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+		var typeAttr = $(this).attr('type');
+		//ラジオボタンに対応する
+		if (typeAttr == 'radio') {
+			//ラジオボタンの値がチェックされているものだけ送信する
+			if($(this).prop('checked')) {
+				//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+				resultArray[name] = valueData;
+			}
+		} else {
+			//入力データを結果の変数に、key名をクラス名にして保存する
+			resultArray[name] = valueData;
+		}
+	});
+	//結果を返す
+	return resultArray;
+}
