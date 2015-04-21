@@ -294,7 +294,7 @@
     	},
     	"personEmail":{
     		"value":"",
-    		"name":"personEmail",
+    		"name":"email",
     		"type":"hidden"
     	},
     	"personTel":{

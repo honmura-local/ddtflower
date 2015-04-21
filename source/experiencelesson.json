@@ -390,7 +390,7 @@
     },
     "mailSubject": {
         "type": "hidden",
-        "value": "1",
+        "value": "2",
         "name": "subject"
     },
     "specialReservedConfirmDialog": {}

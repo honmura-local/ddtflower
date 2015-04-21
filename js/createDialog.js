@@ -101,14 +101,14 @@ function replaceJpName(names, jpNames){
 
 
 //必須入力を行う入力フォームのname属性を配列に入れる。
-var checkNames = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'personEmail', 'personEmailCheck', 'personCount'];
+var checkNames = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
 var checkNamesJp = {
 			construct:'希望作品', 
 			schedule:'希望時限', 
 			name:'ご氏名', 
 			personPhoneNumber:'電話番号', 
-			personEmail:'メールアドレス', 
+			email:'メールアドレス', 
 			personEmailCheck:'メールアドレス(確認)', 
 			personCount:'人数',
 			course:'コース'
@@ -278,7 +278,7 @@ function createSpecialReservedDialog(content, array){
 			        		 //必須入力チェックを行う。
 			        		 var emptyList = checkEmptyInput(checkNames);
 		        			//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
-			        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="personEmail"], input[name="personCount"]');
+			        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]');
 			        		 //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
 			        		 var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
 			        		 //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。

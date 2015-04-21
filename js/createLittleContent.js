@@ -1232,11 +1232,13 @@ function validateFirefoxKeyCode(keyCode,type){
 //テキストボックス等のname属性の日本語版を格納する連想配列。
 var errorJpNames = {name:'氏名',
 					eMail:'メールアドレス',
+					email:'メールアドレス',
 					sex:'性別',
 					content:'お問い合わせ内容',
 					tel:"電話番号",
 					address:'住所',
 					eMailConfirm:"メールアドレス(確認)",
+					emailConfirm:"メールアドレス(確認)",
 					campaignTitle:'キャンペーン名',
 					startDate:'開始日',
 					endDate:'終了日',
@@ -1266,8 +1268,8 @@ var showAlert = {
 			alert(createErrorText(errors, errorJpNames));
 		},
 		rules:{	//ルールを設定する。
-			eMailConfirm:{	//メールアドレス入力確認欄
-				equalTo: '[name="eMail"]'	//メールアドレス入力欄と同じ値を要求する。
+			emailConfirm:{	//メールアドレス入力確認欄
+				equalTo: '[name="email"]'	//メールアドレス入力欄と同じ値を要求する。
 			},
 			passwordConfirm:{	//パスワード入力確認欄
 				equalTo: '[name="password"]'	//パスワード入力欄と同じ値を要求する。

@@ -65,7 +65,7 @@
                     "text": "男"
                 }
             },
-            "eMail": {
+            "email": {
                 "formContent": {
                     "text": "メールアドレス"
                 },
@@ -76,10 +76,10 @@
                     "text": "E-mail"
                 }
             },
-            "eMailTextBox": {
+            "emailTextBox": {
                 "textBox2": {
                     "type": "email",
-                    "name": "eMail",
+                    "name": "email",
                     "size": "60",
                     "required": "",
                     "onkeyDown": "return controllInputChar(event);"
