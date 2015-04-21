@@ -263,8 +263,19 @@ button.ui-button-text-only span.ui-button-text {
 }
 
 /* 
+ * セレクタ:.toppageLink
+ * 概要   :guideFASchoolのリンクのタグ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.21
+ */
+.toppageLink{
+	width: 100%;			/* 幅を親と同じだけ広げる。 */
+	display:inline-block;	/* インラインブロックにする。 */
+}
+
+/* 
  * セレクタ:.guideFASchool img
- * 概要   :f_a_schoolのアイコン画像。
+ * 概要   :guideFASchoolのアイコン画像。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */
@@ -274,7 +285,7 @@ button.ui-button-text-only span.ui-button-text {
 
 /* 
  * セレクタ:.guideFASchool p
- * 概要   :f_a_schoolのテキスト。
+ * 概要   :guideFASchoolのテキスト。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.05
  */

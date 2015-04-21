@@ -11,17 +11,12 @@
 			<link href="css/admin.css" rel="stylesheet" type="text/css" />
 			<script>
 				if($('.contentManagement').length <= 0){
-					creator.outputTag('headImage', 'createImage', $target);	// 天の画像を作る
 					creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 					creator.getJsonFile('source/studentmanagement.json');	//生徒さんの情報管理JSONを取得する。
 					creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
-					//管理者タブ内でなければ
 					creator.outputTag('headImage', 'createImage', $target);	// 天の画像を作る
-					$target = $('.tabPanel.active:last');	//書き込み先をタブにする
-					
 					// 登録メール送信完了のメッセージを出す。
 					creator.outputTag('sendConfirmMail', 'showMessage', $target);
-
 					creator.outputTag('footImage', 'createImage');			// 地の画像を作る
 					creator.outputTag('footer');							// フッターを作る
 					// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。

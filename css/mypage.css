@@ -252,15 +252,6 @@
 	margin-bottom: 10px;		/* 下にmarginを入れ、スマホレイアウト時にボタン領域と間隔を取る。 */
 }
 
- /* 
- * セレクタ:.blogPublicationRadio
- * 概要   :ブログ記事の公開設定のラジオボタン。
- * 作成者 :T.Masuda
- * 作成日 :2015.04.09
- */
-.blogPublicationRadio {
-	vertical-align: text-bottom;	/* 垂直位置が中央にそろう様に調整する。 */
-}
 
  /* 
  * セレクタ:.blogPublicationLabel

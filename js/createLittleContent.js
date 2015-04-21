@@ -180,6 +180,8 @@ function createBlogCalendar(selector, dateArray) {
 	$(selector).datepicker({
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
+			// 開発中のメッセージを出す。
+			alert('現在この機能は開発中となっています。');
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -214,7 +216,6 @@ function extractDateArray(map){
 	for(key in map){
 		//キーが数字であれば
 		if(!(isNaN(key))){
-			console.log(map[key].blogArticleTitle.blogArticleDate.text);
 			//日付のキーを取得して配列に格納する。
 			retArray.push(new Date(map[key].blogArticleTitle.blogArticleDate.text));
 		}
@@ -665,7 +666,7 @@ function injectionTableData(target, map){
 	//処理対象のテーブルのjQueryオブジェクトを取得する。
 	var $table = $(target);
 	
-	//mapを操作する。
+	//mapを走査する。
 	for(key in map){
 		//対応するセルにデータを流し込む。
 		$('.' + key + ' td', $table).text(map[key]);

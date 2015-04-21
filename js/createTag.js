@@ -336,11 +336,15 @@ function createTag(){
 		
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
-		//ナンバリング用Tagを表示する。
-		this.outputTag('numbering', 'numbering', '.numberingOuter');
 		
-		//現在表示中のページに対応するナンバリングの色を変える。
-		this.selectPageNumber(displayPage);
+		// add T.Masuda 2015/0421 ナンバリングが生成されない時にcreateTagのエラーがコンソールに出力されるバグの修正
+		//ナンバリングのオブジェクトがあれば
+		if('1' in this.json.numbering){
+			//ナンバリング用Tagを表示する。
+			this.outputTag('numbering', 'numbering', '.numberingOuter');
+			//現在表示中のページに対応するナンバリングの色を変える。
+			this.selectPageNumber(displayPage);
+		}
 		
 		//スクロール位置が低ければ
 		if($(window).scrollTop() > $(".main").offset().top){

@@ -206,7 +206,7 @@
             },
             "passwordTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "password",
                     "name": "password",
                     "size": "60",
                     "required": ""
@@ -225,7 +225,7 @@
             },
             "passwordConfirmTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "password",
                     "name": "passwordConfirm",
                     "size": "60",
                     "required": ""
@@ -359,6 +359,18 @@
             "onclick": ""
         }
     },
+    "entryTitle":{
+    	"class":"pageTitle cf",
+        "image"     :{
+            "src"   :   "image/icon(butterfly).png"
+        },
+        "title"     : {
+            "text"  :   "新規会員登録"
+        },
+        "summary"   : {
+            "text"  :   ""
+        }
+    },
     "entryStudent": {
         "class": "entryStudent editStudent",
         "action": "confirmregist.html",
@@ -455,7 +467,7 @@
             },
             "passwordTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "password",
                     "name": "password",
                     "size": "60",
                     "required": ""
@@ -474,7 +486,7 @@
             },
             "passwordConfirmTextBox": {
                 "textBox": {
-                    "type": "text",
+                    "type": "password",
                     "name": "passwordConfirm",
                     "size": "60",
                     "required": ""
@@ -627,9 +639,41 @@
                     "text": ""
                 }
             },
+            "nameKana": {
+                "head": {
+                    "text": "氏名(カナ)"
+                },
+                "data": {
+                    "text": ""
+                }
+            },
             "sex": {
                 "head": {
                     "text": "性別"
+                },
+                "data": {
+                    "text": ""
+                }
+            },
+            "userId": {
+                "head": {
+                    "text": "ユーザID"
+                },
+                "data": {
+                    "text": ""
+                }
+            },
+            "nickname": {
+                "head": {
+                    "text": "ニックネーム"
+                },
+                "data": {
+                    "text": ""
+                }
+            },
+            "password": {
+                "head": {
+                    "text": "パスワード"
                 },
                 "data": {
                     "text": ""
@@ -685,22 +729,46 @@
             "sendValue2": {
                 "class": "sendValue",
                 "type": "hidden",
-                "name": "sex",
+                "name": "nameKana",
                 "value": ""
             },
             "sendValue3": {
                 "class": "sendValue",
                 "type": "hidden",
-                "name": "eMail",
+                "name": "sex",
                 "value": ""
             },
             "sendValue4": {
                 "class": "sendValue",
                 "type": "hidden",
-                "name": "tel",
+                "name": "userId",
                 "value": ""
             },
             "sendValue5": {
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "nickname",
+                "value": ""
+            },
+            "sendValue6": {
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "password",
+                "value": ""
+            },
+            "sendValue7": {
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "eMail",
+                "value": ""
+            },
+            "sendValue8": {
+                "class": "sendValue",
+                "type": "hidden",
+                "name": "tel",
+                "value": ""
+            },
+            "sendValue9": {
                 "class": "sendValue",
                 "type": "hidden",
                 "name": "address",

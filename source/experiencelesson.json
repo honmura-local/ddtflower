@@ -341,7 +341,7 @@
                     "html": "メールアドレス<br>"
                 },
                 "personTextbox": {
-                    "name": "personEmail",
+                    "name": "email",
                     "size": "27",
                     "autocomplete": "off",
                     "onkeyDown": "return controllInputChar(event);",
