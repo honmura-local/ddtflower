@@ -924,9 +924,12 @@ ul li.notice{
 	 * 概要   :入力項目の見出し。
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
+	 * 修正者 :T.Yamamoto
+	 * 修正日 :2015.04.22
+	 * 修正内容：幅を58%から48%にしました
 	 */
 	.editStudent dt{
-		width: 58%;		/* 幅を40%にする */
+		width: 48%;		/* 幅を48%にする */
 	}
 	
 	/* 
@@ -937,11 +940,14 @@ ul li.notice{
 	 * 修正者 :T.Masuda
 	 * 修正日 :2015.03.10
 	 * 内容　 :幅を調整しました。
+	 * 修正者 :T.Yamamoto
+	 * 修正日 :2015.04.22
+	 * 修正内容：幅を35%から46%にしました
 	 */
 	.editStudent dd{
-		width: 35%;					/* 幅を画面の60%に指定する。 */
-		padding-left: 10px;
-		margin-left: 0px;
+		width: 46%;				/* 幅を画面の46%に指定する。 */
+		padding-left: 10px;		/* 10px左から要素の幅を広げる */
+		margin-left: 0px;		/* 左の要素の余白を0にする */
 	}
 	/* 
 	 * セレクタ:.editStudent textarea, .editStudent input[type="text"], .editStudent input[type="email"], .editStudent input[type="tel"], .editStudent input[type="number"],.editStudent input[type="password"]
@@ -1002,17 +1008,35 @@ ul li.notice{
 
 /* スマホ用微調整 */
 @media(max-width:400px){
+	/* 
+	 * セレクタ:.articleSearchLabel
+	 * 概要   :管理者画面の検索領域のラベルについてのスタイル
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.08
+	 */
 	.articleSearchLabel{
 		width: 35%;	/* 画面幅が狭くなってきたら検索ボックスを1行1列にする。その際にラベルの幅も統一する */
 	}
+	/* 
+	 * セレクタ:.articleSearchTextBox
+	 * 概要   :管理者画面検索ボックスのテキストボックス猟奇。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.08
+	 */
 	input.articleSearchTextBox {
 		width: 55%;
 	}
+	/* 
+	 * セレクタ:.articleSearch
+	 * 概要   :検索ボタンの領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.04.08
+	 */
 	.articleSearch {
 		width: 100%;
 	}	
 }
-
+/*
  * セレクタ:.contentManagement > *
  * 概要   :管理者画面のタブ外枠の直下要素。
  * 作成者 :T.Masuda
@@ -1031,7 +1055,7 @@ ul li.notice{
 .searchButtonSet{
 	margin-bottom:5px;	/* 下にmarginを指定し、余白を作る。 */
 	margin-left: 1%;	/* 左に1%の余白を作る。 */
-	margin: 5px 1% 0px;
+	margin: 5px 1% 0px;	/* 余白を上に5px左右に1%下に0pxとる */
 }
 
 /* 
