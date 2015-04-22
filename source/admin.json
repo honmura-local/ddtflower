@@ -52,6 +52,14 @@
                 "data-target": "#studentManagement",
                 "href": "studentmanagement.html .main"
             }
+        },
+        "reservedLessonButton": {
+            "class": "reservedLessonButton tab",
+            "reservedLessonLink": {
+                "text": "レッスン予約",
+                "data-target": "#reservedLessonManagement",
+                "href": "reservedlessonmanagement.html .main"
+            }
         }
     },
     "adminPanels": {
@@ -75,6 +83,10 @@
         "studentManagement": {
             "class": "studentManagement tabPanel",
             "id": "studentManagement"
+        },
+        "reservedLessonManagement": {
+            "class": "reservedLessonManagement tabPanel",
+            "id": "reservedLessonManagement"
         }
     },
     "optionsConfirmChange": {
