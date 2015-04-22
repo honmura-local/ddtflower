@@ -85,14 +85,14 @@
     },
     "listEditButtons": {
         "createNew": {
-            "value": "作成",
             "type": "submit",
-            "data-role": "0"
+            "data-role": "0",
+            "value": "作成"
         },
         "edit": {
-            "value": "編集",
             "type": "submit",
-            "data-role": "1"
+            "data-role": "1",
+            "value": "編集"
         },
         "delete": {
         	"class":" deleteRecord delete",
@@ -606,18 +606,18 @@
             }
         },
         "submit": {
-            "text": "登録へ",
             "href": "",
             "onclick": "",
             "type": "submit",
             "value": "登録へ",
+            "text": "登録へ",
             "confirm": "true"
         },
         "back": {
             "text": "戻る",
+            "type":"button",
             "href": "",
-            "onclick": "history.back();",
-            "type":"button"
+            "onclick": "history.back();"
         }
     },
     "confirmRegistration": {

@@ -33,15 +33,15 @@
     "myPageBlogButtons": {
         "myPageBlogButton1": {
             "class": "myPageBlogButton myPageButton",
-            "value": "記事作成",
             "type": "submit",
-            "data-role": "0"
+            "data-role": "0",
+            "value": "記事作成"
         },
         "myPageBlogButton2": {
             "class": "myPageBlogButton myPageButton",
-            "value": "記事編集",
             "type": "submit",
-            "data-role": "1"
+            "data-role": "1",
+            "value": "記事編集"
         },
         "myPageBlogButton3": {
             "class": "myPageBlogButton myPageButton deleteRecord",

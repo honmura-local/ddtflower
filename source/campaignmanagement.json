@@ -7,8 +7,8 @@
     },
     "searchButtonSet": {
         "executeSearch": {
-            "value": "検索",
-            "type": "submit"
+            "type": "submit",
+            "value": "検索"
         }
     },
     "titleSearch": {
@@ -81,14 +81,14 @@
     },
     "listEditButtons": {
         "createNew": {
-            "value": "作成",
             "type": "submit",
-            "data-role": "0"
+            "data-role": "0",
+            "value": "作成",
         },
         "edit": {
-            "value": "編集",
             "type": "submit",
-            "data-role": "1"
+            "data-role": "1",
+            "value": "編集"
         },
         "delete": {
         	"class":" deleteRecord delete",
