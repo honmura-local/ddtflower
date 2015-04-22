@@ -1060,6 +1060,7 @@ $(document).on('change', '.myGalleryEditButtons .uploader', function(event){
     				$('.myPhotoLink:last').attr('href', src);
     				//画像サムネイルに使う要素の画像を設定する。
     				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+    				$('.myPhoto:last').removeClass('blankPhoto');
     			}
     		});
     	//保存に失敗していたら
