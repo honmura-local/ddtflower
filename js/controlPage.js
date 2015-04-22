@@ -209,8 +209,14 @@ function createFormData(form){
 				val = [];
 				//name属性で括られたチェックボックスを走査していく。
 				$('input:checkbox[name="' + name + '"]:checked').each(function(i){
-					//配列にチェックボックスの値を格納していく。
-					val[i] = $(this).val();
+					//IEであれば
+					if(uaName == 'ie'){
+						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
+						val[i] = this.getAttributeNode('value');
+					} else {
+						//配列にチェックボックスの値をvalメソッドで格納していく。
+						val[i] = $(this).val();
+					}
 				});
 				//formDataを連想配列として扱い、keyとvalueを追加していく。
 				formDataReturn[name] = val;
