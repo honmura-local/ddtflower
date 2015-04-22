@@ -1600,27 +1600,6 @@ function deleteNumberKey(map){
  * 作成者:T.Masuda
  */
 function saveOptionSetting(){
-	//処理を中断するかの判定を格納する変数を用意する。
-	var isStop = false;
-	
-	//確認が必要なタイプのテキストボックスがあれば
-	if($('.myOptionTextConfirm').length){
-		//走査する。
-		$('.myOptionTextConfirm').each(function(){
-			console.log($('input:eq(0)', this).attr('name').replace('Old', ''));
-			//新しいものの欄と確認欄が不一致であれば
-			if($('input:eq(1)', this).val() != $('input:eq(2)', this).val()){
-				alert(errorJpNames[$('input:eq(0)', this).attr('name').replace('Old', '')]　+ '\n・確認欄と新しい値を入力する欄に同じものを入力してください。');
-				isStop = true;	//処理を中断するフラグをたてる。
-			}
-		});
-	}
-	
-	//確認欄に間違いがあったら
-	if(isStop){
-		return;	//処理を中断する。
-	}
-	
 	//設定のデータを連想配列にして返してもらう。
 	var settingData = JSON.stringify(createOptionData());
 	
@@ -1640,7 +1619,7 @@ function saveOptionSetting(){
 			if(success){
 				message = "更新が完了しました。";	//成功メッセージを用意する。
 			}
-			
+
 			alert(message);	//結果をダイアログで表示する。
 		},
 		//通信が失敗したら
@@ -1664,7 +1643,7 @@ function createOptionData(){
 	var retMap = createFormData($('.optionForm'));
 	//ユーザIDを格納する。
 	retMap['userId'] = getUserId();
-	
+
 	return retMap;	//作成したデータを返す。
 }
 

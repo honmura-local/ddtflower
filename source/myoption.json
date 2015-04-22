@@ -77,7 +77,7 @@
             "name": "emailNew",
             "onkeyDown": "return controllInputChar(event);",
             "style": "ime-mode:disabled",
-            "placeholder": "メールアドレスを変更する場合は、新しいメールアドレスを新メールアドレスと入力確認欄への入力をお願いします。"
+            "placeholder": "新しいメールアドレスを入力してください。"
         },
         "myOptionLabelConfirm": {
             "text": "メールアドレス(確認)"
@@ -103,7 +103,7 @@
             "type": "password",
             "name": "passwordOld",
             "style": "ime-mode:disabled",
-            "placeholder": "パスワードを変更する場合は、以前のパスワードと新しいパスワードを入力してください。"
+            "placeholder": "新旧のパスワードを入力してください。"
         },
         "myOptionLabelNew": {
             "text": "パスワード(新)"

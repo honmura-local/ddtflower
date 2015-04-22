@@ -31,7 +31,7 @@ function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, 
 	var $parent = '';	//ボタンの親要素を格納する変数を宣言する。
 	
 	//アップロードボタンのchangeイベントを定義する。
-	$(document).on('change', uploader, function(){
+	$(uploader).on('change', function(){
 		//拡張子チェックを行う。画像の拡張子でなければはじく。
 		if(!checkIdentifier($(this).val())){
 			//有効なファイルを選んでもらうように警告を出す。
@@ -45,8 +45,10 @@ function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, 
 	});
 	
 	//ボタンのクリックイベントを登録する。
-	$(document).on('click', parentClass + ' > button' + button!== void(0)? button : '', function(){
-		$parent = $(this).parent();
+	$(parentClass + ' > button' + button!== void(0)? button : '').on('click' , function(){
+		//イベントオブジェクトが取得できていれば
+		
+		$parent = $(this).parent();	//ボタンの親要素を取得する。
 		$(uploader);
 		//アップロードボタンをクリックする。
 		$(uploader, document).click();

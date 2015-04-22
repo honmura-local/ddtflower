@@ -311,11 +311,12 @@ function postForm(form){
 		dataType:'html',	//htmlのデータを返してもらう
 		method:'POST',		//POSTする
 		async:false,		//同期通信を行う
+		cache:false,		//キャッシュしない
 		data:formData,		//フォームデータをを送る
 		headers: {			//リクエストヘッダを設定する
 			"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
 		},
-		success:function(data){	//通信に成功したら
+		success:function(data, xhr){	//通信に成功したら
 			//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
 			var isCgiHistory = $form.attr('state') !== void(0)? true: false;
 			//お問い合わせフォームであったら
