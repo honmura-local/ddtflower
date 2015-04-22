@@ -111,17 +111,23 @@ $(document).ready(function(){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 
+	$.when(
 	//0ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowCampaign', 0, 3000);
-	//400ミリ秒後にギャラリーお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowGallery', 200, 3000);
-	//900ミリ秒後にブログお知らせ表示ボタンをスライド表示する。
-	showRightOutOfDisplayButton('.topicShowBlog', 400, 3000);
+		showRightOutOfDisplayButton('.topicShowCampaign', 0, 3000)
+		).then(function(){
+			$.when(
+				//400ミリ秒後にギャラリーお知らせ表示ボタンをスライド表示する。
+				showRightOutOfDisplayButton('.topicShowGallery', 300, 3000)
+				).then(function(){
+					//900ミリ秒後にブログお知らせ表示ボタンをスライド表示する。
+					showRightOutOfDisplayButton('.topicShowBlog', 600, 3000);
+			});
+	});
 	
-	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。
-	fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
-	fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);
-	fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
+	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。順番にコールして順を整える。
+			fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
+			fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);		
+			fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
 });
 
 </script>
