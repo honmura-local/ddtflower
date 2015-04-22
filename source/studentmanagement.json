@@ -246,8 +246,7 @@
                 "sexRadioButtonFemale": {
                     "type": "radio",
                     "name": "sex",
-                    "value": "女",
-                    "checked": ""
+                    "value": "女"
                 },
                 "sexRadioButtonFemaleLabel": {
                     "text": "女"
