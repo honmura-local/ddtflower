@@ -199,11 +199,13 @@ function createFormData(form){
 		var val = $(this).val();
 		//name属性の値を取得する。
 		var name = $(this).attr('name');
+		//type属性の値を取得する。
+		var type = $(this).attr('type');
 		
 		//nameが空でなければ
 		if(name != "" && name !== void(0)){
 			//name属性で括られた最初のチェックボックスなら
-			if($(this).attr('type') == 'checkbox' 
+			if(type == 'checkbox' 
 				&& $(this).index('[name="' + name + '"]:checked') == 0){
 				//valを配列として扱う。
 				val = [];
@@ -212,7 +214,7 @@ function createFormData(form){
 					//IEであれば
 					if(uaName.indexOf('ie') != -1){
 						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-						val[i] = this.getAttributeNode('value');
+						val[i] = this.getAttributeNode('value').value;
 					} else {
 						//配列にチェックボックスの値をvalメソッドで格納していく。
 						val[i] = $(this).val();
@@ -221,9 +223,13 @@ function createFormData(form){
 				//formDataを連想配列として扱い、keyとvalueを追加していく。
 				formDataReturn[name] = val;
 			//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
-			} else if(($(this).attr('type') == 'checkbox' 
+			} else if(type == 'checkbox' 
 				&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
-				//何もしない。
+			//何もしない。
+			//ラジオボタンかつieであれば
+			} else if(type == 'radio' || uaName.indexOf('ie') != -1){
+				//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
+				val = this.getAttributeNode('value').value;	//IEでの値を取得するやり方を使う。
 			//それ以外であれば
 			} else {
 				//name属性がnameであれば
