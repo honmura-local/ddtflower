@@ -77,7 +77,7 @@
             "name": "emailNew",
             "onkeyDown": "return controllInputChar(event);",
             "style": "ime-mode:disabled",
-            "placeholder": "メールアドレスを変更する場合は、以前のメールアドレスと新しいメールアドレスを入力してください。"
+            "placeholder": "メールアドレスを変更する場合は、新しいメールアドレスを新メールアドレスと入力確認欄への入力をお願いします。"
         },
         "myOptionLabelConfirm": {
             "text": "メールアドレス(確認)"
