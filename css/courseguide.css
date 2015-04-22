@@ -256,7 +256,7 @@
  * 内容   :セレクターを.itemList .listContent:beforeに変更
  */
 .itemList .listContent:before {
-    content: "●";               /* 箇条書きの左横に黒丸をつける */
+    content: "\25cf";               /* 箇条書きの左横に黒丸をつける */
 }
 
 /* セレクター：.commonText td:before, .salesPoint td:before, .memberRule td:before
@@ -265,7 +265,7 @@
  * 内容   :セレクターを.itemList .listContent:nth-last-of-type(1):beforeに変更
  */
 .memberRule .listContent:nth-last-of-type(1):before {
-    content: "＊";           /* 会員規約の最後の箇条書きの左に但し書きの印をつける */
+    content: "\ff0a";           /* 会員規約の最後の箇条書きの左に但し書きの印をつける */
 }
 
 /* 

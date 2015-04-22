@@ -128,7 +128,7 @@
 
 
 .blogEditTitle:before {
-	content: "タイトル編集";
+	content: "\30bf \30a4 \30c8 \30eb \7de8 \96c6";
 	display: block;
 	margin-left: 5px;
 }
@@ -336,7 +336,7 @@
  * 作成日 :2015.03.12
  */
 .blogEditImages:before {
-	content: "画像選択";		/* タイトルの文字を入れる */
+	content: "\753b \50cf \9078 \629e";		/* タイトルの文字を入れる */
 	padding-left: 0.5em;	/* 少しインデントをつける */
 }
 
@@ -348,7 +348,7 @@
  * 作成日 :2015.03.12
  */
 .blogEditText:before {
-	content: "本文編集";		/* タイトルの文字を入れる。 */
+	content: "\672c \6587 \7de8 \96c6";		/* タイトルの文字を入れる。 */
 	padding-left: 1.5em;	/* 少しインデントを付ける。 */
 }
 
