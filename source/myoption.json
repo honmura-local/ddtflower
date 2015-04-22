@@ -12,7 +12,8 @@
         }
     },
     "optionForm": {
-        "class": "myOption optionForm"
+        "class": "myOption optionForm",
+        "method":"post"
     },
     "myOptionButtons": {
         "myOptionBackButton": {

@@ -552,12 +552,12 @@
 }
 
 /* 
- * セレクタ:.editStudent input[type="text"],.editStudent input[type="email"],.editStudent input[type="number"],.editStudent input[type="tel"]
+ * セレクタ:.editStudent input[type="text"],.editStudent input[type="email"],.editStudent input[type="number"],.editStudent input[type="tel"],input[type="password"]
  * 概要   :生徒さん登録画面のテキストボックス。
  * 作成者 :T.Masuda
  * 作成日 :2015.04.14
  */
-.editStudent input[type="text"],.editStudent input[type="email"],.editStudent input[type="number"],.editStudent input[type="tel"]{
+.editStudent input[type="text"],.editStudent input[type="email"],.editStudent input[type="number"],.editStudent input[type="tel"],input[type="password"]{
 	border: 1px solid #d8d8d8;	/* 枠線を灰色に設定する。 */
 }
  
@@ -944,7 +944,7 @@ ul li.notice{
 		margin-left: 0px;
 	}
 	/* 
-	 * セレクタ:.editStudent textarea, .editStudent input[type="text"], .editStudent input[type="email"], .editStudent input[type="tel"], .editStudent input[type="number"]
+	 * セレクタ:.editStudent textarea, .editStudent input[type="text"], .editStudent input[type="email"], .editStudent input[type="tel"], .editStudent input[type="number"],.editStudent input[type="password"]
 	 * 概要   :入力項目
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.03.26
@@ -953,7 +953,8 @@ ul li.notice{
 	 .editStudent input[type="text"],
 	 .editStudent input[type="email"],
 	 .editStudent input[type="tel"],
-	 .editStudent input[type="number"]
+	 .editStudent input[type="number"],
+	 .editStudent input[type="password"]
 	 {
 	 	 width: 95%; 		/* 幅を95%にする */
 	 }

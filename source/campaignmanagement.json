@@ -2,7 +2,7 @@
     "managementList": {
         "class": "managementList",
         "action": "createcampaign.html",
-        "method": "post",
+        "method": "get",
         "table": {}
     },
     "searchButtonSet": {

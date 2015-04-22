@@ -23,7 +23,7 @@
     "myPageBlog": {
         "class":"myPageBlog myPageContent",
         "action": "createarticle.html",
-        "method": "post",
+        "method": "get",
         "data-role": "4"
     },
     "myPageBlogTitle": {

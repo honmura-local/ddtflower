@@ -171,7 +171,8 @@
         "table": {}
     },
     "optionForm": {
-        "action": ""
+        "action": "",
+        "method":"post"
     },
     "numberingOuter": {}
 }

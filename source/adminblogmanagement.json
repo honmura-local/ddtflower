@@ -81,7 +81,7 @@
     "managementForm":{
     	"data-role":"4",
     	"action":"createarticleintab.html",
-    	"method":"post"
+    	"method":"get"
     },
     "contentSearch":{
     	"data-role":"4",

@@ -200,33 +200,38 @@ function createFormData(form){
 		//name属性の値を取得する。
 		var name = $(this).attr('name');
 		
-		//name属性で括られた最初のチェックボックスなら
-		if($(this).attr('type') == 'checkbox' 
-			&& $(this).index('[name="' + name + '"]:checked') == 0){
-			//valを配列として扱う。
-			val = [];
-			//name属性で括られたチェックボックスを走査していく。
-			$('input:checkbox[name="' + name + '"]:checked').each(function(i){
-				//配列にチェックボックスの値を格納していく。
-				val[i] = $(this).val();
-			});
-			//formDataを連想配列として扱い、keyとvalueを追加していく。
-			formDataReturn[name] = val;
-		//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
-		} else if(($(this).attr('type') == 'checkbox' 
-			&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
-			//何もしない。
-		//それ以外であれば
-		} else {
-			//name属性がnameであれば
-			//送信確認と送信時に文字列追加が行われてしまうため、一時凍結しました。
-//			if(name == 'name'){		
-//				val = val + ' 様';
-//			}
-			//formDataを連想配列として扱い、keyとvalueを追加していく。
-			formDataReturn[name] = val;
+		//nameが空でなければ
+		if(name != "" && name !== void(0)){
+			//name属性で括られた最初のチェックボックスなら
+			if($(this).attr('type') == 'checkbox' 
+				&& $(this).index('[name="' + name + '"]:checked') == 0){
+				//valを配列として扱う。
+				val = [];
+				//name属性で括られたチェックボックスを走査していく。
+				$('input:checkbox[name="' + name + '"]:checked').each(function(i){
+					//配列にチェックボックスの値を格納していく。
+					val[i] = $(this).val();
+				});
+				//formDataを連想配列として扱い、keyとvalueを追加していく。
+				formDataReturn[name] = val;
+			//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
+			} else if(($(this).attr('type') == 'checkbox' 
+				&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
+				//何もしない。
+			//それ以外であれば
+			} else {
+				//name属性がnameであれば
+				//送信確認と送信時に文字列追加が行われてしまうため、一時凍結しました。
+	//			if(name == 'name'){		
+	//				val = val + ' 様';
+	//			}
+				//formDataを連想配列として扱い、keyとvalueを追加していく。
+				formDataReturn[name] = val;
+			}
 		}
 	});
+
+	
 	
 	//フォームデータを返す。
 	return formDataReturn;
@@ -291,7 +296,11 @@ function afterSubmitForm(form, event){
  * 戻り値:なし
  * 概要  :フォームを送信する。
  * 作成日:2015.04.13
- * 作成者:T.Y
+ * 作成者:T.Masuda
+ * 作成日:2015.04.13
+ * 変更者:T.Masuda
+ * 変更日:2015.04.22
+ * 内容　:通信メソッドをフォームから取得して設定する様にしました。
  */
 function postForm(form){
 	$form = $(form);	//高速化のため、フォームの要素をjQueryオブジェクトにして変数に格納する。
@@ -307,14 +316,11 @@ function postForm(form){
 	
 	//Ajax通信を行う
 	$.ajax({
-		url:url[0],			//1つ目のURLにアクセスする
-		dataType:'html',	//htmlのデータを返してもらう
-		method:'POST',		//POSTする
-		async:false,		//同期通信を行う
-		data:formData,		//フォームデータをを送る
-		headers: {			//リクエストヘッダを設定する
-			"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
-		},
+		url:url[0],							//1つ目のURLにアクセスする
+		dataType:'html',					//htmlのデータを返してもらう
+		method:$form.attr('method'),		//メソッドをフォームから取得する
+		async:false,						//同期通信を行う
+		data:formData,						//フォームデータをを送る
 		success:function(data, status, xhr){	//通信に成功したら
 			//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
 			var isCgiHistory = $form.attr('state') !== void(0)? true: false;
@@ -376,12 +382,6 @@ function postForm(form){
 			
 		}
 	});
-	
-//	//postメソッドでフォームの送信を行う。
-//	$.post(url[0], formData,
-//	// 成功時の処理を記述する。
-//	 function(data){
-//	});
 	
 	//スクロール位置をトップに戻す。
 	window.scroll(0, 0);

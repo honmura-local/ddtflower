@@ -109,7 +109,7 @@
     "managementForm": {
         "data-role": "6",
         "action": "studentregistration.html",
-        "method": "post"
+        "method": "get"
     },
     "editStudent": {
         "action": "confirmregist.html",
