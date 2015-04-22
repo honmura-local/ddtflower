@@ -159,7 +159,7 @@ span,label,h1,h2,h3,h4,h5,th{
     font-weight: bold!important;   	 /* フォントを太字に戻す。 */
 	vertical-align: baseline!important;	/* 高さを下にあわせる。 */
 }
-	
+
 /* 
  * セレクタ:button,input[type="submit"],input[type="button"]
  * 概要   :ボタン。
@@ -254,6 +254,7 @@ button.ui-button-text-only span.ui-button-text {
  */
 .guideLogin img:hover{
 	opacity: 0.5;	/* 透過率を下げる。 */
+	cursor:pointer;	/* カーソルを指差しにする。 */
 }
 
 /* 

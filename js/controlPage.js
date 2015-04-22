@@ -224,12 +224,12 @@ function createFormData(form){
 				formDataReturn[name] = val;
 			//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
 			} else if(type == 'checkbox' 
-				&& $(this).index('[name="' + name + '"]') != 0) || name === void(0)){
+				&& $(this).index('[name="' + name + '"]') != 0 || name === void(0)){
 			//何もしない。
 			//ラジオボタンかつieであれば
 			} else if(type == 'radio' || uaName.indexOf('ie') != -1){
 				//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-				val = this.getAttributeNode('value').value;	//IEでの値を取得するやり方を使う。
+				val = this.getAttributeNode('value').text;	//IEでの値を取得するやり方を使う。
 			//それ以外であれば
 			} else {
 				//name属性がnameであれば
