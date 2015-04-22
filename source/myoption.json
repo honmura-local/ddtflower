@@ -11,29 +11,118 @@
             "text": ""
         }
     },
-    "optionForm":{
-    	"class":"myOption optionForm"
+    "optionForm": {
+        "class": "myOption optionForm"
     },
     "myOptionButtons": {
         "myOptionBackButton": {
-        	"class":"myOptionBackButton back",
+            "class": "myOptionBackButton back",
             "text": "戻る",
-            "type":"button"
+            "type": "button"
         },
         "myOptionConfirmChangeButton": {
-        	"class":"myOptionConfirmChangeButton optionSave",
+            "class": "myOptionConfirmChangeButton optionSave",
             "text": "更新",
-            "type":"button"
+            "type": "submit"
+        }
+    },
+    "myOptionNickname": {
+        "class": "myOptionText",
+        "myOptionLabel": {
+            "text": "あなたのニックネーム"
+        },
+        "myOptionTextbox": {
+            "type": "text",
+            "name": "nickname"
+        }
+    },
+    "myOptionTel": {
+        "class": "myOptionText",
+        "myOptionLabel": {
+            "text": "あなたの電話番号"
+        },
+        "myOptionTextbox": {
+            "type": "tel",
+            "name": "tel",
+            "style": "ime-mode:disabled",
+            "onkeyDown": "return controllInputChar(event);"
+        }
+    },
+    "myOptionAddress": {
+        "class": "myOptionText myOptionAddress",
+        "myOptionLabel": {
+            "text": "あなたの住所"
+        },
+        "myOptionTextbox": {
+            "type": "text",
+            "name": "address"
         }
     },
     "myOptionMail": {
-        "class": "myOptionText",
-        "myOptionLabel": {
-            "text": "あなたのメールアドレス"
+        "class": "myOptionText myOptionTextConfirm myOptionMail",
+        "myOptionLabelOld": {
+            "text": "メールアドレス(旧)"
         },
-        "myOptionTextbox": {
+        "myOptionTextboxOld": {
             "type": "email",
-            "name": "email"
+            "name": "emailOld",
+            "onkeyDown": "return controllInputChar(event);",
+            "style": "ime-mode:disabled"
+        },
+        "myOptionLabelNew": {
+            "text": "メールアドレス(新)"
+        },
+        "myOptionTextboxNew": {
+            "type": "email",
+            "name": "emailNew",
+            "onkeyDown": "return controllInputChar(event);",
+            "style": "ime-mode:disabled",
+            "placeholder": "メールアドレスを変更する場合は、以前のメールアドレスと新しいメールアドレスを入力してください。"
+        },
+        "myOptionLabelConfirm": {
+            "text": "メールアドレス(確認)"
+        },
+        "myOptionTextboxConfirm": {
+            "type": "email",
+            "name": "emailConfirm",
+            "style": "ime-mode:disabled",
+            "autocomplete": "off",
+            "oncopy": "return false",
+            "onpaste": "return false",
+            "ononcontextmenu": "return false",
+            "onkeyDown": "return controllInputChar(event);",
+            "placeholder": "手動で入力してください。"
+        }
+    },
+    "myOptionPassword": {
+        "class": "myOptionText myOptionTextConfirm myOptionPassword",
+        "myOptionLabelOld": {
+            "text": "パスワード(旧)"
+        },
+        "myOptionTextboxOld": {
+            "type": "password",
+            "name": "passwordOld",
+            "style": "ime-mode:disabled",
+            "placeholder": "パスワードを変更する場合は、以前のパスワードと新しいパスワードを入力してください。"
+        },
+        "myOptionLabelNew": {
+            "text": "パスワード(新)"
+        },
+        "myOptionTextboxNew": {
+            "type": "password",
+            "name": "passwordNew",
+            "style": "ime-mode:disabled"
+        },
+        "myOptionLabelConfirm": {
+            "text": "パスワード(確認)"
+        },
+        "myOptionTextboxConfirm": {
+            "type": "password",
+            "name": "passwordConfirm",
+            "oncopy": "return false",
+            "onpaste": "return false",
+            "ononcontextmenu": "return false",
+            "placeholder": "手動で入力してください。"
         }
     },
     "myOptionBlogTitle": {
@@ -55,8 +144,7 @@
             "class": "myOptionRadio",
             "type": "radio",
             "name": "blogPublication",
-            "value": "0",
-            "checked":"false"
+            "value": "0"
         },
         "myOptionLabelInline1": {
             "class": "myOptionLabelInline",
@@ -66,8 +154,7 @@
             "class": "myOptionRadio",
             "type": "radio",
             "name": "blogPublication",
-            "value": "1",
-            "checked":"false"
+            "value": "1"
         },
         "myOptionLabelInline2": {
             "class": "myOptionLabelInline",
@@ -77,8 +164,7 @@
             "class": "myOptionRadio",
             "type": "radio",
             "name": "blogPublication",
-            "value": "2",
-            "checked":"false"
+            "value": "2"
         },
         "myOptionLabelInline3": {
             "class": "myOptionLabelInline",

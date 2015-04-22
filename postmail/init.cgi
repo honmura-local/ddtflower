@@ -109,6 +109,7 @@ $cf{replace} = {
 		'name'    => 'ご氏名',
 		'sex'   => '性別',
 		'eMail' => 'メールアドレス',
+		'email' => 'メールアドレス',
 		'reservedDate' => '予約希望日時',
 		'construct' => '希望作品',
 		'schedule[]' => '希望時限',

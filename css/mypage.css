@@ -270,7 +270,6 @@
  * 作成日 :2015.03.12
  */
 .blogEditButtons {
-	padding:	:20px;		/*内側に余白を取る。*/
 	box-sizing	:border-box;/*サイズ計算にpaddingとborderを込みにする。*/
 　　text-align	:right;		/*子要素となるボタンを右に寄せる。*/
 	float: right;			/* 右に寄せる。 */
@@ -398,13 +397,14 @@
 }
 
 /* 
- * セレクタ:.myOption input[type="text"]
- * 概要   :オプションタブ内のメールアドレス入力欄。
+ * セレクタ:.myOptionText input[type="text"],.myOptionText input[type="email"],.myOptionText input[type="password"],.myOptionText input[type="tel"]
+ * 概要   :オプションタブ内の入力欄。
  * 作成者 :T.Masuda
- * 作成日 :2015.03.25
+ * 作成日 :2015.04.21
  */
-.myOptionText input[type="text"],.myOptionText input[type="email"]{
-	width		: 80%	;	/* 十分な幅を取る。 */
+.myOptionText input[type="text"],.myOptionText input[type="email"],.myOptionText input[type="password"],.myOptionText input[type="tel"]{
+	width	: 80%	;	/* 十分な幅を取る。 */
+	display	:block	;	/* テキストボックス1つごとに改行させる。 */
 }
 
 /* 
@@ -587,8 +587,6 @@
 	 * 作成日 :2015.03.12
 	 */
 	 .blogEditButtons {
-		padding:	:0;		/*paddingが必要なくなったため、0にする。*/
-	 
 	 	float: none;
 	 	margin: 0 auto;
 }

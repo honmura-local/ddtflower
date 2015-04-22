@@ -338,8 +338,9 @@ function createTag(){
 		$('.numberingOuter').empty();
 		
 		// add T.Masuda 2015/0421 ナンバリングが生成されない時にcreateTagのエラーがコンソールに出力されるバグの修正
+		// add T.Masuda 2015/0422 numberingオブジェクトが生成されていない状況への対応
 		//ナンバリングのオブジェクトがあれば
-		if('1' in this.json.numbering){
+		if('numbering' in this.json && '1' in this.json.numbering){
 			//ナンバリング用Tagを表示する。
 			this.outputTag('numbering', 'numbering', '.numberingOuter');
 			//現在表示中のページに対応するナンバリングの色を変える。

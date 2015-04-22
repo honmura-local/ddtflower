@@ -29,8 +29,6 @@ if (userAgent.indexOf('msie') != -1) {
   }
 } else if (userAgent.indexOf('android') != -1) {
 	uaName = 'android';
-} else if (userAgent.indexOf('mobile') != -1) {
-  uaName = 'mobile';
 } else if (userAgent.indexOf('ipad') != -1) {
   uaName = 'ipad';
 } else if (userAgent.indexOf('ipod') != -1) {
@@ -39,6 +37,8 @@ if (userAgent.indexOf('msie') != -1) {
   uaName = 'iphone';
   var ios = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 //  uaName = [parseInt(ios[1], 10), parseInt(ios[2], 10), parseInt(ios[3] || 0, 10)];
+} else if (userAgent.indexOf('mobile') != -1) {
+	uaName = 'mobile';
 } else if (userAgent.indexOf('chrome') != -1) {
 	  uaName = 'chrome';
 } else if (userAgent.indexOf('safari') != -1) {
@@ -1006,7 +1006,8 @@ $(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicatio
  */
 $(document).on('click', '.myGalleryEditButtons .createButton', function(){
 	//画像アップローダーのタグをクリックする。
-	$('.uploader').click();
+	$('input[type="file"]').trigger('click');
+	
 });
 
 /*
@@ -1121,6 +1122,21 @@ function uploadImage(uploader, parent, srcReturn){
 }
 
 /*
+ * 関数名:function replaceClone(elem)
+ * 引数  :element elem:処理対象の要素。
+ * 戻り値:なし
+ * 概要  :指定した要素を配置し直す。IOS Safariで画像パスを削除した画像タグの画像が空にならないバグへの対処により作成。
+ * 作成日:2015.04.22
+ * 作成者:T.Masuda
+ */
+function replaceClone(elem){
+	var $target = $(elem);				//処理対象の要素のjQueryオブジェクトを作る。
+	var $clone = $(elem).clone(false);	//クローンを作る。
+	$(elem).after($clone);				//クローンを処理対象の要素の後ろに配置する。
+	$(elem).remove();					//処理対象の要素を消し、置き換えを終える。
+}
+
+/*
  * 関数名:function deleteSiblingSrc(button, targets)
  * 引数  :element button:画像削除のイベントをバインドした要素。
  * 　　　:String targets:画像パスを削除する対象の要素のセレクタ。
@@ -1133,8 +1149,12 @@ function deleteSiblingSrc(button, targets){
 	var $siblings = $(button).siblings(targets);	//指定した兄弟要素を取得する。
 	$($siblings).each(function(){					//画像パスを削除する要素を走査する。
 		//画像タグであれば
-		if($(this)[0].tagName == 'IMG'){
+		if($(this)[0].tagName == 'IMG' || $(this).filter('[src]').length){
 			$(this).attr('src', "");	//ソースパスを空にする。
+			//IOSのデバイスなら、DOMそのものを生成し直して画像を空にする。
+			if(uaName == 'iphone' ||uaName == 'ipad' ||uaName == 'ipad'){
+				replaceClone(this);	//タグを置き換える。
+			}
 		//特別処理の指定がないタグなら
 		} else {
 			$(this).val("");	//value属性を空にする。
@@ -1258,8 +1278,13 @@ var errorJpNames = {name:'氏名',
 					passwordConfirm:'パスワード(確認)',
 					nickname:'ニックネーム',
 					password:'パスワード',
-					userId:'ユーザID'
+					passwordNew:'パスワード(新)',
+					emailNew:'メールアドレス(新)',
+					adminBlogTitle:'管理者ブログタイトル',
+					allowMidnightMail:'深夜メール受信',
+					recieveMailType:'受信するメールの種類'
 					};
+
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {
 		invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
@@ -1328,6 +1353,9 @@ var articleSubmitHandler = {
 					default:	//当てはまらなければそのまま
 						break;
 					}
+					
+					var time = new Date();	//リクエストヘッダーに載せる日付を取得するため、日付型のインスタンスを用意する。
+					
 					//Ajax通信で該当する記事のJSONを取得する。
 					$.ajax({
 						//ブログ記事を1つだけ取得するサーバのファイルにアクセスする。
@@ -1337,6 +1365,9 @@ var articleSubmitHandler = {
 						//ユーザIDと記事番号とコンテンツ番号を送る。
 						data:{'userId':userId, 'number':number, 'contentNum':contentNum},
 						dataType:'JSON',	//JSONを返してもらう。
+						headers: {			//リクエストヘッダを設定する
+							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
+						},
 						success:function(json){	//通信が成功したら
 							//実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
 							//ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
@@ -1413,6 +1444,26 @@ var listSearchSubmitHandler = {
 			}
 		}
 }
+
+//オプション更新のsubmitHandler。
+var optionSubmitHandler = { submitHandler:function(form){
+		saveOptionSetting();	//設定を保存する。
+	},
+	invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
+		var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
+		//エラー文を表示する。
+		alert(createErrorText(errors, errorJpNames));
+	},
+	rules:{	//ルールを設定する。
+		emailConfirm:{	//メールアドレス入力確認欄
+			equalTo: '[name="emailNew"]'	//メールアドレス入力欄と同じ値を要求する。
+		},
+		passwordConfirm:{	//パスワード入力確認欄
+			equalTo: '[name="passwordNew"]'	//パスワード入力欄と同じ値を要求する。
+		}
+	}
+}
+	
 
 /*
  * 関数名:function deleteRowData(form)
@@ -1549,6 +1600,27 @@ function deleteNumberKey(map){
  * 作成者:T.Masuda
  */
 function saveOptionSetting(){
+	//処理を中断するかの判定を格納する変数を用意する。
+	var isStop = false;
+	
+	//確認が必要なタイプのテキストボックスがあれば
+	if($('.myOptionTextConfirm').length){
+		//走査する。
+		$('.myOptionTextConfirm').each(function(){
+			console.log($('input:eq(0)', this).attr('name').replace('Old', ''));
+			//新しいものの欄と確認欄が不一致であれば
+			if($('input:eq(1)', this).val() != $('input:eq(2)', this).val()){
+				alert(errorJpNames[$('input:eq(0)', this).attr('name').replace('Old', '')]　+ '\n・確認欄と新しい値を入力する欄に同じものを入力してください。');
+				isStop = true;	//処理を中断するフラグをたてる。
+			}
+		});
+	}
+	
+	//確認欄に間違いがあったら
+	if(isStop){
+		return;	//処理を中断する。
+	}
+	
 	//設定のデータを連想配列にして返してもらう。
 	var settingData = JSON.stringify(createOptionData());
 	
@@ -1595,19 +1667,6 @@ function createOptionData(){
 	
 	return retMap;	//作成したデータを返す。
 }
-
-/*
- * イベント名:$(document).on('change', 'myOptionConfirmChangeButton')
- * 引数  　 	:string 'click':クリックのイベントの文字列
- * 			:string '.myOptionConfirmChangeButton':Myオプションページの更新ボタンのセレクタ。
- * 戻り値　 :なし
- * 概要  　 :オプションページでの設定を保存する。
- * 作成日　　:2015.03.27
- * 作成者　　:T.Masuda
- */
-$(document).on('click', '.optionSave', function(event){
-	saveOptionSetting();	//設定を保存する。
-});
 
 /*
  * 関数名 :function loadValue(settings)

@@ -79,7 +79,8 @@
     },
     "optionsConfirmChange": {
         "optionsConfirmChangeButton": {
-            "text": "更新"
+            "text": "更新",
+            "type": "submit"
         }
     },
     "optionsMyMail": {
@@ -89,7 +90,17 @@
         "optionsMyEmailForm": {
             "type": "email",
             "name": "email",
-            "value": "sample@ddt.com"
+            "onkeyDown": "return controllInputChar(event);",
+            "style": "ime-mode:disabled"
+        }
+    },
+    "optionsAdminBlogTitle": {
+        "optionsLabel": {
+            "text": "管理者ブログタイトル"
+        },
+        "optionsAdminBlogTitleForm": {
+            "type": "text",
+            "name": "adminBlogTitle"
         }
     },
     "optionsAllowMidnightMail": {
@@ -159,6 +170,8 @@
         "class": "managementList",
         "table": {}
     },
-    "optionForm":{"action":""},
-    "numberingOuter":{}
+    "optionForm": {
+        "action": ""
+    },
+    "numberingOuter": {}
 }

@@ -302,68 +302,86 @@ function postForm(form){
 	//creatorのメンバにフォームデータを保存する。
 	creator.formData['formData'] = formData;
 	
-	//postメソッドでフォームの送信を行う。
-	$.post(url[0], formData,
-	// 成功時の処理を記述する。
-	 function(data){
-		//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
-		var isCgiHistory = $form.attr('state') !== void(0)? true: false;
-		//お問い合わせフォームであったら
-		if($('.main .confirmSendMail').length > 0 && !(isCgiHistory)){
-			//送信完了のメッセージを出す。
-			alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してお問い合わせの操作を行ってください。');
-		}
+	//現在の日付を取得するために日付型のインスタンスを作る。
+	var time = new Date();
 	
-		var $target = $('.main');	//書き込み先を指定する。
+	//Ajax通信を行う
+	$.ajax({
+		url:url[0],			//1つ目のURLにアクセスする
+		dataType:'html',	//htmlのデータを返してもらう
+		method:'POST',		//POSTする
+		async:false,		//同期通信を行う
+		data:formData,		//フォームデータをを送る
+		headers: {			//リクエストヘッダを設定する
+			"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
+		},
+		success:function(data){	//通信に成功したら
+			//ブラウザ履歴からのページ読み込みであったらtrue判定、そうでなければfalse判定の変数を用意する。
+			var isCgiHistory = $form.attr('state') !== void(0)? true: false;
+			//お問い合わせフォームであったら
+			if($('.main .confirmSendMail').length > 0 && !(isCgiHistory)){
+				//送信完了のメッセージを出す。
+				alert('お問い合わせのメールの送信が完了しました。\n追ってメールでの連絡をいたします。\n返信のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してお問い合わせの操作を行ってください。');
+			}
 		
-		//URLが二つあれば
-		if(url.length > 1){
-			alert('更新に成功しました。');	//返ってきたデータをダイアログに出す。
-//			alert(data);	//返ってきたデータをダイアログに出す。
-			//タブがあれば
-			if($target.has('.tabContainer').length){
-				$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
-				callPageInTab(url[1], $target);			//タブにページを書き込む。
-				//タブでなかったら
+			var $target = $('.main');	//書き込み先を指定する。
+			
+			//URLが二つあれば
+			if(url.length > 1){
+				alert('更新に成功しました。');	//返ってきたデータをダイアログに出す。
+//				alert(data);	//返ってきたデータをダイアログに出す。
+				//タブがあれば
+				if($target.has('.tabContainer').length){
+					$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
+					callPageInTab(url[1], $target);			//タブにページを書き込む。
+					//タブでなかったら
+				} else {
+					callPage(url[1]); //画面を切り替える。
+				}			
 			} else {
-				callPage(url[1]); //画面を切り替える。
-			}			
-		} else {
-			//タブがあれば
-			if($target.has('.tabContainer').length){
-				$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
-				callPageInTab(url[0], $target);			//タブにページを書き込む。
-				//タブでなかったら
-			} else {
-				//mainのタグを空にする。
-				$target.empty();
-				//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
-				$target.append($('.main > *', data));
-				//linkタグを収集する。
-				var links = $(data).filter('link');
-				//scriptタグを収集する。
-				var scripts = $(data).filter('script:parent');
-				//linkタグを展開する。
-				links.each(function(){
-					//headタグ内にlinkタグを順次追加していく。
-					$target.append($(this));
-				});
-				//scriptタグを展開する。
-				scripts.each(function(){
-					//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
-					$target.append($(this));
-				});
-				
-				//カレントのURLを更新する。
-				currentLocation = url;
-				//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
-				if(!(isCgiHistory) && isSupportPushState()){
-					//画面遷移の履歴を追加する。
-					history.pushState({'url':'#' + currentLocation}, '', location.href);
+				//タブがあれば
+				if($target.has('.tabContainer').length){
+					$target = $('.tabPanel.active:last');	//タブパネル内を書き換える。
+					callPageInTab(url[0], $target);			//タブにページを書き込む。
+					//タブでなかったら
+				} else {
+					//mainのタグを空にする。
+					$target.empty();
+					//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
+					$target.append($('.main > *', data));
+					//linkタグを収集する。
+					var links = $(data).filter('link');
+					//scriptタグを収集する。
+					var scripts = $(data).filter('script:parent');
+					//linkタグを展開する。
+					links.each(function(){
+						//headタグ内にlinkタグを順次追加していく。
+						$target.append($(this));
+					});
+					//scriptタグを展開する。
+					scripts.each(function(){
+						//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+						$target.append($(this));
+					});
+					
+					//カレントのURLを更新する。
+					currentLocation = url;
+					//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
+					if(!(isCgiHistory) && isSupportPushState()){
+						//画面遷移の履歴を追加する。
+						history.pushState({'url':'#' + currentLocation}, '', location.href);
+					}
 				}
 			}
+			
 		}
 	});
+	
+//	//postメソッドでフォームの送信を行う。
+//	$.post(url[0], formData,
+//	// 成功時の処理を記述する。
+//	 function(data){
+//	});
 	
 	//スクロール位置をトップに戻す。
 	window.scroll(0, 0);

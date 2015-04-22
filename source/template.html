@@ -935,7 +935,7 @@
 </form>
 
 <!-- 画像アップロードのボタン。隠す。 -->
-<input type="" style="" class="blogEditImageUploader">
+<input type="file" style="" class="blogEditImageUploader">
 
 <!-- ブログ編集ページ タイトル編集の領域とテキストボックス。 -->
 <div class="blogEditTitle">
@@ -1005,7 +1005,15 @@
 	<!-- オプションタブのラベル -->
 	<span class="optionsLabel"></span>
 	<!-- 管理者ユーザのメールアドレス設定テキストボックス -->
-	<input class="optionsMyEmailForm" type="" name="" value="">
+	<input class="optionsMyEmailForm" type="" name="" value="" onkeyDown="" style="">
+</div>
+
+<!-- 管理者ブログのタイトル設定 -->
+<div class="optionsAdminBlogTitle">
+	<!-- オプションタブのラベル -->
+	<span class="optionsLabel"></span>
+	<!-- 管理者ブログのタイトル設定テキストボックス -->
+	<input class="optionsAdminBlogTitleForm" type="" name="" value="" onkeyDown="" style="" autocomplete="">
 </div>
 
 <!-- オプションタブ 深夜のメール送信許可ラジオボタン -->
@@ -1522,11 +1530,11 @@
 <!-- Myギャラリーの編集ボタン群 -->
 <div class="myGalleryEditButtons">
 	<!-- 新規ボタン -->
-	<button class="createButton"></button>
+	<button class="createButton" onclick=""></button>
 	<!-- 削除ボタン -->
 	<button class="deleteButton"></button>
 	<!-- 不可視の画像アップローダー -->
-	<input type="" class="uploader" style="" />
+	<input type="file" class="uploader" style="" />
 	<!-- 戻るボタン -->
 	<button class="back"></button>
 </div>
@@ -1552,8 +1560,24 @@
 <div class="myOptionText">
 	<!-- ラベル -->
 	<span class="myOptionLabel"></span>
-	<!-- 管理者ユーザのメールアドレス設定テキストボックス -->
-	<input class="myOptionTextbox" type="" name="" value="">
+	<!-- 設定テキストボックス -->
+	<input class="myOptionTextbox" type="" name="" value="" onkeyDown="" style="" autocomplete="">
+</div>
+
+<!-- 確認欄付きのテキストボックス。 -->
+<div class="myOptionTextConfirm">
+	<!-- ラベル -->
+	<span class="myOptionLabelOld"></span>
+	<!-- 古い設定値の設定テキストボックス -->
+	<input class="myOptionTextboxOld" type="" name="" value="" onkeyDown="" style="" placeholder="">
+	<!-- ラベル -->
+	<span class="myOptionLabelNew"></span>
+	<!-- 新しい設定テキストボックス -->
+	<input class="myOptionTextboxNew" type="" name="" value=""  onkeyDown="" style="" placeholder="">
+	<!-- ラベル -->
+	<span class="myOptionLabelConfirm"></span>
+	<!-- 新しい設定の確認テキストボックス -->
+	<input class="myOptionTextboxConfirm" type="" name="" value="" onkeyDown="" style="" style="" oncopy="" onpaste="" oncontextmenu="" onkeyDown="" placeholder="">
 </div>
 
 <!-- ラジオボタン -->

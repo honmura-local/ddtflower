@@ -280,12 +280,12 @@
 }
 
 /* 
- * セレクタ:.options input[type="email"]
- * 概要   :オプションタブ内のメールアドレス入力欄。
+ * セレクタ:.options input[type="email"],.options input[type="text"]
+ * 概要   :オプションタブ内のメールアドレス入力欄と通常のテキストボックス。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.25
  */
-.options input[type="email"]{
+.options input[type="email"],.options input[type="text"]{
 	width		: 80%	;	/* 十分な幅を取る。 */
 }
 

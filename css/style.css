@@ -150,6 +150,17 @@ span,label,h1,h2,h3,h4,h5,th{
 }
 
 /* 
+ * セレクタ:.ui-datepicker-title span,.ui-datepicker-calendar thead span
+ * 概要   :datepickerのタイトルと週見出し行のセル。上記のスタイル指定の影響を打ち消す。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.21
+ */
+.ui-datepicker-title span,.ui-datepicker-calendar thead span{
+    font-weight: bold!important;   	 /* フォントを太字に戻す。 */
+	vertical-align: baseline!important;	/* 高さを下にあわせる。 */
+}
+	
+/* 
  * セレクタ:button,input[type="submit"],input[type="button"]
  * 概要   :ボタン。
  * 作成者 :T.Masuda
@@ -232,6 +243,16 @@ button.ui-button-text-only span.ui-button-text {
  * 作成日 :2015.02.25
  */
 .guides a:hover{
+	opacity: 0.5;	/* 透過率を下げる。 */
+}
+
+/* 
+ * セレクタ:.guideLogin img:hover
+ * 概要   :ログインボタンにマウスカーソルを重ねたときの動作。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.22
+ */
+.guideLogin img:hover{
 	opacity: 0.5;	/* 透過率を下げる。 */
 }
 
