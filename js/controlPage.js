@@ -210,7 +210,7 @@ function createFormData(form){
 				//name属性で括られたチェックボックスを走査していく。
 				$('input:checkbox[name="' + name + '"]:checked').each(function(i){
 					//IEであれば
-					if(uaName == 'ie'){
+					if(uaName.indexOf('ie') != -1){
 						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
 						val[i] = this.getAttributeNode('value');
 					} else {
