@@ -83,7 +83,7 @@
         "createNew": {
             "type": "submit",
             "data-role": "0",
-            "value": "作成",
+            "value": "作成"
         },
         "edit": {
             "type": "submit",
@@ -91,7 +91,7 @@
             "value": "編集"
         },
         "delete": {
-        	"class":" deleteRecord delete",
+            "class": " deleteRecord delete",
             "text": "削除",
             "type": "button"
         },
@@ -218,9 +218,9 @@
             "href": "campaignmanagement.html"
         }
     },
-    "contentSearch":{
-    	"data-role":"5",
-    	"method":"post",
-    	"data-target":"campaignListContent"
+    "contentSearch": {
+        "data-role": "5",
+        "method": "post",
+        "data-target": "campaignListContent"
     }
 }

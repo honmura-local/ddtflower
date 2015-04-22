@@ -2,8 +2,8 @@
     "searchButtonSet": {
         "executeSearch": {
             "text": "検索",
-            "value":"検索",
-            "type":"submit"
+            "type":"submit",
+            "value":"検索"
         }
     },
     "titleSearch": {
