@@ -1668,7 +1668,7 @@ function loadValue(settings){
 		//ラジオボタンであれば
 		if(type == "radio"){
 			//値に該当する要素をチェックする。
-			$elem.filter('[value="' + settings[key]['value'] + '"]').prop('checked', 'true');
+			$elem.filter('[value="' + settings[key]['value'] + '"]').prop('checked', true);
 		//チェックボックスであれば
 		} else if(type == "checkbox"){
 			//チェックが入っているチェックボックスの値の配列の長さを取得する。
@@ -1677,7 +1677,7 @@ function loadValue(settings){
 			//チェックボックスの配列を走査する。
 			for(var i = 0; i < valueLength; i++){
 				//チェックが入っていることになる要素であれば
-				$elem.filter('[value="' + value[i] + '"]').prop('checked', 'true');
+				$elem.filter('[value="' + value[i] + '"]').prop('checked', true);
 			}
 		//それ以外であれば
 		} else {
