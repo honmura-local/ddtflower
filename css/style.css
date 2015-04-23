@@ -953,6 +953,17 @@ label.error{
 form[target^="jquery_upload"]{
  	display:none;	/* 見えない方が都合がいいので隠す。 */
 }
+/* 
+ * セレクタ:.annotation
+ * 概要   :1行だけの注釈のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.31
+ */
+.annotation, .notice {
+    clear: left;      /* 左側の回り込みを解除する */
+    padding-left: 1em;/* 左から1文字分余白を空ける */
+    text-indent: -1em;/* 文字のインデントを1文字はみ出る形にする */
+}
  
 /* 
  * セレクタ:.toEntryPage
