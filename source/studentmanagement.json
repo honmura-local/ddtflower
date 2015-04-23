@@ -346,15 +346,15 @@
             }
         },
         "submit": {
-            "value": "登録へ",
             "type": "submit",
+            "value": "登録へ",
             "onclick": "",
             "confirm": "true"
         },
         "back": {
             "href": "#studentmanagement.html",
-            "text": "戻る",
             "type": "button",
+            "text": "戻る",
             "onclick": ""
         }
     },
@@ -609,8 +609,8 @@
             "href": "",
             "onclick": "",
             "type": "submit",
-            "value": "登録へ",
             "text": "登録へ",
+            "value": "登録へ",
             "confirm": "true"
         },
         "back": {

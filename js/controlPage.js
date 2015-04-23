@@ -617,8 +617,13 @@ $(window).on('load', function(){
  * 戻り値:なし
  * 作成日　　:2015.03.25
  * 作成者　　:T.Masuda
+ * 修正日　　:2015.04.23
+ * 修正者　　:T.Masuda
+ * 内容　　　:URLから#を抜く様に変更しました。
  */
 function callPageInTab(url, tabPanel){
+	//urlから#を抜き取り、有効なURLを形成する。
+	url = url.replace(/#/g, '');
 	//ajax通信を行う
 	$.ajax({
 		url:url,				//読み込むファイルのURLを指定する。
