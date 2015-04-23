@@ -992,7 +992,7 @@ form[target^="jquery_upload"]{
  * 作成日 :2015.04.23
  */
 .uploader{
-	display:block;	/* 表示しない */
+	display:none;	/* 表示しない */
 }
 
 

@@ -50,6 +50,19 @@ if (userAgent.indexOf('msie') != -1) {
 };
 //以上、引用終了。
 
+/*
+ * 関数名:function isIE()
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :ブラウザがIEかどうかを調べる。IEならUA文字列を返す。
+ * 作成日:2015.04.23
+ * 作成者:T.M
+ */
+function isIE(){
+	//IEであればIEのUA文字列を返し、そうでなければfalseを返す。
+	return uaName.indexOf('ie') != -1? uaName: false;
+}
+
 //Optionタグを生成するための連想配列。createOptions関数で使う。
 var options = {
 				"publifications":{
@@ -984,22 +997,6 @@ $(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicatio
 	postPhoto(myphoto);
 });
 
-/*
- * イベント名:$(document).on('click', '.myGalleryEditButtons .createButton')
- * 引数  　 	:string 'click':クリックイベントの文字列
- * 			:string '.myGalleryEditButtons .createButton':新規ボタンのセレクタ。
- * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
- * 作成日　　:2015.03.27
- * 作成者　　:T.Masuda
- */
-$(document).on('click', '.myGalleryEditButtons .createButton', function(){
-	var t = $('.uploader');
-	//画像アップローダーのタグをクリックする。
-	t.trigger('click');
-	
-});
-
 function bindClickTarget(selector, target){
 	$(selector).on('click', function(){	//クリックイベントを登録する。
 		var $target = $(target);	//ターゲットのjQueryオブジェクトを取得する。
@@ -1009,13 +1006,12 @@ function bindClickTarget(selector, target){
 }
 
 /*
- * イベント名:$(document).on('change', '.uploader .createButton')
- * 引数  　 	:string 'change':値変化のイベントの文字列
- * 			:string '.myGalleryEditButtons .uploader':新規ボタンのセレクタ。
- * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のコメントの編集を終えたときのイベント。
- * 作成日　　:2015.03.27
- * 作成者　　:T.Masuda
+ * 関数名:function setMyGalleryChangeEvent(selector)
+ * 引数 	:String selector:イベントをバインドする対象のセレクタ
+ * 戻り値:なし
+ * 概要  :Myギャラリーの新規作成イベントの関数
+ * 作成日:2015.04.23
+ * 作成者:T.Masuda
  */
 function setMyGalleryChangeEvent(selector){
 	$(selector).on('change', function(event){
@@ -1041,28 +1037,45 @@ function setMyGalleryChangeEvent(selector){
 	    					.text('success')
 	    			);
 	    	if(issuccess){	//保存に成功していたら
-	    		//ファイルのオブジェクトをを取得する。
-	    		var file = event.target.files[0];
-	    		//画像の縮小を行う。
-	    		canvasResize(file, {
-	    			crop: false,	//画像を切り取るかを選択する
-	    			quality: 80,	//画像の品質
-	    			//コールバック関数。画像パスを引数として受け取る。
-	    			callback: function(data) {
-	    				$(xml).attr('src', data);	//アップロードした画像をセットする。
-	    				var src = data;	//画像の保存先を取得する。
-	//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
-	    				//createTagで新たな写真を作成する。
-	    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-	    				//新たな写真を初期化する。
-	    				createNewPhoto();
-	    				//画像拡大用のタグにソースをセットする。
-	    				$('.myPhotoLink:last').attr('href', src);
-	    				//画像サムネイルに使う要素の画像を設定する。
-	    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-	    				$('.myPhoto:last').removeClass('blankPhoto');
-	    			}
-	    		});
+	    		//IE9以下でなければ
+	    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
+		    		//ファイルのオブジェクトをを取得する。
+		    		var file = event.target.files[0];
+		    		//画像の縮小を行う。
+		    		canvasResize(file, {
+		    			crop: false,	//画像を切り取るかを選択する
+		    			quality: 80,	//画像の品質
+		    			//コールバック関数。画像パスを引数として受け取る。
+		    			callback: function(data) {
+		    				$(xml).attr('src', data);	//アップロードした画像をセットする。
+		    				var src = data;	//画像の保存先を取得する。
+		//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
+		    				//createTagで新たな写真を作成する。
+		    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		    				//新たな写真を初期化する。
+		    				createNewPhoto();
+		    				//画像拡大用のタグにソースをセットする。
+		    				$('.myPhotoLink:last').attr('href', src);
+		    				//画像サムネイルに使う要素の画像を設定する。
+		    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+		    				$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+		    			}
+		    		});
+		    	//IE6~9なら
+		    	} else {
+		    		//サムネイルが出ないことを伝える。
+		    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
+	    			var src = 'photo/general/web/DSC_0266.JPG';	//今のところはダミーの写真を追加する。
+	    			//createTagで新たな写真を作成する。
+	    			creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+	    			//新たな写真を初期化する。
+	    			createNewPhoto();
+	    			//画像拡大用のタグにソースをセットする。
+	    			$('.myPhotoLink:last').attr('href', src);
+	    			//画像サムネイルに使う要素の画像を設定する。
+	    			$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+	    			$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+		    	}
 	    	//保存に失敗していたら
 	    	} else {
 	    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
@@ -1086,36 +1099,52 @@ function setMyGalleryChangeEvent(selector){
 function uploadImage(uploader, parent, srcReturn){
 	$uploader = $(uploader);	//アップローダーの要素をjQueryオブジェクトにして変数に格納する。
 	//保存先を指定して画像のアップロードを行う。
-	$uploader.upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
+	$uploader.upload('source/dummy.xml',{"dir":init['photoDirectory']}, function(html) {
+//		$uploader.upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(html) {
 		//返ってきたデータから成否判定の値を取り出す。
 //		var issuccess = parseInt($(xml).find('issuccess').text());
 		var issuccess = "true";
 		if(issuccess == "true"){	//保存に成功していたら
-
-    		//ファイルのオブジェクトをを取得する。
-    		var file = uploader.files[0];
-    		var filetmp = '';	//画像パスの一時保存場所のパス用の変数を用意する。
-    		//画像の縮小を行う。
-    		canvasResize(file, {
-    			crop: false,	//画像を切り取るかを選択する
-    			quality: 80,	//画像の品質
-    			//コールバック関数。画像パスを引数として受け取る。
-    			callback: function(data) {
-    				filetmp = data;				//filetmpにdataを一時保存する。
-    				//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
-    				var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
-    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
-    					//画像タグであれば
-    					if($(this)[0].tagName == 'IMG'){
-    						$(this).attr('src', filetmp);	//ソースパスを設定する。
-//					$(this).attr('src', src);	//ソースパスを設定する。
-    						//特別処理の指定がないタグなら
-    					} else {
-    						$(this).val(src);	//画像パスをvalue属性にセットする。
-    					}
-    				});
-    			}
-    		});
+		
+			//IE6~9でなければ
+    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
+	    		//ファイルのオブジェクトをを取得する。
+	    		var file = uploader.files[0];
+	    		var filetmp = '';	//画像パスの一時保存場所のパス用の変数を用意する。
+	    		//画像の縮小を行う。
+	    		canvasResize(file, {
+	    			crop: false,	//画像を切り取るかを選択する
+	    			quality: 80,	//画像の品質
+	    			//コールバック関数。画像パスを引数として受け取る。
+	    			callback: function(data) {
+	    				filetmp = data;				//filetmpにdataを一時保存する。
+	    				//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
+	    				var src = filetmp;								//画像の保存先を取得する。
+	    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
+	    					//画像タグであれば
+	    					if($(this)[0].tagName == 'IMG'){
+	    						$(this).attr('src', filetmp);	//ソースパスを設定する。
+	//					$(this).attr('src', src);	//ソースパスを設定する。
+	    						//特別処理の指定がないタグなら
+	    					} else {
+	    						$(this).val(src);	//画像パスをvalue属性にセットする。
+	    					}
+	    				});
+	    			}
+	    		},'xml');
+	    	//IE6~9なら
+    		}else{
+				var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
+				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
+					//画像タグであれば
+					if($(this)[0].tagName == 'IMG'){
+						$(this).attr('src', src);	//ソースパスを設定する。
+						//特別処理の指定がないタグなら
+					} else {
+						$(this).val(src);	//画像パスをvalue属性にセットする。
+					}
+				});
+    		}
 		} else {
 			alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
 		}
