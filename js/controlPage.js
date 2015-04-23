@@ -226,10 +226,6 @@ function createFormData(form){
 			} else if(type == 'checkbox' 
 				&& $(this).index('[name="' + name + '"]') != 0 || name === void(0)){
 			//何もしない。
-			//ラジオボタンかつieであれば
-			} else if(type == 'radio' && uaName.indexOf('ie') != -1){
-				//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-				val = this.getAttributeNode('value').value;	//IEでの値を取得するやり方を使う。
 			//それ以外であれば
 			} else {
 				//name属性がnameであれば

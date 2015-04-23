@@ -668,7 +668,7 @@ ul li.notice{
  * 作成日 :2015.03.25
  */
 .confirmRegistration li:before {
-	content:"※";	/* 注意書きの先頭に※印を入れる。 */
+	content:"\203b";	/* 注意書きの先頭に※印を入れる。 */
 }
 
 /* ここまで生徒さん登録画面の確認 */
