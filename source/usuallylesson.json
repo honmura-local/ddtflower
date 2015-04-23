@@ -19,8 +19,8 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "course",
-                        "value": "プリザ",
-                        "type": "radio"
+                        "type": "radio",
+                        "value": "プリザ"
                     },
                     "buttonTopText": {
                         "text": "プリザ"
@@ -31,8 +31,8 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "course",
-                        "value": "生花",
-                        "type": "radio"
+                        "type": "radio",
+                        "value": "生花"
                     },
                     "buttonTopText": {
                         "text":"生花"
@@ -48,8 +48,8 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "course",
-                        "value": "NFD",
-                        "type": "radio"
+                        "type": "radio",
+                        "value": "NFD"
                     },
                     "buttonTopText": {
                         "text": "NFD"
@@ -67,8 +67,8 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "schedule",
-                        "value": "11:00 〜 13:00",
-                        "type": "checkbox"
+                        "type": "checkbox",
+                        "value": "11:00 〜 13:00"
                     },
                     "buttonTopText": {
                         "text": "11:00 〜 13:00"
@@ -82,8 +82,8 @@
                 "buttonTopLabel": {
                     "buttonTop": {
                         "name": "schedule",
-                        "value": "14:00 〜 16:00",
-                        "type": "checkbox"
+                        "type": "checkbox",
+                        "value": "14:00 〜 16:00"
                     },
                     "buttonTopText": {
                         "text": "14:00 〜 16:00"
@@ -96,8 +96,8 @@
             "buttonTopLabel": {
                 "buttonTop": {
                     "name": "schedule",
-                    "value": "16:30 〜 18:30",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "16:30 〜 18:30"
                 },
                 "buttonTopText": {
                     "text": "16:30 〜 18:30"
@@ -109,8 +109,8 @@
             "buttonTopLabel": {
                 "buttonTop": {
                     "name": "schedule",
-                    "value": "19:00 〜 21:00",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "19:00 〜 21:00"
                 },
                 "buttonTopText": {
                     "text": "19:00 〜 21:00"
@@ -122,8 +122,8 @@
             "buttonTopLabel": {
                 "buttonTop": {
                     "name": "schedule",
-                    "value": "19:30 〜 21:30",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "19:30 〜 21:30"
                 },
                 "buttonTopText": {
                     "text": "19:30 〜 21:30"
@@ -152,8 +152,8 @@
             "MondayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "月",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "月"
                 },
                 "buttonBottomText": {
                     "text": "月"
@@ -162,8 +162,8 @@
             "TuesdayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "火",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "火"
                 },
                 "buttonBottomText": {
                     "text": "火"
@@ -172,8 +172,8 @@
             "WednesdayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "水",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "水"
                 },
                 "buttonBottomText": {
                     "text": "水"
@@ -182,8 +182,8 @@
             "ThirsdayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "木",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "木"
                 },
                 "buttonBottomText": {
                     "text": "木"
@@ -192,8 +192,8 @@
             "FridayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "金",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "金"
                 },
                 "buttonBottomText": {
                     "text": "金"
@@ -202,8 +202,8 @@
             "SaturdayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "土",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "土"
                 },
                 "buttonBottomText": {
                     "text": "土"
@@ -212,8 +212,8 @@
             "SundayCheck": {
                 "buttonBottom": {
                     "name": "dayOfWeek",
-                    "value": "日",
-                    "type": "checkbox"
+                    "type": "checkbox",
+                    "value": "日"
                 },
                 "buttonBottomText": {
                     "text": "日"
