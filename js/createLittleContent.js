@@ -1380,9 +1380,9 @@ var articleSubmitHandler = {
 									//キーに対応したクラスの要素にテキストを追加していく。
 									dom.attr('src',json[key]);
 								//ラジオボタンなら
-								} else if(dom.attr('type') == 'checkbox'){
+								} else if(dom.attr('type') == 'radio'){
 									//対象となるラジオボタンにチェックを入れる。
-									dom.filter('[value="' + json[key] + '"]').prop('check', 'true');
+									dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
 								//日付テキストボックスなら
 								} else if(dom.attr('type') == 'date'){
 									//日付のフォーマットを整えてテキストボックスに値を入れる。
