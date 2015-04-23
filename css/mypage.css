@@ -423,10 +423,24 @@
  * 概要   :オプションの各項目。
  * 作成者 :T.Masuda
  * 作成日 :2015.03.26
+ * 変更者 :T.Yamamoto
+ * 変更日 :2015.04.23
+ * 変更内容:セレクターにmyOptionRadioを削除しました
  */
-.myOptionText, .myOptionRadio, .myOptionCheckbox{
+.myOptionText, .myOptionCheckbox{
 	margin-bottom: 10px;	/* 項目ごとに間隔を取る。 */
 }
+
+/* 
+ * セレクタ:.myOptionRadio
+ * 概要   :オプションのラジオボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.04.23
+ */
+.myOptionRadio {
+	margin-bottom: 4px;		/* 下から4px余白をとりラベルと位置を合わせる */
+}
+
 /* 個人設定はここまで */
 
 

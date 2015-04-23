@@ -946,7 +946,19 @@ label.error{
  form[target^="jquery_upload"]{
  	display:none;
  }
- 
+
+/* 
+ * セレクタ:.annotation
+ * 概要   :1行だけの注釈のスタイル
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.03.31
+ */
+.annotation, .notice {
+    clear: left;      /* 左側の回り込みを解除する */
+    padding-left: 1em;/* 左から1文字分余白を空ける */
+    text-indent: -1em;/* 文字のインデントを1文字はみ出る形にする */
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {
     
@@ -1235,4 +1247,15 @@ label.error{
 	.tabPanel .managementList {
 		max-width: 100%;		/* 親要素の幅いっぱいに幅を広げられるようにする。 */
 	}
+
+    /* 
+     * セレクタ:.annotion
+     * 概要   :スマホ用注釈
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.04.17
+     * 変更者 :T.Yamamoto
+     */
+    .annotation, .notice {
+        text-indent: -11px;      /* 字下げのためにインデントをとる */
+    }
 }	
