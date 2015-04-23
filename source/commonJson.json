@@ -2,7 +2,7 @@
     "guides": {
         "guideFASchool": {
             "toppageLink": {
-                "href": "index.html",
+                "href": "#index.html",
                 "flowerIcon": {
                     "src": "image/icon(logo50).png"
                 },
@@ -29,7 +29,7 @@
         },
         "guideMail": {
             "contactLink": {
-                "href": "contact.html",
+                "href": "#contact.html",
                 "mailIcon": {
                     "src": "image/icon(mail).png"
                 }
@@ -37,7 +37,7 @@
         },
         "guideAccess": {
             "accessLink": {
-                "href": "access.html",
+                "href": "#access.html",
                 "accessIcon": {
                     "src": "image/icon(accessl).png"
                 }
@@ -45,7 +45,7 @@
         },
         "guideTrial": {
             "experienceLink": {
-                "href": "experience.html",
+                "href": "#experience.html",
                 "experienceIcon": {
                     "src": "image/icon(experience).png"
                 }
@@ -53,7 +53,7 @@
         },
         "guideBlog": {
             "guideBlogLink": {
-                "href": "blog.html",
+                "href": "#blog.html",
                 "guideBlogIcon": {
                     "src": "image/icon(blog50).png"
                 }
@@ -84,7 +84,7 @@
     "topMenu": {
         "preservedButton": {
             "preservedLink": {
-                "href": "preserved.html",
+                "href": "#preserved.html",
                 "title": "プリザーブドフラワー",
                 "preservedText": {
                     "text": "プリザ"
@@ -93,7 +93,7 @@
         },
         "freshButton": {
             "freshLink": {
-                "href": "fresh.html",
+                "href": "#fresh.html",
                 "title": "フレッシュフラワー",
                 "freshText": {
                     "text": "生花"
@@ -102,7 +102,7 @@
         },
         "nfdButton": {
             "nfdLink": {
-                "href": "nfd.html",
+                "href": "#nfd.html",
                 "title": "NFD資格取得",
                 "nfdText": {
                     "text": "NFD"
@@ -111,7 +111,7 @@
         },
         "nationalButton": {
             "nationalLink": {
-                "href": "national.html",
+                "href": "#national.html",
                 "title": "国家認定資格取得",
                 "nationalText": {
                     "text": "国家資格"
@@ -120,7 +120,7 @@
         },
         "bridalButton": {
             "bridalLink": {
-                "href": "bridal.html",
+                "href": "#bridal.html",
                 "title": "",
                 "bridalText": {
                     "text": "ブライダル"
@@ -129,7 +129,7 @@
         },
         "franchiseButton": {
             "franchiseLink": {
-                "href": "franchise.html",
+                "href": "#franchise.html",
                 "title": "フランチャイズ",
                 "franchiseText": {
                     "text": "FC"
@@ -138,7 +138,7 @@
         },
         "galleryButton": {
             "galleryLink": {
-                "href": "gallery.html",
+                "href": "#gallery.html",
                 "title": "",
                 "galleryText": {
                     "text": "ギャラリー"
@@ -147,7 +147,7 @@
         },
         "voiceButton": {
             "voiceLink": {
-                "href": "voice.html",
+                "href": "#voice.html",
                 "title": "",
                 "voiceText": {
                     "text": "生徒さんの声"
