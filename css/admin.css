@@ -182,7 +182,7 @@
  * 作成日 :2015.03.13
  */
 .key:after {
-	content		:"→";		/*右向きの矢印を配置する。*/
+	content		:"\002192";		/*右向きの矢印を配置する。*/
 	background: white;
 	color: #555;
 	display: inline-block;

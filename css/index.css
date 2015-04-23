@@ -168,6 +168,20 @@
 	cursor:pointer;		/* カーソルを指差しにする。 */
 }
 
+/* 
+ * セレクタ:.topicShow:hover, .topicContent:hover
+ * 概要   :要素の透過度を70%にする
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.04.23
+ */
+ .topicShow:hover,			/* トップページスライドボタン */
+ .topicContent:hover,		/* トップページスライドボタン内コンテンツ */
+ .submit:hover,				/* 生徒さん登録タブ、登録ボタン */
+ .back:hover				/* 生徒さん登録タブ、戻るボタン */
+ {
+ 	opacity: 0.7;		/* 表示を70%まで透化する */
+ }
+
 /* 以下3個のスタイルシートはtopicShow:nthの絶対位置指定のテストです。 */
 .topicShowCampaign{
 	top: 10px;
