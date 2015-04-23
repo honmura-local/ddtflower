@@ -572,8 +572,7 @@ function allCheckbox(checkboxTarget, allCheckTarget) {
 function createTab(selector){
 	//タブのコンテンツを作成する。
 	$(selector).easytabs({
-		updateHash:false,	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
-		cache:false
+		updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
 	});
 }
 
