@@ -45,7 +45,7 @@
         },
         "myPageBlogButton3": {
             "class": "myPageBlogButton myPageButton deleteRecord",
-            "text": "記事削除",
+            "value": "記事削除",
             "type": "button"
         },
         "myPageBlogButtonHidden": {
