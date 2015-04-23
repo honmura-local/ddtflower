@@ -1256,6 +1256,6 @@ label.error{
      * 変更者 :T.Yamamoto
      */
     .annotation, .notice {
-        text-indent: -11px;      /* 字下げのためにインデントをとる */
+        text-indent: -12px;      /* 字下げのためにインデントをとる */
     }
 }	
