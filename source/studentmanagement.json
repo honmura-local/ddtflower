@@ -274,7 +274,7 @@
             "eMailTextBox": {
                 "textBox": {
                     "type": "email",
-                    "name": "eMail",
+                    "name": "email",
                     "size": "60",
                     "required": "",
                     "onkeyDown": "return controllInputChar(event);"
@@ -294,7 +294,7 @@
             "eMailConfirmTextBox": {
                 "textBox": {
                     "type": "email",
-                    "name": "eMailConfirm",
+                    "name": "emailConfirm",
                     "size": "60",
                     "required": "",
                     "oncopy": "return false",
@@ -535,7 +535,7 @@
             "eMailTextBox": {
                 "textBox": {
                     "type": "email",
-                    "name": "eMail",
+                    "name": "email",
                     "size": "60",
                     "required": "",
                     "onkeyDown": "return controllInputChar(event);"
@@ -555,7 +555,7 @@
             "eMailConfirmTextBox": {
                 "textBox": {
                     "type": "email",
-                    "name": "eMailConfirm",
+                    "name": "emailConfirm",
                     "size": "60",
                     "required": "",
                     "onkeyDown": "return controllInputChar(event);",

@@ -13,8 +13,7 @@
     },
     "blogEditImageUploader":{
     	"class":"uploader blogEditImageUploader",
-    	"type":"file",
-    	"style":"display:none;"
+    	"type":"file"
     },
     "blogEdit":{
     	"name":"blogEdit",

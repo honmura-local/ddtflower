@@ -101,7 +101,7 @@
         },
         "optionsMyEmailForm": {
             "type": "email",
-            "name": "email",
+            "name": "myEmail",
             "onkeyDown": "return controllInputChar(event);",
             "style": "ime-mode:disabled"
         }

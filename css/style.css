@@ -943,10 +943,48 @@ label.error{
  .managementList .numberHead, .managementList .number{
  	display: none;	/* 非表示にする */
 }
- form[target^="jquery_upload"]{
- 	display:none;
- }
+
+/* 
+ * セレクタ:form[target^="jquery_upload"]
+ * 概要   :jQuery.Uploadで一時的に自動生成されるフォームのタグ
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.23
+ */
+form[target^="jquery_upload"]{
+ 	display:none;	/* 見えない方が都合がいいので隠す。 */
+}
  
+/* 
+ * セレクタ:.toEntryPage
+ * 概要   :ログインダイアログの、会員登録ページへのリンク
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.23
+ */
+.toEntryPage{
+	color: darkseagreen!important;	/* 暗めの翠の文字にする。 */
+}
+ 
+/* 
+ * セレクタ:.toEntryPage
+ * 概要   :.toEntryPageのマウスオーバーイベント
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.23
+ */
+.toEntryPage:hover{
+	opacity: 0.5;	/* マウスオーバー時に半透明にする。 */
+}
+
+/* 
+ * セレクタ:.uploader
+ * 概要   :アップローダーのタグ。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.23
+ */
+.uploader{
+	display:block;	/* 表示しない */
+}
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {
     

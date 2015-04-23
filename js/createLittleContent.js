@@ -967,16 +967,6 @@ $(document).on('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPubli
 });
 
 /*
- * イベント名:$(document).hammer().on('doubletap', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication')
- * 引数  　 	:string 'dblclick':ダブルクリックイベントの文字列
- * 			:string '.myPhotoTitle,.myPhotoComment,.myPhotoPublication':写真のタイトル、コメント、公開設定のセレクタ。
- * 戻り値　 :なし
- * 概要  　 :Myギャラリーの写真のタイトル、コメント、公開設定をダブルタップしたときのイベント。
- * 作成日　　:2015.04.19
- * 作成者　　:T.Masuda
- */
-
-/*
  * イベント名:$(document).on('blur', '.myGallery .myPhotoTitleEdit')
  * 引数  　 	:string 'blur':フォーカスが外れたときのイベントの文字列
  * 			:string '.myGallery .myPhotoTitle':写真のタイトルのセレクタ。
@@ -1004,10 +994,19 @@ $(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicatio
  * 作成者　　:T.Masuda
  */
 $(document).on('click', '.myGalleryEditButtons .createButton', function(){
+	var t = $('.uploader');
 	//画像アップローダーのタグをクリックする。
-	$('input[type="file"]').trigger('click');
+	t.trigger('click');
 	
 });
+
+function bindClickTarget(selector, target){
+	$(selector).on('click', function(){	//クリックイベントを登録する。
+		var $target = $(target);	//ターゲットのjQueryオブジェクトを取得する。
+		//ターゲットをクリックする。
+		$target.trigger('click');
+	});
+}
 
 /*
  * イベント名:$(document).on('change', '.uploader .createButton')
@@ -1018,57 +1017,60 @@ $(document).on('click', '.myGalleryEditButtons .createButton', function(){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('change', '.myGalleryEditButtons .uploader', function(event){
-	//拡張子チェックを行う。画像の拡張子でなければはじく。
-	if(!checkIdentifier($(this).val())){
-		//有効なファイルを選んでもらうように警告を出す。
-		alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
-		return;	//処理を終える。
-	}
-	//保存先を指定して画像のアップロードを行う。
-    $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
-//    	$(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
-    	//返ってきたデータから成否判定の値を取り出す。
-    	//var issuccess = parseInt($(xml).find('issuccess').text());
-    	//ローカルでのテスト用のxmlデータを作る。
-    	var issuccess = 1;
-    	xml = $('<root></root>')
-    			.append($('<src></src>')
-    					.text('')
-    			)
-    			.append($('<message></message>')
-    					.text('success')
-    			);
-    	if(issuccess){	//保存に成功していたら
-    		//ファイルのオブジェクトをを取得する。
-    		var file = event.target.files[0];
-    		//画像の縮小を行う。
-    		canvasResize(file, {
-    			crop: false,	//画像を切り取るかを選択する
-    			quality: 80,	//画像の品質
-    			//コールバック関数。画像パスを引数として受け取る。
-    			callback: function(data) {
-    				$(xml).attr('src', data);	//アップロードした画像をセットする。
-    				var src = data;	//画像の保存先を取得する。
-//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
-    				//createTagで新たな写真を作成する。
-    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-    				//新たな写真を初期化する。
-    				createNewPhoto();
-    				//画像拡大用のタグにソースをセットする。
-    				$('.myPhotoLink:last').attr('href', src);
-    				//画像サムネイルに使う要素の画像を設定する。
-    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-    //				$('.myPhoto:last').removeClass('blankPhoto');
-    			}
-    		});
-    	//保存に失敗していたら
-    	} else {
-    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
-    	}
-    //サーバから返されたデータをXMLとして扱う。
-    },"xml");
-});
+function setMyGalleryChangeEvent(selector){
+	$(selector).on('change', function(event){
+		//拡張子チェックを行う。画像の拡張子でなければはじく。
+		if(!checkIdentifier($(this).val())){
+			//有効なファイルを選んでもらうように警告を出す。
+			alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
+			return;	//処理を終える。
+		}
+		
+		//保存先を指定して画像のアップロードを行う。
+	    $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
+	//    	$(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
+	    	//返ってきたデータから成否判定の値を取り出す。
+	    	//var issuccess = parseInt($(xml).find('issuccess').text());
+	    	//ローカルでのテスト用のxmlデータを作る。
+	    	var issuccess = 1;
+	    	xml = $('<root></root>')
+	    			.append($('<src></src>')
+	    					.text('')
+	    			)
+	    			.append($('<message></message>')
+	    					.text('success')
+	    			);
+	    	if(issuccess){	//保存に成功していたら
+	    		//ファイルのオブジェクトをを取得する。
+	    		var file = event.target.files[0];
+	    		//画像の縮小を行う。
+	    		canvasResize(file, {
+	    			crop: false,	//画像を切り取るかを選択する
+	    			quality: 80,	//画像の品質
+	    			//コールバック関数。画像パスを引数として受け取る。
+	    			callback: function(data) {
+	    				$(xml).attr('src', data);	//アップロードした画像をセットする。
+	    				var src = data;	//画像の保存先を取得する。
+	//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
+	    				//createTagで新たな写真を作成する。
+	    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+	    				//新たな写真を初期化する。
+	    				createNewPhoto();
+	    				//画像拡大用のタグにソースをセットする。
+	    				$('.myPhotoLink:last').attr('href', src);
+	    				//画像サムネイルに使う要素の画像を設定する。
+	    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
+	    				$('.myPhoto:last').removeClass('blankPhoto');
+	    			}
+	    		});
+	    	//保存に失敗していたら
+	    	} else {
+	    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
+	    	}
+	    //サーバから返されたデータをXMLとして扱う。
+	    },"xml");
+	});
+}
 	
 /*
  * 関数名:function uploadImage(uploader, parent, srcReturn)
@@ -1282,7 +1284,8 @@ var errorJpNames = {name:'氏名',
 					emailNew:'メールアドレス(新)',
 					adminBlogTitle:'管理者ブログタイトル',
 					allowMidnightMail:'深夜メール受信',
-					recieveMailType:'受信するメールの種類'
+					recieveMailType:'受信するメールの種類',
+					myEmail:'メールアドレス'
 					};
 
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
@@ -1685,4 +1688,23 @@ function loadValue(settings){
 			$elem.val(value);
 		}
 	}
+}
+
+/*
+ * 関数名 :function useFileReader(selector)
+ * 引数  　:String selector:input type="file"のセレクタ
+ * 戻り値　:なし
+ * 概要  　:IE9以下でFile APIに対応する。
+ * 作成日　:2015.04.23
+ * 作成者　:T.Masuda
+ */
+function useFileReader(selector){
+	$(selector).fileReader({		//fileReader.jsの関数をコールする
+		id: 'fileReaderSWFObject',	//fileReaderSWFObjectのIDを指定する
+		//filereader.swf へのパス
+		filereader: 'js/source/filereader.swf',
+		//expressInstall.swf へのパス
+		expressInstall: 'js/source/expressInstall.swf',
+		debugMode: true			//デバッグモードをオンにする。
+	});
 }

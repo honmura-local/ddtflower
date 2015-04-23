@@ -743,8 +743,8 @@ function checkLogin(){
 	var result = false;
 	// クッキーを連想配列で取得する。
 	var cookies = GetCookies();
-	//ログイン中であれば
-	if('user' in cookies && cookies['user'] != ""){
+	//ログイン中であれば	※空のcookieに対しては、IEは文字列"undefined"を返し、それ以外は空文字を返す。
+	if('user' in cookies && (cookies['user'] != "" && cookies['user'] != "undefined")){
 		// ログインボタンをログアウトボタンに差し替える。
 		$('.login').removeClass('login')
 					.addClass('logout')
@@ -823,7 +823,7 @@ function deleteCookie(cookieName) {
   cName = cookieName + "="; // 削除するクッキー名
   dTime = new Date();
   dTime.setYear(dTime.getYear() - 1);
-  document.cookie = cName + ";expires=" + dTime.toGMTString();
+	  document.cookie = cName + ";expires=" + dTime.toGMTString();
 }
 
 /* クッキーを連想配列で取得する関数。http://so-zou.jp/web-app/tech/programming/javascript/cookie/#no5より。 */

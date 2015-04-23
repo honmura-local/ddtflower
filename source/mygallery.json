@@ -21,7 +21,8 @@
         },
         "uploader":{
         	"type":"file",
-        	"style":"display:none"
+        	"id":"uploader",
+        	"name":"uploader"
         },
         "back": {
             "text": "戻る"
