@@ -34,12 +34,12 @@ function isSupportPushState(){
 	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
 	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
 		//pushState対応ブラウザであれば
-//		if(isSupportPushState()){
 			//URLを引数にしてページを切り替える関数をコールする。
 			callPage($(this).attr('href'));
+		if(isSupportPushState()){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
-//		}
+		}
 	});
 
 /*
@@ -645,9 +645,12 @@ function callPageInTab(url, tabPanel){
  * 概要  　 :タブパネル内でリンクをクリックしたときのイベント。
  * 作成日　　:2015.03.25
  * 作成者　　:T.Masuda
+ * 修正日　　:2015.04.25
+ * 修正者　　:T.Masuda
+ * 内容　　　:input:buttonにも対応しました。
  */
 //表示中のタブパネル内でリンク付きのボタンがクリックされたら
-$(document).on('click', '.tabPanel.active button[href]', function(){
+$(document).on('click', '.tabPanel.active button[href],.tabPanel.active input:button[href]', function(){
 	//タブ内でのページの切り替えを行う。
 	callPageInTab($(this).attr('href'), $('.tabPanel').has(this));
 });
@@ -694,33 +697,6 @@ function sendImitateForm(form){
 	//フォームを送信する先のページに切り替える。
 	callPage($form.attr('action'));
 };
-
-/*
- * イベント名:$(document).on('submit', '.imitateForm')
- * 引数  　 :なし
- * 戻り値　 :なし
- * 概要  　 :フォームをsubmitしたときのイベント。
- * 作成日　　:2015.03.26
- * 作成者　　:T.Masuda
- */
-//$(document).on('submit', '.imitateForm', function(){
-//	event.preventDefault();	//submitイベント本来の画面遷移をキャンセルする。
-//	sendImitateForm(this);	//自己定義の関数でフォームの送信を行う。
-//});
-
-/*
- * イベント名:$(document).on('click')
- * 引数  　 :なし
- * 戻り値　 :なし
- * 概要  　 :タブパネル内で疑似フォームをサブミット(クリック)したときのイベント。
- * 作成日　　:2015.03.25
- * 作成者　　:T.Masuda
- */
-//表示中のタブパネル内で疑似フォームがサブミットされたら
-//$(document).on('click', '.imitateForm .submit', function(){
-//	//疑似サブミットの処理の関数をコールする。
-//	submitImitateForm($('.imitateForm').has(this));
-//});
 
 /*
  * イベント:$(document).on('submit', 'form.specialReservedDialog')
@@ -792,10 +768,16 @@ $(document).on('submit', '.specialReservedConfirmDialog form', function(event){
  * 概要   :送信確認ページの戻るボタンがクリックされたときのイベント。
  * 作成日 :2015.03.31
  * 作成者 :T.M
+ * 修正日 :2015.04.23
+ * 修正者 :T.M
+ * 内容　 :タブ外でのみ動作するように変更しました。
  */
 $(document).on('click', '.main .confBackButton', function(){
-	//戻る。
-	history.back();
+	//タブでなければ
+	if($('.tabContainer').length <= 0){
+		//戻る。
+		history.back();
+	}
 });
 
 /*

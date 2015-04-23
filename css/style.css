@@ -943,7 +943,9 @@ label.error{
  .managementList .numberHead, .managementList .number{
  	display: none;	/* 非表示にする */
 }
- 
+ form[target^="jquery_upload"]{
+ 	display:none;
+ }
  
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {

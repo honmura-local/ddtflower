@@ -708,16 +708,15 @@
             "class": "sendForm imitateForm",
             "action": "sendconfirmmail.html",
             "backButton": {
-                "class": "backButtonbutton",
+                "class": "confBackButton",
                 "type": "button",
                 "value": "戻る",
-                "onclick": "history.back()"
+                "href": "studentregistration.html"
             },
             "sendButton": {
                 "class": "sendButtonbutton submit",
                 "type": "submit",
-                "value": "送信",
-                "onclick": ""
+                "value": "送信"
             },
             "sendValue1": {
                 "class": "sendValue",
