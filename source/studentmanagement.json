@@ -352,7 +352,7 @@
             "confirm": "true"
         },
         "back": {
-            "href": "studentmanagement.html",
+            "href": "#studentmanagement.html",
             "text": "戻る",
             "type": "button",
             "onclick": ""
@@ -786,7 +786,7 @@
         },
         "returnToTop": {
             "text": "トップへ戻る",
-            "href": "index.html"
+            "href": "#index.html"
         }
     },
     "errorConfirm": {
@@ -801,7 +801,7 @@
         },
         "returnToTop": {
             "text": "トップへ戻る",
-            "href": "index.html"
+            "href": "#index.html"
         }
     },
     "contentSearch":{
