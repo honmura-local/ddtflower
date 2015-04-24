@@ -158,16 +158,6 @@
             "text": "円"
         }
     },
-    "campaignCopy": {
-        "campaignLabel": {
-            "text": "キャンペーン名"
-        },
-        "campaignCopyTextBox": {
-            "type": "text",
-            "name": "campaignCopy",
-            "value": ""
-        }
-    },
     "campaignDates": {
         "campaignStartDate": {
             "campaignLabelInline1": {
