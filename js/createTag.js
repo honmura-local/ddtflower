@@ -39,6 +39,8 @@ function createTag(){
 			async: false,
 			//サーバへ連想配列を送信する。
 			data: map,
+			//キャッシュを無効にする。
+			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
 				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
@@ -82,6 +84,8 @@ function createTag(){
 			dataType: 'HTML',
 			//同期通信を行う。
 			async: false,
+			//キャッシュを無効にする。
+			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(html){
 				//クラスのメンバdomに取得したDOMのオブジェクトを格納する。
@@ -783,6 +787,8 @@ function createTag(){
 			dataType: 'JSON',
 			//同期通信を行う。
 			async: false,
+			//キャッシュを無効にする。
+			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
 				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
@@ -827,6 +833,8 @@ function createTag(){
 			//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
 			data:{text:jsonString, path:'source/' + topNodeName + '.json'},
 			dataType:'text',		//テキストデータを返してもらう。
+			//キャッシュを無効にする。
+			cache:false,
 			async:false,	//同期通信
 			success:function(text){	//通信成功時
 				alert(text);	//保存結果のログを出す。
