@@ -952,6 +952,7 @@ label.error{
  */
 form[target^="jquery_upload"]{
  	display:none;	/* 見えない方が都合がいいので隠す。 */
+ 	float:left;		/* 流す。 */
 }
 /* 
  * セレクタ:.annotation
@@ -989,10 +990,18 @@ form[target^="jquery_upload"]{
  * セレクタ:.uploader
  * 概要   :アップローダーのタグ。
  * 作成者 :T.Masuda
- * 作成日 :2015.04.23
+ * 作成日 :2015.04.24
  */
 .uploader{
-	display:none;	/* 表示しない */
+	/* 見えなくする。displayをnoneにするとclick()で反応しないブラウザがあるため、visibilityと絶対座標で再現する。 */
+	visibility: hidden;		/* 要素を見えなくする。 */
+	position: absolute;		/* 絶対位置を指定し、場所を取らない様にする。 */
+	z-index: 0;				/* 重なりを最低にする。 */
+	width:0px;				/* 幅を0にする */
+	height:0px;				/* 高さを0にする */
+	/* 隅にどける。 */
+	left:0;
+	top:0;
 }
 
 

@@ -260,7 +260,7 @@
                     "text": "男"
                 }
             },
-            "eMail": {
+            "email": {
                 "formContent": {
                     "text": "メールアドレス"
                 },
@@ -271,7 +271,7 @@
                     "text": "E-mail"
                 }
             },
-            "eMailTextBox": {
+            "emailTextBox": {
                 "textBox": {
                     "type": "email",
                     "name": "email",
@@ -280,7 +280,7 @@
                     "onkeyDown": "return controllInputChar(event);"
                 }
             },
-            "eMailConfirm": {
+            "emailConfirm": {
                 "formContent": {
                     "text": "メールアドレス(確認)"
                 },
@@ -291,7 +291,7 @@
                     "text": ""
                 }
             },
-            "eMailConfirmTextBox": {
+            "emailConfirmTextBox": {
                 "textBox": {
                     "type": "email",
                     "name": "emailConfirm",
@@ -521,7 +521,7 @@
                     "text": "男"
                 }
             },
-            "eMail": {
+            "email": {
                 "formContent": {
                     "text": "メールアドレス"
                 },
@@ -532,7 +532,7 @@
                     "text": "E-mail"
                 }
             },
-            "eMailTextBox": {
+            "emailTextBox": {
                 "textBox": {
                     "type": "email",
                     "name": "email",
@@ -541,7 +541,7 @@
                     "onkeyDown": "return controllInputChar(event);"
                 }
             },
-            "eMailConfirm": {
+            "emailConfirm": {
                 "formContent": {
                     "text": "メールアドレス(確認)"
                 },
@@ -552,7 +552,7 @@
                     "text": ""
                 }
             },
-            "eMailConfirmTextBox": {
+            "emailConfirmTextBox": {
                 "textBox": {
                     "type": "email",
                     "name": "emailConfirm",
@@ -678,7 +678,7 @@
                     "text": ""
                 }
             },
-            "eMail": {
+            "email": {
                 "head": {
                     "text": "メールアドレス"
                 },
@@ -757,7 +757,7 @@
             "sendValue7": {
                 "class": "sendValue",
                 "type": "hidden",
-                "name": "eMail",
+                "name": "email",
                 "value": ""
             },
             "sendValue8": {

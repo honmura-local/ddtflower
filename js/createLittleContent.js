@@ -869,12 +869,12 @@ function startEditText(textElem){
 				.attr('type', 'text')			//テキストボックスのtypeをセットする。	
 		);
 	}
+	//イベント発火元の要素を消す。
+	$(textElem).siblings('.'+className).remove();
+	$(textElem).remove();
 	
 	//追加した要素にフォーカスする。
 	$('.' + className + 'Edit').focus();
-	
-	//イベント発火元の要素を消す。
-	$(textElem).remove();
 };
 
 /*
@@ -1134,6 +1134,8 @@ function uploadImage(uploader, parent, srcReturn){
 	    		},'xml');
 	    	//IE6~9なら
     		}else{
+	    		//サムネイルが出ないことを伝える。
+	    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
 				var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
 				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
 					//画像タグであれば
