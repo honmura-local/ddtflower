@@ -50,6 +50,17 @@ if (userAgent.indexOf('msie') != -1) {
 };
 //以上、引用終了。
 
+//http://yoyogisan.hatenablog.com/entry/2014/08/24/191101 より引用。
+//使っているのがAndroidの標準ブラウザかの判定の関数です。
+function isAndDefaultBrowser(){
+    var ua=window.navigator.userAgent.toLowerCase();
+    if(ua.indexOf('linux; u;')>0){
+        return true;
+    }else{
+        return false;
+    } 
+}
+
 /*
  * 関数名:function isIE()
  * 引数  :なし
@@ -856,11 +867,11 @@ function startEditText(textElem){
 		//編集用のテキストエリアを配置する。
 		$(textElem).after($('<select></select>')
 				.addClass(className + 'Edit')				//編集テキストエリア用のクラスをセットする。
-				.val(currentText)							//テキストを引き継ぐ。
+				.val($(textElem).attr('value'))							//テキストを引き継ぐ。
 				.append(createOptions('publifications'))	//optionタグをセットする。
-			);
+				.focus());
 		//選択済みにする。
-		$('.' + className + 'Edit').val($(textElem).attr('value'));
+//		$('.' + className + 'Edit').val($(textElem).attr('value'));
 	}else {
 		//編集用のテキストエリアを配置する。
 		$(textElem).after($('<input>')
@@ -869,12 +880,34 @@ function startEditText(textElem){
 				.attr('type', 'text')			//テキストボックスのtypeをセットする。	
 		);
 	}
-	//イベント発火元の要素を消す。
-	$(textElem).siblings('.'+className).remove();
-	$(textElem).remove();
+
+	//Androidの標準ブラウザでなければ　※Androidの標準ブラウザはfocus()を使わずともセレクトメニューにフォーカスするので
+	if(!isAndDefaultBrowser() && !$('.' + className + 'Edit')[0].tagName != 'SELECT'){
+		//追加した要素にフォーカスする。
+		$('.' + className + 'Edit').focus();
+		//編集終了のイベントを登録する。
+		$('.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit').on('blur', function(){
+			//自身を持つ写真要素のセレクタを取得する。
+			var myphoto = $('.myPhoto').has(this);
+			//編集モードを解除する。
+			endEditText(this);
+			//編集したデータを送信する。
+			postPhoto(myphoto);
+		});
+	} else {
+		$('body').on('click.editSelect', function(){
+			//自身を持つ写真要素のセレクタを取得する。
+			var myphoto = $('.myPhoto').has('.myPhotoPublicationEdit').eq(0);
+			//編集終了の関数をコールする。
+			endEditText($('.myPhotoPublicationEdit').eq(0));
+			$('body').off('click.editSelect');
+			//編集したデータを送信する。
+			postPhoto(myphoto);
+		});
+	}
 	
-	//追加した要素にフォーカスする。
-	$('.' + className + 'Edit').focus();
+	//イベント発火元の要素を消す。
+	$(textElem).remove();
 };
 
 /*
@@ -988,14 +1021,14 @@ $(document).on('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPubli
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit', function(){
-	//自身を持つ写真要素のセレクタを取得する。
-	var myphoto = $('.myPhoto').has(this);
-	//編集モードを解除する。
-	endEditText(this);
-	//編集したデータを送信する。
-	postPhoto(myphoto);
-});
+//$(document).on('blur', '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit', function(){
+//	//自身を持つ写真要素のセレクタを取得する。
+//	var myphoto = $('.myPhoto').has(this);
+//	//編集モードを解除する。
+//	endEditText(this);
+//	//編集したデータを送信する。
+//	postPhoto(myphoto);
+//});
 
 function bindClickTarget(selector, target){
 	$(selector).on('click', function(){	//クリックイベントを登録する。
