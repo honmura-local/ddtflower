@@ -65,19 +65,23 @@ function finshedLessonTableAfterPaging() {
 		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
 		var nowPageNumber = Number($('.select').text() - 1);
 		//テーブルのデータを取得する
-		var tableRow = create_tag.json.finishedLessonTable[TABLE_DATA_KEY];
-		//テーブルの値を編集するループを開始する値を取得する
-		var loopStartCount = nowPageNumber * 10;
+		var tableData = create_tag.json.finishedLessonTable[TABLE_DATA_KEY];
 		//テーブルのレコード数を取得する
-		var recordCount = Number(tableRow.length);
+		var recordCount = Number(tableData.length);
 		//今のページングの値が最大値なら行数の最大値、違うならページングの最後の行の値をループの終わり値とする
 		var loopEndCount = loopEndCount >= recordCount ? recordCount-1 : nowPageNumber * 10 + 9;
 		//テーブルのループのための行番号を取得する
 		var rowNumber = 1;
 		//ループで受講済みテーブルを編集する
-		for(loopStartCount; loopStartCount<=loopEndCount; loopStartCount++) {
+		//ループの開始の値を算出する(loopStartCount)
+		for(var loopStartCount = nowPageNumber * 10; loopStartCount <= loopEndCount; loopStartCount++) {
+			//走査対象のデータがなければ
+			if(tableData[loopStartCount] === void(0)){
+				break;	//ループを抜ける
+			}
+			
 			//テーブルの値を置換する
-			callMemberLessonValue('.finishedLessonTable', tableRow, loopStartCount, rowNumber);
+			callMemberLessonValue('.finishedLessonTable', tableData, loopStartCount, rowNumber);
 			//行番号をインクリメントして次の行についてのループに備える
 			rowNumber++;
 		}

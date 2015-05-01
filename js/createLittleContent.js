@@ -2832,7 +2832,9 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//ダイアログが開いたときのコールバック関数を指定する。
 			//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
 			reservedLessonListDialog.run();	//主処理を走らせる。
-		}
+		},
+		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		minDate:1				//過去はクリックできなくする。
 	}
 
 //管理者ダイアログ
@@ -3149,8 +3151,8 @@ function memberCalendar(selector, dateRange, userId, create_tag) {
 	$calendar.userId = userId;		//ユーザIDを保存する
 	this.create_tag = create_tag;			//createLittleContentsクラスのインスタンスを利用する
 	
-	
-	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//クリック可能な最大日付までの日数をオブジェクトにセットする
+	calendarOptions[this.calendarName].maxDate = dateRange;
 	//オプションを設定する
 	this.calendarOptions = calendarOptions[this.calendarName];
 }

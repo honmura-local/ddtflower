@@ -716,8 +716,7 @@ function addlogoutEvent(selector){
 				//cookieにユーザ情報と期限の日付を格納する。
 				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';		//会員ID削除
 				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除
-				console.log($(this).closest('.window'));
-				$(self).closest('.window')[0].instance.destroy();
+				$(self).closest('.window')[0].instance.destroy();	//先頭のウィンドウを消す
 				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
