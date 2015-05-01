@@ -317,12 +317,13 @@ function afterSubmitForm(form, event){
 	
 	//submitボタンにconfirm属性が指定してありかつ、trueであれば
 	if($(('input:submit[confirm="true"]'), $this).length){
-		//formタグにメッセージが書いてあれば、取得してダイアログに渡す準備をする。
 		var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
-		//同様にタイトルも準備する。
-		var title = $this.attr("title") !== void(0)? $this.attr("title"):"";
-		//OKボタン、キャンセルボタンでtrue、falseを返すダイアログを表示する。
-		chooseOKBeforeCallFunc(message, title, postForm, $this);
+		var sd = new SimpleConfirmDialog(
+				function(){
+						postForm($this);
+				},
+				message);
+		sd._showDialog();
 	} else {
 		//チェックの必要がなければ通常通りフォームをsubmitする。
 		postForm($this);
