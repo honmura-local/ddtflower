@@ -12,10 +12,11 @@
 			<!-- ブログのCSSファイルを読み込む。 -->
 			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
-				creator.getJsonFile('source/blog.json');		// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/blogcontent.json');	// テスト用のブログJSONデータを取得する。
-				creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
+				creator.getJsonFile('source/blog.json');			// ファイルのデータをjsonを用いて持ってくる
+				creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
+				creator.getJsonFile('source/blogcontent.json');		// テスト用のブログJSONデータを取得する。
+				creator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する
+				creator.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
 			
 				creator.outputTag('headImage', 'createImage');				// 天の画像を作る
 				creator.outputTag('pageTitle');								// タイトル領域を作る

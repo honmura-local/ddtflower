@@ -10,7 +10,14 @@
 			<script>
 				creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 				creator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のためのjsonを取得する。
-				creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
+				
+				//タブからの呼び出しでなければ
+				if(creator.dom == '')
+					//DOMを用意する
+					creator.getDomFile('template/common.html');	
+					creator.getDomFile('source/student.html');
+				}
+					
 				creator.outputTag('headImage', 'createImage');			// 天の画像を作る
 				creator.outputTag('errorConfirm', 'showMessage');		// エラー発生のメッセージを出す。
 				creator.outputTag('footImage', 'createImage');			// 地の画像を作る

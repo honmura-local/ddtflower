@@ -14,7 +14,13 @@
 			<script>
 				creator.getJsonFile('source/createarticle.json');	// マイページのJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
-				creator.getDomFile('source/template.html');			// ファイルのhtmlデータをdomを用いて持ってくる
+				//ページ描画に必要なDOMがなければ
+				if(creator.dom !== void(0) && creator.dom == ''){
+					//必要なDOMを取得する。
+					creator.getDomFile('template/common.html');				
+				}
+				//ブログ編集ページ用のDOMを取得する
+				creator.getDomFile('template/createblogarticle.html');
 			
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る

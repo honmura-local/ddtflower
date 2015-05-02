@@ -20,7 +20,10 @@
 				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
 				creator.getJsonFile('source/mygallerycontent.json');	// Myギャラリー生成用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
-				creator.getDomFile('source/template.html');			// HTMLのテンプレートデータをを取得する。
+				// HTMLのテンプレートデータをを取得する。
+				creator.getDomFile('template/common.html');			
+				creator.getDomFile('template/gallery.html');			
+				
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。

@@ -98,8 +98,15 @@ function createTag(){
 			}
 		});
 		
-		//クラスのメンバのdomにtmpのHTML文字列をオブジェクトに変換して格納する。
-		this.dom = $(tmp);
+		//DOMが空であれば
+		if(this.dom == ''){
+			//クラスのメンバのdomにtmpのHTML文字列をオブジェクトに変換して格納する。
+			this.dom = $(tmp);
+		//既にDOMがあれば
+		} else {
+			//DOMを追加する。
+			$(this.dom).append($('> *',tmp));
+		}
 	};
 
 	/* 

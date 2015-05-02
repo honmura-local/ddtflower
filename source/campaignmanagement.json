@@ -134,6 +134,16 @@
             "value": ""
         }
     },
+    "campaignCopy": {
+        "campaignLabel": {
+            "text": "コピー"
+        },
+        "campaignCopyTextBox": {
+            "type": "text",
+            "name": "campaignCopy",
+            "value": ""
+        }
+    },
     "campaignContent": {
         "campaignLabel": {
             "text": "内容"

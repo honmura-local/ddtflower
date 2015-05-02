@@ -6,7 +6,7 @@
         "passwordTextBox input": "0000000x",
         "userIdTextBox input": "nissy194",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "東京都"
     },
@@ -17,7 +17,7 @@
         "passwordTextBox input": "000000010",
         "userIdTextBox input": "terror",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "兵庫県"
     },
@@ -28,7 +28,7 @@
         "passwordTextBox input": "000a00000",
         "userIdTextBox input": "shamroc",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "福井県"
     },
@@ -39,7 +39,7 @@
         "passwordTextBox input": "00001000",
         "userIdTextBox input": "blackrose",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "神奈川県"
     },
@@ -50,7 +50,7 @@
         "passwordTextBox input": "00000003",
         "userIdTextBox input": "mistral",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "埼玉県"
     },
@@ -61,7 +61,7 @@
         "passwordTextBox input": "00000400",
         "userIdTextBox input": "aida",
         "sexRadioButton input": "女",
-        "eMailTextBox input": "xxx@yyy.zzz",
+        "emailTextBox input": "xxx@yyy.zzz",
         "telTextBox input": "000-0000-0000",
         "addressTextBox input": "茨城県"
     }

@@ -12,7 +12,13 @@
 		<script>
 			creator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
 			creator.getJsonFile('source/commonJson.json');			// 共通のパーツのJSONを取得する。
-			creator.getDomFile('source/template.html');				// パーツのテンプレートのDOMを取得する。
+			// パーツのテンプレートのDOMを取得する。
+			creator.getDomFile('template/common.html');				
+			creator.getDomFile('template/admin.html');
+			creator.getDomFile('template/table.html');
+			creator.getDomFile('template/student.html');
+			creator.getDomFile('template/createblogarticle.html');
+			
 			creator.outputTag('headImage', 'createImage');			// 天の画像を作る
 			creator.outputTag('pageTitle');							// タイトル領域を作る
 			creator.outputTag('contentManagement', 'tabContainer');	// 管理者画面のコンテンツを作る。

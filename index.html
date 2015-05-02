@@ -86,7 +86,8 @@ $(document).ready(function(){
 
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
-	creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
+	creator.getDomFile('template/common.html');		// 共通パーツのDOMを取得する。
+	creator.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
 	//ヘッダー内のタグが作成済みでなければ
 	if($('header').children().length <= 0){
 		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る

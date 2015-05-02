@@ -15,7 +15,10 @@
 				creator.getJsonFile('source/voice.json');			// 生徒さんの声のJSONを取得する。
 				creator.getJsonFile('source/voicestudents.json');	// 生徒さんの声の記事のJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 共通のパーツのJSONを取得する。
-				creator.getDomFile('source/template.html');			// ページのパーツのテンプレートhtmlを取得する。
+				// ページのパーツのテンプレートhtmlを取得する。
+				creator.getDomFile('template/common.html');			
+				creator.getDomFile('template/blog.html');
+
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('voices','blog');					// 生徒さんの声領域を作る

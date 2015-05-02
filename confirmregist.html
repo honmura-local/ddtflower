@@ -13,7 +13,6 @@
 			var $target = $('.main');	//タグの書き込み先を変数に格納する。
 			creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 			creator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のJSONを取得する。
-			creator.getDomFile('source/template.html');				// ファイルのhtmlデータをdomを用いて持ってくる
 			//管理者タブ内でなければ
 			if($('.contentManagement').length <= 0){
 				creator.outputTag('headImage', 'createImage', $target);	// 天の画像を作る

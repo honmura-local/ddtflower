@@ -17,7 +17,10 @@
 				creator.getJsonFile('source/mypage.json');			// マイページのJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
 				creator.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
-				creator.getDomFile('source/template.html');			// ファイルのhtmlデータをdomを用いて持ってくる
+				// ファイルのhtmlデータをdomを用いて持ってくる
+				creator.getDomFile('template/common.html');
+				creator.getDomFile('template/mypage.html');
+				creator.getDomFile('template/table.html');
 			
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る

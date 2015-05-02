@@ -17,7 +17,9 @@
 				creator.getJsonFile('source/myoption.json');		// 個人設定ページのJSONを取得する。
 				creator.getJsonFile('source/myoptionsetting.json');	// 個人設定のJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
-				creator.getDomFile('source/template.html');			// HTMLのテンプレートデータをを取得する。
+				// HTMLのテンプレートデータをを取得する。
+				creator.getDomFile('template/common.html');
+				creator.getDomFile('template/mypage.html');
 				
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る

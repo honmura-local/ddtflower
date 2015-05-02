@@ -221,7 +221,7 @@ function createSpecialReservedDialog(content, array){
 	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
 	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
 	
-	creator.getDomFile('source/template.html');	//タグを作るためにテンプレートのDOMを取得する。
+	creator.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
 	
 	// ダイアログの本体となるdivタグを生成する。
 	creator.reservedDialog[content]();

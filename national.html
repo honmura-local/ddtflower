@@ -12,7 +12,10 @@
 			<script>
 				creator.getJsonFile('source/national.json');		// ファイルのデータをjsonを用いて持ってくる
 				creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
-				creator.getDomFile('source/template.html');			// ファイルのhtmlデータをdomを用いて持ってくる
+				
+				creator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する。
+				creator.getDomFile('template/courseguide.html');	// コース紹介ページのパーツのDOMを取得する。
+				
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('examination', 'description');	// 資格試験の説明を作る
