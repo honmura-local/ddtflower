@@ -44,12 +44,13 @@
 		<script>
 			creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 			//ページ内呼び出しでなければ
-			if(creator.dom != ''){
+			if(creator.dom == ''){
 				creator.getDomFile('template/common.html');				// ファイルのhtmlデータをdomを用いて持ってくる
 			}
 			
 			creator.outputTag('headImage', 'createImage');			// 天の画像を作る
 			creator.outputTag('footImage', 'createImage');			// 地の画像を作る
+			creator.outputTag('footer');							// フッターを作る
 			$('.createImage').eq(0).after($('.confirmSendMail'));	//headImageの後に入力確認テーブルを移動する。
 			// トップメニューにマウスオーバーのフィルターを配置する。
 				functionFilter('.topMenu li');
