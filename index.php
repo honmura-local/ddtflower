@@ -99,15 +99,12 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/createLittleContent.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
-<!-- dialogExクラス置換作業中の一時JSファイル -->
-<script type="text/javascript" src="js/dialogFunctionMasuda.js"></script>
 <!-- 会員検索クエリを検索ボタンクリックで生成する -->
 <script src="js/replaceQuery.js"></script>
-<!-- ダイアログを開くオプションを生成する -->
-<script src="js/dialogFunction_yamamoto.js"></script>
-<!-- ダイアログの設定関数を生成する -->
-<script src="js/dialogOption_yamamoto.js"></script>
-
+<!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
+<script type="text/javascript" src="js/dialogEx.js"></script>
+<!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->
+<script type="text/javascript" src="js/dialogExOptions.js"></script>
 
 </head>
 
