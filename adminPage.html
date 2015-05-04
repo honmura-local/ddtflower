@@ -49,14 +49,10 @@
 			<script>
 			//ドキュメント配備後
 			$(document).ready(function(){
-				// creator = new createTag();
-				// ユーザーページのパーツのテンプレートのJSONを取得する。
-				creator.getJsonFile('source/commonUser.json');
-				// 管理者ページ共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/adminCommon.json');
-				//共通のjsonを取得する
-				creator.getJsonFile('source/commonJson.json');
 
+				//createTagクラスのインスタンスが生成されていなければ、ここで新しく作る
+				creator = creator !== void(0)? creator: new createTag();
+				
 				// ユーザーページのパーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/commonUser.html');
 				// 管理者ページ共通のパーツのJSONを取得する。
@@ -64,11 +60,26 @@
 				// 共通パーツのDOMを取得する
 				creator.getDomFile('template/common.html');
 				
+				// ユーザーページのパーツのテンプレートのJSONを取得する。
+				creator.getJsonFile('source/commonUser.json');
 				//パーツのHTMLを順次作成し、画面に追加していく
 				//ユーザ情報のテキストをDBから取得する
+				//ログイン情報も取得する
 				creator.getJsonFile('php/GetJSONString.php', creator.json['adminHeader'], 'adminHeader');
 				//ヘッダー
 				creator.outputTag('adminHeader');
+				
+				//ログイン状態でなければ
+				if(!parseInt(creator.json.adminHeader.isLogin)){
+					callPage('index.php');		//トップページへ遷移する
+					return;	//以後の処理を行わない。
+				}
+				
+				// 管理者ページ共通のパーツのJSONを取得する。
+				creator.getJsonFile('source/adminCommon.json');
+				//共通のjsonを取得する
+				creator.getJsonFile('source/commonJson.json');
+
 				//タブ領域
 				creator.outputTag('adminTab', 'tabContainer');
 				//タブコンテンツ5個

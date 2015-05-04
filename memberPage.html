@@ -43,19 +43,27 @@
 			//ドキュメント配備後
 			$(document).ready(function(){
 				//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
-				//creator = new createTag();
-				//creator.getJsonFile('source/memberPage.json');
-				//// 会員共通のパーツのJSONを取得する。
-				//creator.getJsonFile('source/memberCommon.json');
+				creator = creator !== void(0)? creator: new createTag();
+				//会員ページのDOMを取得する
+				creator.getJsonFile('source/memberCommon.json');
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				//ログイン状態でなければ
+				if(!parseInt(creator.json.memberHeader.isLogin)){
+					callPage('index.php');		//トップページへ遷移する
+					return;	//以後の処理を行わない。
+				}
+				
+				//JSONからユーザIDを取り出し変数に入れる
+				var userId = creator.json.memberHeader.user_key_value;
+				creator.getJsonFile('source/memberPage.json');
 				//パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// 会員共通のパーツのJSONを取得する。
 				creator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberPage.html');
-				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
-
+				
 				// 会員ページヘッダーを作る
 				creator.outputTag('memberHeader');
 				// バナー領域を作る
@@ -97,7 +105,7 @@
 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				});
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, lessonList);
+				var memCalendar = new memberCalendar('.lessonCalendar', 90, userId, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
 
 				// タブ機能を作る
@@ -145,7 +153,7 @@
 					accordionSetting('.lessonAccordion', '.attention');
 				});
 				//キャンセルダイアログを予約中授業テーブルから開く処理
-				cancelDialogOpen(cancelLesson, memberInfo);
+				cancelDialogOpen(cancelLesson, userId);
 				//予約中授業テーブル絞り込みボタン機能を実装する
 				reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 			});

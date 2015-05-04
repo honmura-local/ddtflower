@@ -133,6 +133,15 @@ $(document).ready(function(){
 		// ログイン状態をチェックする。
 		checkLoginState();
 	}
+
+	//トップページ読み込み時にヘッダーが見えなくなっていたら
+	if($('header:hidden').length > 0){
+		//表示する
+		$('header:invisible:hidden').css('display', 'block');
+		//会員ページ、管理者ページのヘッダーが表示されていたら非表示にする。
+		$('.memberHeader, .adminHeader').css('display', 'none');
+	}
+	
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	//ブログのお知らせを作る。
 	creator.outputTag('topicGallery','topic', '.flowerBackground');
