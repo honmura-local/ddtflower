@@ -1320,8 +1320,10 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				//予約できる授業の時予約確認ダイアログを出す
-				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
+				//残席の記号を取得する
+				var restMarkNow = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR +':eq(' + (rowNum+1) + ') td').eq(4).text();
+				//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST] && restMarkNow != '✕') {
 					//レッスン一覧ダイアログを取得する
 					var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
 					//次のダイアログに渡すオブジェクトを作る

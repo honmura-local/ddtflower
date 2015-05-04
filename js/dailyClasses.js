@@ -534,8 +534,6 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 		rest = restMarks[0];
 		//状況を予約不可にする
 		lessonStatus = classworkStatuses[4];
-		//行の色をグレーっぽくする
-		$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
 	//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
 	} else {
 		//料金を入れる
@@ -544,6 +542,11 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 		lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 		//残席を記号にする
 		rest = getRestMark(recordData, timeTableStudents);
+	}
+	//残席がバツのときにはクリックできないことを分かりやすくするために行の背景をグレーにする
+	if(rest == restMarks[0]) {
+		//行の色をグレーっぽくする
+		$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
 	}
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);

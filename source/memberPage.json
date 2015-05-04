@@ -257,6 +257,9 @@
                 }
             }
         },
+        "lessonAccordion":{
+            "text":"キャンセル料・加算ポイントについて"
+        },
         "attention": {
             "cancelRateLabel": {
                 "class":"cancelRateLabel contentsBorder",
@@ -427,8 +430,8 @@
                 }
             }
         },
-        "cancelLessonDetail":{
-            "text":"授業の詳細はこちら"
+        "lessonAccordion":{
+            "text":"キャンセル料・加算ポイントについて"
         },
         "attention": {
             "cancelRateLabel": {

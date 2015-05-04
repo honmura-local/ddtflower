@@ -554,24 +554,24 @@ label,
 }
 
 /* 
- * セレクタ :.cancelLessonDialogContent .attention
+ * セレクタ :.attention
  * 概要   :キャンセル率の注意領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.07.09
  */
-.cancelLessonDialogContent .attention {
+.attention {
 	display: none;		/* 最初は表示しない */
-	font-size: 13px;	/* フォントサイズを13pxにす */
+	font-size: 12px;	/* フォントサイズを13pxにす */
 }
 
 /* 
- * セレクタ :.cancelLessonDialogContent .cancelLessonDetail
- * 概要   :キャンセル率の注意領域
+ * セレクタ :.ui-dialog .lessonAccordion
+ * 概要   :確認ダイアログのキャンセル料率と加算ポイント
  * 作成者 :T.Yamamoto
  * 作成日 :2015.07.09
  */
-.cancelLessonDialogContent .cancelLessonDetail {
-	font-size: 13px;	/* フォントサイズを13pxにする */
+.ui-dialog .lessonAccordion {
+	font-size: 12px;	/* フォントサイズを13pxにする */
 	color: #6470EF;		/* 色を青色にする */
 	text-align: right;	/* 右寄せにする */
 	margin-right: 1em;	/* 右から1文字空ける */
@@ -639,7 +639,7 @@ label,
  */
 .tabLink {
 	padding: 6px 0;				/* 上下に6px要素の幅を広げる */
-	color: #999;				/* 文字色を黒にする */
+	color: #666;				/* 文字色を黒にする */
 }
 /* 予約確認ダイアログ領域終わり */
 
@@ -978,7 +978,7 @@ label,
 	.cancelLessonDialog,
 	.keepMoney,
 	.hasPoint {
-		font-size: 13px;		/* フォントサイズを13pxにする */
+		font-size: 14px;		/* フォントサイズを13pxにする */
 	}
 
 	/* 
