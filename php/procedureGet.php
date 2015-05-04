@@ -65,13 +65,15 @@ class procedureGet extends procedureBase{
 		
 		//DBとの接続を閉じる
 		$this->disconnect();
+		//ログイン判定を取得する
+		$this->json['isLogin'] = $this->isLogin == true? 1: 0;
 		
 		// 連想配列をjsonに変換して変数に入れる
 		$jsonOut = json_encode($this->json, JSON_UNESCAPED_UNICODE);
 		// 作成したJSON文字列を出力する。
 		print($jsonOut);
 	}
-	
+
 	/*
 	 * 関数名：run
 	 * 概要  :クラスのinit、job関数をまとめて実行する。

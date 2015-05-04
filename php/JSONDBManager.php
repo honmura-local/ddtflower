@@ -367,11 +367,13 @@ class JSONDBManager extends dbConnect{
 	 * 作成者:T.Masuda
 	 * 作成日:2015.06.11
 	 */
-	function getListJSONPlusKey($json, $key){
+	function getListJSONPlusKey($json, $key, $isLogin){
 		//getListJSONでテーブル用のJSON配列を作成する
 		$retArray = $this->getListJSON($json);
 		//JSON配列の文字列を配列データに変換し、引数のJSONに追加する
 		$json[$key] = json_decode ($retArray);
+		//ログイン判定を取得する
+		$json['isLogin'] = $isLogin == true? 1: 0;
 		//追加を行った引数のJSONを文字列に変換する
 		$retArray = json_encode($json, JSON_UNESCAPED_UNICODE);
 	

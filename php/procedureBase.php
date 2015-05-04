@@ -21,6 +21,8 @@ require_once ('account.php');
  */
 class procedureBase extends account{
 
+	public $isLogin = false;	//ログイン状態の値を格納するメンバ
+	
 	/*
 	 * 関数名：init
 	 * 概要  :クラスの初期化関数。accountクラスの初期化関数とログインチェック関数をコールする。
@@ -33,8 +35,8 @@ class procedureBase extends account{
 	function init(){
 		//親クラスのinit関数をコールする。
 		parent::init();
-		//ログインチェックを行う。
-		$this->loginCheck();
+		//ログインチェックを行う。結果はメンバに保存する
+		$this->isLogin = $this->loginCheck();
 	}
 
 	/*
@@ -49,6 +51,11 @@ class procedureBase extends account{
 	function job($jsonString){
 		//JSON文字列から連想配列を取得し、自身のメンバに保存する。
 		parent::getJSONMap($jsonString);
+		//ログイン状態かつ、ユーザIDがJSONにあれば
+		if(isset($_SESSION['userId']) && isset($this->json['user_key'])){
+			//セッションからユーザIDを取り出しJSONに追加する
+			$this->json['user_key']['value'] = $_SESSION['userId'];
+		}
 	}
 	
 	/*

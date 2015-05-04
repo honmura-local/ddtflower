@@ -59,8 +59,8 @@ class procedureGetList extends procedureBase{
 		try {
 			//取得したJSON連想配列を走査する
 			if(is_array($this->json) && $this->is_hash($this->json)){
-				//レコードのJSONを作る
-				$retArrayString = $this->getListJSONPlusKey($this->json, STR_TABLE);
+				//レコードのJSONを作る。テーブルのキー名とログイン判定も引数に入れる
+				$retArrayString = $this->getListJSONPlusKey($this->json, STR_TABLE, $this->isLogin);
 			}
 			//SQL例外のcatchブロック
 		} catch (PDOException $e) {

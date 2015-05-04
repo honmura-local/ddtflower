@@ -1,6 +1,21 @@
 // 画面遷移を操作する関数を中心にまとめたJSファイル。
 
+
 currentLocation = '';	//現在選択中のページの変数
+//会員ページ名のリスト
+NEED_LOGIN_PAGES = [
+	                    'adminPage.html',
+	                    'memberMyBlog.html',
+	                    'memberMyGallery.html',
+	                    'memberPage.html',
+	                    'memberPassword.html',
+	                    'memberProfile.html',
+	                    'memberSuggestionBox.html',
+	                    'mygallery.html',
+	                    'myoption.html',
+	                    'mypage.html'
+                    ];
+
 //トップページのファイル名の定数
 TOPPAGE_NAME = 'index.php';
 
@@ -137,6 +152,10 @@ function callPage(url, state){
 		postForm($('<form></form>').attr({action: url,method:'post',state:url}));
 		return;	//処理を終える。
 	}
+	
+	//ログインチェックを行う。
+//	var isLogin = loginCheck();
+	
 	//Ajax通信を行う。
 	$.ajax({
 		//URLを指定する。
@@ -588,6 +607,34 @@ if (isSupportPushState()){
   });
 }
 
+/*
+ * 関数名:loginCheck
+ * 引数  :なし
+ * 戻り値:boolean:ログイン状態か否かを返す
+ * 概要  :ログイン状態チェック用のPHPをコールし、判定を返す
+ * 作成日:2015.07.31
+ * 作成者:T.Masuda
+ */
+function loginCheck(){
+	retBoo = false;	//返却用の変数を用意する。
+	$.ajax({	//Ajax通信を開始する
+		url:"php/LoginCheck.php",	//ログインチェック用のPHPをコールする
+		dataType:"json",			//JSONデータを返してもらう
+		async:false,				//同期通信
+		cache:false,				//キャッシュ無効
+		success:function(json){		//成功時のコールバック関数
+			//ログイン状態の判定の値を取得して、真理値に変換して変数に代入する。
+			$retBoo = parseInt(json.isLogin)? true: false;
+		},
+		//通信エラーであれば
+		error:function(xhr, status, error){
+			//通信失敗を通達する
+			alert('ログインの確認の通信に失敗しました。');
+		}
+	});
+	
+	return $retBoo;	//判定結果を返す
+}
 /*
  * イベント名:load
  * 引数  　 :なし

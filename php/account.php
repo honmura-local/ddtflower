@@ -13,6 +13,10 @@
 //loginの親クラスのファイルを読み込む
 require_once ('JSONDBManager.php');
 
+class LoginCheckException extends Exception{
+	
+}
+
 /*
  * クラス名:account
  * 概要  :ログインのための関数を持ったクラス。JSONDBManagerクラスを継承する。
@@ -124,9 +128,10 @@ class account extends JSONDBManager{
 			}
 		//例外をキャッチした場合は以下のブロックに入る
 		} catch (LoginCheckException $e){
-			//未定義
+			//falseを返す。現状では仮の処理。
+			return false;
 		}
-
+		
 		//真理値を返す
 		return $retBoo;
 	}
