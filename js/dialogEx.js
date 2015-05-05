@@ -75,12 +75,14 @@ CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
 RETURN_OBJ									= 'returnObj';									//dialogExクラスのアウトプット用オブジェクト名
 SELECTOR_LAST								= ':last';										//「一番後ろの要素」の疑似セレクタ
-MESSAGE_SEND_SIMPLE_NOTICE					= "メッセージの送信が完了しました。";					//簡易的なメッセージ送信完了のメッセージ	
+MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE			= "メッセージの送信が完了しました。";					//簡易的なメッセージ送信完了のメッセージ	
 ROLE										= 'role';										//role属性
 CONFIRM_DIALOG								= 'confirmDialog';								//確認ダイアログ
 SUGGESTION_BOX_CONFIRM_DIALOG				= 'suggestionBoxConfirmDialog';					//目安箱送信確認ダイアログ
 MY_BLOG_CONFIRM_DIALOG						= 'myBlogConfirmDialog';						//マイブログ更新確認ダイアログ
 MAIL_MAGAZINE_CONFIRM_DIALOG				= 'mailmagazineConfirmDialog';					//メルマガ送信確認ダイアログ
+DESTROY										= 'destroy';									//破棄命令の文字列
+MESSAGE_SEND_FAILED_SIMPLE_NOTICE			= 'メッセージの送信に失敗しました。時間をおいてお試しください。';	//簡易的なメッセージ送信失敗のメッセージ	
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -299,17 +301,16 @@ function dialogEx(url, argumentObj, returnObj){
 		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this);
 		var dialogRole = $dialog.attr(ROLE);	//ダイアログのrole属性を取得する
 		//ダイアログが確認ダイアログであれば、その親の要素(=元のダイアログ)を取得して処理対象にする
-		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 ? $($dialog.parent()): $dialog;
-		var dialogClassName = $dialog.attr('class').split(' ')[0];	//ダイアログのクラス名を取得する
+		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 
+			? $(DOT + CONFIRM_DIALOG + SELECTOR_LAST).parent(): $dialog;
+//		var dialogClassName = $dialog.attr('class').split(' ')[0];	//ダイアログのクラス名を取得する
+		
 		//まずはダイアログを閉じる
 		$dialog.dialog(CLOSE);
 //		$(DOT + dialogClassName).dialog(CLOSE);
 		//jQuery UIのダイアログを破棄する
-		$dialog.dialog('destroy');
-		console.log($('.ui-dialog').has(DOT+dialogClassName));
-		//画面上に展開されているダイアログのDOMを破棄する。
-		$('.ui-dialog').has(DOT+dialogClassName).remove();
-//		$dialog.remove();
+		$dialog.dialog(DESTROY);
+		$dialog.remove();
 	}
 
 	/* 関数名:setAlertContents
@@ -507,31 +508,33 @@ function dialogEx(url, argumentObj, returnObj){
 		//はいボタンが押されていたら
 		if(dialogClass.getPushedButtonState() == YES){
 			var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-			var resulwork = null;
-		
-			$.ajax({
-				url:'php/mailSendEntryMemberMail.php'
-				,data:{
-						from:data.from
-						,subject:data.mailSubject
-						,content:data.mailContent
-				}
-				,dataType:"json"
-				,type:"POST"
-				,success:function(result){
-					resulwork = result;
-					//送信完了と共に入力ダイアログを消す
-					alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
-				}
-				,error:function(xhr, status, error){
-					throw new (status + ":" + MESSAGE_FAILED_CONNECT);
-					//送信完了と共に入力ダイアログを消す
-					alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
-				}
-			});
+			var resultwork = null;
+			
+				$.ajax({
+					url:'php/mailSendEntryMemberMail.php'
+					,data:{
+							from:data.from
+							,subject:data.mailSubject
+							,content:data.mailContent
+					}
+					,dataType:"json"
+					,type:"POST"
+					//通信成功時
+					,success:function(result){
+						resultwork = result;		//通信結果から情報を取り出す
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+					}
+					//通信失敗時
+					,error:function(xhr, status, error){
+						//throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	//送信失敗のメッセージを出す
+					}
+				});
 		
 		// @TODO 結果をどうしいのかはまだ未定
-		//return resulwork
+		//return resultwork
 		
 		}
 	}
@@ -860,20 +863,20 @@ function cancelLessonDialogClose() {
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
 		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-	//ダイアログの呼び出し元で違うcreateLittleContentsクラスインスタンスを利用する
-	var creator = data.reservedListCreator !== void(0)?	data.reservedListCreator: data.creator;
-	//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-	//変更者:T.Masuda 変更日:2015.08.09 ダイアログのクラスインスタンスに持たせたcreateLittleContentsクラスに関数をコールさせます。
-	creator.setDBdata(creator.json.cancelReservedData, data, MESSAGE_SUCCESS_CANCELED);
-
-	//予約可能授業一覧テーブルがあればテーブルをリロードする
-	if(data.reservedListCreator !== void(0)) {
-		//予約可能授業一覧テーブルをリロードする
-		data.reservedListCreator.tableReload(LESSON_TABLE);
-	}
+		//ダイアログの呼び出し元で違うcreateLittleContentsクラスインスタンスを利用する
+		var creator = data.reservedListCreator !== void(0)?	data.reservedListCreator: data.creator;
+		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
+		//変更者:T.Masuda 変更日:2015.08.09 ダイアログのクラスインスタンスに持たせたcreateLittleContentsクラスに関数をコールさせます。
+		creator.setDBdata(creator.json.cancelReservedData, data, MESSAGE_SUCCESS_CANCELED);
 	
-	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
-	data.creator.tableReload(RESERVED_LESSON_TABLE);
+		//予約可能授業一覧テーブルがあればテーブルをリロードする
+		if(data.reservedListCreator !== void(0)) {
+			//予約可能授業一覧テーブルをリロードする
+			data.reservedListCreator.tableReload(LESSON_TABLE);
+		}
+		
+		//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
+		data.creator.tableReload(RESERVED_LESSON_TABLE);
 	}
 }
 
