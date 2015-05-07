@@ -16,30 +16,6 @@ function memberReserveListDialog(dialog){
 	//予約・キャンセルの操作分岐のための数値
 	this.manipulation = 0;
 	
-	/* 関数名:dispContents
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContents = function(){
-		//DBから1件もレコードを取得できなければ例外を投げてアラートダイアログに変化させる
-		try{
-			//画面を表示する準備をする
-			this.constructionContent();
-		//レコードが取得できていなければ
-		}catch (e){
-			//ダイアログをアラートのダイアログに変える
-			this.showAlertNoReserve();
-		}
-
-		//ダイアログの画面パーツをセットする
-		this.dispContentsHeader();	//ダイアログ上部
-		this.dispContentsMain();		//ダイアログ中部
-		this.dispContentsFooter();	//ダイアログ下部
-	}
 
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
@@ -125,7 +101,7 @@ function memberReserveListDialog(dialog){
 	 */
 	this.customizeJson = function(){
 		//テーブル置換用の時限データを取得する
-		this.getReplacedTableData(tableName);
+		this.getReplacedTableData(LESSON_TABLE);
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//授業一覧のJSON配列に授業開始~終了時間の列を追加する
 		this.setStartAndEndTimeColumn(LESSON_TABLE, START_AND_END_TIME, START_TIME, END_TIME, ' ~ ');
@@ -145,20 +121,35 @@ function memberReserveListDialog(dialog){
 		//授業のデータから、その日の存在する時限一覧を取得する。
 		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
 	}
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
+
+	/* 関数名:dispContents
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
+	 * 作成日　:2015.0813
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsHeader = function(){
-		//ダイアログのタイトルを変更する
-		this.setDialogTitle(this.dialogClass.getArgumentDataObject().dateJapanese);
+	this.dispContents = function(){
+		//DBから1件もレコードを取得できなければ例外を投げてアラートダイアログに変化させる
+		try{
+			//画面を表示する準備をする
+			this.constructionContent();
+		//レコードが取得できていなければ、またはエラーが起きたら
+		}catch (e){
+			//ダイアログをアラートのダイアログに変える
+			this.showAlertNoReserve();
+			throw e;	//例外を投げ、ダイアログの表示を切り上げる
+		}
+		
+		//ダイアログの画面パーツをセットする
+		this.dispContentsHeader();	//ダイアログ上部
+		this.dispContentsMain();	//ダイアログ中部
+		this.dispContentsFooter();	//ダイアログ下部
+		this.setConfig();			//ダイアログの設定をする
+		this.setCallback();			//コールバック関数を登録する
 	}
-
+	
 	/* 関数名:dispContentsMain
 	 * 概要　:画面パーツ設定用関数のメイン部分作成担当関数
 	 * 引数　:なし
@@ -170,6 +161,7 @@ function memberReserveListDialog(dialog){
 	this.dispContentsMain = function(){
 		//予約可能授業一覧テーブルの外側の領域を作る
 		this[VAR_CREATE_TAG].outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
+		console.log(this[VAR_CREATE_TAG].json[LESSON_TABLE]);
 		//予約できる授業のデータ一覧テーブルを作る
 		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
 		//テーブルの値を置換する
@@ -190,11 +182,22 @@ function memberReserveListDialog(dialog){
 	this.setCallback = function(){
 		//ダイアログを閉じるときは破棄するように設定する
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
-		//予約確認ダイアログを出すイベントを登録する
-		this.whenRecordSelectEvent(SELECTOR_LESSON_TABLE);
 		//テーブルの行クリックイベントを登録する
-		this.setCallbackRowClick();	
+		this.setCallbackRowClick(this);	
 	}
+	
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.setConfig = function(){
+		//ダイアログの位置調整を行う
+		this.setDialogPosition(POSITION_CENTER_TOP);
+	}
+	
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
@@ -298,7 +301,7 @@ function memberReserveListDialog(dialog){
 		//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
 		var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
 		//次のダイアログに渡すデータを変数に入れる
-		var recordObject = creator.json[tableName][TABLE][rowNum];
+		var recordObject = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する
 		var returnObject = {
 			number:rowNum,			//クリックされた行番号
@@ -360,9 +363,6 @@ function memberReserveListDialog(dialog){
 		default:break;	//switchを抜ける
 		}
 	}
-
-	//ダイアログを閉じるときは破棄するように設定する
-	this.dialogClass.destroy();
 
 }
 

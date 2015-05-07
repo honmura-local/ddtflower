@@ -266,10 +266,13 @@ label,
  * 概要   :授業についてのテーブル領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.07.01
+ * 変更者 :T.Masuda
+ * 変更日 :2015.08.29
+ * 内容	 :無効にしました
  */
 .lessonTable,
 .displayNone {
-	display: none;			/* 最初は表示しない */
+	/*display: none;*/			/* 最初は表示しない */
 }
 
 /* 

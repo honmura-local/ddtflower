@@ -275,7 +275,7 @@ function baseDialog(dialog){
 	this.yes_no = [
 	                         	{
 	                         		//はいボタン
-		                        	 text:YES,
+		                        	 text:TEXT_YES,
 		                        	 //クリック時のコールバック関数を設定する
                             		 click:
                               			 //コールバック関数
@@ -285,7 +285,7 @@ function baseDialog(dialog){
                               		 }
 	                         	},
 		                         {	//いいえボタン
-		                        	 text:NO,
+		                        	 text:TEXT_NO,
 		                        	//クリック時のコールバック関数を設定する
                             		 click:
                               			 //コールバック関数
@@ -415,6 +415,22 @@ function baseDialog(dialog){
 					}
 	           ];
 	
+	//閉じるボタン単体の配列
+	this.close_single = [
+	                    //閉じるボタン
+	                    {
+	                    	//ボタンテキスト
+	                    	text:STR_CLOSE_JP,
+	                    	//ダイアログを閉じるボタンのイベントコールバック関数
+	                    	click:
+	                    		//コールバック関数
+	                    		function(){
+	                    		//閉じるボタンの処理を行う
+	                    		this.dialogBuilder.callbackCloseButton();
+	                    	}
+	                    }
+	                    ];
+	
 	/* 関数名:callbackYes
 	 * 概要　:ダイアログのはいボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
@@ -424,7 +440,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackYes = function(){
-		this.instance.setPushedButtonState(YES);
+		this.dialogClass.setPushedButtonState(YES);
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -437,7 +453,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackNo = function(){
-		this.instance.setPushedButtonState(NO);
+		this.dialogClass.setPushedButtonState(NO);
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -450,7 +466,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCancel = function(){
-		this.instance.setPushedButtonState(CANCEL);
+		this.dialogClass.setPushedButtonState(CANCEL);
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 

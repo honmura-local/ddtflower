@@ -2816,8 +2816,8 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		onSelect: function(dateText, inst){
 			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
-			//予約一覧ダイアログ用オブジェクトをコピーする
-			var sendObject = $.extend(true, {}, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			//汎用のダイアログ用オブジェクトをコピーする
+			var sendObject = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
 			
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
 			var dateObject = instance.lessonListDialogSendObject(dateText);
@@ -2830,16 +2830,18 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			dialogDataObject.creator = instance.creator;
 			
 			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
-			$.extend(true, sendObject.argumentObj.data, dialogDataObject);
+			$.extend(true, sendObject.data, dialogDataObject);
+			//@mod 20150829 T.Masuda ダイアログのタイトルをここでセットするように変更しました
+			//ダイアログのタイトルをセットする
+			sendObject.config.title = sendObject.data.dateJapanese;
 			
 			//予約授業一覧ダイアログを作る
 			var reservedLessonListDialog = new dialogEx(
 					DIALOG_RESERVE_LESSON_LIST, 
-					sendObject.argumentObj
+					sendObject
 					);
 			//ダイアログが開いたときのコールバック関数を指定する。
 			//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
-			reservedLessonListDialog.setCallbackOpen(commonFuncs.callOpenDialog);
 			reservedLessonListDialog.run();	//主処理を走らせる。
 		}
 	}
