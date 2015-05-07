@@ -489,8 +489,12 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallbackRowClick = function() {
+		var thisElem = this;	//イベントコールバック内でクラスインスタンスを使うため、変数に入れる
 		//ダイアログの内のテーブルの行をクリックしたときのコールバック関数をセットする
-		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, this.callbackRowClick(this));
+		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, function(){
+			//行クリック時のコールバック関数を実行する
+			thisElem.callbackRowClick(this);
+		});
 	};
 	
 	/* 関数名:callbackRowClick

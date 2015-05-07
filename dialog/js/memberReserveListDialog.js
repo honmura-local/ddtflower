@@ -15,6 +15,8 @@ function memberReserveListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	//予約・キャンセルの操作分岐のための数値
 	this.manipulation = 0;
+	//選択したレコードのデータ
+	this.recordData = {};
 	
 
 	/* 関数名:constructionContent
@@ -183,7 +185,7 @@ function memberReserveListDialog(dialog){
 		//ダイアログを閉じるときは破棄するように設定する
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 		//テーブルの行クリックイベントを登録する
-		this.setCallbackRowClick(this);	
+		this.setCallbackRowClick();	
 	}
 	
 	/* 関数名:setConfig
@@ -209,14 +211,15 @@ function memberReserveListDialog(dialog){
 	this.setArgumentObj = function() {
 
 		//新たにオブジェクトを作り、親ダイアログから引き継いだargumentObjの内容をセットする
-		var argumentObj = $.extend(true, {}, this.dialog[0].instance.argumentObj, this.recordData[DATA_KEY]);
+		var argumentObj = $.extend(true, {}, this.dialog[0].instance.argumentObj);
 		
 		//子ダイアログに渡すオブジェクトを生成する
-		$.extend(true, argumentObj.data,	//元データ
-				{parentDialogEx:this.dialog[0].instance},	//このダイアログのクラスインスタンス
-				{parentDialogCreateTag:this.createTag},		//このダイアログのcreateTag
-				recordData.data,		//行データ
-				recordData.number		//行番号
+		$.extend(true, argumentObj.data,							//元データ
+				{parentDialogEx:this.dialog[0].instance},			//このダイアログのクラスインスタンス
+				{parentDialogCreateTag:this[VAR_CREATE_TAG]},		//このダイアログのcreateTag
+				this.recordData.data,								//行データ
+				this.recordData.number,								//行番号
+				{callback:this.registerReserved}					//子ダイアログclose時のコールバック関数
 		);
 		
 		return argumentObj;	//生成したオブジェクトを返す
@@ -253,23 +256,22 @@ function memberReserveListDialog(dialog){
 	
 	/* 関数名:callbackRowClick
 	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数(内容はオーバーライドして定義されたし)
-	 * 引数　:baseDialog thisElem:イベントを登録したクラスインスタンス
+	 * 引数　:Element clicked:クリックされた行の要素
 	 * 返却値:なし
 	 * 作成日　:015.08.22
 	 * 作成者　:T.Masuda
 	 */
-	this.callbackRowClick = function(thisElem) {
-		//クリックした行の番号とデータを取得する
-		this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem[VAR_CREATE_TAG]);
+	this.callbackRowClick = function(clicked) {
+		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
+		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
 		//残席の記号を取得する
 		var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(REST_COLUMN_NUM).text();
-		
 		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-		if (thisElem[VAR_CREATE_TAG].json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
 			&& restMarkNow != CHAR_INVALIDATE) {
 			var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
 			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-			if(thisElem[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS) {
+			if(this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS) {
 				//予約確認ダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
 				//予約操作を行う
@@ -296,21 +298,22 @@ function memberReserveListDialog(dialog){
 	 * 返却値:object:returnObject:取得したデータの結果
 	 * 作成日　:2015.08.08
 	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.08.29
+	 * 変更者　:T.Masuda
+	 * 内容　 :全体的に改修しました。行番号はtrタグを基準に取得します
 	 */
-	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName, creator) {
-		//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
-		var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
+	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName) {
+		//クリックされた行番号を取得する。見出しの行は除外する
+		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(':not(:first)').index(clickTarget);
 		//次のダイアログに渡すデータを変数に入れる
 		var recordObject = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する
-		var returnObject = {
+		return returnObject = {
 			number:rowNum,			//クリックされた行番号
 			data:recordObject		//クリックされた行のデータ
 		}
-		//取得した行の番号とデータを返す
-		return returnObject;
 	}
-	
+
 	/* 関数名:updateJson
 	 * 概要　:サーバへクエリを投げる前に、送信するJSONデータを加工する
 	 * 引数　:baseDialog dialogBuilder:ダイアログ専用クラスインスタンス
@@ -325,16 +328,22 @@ function memberReserveListDialog(dialog){
 		//DB操作によってクエリを切り替える
 		switch(this.manipulation){
 		//通常の予約
-		case PROCESSING_RESERVE:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;
+		case PROCESSING_RESERVE:
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;
 			break;
 		//再予約
-		case PROCESSING_RESERVE_AGAIN:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].updateReservedData;
+		case PROCESSING_RESERVE_AGAIN:
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].updateReservedData;
 			break;
 		//キャンセル
-		case PROCESSING_CANCEL:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].cancelReservedData;
+		case PROCESSING_CANCEL:
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].cancelReservedData;
 			break;
-		default:break;
+		//それ以外であれば、そのまま終わる
+		default:
+			break;
 		}
+		
 		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;

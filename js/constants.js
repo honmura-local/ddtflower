@@ -409,9 +409,9 @@ TAG_CHILD_TR								= ' tr';	//子セレクタとしてのtr
 TEXT_YES									= 'はい';	//「はい」の文字列
 TEXT_NO										= 'いいえ';	//「いいえ」の文字列
 //予約キャンセルダイアログ
-HTML_MEMBER_RESERVE_CANCEL_DIALOG			= 'memberReserveCancelDialog.html';
+HTML_MEMBER_RESERVE_CANCEL_DIALOG			= 'dialog/memberReserveCancelDialog.html';
 //予約確認ダイアログ
-HTML_MEMBER_RESERVE_CONFIRM_DIALOG			= 'memberReserveConfirmDialog.html';
+HTML_MEMBER_RESERVE_CONFIRM_DIALOG			= 'dialog/memberReserveConfirmDialog.html';
 //整数の4
 INT_4										= 4;
 //ターゲットの授業テーブル
