@@ -17,7 +17,7 @@ function createTag(){
 	 * 概要  :JSONファイルを取得して返す。
 	 * 引数  :String jsonPath:JSONを要求する先。
 	 * 		:Object map:サーバへ渡す値の連想配列。
-	 * 返却値  :Object
+	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 * 変更者:T.Masuda
@@ -43,7 +43,7 @@ function createTag(){
 			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
-				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
+				//取得したJSONの連想配列をtmpに一時保存する。
 				tmp = json;
 			},
 			//通信失敗時の処理。
@@ -65,10 +65,10 @@ function createTag(){
 	};
 
 	/* 
-	 * 関数名:this.getDomFile = function((domPath))
-	 * 概要  :JSONファイルを取得して返す。
-	 * 引数  :String jsonPath
-	 * 返却値  :Object
+	 * 関数名:this.getDomFile = function(domPath)
+	 * 概要  :テンプレートのHTMLのDOMを取得して返す。
+	 * 引数  :String domPath
+	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 */
@@ -111,7 +111,7 @@ function createTag(){
 
 	/* 
 	 * 関数名:this.outputTag = function(key, domNodeName, appendTo)
-	 * 概要  :キーからパーツを。
+	 * 概要  :キーからパーツを作り配置する。
 	 * 引数  :String key, String domNodeName, String appendTo
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
@@ -205,8 +205,8 @@ function createTag(){
 	/* 
 	 * 関数名:this.getMapNode = function(key)
 	 * 概要  :JSON連想配列の最上階層からキーに対応した値を取り出す。
-	 * 引数  :String key
-	 * 返却値  :Object
+	 * 引数  :String key:JSONのキー
+	 * 返却値  :Object:取得した連想配列
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 */
@@ -218,8 +218,8 @@ function createTag(){
 	/* 
 	 * 関数名:this.getDomNode = function(key)
 	 * 概要  :キーに対応するHTMLのパーツを返す。
-	 * 引数  :String key
-	 * 返却値  :jQuery
+	 * 引数  :String key:JSONのキーの文字列。DOMのクラス名でもある。
+	 * 返却値  :Element:取得したDOMを返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 * 内容  :テンプレートのHTMLそのものではなく、コピーを返す様に変更しました。
@@ -232,7 +232,7 @@ function createTag(){
 	/* 
 	 * 関数名:this.createTagArray = function(mapNode, domNode)
 	 * 概要  :リストタイプのタグを配置する。
-	 * 引数  :String key, Object mapNode, jQuery domNode
+	 * 引数  :String key, Object mapNode, Element domNode
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -285,9 +285,10 @@ function createTag(){
 
 	/* 
 	 * 関数名:this.getDomChild = function(key, domNode)
-	 * 概要  :リストタイプのタグを配置する。
-	 * 引数  :String key, jQuery domNode
-	 * 返却値  :なし
+	 * 概要  :DOMから子要素のDOMを取得して返す。
+	 * 引数  :String key:JSONのキー。子要素のクラスと合致する
+	 		 Element domNode:子要素を取得する元のDOMノード
+	 * 返却値  :Element:取得したDOMを返す。
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
@@ -314,7 +315,7 @@ function createTag(){
 	
 	/* 
 	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea)
-	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
+	 * 概要  :ナンバリングと、それに応じた記事を作る。
 	 * 引数  :String jsonName:処理対象となるJSONのキー名。
 	 * 		 int startPage:表示する1つ目のナンバリングの数
 	 * 		 int displayPageMax:表示するナンバリングの最大数
@@ -440,7 +441,7 @@ function createTag(){
 	 * 作成日:2015.03.12
 	 */
 	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea){
-		var startAroundPage;
+		var startAroundPage;	//ナンバリングの表示開始ページ数を格納する変数を宣言する。
 		
 		//開始ページを算出する
 		//前移動の場合
@@ -453,7 +454,7 @@ function createTag(){
 			startAroundPage = (startPage+displayPageMax) < displayPage ? startPage+1 : startPage;		
 		//上記以外の場合
 		} else {
-			return;
+			return;	//途中終了する。
 		}
 		
 		var keyObj = {};	//keyオブジェクトを生成する。
@@ -474,9 +475,9 @@ function createTag(){
 
 	/* 
 	 * 関数名:this.getJsonObjectNum = function(jsonName)
-	 * 概要  :jsonの指定キー直下ののキーの数を返す。
+	 * 概要  :jsonの指定キー直下の数字キーの数を返す。
 	 * 引数  :String jsonName:処理対象のJSONのキー名。
-	 * 返却値  :int
+	 * 返却値  :int:チェック対象の数を返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
 	 */
@@ -515,9 +516,9 @@ function createTag(){
 	/*
 	 * 関数名:this.createElementTag = function(stackKey, curMapNode, topDomNode)
 	 * 概要  :JSONのノードに対応したタグを作る。
-	 * 引数  :String stackKey:
-	 * 　　　:Object curMapNode:
-	 * 　　　:Element topDomNode:
+	 * 引数  :Array stackKey:キーを格納するスタック形式の配列
+	 * 　　　:Object curMapNode:現在さしているJSONのノード
+	 * 　　　:Element topDomNode:現在さしているDOMの先頭
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -529,9 +530,9 @@ function createTag(){
 			return;	//処理を終える。
 		}
 		
-		//ノードがある限りループする。
+		//curMapNodeにキーがある限りループする。
 		for(key in curMapNode){
-			var mapNode = curMapNode[key];	//ループで走査しているキーの値を取得する。
+			var mapNode = curMapNode[key];	//現在走査しているキーの値を取得する。
 			var curDomNode = null;			//カレントのDOMノードを格納する変数を宣言、nullで初期化する。
 			
 			//mapNodeが配列であれば
@@ -581,7 +582,7 @@ function createTag(){
 								.addClass('values')
 						);
 
-		//キーのタグを群を作る。
+		//キーのタグ群を作る。
 		var keys = this.createKeyTags(curStackKey);
 		//キーのタグをまとめるタグに追加する。
 		$('.keys', retDom).append(keys);
@@ -607,7 +608,7 @@ function createTag(){
 	 * 引数  :Array curStackKey:キー名のスタック。
 	 * 　　　:String mapNode:JSONの文字列配列。
 	 * 　　　:String key:カレントのキー。
-	 * 返却値  :Element
+	 * 返却値  :Element:作成したDOM要素を返す。
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -651,7 +652,7 @@ function createTag(){
 	 * 関数名:this.createKeyTags = function(curStackKey)
 	 * 概要  :キーのタグ群を作る。
 	 * 引数  :Array curStackKey:キーのスタック。
-	 * 返却値  :Element
+	 * 返却値  :Element:作成したDOMを返す。
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -669,7 +670,7 @@ function createTag(){
 				$(retDom).append($('<span></span>').addClass('key').text(curStackKey[i]));
 			//最後の要素なら
 			} else {
-				//キーのタグをretDomに追加する。
+				//カレントのキーのタグをretDomに追加する。
 				$(retDom).append($('<span></span>').addClass('key currentKey').text(curStackKey[i]));
 			}
 		}
@@ -693,7 +694,7 @@ function createTag(){
 		//弟DOMがある限りループする。編集用テキストエリアのDOMを走査することで、この処理を実現する。
 		$('.editValue', topDomNode).each(function(){
 			var thisName = $(this).attr('name');	//現在のDOMのname属性を取得する。
-			//前回の走査が配列ノードの2番目以降であればスキップする。
+			//今回の走査が配列ノードの2番目以降であればスキップする。
 			if(thisName != prevName){
 				//テキストエリアのname属性からスタックキーを生成する。
 				var stackKey = thisName.split('_');
@@ -736,7 +737,7 @@ function createTag(){
 	 * 概要  :トークン文字列に該当するJSONノードを探し返す。
 	 * 引数  :Array curStackKey:スタックされたキーの配列
 	 * 　　　:Object curMapNode:カレントの連想配列のノード
-	 * 返却値  :なし
+	 * 返却値  :Object:連想配列を返す。
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -798,7 +799,7 @@ function createTag(){
 			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
-				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
+				//tmpに取得したJSONのデータを一時保存する。
 				tmp = json;
 			},
 			//通信失敗時の処理。
@@ -808,7 +809,7 @@ function createTag(){
 			}
 		});
 
-		//フィールドのメンバのjsonが空であれば
+		//JSONが取得できていれば
 		if(tmp != null){
 			//クラスのメンバのjsonにtmpの連想配列を格納する。
 			this.json[rootName] = tmp;
@@ -852,7 +853,7 @@ function createTag(){
 			}
 		});
 	});
-	
+
 	
 	/*
 	 * 関数名:this.reservedDialog['experience'] = function()
