@@ -409,10 +409,12 @@
             "text":"いいえ"
         },
         "reserveYesButton":{
-            "text":"はい"
+            "text":"はい",
+            "value":"1"
         },
         "reserveNoButton":{
-            "text":"いいえ"
+            "text":"いいえ",
+            "value":"0"
         }
     },
     "sendReservedData":{
@@ -588,10 +590,12 @@
             "text": "上記の授業をキャンセルしますか?"
         },
         "cancelYesButton":{
-            "text":"はい"
+            "text":"はい",
+            "value":"1"
         },
         "cancelNoButton":{
-            "text":"いいえ"
+            "text":"いいえ",
+            "value":"0"
         }
     },
     "cancelReservedData":{

@@ -55,6 +55,8 @@ UNSELECTED 									= -1;											//ボタン未選択の値
 NO											= 0;											//「はい」ボタンの値
 YES											= 1;											//「いいえ」ボタンの値
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
+ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
+RETURN_OBJ									= 'returnObj';									//dialogExクラスのアウトプット用オブジェクト名
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -356,6 +358,17 @@ function dialogEx(url, argumentObj, returnObj){
 	}
 
 	
+	/* 関数名:getArgumentObject
+	 * 概要　:argumentObjを返す
+	 * 引数　:なし
+	 * 返却値:Object:ダイアログのインプットデータオブジェクト
+	 * 作成日　:015.08.09
+	 * 作成者　:T.Masuda
+	 */
+	this.getArgumentObject = function() {
+		return this.argumentObj;	//argumentオブジェクトを返す
+	}
+	
 	/* 関数名:getConfigObject
 	 * 概要　:configオブジェクトを返す
 	 * 引数　:なし
@@ -625,8 +638,9 @@ function eachDayReservedInfoTableReplace() {
 function insertConfirmReserveJsonDialogValueEx(targetJson, dialogJsonKey, creator){
 	//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
 	var object = creator.json[targetJson];
+	console.log($(DOT + dialogJsonKey)[0].instance);
 	//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
-	var receivedObject = $(DOT + dialogJsonKey)[0].instance.argumentObj;
+	var receivedObject = $(DOT + dialogJsonKey)[0].instance.getArgumentDataObject();
 	//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
 	//受講時間
 	object.lessonConfirm.lessonInfo.timeSchedule.text = buildHourFromTo(receivedObject);
@@ -694,11 +708,25 @@ function getDialogTitleDate(date) {
  * 作成日:2015.08.06
  */
 function cancelDialogOpen(dialogData, dialogTitleDate) {
+	//キャンセルダイアログ用のオプションを取得する
+	var dialogOption = $.extend(true, {}, dialogExOption[CANCEL_LESSON_DIALOG].argumentObj);
 	//ダイアログのタイトルをセットして予約日を分かりやすくする
-	dialogExOption[CANCEL_LESSON_DIALOG][TITLE] = dialogTitleDate;
+	dialogOption.config[TITLE] = dialogTitleDate;
+
+	$.extend(true, 							//dataオブジェクトを統合する
+			dialogOption.data,				//新たにオブジェクトを作り、そこにまとめる
+			dialogData		 				//選択された行データ
+	);
+	
+	console.log(dialogOption);
+	
 	//予約キャンセルダイアログを作る
-	var cancelLessonDialog = new dialogEx(DIALOG_CANCEL_LESSON, dialogData, dialogExOption[CANCEL_LESSON_DIALOG]);
-	cancelLessonDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
+	var cancelLessonDialog = new dialogEx(
+			DIALOG_CANCEL_LESSON, 
+			dialogOption,
+			dialogExOption[CANCEL_LESSON_DIALOG].returnObj
+		);
+	cancelLessonDialog.setCallbackClose(cancelLessonDialogClose);	//閉じるときのイベントを登録
 	cancelLessonDialog.run();	//主処理を走らせる。
 }
 
@@ -706,16 +734,21 @@ function cancelDialogOpen(dialogData, dialogTitleDate) {
  * 関数名:cancelDialogOpenFromReservedTable
  * 概要  :予約キャンセルダイアログを予約済み授業から開くための関数
  * 引数  :int memberNumber:会員番号
+ * 　　  :createLittleContents creator:createLittleContentsクラスインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.31
+ * 変更者:T.Masuda
+ * 変更日:2015.08.09
+ * 内容	:改修したdialogExクラスに対応しました。
  */
-function cancelDialogOpenFromReservedTable (memberNumber) {
+function cancelDialogOpenFromReservedTable (memberNumber, creator) {
 	//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
 	$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
 		var recordData = getClickTableRecordData(this, RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD , creator);
 		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる
-		var sendObject = $.extend(true, {userId:memberNumber}, recordData.data);
+		//@mod 2015.0809 T.Masuda creatorもsendObjectに含む様にしました
+		var sendObject = $.extend(true, {userId:memberNumber}, {'creator':creator}, recordData.data);
 		//日付を日本語表示にする
 		var titleDate = getDialogTitleDate(sendObject.lesson_date);
 		//キャンセルダイアログを開く
@@ -723,79 +756,6 @@ function cancelDialogOpenFromReservedTable (memberNumber) {
 	});
 }
 
-
-
-
-/* 関数名:openMemberReservedConfirmDialog
- * 概要　:会員top、予約確認ダイアログを開く処理
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
- */
-function openMemberReservedConfirmDialog() {
-	//予約確認ダイアログを表示する処理
-	$('.reserveLessonListContent').on(CLICK, '.targetLessonTable', function(){
-		//クリックした行の番号とデータを取得する
-		var recordData = getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, reserveLessonListCreator);
-		//残席の記号を取得する
-		var restMarkNow = $('.targetLessonTable' +':eq(' + (recordData.number) + ') td').eq(4).text();
-		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-		if (reserveLessonListCreator.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST] && restMarkNow != '✕') {
-			//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
-			recordData.data['userId'] = reserveLessonListCreator.json.accountHeader.user_key.value;
-			//日付を日本語表示にしてダイアログのタイトルにするために保存する
-			var titleDate = getDialogTitleDate(recordData.data.lesson_date)
-			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-			if(reserveLessonListCreator.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
-				//ダイアログのタイトルをセットして予約日を分かりやすくする
-				dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG][TITLE] = titleDate;
-				//予約授業一覧ダイアログを作る
-				var memberReservedConfirmDialog = new dialogEx(DIALOG_MEMBER_RESERVED_CONFIRM, recordData.data, dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG]);
-				memberReservedConfirmDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
-				memberReservedConfirmDialog.run();	//主処理を走らせる。
-			//すでに予約しているのであればキャンセルダイアログを開く
-			} else {
-				//キャンセルダイアログを開く
-				cancelDialogOpen(recordData.data, titleDate);
-			}
-		}
-	});
-}
-
-/* 関数名:openAdminLessonDetailDialog
- * 概要　:管理者授業詳細ダイアログを開く
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
- */
-function openAdminLessonDetailDialog() {
-	//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
-	//予約決定ダイアログを表示する処理
-	$('.adminLessonListContent').on(STR_CLICK, '.targetAdminLessonRecord', function(){
-		//クリックしたセルの行番号を取得する
-		var rowNum = $('.targetAdminLessonRecord').index(this);
-		//次のダイアログに渡すデータを変数に入れる
-		var sendObject = adminLessonListCreator.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
-		//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-		var timeSchedule = $('.targetAdminLessonRecord:eq(' + rowNum + ') td').eq(0).text();
-		//時間割を次のダイアログに入れるためのデータに入れる
-		sendObject['time_schedule'] = timeSchedule;
-		//日付のハイフンを置換前のスラッシュ区切りにする
-		var date = sendObject.lesson_date.replace(/-/g,"/");
-		// 日付を日本語表示にする
-		var titleDate = changeJapaneseDate(date);
-		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[LESSON_DETAIL_DIALOG][TITLE] = titleDate;
-		//授業詳細ダイアログを作る
-		var lessonDetailDialog = new dialogEx('dialog/lessonDetailDialog.html', sendObject, dialogExOption[LESSON_DETAIL_DIALOG]);
-		//ダイアログを開くときのテーブルの値を編集して表示する
-		// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-		lessonDetailDialog.setCallbackClose(adminLessonDetailDialogCloseFunc);	//閉じるときのイベントを登録
-		lessonDetailDialog.run();	//主処理を走らせる。
-	});
-}
 
 /* 関数名:adminNewLessonCreateDialogCloseFunc
  * 概要　:管理者新規授業作成ダイアログが閉じた時のイベント登録関数
@@ -809,32 +769,6 @@ function adminNewLessonCreateDialogCloseFunc() {
 	$('.adminNewLessonCreateContent')[0].instance.destroy();
 }
 
-/* 関数名:openAdminNewLessonCreateDialog
- * 概要　:管理者新規授業作成ダイアログを開く
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.08.01
- * 作成者　:T.Yamamoto
- */
-function openAdminNewLessonCreateDialog() {
-	//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
-	$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
-		//新規授業追加ダイアログに渡す変数を宣言しておく
-		var sendObject = {};
-		//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
-		sendObject['lessonDate'] = $('.adminLessonListContent')[0].instance.argumentObj.lessonDate.replace(/\//g,"-");
-		//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-		sendObject['tableData'] = adminLessonListCreator.json.adminLessonDetailTable.table;
-		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_NEW_LESSON_CREATE][TITLE] = dialogExOption[ADMIN_LESSONLIST_DIALOG][TITLE];
-		//新規授業追加ダイアログを作る
-		var newLessonCreateDialog = new dialogEx('dialog/adminNewLessonCreateDialog.html', sendObject, dialogExOption[ADMIN_NEW_LESSON_CREATE]);
-		//ダイアログを開くときのテーブルの値を編集して表示する
-		// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-		newLessonCreateDialog.setCallbackClose(adminNewLessonCreateDialogCloseFunc);	//閉じるときのイベントを登録
-		newLessonCreateDialog.run();	//主処理を走らせる。
-	});
-}
 
 /* 関数名:adminLessonDetailDialogCloseFunc
  * 概要　:管理者授業詳細ダイアログが閉じるときにコールされる関数一覧。初期化処理を行う
@@ -848,63 +782,70 @@ function adminLessonDetailDialogCloseFunc() {
 	$('.adminLessonDetailContent')[0].instance.destroy();
 }
 
-/* 関数名:memberReservedConfirmDialogOkButtonFunc
+/* 関数名:memberReservedConfirmDialogClose
  * 概要　:会員top、予約確認ダイアログでokボタンが押された時の処理を登録する
- * 引数　:sendObject:送信する連想配列データ
+ * 引数　:なし
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
+ * 変更日　:2015.08.09
+ * 変更者　:T.Masuda
+ * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
  */
-function memberReservedConfirmDialogOkButtonFunc(sendObject) {
-	if(!sendObject.user_work_status) {
-		//DBにデータを挿入して予約処理をする
-		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.sendReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
-	//以前にキャンセルしたことがある授業の場合
-	} else {
-		//DBにデータの更新で予約処理をする
-		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.updateReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
+function memberReservedConfirmDialogClose() {
+	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+		
+		if(!data.user_work_status) {
+			//DBにデータを挿入して予約処理をする
+			dialogClass.creator.setDBdata(dialogClass.creator.json.sendReservedData, data, MESSAGE_SUCCESS_RESERVED);
+			//以前にキャンセルしたことがある授業の場合
+		} else {
+			//DBにデータの更新で予約処理をする
+			dialogClass.creator.setDBdata(dialogClass.creator.json.updateReservedData, data, MESSAGE_SUCCESS_RESERVED);
+		}
+		
+		//会員トップ画面、予約中授業一覧ダイアログをリロードして最新の状態にする
+		data.creator.tableReload(RESERVED_LESSON_TABLE);
+		//予約授業一覧ダイアログのテーブルをリロードして最新の状態にする
+		data.reservedListCreator.tableReload(LESSON_TABLE);
 	}
-	//会員トップ画面、予約中授業一覧ダイアログをリロードして最新の状態にする
-	creator.tableReload(RESERVED_LESSON_TABLE);
-	//予約授業一覧ダイアログのテーブルをリロードして最新の状態にする
-	reserveLessonListCreator.tableReload(LESSON_TABLE);
-	$('.memberReservedConfirmDialogContent').dialog(CLOSE);			//ダイアログを閉じる
 }
 
-/* 関数名:memberReservedConfirmDialogOkButton
- * 概要　:会員top、予約キャンセルダイアログでダイアログが閉じる時の処理
- * 引数　:sendObject:送信する連想配列データ
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
- */
-function cancelLssonDialogCloseFunc() {
-	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
-	creator.tableReload(RESERVED_LESSON_TABLE);
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.cancelLessonDialogContent')[0].instance.destroy();
-}
-
-
-/* 関数名:cancelLssonDialogDialogOkButton
+/* 関数名:cancelLessonDialogClose
  * 概要　:会員top、予約キャンセルダイアログでokボタンが押された時の処理を登録する
  * 引数　:sendObject:送信する連想配列データ
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
+ * 修正日　:2015.07.31
+ * 修正者　:T.Masuda
+ * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
  */
-function cancelLssonDialogDialogOkButton(sendObject) {
+function cancelLessonDialogClose() {
+	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	//ダイアログの呼び出し元で違うcreateLittleContentsクラスインスタンスを利用する
+	var creator = data.reservedListCreator !== void(0)?	data.reservedListCreator: data.creator;
 	//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-	cancelLessonCreator.setDBdata(cancelLessonCreator.json.cancelReservedData, sendObject, MESSAGE_SUCCESS_CANCELED);
+	//変更者:T.Masuda 変更日:2015.08.09 ダイアログのクラスインスタンスに持たせたcreateLittleContentsクラスに関数をコールさせます。
+	creator.setDBdata(creator.json.cancelReservedData, data, MESSAGE_SUCCESS_CANCELED);
+
 	//予約可能授業一覧テーブルがあればテーブルをリロードする
-	if($(DOT + LESSON_TABLE)) {
+	if(data.reservedListCreator !== void(0)) {
 		//予約可能授業一覧テーブルをリロードする
-		reserveLessonListCreator.tableReload(LESSON_TABLE);
+		data.reservedListCreator.tableReload(LESSON_TABLE);
 	}
+	
 	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
-	creator.tableReload(RESERVED_LESSON_TABLE);
-	//ダイアログを閉じる
-	$('.cancelLessonDialogContent').dialog(CLOSE);
+	data.creator.tableReload(RESERVED_LESSON_TABLE);
+	}
 }
 
 /* 

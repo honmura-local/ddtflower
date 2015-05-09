@@ -5,6 +5,8 @@
 	$('.reserveLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
 	var reserveLessonListCreator = new createLittleContents();
+	//キャンセル時に必要なクエリがあるため、会員ページのJSONを取得する
+	reserveLessonListCreator.getJsonFile('source/memberPage.json');
 	//会員、予約授業一覧のjsonを取得する
 	reserveLessonListCreator.getJsonFile('source/eachDayLesson.json');
 	//会員、予約授業一覧のテンプレートを取得する
@@ -38,7 +40,7 @@
 		reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
 		$('.reserveLessonListContent').off();
 		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
-		openMemberReservedConfirmDialog();
+		reserveLessonListCreator.openMemberReservedConfirmDialog();
 	}
 </script>
 </div>

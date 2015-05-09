@@ -131,6 +131,7 @@ var specialReservedConfirmDialogOption = {
 			
 		}
 	},
+	//アウトプット用データを格納するオブジェクト
 	returnObj:{
 		
 	}
@@ -160,6 +161,10 @@ dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			},
 			data:{
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 };
 
@@ -181,6 +186,24 @@ dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG] = {
 				position :{my:'center top',at:'center top', of:window}
 			},
 			data:{
+			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			//ダイアログの状態を表すオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+			},
+			//関数オブジェクト
+			funcObj:{
+				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
+				        function(){	//「いいえ」ボタン
+				        	//いいえ」ボタンの処理内容
+				        },
+				        function(){	//「はい」ボタン
+				        	//「はい」ボタンの処理内容
+				        }
+				]
 			}
 		}
 };
@@ -204,6 +227,24 @@ dialogExOption[CANCEL_LESSON_DIALOG] = {
 			},
 			data:{
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			//ダイアログの状態を表すオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+			},
+			//関数オブジェクト
+			funcObj:{
+				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
+				        function(){	//「いいえ」ボタン
+				        	//いいえ」ボタンの処理内容
+				        },
+				        function(){	//「はい」ボタン
+				        	//「はい」ボタンの処理内容
+				        }
+				]
+			}
 		}
 };
 
@@ -226,6 +267,10 @@ dialogExOption[ADMIN_LESSONLIST_DIALOG] = {
 			},
 			data:{
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 };
 
@@ -244,10 +289,25 @@ dialogExOption[LESSON_DETAIL_DIALOG] = {
 				//モーダル化する
 				modal:true,
 				//画面上部にダイアログを表示する
-				position :{my:'center top',at:'center top', of:window}
+				position :{my:'center top',at:'center top', of:window},
+				//以下、ダイアログの状態に合わせて発生するイベントとコールバック関数。
+				//dialogExクラスのsetCallback~関数でコールバック関数をセットします
+				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
+					
+				},
+				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
+					
+				},
+				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
+					
+				}
 			},
 			data:{
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 }
 
@@ -266,11 +326,26 @@ dialogExOption[ADMIN_NEW_LESSON_CREATE] = {
 				//モーダル化する
 				modal:true,
 				//画面上部にダイアログを表示する
-				position :{my:'center top',at:'center top', of:window}
+				position :{my:'center top',at:'center top', of:window},
+				//以下、ダイアログの状態に合わせて発生するイベントとコールバック関数。
+				//dialogExクラスのsetCallback~関数でコールバック関数をセットします
+				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
+					
+				},
+				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
+					
+				},
+				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
+					
+				}
 			},
 			data:{
 				
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 }
 
@@ -291,8 +366,23 @@ dialogExOption[ADMIN_MAIL_SEND_DIALOG] = {
 				//ダイアログタイトルをメッセージ作成にする
 				title:'メッセージ作成',
 				//画面上部にダイアログを表示する
-				position :{my:'center top',at:'center top', of:window}
+				position :{my:'center top',at:'center top', of:window},
+				//以下、ダイアログの状態に合わせて発生するイベントとコールバック関数。
+				//dialogExクラスのsetCallback~関数でコールバック関数をセットします
+				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
+					
+				},
+				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
+					
+				},
+				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
+					
+				}
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 }
 
@@ -313,11 +403,26 @@ dialogExOption[CONFIRM_DIALOG] = {
 				//ダイアログタイトルを送信確認にする
 				title:'送信確認',
 				//画面上部にダイアログを表示する
-				position :{my:'center top',at:'center top', of:window}
+				position :{my:'center top',at:'center top', of:window},
+				//以下、ダイアログの状態に合わせて発生するイベントとコールバック関数。
+				//dialogExクラスのsetCallback~関数でコールバック関数をセットします
+				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
+					
+				},
+				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
+					
+				},
+				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
+					
+				}
 			},
 			data:{
 				
 			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			
 		}
 }
 

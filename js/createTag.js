@@ -1318,15 +1318,20 @@ function createTag(){
 	 * 戻り値　:なし
 	 * 作成日　:2015.0614
 	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0809
+	 * 変更者　:T.Masuda
+	 * 内容　 :引数に取ったオブジェクトに影響が出ない様にしました。
 	 */
 	this.replaceValueNode = function(object){
+		//返却用オブジェクトを用意し、引数のオブジェクトのコピーを格納する
+		var retObj = $.extend(true, {}, object);
 		//オブジェクトを走査する
-		for(key in object){
+		for(key in retObj){
 			//keyのvalueを、新たに生成したオブジェクトのvalueのkeyにセットし、元のkeyにセットする
-			object[key] = {value:object[key]};
+			retObj[key] = {value:retObj[key]};
 		}
 		
-		return object;	//処理を終えたobjectを返す
+		return retObj;	//処理を終えたobjectを返す
 	}
 	
 	/*

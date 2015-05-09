@@ -137,7 +137,7 @@
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 						//キャンセルダイアログを予約中授業テーブルから開く処理
-						cancelDialogOpenFromReservedTable(memberInfo);
+						cancelDialogOpenFromReservedTable(memberInfo, creator);
 					}
 					//キャンセル料率のレートをアコーディオン形式で表示する
 					creator.accordionSetting('.lessonAccordion', '.attention');
