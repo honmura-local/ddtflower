@@ -17,6 +17,8 @@ exit;
 <meta http-equiv="Content-Type" content="application/json; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
+
+
 <!-- 表示用タイトル -->
 
 <!--title、keywords、description表示用-->
@@ -43,6 +45,18 @@ exit;
 <script type="text/javascript" src="ddt-regular/js/imagemove.js" charset="utf-8"></script>
 <!-- script type="text/javascript" src="ddt-regular/js/footerFixed.js"></script -->
 <!--[if lt IE 9]><script src="ddt-regular/js/html5shiv.js"></script><![endif]-->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58020246-43', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
 </head>
 <!-- コンテンツを表示する領域 -->
 <body id="base">
