@@ -1417,6 +1417,8 @@ this.defaultClassworkCostColumns = [
 					commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
 				},
 				close:function(){	//ダイアログが閉じるときのイベント
+					//ダイアログを完全に破棄する
+					commonFuncs.setCallbackToEventObject(this, 'instance', 'destroy');
 				}
 			},
 			//インプット用データオブジェクト
@@ -1531,17 +1533,26 @@ this.defaultClassworkCostColumns = [
 	 * 内容	:commonクラスに移動しました。また、createTagを引数に取る様にしました
 	 */
 	this.setJsonDataFromArgumentObj = function(create_tag, dialogClass){
-		//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
-		var setToObject = create_tag.json;
 		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
 		var argumentObj = dialogClass.getArgumentDataObject();
 		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-		setToObject.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
-		setToObject.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
-		setToObject.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
-		setToObject.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
-		setToObject.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
-		setToObject.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
+		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
+		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
+		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
+//		//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
+//		var setToObject = create_tag.json.lessonConfirmContent;
+//		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
+//		var argumentObj = dialogClass.getArgumentDataObject();
+//		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
+//		setToObject.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
+//		setToObject.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
+//		setToObject.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
+//		setToObject.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
+//		setToObject.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
+//		setToObject.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
 	}	 
 	 
 	

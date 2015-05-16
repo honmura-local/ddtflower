@@ -65,6 +65,8 @@ function windowEx(url, argumentObj, returnObj){
 			async: false,			//同期通信を行う
 			cache: true,			//通信結果をキャッシュする
 			success:function(html){	//通信成功時
+				//DOMをクリアする
+				tmpThis.dom = EMPTY_STRING;	
 				//取得したhtmlデータをメンバに格納する。
 				tmpThis.dom = html;
 			},

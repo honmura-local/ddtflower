@@ -59,13 +59,13 @@ function memberReserveCancelDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//ダイアログの中身のコンテンツを作る
-		creator.outputTag(CLASS_LESSON_INFO, CLASS_LESSON_INFO, CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_INFO, CLASS_LESSON_INFO, CURRENT_DIALOG_SELECTOR);
 		//アコーディオンの表示のきっかけとなるキャンセル料率と加算ポイントについてのテキストを作る
-		creator.outputTag(CLASS_INFO_ACCORDION, CLASS_INFO_ACCORDION, CLASS_LESSON_INFO);
+		this[VAR_CREATE_TAG].outputTag(CLASS_INFO_ACCORDION, CLASS_INFO_ACCORDION, CLASS_LESSON_INFO);
 		//アコーディオンの中身を作る
-		creator.outputTag(CLASS_LESSON_ACCORDION, CLASS_LESSON_ACCORDION, CLASS_LESSON_INFO);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_ACCORDION, CLASS_LESSON_ACCORDION, CLASS_LESSON_INFO);
 		//確認テキストを作る
-		creator.outputTag(CLASS_MEMBER_CONFIRM, CLASS_MEMBER_CONFIRM, CLASS_LESSON_INFO);
+		this[VAR_CREATE_TAG].outputTag(CLASS_MEMBER_CONFIRM, CLASS_MEMBER_CONFIRM, CLASS_LESSON_INFO);
 	}
 	
 	/* 関数名:setCallback
@@ -91,7 +91,7 @@ function memberReserveCancelDialog(dialog){
 	 */
 	this.setConfig = function(){
 		//はい・いいえボタンを使う
-		this.setButtons(this.yes_no);
+		this.setDialogButtons(this.yes_no);
 		//ダイアログの位置調整を行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
 	}

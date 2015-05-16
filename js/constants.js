@@ -667,4 +667,4 @@ PROCESSING_CANCEL							= 2;	//予約キャンセル操作を行う
 KEY_DB_SETQUERY 							= 'db_setQuery';
 KEY_DB_GETQUERY 							= 'db_getQuery';
 
-
+COLUMN_NAME_LESSON_KEY						= 'lesson_key';

@@ -45,6 +45,8 @@ function dialogEx(url, argumentObj, returnObj){
 				commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
 			},
 			close:function(){
+				//ダイアログを完全に破棄する
+				commonFuncs.setCallbackToEventObject(this, 'instance', 'destroy');
 			}
 		},
 		//インプット用データオブジェクト

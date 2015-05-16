@@ -20,7 +20,7 @@ function baseDialog(dialog){
 	//各コンストラクタ引数をメンバに格納する
 	this.dialog = dialog;		//ダイアログのDOM
 	//dialogExクラスインスタンス。初期展開時のエラー対策のため、dialogが空かどうかの判定をしています。
-	this.dialogClass = commonFuncs.checkEmpty(dialog) ? dialog[0].instance : void(0);
+	this.dialogClass = commonFuncs.checkEmpty(dialog) ? dialog.instance : void(0);
 	//ダイアログの生成と操作に使うcreateLittleContentsインスタンスを用意する
 	this.create_tag = new createLittleContents();
 	
@@ -60,7 +60,8 @@ function baseDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
-			this.setJson();			//JSONを取得する
+			this.getJson();			//JSONを取得する
+			this.getDom();			//DOMを取得する
 			this.customizeJson();	//取得したJSONを加工する
 		//例外時処理
 		}catch(e){
@@ -243,8 +244,10 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.sendQuery = function(sendUrl, sendObj){
+		
+		var send = this.create_tag.checkBeforeConvertJsonString(this.create_tag.replaceValueNode(sendObj));
 		//引数のオブジェクトをパースしてJSON文字列にする
-		var jsonString = JSON.stringify(sendObj);
+		var jsonString = JSON.stringify(send);
 		//JSONが無効なものであれば
 		if(!commonFuncs.checkEmpty(jsonString)){
 			//JSON解析エラー例外を投げる
@@ -254,9 +257,10 @@ function baseDialog(dialog){
 		var retObj = {};	//返却用の変数を宣言する
 		$.ajax({
 			url:sendUrl			//PHPのURLを設定する
-			,data:{json:JSON.stringify(sendObj)}	//送信データのオブジェクト
+			,data:{json:jsonString}	//送信データのオブジェクト
 			,dataType:"json"	//JSON形式でデータをもらう
 			,type:"POST"		//POSTメソッドでHTTP通信する
+			,async:false		//同期通信を行う
 			//通信成功時の処理
 			,success:function(json, status){	//オブジェクトに変換したJSONと通信状態をを返してもらう
 				retObj = json;	//通信結果のJSONを取得する
@@ -291,7 +295,7 @@ function baseDialog(dialog){
                               			 //コールバック関数
                               			 function(){
                               			 //更新ボタンの処理を行う
-                              			 this.dialogBuilder.callBackNo();
+                              			 this.dialogBuilder.callbackNo();
                               		 }
 		                         }
 	                         ];
@@ -491,7 +495,7 @@ function baseDialog(dialog){
 	this.setCallbackRowClick = function() {
 		var thisElem = this;	//イベントコールバック内でクラスインスタンスを使うため、変数に入れる
 		//ダイアログの内のテーブルの行をクリックしたときのコールバック関数をセットする
-		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, function(){
+		$(STR_TR, this[DIALOG_CLASS].dom).on(CLICK, function(){
 			//行クリック時のコールバック関数を実行する
 			thisElem.callbackRowClick(this);
 		});
@@ -613,9 +617,9 @@ function baseDialog(dialog){
 	this.openDialog = function(url){
 		//ダイアログのクラスインスタンスを生成する。
 		//openイベントはsetArgumentObjでセットしておく
-		this.dialogEx = new dialogEx(url, this.setArgumentObj());
+		var newDialog = new dialogEx(url, this.setArgumentObj());
 		//openイベントのコールバック関数をセットする
-		this.dialogEx.run();	//ダイアログを開く
+		newDialog.run();	//ダイアログを開く
 	}
 
 	/* 関数名:insertFooterContents

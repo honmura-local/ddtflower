@@ -2727,6 +2727,12 @@ function createLittleContents(){
 						!(typeof retObject[key].value == STRING 
 						|| typeof retObject[key].value == NUMBER)){
 					delete retObject[key];	//該当するノードを削除する
+				//キーがdb_getQuery、db_setQueryであり、テキストがvalueにセットされていたら
+				} else if(key.indexOf('db_') != -1 
+						&& key.indexOf('Query') != -1 
+						&& commonFuncs.checkEmpty(retObject[key].value)){
+					//階層を上げて、JSONDBManagerで利用するためのノードの構成にする(このキーの値はvalueであってはいけない)
+					retObject[key] = retObject[key].value;
 				}
 			}
 			

@@ -18,6 +18,13 @@ function memberReserveListDialog(dialog){
 	//選択したレコードのデータ
 	this.recordData = {};
 	
+	//予約、キャンセルを行ったときのお知らせのテキストの配列
+	this.noticeMessages = [
+	                       	'ご希望の授業の予約が完了しました。',
+	                       	'ご希望の授業の予約が完了しました。',
+	                       	'選択した授業の予約をキャンセルしました。'
+	                       ];
+	
 
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
@@ -75,6 +82,8 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getDom = function(){
+		//createTagのDOMをクリアする
+		this[VAR_CREATE_TAG].dom = EMPTY_STRING;		
 		//会員ページ 授業一覧ダイアログのテンプレートHTMLを取得する
 		this[VAR_CREATE_TAG].getDomFile(RESERVE_LIST_HTML);		
 	};
@@ -162,16 +171,15 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//予約可能授業一覧テーブルの外側の領域を作る
-		this[VAR_CREATE_TAG].outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
-		console.log(this[VAR_CREATE_TAG].json[LESSON_TABLE]);
+		this[VAR_CREATE_TAG].outputTag(TABLE_AREA, TABLE_AREA, this.dialog);
 		//予約できる授業のデータ一覧テーブルを作る
-		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
+		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(SELECTOR_TABLE_AREA, this.dialog));
 		//テーブルの値を置換する
 		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
 		//テーブルの値をクライアント側で編集して画面に表示する
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
-		this[VAR_CREATE_TAG].outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(EXPLAIN + 1, EXPLAIN + 1, this.dialog);
 	}
 
 	/* 関数名:setCallback
@@ -182,10 +190,8 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
-		//ダイアログを閉じるときは破棄するように設定する
-		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 		//テーブルの行クリックイベントを登録する
-		this.setCallbackRowClick();	
+		this.setCallbackRowClick();
 	}
 	
 	/* 関数名:setConfig
@@ -211,12 +217,11 @@ function memberReserveListDialog(dialog){
 	this.setArgumentObj = function() {
 
 		//新たにオブジェクトを作り、親ダイアログから引き継いだargumentObjの内容をセットする
-		var argumentObj = $.extend(true, {}, this.dialog[0].instance.argumentObj);
+		var argumentObj = $.extend(true, {}, this.dialog.instance.argumentObj);
 		
 		//子ダイアログに渡すオブジェクトを生成する
 		$.extend(true, argumentObj.data,							//元データ
-				{parentDialogEx:this.dialog[0].instance},			//このダイアログのクラスインスタンス
-				{parentDialogCreateTag:this[VAR_CREATE_TAG]},		//このダイアログのcreateTag
+				{parentDialogEx:this.dialogClass},					//このダイアログのクラスインスタンス
 				this.recordData.data,								//行データ
 				this.recordData.number,								//行番号
 				{callback:this.registerReserved}					//子ダイアログclose時のコールバック関数
@@ -269,13 +274,14 @@ function memberReserveListDialog(dialog){
 		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
 		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
 			&& restMarkNow != CHAR_INVALIDATE) {
-			var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
-			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
+			var dialogUrl = EMPTY_STRING;	//ダイアログのURLを格納する変数を用意する
+			//予約済みでない
 			if(this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS) {
 				//予約確認ダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
-				//予約操作を行う
-				this.manipulation = PROCESSING_RESERVE;
+				//予約操作を行う。初回予約、再予約で別の値をクエリ判別のための変数にセットする
+				this.manipulation = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] == EMPTY_STRING ? 
+						PROCESSING_RESERVE : PROCESSING_RESERVE_AGAIN;
 			//予約済みであれば
 			} else {
 				//予約キャンセルダイアログのURLをセットする
@@ -329,22 +335,22 @@ function memberReserveListDialog(dialog){
 		switch(this.manipulation){
 		//通常の予約
 		case PROCESSING_RESERVE:
-			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.sendReservedData.db_setQuery;
 			break;
 		//再予約
 		case PROCESSING_RESERVE_AGAIN:
-			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].updateReservedData;
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.updateReservedData.db_setQuery;
 			break;
 		//キャンセル
 		case PROCESSING_CANCEL:
-			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].cancelReservedData;
+			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.cancelReservedData.db_setQuery;
 			break;
 		//それ以外であれば、そのまま終わる
 		default:
 			break;
 		}
 
-		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
+//		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;
 	};
@@ -357,17 +363,24 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.registerReserved = function(){
+		var dialogClass = this.instance;	//ダイアログのクラスインスタンスを取得する
+		//予約確認、またはキャンセルダイアログを破棄する
+		dialogClass.destroy();
 		//押されたボタンで処理を分岐させる
-		switch(this.dialogClass.getPushedButtonState()){
+		switch(dialogClass.getPushedButtonState()){
 		//はいボタンが押されたパターン
 		case YES:
+				var data = dialogClass.getArgumentDataObject();
 				//親のダイアログ専用クラスインスタンスを取得する
-				var parentDialogBuilder = parentDialog.dom.dialogBuilder;
+				var parentDialogBuilder = data.parentDialogEx.dom.dialogBuilder;
 				//親ダイアログでDB更新用JSONをまとめる
-				var sendObject = parentDialogBuilder.updateJson();
+				var sendObject = parentDialogBuilder.updateJson(this.dialogBuilder);
 				//クエリを発行してキャンセル処理を行う
-				this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+				parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+				$(parentDialogBuilder.dialog).empty();
 				parentDialogBuilder.dispContents();	//予約一覧ダイアログの中身を更新する
+				//予約、キャンセルに応じた通知のアラートを出す
+				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
 				break;	//switchを抜ける
 		default:break;	//switchを抜ける
 		}

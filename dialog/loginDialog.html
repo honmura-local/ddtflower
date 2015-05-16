@@ -6,7 +6,7 @@
 		commonFuncs.getScriptFile(URL_LOGIN_DIALOG_JS);
 		
 		//当該ダイアログ用関数クラスインスタンスを生成する
-		var dialogBuilder = new loginDialog(thisDialog);
+		var dialogBuilder = new loginDialog(thisDialog[0]);
 		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
 		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>

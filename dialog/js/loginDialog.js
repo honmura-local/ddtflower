@@ -77,7 +77,7 @@ function loginDialog(dialog){
 	this.dispContentsHeader = function(){
 		//ダイアログのタイトルを変更する。
 		//ログインエラー例外クラス生成時に設定されたタイトルを使う
-		this.setDialogTitle(this.dialog[0].instance.getArgumentDataObject().title);
+		//this.setDialogTitle(this.dialog.instance.getArgumentDataObject().title);
 	}
 	
 	/* 関数名:dispContentsMain
