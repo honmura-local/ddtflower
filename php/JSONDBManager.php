@@ -103,6 +103,11 @@ class JSONDBManager {
 	function executeQuery($json, $queryKey) {
 		// 返却する結果セットの変数を作成する
 		$retRS = null;
+		//ユーザ情報を保護するためパスワードがkeyにあればハッシュ化する
+		if (array_key_exists('password', $json)) {
+			//ハッシュ化する
+			$json['password']['value'] = sha1($json['password']['value']);
+		}
 		// $queryKeyが$jsonに存在していれば$queryに値を入れる
 		if (array_key_exists($queryKey, $json)) {
 			// カレントjsonから"queryKey"を持つキーを取得する

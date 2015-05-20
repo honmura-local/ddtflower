@@ -929,7 +929,7 @@ function toggleHeader(targetObject){
  * 作成日　:2015.0627
  * 作成者　:T.Masuda
  */
-function afterLogin(json, creator){
+function afterLogin(id, creator){
 	//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
 	$(CLASS_HEADER).hide();		//ヘッダーを隠す
 	creator.getJsonFile(PATH_MEMBERPAGE_JSON);
@@ -940,7 +940,7 @@ function afterLogin(json, creator){
 		//子供にuser_keyがあるときにvalueの値を書き換える 
 		if(USER_KEY in creator.json[key]) {
 			//jsonの値をセットする
-			creator.json[key][USER_KEY][VALUE] = json[ID];
+			creator.json[key][USER_KEY][VALUE] = id;
 		}else {
 			//次のループに行く
 			continue;
@@ -1010,104 +1010,56 @@ dialogOption[LOGIN_DIALOG] = {
 			        	 class:'loginButton',
 			        	 // ボタン押下時の処理を記述する。
 			        	 click:function(event, ui){
-			        		 var $dialog = $(this);		//ダイアログ自身の要素を変数に格納しておく
-			        		 // 必須入力項目が皆入力済みであれば
-			        		 if($('input.userName' ,this).val() != ''
-			        			 &&  $('input.userName' ,this).val() != ''){
-			        			 
-			        			 //通信の返却値を格納する変数を宣言する。
-			        			 var transResult = {"result":false};
-			        			 // ajax通信を行いサーバにユーザ情報を送る。
-			        			 $.ajax({
-			        			 	type: 'POST',
-			        				 //ログイン認証のサーバにデータを送信する。
-			        				// url:location.href,
-			        				// フォームで入力されたidとパスワードを送信する先のURL
-									url : 'php/login.php',
-			        				//ユーザ名とパスワードをPHPに送信する。
-			        				data:{'userName':$('input.userName' ,this).val(),
-			        					'password':$('input.password' ,this).val()
-			        				},
-			        				//JSONで結果を返してもらう。
-			        				dataType:'json',
-			        				//同期通信を行う。
-			        				async:false,
-			        				success:function(json){
-			        					//正しいidとパスワードが入力されていなかったらエラーメッセージを出す
-			        					if (!json['id']) {
-			        						//エラーメッセージを表示する
-			        						alert(MESSAGE_LOGIN_ERROR);
-			        						//メッセージを出してプログラムを終わらせる
-			        						return;
-			        					}
-										// 会員共通のパーツのJSONを取得する。
-										creator.getJsonFile('source/eachDayLesson.json');
-										//管理者ページのcssを読み込む
-			        					$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
-			        					//お問い合わせのcssを読み込む
-			        					$(SELECTOR_HEAD_LAST).after(PATH_CONTACT_CSS);
-			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
-			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
-										//管理者の会員番号であったら
-										if(json['id'] == 1) {
-											$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
-											callPage('adminPage.html');
-										} else {
-											//会員ページを読み込む
-											memberInfo = json;
-											callPage('memberPage.html');
-										}
-										//ログアウト設定関数を呼び出し、ログアウトしたときの処理を決める
-			        					logoutMemberPage();
-			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
-			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
-
-
-
-			        					// 通信結果のデータをtransResultに格納する。
-			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
-			        					//console.log(json);
-			        				},
-			        				//通信失敗時の処理
-			        				error:function(){
-			        					//エラーログを出す。
-			        					console.log(errorMessages[0]);
-			        				}
-			        				
-			        			 });
-// ダイアログを消去する。
-
-			        		 // $(this).dialog('close').dialog('destroy').remove();
-			        			// 通信が成功していたら
-			        			 if(transResult["result"]){
-			        				// // ユーザ情報の取得に成功していたら
-			        				//  if('user' in transResult){
-			        				// 	 //日付クラスインスタンスを生成する。
-			        				// 	 var cookieLimit = new Date();
-			        				// 	 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
-			        				// 	 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
-			        				// 	 //cookieにユーザ情報と期限の日付を格納する。
-			        				// 	 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
-			        				// 	 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
-			        				// 	 //ここまで変更しました。
-			        				// 	 // ダイアログを消去する。
-						        	// 	 $(this).dialog('close').dialog('destroy').remove();
-						        	// 	 //画面を更新する。
-						        	// 	 location.reload();
-			        				//  } else {
-			        				// 	 // 認証失敗のメッセージを出す。
-			        				// 	 alert(errorMessages[1]);
-			        				//  }
-			        			//通信に失敗していたら。 
-			        			 } else {
-			        			//通信エラーのメッセージを出す。
-		        				// alert(errorMessages[2]);
-			        			}
-			        		//空欄に入力するようにメッセージを出す。
-			        		 } else {
-			        			 alert(errorMessages[3]);
-			        		 }
+			        	 	//ログイン処理に使うために入力されたログインidを取得する
+			        	 	var userLoginId = $('.userName').val();
+			        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
+			        	 	var userLoginPassword = $('.password').val();
+			        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
+			        	 	if(userLoginId != '' || userLoginPassword != '') {
+			        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
+			        	 		creator.json.login.userName.value = userLoginId;
+			        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
+			        	 		creator.json.login.password.value = userLoginPassword;
+			        	 		//ログイン処理を行うため、jsondmManagerから会員番号を取り出す
+			        	 		creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json.login, 'login');
+			        	 		//取り出した会員番号をグローバル変数に入れて使いやすくし会員ページで予約処理などで使う
+			        	 		memberInfo = creator.json.login.id.text;
+			        	 		//取り出したidが空のときユーザが入力したログインidとパスワードが間違っているメッセージを出す
+			        	 		if(memberInfo == '') {
+			        	 			//エラーメッセージを表示する
+			        				alert(MESSAGE_LOGIN_ERROR);
+			        			//ログインidとパスワードが正しいときにログイン処理を開始する
+			        	 		} else {
+									// 会員共通のパーツのJSONを取得する。
+									creator.getJsonFile('source/eachDayLesson.json');
+									//管理者ページのcssを読み込む
+		        					$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
+		        					//お問い合わせのcssを読み込む
+		        					$(SELECTOR_HEAD_LAST).after(PATH_CONTACT_CSS);
+		        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
+		        					afterLogin(memberInfo, creator);	//ログイン後の処理をまとめて実行する。
+									//管理者の会員番号であったら
+									if(memberInfo == 1) {
+										//管理者ページを読み込む
+										callPage('adminPage.html');
+									} else {
+										//会員ページを読み込む
+										callPage('memberPage.html');
+									}
+									//ログアウト設定関数を呼び出し、ログアウトしたときの処理を決める
+		        					logoutMemberPage();
+									//セキュリティ対策としてログインidを空白に初期化する
+									userLoginId = '';
+				        	 		creator.json.login.userName.value = '';
+				        	 		//セキュリティ対策としてログインパスワードを空白に初期化する
+				        	 		userLoginPassword = '';
+				        	 		creator.json.login.password.value = '';
+		        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+		        					$(this).dialog(CLOSE);	//ダイアログを閉じる
+			        	 		}
+			        	 	} else {
+								alert(errorMessages[3]);
+			        	 	}
 			        	 }
 			         },
 			         {

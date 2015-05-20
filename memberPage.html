@@ -97,7 +97,7 @@
 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				});
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo['id'], lessonList);
+				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
 
 				// タブ機能を作る
@@ -145,7 +145,7 @@
 					accordionSetting('.lessonAccordion', '.attention');
 				});
 				//キャンセルダイアログを予約中授業テーブルから開く処理
-				cancelDialogOpen(cancelLesson, memberInfo['id']);
+				cancelDialogOpen(cancelLesson, memberInfo);
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
 				//絞り込みボタン機能を実装する

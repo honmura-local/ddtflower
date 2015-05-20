@@ -3046,9 +3046,7 @@ function loginInsteadOfMember (clickParentSelector, clickSelector) {
 		//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
 		creator.json.finishedLessonTable.user_key.value = memberNumber;
 		//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
-		memberInfo = {
-			id:memberNumber
-		};
+		memberInfo = memberNumber;
 		//会員ページを呼び出す
 		callPage('memberPage.html')
 	});
