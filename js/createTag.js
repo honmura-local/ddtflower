@@ -504,9 +504,11 @@ function createTag(){
 		for(key in this.json){
 			//キーが数字であれば
 			if(!(isNaN(key))){
+				//@add 2015.0527 T.Masuda 引数のundefinedチェックのため、特定のキーの値を取得するようにしました
+				var blogCheck = this.json[key].blogArticleTitle;
 				//@add 2015.0527 T.Masuda 条件式を追加しました
 				//日付が合うか、日付の入力がなければ
-				if(this.json[key].blogArticleTitle.blogArticleDate.text == date|| date === void(0)){
+				if((blogCheck !== void(0) && blogCheck.blogArticleDate.text == date)|| date === void(0)){
 					//retNumに1を足す
 					retNum++;
 				}
@@ -538,9 +540,11 @@ function createTag(){
 		for(key in this.json){
 			//キーが数字であれば
 			if(!(isNaN(key))){
+				//@add 2015.0527 T.Masuda 引数のundefinedチェックのため、特定のキーの値を取得するようにしました
+				var blogCheck = this.json[key].blogArticleTitle;
 				//@add 2015.0527 T.Masuda 条件式を追加しました
 				//日付が合うか、日付の入力がなければ
-				if(this.json[key].blogArticleTitle.blogArticleDate.text == date|| date === void(0)){
+				if((blogCheck !== void(0) && blogCheck.blogArticleDate.text == date)|| date === void(0)){
 					//絞り込みをクリアした記事を返すオブジェクトに追加する
 					retObj[String(counter)] = this.json[key];
 					//カウンターを回す
