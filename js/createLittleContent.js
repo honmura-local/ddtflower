@@ -204,8 +204,8 @@ function createBlogCalendar(selector, dateArray) {
 	$(selector).datepicker({
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			// 開発中のメッセージを出す。
-			alert('現在この機能は開発中となっています。');
+			//@mod 2015.0527 T.Masuda 処理を追加しました
+			creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -1771,4 +1771,63 @@ function useFileReader(selector){
 		expressInstall: 'js/source/expressInstall.swf',
 		debugMode: true			//デバッグモードをオンにする。
 	});
+}
+
+/*
+ * 関数名 :createNewArticleList
+ * 引数  　:int number: 作成する記事一覧の項目数
+ * 戻り値　:なし
+ * 概要  　:最新記事の一覧を作る
+ * 作成日　:2015.05.27
+ * 作成者　:T.Masuda
+ */
+function createNewArticleList(){
+	//各項目を走査する
+	$('.currentArticleList li').each(function(i){
+		var $elem = $('a:first',this);	//リンク部分を取得する
+		//クリックしたらブログの記事を作るコードを追加する
+		$elem.attr('onclick', '$(".numberingOuter,.blog").empty();creator.outputTag(' + (i + 1) + ', "blogArticle",".blog");');
+		
+		var $elems = $('*',$elem);	//項目を取得する
+		//ブログ記事のオブジェクトを取得する
+		var articleNode = creator.json[String(i + 1)];
+		//オブジェクトが取得できていなければ
+		if(articleNode === void(0)){
+			return;	//関数を終える
+		}
+		//記事一覧にテキストを入れる
+		insertArticleListText($elems, articleNode);
+	});
+}
+
+/*
+ * 関数名 :insertArticleListText
+ * 引数  　:element elem:記事リストの項目を構成する要素
+ * 　　　　:element articleNode:記事のノード
+ * 戻り値　:なし
+ * 概要  　:最新記事の一覧のテキストを入れる
+ * 作成日　:2015.05.27
+ * 作成者　:T.Masuda
+ */
+function insertArticleListText(elems, articleNode){
+	var elemsLength = elems.length; //項目数を取得する
+	//ループで値を入れていく
+	for(var j = 0; j < elemsLength; j++){
+		//タグ名を取得する
+		var tagName = elems[j].tagName;
+		//タグ名でデータを取得するJSONノードを決める
+		//タイトル
+		if(tagName == 'P'){
+			//値を入れる
+			elems.eq(j).text(articleNode.blogArticleTitle.blogArticleTitleText.text);
+			//日時
+		} else if(tagName == 'TIME'){
+			//値を入れる
+			elems.eq(j).text(articleNode.blogArticleTitle.blogArticleDate.text);
+			//投稿者
+		} else if(tagName == 'SMALL'){
+			//値を入れる
+			elems.eq(j).text(articleNode.blogArticleTitle.blogArticleUserName.text);
+		}
+	}
 }

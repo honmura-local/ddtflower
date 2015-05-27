@@ -92,6 +92,21 @@ function overwrightContent(target, data){
 }
 
 /*
+ * 関数名:overwriteMSLContent(target, data)
+ * 引数  :String target, Object data
+ * 戻り値:なし
+ * 概要  :既存のコンテンツを消して、MSLのコンテンツを追加する。
+ * 作成日:2015.05.13
+ * 作成者:T.M
+ */
+function overwriteMSLContent(target, data){
+	//mainのタグを空にする。
+	$(target).empty();
+	//mainのタグを上書きする。
+	$(target).replaceWith($('.main' ,data));
+}
+
+/*
  * 関数名:callPage(url, state)
  * 引数  :String url, Object state
  * 戻り値:なし
@@ -125,8 +140,15 @@ function callPage(url, state){
 			creator.json = null;
 			//ひな形のHTMLのDOMを格納する変数を初期化する。
 			creator.dom = '';
-			//既存のコンテンツを上書きする。
-			overwrightContent('.main', html);
+			//list.phpかdetail.phpであれば
+			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
+				//MSLのコンテンツで既存のコンテンツを上書きする
+				overwriteMSLContent('.main', html);
+			//それ以外であれば
+			} else {
+				//既存のコンテンツを上書きする。
+				overwrightContent('.main', html);
+			}
 			//カレントのURLを更新する。
 			currentLocation = url;
 

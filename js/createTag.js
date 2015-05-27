@@ -11,7 +11,8 @@ function createTag(){
 	var own = this;				//自分自身の要素を変数に入れる
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
-
+	//@add 2015.0528 T.Masuda 絞り込んだJSONを一時保存するメンバを追加
+	this.filteredMap = null;	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
@@ -123,7 +124,7 @@ function createTag(){
 		domNodeName = domNodeName === undefined ? key : domNodeName;
 			
 		//JSONの先頭のキーの連想配列と、DOMの先頭を取得する。
-		mapNode = this.getMapNode(key);			//マップの先頭を取得する。
+		mapNode = this.filteredMap == null?this.getMapNode(key):this.filteredMap[key];			//マップの先頭を取得する。
 		domNode = this.getDomNode(domNodeName);	//DOMの先頭を取得する。
 
 		// createTagでキーに対応したHTMLのパーツを作成し、変数tagに格納する。
@@ -333,22 +334,25 @@ function createTag(){
 	 * 変更日:2015.04.09
 	 * 内容　:引数に作成した記事の追加先を追加しました。
 	 */
-	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
+	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, date){
 		
 		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
 		this.numbering = {};		
 
 		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea);
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, date);
 		
 		//記事を消す
 		$(targetArea).empty();
+		//JSONを日付で絞り込む
+		this.filteredMap = this.filterJSON(this.json, date);
 		//コンテンツ表示
-		outputKeyNumberObject(this.json, jsonName, targetArea, pageNum, displayPage)
-		
+		outputKeyNumberObject(this.filteredMap, jsonName, targetArea, pageNum, displayPage)
+
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
-		
+		//filteredMapを初期化する
+		this.filteredMap = null;
 		// add T.Masuda 2015/0421 ナンバリングが生成されない時にcreateTagのエラーがコンソールに出力されるバグの修正
 		// add T.Masuda 2015/0422 numberingオブジェクトが生成されていない状況への対応
 		//ナンバリングのオブジェクトがあれば
@@ -358,7 +362,8 @@ function createTag(){
 			//現在表示中のページに対応するナンバリングの色を変える。
 			this.selectPageNumber(displayPage);
 		}
-		
+		//@add T.Masuda 2015/0527 ナンバリングのノードを削除するように追加
+		delete this.json.numbering;
 		//スクロール位置が低ければ
 		if($(window).scrollTop() > $(".main").offset().top){
 			//スクロール位置を上に戻す。記事が見えなくならないようにするため、.mainの縦座標を基準に移動する。
@@ -373,6 +378,7 @@ function createTag(){
 	 * 		 int startPage:表示する1つ目のナンバリングの番号。
 	 * 		 int displayPageMax:表示するナンバリングの最大個数。
 	 * 		 int pageNum:1ページに表示する記事数。
+	 * 		 Date date:絞り込む日付
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -380,10 +386,13 @@ function createTag(){
 	 * 変更者:T.Masuda
 	 * 変更日:2015.04.08
 	 * 内容　:引数pageNumを追加し、1ページに複数の記事を載せることに対応しました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.05.27
+	 * 内容　:日付による絞り込みに対応
 	 */
-	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, date){
 		//ページ数を取得する。
-		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName) / pageNum);
+		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName, date) / pageNum);
 		
 		//ページ数が1以下ならナンバリングを作成せずに終了する。
 		if(pageMax <= 1){
@@ -392,7 +401,7 @@ function createTag(){
 		
 		// <<ボタンを作る。(1ページ前に進める)
 		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
-										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea);
+										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea, date);
 
 		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
 		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
@@ -406,15 +415,16 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
+			//@mod 2015.0528 T.Masuda 出力される関数文字列に引数を追加しました
 			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
-				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '")';
+				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '","' + date + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
 		}
 			
 		// <<ボタンを作る。(1ページ後に進める)
 		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
-										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea);
+										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea, date);
 			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
 		this.json['numbering'] = this.numbering;
@@ -435,12 +445,13 @@ function createTag(){
 	 * 		String jsonName:JSON名。
 	 * 		int pageNum:1ページに表示する記事数。
 	 * 		String targetArea:記事の追加先。
+	 * 		Date date:絞り込む日付。
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea){
+	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea, date){
 		var startAroundPage;	//ナンバリングの表示開始ページ数を格納する変数を宣言する。
 		
 		//開始ページを算出する
@@ -467,21 +478,25 @@ function createTag(){
 		
 		//関数実行属性をoutputNumberingTagに設定する。
 		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
-			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '")';
+			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '","' + date + '")';
 		
 		//numberingオブジェクトの中に追加する。
 		numbering[key] = keyObj[key];
 	}
 
 	/* 
-	 * 関数名:this.getJsonObjectNum = function(jsonName)
+	 * 関数名:this.getJsonObjectNum = function(jsonName, date)
 	 * 概要  :jsonの指定キー直下の数字キーの数を返す。
 	 * 引数  :String jsonName:処理対象のJSONのキー名。
+	 * 　　  :Date date:絞り込む日付。
 	 * 返却値  :int:チェック対象の数を返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
+	 * 変更者:T.Masuda
+	 * 変更日:2015.05.27
+	 * 内容　:日付絞り込みに対応しました
 	 */
-	this.getJsonObjectNum = function(jsonName){
+	this.getJsonObjectNum = function(jsonName, date){
 		//返却する値を格納するための変数を宣言、0で初期化する。
 		var retNum = 0;
 
@@ -489,13 +504,53 @@ function createTag(){
 		for(key in this.json){
 			//キーが数字であれば
 			if(!(isNaN(key))){
-				//retNumに1を足す
-				retNum++;
+				//@add 2015.0527 T.Masuda 条件式を追加しました
+				//日付が合うか、日付の入力がなければ
+				if(this.json[key].blogArticleTitle.blogArticleDate.text == date|| date === void(0)){
+					//retNumに1を足す
+					retNum++;
+				}
 			}
 		}
 		
 		//retNumを返す。
 		return retNum;
+	}
+	
+	/* 
+	 * 関数名:this.filterJSON = function(json, date)
+	 * 概要  :JSONでの記事を日付で絞り込む
+	 * 引数  :String json:JSON連想配列
+	 * 　　  :Date date:絞り込む日付。
+	 * 返却値  :Object:絞り込んだJSONを返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.03.13
+	 * 変更者:T.Masuda
+	 * 変更日:2015.05.27
+	 * 内容　:日付絞り込みに対応しました
+	 */
+	this.filterJSON = function(jsonName, date){
+		//返却する値を格納するための変数を宣言、空オブジェクトで初期化する。
+		var retObj = {};
+		var counter = 1;	//カウンター変数を用意、1で初期化する
+		
+		//jsonのキー走査する。
+		for(key in this.json){
+			//キーが数字であれば
+			if(!(isNaN(key))){
+				//@add 2015.0527 T.Masuda 条件式を追加しました
+				//日付が合うか、日付の入力がなければ
+				if(this.json[key].blogArticleTitle.blogArticleDate.text == date|| date === void(0)){
+					//絞り込みをクリアした記事を返すオブジェクトに追加する
+					retObj[String(counter)] = this.json[key];
+					//カウンターを回す
+					counter++;
+				}
+			}
+		}
+		
+		//retObjを返す。
+		return retObj;
 	}
 	
 	/* 
