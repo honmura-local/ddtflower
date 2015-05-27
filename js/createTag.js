@@ -338,6 +338,8 @@ function createTag(){
 		
 		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
 		this.numbering = {};		
+		//dateの値が文字列でのundefinedならば、本物のundefinedにする
+		date = date == "undefined"?void(0) : date;
 
 		//ナンバリング用のJSONを作る。
 		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, date);
