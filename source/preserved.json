@@ -64,66 +64,66 @@
     },
     "footGallery": {
         "1stArt": {
-            "href": "photo/general/web/DSC_1086.jpg",
+            "href": "photo/general/web/DSC_0682.jpg",
             "rel": "gallery",
             "1stImage": {
-                "src": "photo/general/web120/DSC_1086.jpg"
+                "src": "photo/general/web120/DSC_0682.jpg"
             }
         },
         "2ndArt": {
-            "href": "photo/general/web/DSC_1061.jpg",
+            "href": "photo/general/web/DSC_0652.jpg",
             "rel": "gallery",
             "2ndImage": {
-                "src": "photo/general/web120/DSC_1061.jpg"
+                "src": "photo/general/web120/DSC_0652.jpg"
             }
         },
         "3rdArt": {
-            "href": "photo/general/web/DSC_1038.jpg",
+            "href": "photo/general/web/DSC_0736.jpg",
             "rel": "gallery",
             "3rdImage": {
-                "src": "photo/general/web120/DSC_1038.jpg"
+                "src": "photo/general/web120/DSC_0736.jpg"
             }
         },
         "4thArt": {
-            "href": "photo/general/web/DSC_1025.jpg",
+            "href": "photo/general/web/DSC_0767.jpg",
             "rel": "gallery",
             "4thImage": {
-                "src": "photo/general/web120/DSC_1025.jpg"
+                "src": "photo/general/web120/DSC_0767.jpg"
             }
         },
         "5thArt": {
-            "href": "photo/general/web/DSC_1008.jpg",
+            "href": "photo/general/web/DSC_0834.jpg",
             "rel": "gallery",
             "5thImage": {
-                "src": "photo/general/web120/DSC_1008.jpg"
+                "src": "photo/general/web120/DSC_0834.jpg"
             }
         },
         "6thArt": {
-            "href": "photo/general/web/DSC_0985.jpg",
-            "rel": "gallery",
-            "6thImage": {
-                "src": "photo/general/web120/DSC_0985.jpg"
-            }
-        },
-        "7thArt": {
-            "href": "photo/general/web/DSC_0947.jpg",
-            "rel": "gallery",
-            "7thImage": {
-                "src": "photo/general/web/DSC_0947.jpg"
-            }
-        },
-        "8thArt": {
             "href": "photo/general/web/DSC_0898.jpg",
             "rel": "gallery",
-            "8thImage": {
+            "6thImage": {
                 "src": "photo/general/web120/DSC_0898.jpg"
             }
         },
+        "7thArt": {
+            "href": "photo/general/web/DSC_1061.jpg",
+            "rel": "gallery",
+            "7thImage": {
+                "src": "photo/general/web/DSC_1061.jpg"
+            }
+        },
+        "8thArt": {
+            "href": "photo/general/web/DSC_0985.jpg",
+            "rel": "gallery",
+            "8thImage": {
+                "src": "photo/general/web120/DSC_0985.jpg"
+            }
+        },
         "9thArt": {
-            "href": "photo/general/web/DSC_0894.jpg",
+            "href": "photo/general/web/ex_puriza2.jpg",
             "rel": "gallery",
             "9thImage": {
-                "src": "photo/general/web120/DSC_0894.jpg"
+                "src": "photo/general/web120/ex_puriza2.jpg"
             }
         },
         "10thArt": {

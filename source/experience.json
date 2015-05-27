@@ -154,10 +154,10 @@
         },
         "experience3rdDiv": {
             "experience3rdArt": {
-                "href": "photo/general/web/DSC_0099.jpg",
+                "href": "photo/general/web/ex_fresh1.jpg",
                 "rel": "gallery",
                 "experience3rdImage": {
-                    "src": "photo/general/web120/DSC_0099.jpg"
+                    "src": "photo/general/web120/ex_fresh1_w179.jpg"
                 },
                 "construct3rdName": {
                     "text": "生花1"
@@ -166,10 +166,10 @@
         },
         "experience4thDiv": {
             "experience4thArt": {
-                "href": "photo/general/web/DSC_0094.jpg",
+                "href": "photo/general/web/ex_fresh2.jpg",
                 "rel": "gallery",
                 "experience4thImage": {
-                    "src": "photo/general/web120/DSC_0094.jpg"
+                    "src": "photo/general/web120/ex_fresh2_w179.jpg"
                 },
                 "construct4thName": {
                     "text": "生花2"
