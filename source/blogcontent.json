@@ -3,18 +3,18 @@
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/01"
+                "text": "2015/05/25"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0064.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpt1/v/t1.0-9/10403158_828027337290655_8281494062237713313_n.jpg?oh=0794d9c42b80ed03748b0357d4628240&oe=55F39FBE"
             },
             "blogArticleImage2": {
                 "src": ""
@@ -24,221 +24,221 @@
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "本日午前中のレッスン生徒さんの作品です。\nマグノリアリーフとテトラゴナの実が可愛いドライで飾れ大型リースです。"
         }
     },
     "2": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/24"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0094.jpg"
+                "src": "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xta1/v/t1.0-9/11295703_827181244041931_3580511668213822528_n.jpg?oh=85f7ea816782fe156194a2cb3e4623e3&oe=55F0A31C&__gda__=1442763669_b6853ed4540d3b03626944eda28dbe3a"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xta1/v/t1.0-9/11262236_827181264041929_7305360144986396574_n.jpg?oh=f84d2b73c17862bea60bdd1dfde8f3c5&oe=55BF9766&__gda__=1438966511_aef4e72d51676a8096f5b54f3fc010cd"
             },
             "blogArticleImage3": {
                 "src": ""
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日の生花はまん丸トピアリーお花はバラストロベリーミルフィーユ、マトリカリアたまごピンク名前もとっても可愛いですね。"
         }
     },
     "3": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/18"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0099.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11248157_825287770897945_677656162371045506_n.jpg?oh=182772996a361510962e96db2ef50775&oe=55FF49B9"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11265475_825287790897943_5070975860915280938_n.jpg?oh=ef380078f056c08f38ed9b5ef7a0795d&oe=560B68EF"
             },
             "blogArticleImage3": {
                 "src": ""
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "本日のレッスン生徒さんの作品です。バスケットに可愛くアレンジして頂きました。"
         }
     },
     "4": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/18"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0168.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/10994329_824876244272431_471430600649546052_n.jpg?oh=463b48625a5e7e658e6f2e4686efd322&oe=560BD122"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/10421628_824876350939087_7446536443988335058_n.jpg?oh=91906118b5eb7a27d706907434285757&oe=55FCDC49"
             },
             "blogArticleImage3": {
                 "src": ""
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "プリザーブドフラワー生徒さんの作品です。\nいつ見ても可愛いトピアリーまん丸に仕上がりました。"
         }
     },
     "5": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/17"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0266.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpt1/v/t1.0-9/11137151_824644380962284_728617439594830615_n.jpg?oh=abdfe9ce92d26965922cc796a1cd7304&oe=55C24C4F"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10389613_824644407628948_8955774109938509391_n.jpg?oh=bb0dc482801ab0a9a3f33df42a0b1be6&oe=55FCD601"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10923257_824645607628828_7742961148343337141_n.jpg?oh=092474e6583e698e8eedde352f46f4be&oe=560B98BB"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "週末レッスン生徒さんの作品です。\nビダーマイヤー(同心円状)とってもバランス良く出来てますね\nお花はバラ、ナデシコ、カーネ、ブアリアです。"
         }
     },
     "6": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/17"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0652.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/10356424_824428047650584_7191673810840700174_n.jpg?oh=f8401db2907233060f3c3a24930d11cc&oe=5603CF44"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10389613_824644407628948_8955774109938509391_n.jpg?oh=bb0dc482801ab0a9a3f33df42a0b1be6&oe=55FCD601"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/10923257_824645607628828_7742961148343337141_n.jpg?oh=092474e6583e698e8eedde352f46f4be&oe=560B98BB"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日の生花はビダーマイヤー同一円心に作成して頂きました。ケーキみたいですね"
         }
     },
     "7": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/16"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0662.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10419396_824264011000321_7752884715291911852_n.jpg?oh=dd46eefe21f70b72fe8d1472e4bf6768&oe=55C2C59C"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11140379_824428060983916_4874360383484127896_n.jpg?oh=2aeb6e49be356b3dc3b08a956ccad04b&oe=55FC588F"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/11245801_824428070983915_3420171669597714452_n.jpg?oh=bf0869282de370cdb03c8ccc2c4255df&oe=56008C4D"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "プリザーブドフラワー生徒さんの作品です。1日で3作品、全てお友達への誕生日プレゼント 素敵ですね"
         }
     },
     "8": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/15"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0682.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/1546146_823824661044256_173454799403808746_n.jpg?oh=6c34bde0d7071287059591797e3d4ff9&oe=560A5582"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11295830_823824674377588_4841336292867826862_n.jpg?oh=1b3498d9e2052072c2c74e21a136dffd&oe=560489AB"
             },
             "blogArticleImage3": {
                 "src": ""
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "本日午前中の生徒さんの作品です。芍薬、バラ、ローズマリー香りに癒されます。"
         }
     },
     "9": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/14"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0736.jpg"
+                "src": "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xta1/v/t1.0-9/p296x100/11108277_823097884450267_9045361109489417536_n.jpg?oh=7a7bdbc747a1c031070078aef64b017d&oe=55BEF0FE&__gda__=1442827403_e010dfdd03a42883f176b55fc89342b0"
             },
             "blogArticleImage2": {
                 "src": ""
@@ -248,25 +248,25 @@
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日は夏のお花芍薬を使ってアレンジして頂きました。\n今日の芍薬はかぐや姫可愛い名前ですね"
         }
     },
     "10": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/12"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0745.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1.0-9/11150959_822618891164833_1175800090704426560_n.jpg?oh=3cc00fe9c0605df43fea8d60cf670dc5&oe=56094C00"
             },
             "blogArticleImage2": {
                 "src": ""
@@ -276,81 +276,81 @@
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日も可愛いお花を仕入れて来ました\nバラ ランハーツとピーチアバランシェ大好きな色味です。\n生徒さんに早速バスケットアレンジ作って頂きました。"
         }
     },
     "11": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/11"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0767.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11014681_822098684550187_1675682967047502690_n.jpg?oh=43c7f865dab82a2cdc21e450617c7328&oe=55BEEF64"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xat1/v/t1.0-9/11262363_822099001216822_1107941101930272383_n.jpg?oh=726f8ed5011dc935f130b3c7dd01009d&oe=55F53122"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/11210514_822099057883483_9041242352537872529_n.jpg?oh=2a66774168fa134999ca0a8d6843b3ac&oe=56030B5D"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "おはようございます。台風接近中で風が強い朝ですね、今日は早めの帰宅が良いかもですね。\n花のネスト(巣)生徒さんの作品です。卵もお作り頂きました。"
         }
     },
     "12": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/10"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0834.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11209385_821413964618659_2885675807678159271_n.jpg?oh=667379695aa7edf740b541985892514b&oe=560B3AAB"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xtp1/v/t1.0-9/11150707_821413984618657_7482433085579914585_n.jpg?oh=9452ddf70ced4a4a1ff18ca1ae8fb2f8&oe=55F77B7E&__gda__=1442358088_7d07b816a316cf3b858a1fdfa654582c"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpt1/v/t1.0-9/11140079_821414001285322_4109556748949420156_n.jpg?oh=7c8e78f05ac8a2b8d0c4c11084f255de&oe=55FE3BBB"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "本日の生花は母の日の花束です。皆様綺麗にお作り頂きました。"
         }
     },
     "13": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/05"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0894.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/10408076_818698168223572_4229498515232023976_n.jpg?oh=268bffa0d0e9a70612fcfbe9dc1029f1&oe=55F8C8D4"
             },
             "blogArticleImage2": {
                 "src": ""
@@ -360,137 +360,137 @@
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "本日午前中のキャンペーンレッスン生徒さんの作品です。可愛いプードルちゃん勢揃いです"
         }
     },
     "14": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/05/03"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0898.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/11209546_818020628291326_5768325481290766650_n.jpg?oh=94a3a5ea83eea209f43ddba47db56d0e&oe=5602BDC8"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11180316_818020668291322_6356636689988130694_n.jpg?oh=28986b540f44b6fdd5a8602af9a048c1&oe=55FC4139"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11193310_818022031624519_8534553425321016553_n.jpg?oh=97fbeeb3929da914fa0dd3d31057a2a4&oe=55FA21CD"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "皆様こんにちは～ゴールデンウイーク楽しんでらっしゃいますか？\nスクールは本日午後、明日はお休みを頂いております。さて最近人気のガーデンリース生徒さんの作品です。"
         }
     },
     "15": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/04/30"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0947.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xtf1/v/t1.0-9/11092115_816523931774329_7652559137317214556_n.jpg?oh=60afac2902874e596b146953dc0acb5e&oe=5606F23C"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://fbcdn-sphotos-e-a.akamaihd.net/hphotos-ak-xtf1/v/t1.0-9/11013308_816523985107657_2579592427986061282_n.jpg?oh=ecc17f17da8782e9238fccd6dc55bcb3&oe=55C845F8&__gda__=1443604643_c839ff2dbc39b66304ff048eb7f3ed4c"
             },
             "blogArticleImage3": {
                 "src": ""
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "プリザーブドフラワー母の日のアレンジです。本日は新作up\nゴールデンウイーク3,4も開講しております。遠くに行くより近場で可愛いお花に触れるのも楽しいですよ\nご予約お待ちしております"
         }
     },
     "16": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/04/29"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0985.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/11165009_815960608497328_5853592507651646296_n.jpg?oh=e82a5e0d3b76e0acebe6d1dccc364fc6&oe=560D29CC"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/11169879_815960628497326_7836060614407450135_n.jpg?oh=43611c597527b6e68993f2a4a72c4563&oe=5606C01B"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11165252_815960648497324_5677316737627251210_n.jpg?oh=9be766fed99980c8b0d55e3d93f1e1fa&oe=55BEED3C"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "爽やかなキャンドルアレンジと可愛いフラワーコーン出来ました。"
         }
     },
     "17": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/04/26"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1025.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/11188330_814326811994041_9062439968494867413_n.jpg?oh=d240e814471773a0207da223eccdaa56&oe=55F2EDF5"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xfp1/v/t1.0-9/22116_814326831994039_6973062215218513062_n.jpg?oh=7f62945ea0f97664a2c08886f2b1d92b&oe=560A432C&__gda__=1442869039_1a375ae9f754d35dd0f72a8ba5eabe1e"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/11159553_814326858660703_2976800950823937633_n.jpg?oh=8a13454d40d2f9ce84f86a86534e918b&oe=55C128CF"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日も可愛いお花が一杯出来ました"
         }
-    },    
+    },
     "18": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015-04-25"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1038.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xtf1/v/t1.0-9/10001415_813776882049034_7250433028097160123_n.jpg?oh=c6a4b5264c242a23696d3eb7532256c4&oe=55BF574B"
             },
             "blogArticleImage2": {
                 "src": ""
@@ -500,707 +500,63 @@
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "生花ファーストステージ生徒さんの作品です。基本の形トライアンギュラーです。"
         }
-    },    
+    },
     "19": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "プリザ"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/04/20"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1061.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xtf1/v/t1.0-9/s480x480/11118377_811424698950919_7966627790690410657_n.jpg?oh=b5eee4268e17afffd50da33369448367&oe=5604B4F5"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xpf1/v/t1.0-9/p235x165/11159952_811424715617584_526077626584635604_n.jpg?oh=6e9fd2c679ca05c1653d9f72e5344af5&oe=560BD044&__gda__=1443596739_172161b0582901b711dc0a2f8ca97b2f"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xft1/v/t1.0-9/p235x165/22408_811424732284249_7416907214132885365_n.jpg?oh=8cdbdfd9afcd6c1accbc217660bb7b88&oe=56030AE4"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "プリザーブドフラワー生徒さんの作品とキャンペーンレッスンの作品です。\n今日から大阪でお花の研修です。皆様に素敵な作品がご紹介出来ます様にしっかりお勉強して来ます"
         }
-    },    
+    },
     "20": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
+                "text": "生花"
             },
             "blogArticleDate": {
-                "text": "2015/03/02"
+                "text": "2015/04/20"
             },
             "blogArticleUserName": {
-                "text": "FlowerMaster"
+                "text": "DDTFlowers"
             }
         },
         "blogArticleImages": {
             "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1086.jpg"
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/s480x480/11169874_811174178975971_3710241535742955223_n.jpg?oh=5f62a25abbed6aec056ec6d87c7abad5&oe=55C507C6"
             },
             "blogArticleImage2": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xat1/v/t1.0-9/s206x206/11150197_811174198975969_5407616222144613485_n.jpg?oh=fd942645708f64e9669b36d399813788&oe=560CCE25"
             },
             "blogArticleImage3": {
-                "src": ""
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpa1/v/t1.0-9/s206x206/11169811_811174218975967_4870151491300705981_n.jpg?oh=e52b87acd7d3a570a06d0e190d30d521&oe=55C56BD1"
             }
         },
         "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "21": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0064.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "22": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0094.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "23": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0099.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "24": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0168.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "25": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0266.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "26": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0652.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "27": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0662.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "28": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0682.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "29": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0736.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "30": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0745.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "31": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0767.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "32": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0834.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "33": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0898.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "34": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0947.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "35": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0985.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "36": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1008.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "37": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1038.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "38": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1061.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "39": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_1086.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "40": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0064.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "41": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0094.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },    
-    "42": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0099.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
-        }
-    },
-    "43": {
-        "class": "blogArticle cf",
-        "blogArticleTitle": {
-            "blogArticleTitleText": {
-                "text": "ブログ テストタイトル"
-            },
-            "blogArticleDate": {
-                "text": "2015/03/02"
-            },
-            "blogArticleUserName": {
-                "text": "FlowerMaster"
-            }
-        },
-        "blogArticleImages": {
-            "blogArticleImage1": {
-                "src": "photo/general/web120/DSC_0168.jpg"
-            },
-            "blogArticleImage2": {
-                "src": ""
-            },
-            "blogArticleImage3": {
-                "src": ""
-            }
-        },
-        "blogArticleText": {
-            "text": "この記事はテスト用のものとなっております。"
+            "text": "今日も可愛いアレンジが一杯出来ました\n皆さま素敵にて完成です。\n本日母の日キャンペーンメルマガを配信いたしました。ご予約お待ちしております"
         }
     },
     "currentArticleList": {
