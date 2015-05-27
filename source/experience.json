@@ -68,67 +68,72 @@
             "class": "noneDisplay"
         }
     },
-    "specialGuide": {
-        "class": "specialGuide guideTable",
-        "summary": {
-            "text": "体験レッスン案内"
-        },
-        "doKnow": {
-            "item": {
-                "text": "体験種別"
+    "specialGuide":{
+        "specialGuideTable": {
+            "class": "CourseGuideTable guideTable",
+            "summary": {
+                "text": "体験レッスン案内"
             },
-            "content": {
-                "text": "プリザーブドフラワー,生花"
+            "doKnow": {
+                "item": {
+                    "text": "体験種別"
+                },
+                "content": {
+                    "text": "プリザーブドフラワー,生花"
+                }
+            },
+            "cost": {
+                "item": {
+                    "text": "費用"
+                },
+                "content": {
+                    "text": "2,800円"
+                }
+            },
+            "times": {
+                "item": {
+                    "text": "回数"
+                },
+                "content": {
+                    "text": "1回"
+                }
+            },
+            "hour": {
+                "item": {
+                    "text": "1回あたりの時間"
+                },
+                "content": {
+                    "text": "90分"
+                }
+            },
+            "target": {
+                "item": {
+                    "text": "対象者"
+                },
+                "content": {
+                    "text": "初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
+                }
+            },
+            "bring": {
+                "item": {
+                    "text": "持ち物・その他"
+                },
+                "content": {
+                    "text": "お持ち帰り用の袋をご持参下さい"
+                }
             }
         },
-        "cost": {
-            "item": {
-                "text": "費用"
-            },
-            "content": {
-                "text": "2,400円"
-            }
-        },
-        "times": {
-            "item": {
-                "text": "回数"
-            },
-            "content": {
-                "text": "1回"
-            }
-        },
-        "hour": {
-            "item": {
-                "text": "1回あたりの時間"
-            },
-            "content": {
-                "text": "90分"
-            }
-        },
-        "target": {
-            "item": {
-                "text": "対象者"
-            },
-            "content": {
-                "text": "初めての方 癒されたい方 趣味を見つけたい方 どなたでも大歓迎"
-            }
-        },
-        "bring": {
-            "item": {
-                "text": "持ち物・その他"
-            },
-            "content": {
-                "text": "お持ち帰り用の袋をご持参下さい"
-            }
+        "annotation":{
+            "text":"＊生花体験レッスンのお花は入荷状況により変更になります"
         }
     },
     "experienceGallery": {
         "experience1stDiv": {
             "experience1stArt": {
-                "href": "photo/general/web/DSC_0898.jpg",
+                "href": "photo/general/web/DSC_0682.jpg",
                 "rel": "gallery",
                 "experience1stImage": {
-                    "src": "photo/general/web120/DSC_0898.jpg"
+                    "src": "photo/general/web120/DSC_0682.jpg"
                 },
                 "construct1stName": {
                     "text": "プリザ1"
@@ -137,10 +142,10 @@
         },
         "experience2ndDiv": {
             "experience2ndArt": {
-                "href": "photo/general/web/DSC_0894.jpg",
+                "href": "photo/general/web/ex_puriza2.jpg",
                 "rel": "gallery",
                 "experience2ndImage": {
-                    "src": "photo/general/web120/DSC_0894.jpg"
+                    "src": "photo/general/web120/ex_puriza2.jpg"
                 },
                 "construct2ndName": {
                     "text": "プリザ2"

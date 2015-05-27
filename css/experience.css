@@ -16,8 +16,7 @@
  * 内容　 :コース案内と同様のレイアウトへの修正をしました。
  */
 .specialGuide {
-    width: 50%;             /* 幅を52%にする */
-    padding: 10px;          /* 10px要素の幅を広げる */
+    width: 50%;             /* 幅を50%にする */
     margin: 0px 0px 30px;   /* 上下に40pxの余白を空ける */
     float: left;            /* 左側に回り込む */
 }
@@ -260,5 +259,15 @@
      */
     .experienceGallery > div > div > div{
         width:50%!important;    /* 2個ずつ並べて表示する。 */
+    }
+
+    /* 
+     * セレクタ:#container .CourseGuideTable
+     * 概要   :体験レッスンのコース案内テーブル
+     * 作成者 :T.Yamamoto
+     * 作成日 :2015.05.27
+     */
+    #container .CourseGuideTable {
+        width: 100%;        /* 幅を100%にする */
     }
 }
