@@ -699,7 +699,7 @@
      */
     .guideTable {
         float: none;            /* floatを解除する。 */
-        margin: 0 auto 15px;    /* 中央に寄せる。下にもmarginを追加する。 */
+        margin: 0 auto;    /* 中央に寄せる。下にもmarginを追加する。 */
     }
 
     /* 
@@ -751,16 +751,5 @@
      */
     .itemList .listContent {
         text-indent: -8px;      /* 字下げのためにインデントをとる */
-    }
-
-    /* 
-     * セレクタ:.annotion
-     * 概要   :スマホ用注釈
-     * 作成者 :T.Yamamoto
-     * 作成日 :2015.04.17
-     * 変更者 :T.Yamamoto
-     */
-    .annotation, .notice {
-        text-indent: -11px;      /* 字下げのためにインデントをとる */
     }
 }
