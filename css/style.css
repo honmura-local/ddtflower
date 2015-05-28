@@ -363,7 +363,7 @@ button.ui-button-text-only span.ui-button-text {
  * 変更日 :2015.03.04
  * 内容　 :インラインブロックに変更しました。
  */
-.guideTel .p2{
+.guideTel .p2 .telLink{
     font-size: 15px;    /* フォントサイズを指定する。3行で50pxを超えないようにする。 */
     color:  limegreen;  /* 淡い緑のフォントにする。 */
     display: inline-block;	/* インラインブロックとして扱い、必要以上の幅を取らないようにする。 */
