@@ -2,9 +2,9 @@
 include 'inc/mslinfo.php';
 $msl_infos = new MSLDetailInfo();
 if ($msl_infos->get('article_title')==""){
-//header("HTTP/1.0 404 Not Found");
-//header("Location:".(empty($_SERVER["HTTPS"]) ? "http://" : "https://") . $_SERVER["HTTP_HOST"]);
-//exit;
+header("HTTP/1.0 404 Not Found");
+header("Location:".(empty($_SERVER["HTTPS"]) ? "http://" : "https://") . $_SERVER["HTTP_HOST"]);
+exit;
 }
 ?>
 <!-- HTMLによるコード -->
@@ -33,18 +33,6 @@ if ($msl_infos->get('article_title')==""){
 
 <!-- メインのCSSファイルを読み込む。 -->
 <link href="../css/style.css" rel="stylesheet" type="text/css">
-<!-- Googleアナリティクスのトラッキングコード -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-58020246-43', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
 </head>
 <!-- コンテンツを表示する領域 -->
 <body>
@@ -52,7 +40,17 @@ if ($msl_infos->get('article_title')==""){
 	<div id="container">
 		<!-- メインのタグ -->
 		<div class="main">
+			<?php echo $msl_infos->get('h1'); ?>
 			<!--MSL記事表示用-->
+			<ul id="mslSocial">
+				<li class="mslFacebook"><a href="http://www.facebook.com/share.php?u=<?php echo $msl_infos->get('article_url'); ?>"><img src="http://ddthink.com/article/images/fb_likebtn.gif"></a></li>
+				<li class="mslTwitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $msl_infos->get('article_url'); ?>" data-lang="ja" data-count="none">ツイート</a> 
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> 
+				</li>
+				<li class="mslMixi"><a href="http://mixi.jp/share.pl" class="mixi-check-button" data-button="button-6">mixiチェック</a> 
+					<script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script> 
+				</li>
+			</ul>
 			<?php echo $msl_infos->get('html_article'); ?>
 			<!--MSL記事表示用-->
 		</div>
