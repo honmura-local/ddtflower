@@ -179,8 +179,21 @@ $(document).ready(function(){
 入会金や年会費は一切かかりません。レッスン代は、次のレッスン分を先に支払う都度払い前金制です。退会時に前金は返金されますのでご安心ください。
 また本校はお仕事帰りに通いやすい時間帯でもレッスンを行っています。「仕事が終わってからじゃ間に合わない…」と今までレッスン受講を諦めていた方も勿論そうでない方も、この機会に本校でフラワーアレンジメントを始めてみませんか。体験レッスンも随時行っていますので、ぜひお気軽にホームページよりご予約ください。
 皆様の受講を心よりお待ちしています。</p>
-
+<ul id="mslSocial">
+	<li class="mslFacebook"><a href="http://www.facebook.com/share.php?u=<?php echo $msl_infos->get('article_url'); ?>"><img src="article/images/fb_likebtn.gif"></a></li>
+	<li class="mslTwitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $msl_infos->get('article_url'); ?>" data-lang="ja" data-count="none">ツイート</a> 
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> 
+	</li>
+	<li class="mslMixi"><a href="http://mixi.jp/share.pl" class="mixi-check-button" data-button="button-6">mixiチェック</a> 
+		<script type="text/javascript" src="http://static.mixi.jp/js/share.js"></script> 
+	</li>
+</ul>
+<?php echo $msl_infos->get('html_article'); ?><!-- msl指定のタイトル -->
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 
+<a href="#article/list.php" style="display:block;font-size:10px;">MSL list.php</a>
+<a href="#article/detail.php" style="display:block;font-size:10px;">MSL detail.php</a>
+<a href="#mypage.html" style="display:block;font-size:10px;">mypage</a>
+<a href="#admin.html" style="display:block;font-size:10px;">admin</a>
 </body>
 </html>
