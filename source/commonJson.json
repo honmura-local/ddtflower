@@ -56,7 +56,7 @@
         },
         "guideBlog": {
             "guideBlogLink": {
-                "href": "#blog.html",
+                "href": "#blog.php",
                 "guideBlogIcon": {
                     "src": "image/icon(blog50).png"
                 }
@@ -136,7 +136,7 @@
         },
         "galleryButton": {
             "galleryLink": {
-                "href": "#gallery.html",
+                "href": "#gallery.php",
                 "title": "",
                 "galleryText": {
                     "text": "ギャラリー"
