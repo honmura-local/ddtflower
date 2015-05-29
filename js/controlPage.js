@@ -89,6 +89,19 @@ function overwrightContent(target, data){
 		//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
 		$(target).append($(this));
 	});
+	
+	//トップページでなく、MSLのリストがあったら
+	if($('mslongtail_wrapper', data).length && $('.topic').length <= 0){
+		//ギャラリーページなら
+		if($('.gallery').length){
+			//MSLの記事リストをギャラリーの前に配置する
+			$('.gallery').before($('mslongtail_wrapper', data).parent());
+		//ブログページなら
+		} else if($('.blogRightContent').length){
+			//ブログ記事の前にMSLのリストを配置する
+			$('.blogRightContent,').prepend($('mslongtail_wrapper', data).parent());
+		}
+	}
 }
 
 /*

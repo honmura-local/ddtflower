@@ -191,8 +191,8 @@ $(document).ready(function(){
 <?php echo $msl_infos->get('html_article'); ?><!-- msl指定のタイトル -->
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 
-<a href="#article/list.php" style="display:block;font-size:10px;">MSL list.php</a>
-<a href="#article/detail.php" style="display:block;font-size:10px;">MSL detail.php</a>
+<a href="#article/list.php/1197/1984" style="display:block;font-size:10px;">MSL list.php</a>
+<a href="#article/detail.php/1197/190747" style="display:block;font-size:10px;">MSL detail.php</a>
 <a href="#mypage.html" style="display:block;font-size:10px;">mypage</a>
 <a href="#admin.html" style="display:block;font-size:10px;">admin</a>
 </body>
