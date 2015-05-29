@@ -91,15 +91,15 @@ function overwrightContent(target, data){
 	});
 	
 	//トップページでなく、MSLのリストがあったら
-	if($('mslongtail_wrapper', data).length && $('.topic').length <= 0){
+	if($('.mslongtail_wrapper', data).length && $('.topic').length <= 0){
 		//ギャラリーページなら
 		if($('.gallery').length){
 			//MSLの記事リストをギャラリーの前に配置する
-			$('.gallery').before($('mslongtail_wrapper', data).parent());
+			$('.gallery').before($('.mslongtail_wrapper', data).parent());
 		//ブログページなら
 		} else if($('.blogRightContent').length){
 			//ブログ記事の前にMSLのリストを配置する
-			$('.blogRightContent,').prepend($('mslongtail_wrapper', data).parent());
+			$('.blogRightContent,').prepend($('.mslongtail_wrapper', data).parent());
 		}
 	}
 }
