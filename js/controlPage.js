@@ -249,7 +249,7 @@ function createFormData(form){
 	//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
 	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]', form)
 		.not('[disabled]').each(function(){
-		var val = this.getAttribute('value');
+		var val = this.value;	//入力フォームから値を取得する
 		//name属性の値を取得する。
 		var name = $(this).attr('name');
 		//type属性の値を取得する。
@@ -257,35 +257,20 @@ function createFormData(form){
 		
 		//nameが空でなければ
 		if(name != "" && name !== void(0)){
-			//name属性で括られた最初のチェックボックスなら
-			if(type == 'checkbox' 
-				&& $(this).index('[name="' + name + '"]:checked') == 0){
-				//valを配列として扱う。
-				val = [];
-				//name属性で括られたチェックボックスを走査していく。
-				$('input:checkbox[name="' + name + '"]:checked').each(function(i){
-					//IEであれば
-					if(uaName.indexOf('ie') != -1){
+			//チェックボックスか、ラジオボタンなら
+			if(type == 'checkbox' || type=='radio'){
+				if($(this).index('[name="' + name + '"]:checked') == 0){
+					val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
+					//name属性で括られたチェックボックスを走査していく。
+					$('input[name="' + name + '"]:checked').each(function(){
 						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-						val[i] = this.getAttributeNode('value').value;
-					} else {
-						//配列にチェックボックスの値をvalメソッドで格納していく。
-						val[i] = $(this).val();
-					}
-				});
-				//formDataを連想配列として扱い、keyとvalueを追加していく。
-				formDataReturn[name] = val;
-			//チェックが入った2番目以降のチェックボックスであるか、name属性がない入力要素であれば
-			} else if(type == 'checkbox' 
-				&& $(this).index('[name="' + name + '"]') != 0 || name === void(0)){
-			//何もしない。
+						val.push(this.getAttribute('value'));
+					});
+					//formDataを連想配列として扱い、keyとvalueを追加していく。
+					formDataReturn[name] = val;
+				}
 			//それ以外であれば
 			} else {
-				//name属性がnameであれば
-				//送信確認と送信時に文字列追加が行われてしまうため、一時凍結しました。
-	//			if(name == 'name'){		
-	//				val = val + ' 様';
-	//			}
 				//formDataを連想配列として扱い、keyとvalueを追加していく。
 				formDataReturn[name] = val;
 			}
