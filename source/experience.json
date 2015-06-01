@@ -142,7 +142,7 @@
         },
         "experience2ndDiv": {
             "experience2ndArt": {
-                "href": "photo/general/web/ex_puriza2.jpg",
+                "href": "photo/general/web/ex_puriza2.JPG",
                 "rel": "gallery",
                 "experience2ndImage": {
                     "src": "photo/general/web120/ex_puriza2.jpg"
@@ -154,7 +154,7 @@
         },
         "experience3rdDiv": {
             "experience3rdArt": {
-                "href": "photo/general/web/ex_fresh1.jpg",
+                "href": "photo/general/web/ex_fresh1.JPG",
                 "rel": "gallery",
                 "experience3rdImage": {
                     "src": "photo/general/web120/ex_fresh1_w179.jpg"
@@ -166,7 +166,7 @@
         },
         "experience4thDiv": {
             "experience4thArt": {
-                "href": "photo/general/web/ex_fresh2.jpg",
+                "href": "photo/general/web/ex_fresh2.JPG",
                 "rel": "gallery",
                 "experience4thImage": {
                     "src": "photo/general/web120/ex_fresh2_w179.jpg"
