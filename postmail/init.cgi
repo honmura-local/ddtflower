@@ -112,6 +112,7 @@ $cf{replace} = {
 		'email' => 'メールアドレス',
 		'reservedDate' => '予約希望日時',
 		'construct' => '希望作品',
+		'construct[]' => '希望作品',
 		'schedule[]' => '希望時限',
 		'dayOfWeek[]' => '予備希望曜日',
 		'week[]' => '予備希望週',
