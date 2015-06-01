@@ -82,7 +82,6 @@
                     "name": "email",
                     "size": "60",
                     "required": "",
-                    "onkeyDown": "return controllInputChar(event);"
                 }
             },
             "content": {

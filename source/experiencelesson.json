@@ -344,7 +344,6 @@
                     "name": "email",
                     "size": "27",
                     "autocomplete": "off",
-                    "onkeyDown": "return controllInputChar(event);",
                     "style": "ime-mode:disabled",
                     "type": "email"
                 }
@@ -365,7 +364,6 @@
                     "oncopy": "return false",
                     "onpaste": "return false",
                     "ononcontextmenu": "return false",
-                    "onkeyDown": "return controllInputChar(event);",
                     "placeholder":"手動で入力してください。"
                 }
             }
