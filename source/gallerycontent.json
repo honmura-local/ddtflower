@@ -2,7 +2,7 @@
     "1": {
         "class": "photo",
         "photoImage": {
-            "href":"photo/general/web/ddt_basket.jpg",
+            "href":"photo/general/web/ddt_basket.JPG",
             "rel":"gallery",
             "photoImageThumb":{
                 "style": "background-image:url('photo/general/web120/ddt_basket.jpg')"
@@ -40,7 +40,7 @@
     "3": {
         "class": "photo",
         "photoImage": {
-            "href":"photo/general/web/ddt_topi.jpg",
+            "href":"photo/general/web/ddt_topi.JPG",
             "rel":"gallery",
             "photoImageThumb":{
                 "style": "background-image:url('photo/general/web120/ddt_topi.jpg')"
@@ -173,7 +173,7 @@
     "10": {
         "class": "photo",
         "photoImage": {
-            "href":"photo/general/web/ddt_ch.jpg",
+            "href":"photo/general/web/ddt_ch.JPG",
             "rel":"gallery",
             "photoImageThumb":{
                 "style": "background-image:url('photo/general/web120/ddt_ch.jpg')"
