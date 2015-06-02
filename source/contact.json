@@ -50,8 +50,8 @@
                     "type": "radio",
                     "name": "sex",
                     "value": "女",
-                    "checked":"",
-                    "required":"true"
+                    "checked": "",
+                    "required": "true"
                 },
                 "sexRadioButtonFemaleLabel": {
                     "text": "女"
@@ -81,7 +81,7 @@
                     "type": "email",
                     "name": "email",
                     "size": "60",
-                    "required": "",
+                    "required": ""
                 }
             },
             "content": {
