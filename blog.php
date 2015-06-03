@@ -29,16 +29,10 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				
 				creator.outputTag('blogRightContent');						// 右側領域を作る
 				creator.outputTag('blog','blog','.blogRightContent');		// 右側領域にブログ領域を作る
-				// ナンバリング領域を作る
-				creator.outputTag('numberingOuter','numberingOuter','.blogRightContent');
 				
 				creator.outputTag('blogLeftContent');						// 左側領域を作る
 				creator.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
-				// 左側領域に最新記事一覧を作る
-				creator.outputTag('currentArticleList','currentArticleList','.blogLeftContent');
 			
-				//@mod 2015.03.13 T.Masuda blogコンテンツを作成する記述を追加しました。
-				creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog');	// ブログの記事を作る。
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
 				
@@ -51,8 +45,6 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				
 				//datepickerによるカレンダーを作成する。
 				createBlogCalendar('.calendar', dateArray);
-				//最新記事一覧を作る
-				createNewArticleList();
 			</script>
 			<!-- MSLの記事を表示する -->
 			<?php echo $msl_infos->get('html_article'); ?>

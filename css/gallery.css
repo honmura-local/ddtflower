@@ -247,3 +247,71 @@
 		text-align: center;	/* 内容を左に寄せる。 */
 	}	
 }
+
+/* @add 2015.0603 T.Masuda MSLのリスト対応*/
+/* 
+ * セレクタ:.gallery #mslongtail_1985 li
+ * 概要   :MSLの記事一覧の各項目。スタイルについては.photoを転用しました
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.gallery #mslongtail_1985 li{
+	width: 170px;				/* 1行で6枚の写真を並べる。 */
+	height: 210px;			/* 内容に関わらず高さを揃える。 */
+	margin			: 5px;				/* 全方向にmarginを配置する。 */
+	padding			: 5px 10px;			/* 内側の余白を指定する。 */
+	box-sizing		: border-box;		/* paddingとborderを幅計算に入れる。 */
+	border			: 1px solid #CCC;	/* 灰色の線で囲む。 */
+	font-size: 14px;				/* 写真がメインなので、字は添える程度の小さいものにする。 */
+	border-radius	: 5px;				/* 角に丸みをつける。 */
+	display			:inline-block;
+	vertical-align: top;
+	/* 文字幅がオーバーしたら...を表示する設定。 */
+	overflow		: hidden; 	/* はみ出した文字を隠す。 */
+	white-space		: nowrap; 	/* 改行・連続するスペースを無視する。 */
+	text-overflow	: ellipsis;	/* テキストがはみ出したら点を表示する。 */
+	/* ここまで一連の設定。 */
+}
+
+/* 
+ * セレクタ:.gallery #mslongtail_1985 img
+ * 概要   :MSLの記事一覧の各項目の画像。スタイルについてはphotoImageを転用しました
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.gallery #mslongtail_1985 img{
+    width	: 100%;		/* 幅を親に合わせる。 */
+    height	: auto;		/* 高さは子に合わせる。 */
+    display	: block;	/* ブロック要素にする。 */
+}
+
+/* 
+ * セレクタ:.gallery #mslongtail_1985 p
+ * 概要   :MSLの記事一覧の「もっと見る」の字の外枠
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.gallery #mslongtail_1985 p{
+	margin-top: 10px;	/* 上にmarginを取る */		
+}
+
+/* 
+ * セレクタ:.gallery #mslongtail_1985 p a
+ * 概要   :MSLの記事一覧の「もっと見る」の字
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.gallery #mslongtail_1985 p a{
+	font-size: 14px;	/* 小さめの文字にする */
+	text-indent: 0.5em;	/* インデントを取る */
+}
+
+/* 
+ * セレクタ:.gallery #mslongtail_1985 h2
+ * 概要   :MSLの記事一覧のタイトル。不要なので隠す
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.gallery #mslongtail_1985 h2{
+	display: none;	/* 不要なので隠す */
+}

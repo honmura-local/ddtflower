@@ -90,12 +90,20 @@ function overwrightContent(target, data){
 		$(target).append($(this));
 	});
 	
-	//トップページでなく、MSLのリストがあったら
-	if($('.main .mslongtail_wrapper', data).length && $('.topic').length <= 0){
+	//@mod 2015.0603 T.Masuda トップページでのMSL表示用の記述を追加しました
+	//MSLのリストがあったら
+	if($('.main .mslongtail_wrapper', data).length){
+		if($('.topic').length){
+			//ブログとギャラリーのお知らせの内容を消す
+			$('.topicGallery').empty();
+			$('.topicBlog').empty();
+			//MSLのリストをお知らせウィンドウに入れる。非表示になっているので表示する
+			$('.topicGallery').append($('#mslongtail_1985', data).show());
+			$('.topicBlog').append($('#mslongtail_1984', data).show());
 		//ギャラリーページなら
-		if($('.gallery').length){
+		}else if($('.gallery').length){
 			//MSLの記事リストをギャラリーの前に配置する
-			$('.gallery').before($('.main .mslongtail_wrapper', data).parent());
+			$('.gallery').append($('.main .mslongtail_wrapper', data).parent());
 		//ブログページなら
 		} else if($('.blogRightContent').length){
 			//ブログ記事の前にMSLのリストを配置する
@@ -505,29 +513,6 @@ function chooseOKBeforeCallFunc(message, title, func, arg1, arg2, arg3){
 
 
 /*
- * 関数名:functionFilter
- * 引数  :var filterTarget
- * 戻り値:なし
- * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
- * 作成日:2015.02.05
- * 作成者:T.Y
- * 変更日:2015.02.22
- * 変更者:T.Masuda
- * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
- */
-function functionFilter (filterTarget) {
-  // jqueryの記述の始まり
-	//現在表示中のページのボタン以外に対して
-    $(document)
-        .on('mouseenter', filterTarget, function() {	// 引数の要素にマウスを乗せた時の処理
-            $(this).addClass('active');   				 // 引数の要素にactiveクラスを付与する。
-        })
-        .on('mouseleave', filterTarget, function() {	// 引数の要素からマウスが離れたときの処理
-            $(this).removeClass('active');  			// 引数の要素からactiveクラスを除去する。
-        });
-}
-	
-/*
  * 関数名:changeSelectedButtonColor
  * 引数  :var filterTarget
  * 戻り値:なし
@@ -614,6 +599,11 @@ $(window).on('load', function(){
 			var currentUrl = window.history.state.url;
 			//ページを読み込む。更新なので履歴を積まないために第二引数を入力する。
 			callPage(currentUrl, window.history.state);
+		//@add 2015.0603 T.Masuda URLのハッシュに応じて画面を遷移させるように変更しました
+		//URLにハッシュがあれば
+		} else if(location.hash){
+			//callPageを呼び、ハッシュで指定されたページを開く
+			callPage(location.hash);
 		}
 	//pushStateに対応していなければhashchangeのイベントで更新を行う。
 	}else{
