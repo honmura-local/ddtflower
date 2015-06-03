@@ -87,15 +87,6 @@
 	font-size: 14px;	/* フォントサイズをやや小さめにする */
 }
 
-/* 
- * セレクタ:.mslongtail_list_link.mslongtail_wrapper
- * 概要   :MSLの記事詳細の一覧ページへのリンク
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.mslongtail_list_link.mslongtail_wrapper{
-	text-align:right;	/* 文字を右に寄せる */
-}
 
 /* 
  * セレクタ:.mslongtail_list_link a
@@ -115,17 +106,6 @@
  */
 #mslongtail_list.mslongtail_wrapper{
 	text-indent:0.5em;	/* 少々字下げする */
-}
-
-/* 
- * セレクタ:#mslongtail_list.mslongtail_wrapper h2
- * 概要   :MSLの記事詳細の記事一覧のタイトル部分
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_list.mslongtail_wrapper h2{
-	font-size: 28px;			/* ページタイトル用フォントサイズにする */
-	text-align: center;			/* 中央に寄せる */
 }
 
 /* 
@@ -159,70 +139,4 @@
 	background: #FFCC99;	/* 背景をベージュにする */
 }
 
-/* 
- * セレクタ:#mslongtail_list.mslongtail_wrapper ul li
- * 概要   :MSLの記事一覧ページの各項目
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_list.mslongtail_wrapper ul li{
-	/* 固定の幅、高さを指定する */
-	width: 170px;			
-	height: 210px;
-	margin: 5px 5px 15px;	/* 適宜他の項目と間隔を取る */
-	padding: 5px 10px;		/* 内側の余白をつける */
-	box-sizing: border-box;	/* padding、borderを大きさ計算に入れる */
-	font-size: 12px;		/* 小さめのフォントにする */
-	display: inline-block;	/* インラインブロックにして横に並べる */
-	vertical-align: top;	/* 要素を上に寄せる */
-	/* 幅を超えた文字を隠す */
-	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
-}
 
-/* 
- * セレクタ:#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li
- * 概要   :MSLのブログ記事一覧ページの各項目
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li{
-	background: #FFCC99;	/* 背景をベージュにする */
-	border-radius: 10px;	/* 角丸をつける */
-}
-
-/* 
- * セレクタ:#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li
- * 概要   :MSLのギャラリー記事一覧ページの各項目
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_1985 #mslongtail_list.mslongtail_wrapper ul li{
-	background: #FFF;		/* 背景を白くする */
-	border:1px solid #666;	/* 灰色の罫線で囲む */
-	border-radius: 5px;		/* 角丸をつける */
-}
-
-/* 
- * セレクタ:#mslongtail_list.mslongtail_wrapper img
- * 概要   :MSLの記事一覧ページの各項目の画像
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_list.mslongtail_wrapper img{
-	display: block;			/* ブロック要素にして横に要素を並べない */
-	margin: 5px auto 10px;	/* 中央によせ、上下にも適正な間隔を取る */
-	/* 固定のサイズをセットする */
-	width: 136px;			
-	height: 136px;
-	border-radius: 10px;	/* 角丸をつける */
-}
-
-/* 
- * セレクタ:#mslongtail_list.mslongtail_wrapper p a
- * 概要   :MSLの記事一覧ページの戻るリンク
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-#mslongtail_list.mslongtail_wrapper p a{
-	font-size: 14px;	/* 「戻る」の文字を小さめにする */
-}
