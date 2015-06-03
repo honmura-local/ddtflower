@@ -60,10 +60,10 @@ var currentPage = getCurrentPageFileName('php');	//現在のページ名を取�
 
 //現在のページがMSLのphpであれば
 if(currentPage == MSL_LIST_PHP || currentPage == MSL_DETAIL_PHP){
-	INIT_JSON_PATH = "../../" + INIT_JSON;		//2階層下がってファイルを取得する
+	INIT_JSON_PATH = "../../../" + INIT_JSON;		//2階層下がってファイルを取得する
 //他のページなら
 } else {
-	INIT_JSON_PATH = "source/init.json";		//階層を下げない
+	INIT_JSON_PATH = INIT_JSON;		//階層を下げない
 }
 
 

@@ -28,24 +28,26 @@ exit;
   ga('send', 'pageview');
 </script>
 <!-- mslで指定されたCSSファイルを読み込む -->
-<link href="css/top.css" rel="stylesheet" type="text/css">
+<link href="../../css/top.css" rel="stylesheet" type="text/css">
+<!-- メインのCSSファイルを読み込む。 -->
+<link href="../../../css/style.css" rel="stylesheet" type="text/css">
+<!-- コース案内のCSSファイルを読み込む。 -->
+<link href="../../../css/courseguide.css" rel="stylesheet" type="text/css">
 
 <!-- メインのCSSファイルを読み込む。 -->
-<link href="/flowers/css/style.css" rel="stylesheet" type="text/css">
+<link href="../../../css/style.css" rel="stylesheet" type="text/css">
 <!-- jQueryの本体を読み込む。 -->
-<script src="/flowers/js/jquery-1.11.0.min.js"></script>
+<script src="../../../js/jquery-1.11.0.min.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
-<script src="/flowers/js/flowersstylefix.js"></script>
+<script src="../../../js/flowersstylefix.js"></script>
 <!-- タグを作成するJSの関数群を読み込む -->
-<script type="text/javascript" src="/flowers/js/createTag.js"></script>
-<!-- タグを作成するJSの関数群を読み込む -->
-<script type="text/javascript" src="/flowers/js/controlPage.js"></script>
-<!-- タグを作成するJSの関数群を読み込む -->
-<script type="text/javascript" src="/flowers/js/createDialog.js"></script>
-<!-- メインのCSSファイルを読み込む。 -->
-<link href="/flowers/css/style.css" rel="stylesheet" type="text/css">
-<!-- コース案内のCSSファイルを読み込む。 -->
-<link href="/flowers/css/courseguide.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../../../js/createTag.js"></script>
+<!-- 初期化変数を配置するための関数をコールするためのファイルを読み込む -->
+<script type="text/javascript" src="../../../js/createDialog.js"></script>
+<!-- MSLページ用の関数ファイルを読み込む -->
+<script type="text/javascript" src="../../../js/mslFunctions.js"></script>
+
+
 <script>
 	$(document).ready(function(){
 		var creator = new createTag();	//createTagのクラスオブジェクトを生成する
@@ -69,12 +71,21 @@ exit;
 		fixXCoordinateOnScroll('header')
 		//花の上下の画像にMSL記事を移動する
 		$('.createImage:first').after($('[id*="mslongtail_198"]'));
+		$('.createImage:first').after($('#mslSocial'));
 
-		//画像パスの修正を行う
-		//花の枠 上
-		$('.flowerImage').eq(0).attr('src', '/flowers/image/main(header800).png');
-		//花の枠 上
-		$('.flowerImage').eq(1).attr('src', '/flowers/image/main(footer800).png');
+		//画像タグのパスを階層に合わせて修正する
+		$('img').each(function(){
+			var imgPath = $(this).attr('src');	//画像のパスを取得する
+			//画像フォルダから取得している画像なら
+			if(imgPath.indexOf('image/') != -1){
+				//画像パスを階層に合わせる
+				$(this).attr('src', '../../../' + $(this).attr('src'));
+			}
+		});
+		
+		//画面遷移イベントを登録する関数をコールする
+		linkClicked('a[href*="#"],a[href$="#"][target!="_blank"]');
+		removeTextNode('.main');	//不要なテキストを消す
 	});
 </script>
 </head>
@@ -82,12 +93,14 @@ exit;
 <body>
 	<!-- ウェブサイトの横幅の基準となる -->
 	<div id="container">
-		<!-- メインのタグ -->
+	<!-- ヘッダー領域のタグ -->
+	<header class="header"></header>
+	<!-- メインのタグ -->
 		<div class="main">
 			<?php echo $msl_infos->get('h1'); ?>
 			<!--MSL記事表示用-->
 			<ul id="mslSocial">
-				<li class="mslFacebook"><a href="http://www.facebook.com/share.php?u=<?php echo $msl_infos->get('article_url'); ?>"><img src="http://ddthink.com/article/images/fb_likebtn.gif"></a></li>
+				<li class="mslFacebook"><a href="http://www.facebook.com/share.php?u=<?php echo $msl_infos->get('article_url'); ?>"><img src="http://ddthink.com/test/before/ddtflowers/article/images/fb_likebtn.gif"></a></li>
 				<li class="mslTwitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $msl_infos->get('article_url'); ?>" data-lang="ja" data-count="none">ツイート</a> 
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> 
 				</li>
