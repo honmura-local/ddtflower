@@ -27,7 +27,8 @@ $msl_infos = new MSLListInfo();
   ga('send', 'pageview');
 </script>
 <!-- mslで指定されたCSSファイルを読み込む -->
-<link href="css/top.css" rel="stylesheet" type="text/css">
+<link href="../../css/top.css" rel="stylesheet" type="text/css">
+<link href="../../css/list.css" rel="stylesheet" type="text/css">
 
 <!-- メインのCSSファイルを読み込む。 -->
 <link href="../css/style.css" rel="stylesheet" type="text/css">
@@ -67,9 +68,9 @@ $msl_infos = new MSLListInfo();
 	$(document).ready(function(){
 		var creator = new createTag();	//createTagのクラスオブジェクトを生成する
 
-		creator.getJsonFile('/flowers/source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
-		creator.getDomFile('/flowers/template/common.html');				// 共通パーツのDOMを取得する。
-		creator.getDomFile('/flowers/template/courseguide.html');		// コース紹介ページのパーツのDOMを取得する。
+		creator.getJsonFile('../../../source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
+		creator.getDomFile('../../../template/common.html');				// 共通パーツのDOMを取得する。
+		creator.getDomFile('../../../template/courseguide.html');		// コース紹介ページのパーツのDOMを取得する。
 
 		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る
 		creator.outputTag('topMenu', 'topMenu', '.header');		// トップメニューを作る
