@@ -38,3 +38,26 @@ function fixYCoordinate(upperElem, lowerElem){
 	});
 }
 
+/*
+ * 関数名:functionFilter
+ * 引数  :var filterTarget
+ * 戻り値:なし
+ * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
+ * 作成日:2015.02.05
+ * 作成者:T.Y
+ * 変更日:2015.02.22
+ * 変更者:T.Masuda
+ * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
+ */
+function functionFilter (filterTarget) {
+  // jqueryの記述の始まり
+	//現在表示中のページのボタン以外に対して
+    $(document)
+        .on('mouseenter', filterTarget, function() {	// 引数の要素にマウスを乗せた時の処理
+            $(this).addClass('active');   				 // 引数の要素にactiveクラスを付与する。
+        })
+        .on('mouseleave', filterTarget, function() {	// 引数の要素からマウスが離れたときの処理
+            $(this).removeClass('active');  			// 引数の要素からactiveクラスを除去する。
+        });
+}
+	
