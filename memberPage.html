@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DDTFlowers</title>
+</head>
+<body>
+	<div id="container">
+		<div class="main">
+			<!-- 管理者画面のCSSファイルを読み込む。 -->
+			<link href="css/admin.css" rel="stylesheet" type="text/css" />
+			<script>
+				creator.getJsonFile('source/memberPage.json');
+				creator.getJsonFile('source/commonJson.json');			// 共通のパーツのJSONを取得する。
+				// パーツのテンプレートのDOMを取得する。
+				creator.getDomFile('template/common.html');				
+				creator.getDomFile('template/memberPage.html');
+				
+				creator.outputTag('headImage', 'createImage');			// 天の画像を作る
+				creator.outputTag('memperPageHead');
+				creator.outputTag('lessonTabs');
+				creator.outputTag('lessonTabInContent');
+		 		creator.outputTag('footImage', 'createImage');			// 地の画像を作る
+				creator.outputTag('footer');							// フッターを作る
+			
+				//フォームに入力チェックをかける。
+				$('form').validate(showAlert);
+			</script>
+		</div>
+	</div>
+</body>
+</html>
