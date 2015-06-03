@@ -13,37 +13,6 @@ exit;
 <html>
 <!-- 予め仕様等を記すヘッダータグ -->
 <head>
-<!-- jQueryの本体を読み込む。 -->
-<script src="../js/jquery-1.11.0.min.js"></script>
-<!-- サイト全体のレイアウト調整用JSファイル。 -->
-<script src="../js/flowersstylefix.js"></script>
-<!-- タグを作成するJSの関数群を読み込む -->
-<script type="text/javascript" src="../js/createTag.js"></script>
-<!-- メインのCSSファイルを読み込む。 -->
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<!-- コース案内のCSSファイルを読み込む。 -->
-			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
-			<script>
-				$(document).ready(function(){
-					creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
-	
-					creator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する。
-					creator.getDomFile('template/courseguide.html');	// コース紹介ページのパーツのDOMを取得する。
-					creator.outputTag('headImage', 'createImage');			// 天の画像を作る
-	
-					creator.outputTag('footImage', 'createImage');			// 地の画像を作る
-					creator.outputTag('footer');							// フッターを作る
-					
-					// トップメニューにマウスオーバーのフィルターを配置する。
-					functionFilter('.topMenu li');
-					// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-					fixYCoordinate('header', '.main');
-					// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-					fixXCoordinateOnScroll('header')
-					//花の上下の画像にMSL記事を移動する
-					$('.createImage:first').after($('.mslongtail_wrapper:first'));
-				});
-				</script>
 <!--title、keywords、description表示用-->
 <?php echo $msl_infos->get('html_meta'); ?>
 <!--title、keywords、description表示用-->
@@ -62,7 +31,52 @@ exit;
 <link href="css/top.css" rel="stylesheet" type="text/css">
 
 <!-- メインのCSSファイルを読み込む。 -->
-<link href="../css/style.css" rel="stylesheet" type="text/css">
+<link href="/flowers/css/style.css" rel="stylesheet" type="text/css">
+<!-- jQueryの本体を読み込む。 -->
+<script src="/flowers/js/jquery-1.11.0.min.js"></script>
+<!-- サイト全体のレイアウト調整用JSファイル。 -->
+<script src="/flowers/js/flowersstylefix.js"></script>
+<!-- タグを作成するJSの関数群を読み込む -->
+<script type="text/javascript" src="/flowers/js/createTag.js"></script>
+<!-- タグを作成するJSの関数群を読み込む -->
+<script type="text/javascript" src="/flowers/js/controlPage.js"></script>
+<!-- タグを作成するJSの関数群を読み込む -->
+<script type="text/javascript" src="/flowers/js/createDialog.js"></script>
+<!-- メインのCSSファイルを読み込む。 -->
+<link href="/flowers/css/style.css" rel="stylesheet" type="text/css">
+<!-- コース案内のCSSファイルを読み込む。 -->
+<link href="/flowers/css/courseguide.css" rel="stylesheet" type="text/css">
+<script>
+	$(document).ready(function(){
+		var creator = new createTag();	//createTagのクラスオブジェクトを生成する
+
+		creator.getJsonFile('/flowers/source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
+		creator.getDomFile('/flowers/template/common.html');				// 共通パーツのDOMを取得する。
+		creator.getDomFile('/flowers/template/courseguide.html');		// コース紹介ページのパーツのDOMを取得する。
+
+		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る
+		creator.outputTag('topMenu', 'topMenu', '.header');		// トップメニューを作る
+		// ログイン状態をチェックする。
+		checkLoginState();
+		creator.outputTag('headImage', 'createImage');			// 天の画像を作る
+		creator.outputTag('footImage', 'createImage');			// 地の画像を作る
+		creator.outputTag('footer');							// フッターを作る
+		// トップメニューにマウスオーバーのフィルターを配置する。
+		functionFilter('.topMenu li');
+		// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+		fixYCoordinate('header', '.main');
+		// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+		fixXCoordinateOnScroll('header')
+		//花の上下の画像にMSL記事を移動する
+		$('.createImage:first').after($('[id*="mslongtail_198"]'));
+
+		//画像パスの修正を行う
+		//花の枠 上
+		$('.flowerImage').eq(0).attr('src', '/flowers/image/main(header800).png');
+		//花の枠 上
+		$('.flowerImage').eq(1).attr('src', '/flowers/image/main(footer800).png');
+	});
+</script>
 </head>
 <!-- コンテンツを表示する領域 -->
 <body>
@@ -86,6 +100,7 @@ exit;
 		</div>
 	<!-- idをcontainerに指定したdivタグを閉じる -->
 	</div>
+	
 <!-- bodyタグを閉じる -->
 </body>
 <!-- htmlタグを閉じる -->

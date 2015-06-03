@@ -2,9 +2,69 @@
  * ダイアログを作る関数をまとめたJSファイル。
  */
 
+//ファイルパスの定数
+MSL_LIST_PHP = 'list.php';
+MSL_DETAIL_PHP = 'detail.php';
+INIT_JSON = 'source/init.json';
+
+/* 
+ * ファイル名:createDialog.js
+ * 概要  :ダイアログと関係する関数を定義する
+ * 作成者:T.M
+ * 作成日:2015.
+ * パス　:/js/createDialog.js
+ */
+
+/* 
+ * 関数名:getCurrentPageFileName()
+ * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
+ * 引数  :String identifier:探す拡張子
+ * 返却値  :String:ファイル名を返す
+ * 作成者:T.M
+ * 作成日:2015.06.03
+ */
+function getCurrentPageFileName(identifier){
+	var retFileName = '';	//ファイル名を返却するための変数を宣言、初期化する
+	//現在のページのパスを配列で取得する
+	var path = location.pathname.split('/');
+	//ファイル名取得の前準備としてパスの要素数を取得する
+	var pathLength = path.length;
+	
+	//拡張子の指定があったら
+	if(identifier){
+		//拡張子の文字列を作成する
+		var identifierString = '.' + identifier;
+		//ループしてパスを走査する
+		for(var i = 0; i < pathLength; i++){
+			//配列の要素が指定した拡張子を含んでいたら
+			if(path[i].indexOf(identifierString) != -1){
+				//現在走査しているパスを返却するように、変数にセットする
+				retFileName = path[i];
+				break;	//ループ終了
+			}
+		}
+	//拡張子の指定がなければ
+	} else {
+		//最後の文字列 = ファイル名として返却するようにする
+		retFileName = path[pathLength - 1];
+	}
+	
+	return retFileName;	//取得したファイル名を返す
+}
+
 /**
  * 体験レッスンページのコンテンツ作成用JavaScript関数 + 汎用テキスト作成JavaScript関数ファイル。
  */
+
+var currentPage = getCurrentPageFileName('php');	//現在のページ名を取得する。phpでなければ空文字を返す
+
+//現在のページがMSLのphpであれば
+if(currentPage == MSL_LIST_PHP || currentPage == MSL_DETAIL_PHP){
+	INIT_JSON_PATH = "../../" + INIT_JSON;		//2階層下がってファイルを取得する
+//他のページなら
+} else {
+	INIT_JSON_PATH = "source/init.json";		//階層を下げない
+}
 
 
 /* 
@@ -860,7 +920,7 @@ var errorMessages = [
 ];
 
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
-var init = getInitData("source/init.json", 100);
+var init = getInitData(INIT_JSON_PATH, 100);
 
 /* 
  * 関数名:showEditDialog(editElem)
