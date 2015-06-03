@@ -1,0 +1,20 @@
+/* 
+ * セレクタ:p.mslongtail_list_link
+ * 概要   :MSLの記事詳細の一覧ページへのリンク
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+p.mslongtail_list_link{
+	text-align:right;	/* 文字を右に寄せる */
+}
+/* 
+ * セレクタ:#mslongtail_list.mslongtail_wrapper h2
+ * 概要   :MSLの記事詳細の記事一覧のタイトル部分
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+#mslongtail_list.mslongtail_wrapper h2{
+	font-size: 14px;			/* ページタイトル用フォントサイズにする */
+	text-align: left;			/* 中央に寄せる */
+}
+
