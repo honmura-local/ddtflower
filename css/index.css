@@ -340,3 +340,13 @@
 	text-overflow	: ellipsis;	/* テキストがはみ出したら点を表示する。 */
 	/* ここまで一連の設定。 */
 }
+
+/* 
+ * セレクタ:#mslongtail_1984,#mslongtail_1985
+ * 概要   :MSLの記事一覧。ブログ、ギャラリーの両方
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.04
+ */
+#mslongtail_1984,#mslongtail_1985{
+	display: none;	/* 最初は隠しておく */
+}

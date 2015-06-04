@@ -152,9 +152,13 @@ $(document).ready(function(){
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 	
-	//@add 2015.0603 T.Masuda MSLのリストを隠しておく
-	$('#mslongtail_1984').hide();
-	$('#mslongtail_1985').hide();
+	//@add 2015.0604 T.Masuda MSLの記事一覧を最新記事表示ウィンドウに載せる
+	//ブログとギャラリーのお知らせの内容を消す
+	$('.topicGallery').empty();
+	$('.topicBlog').empty();
+	//MSLのリストをお知らせウィンドウに入れる。非表示になっているので表示する
+	$('.topicGallery').append($('#mslongtail_1985').show());
+	$('.topicBlog').append($('#mslongtail_1984').show());
 	
 	$.when(
 	//0ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。

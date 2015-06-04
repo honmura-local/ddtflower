@@ -13,6 +13,11 @@ exit;
 <html>
 <!-- 予め仕様等を記すヘッダータグ -->
 <head>
+<!-- UTF-8でエンコード -->
+<meta http-equiv="Content-Type" content="text/html charset=UTF-8">
+<meta charset="utf-8">
+<!-- 画面の幅を使用している端末に依存する。加えてズームを許可しない。 -->
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
 <!--title、keywords、description表示用-->
 <?php echo $msl_infos->get('html_meta'); ?>
 <!--title、keywords、description表示用-->

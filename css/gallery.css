@@ -315,3 +315,13 @@
 .gallery #mslongtail_1985 h2{
 	display: none;	/* 不要なので隠す */
 }
+
+/* 
+ * セレクタ:.gallery #mslongtail_1985
+ * 概要   :MSLの記事一覧
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.04
+ */
+.gallery #mslongtail_1985{
+	display: block;	/* 最初から表示しておく */
+}

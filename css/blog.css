@@ -343,6 +343,88 @@
 	background	:#CEDC3A;		/*サイトのメインで使っている背景色を適用する。*/
 }
 
+/* @add 2015.0603 T.Masuda MSL記事用の記述を追加しました */
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1985 li
+ * 概要   :MSLの記事一覧の各項目。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 li{
+	width			: 100%;			/*幅を右側コンテンツ領域一杯に広げる。*/
+	margin			: 0 auto 20px;	/*水平位置を中央に合わせる。また、下に余白を空ける。*/
+	background		:#FFCC99 ;		/*背景色をベージュにする。*/
+	border-radius	:10px;			/*記事領域の角を丸くする。*/
+	padding			: 10px 2%;		/* 全体方向に内側の余白を入れる。 */
+	box-sizing		: border-box;	/* 幅の計算にborderとpaddingを加える。 */
+}
+
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1984 img
+ * 概要   :MSLの記事一覧の各項目の画像。スタイルについてはphotoImageを転用しました
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 img{
+	width		:25%;	/*mainの1/5の幅を取る。*/
+	display		:inline-block;	/* インラインブロックにして横に並べる。*/
+	margin-right: 5px;	/* テキスト部分と間隔を取る。 */
+	height: auto;		/* 高さは幅に合わせる */
+}
+
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1984 p
+ * 概要   :MSLの記事一覧の「もっと見る」の字の外枠
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 p{
+	margin-top: 10px;	/* 上にmarginを取る */		
+}
+
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1984 p a
+ * 概要   :MSLの記事一覧の「もっと見る」の字
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 p a{
+	font-size: 14px;	/* 小さめの文字にする */
+	text-indent: 0.5em;	/* インデントを取る */
+}
+
+/* 
+ * セレクタ:.blog #mslongtail_1984 h2
+ * 概要   :MSLの記事一覧のタイトル。不要なので隠す
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 h2{
+	display: none;	/* 不要なので隠す */
+}
+
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1984 .mslongtail_title
+ * 概要   :MSLの記事一覧の各項目のタイトル
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.03
+ */
+.blogRightContent #mslongtail_1984 .mslongtail_title{
+	display: inline-block;	/* インラインブロックで横に並べる */
+	vertical-align: top;	/* 文字を上につめる */
+}
+
+/* 
+ * セレクタ:.blogRightContent #mslongtail_1984
+ * 概要   :MSLの記事一覧
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.04
+ */
+.blogRightContent #mslongtail_1984{
+	display: block;	/* 最初から表示しておく */
+}
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -471,74 +553,14 @@
 	 .blogArticleListButton {
 	 	width:auto;		/*フォントサイズに合わせた幅を指定する。*/
 	 }
+	/* 
+	 * セレクタ:.blogRightContent #mslongtail_1985 li
+	 * 概要   :MSLの記事一覧の各項目。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.06.04
+	 */
+	.blogRightContent #mslongtail_1984 li{
+		width			: 90%;			/* 少し余白がとれる幅にする。*/
+	}
 }
 
-/* @add 2015.0603 T.Masuda MSL記事用の記述を追加しました */
-/* 
- * セレクタ:.blogRightContent #mslongtail_1985 li
- * 概要   :MSLの記事一覧の各項目。スタイルについては.photoを転用しました
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 li{
-	width			: 100%;			/*幅を右側コンテンツ領域一杯に広げる。*/
-	margin			: 0 auto 20px;	/*水平位置を中央に合わせる。また、下に余白を空ける。*/
-	background		:#FFCC99 ;		/*背景色をベージュにする。*/
-	border-radius	:10px;			/*記事領域の角を丸くする。*/
-	padding			: 10px 2%;		/* 全体方向に内側の余白を入れる。 */
-	box-sizing		: border-box;	/* 幅の計算にborderとpaddingを加える。 */
-}
-
-/* 
- * セレクタ:.blogRightContent #mslongtail_1984 img
- * 概要   :MSLの記事一覧の各項目の画像。スタイルについてはphotoImageを転用しました
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 img{
-	width		:25%;	/*mainの1/5の幅を取る。*/
-	display		:inline-block;	/* インラインブロックにして横に並べる。*/
-	margin-right: 5px;	/* テキスト部分と間隔を取る。 */
-}
-
-/* 
- * セレクタ:.blogRightContent #mslongtail_1984 p
- * 概要   :MSLの記事一覧の「もっと見る」の字の外枠
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 p{
-	margin-top: 10px;	/* 上にmarginを取る */		
-}
-
-/* 
- * セレクタ:.blogRightContent #mslongtail_1984 p a
- * 概要   :MSLの記事一覧の「もっと見る」の字
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 p a{
-	font-size: 14px;	/* 小さめの文字にする */
-	text-indent: 0.5em;	/* インデントを取る */
-}
-
-/* 
- * セレクタ:.blog #mslongtail_1984 h2
- * 概要   :MSLの記事一覧のタイトル。不要なので隠す
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 h2{
-	display: none;	/* 不要なので隠す */
-}
-
-/* 
- * セレクタ:.blogRightContent #mslongtail_1984 .mslongtail_title
- * 概要   :MSLの記事一覧の各項目のタイトル
- * 作成者 :T.Masuda
- * 作成日 :2015.06.03
- */
-.blogRightContent #mslongtail_1984 .mslongtail_title{
-	display: inline-block;	/* インラインブロックで横に並べる */
-	vertical-align: top;	/* 文字を上につめる */
-}

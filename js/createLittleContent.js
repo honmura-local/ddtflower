@@ -190,12 +190,18 @@ function createMyPageReservedCalendar(selector, dateRange) {
 /*
  * 関数名:createBlogCalendar(selector)
  * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　　:Array dateArray:日付の配列
+ * 　　　:function callBack:onSelectイベントの処理
  * 戻り値:なし
  * 概要  :ブログページのカレンダーを作る。
  * 作成日:2015.04.16
  * 作成者:T.Masuda
+ * 変更日:2015.06.04
+ * 変更者:T.Masuda
+ * 内容　:引数追加。第3引数にonSelectイベントのコールバック関数を指定可能にしました。
+ * 　　　:また、第2引数がnullであれば日付の絞り込みを行わないようにしました。
  */
-function createBlogCalendar(selector, dateArray) {
+function createBlogCalendar(selector, dateArray, callBack) {
 	//datepickerのロケール設定を行う。
 	$.datepicker.regional['ja'] = dpJpSetting;
 	$.datepicker.setDefaults($.datepicker.regional['ja']);
@@ -204,26 +210,55 @@ function createBlogCalendar(selector, dateArray) {
 	$(selector).datepicker({
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			//@mod 2015.0527 T.Masuda 処理を追加しました
-			creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
+			//@add 2015.0604 T.Masuda コールバック関数を指定できるようにしました
+			//コールバック関数が指定してなければ
+			if(callBack === void(0)){
+				//@mod 2015.0527 T.Masuda 処理を追加しました
+				//絞り込まれたブログ記事を書き出す
+				creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
+			//コールバック関数が指定されていたら
+			} else {
+				//コールバック関数を実行する
+				callBack(dateText, inst);
+			}
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
-			var ymd = createYMD(date);				//日付の配列を作る。
-			var retArray = [false];					//返却する配列を作る。
-			var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
-			
-			//日付配列を走査する。
-			for(var i = 0; i < dateArray.length; i++){
-				//合致する日付があれば
-				if(compareYMD(ymd, createYMD(dateArray[i]))){
-					retArray[0] = true;	//その日付を有効にする。
-				}
-			}
-			
-			return retArray;	//判定の配列を返す。
+			//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
+			return putDisableDate(date, dateArray);
 		}
 	});
+}
+
+/*
+ * 関数名:function putDisableDate(date, dateArray)
+ * 引数  :Date date: 日付
+ * 　　  :Array dateArray: 日付の配列
+ * 戻り値:Array:DatepickerのbeforeShowDayで要求されるbooleanの配列を返す
+ * 概要  :配列に該当する日付があるかのチェックを行い、判定を返す
+ * 作成日:2015.06.04
+ * 作成者:T.Masuda
+ */
+function putDisableDate(date, dateArray){
+	var retArray = [false];					//返却する配列を作る。
+	//日付が用意されていたら
+	if(dateArray != null){
+		var ymd = createYMD(date);				//日付の配列を作る。
+		var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
+			
+		//日付配列を走査する。
+		for(var i = 0; i < dateArray.length; i++){
+			//合致する日付があれば
+			if(compareYMD(ymd, createYMD(dateArray[i]))){
+				retArray[0] = true;	//その日付を無効にする。
+			}
+		}
+	//日付の配列が用意されていなければ
+	} else {
+		retArray[0] = true;	//日付を有効にする
+	}
+	
+	return retArray;	//判定の配列を返す。
 }
 
 /*
@@ -1801,15 +1836,15 @@ function createNewArticleList(){
 }
 
 /*
- * 関数名 :insertArticleListText
+ * 関数名 :insertBlogArticleListText
  * 引数  　:element elem:記事リストの項目を構成する要素
  * 　　　　:element articleNode:記事のノード
  * 戻り値　:なし
- * 概要  　:最新記事の一覧のテキストを入れる
+ * 概要  　:ブログの最新記事の一覧のテキストを入れる
  * 作成日　:2015.05.27
  * 作成者　:T.Masuda
  */
-function insertArticleListText(elems, articleNode){
+function insertBlogArticleListText(elems, articleNode){
 	var elemsLength = elems.length; //項目数を取得する
 	//ループで値を入れていく
 	for(var j = 0; j < elemsLength; j++){
@@ -1828,6 +1863,30 @@ function insertArticleListText(elems, articleNode){
 		} else if(tagName == 'SMALL'){
 			//値を入れる
 			elems.eq(j).text(articleNode.blogArticleTitle.blogArticleUserName.text);
+		}
+	}
+}
+
+/*
+ * 関数名 :insertArticleListText
+ * 引数  　:element elems:記事リストのDOM
+ * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
+ * 戻り値　:なし
+ * 概要  　:最新記事の一覧のテキストを入れる
+ * 作成日　:2015.06.04
+ * 作成者　:T.Masuda
+ */
+function insertArticleListText(elems, articleNodes){
+	var articleLength = articleNodes.length; //項目数を取得する
+	//ループで値を入れていく。記事データか記事一覧のDOMがなくなったら終了する
+	for(var i = 0; i < articleLength && elems[i] != void(0); i++){
+		for(key in articleNodes[i]){
+			//タイトルを作成する
+			$('p',elems[i]).text(articleNodes[i].title);
+			//日付を作成する
+			$('time',elems[i]).text(articleNodes[i].date);
+			//ユーザ名を作成する
+			$('small',elems[i]).text(articleNodes[i].user);
 		}
 	}
 }

@@ -32,7 +32,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				
 				creator.outputTag('blogLeftContent');						// 左側領域を作る
 				creator.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
-			
+				
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
 				
@@ -45,6 +45,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				
 				//datepickerによるカレンダーを作成する。
 				createBlogCalendar('.calendar', dateArray);
+				//ブログ記事の中にMSLのリストを配置する
+				$('.blogRightContent').prepend($('#mslongtail_1984').show());
 			</script>
 			<!-- MSLの記事を表示する -->
 			<?php echo $msl_infos->get('html_article'); ?>

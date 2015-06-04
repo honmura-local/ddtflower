@@ -1,3 +1,4 @@
+@CHARSET "UTF-8";
 /* 
  * ファイル名:top.css
  * 概要   :MSLのリスト、記事詳細ページ用のCSS
@@ -74,7 +75,7 @@
  */
 #mslongtail_detail dt {
 	font-size: 15px;		/* フォントを普通のサイズにする */
-	margin-bottom: 3px;		/* 本文との間に適正な間隔を取る */
+	margin-bottom: 1em;		/* 本文との間に1文字分の間隔を取る */
 }
 
 /* 
@@ -105,7 +106,7 @@
  * 作成日 :2015.06.03
  */
 #mslongtail_list.mslongtail_wrapper{
-	text-indent:0.5em;	/* 少々字下げする */
+	padding: 0 0.5em 10px;	/* インデント付けとコンテンツ最下部との間の間隔取りをする */
 }
 
 /* 
@@ -138,5 +139,4 @@
 #mslongtail_1984 #mslongtail_detail{
 	background: #FFCC99;	/* 背景をベージュにする */
 }
-
 
