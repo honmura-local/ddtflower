@@ -195,6 +195,5 @@ $(document).ready(function(){
 <a href="#article/detail.php/1197/190747" style="display:block;font-size:10px;">MSL detail.php</a>
 <a href="#mypage.html" style="display:block;font-size:10px;">mypage</a>
 <a href="#admin.html" style="display:block;font-size:10px;">admin</a>
-<a href="#memberPage.html" style="display:block;font-size:10px;">会員ページ</a>
 </body>
 </html>

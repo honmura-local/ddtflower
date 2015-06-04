@@ -1,0 +1,204 @@
+@CHARSET "UTF-8";
+
+/* 
+ * セレクタ :.main
+ * 概要   :コンテンツ全体の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+ .main {
+ 	width: 90%;			/* 幅を90%にする */
+ }
+
+/* 
+ * セレクタ :.memberStatus
+ * 概要   :会員情報領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberStatus {
+	font-size: 14px;	/* 文字サイズを14pxにする */
+}
+
+/* 
+ * セレクタ :.memberName
+ * 概要   :会員名領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberName {
+	padding-left: 2em;		/* 2文字分空白を空ける */
+	display: inline-block;	/* インラインブロック要素として扱う */
+}
+
+/* 
+ * セレクタ :.memberPoint
+ * 概要   :会員所持ポイント領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberPoint {
+	padding-left: 1em;		/* 2文字分空白を空ける */
+	display: inline-block;	/* インラインブロック要素として扱う */
+}
+
+/* 
+ * セレクタ :.memberMenu
+ * 概要   :ヘッダのメニュー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu {
+	margin: 5px 0;			/* 上下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.memberMenu li
+ * 概要   :ヘッダのメニューそれぞれの項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu li {
+	display: inline-block;	/* インラインブロック要素として扱う */
+	text-align: center;		/* 中央寄せにする */
+	width: 32%;				/* 幅を32%にする */
+}
+
+/* 
+ * セレクタ :.memberStatus
+ * 概要   :ヘッダのメニュー、リンクボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+a.memberMenuLink {
+	display: block;			/* ブロック要素として扱い、クリックしやすくする */
+}
+
+/* 
+ * セレクタ :.memberStatus
+ * 概要   :会員名領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu li a {
+	display: block;
+}
+
+/* 
+ * セレクタ :.banner
+ * 概要   :バナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner {
+	display: inline-block;		/* インラインブロック要素として扱う */
+	width: 50%;					/* 幅を50%にする */
+	background: #ddd;			/* 背景を灰色にする */
+}
+
+/* 
+ * セレクタ :.banner:nth-of-type(1)
+ * 概要   :左のバナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner:nth-of-type(1) {
+	background: #de3;
+}
+
+/* 
+ * セレクタ :.banner
+ * 概要   :右のバナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner:nth-of-type(2) {
+  background: #eee;
+}
+
+/* 
+ * セレクタ :.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all
+ * 概要   :カレンダー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+	width: 97%;	/* 幅を97%にする */
+}
+
+/* 
+ * セレクタ :.tab
+ * 概要   :タブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.tab {
+	margin: 5px 0;				/* 上下に5pxの余白をとる */
+    display: inline-block;		/* インラインブロック要素として扱う */
+	width: 45%;					/* 幅を45%にする */
+    text-align: center;			/* 中央揃えにする */
+	padding: 5px;				/* 5px要素の幅を広げる */
+    background-color: #cedc3a;	/* 背景を黄緑色にする */
+}
+
+/* 
+ * セレクタ :.themeText
+ * 概要  :「テーマ」のテキスト領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.themeText {
+    display: inline-block;		/* インラインブロック要素として扱う */
+}
+
+/* 
+ * セレクタ :.memberStatus
+ * 概要   :選択中のタブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.tab.active {
+    background-color: #ce6;		/* 背景を薄い黄緑にする */
+}
+
+/* 
+ * セレクタ :.calendar
+ * 概要   :カレンダー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.calendar {
+	margin-top: 5px;		/* 上下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.wrapList
+ * 概要   :データのテーブル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.wrapList {
+	margin: 10px 0;		/* 上下に10pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.anotion
+ * 概要   :データの注釈領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.anotion {
+	margin-bottom: 20px;		/* 下に20pxの余白をとる */
+}
+
+
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+
+}
+
+/* スマホ用微調整 */
+@media(max-width:400px){
+
+}

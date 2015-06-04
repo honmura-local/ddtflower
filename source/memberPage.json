@@ -1,55 +1,90 @@
 {
-	"memperPageHead":{
-		"memberMenu":{
-			"memberMenuList":
-			[
-				{
-					"href":"",
-					"text":"サポートメール"
-				},
-				{
-					"href":"",
-					"text":"プロフィール"
-				},
-				{
-					"href":"",
-					"text":"ログアウト"
-				}
-			]
-		},
-		"bannerArea":{
-			"banner":
-			[
-				{
-					"src":"",
-					"value":"ブログバナー"
-				},
-				{
-					"src":"",
-					"value":"マイページバナー"
-				}
-			]
-		},
-		"advertise":{
-			"advertiseImage":{
-				"src":""
-			}
-		}
-	},
-	"lessonTabs":{
-		"tab":
-		[
-			{
-				"href":"",
-				"text":"予約中の授業"
-			},
-			{
-				"href":"",
-				"text":"受講済の授業"
-			}
-		]
-	},
-	"lessonTabInContent":{
+    "memberPageHead": {
+        "memberStatus": {
+            "memberNumber": {
+                "noArea": {
+                    "text": "No."
+                },
+                "numberArea": {
+                    "text": "00000000"
+                }
+            },
+            "memberName": {
+                "nameArea": {
+                    "text": "山田花子"
+                },
+                "nameTitleArea": {
+                    "text": "様"
+                }
+            },
+            "memberPoint": {
+                "pointNumberArea": {
+                    "text": "900"
+                },
+                "ptArea": {
+                    "text": "pt"
+                }
+            }
+        },
+        "memberMenu": {
+            "memberMenuList": [
+                {
+                    "href": "",
+                    "text": "サポートメール"
+                },
+                {
+                    "href": "",
+                    "text": "プロフィール"
+                },
+                {
+                    "href": "",
+                    "text": "ログアウト"
+                }
+            ]
+        },
+        "bannerArea": {
+            "banner": [
+                {
+                    "src": "",
+                    "title":"blogbanner",
+                    "value": "ブログバナー"
+                },
+                {
+                    "src": "",
+                    "title":"mypagebanner",
+                    "value": "マイページバナー"
+                }
+            ]
+        },
+        "advertise": {
+            "advertiseImage": {
+                "src": ""
+            }
+        }
+    },
+    "lessonCalendar":{
+    	"name":"lessonCalendar"
+    },
+    "lessonTab": {
+    	"class":"tab-container",
+    	"id":"tab-container",
+    	"tabs":{
+    		"tab":
+    		[
+    			{
+    				"href":"#alreadyReserved",
+    				"text":"予約中レッスン"
+    			},
+    			{
+    				"href":"#finishedLesson",
+    				"text":"受講済レッスン"
+    			}
+    		]
+    	}
+    },
+    "alreadyReserved":{
+		"class":"alreadyReserved tabPanel",
+		"id":"alreadyReserved",
 		"selectTheme":{
 			"themeText":{
 				"text":"テーマ"
@@ -69,9 +104,40 @@
 			"text":"絞込"
 		},
 		"wrapList":{
-			"id":"",
+			"id":"alreadyLessonTable",
 			"list":{
-				"id":""
+				"id":"reservedData"
+			}
+		},
+		"anotion":{
+			"text":"※ポイントは参加人数と共に変動します"
+		}
+	},
+	"finishedLesson":{
+		"class":"finishedLesson tabPanel",
+		"id":"finishedLesson",
+		"selectTheme":{
+			"themeText":{
+				"text":"テーマ"
+			}
+		},
+		"selectThemebox":{
+			"themeValue":
+			[
+				"テーマ1",
+				"テーマ2",
+				"テーマ3",
+				"テーマ4",
+				"テーマ5"
+			]
+		},
+		"selectThemeButton":{
+			"text":"絞込"
+		},
+		"wrapList":{
+			"id":"finishedLessonTable",
+			"list":{
+				"id":"finishedData"
 			}
 		},
 		"anotion":{

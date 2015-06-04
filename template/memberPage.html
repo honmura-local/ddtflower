@@ -5,15 +5,30 @@
 <div>
 
 	<!-- 会員サイトヘッダー領域 -->
-	<div class="memperPageHead">
+	<div class="memberPageHead">
 		<!-- 会員番号と会員名、所持ポイントを表示する領域 -->
 		<div class="memberStatus">
 			<!-- 会員番号 -->
-			<span class="memberNumber"></span>
+			<span class="memberNumber">
+				<!-- No.表示領域 -->
+				<span class="noArea"></span>
+				<!-- 番号表示領域 -->
+				<span class="numberArea"></span>
+			</span>
 			<!-- 会員名 -->
-			<span class="memberName"></span>
+			<span class="memberName">
+				<!-- 名前表示領域 -->
+				<span class="nameArea"></span>
+				<!-- 敬称「様」表示領域 -->
+				<span class="nameTitleArea"></span>
+			</span>
 			<!-- 所持ポイント -->
-			<span class="memberPoint"></span>
+			<span class="memberPoint">
+				<!-- ポイント数字表示領域 -->
+				<span class="pointNumberArea"></span>
+				<!-- pt表示領域 -->
+				<span class="ptArea"></span>
+			</span>
 		</div>
 		<!-- ヘッダーメニュー領域 -->
 		<ul class="memberMenu">
@@ -26,7 +41,7 @@
 			<!-- バナーの外枠 -->
 			<a class="banner">
 				<!-- バナーの画像 -->
-				<img class="bannerImage" src="" value="">
+				<img class="bannerImage" title="" src="" value="">
 			</a>
 		</div>
 		<!-- 告知領域 -->
@@ -35,20 +50,22 @@
 		</div>
 	</div>
 
-	<!-- カレンダー領域 -->
-	<div class="memberCalendar"></div>
+	<!-- タブコンテント -->
+	<div class="lessonTab" id="">
+		<!-- タブを囲む領域 -->
+		<ul class="tabs">
+			<!-- 個々のタブ領域 -->
+			<li class="tab">
+				<!-- タブのクリックする領域 -->
+				<a class="tabLink" href=""></a>
+			</li>
+		</ul>
+		<!-- タブのコンテンツを囲む領域 -->
+		<div class="tabContentArea"></div>
+	</div>
 
-	<!-- タブ領域 -->
-	<ul class="lessonTabs">
-		<!-- タブのボタンの外枠 -->
-		<li class="tab">
-			<!-- タブのクリック領域 -->
-			<a class="tabLink" href=""></a>
-		</li>
-	</ul>
-
-	<!-- タブ内コンテンツ -->
-	<div class="lessonTabInContent">
+	<!-- タブ内のコンテンツ -->
+	<div class="tabInContent" id="">
 		<!-- テーマを絞り込むための領域 -->
 		<div class="selectTheme">
 			<!-- テーマと表示する領域 -->
@@ -69,6 +86,7 @@
 		<!-- 注釈 -->
 		<p class="anotion"></p>
 	</div>
+
 
 </div>
 </body>
