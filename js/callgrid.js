@@ -62,6 +62,23 @@
 	        { name: "point", index:"point", width: 40., align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
 	];
 
+// function gridWidth() {
+// 	// 現在の画面の幅を取得する
+// 	var displayWidth = $(window).width();
+// 	// 取得した値の90%をjqgridの幅にする
+// 	var jqgridWidth = displayWidth * 0.9;
+// 	// 20グリッド構成にするため、1つのグリッドの幅を求める
+// 	var gridSize = jqgridWidth / 20;
+// 	// カラムに値を設定する
+// 	colData['reservedData'][0]['width'] = gridSize * 6;
+// 	colData['reservedData'][1]['width'] = gridSize * 2;
+// 	colData['reservedData'][2]['width'] = gridSize * 3;
+// 	colData['reservedData'][3]['width'] = gridSize * 2;
+// 	colData['reservedData'][4]['width'] = gridSize * 4;
+// 	colData['reservedData'][5]['width'] = gridSize * 3;
+// }
+// gridWidth();
+
 	// 受講済みの授業の列データ
 	//列の設定について、特筆すべき点のみ補足します。
 	colData['finishedData'] = [

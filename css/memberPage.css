@@ -117,6 +117,19 @@ a.memberMenuLink {
 }
 
 /* 
+ * セレクタ :.advertise
+ * 概要   :告知領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.advertise {
+	height: 30px;			/* 高さを30pxにする */
+	border: 1px solid #ddd; /* 灰色の線で囲む */
+	margin: 7px 0;			/* 上下に7pxの余白をあける */
+	display: none;			/* 最初は非表示にしておく */
+}
+
+/* 
  * セレクタ :.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all
  * 概要   :カレンダー領域
  * 作成者 :T.Yamamoto
@@ -135,7 +148,7 @@ a.memberMenuLink {
 .tab {
 	margin: 5px 0;				/* 上下に5pxの余白をとる */
     display: inline-block;		/* インラインブロック要素として扱う */
-	width: 45%;					/* 幅を45%にする */
+	width: 46%;					/* 幅を45%にする */
     text-align: center;			/* 中央揃えにする */
 	padding: 5px;				/* 5px要素の幅を広げる */
     background-color: #cedc3a;	/* 背景を黄緑色にする */
@@ -148,7 +161,8 @@ a.memberMenuLink {
  * 作成日 :2015.06.04
  */
 .themeText {
-    display: inline-block;		/* インラインブロック要素として扱う */
+    display: inline-block; /* インラインブロック要素として扱う */
+    
 }
 
 /* 
@@ -191,6 +205,17 @@ a.memberMenuLink {
 	margin-bottom: 20px;		/* 下に20pxの余白をとる */
 }
 
+
+/* 
+ * セレクタ :.selectThemeButton
+ * 概要   :絞り込みボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.selectThemeButton {
+  float: right;			/* 右側に回り込みする */
+  font-size: 12px;		/* フォントサイズを12pxにする */
+}
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){

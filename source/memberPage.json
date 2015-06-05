@@ -58,7 +58,8 @@
         },
         "advertise": {
             "advertiseImage": {
-                "src": ""
+                "src": "",
+                "title":"告知領域"
             }
         }
     },
@@ -73,11 +74,11 @@
     		[
     			{
     				"href":"#alreadyReserved",
-    				"text":"予約中レッスン"
+    				"text":"予約中の授業"
     			},
     			{
     				"href":"#finishedLesson",
-    				"text":"受講済レッスン"
+    				"text":"受講済の授業"
     			}
     		]
     	}
