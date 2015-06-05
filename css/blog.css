@@ -183,29 +183,6 @@
 }
 
  /* 
- * セレクタ:.calendar
- * 概要   :ブログページのカレンダー。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.19
- */
-.calendar{
-	display: inline-block;	/* インラインブロックにして横に並べる。 */
-	font-size: 12px;		/* フォントサイズを小さくし、カレンダーそのものを小さくする。 */
-	margin-bottom: 10px;	/* 下marginを入れる。 */
-}
- /* 
- * セレクタ:.calendar　> div
- * 概要   :ブログページのカレンダー。
- * 作成者 :T.Masuda
- * 作成日 :2015.03.19
- */
-.calendar > div{
-	/* インラインブロックにして幅を取りすぎないようにする。
-	!importantを指定してライブラリによるブロック要素指定をキャンセルする。 */
-	display: inline-block!important;
-}
-
- /* 
  * セレクタ:.currentArticleListTitle
  * 概要   :最新記事の一覧のタイトル部分。
  * 作成者 :T.Masuda
@@ -522,26 +499,6 @@
 	 	margin: 0;				/* marginをなくす。 */
 	 }
 	 
-	 /* 
-	 * セレクタ:.calendar
-	 * 概要   :ブログページのカレンダー。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.19
-	 */
-	.calendar{
-		display: block;	/* スマホレイアウトではブロック要素にする。 */
-	}
-	
-	 /* 
-	 * セレクタ:.calendar　> div
-	 * 概要   :ブログページのカレンダー。
-	 * 作成者 :T.Masuda
-	 * 作成日 :2015.03.19
-	 */
-	.calendar > div {
-		display: block!important;	/* ブロック要素にする */
-		margin: 0 auto ;			/* 中央に寄せる。 */
-	}
 
 	 /* 
 	 * セレクタ:.blogArticleListButton

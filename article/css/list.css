@@ -18,6 +18,7 @@
 	/* 幅を超えた文字を隠す */
 	overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
 }
+
 /* 
  * セレクタ:#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li
  * 概要   :MSLのブログ記事一覧ページの各項目
@@ -92,7 +93,18 @@
 		width: 90%;							/* 余白を残して中央に寄せられるサイズを指定する */
 		display: block;						/* 要素を横並べにしないようにブロック要素にする */
 		margin-left:auto;margin-right:auto;	/* 中心に寄せる */
-	} 
+	}
+
+	/* 
+	 * セレクタ:#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li
+	 * 概要   :MSLのブログ記事一覧ページの各項目
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.06.04
+	 */
+	#mslongtail_1984 #mslongtail_list.mslongtail_wrapper ul li{
+		width: 100%;	/* 幅を100%にする */
+	}
+	
 }
 
 

@@ -44,49 +44,6 @@
     width: 64%;         /* 幅を64%にする */
 }
 
-/* 
- * セレクタ:.calendar
- * 概要   :カレンダーについてそれぞれの項目のスタイル
- * 作成者 :T.Yamamoto
- * 作成日 :2015.02.09
- */
-.calendar {
-    width: 48%;         /* 幅を47%にする */
-    float: right;       /* 右側に回り込む */
-}
-
-/* 
- * セレクタ:.calendar > div 
- * 概要   :datepicker本体。
- * 作成者 :T.Masuda 
- * 作成日 :2015.02.27
- */
-.calendar > div {
-    width:      100%;           /* 幅を領域一杯に広げる。 */
-    font-size:  16px;       /* フォントサイズを上げて全体を大きくする。 */
-    box-sizing: border-box; /* サイズの計算に線、paddingを含む。 */
-}
-
-/* 
- * セレクタ:.calendar > div > div
- * 概要   :datepickerの各内容。
- * 作成者 :T.Masuda 
- * 作成日 :2015.03.02
- */
-.calendar > div  > div {
-    font-size:  0.95em;     /* タイトルより少しだけ小さいフォントを指定する。 */
-}
-
-/* 
- * セレクタ:.calendar td
- * 概要   :datepickerの日付。
- * 作成者 :T.Masuda 
- * 作成日 :2015.03.02
- */
-.calendar .ui-datepicker td a{
-    padding-top     : 6px;      /* 上paddingを設定する。 */
-    padding-bottom  : 6px;      /* 下paddingを設定する。 */
-}
 
 /* 
  * セレクタ:.experienceGallery
