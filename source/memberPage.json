@@ -9,20 +9,20 @@
                     "text": "00000000"
                 }
             },
-            "memberName": {
-                "nameArea": {
-                    "text": "山田花子"
-                },
-                "nameTitleArea": {
-                    "text": "様"
-                }
-            },
             "memberPoint": {
                 "pointNumberArea": {
                     "text": "900"
                 },
                 "ptArea": {
                     "text": "pt"
+                }
+            },
+            "memberName": {
+                "nameArea": {
+                    "text": "山田花子"
+                },
+                "nameTitleArea": {
+                    "text": "様"
                 }
             }
         },
@@ -94,11 +94,9 @@
 		"selectThemebox":{
 			"themeValue":
 			[
-				"テーマ1",
-				"テーマ2",
-				"テーマ3",
-				"テーマ4",
-				"テーマ5"
+				"プリザ",
+				"生花",
+				"NFD"
 			]
 		},
 		"selectThemeButton":{
@@ -125,11 +123,9 @@
 		"selectThemebox":{
 			"themeValue":
 			[
-				"テーマ1",
-				"テーマ2",
-				"テーマ3",
-				"テーマ4",
-				"テーマ5"
+                "プリザ",
+                "生花",
+                "NFD"
 			]
 		},
 		"selectThemeButton":{

@@ -1,5 +1,17 @@
 @CHARSET "UTF-8";
 
+a {
+	display: block;		/* ブロック要素にしてクリックしやすくする */
+}
+
+a:hover {
+	opacity: 0.6;		/* 透過度を80%にする */
+}
+
+a:active {
+	color: #999;		/* クリックしたときに文字の色を薄くする */ 
+}
+
 /* 
  * セレクタ :.main
  * 概要   :コンテンツ全体の領域
@@ -7,18 +19,8 @@
  * 作成日 :2015.06.04
  */
  .main {
- 	width: 90%;			/* 幅を90%にする */
+ 	width: 800px;			/* 幅を800pxにする */
  }
-
-/* 
- * セレクタ :.memberStatus
- * 概要   :会員情報領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberStatus {
-	font-size: 14px;	/* 文字サイズを14pxにする */
-}
 
 /* 
  * セレクタ :.memberName
@@ -27,8 +29,7 @@
  * 作成日 :2015.06.04
  */
 .memberName {
-	padding-left: 2em;		/* 2文字分空白を空ける */
-	display: inline-block;	/* インラインブロック要素として扱う */
+	padding-right: 1em;		/* 2文字分空白を空ける */
 }
 
 /* 
@@ -37,9 +38,8 @@
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
-.memberPoint {
-	padding-left: 1em;		/* 2文字分空白を空ける */
-	display: inline-block;	/* インラインブロック要素として扱う */
+.memberName, .memberPoint {
+	float:right;			/* 右側に回り込みする */
 }
 
 /* 
@@ -65,26 +65,6 @@
 }
 
 /* 
- * セレクタ :.memberStatus
- * 概要   :ヘッダのメニュー、リンクボタン領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-a.memberMenuLink {
-	display: block;			/* ブロック要素として扱い、クリックしやすくする */
-}
-
-/* 
- * セレクタ :.memberStatus
- * 概要   :会員名領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberMenu li a {
-	display: block;
-}
-
-/* 
  * セレクタ :.banner
  * 概要   :バナー領域
  * 作成者 :T.Yamamoto
@@ -93,6 +73,7 @@ a.memberMenuLink {
 .banner {
 	display: inline-block;		/* インラインブロック要素として扱う */
 	width: 50%;					/* 幅を50%にする */
+	height: 40px;
 	background: #ddd;			/* 背景を灰色にする */
 }
 
@@ -103,7 +84,7 @@ a.memberMenuLink {
  * 作成日 :2015.06.04
  */
 .banner:nth-of-type(1) {
-	background: #de3;
+	background: #de3;			/* 背景を黄緑にする */
 }
 
 /* 
@@ -113,7 +94,7 @@ a.memberMenuLink {
  * 作成日 :2015.06.04
  */
 .banner:nth-of-type(2) {
-  background: #eee;
+  background: #eee;				/* 背景をグレーにする */
 }
 
 /* 
@@ -130,13 +111,25 @@ a.memberMenuLink {
 }
 
 /* 
- * セレクタ :.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all
+ * セレクタ :.calendar > div
  * 概要   :カレンダー領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
-.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
-	width: 97%;	/* 幅を97%にする */
+.calendar > div {
+	width: 49%;		/* 幅を49%にする */
+	float: left;	/* 左側に回り込みする */
+}
+
+/* 
+ * セレクタ :#tab-container
+ * 概要   :タブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+#tab-container {
+	width: 49%;		/* 幅を49%にする */
+	float: right;
 }
 
 /* 
@@ -148,9 +141,9 @@ a.memberMenuLink {
 .tab {
 	margin: 5px 0;				/* 上下に5pxの余白をとる */
     display: inline-block;		/* インラインブロック要素として扱う */
-	width: 46%;					/* 幅を45%にする */
+	width: 50%;					/* 幅を45%にする */
     text-align: center;			/* 中央揃えにする */
-	padding: 5px;				/* 5px要素の幅を広げる */
+	padding: 5px 0;				/* 5px要素の幅を広げる */
     background-color: #cedc3a;	/* 背景を黄緑色にする */
 }
 
@@ -176,13 +169,25 @@ a.memberMenuLink {
 }
 
 /* 
+ * セレクタ :.tabLink
+ * 概要   :タブクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.tabLink {
+	display:block;
+}
+
+
+/* 
  * セレクタ :.calendar
  * 概要   :カレンダー領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
-.calendar {
+#container .calendar {
 	margin-top: 5px;		/* 上下に5pxの余白をとる */
+	float: left;
 }
 
 /* 
@@ -217,13 +222,48 @@ a.memberMenuLink {
   font-size: 12px;		/* フォントサイズを12pxにする */
 }
 
+/* 
+ * セレクタ :.selectThemeButton
+ * 概要   :絞り込みボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.ui-jqgrid .ui-jqgrid-view {
+	font-size: 12px;
+}
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
-
 
 }
 
 /* スマホ用微調整 */
 @media(max-width:400px){
 
+	/* 
+	 * セレクタ :.main
+	 * 概要   :コンテンツ全体の領域(スマホ・タブレット)
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.04
+	 */
+	 .main {
+	 	width: 90%;			/* 幅を90%にする */
+	 }
+
+	#container .calendar > div, #tab-container {
+		float:none;
+		width: 100%;
+	}
+
+	/* 
+	 * セレクタ :.memberStatus
+	 * 概要   :会員情報領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.04
+	 */
+	.memberStatus {
+		font-size: 14px;		/* 文字サイズを14pxにする */
+		height: 18px; 
+	}
 }

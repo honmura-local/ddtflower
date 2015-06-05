@@ -39,6 +39,8 @@
 	colNamesLists['reservedData'] = ['開始日時', '終了', 'テーマ', '店舗', '料金', 'ポイント'];
 	// 受講済みの授業テーブル、列名
 	colNamesLists['finishedData'] = ['開始日時', '終了', 'テーマ', '店舗', '料金', 'ポイント'];
+	// 日ごと授業テーブル、列名
+	colNamesLists['lessonStatusList'] = ['時間割', '店舗', 'テーマ', '料金', '残席', '状況', '詳細'];
 
 	// 予約中の授業の列データ
 	//列の設定について、特筆すべき点のみ補足します。
@@ -49,35 +51,18 @@
 	        //editoptions:セレクトメニューでのセル編集時に、選択項目のソースとなる連想配列を指定する。
 	        //sortable:ソート可能かどうかの設定。 sorttype:ソートのデータ型を指定する。
 	        // 開始日時列
-	        { name: "start_date", index:"start_date", width: 90,  align:"center", className: " start_date", editable: true, sortable:true, sorttype:'date', datefmt:"yyyy-mm-dd"},
+	        { name: "start_date", index:"start_date", width: 91,  align:"center", className: " start_date", editable: true, sortable:true, sorttype:'date', datefmt:"yyyy-mm-dd"},
 	        //終了列
-	        { name: "finish_time", index:"finish_time", width: 32.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
+	        { name: "finish_time", index:"finish_time", width: 33.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
 	        //テーマ列
-	        { name: "theme", index:"theme", width: 31.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
+	        { name: "theme", index:"theme", width: 33.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
 	        //店舗列
-	        { name: "store_place", index:"store_place", width: 21, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
+	        { name: "store_place", index:"store_place", width: 24, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
 	        //料金列
 	        { name: "rate", index:"rate", width: 45, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
 	        //ポイント列
-	        { name: "point", index:"point", width: 40., align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
+	        { name: "point", index:"point", width: 36, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
 	];
-
-// function gridWidth() {
-// 	// 現在の画面の幅を取得する
-// 	var displayWidth = $(window).width();
-// 	// 取得した値の90%をjqgridの幅にする
-// 	var jqgridWidth = displayWidth * 0.9;
-// 	// 20グリッド構成にするため、1つのグリッドの幅を求める
-// 	var gridSize = jqgridWidth / 20;
-// 	// カラムに値を設定する
-// 	colData['reservedData'][0]['width'] = gridSize * 6;
-// 	colData['reservedData'][1]['width'] = gridSize * 2;
-// 	colData['reservedData'][2]['width'] = gridSize * 3;
-// 	colData['reservedData'][3]['width'] = gridSize * 2;
-// 	colData['reservedData'][4]['width'] = gridSize * 4;
-// 	colData['reservedData'][5]['width'] = gridSize * 3;
-// }
-// gridWidth();
 
 	// 受講済みの授業の列データ
 	//列の設定について、特筆すべき点のみ補足します。
@@ -88,17 +73,41 @@
 	        //editoptions:セレクトメニューでのセル編集時に、選択項目のソースとなる連想配列を指定する。
 	        //sortable:ソート可能かどうかの設定。 sorttype:ソートのデータ型を指定する。
 	        // 開始日時列
-	        { name: "start_date", index:"start_date", width: 90,  align:"center", className: " start_date", editable: true, sortable:true, sorttype:'date', datefmt:"yyyy-mm-dd"},
+	        { name: "start_date", index:"start_date", width: 91,  align:"center", className: " start_date", editable: true, sortable:true, sorttype:'date', datefmt:"yyyy-mm-dd"},
 	        //終了列
-	        { name: "finish_time", index:"finish_time", width: 32.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
+	        { name: "finish_time", index:"finish_time", width: 33.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
 	        //テーマ列
-	        { name: "theme", index:"theme", width: 31.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
+	        { name: "theme", index:"theme", width: 33.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
 	        //店舗列
-	        { name: "store_place", index:"store_place", width: 21, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
+	        { name: "store_place", index:"store_place", width: 24, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
 	        //料金列
 	        { name: "rate", index:"rate", width: 45, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
 	        //ポイント列
-	        { name: "point", index:"point", width: 40, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
+	        { name: "point", index:"point", width: 36, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
+	];
+
+	// 日ごと授業テーブルのデータ
+	//列の設定について、特筆すべき点のみ補足します。
+	colData['lessonStatusList'] = [
+	        //name:名前 index:ソート時の名前 width:列幅 dataType:データの型 align:セルのテキストの寄せる方向
+	        //className:列のクラス名 editable:編集可能にするかどうかの設定。trueかfalseで指定する。
+	        //editType:editableが有効な場合のセルの編集方法の指定。ラジオボタン、チェックボックス等を指定する。
+	        //editoptions:セレクトメニューでのセル編集時に、選択項目のソースとなる連想配列を指定する。
+	        //sortable:ソート可能かどうかの設定。 sorttype:ソートのデータ型を指定する。
+	        // 時間割列
+	        { name: "timeSchedule", index:"timeSchedule", width: 77,  align:"center", className: " timeSchedule", editable: true, sortable:true, sorttype:'time'},
+	        //店舗列
+	        { name: "store_place", index:"store_place", width: 28, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'time'},
+	        //テーマ列
+	        { name: "theme", index:"theme", width: 31, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
+	        //料金列
+	        { name: "rate", index:"rate", width: 45, align:"center", className: "rate", editable: true, sortable:true, sorttype:'text'},
+	        //残席列
+	        { name: "vacant_seat", index:"vacant_seat", width: 21, align:"center", className: "vacant_seat", editable: false, sortable:true, sorttype:'text'},
+	        //状況列
+	        { name: "situation", index:"situation", width: 45, align:"center", className: "situation", editable: false, sortable:true, sorttype:'text'},
+	        //詳細列
+	        { name: "detail", index:"detail", width: 30, align:"center", className: "detail", editable: false, sortable:true, sorttype:'text'}
 	];
 
 	/*
@@ -332,9 +341,9 @@
 		 datatype:"json",
 		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
 		//基本の幅を指定する。
-		width: 289,
+		width: 292,
 		//グリッドのリサイズ時の最大幅、最小幅を指定する。
-		gridResize: {minWidth:289, maxWidth:289},
+		gridResize: {minWidth:292, maxWidth:292},
 		//表部分の高さを指定する。
 		height: "auto",
 		//列名の表示の配列をセットする。
@@ -377,9 +386,9 @@
 		 datatype:"json",
 		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
 		//基本の幅を指定する。
-		width: 289,
+		width: 292,
 		//グリッドのリサイズ時の最大幅、最小幅を指定する。
-		gridResize: {minWidth:289, maxWidth:289},
+		gridResize: {minWidth:292, maxWidth:292},
 		//表部分の高さを指定する。
 		height: "auto",
 		//列名の表示の配列をセットする。
@@ -414,6 +423,82 @@
 		// }
 	};
 
+	//予約中の授業テーブルのjqGridのルールを連想配列に設定する。
+	objRules['lessonStatusList'] = { 
+		//url:'../GetJSONArray',	//サーブレットGetJSONArrayからJSONを取得する
+		url:'source/eachDayLessonTable.json',
+		// JSONデータをデータソースとして利用する。
+		 datatype:"json",
+		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
+		//基本の幅を指定する。
+		width: 292,
+		//グリッドのリサイズ時の最大幅、最小幅を指定する。
+		gridResize: {minWidth:292, maxWidth:292},
+		//表部分の高さを指定する。
+		height: "auto",
+		//列名の表示の配列をセットする。
+		colNames: colNamesLists['lessonStatusList'],
+		//列定義のデータをセットする。
+		colModel: colData['lessonStatusList'],
+		caption: ''	,		//リストのタイトルを設定する。
+		cellEdit: true,    	// セルの編集を無効にする。
+		//セルを編集してもサーバとの通信をしないように設定する。
+		cellsubmit: 'clientArray',
+        sortorder: "desc",	// 降順ソートをする
+        shrinkToFit: false,	// 列幅の自動調整を行う。
+		//行を選択した後に実行される関数。
+		// afterEditCell:function(rowid, status, e){
+		// 	//確認ウィンドウを出す.
+		// 	if(window.confirm(rowid + "番目のレコードを複製します。")){
+		// 		insertOrderRecord(rowid, this);	//レコードを複製してDBに保存する
+		// 	//キャンセルが選択されたら
+		// 	} else {
+		// 		//削除するかを問う
+		// 		if(window.confirm(rowid + "番目のレコードを削除します。")){
+		// 			deleteOrderRecord(rowid, this);	//レコードを削除する
+		// 		} 
+		// 	}
+		// },
+		// //セルを編集したら
+		// afterSaveCell:function(rowid){
+		// 	//確認ウィンドウを出す.
+		// 	if(window.confirm(rowid + "番目のレコードを更新します。")){
+		// 		updateOrderRecord(rowid, this);
+		// 	}
+		// }
+	};
+
+
+/*
+ * 関数名:gridWidth()
+ * 引数  :string target: 対象の列
+ * 戻り値 :なし
+ * 概要  :jqgridの幅を決める
+ * 作成日 :2015.06.04
+ * 作成者:T.Masuda
+ */
+function gridWidth(target) {
+	// 現在の画面の幅を取得する
+	var displayWidth = $(window).width();
+	// 画面のサイズが600以上の時、幅を変える
+	if (displayWidth >= 600) {
+		// カラムに値を設定する
+		colData[target][0]['width'] = 105;
+		colData[target][1]['width'] = 47.5;
+		colData[target][2]['width'] = 48.5;
+		colData[target][3]['width'] = 48;
+		colData[target][4]['width'] = 60;
+		colData[target][5]['width'] = 51;
+		objRules[target]['width'] = 389;
+	}
+	// 取得した値の90%をjqgridの幅にする
+	// var jqgridWidth = displayWidth * 0.9;
+	// 20グリッド構成にするため、1つのグリッドの幅を求める
+	// var gridSize = jqgridWidth / 20;
+}
+
+
+
 	/*
 	 * 関数名:makeGrid
 	 * 引数  :string target:テーブルのクラス。
@@ -438,3 +523,13 @@
 //	$(document).ready(function(){
 //		makeGrid('receivedData');	//グリッドを作成する
 //	});
+
+function accordion() {
+	// デフォルトで1番目を開く(アコーディオンの中身の最初のものの表示をオンにする)
+	$('accordion').eq(0).show();
+	// クリックしたらアコーディオンパネルが起動する
+	$('.detailButton').click(function() {
+		// メニュー表示/非表示
+		$(this).next('.accordion').slideToggle('fast');
+	});
+}

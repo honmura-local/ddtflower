@@ -72,37 +72,29 @@
 			//ドキュメント配備後
 			$(document).ready(function(){
 				creator = new createTag();
-				creator.getJsonFile('source/memberPage.json');
-				// 共通のパーツのJSONを取得する。
-				//creator.getJsonFile('source/commonJson.json');
-				// パーツのテンプレートのDOMを取得する。
-				creator.getDomFile('template/common.html');
-				// 会員ページのjsonを読み込む
-				creator.getDomFile('template/memberPage.html');
-				// 会員ページヘッダーを作る
-				creator.outputTag('memberPageHead');
-				// 会員ページのカレンダーを作る
-				creator.outputTag('lessonCalendar', 'calendar');
-				// カレンダーを作る
-				createCalendar('.calendar');
-				// タブ機能を作る
-				creator.outputTag('lessonTab');
-				// 会員ページ受講済みレッスンタブを作る
-				// creator.outputTag('lessonTabInContent');
-				// 予約済み授業のタブ内コンテンツを作る
-				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
-				// 受講済み授業のタブ内コンテンツを作る
-				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
+				// 日ごとレッスンのjsonを読み込む
+				creator.getJsonFile('source/eachDayLesson.json');
+				// 日ごとレッスンのテンプレートを読み込む
+				creator.getDomFile('template/eachDayLesson.html');
 
-				// 予約済み授業と受講済み授業についてタブを作る
-				 createTab('#tab-container');
-				 // 予約中のテーブルの値を取り出す
-				 creator.getJsonFile('source/memberPage.json');
-				gridWidth('reservedData');
-				gridWidth('finishedData');
-				 // jqgridでテーブルを作る
-				 makeGrid('reservedData');
-				 makeGrid('finishedData');
+				// 会員ステータスを表示する領域を作る
+				creator.outputTag('memberStatus');
+				// レッスンのステータスを示すテーブルを作る
+				creator.outputTag('lessonStatusTable');
+				// テーブルのステータスを概要を表示する領域を作る
+				creator.outputTag('lessonStatus', 'statusArea');
+				// アコーディオン領域を作る
+				creator.outputTag('acordion', 'insertDiv');
+				// キャンセル料率の概要部分を作る
+				creator.outputTag('cancelRateSummary', 'statusSummary', '.acordion');
+				// キャンセル料率のステータスを作る
+				creator.outputTag('cancelRateStatus', 'statusArea', '.cancelRateSummary');
+				//　加算ポイントの概要部分を作る
+				creator.outputTag('addPointSummary', 'statusSummary', '.acordion');
+				// 加算ポイントのステータスを作る
+				creator.outputTag('addPointStatus', 'statusArea', '.addPointSummary');
+				// 
+				makeGrid('lessonStatusList');
 				});
 			</script>
 		</div>
