@@ -1039,12 +1039,15 @@ form[target^="jquery_upload"]{
 }
 
 /* 
- * セレクタ:.calendar td
+ * セレクタ:.calendar td *
  * 概要   :datepickerの日付。
  * 作成者 :T.Masuda 
  * 作成日 :2015.03.02
+ * 変更者 :T.Masuda 
+ * 変更日 :2015.06.04
+ * 内容　 :セレクタの対象のタグをaから*に変更しました
  */
-.calendar .ui-datepicker td a{
+.calendar .ui-datepicker td *{
     padding-top     : 6px;      /* 上paddingを設定する。 */
     padding-bottom  : 6px;      /* 下paddingを設定する。 */
 }
