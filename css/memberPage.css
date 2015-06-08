@@ -18,9 +18,6 @@ a:active {
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
- .main {
- 	width: 800px;			/* 幅を800pxにする */
- }
 
 /* 
  * セレクタ :.memberName
@@ -61,7 +58,7 @@ a:active {
 .memberMenu li {
 	display: inline-block;	/* インラインブロック要素として扱う */
 	text-align: center;		/* 中央寄せにする */
-	width: 32%;				/* 幅を32%にする */
+	width: 33.333%;				/* 幅を33%にする */
 }
 
 /* 
@@ -110,16 +107,6 @@ a:active {
 	display: none;			/* 最初は非表示にしておく */
 }
 
-/* 
- * セレクタ :.calendar > div
- * 概要   :カレンダー領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.calendar > div {
-	width: 49%;		/* 幅を49%にする */
-	float: left;	/* 左側に回り込みする */
-}
 
 /* 
  * セレクタ :#tab-container
@@ -129,7 +116,7 @@ a:active {
  */
 #tab-container {
 	width: 49%;		/* 幅を49%にする */
-	float: right;
+	float: right;	/* 右に回り込みする */
 }
 
 /* 
@@ -169,15 +156,29 @@ a:active {
 }
 
 /* 
- * セレクタ :.tabLink
- * 概要   :タブクリック領域
+ * セレクタ :.lessonDetail
+ * 概要   :授業についてのテーブル領域
  * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
+ * 作成日 :2015.06.08
  */
-.tabLink {
-	display:block;
+.lessonTable {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	font-size: 14px;			/* フォントサイズを14pxにする */
+	margin-top: 5px;			/* 上から5pの余白をとる */
+	text-align: center;			/* 文字を中央揃えにする */
+	width: 100%;				/* 幅を100%にする */
 }
 
+/* 
+ * セレクタ :.lessonDetail th, .lessonDetail td
+ * 概要   :授業についてのテーブルのカラム領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+.lessonTable th, .lessonTable td {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	padding: 2px;				/* 要素の幅を2px広げる */
+}
 
 /* 
  * セレクタ :.calendar
@@ -222,38 +223,63 @@ a:active {
   font-size: 12px;		/* フォントサイズを12pxにする */
 }
 
-/* 
- * セレクタ :.selectThemeButton
- * 概要   :絞り込みボタン領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.ui-jqgrid .ui-jqgrid-view {
-	font-size: 12px;
-}
-
-
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
+	/* 
+	 * セレクタ :#container
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container {
+		font-size: 16px;	/* フォントサイズを16pxにする */
+	}
 
+	/* 
+	 * セレクタ :.memberPageHead
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	.memberPageHead {
+		width: 90%;			/* 幅を90%にする */ 
+		margin: 0 auto;		/* 中央揃えにする */ 
+	}
+
+	/* 
+	 * セレクタ :#container .calendar, #tab-container
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container .calendar, #tab-container {
+		float:none;					/* 回り込みをなくす */ 
+		width: 90%;					/* 幅を90%にする */ 
+		margin: 5px auto 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
+	}
+
+	/* 
+	 * セレクタ :#container .calendar > div
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container .calendar > div {
+		width: 100%;		/* 幅を100%にする */ 
+	}
 }
 
 /* スマホ用微調整 */
 @media(max-width:400px){
-
 	/* 
-	 * セレクタ :.main
-	 * 概要   :コンテンツ全体の領域(スマホ・タブレット)
+	 * セレクタ :.memberMenu li
+	 * 概要   :ページ全体の領域
 	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.04
+	 * 作成日 :2015.06.08
 	 */
-	 .main {
-	 	width: 90%;			/* 幅を90%にする */
-	 }
-
-	#container .calendar > div, #tab-container {
-		float:none;
-		width: 100%;
+	.memberMenu li {
+		text-align: right;		/* 右揃えにする */ 
+		font-size: 13px;		/* フォントサイズを13pxにする */
 	}
 
 	/* 
@@ -263,7 +289,7 @@ a:active {
 	 * 作成日 :2015.06.04
 	 */
 	.memberStatus {
-		font-size: 14px;		/* 文字サイズを14pxにする */
-		height: 18px; 
+		margin-top: 5px;		/* 上に5pxの余白をとる */
+		font-size: 15px;		/* 文字サイズを14pxにする */
 	}
 }

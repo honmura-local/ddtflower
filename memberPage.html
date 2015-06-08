@@ -94,15 +94,21 @@
 				// 受講済み授業のタブ内コンテンツを作る
 				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
 
+				// 予約済み授業のタブ内テーブルを作る
+				creator.outputTag('reservedDetail', 'lessonDetail', '#alreadyReserved');
+				// 受講済み授業のタブ内テーブルを作る
+				creator.outputTag('finishedDetail', 'lessonDetail', '#finishedLesson');
+
+
 				// 予約済み授業と受講済み授業についてタブを作る
 				 createTab('#tab-container');
 				 // 予約中のテーブルの値を取り出す
-				 creator.getJsonFile('source/memberPage.json');
-				gridWidth('reservedData');
-				gridWidth('finishedData');
-				 // jqgridでテーブルを作る
-				 makeGrid('reservedData');
-				 makeGrid('finishedData');
+				//  creator.getJsonFile('source/memberPage.json');
+				// gridWidth('reservedData');
+				// gridWidth('finishedData');
+				//  // jqgridでテーブルを作る
+				//  makeGrid('reservedData');
+				//  makeGrid('finishedData');
 				});
 			</script>
 		</div>

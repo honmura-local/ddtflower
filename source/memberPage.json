@@ -101,15 +101,6 @@
 		},
 		"selectThemeButton":{
 			"text":"絞込"
-		},
-		"wrapList":{
-			"id":"alreadyLessonTable",
-			"list":{
-				"id":"reservedData"
-			}
-		},
-		"anotion":{
-			"text":"※ポイントは参加人数と共に変動します"
 		}
 	},
 	"finishedLesson":{
@@ -131,14 +122,240 @@
 		"selectThemeButton":{
 			"text":"絞込"
 		},
-		"wrapList":{
-			"id":"finishedLessonTable",
-			"list":{
-				"id":"finishedData"
-			}
-		},
 		"anotion":{
 			"text":"※ポイントは参加人数と共に変動します"
 		}
-	}
+	},
+    "reservedDetail":{
+        "lessonTable":{
+            "border":"1",
+            "tablehead":{
+                "fieldHead":[
+                    "開始日時",
+                    "終了",
+                    "テーマ",
+                    "店舗",
+                    "料金",
+                    "ポイント"
+                ]
+            },
+            "tableContents":[
+                {
+                    "class":"firstRecord",
+                    "text":"1"
+                },
+                {
+                    "class":"secondRecord",
+                    "text":"2"
+                },
+                {
+                    "class":"thirdRecord",
+                    "text":"3"
+                },
+                {
+                    "class":"fourthRecord",
+                    "text":"4"
+                },
+                {
+                    "class":"fifthRecord",
+                    "text":"5"
+                },
+                {
+                    "class":"sixthRecord",
+                    "text":"6"
+                },
+                {
+                    "class":"seventhRecord",
+                    "text":"7"
+                },
+                {
+                    "class":"eighthRecord",
+                    "text":"8"
+                }
+            ]
+        },
+        "firstRecord":[
+            "15/07/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "20pt"
+        ],
+        "secondRecord":[
+            "15/07/02 12:00",
+            "14:00",
+            "生花",
+            "新宿",
+            "8000円",
+            "0pt"
+        ],
+        "thirdRecord":[
+            "15/07/02 18:00",
+            "20:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "5pt"
+        ],
+        "fourthRecord":[
+            "15/07/10 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "12pt"
+        ],
+        "fifthRecord":[
+            "15/07/17 14:00",
+            "16:00",
+            "生花",
+            "新宿",
+            "8000円",
+            "8pt"
+        ],
+        "sixthRecord":[
+            "15/07/24 12:00",
+            "14:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "3pt"
+        ],
+        "seventhRecord":[
+            "15/07/24 16:00",
+            "18:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "2pt"
+        ],
+        "eighthRecord":[
+            "15/08/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "16pt"
+        ],
+        "anotion":{
+            "text":"※ポイントは参加人数と共に変動します"
+        }
+    },
+    "finishedDetail":{
+        "lessonTable":{
+            "border":"1",
+            "tablehead":{
+                "fieldHead":[
+                    "開始日時",
+                    "終了",
+                    "テーマ",
+                    "店舗",
+                    "料金",
+                    "ポイント"
+                ]
+            },
+            "tableContents":[
+                {
+                    "class":"firstRecord",
+                    "text":"1"
+                },
+                {
+                    "class":"secondRecord",
+                    "text":"2"
+                },
+                {
+                    "class":"thirdRecord",
+                    "text":"3"
+                },
+                {
+                    "class":"fourthRecord",
+                    "text":"4"
+                },
+                {
+                    "class":"fifthRecord",
+                    "text":"5"
+                },
+                {
+                    "class":"sixthRecord",
+                    "text":"6"
+                },
+                {
+                    "class":"seventhRecord",
+                    "text":"7"
+                },
+                {
+                    "class":"eighthRecord",
+                    "text":"8"
+                }
+            ]
+        },
+        "firstRecord":[
+            "15/07/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "20pt"
+        ],
+        "secondRecord":[
+            "15/07/02 12:00",
+            "14:00",
+            "生花",
+            "新宿",
+            "8000円",
+            "0pt"
+        ],
+        "thirdRecord":[
+            "15/07/02 18:00",
+            "20:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "5pt"
+        ],
+        "fourthRecord":[
+            "15/07/10 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "12pt"
+        ],
+        "fifthRecord":[
+            "15/07/17 14:00",
+            "16:00",
+            "生花",
+            "新宿",
+            "8000円",
+            "8pt"
+        ],
+        "sixthRecord":[
+            "15/07/24 12:00",
+            "14:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "3pt"
+        ],
+        "seventhRecord":[
+            "15/07/24 16:00",
+            "18:00",
+            "プリザ",
+            "新宿",
+            "3000円",
+            "2pt"
+        ],
+        "eighthRecord":[
+            "15/08/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "16pt"
+        ],
+        "anotion":{
+            "text":"※ポイントは参加人数と共に変動します"
+        }
+    }
 }
