@@ -82,5 +82,79 @@
             "4人~7人：2pt",
             "8人~：3pt"
         ]
+    },
+    "memberTable":{
+        "recordHead":{
+            "fieldHead":[
+                "開始日時",
+                "終了",
+                "テーマ",
+                "店舗",
+                "料金",
+                "ポイント"
+            ]
+        },
+        "recordContent":[
+            {
+                "class":"firstRecord",
+                "text":"1レコード"
+            },
+            {
+                "class":"secondRecord",
+                "text":"2レコード"
+            },
+            {
+                "class":"thirdRecord",
+                "text":"3レコード"
+            },
+            {
+                "class":"forthRecord",
+                "text":"4レコード"
+            },
+            {
+                "class":"fifthRecord",
+                "text":"5レコード"
+            }
+        ],
+        "firstRecord":[
+            "15/07/02 14:00",
+            "15:00",
+            "プリザ",
+            "新宿",
+            "10000円",
+            "2000pt"
+        ],
+        "secondRecord":[
+            "15/07/11 12:00",
+            "11:00",
+            "NFD",
+            "新宿",
+            "4000円",
+            "3000pt"
+        ],
+        "thirdRecord":[
+            "15/07/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "2000pt"
+        ],
+        "forthRecord":[
+            "15/07/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "2000pt"
+        ],
+        "fifthRecord":[
+            "15/07/01 12:00",
+            "14:00",
+            "NFD",
+            "新宿",
+            "10000円",
+            "2000pt"
+        ]
     }
 }

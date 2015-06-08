@@ -55,13 +55,13 @@
 	        //終了列
 	        { name: "finish_time", index:"finish_time", width: 33.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
 	        //テーマ列
-	        { name: "theme", index:"theme", width: 33.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
+	        { name: "theme", index:"theme", width: 31.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
 	        //店舗列
 	        { name: "store_place", index:"store_place", width: 24, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
 	        //料金列
-	        { name: "rate", index:"rate", width: 45, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
+	        { name: "rate", index:"rate", width: 42, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
 	        //ポイント列
-	        { name: "point", index:"point", width: 36, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
+	        { name: "point", index:"point", width: 35, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
 	];
 
 	// 受講済みの授業の列データ
@@ -77,13 +77,13 @@
 	        //終了列
 	        { name: "finish_time", index:"finish_time", width: 33.5, align:"center", className: "finish_time", editable: true, sortable:true, sorttype:'time'},
 	        //テーマ列
-	        { name: "theme", index:"theme", width: 33.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
+	        { name: "theme", index:"theme", width: 31.5, align:"center", className: "theme", editable: true, sortable:true, sorttype:'text'},
 	        //店舗列
 	        { name: "store_place", index:"store_place", width: 24, align:"center", className: "store_place", editable: true, sortable:true, sorttype:'text'},
 	        //料金列
-	        { name: "rate", index:"rate", width: 45, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
+	        { name: "rate", index:"rate", width: 42, align:"center", className: "rate", editable: false, sortable:true, sorttype:'text'},
 	        //ポイント列
-	        { name: "point", index:"point", width: 36, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
+	        { name: "point", index:"point", width: 35, align:"center", className: "point", editable: false, sortable:true, sorttype:'text'}
 	];
 
 	// 日ごと授業テーブルのデータ
@@ -105,9 +105,9 @@
 	        //残席列
 	        { name: "vacant_seat", index:"vacant_seat", width: 21, align:"center", className: "vacant_seat", editable: false, sortable:true, sorttype:'text'},
 	        //状況列
-	        { name: "situation", index:"situation", width: 45, align:"center", className: "situation", editable: false, sortable:true, sorttype:'text'},
+	        { name: "situation", index:"situation", width: 42, align:"center", className: "situation", editable: false, sortable:true, sorttype:'text'},
 	        //詳細列
-	        { name: "detail", index:"detail", width: 30, align:"center", className: "detail", editable: false, sortable:true, sorttype:'text'}
+	        { name: "detail", index:"detail", width: 27, align:"center", className: "detail", editable: false, sortable:true, sorttype:'text'}
 	];
 
 	/*
@@ -341,9 +341,9 @@
 		 datatype:"json",
 		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
 		//基本の幅を指定する。
-		width: 292,
+		width: 286,
 		//グリッドのリサイズ時の最大幅、最小幅を指定する。
-		gridResize: {minWidth:292, maxWidth:292},
+		gridResize: {minWidth:286, maxWidth:286},
 		//表部分の高さを指定する。
 		height: "auto",
 		//列名の表示の配列をセットする。
@@ -386,9 +386,9 @@
 		 datatype:"json",
 		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
 		//基本の幅を指定する。
-		width: 292,
+		width: 286,
 		//グリッドのリサイズ時の最大幅、最小幅を指定する。
-		gridResize: {minWidth:292, maxWidth:292},
+		gridResize: {minWidth:286, maxWidth:286},
 		//表部分の高さを指定する。
 		height: "auto",
 		//列名の表示の配列をセットする。
@@ -431,9 +431,9 @@
 		 datatype:"json",
 		// mtype:"post",	//POSTメソッドでサーバにデータを送信する
 		//基本の幅を指定する。
-		width: 292,
+		width: 286,
 		//グリッドのリサイズ時の最大幅、最小幅を指定する。
-		gridResize: {minWidth:292, maxWidth:292},
+		gridResize: {minWidth:286, maxWidth:286},
 		//表部分の高さを指定する。
 		height: "auto",
 		//列名の表示の配列をセットする。
