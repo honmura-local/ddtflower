@@ -1,5 +1,6 @@
 {
     "memberStatus":{
+        "class":"memberPageHead",
         "keepMoney":{
             "keepMoneyText":{
                 "text":"お預かり金額"
@@ -23,17 +24,175 @@
             }
         }
     },
-    "lessonStatusTable":{
-        "id":"lessonStatusTable",
-        "list":{
-            "id":"lessonStatusList"
+    "tableArea":{
+        "class":"memberPageHead",
+        "memberTable":{
+            "class":"lessonTable",
+            "recordHead":{
+                "fieldHead":[
+                    "時間割",
+                    "店舗",
+                    "テーマ",
+                    "料金",
+                    "残席",
+                    "状況",
+                    "詳細"
+                ]
+            },
+            "recordContent":[
+                {
+                    "class":"firstRecord",
+                    "text":"1レコード"
+                },
+                {
+                    "class":"firstDetail",
+                    "colspan":"7",
+                    "text":"1"
+                },
+                {
+                    "class":"secondRecord",
+                    "text":"2レコード"
+                },
+                {
+                    "class":"secondDetail",
+                    "colspan":"7",
+                    "text":"2"
+                },
+                {
+                    "class":"thirdRecord",
+                    "text":"3レコード"
+                },
+                {
+                    "class":"thirdDetail",
+                    "colspan":"7",
+                    "text":"3"
+                },
+                {
+                    "class":"fourthRecord",
+                    "text":"4レコード"
+                },
+                {
+                    "class":"fourthDetail",
+                    "colspan":"7",
+                    "text":"4"
+                },
+
+                {
+                    "class":"fifthRecord",
+                    "text":"5レコード"
+                },
+                {
+                    "class":"fifthDetail",
+                    "colspan":"7",
+                    "text":"5"
+                },
+                {
+                    "class":"sixthRecord",
+                    "text":"6レコード"
+                },
+                {
+                    "class":"sixthDetail",
+                    "colspan":"7",
+                    "text":"6"
+                },
+
+                {
+                    "class":"seventhRecord",
+                    "text":"7レコード"
+                },
+                {
+                    "class":"seventhDetail",
+                    "colspan":"7",
+                    "text":"7"
+                }
+            ]
+        },
+        "firstRecord":[
+            "11:00~12:00",
+            "新宿",
+            "プリザ",
+            "3000円",
+            "○",
+            "予約可能",
+            "▽"
+        ],
+        "firstDetail":{
+            "class":"accordion firstAccordion"
+        },
+        "secondRecord":[
+            "11:00~12:00",
+            "新宿",
+            "生花",
+            "16000円",
+            "◎",
+            "予約可能",
+            "▽"
+        ],
+        "secondDetail":{
+            "class":"accordion secondAccordion"
+        },
+        "thirdRecord":[
+            "11:00~12:00",
+            "新宿",
+            "プリザ",
+            "4500円",
+            "×",
+            "満席",
+            "▽"
+        ],
+        "thirdDetail":{
+            "class":"accordion thirdAccordion"
+        },
+        "fourthRecord":[
+            "11:00~12:00",
+            "新宿",
+            "生花",
+            "4900円",
+            "◎",
+            "予約可能",
+            "▽"
+        ],
+        "fourthDetail":{
+            "class":"accordion fourthAccordion"
+        },
+        "fifthRecord":[
+            "13:00~14:00",
+            "新宿",
+            "NFD",
+            "6900",
+            "△",
+            "予約可能",
+            "▽"
+        ],
+        "fifthDetail":{
+            "class":"accordion fifthAccordion"
+        },
+        "sixthRecord":[
+            "13:00~14:00",
+            "新宿",
+            "生花",
+            "7000円",
+            "○",
+            "予約中",
+            "▽"
+        ],
+        "sixthDetail":{
+            "class":"accordion sixthAccordion"
+        },
+        "seventhRecord":[
+            "13:00~14:00",
+            "新宿",
+            "プリザ",
+            "7000円",
+            "×",
+            "中止",
+            "▽"
+        ],
+        "seventhDetail":{
+            "class":"accordion seventhAccordion"
         }
     },
     "lessonStatus":{
-        "class":"lessonStatus",
-        "statusText":{
-            "class":"lessonStatusText"
-        },
         "lessonStatusText":
         [
             "※残席:",
@@ -43,118 +202,73 @@
             "×=満席"
         ]
     },
-    "acordion":{
-        "class":"acordion"
-    },
-    "cancelRateSummary":{
-        "class":"cancelRateSummary",
-        "summaryText":{
-            "text":"キャンセル料率(授業当日より)"
-        }
-    },
-    "cancelRateStatus":{
-        "class":"cancelRateStatus",
-        "statusText":{
-            "class":"cancelRateStatusText"
-        },
-        "cancelRateStatusText":
-        [
-            "当日：100%",
-            "1日前：50%",
-            "2日前：20%"
-        ]
-    },
-    "addPointSummary":{
-        "class":"addPointSummary",
-        "summaryText":{
-            "text":"加算ポイント(受講者人数が)"
-        }
-    },
-    "addPointStatus":{
-        "class":"aｄｄPointStatus",
-        "statusText":{
-            "class":"aｄｄPointStatusText"
-        },
-        "aｄｄPointStatusText":
-        [
-            "1人：0pt",
-            "2人~3人：1pt",
-            "4人~7人：2pt",
-            "8人~：3pt"
-        ]
-    },
-    "memberTable":{
-        "recordHead":{
-            "fieldHead":[
-                "開始日時",
-                "終了",
-                "テーマ",
-                "店舗",
-                "料金",
-                "ポイント"
+    "firstStatus":{
+        "detailArea":{
+            "class":"detailArea",
+            "statusArea":[
+                {
+                    "class":"rateDetail"
+                },
+                {
+                    "class":"cancelSummary"
+                },
+                {
+                    "class":"cancelDetail"
+                },
+                {
+                    "class":"addPointSummary"
+                },
+                {
+                    "class":"addPointDetail"
+                }
             ]
         },
-        "recordContent":[
-            {
-                "class":"firstRecord",
-                "text":"1レコード"
+        "rateDetail":{
+            "statusText":{
+                "class":"rateText"
             },
-            {
-                "class":"secondRecord",
-                "text":"2レコード"
-            },
-            {
-                "class":"thirdRecord",
-                "text":"3レコード"
-            },
-            {
-                "class":"forthRecord",
-                "text":"4レコード"
-            },
-            {
-                "class":"fifthRecord",
-                "text":"5レコード"
+            "rateText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円",
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelSummary":{
+            "statusText":{
+                "text":"キャンセル料率(授業当日より)"
             }
-        ],
-        "firstRecord":[
-            "15/07/02 14:00",
-            "15:00",
-            "プリザ",
-            "新宿",
-            "10000円",
-            "2000pt"
-        ],
-        "secondRecord":[
-            "15/07/11 12:00",
-            "11:00",
-            "NFD",
-            "新宿",
-            "4000円",
-            "3000pt"
-        ],
-        "thirdRecord":[
-            "15/07/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "2000pt"
-        ],
-        "forthRecord":[
-            "15/07/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "2000pt"
-        ],
-        "fifthRecord":[
-            "15/07/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "2000pt"
-        ]
+        },
+        "cancelDetail":{
+            "statusText":{
+                "class":"cancelText"
+            },
+            "cancelText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "statusText":{
+                "text":"加算ポイント(受講者人数が)"
+            }
+        },
+        "addPointDetail":{
+            "statusText":{
+                "class":"addPointText"
+            },
+            "addPointText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
     }
 }

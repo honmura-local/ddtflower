@@ -32,34 +32,37 @@
 		<table id="" class="list"></table>
 	</div>
 
-	<!-- ステータスの行を表す領域 -->
-	<div class="detail">
-		<!-- 残席などの情報エリア -->
-		<span class="statusText"></span>
-	</div>
-
 	<!-- ステータスの概要を表す領域 -->
-	<div class="statusSummary">
-		<span class="summaryText"></span>
+	<div class="lessonStatus">
+		<span class="lessonStatusText"></span>
 	</div>
 
-	<!-- divを挿入する領域 -->
-	<div class="insertDiv"></div>
+	<!-- テーブル領域 -->
+	<div class="tableArea">
+		<!-- テーブル -->
+		<table class="memberTable">
+			<!-- テーブルのヘッダレコード -->
+			<tr class="recordHead">
+				<!-- フィールドのヘッダー -->
+				<th class="fieldHead"></th>
+			</tr>
+			<!-- レコードのコンテンツ -->
+			<tr class="recordContent">
+				<!-- フィールドのコンテンツ -->
+				<td class="fieldContent" colspan=""></td>
+			</tr>
+		</table>
+	</div>
 
-	<!-- テーブル -->
-	<table class="memberTable">
-		<!-- テーブルのヘッダレコード -->
-		<tr class="recordHead">
-			<!-- フィールドのヘッダー -->
-			<th class="fieldHead"></th>
-		</tr>
-		<!-- レコードのコンテンツ -->
-		<tr class="recordContent">
-			<!-- フィールドのコンテンツ -->
-			<td class="fieldContent" colspan=""></td>
-		</tr>
-	</table>
-
+	<div class="detail">
+		<!-- アコーディオンパネルでの詳細領域 -->
+		<ul class="detailArea">
+			<!-- 詳細の個々のエリア -->
+			<li class="statusArea">
+				<span class="statusText"></span>
+			</li>
+		</ul>
+	</div>
 
 </div>
 </body>
