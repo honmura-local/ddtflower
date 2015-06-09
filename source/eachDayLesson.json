@@ -24,7 +24,7 @@
             }
         }
     },
-    "tableArea":{
+    "lessonTableArea":{
         "class":"memberPageHead",
         "memberTable":{
             "class":"lessonTable",
@@ -46,8 +46,7 @@
                 },
                 {
                     "class":"firstDetail",
-                    "colspan":"7",
-                    "text":"1"
+                    "colspan":"7"
                 },
                 {
                     "class":"secondRecord",
@@ -55,8 +54,7 @@
                 },
                 {
                     "class":"secondDetail",
-                    "colspan":"7",
-                    "text":"2"
+                    "colspan":"7"
                 },
                 {
                     "class":"thirdRecord",
@@ -64,8 +62,7 @@
                 },
                 {
                     "class":"thirdDetail",
-                    "colspan":"7",
-                    "text":"3"
+                    "colspan":"7"
                 },
                 {
                     "class":"fourthRecord",
@@ -73,8 +70,7 @@
                 },
                 {
                     "class":"fourthDetail",
-                    "colspan":"7",
-                    "text":"4"
+                    "colspan":"7"
                 },
 
                 {
@@ -83,8 +79,7 @@
                 },
                 {
                     "class":"fifthDetail",
-                    "colspan":"7",
-                    "text":"5"
+                    "colspan":"7"
                 },
                 {
                     "class":"sixthRecord",
@@ -92,8 +87,7 @@
                 },
                 {
                     "class":"sixthDetail",
-                    "colspan":"7",
-                    "text":"6"
+                    "colspan":"7"
                 },
 
                 {
@@ -102,8 +96,7 @@
                 },
                 {
                     "class":"seventhDetail",
-                    "colspan":"7",
-                    "text":"7"
+                    "colspan":"7"
                 }
             ]
         },
@@ -202,36 +195,17 @@
             "×=満席"
         ]
     },
-    "firstStatus":{
-        "detailArea":{
-            "class":"detailArea",
-            "statusArea":[
-                {
-                    "class":"rateDetail"
-                },
-                {
-                    "class":"cancelSummary"
-                },
-                {
-                    "class":"cancelDetail"
-                },
-                {
-                    "class":"addPointSummary"
-                },
-                {
-                    "class":"addPointDetail"
-                }
-            ]
-        },
-        "rateDetail":{
-            "statusText":{
-                "class":"rateText"
-            },
-            "rateText":[
+    "firstDetail":{
+        "rateDetail1":{
+            "statusText":[
                 "受講料：",
                 "3000円",
                 "追加料金",
-                "0円",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
                 "ステージ:",
                 "1",
                 "レベル",
@@ -239,31 +213,261 @@
                 "催行未定"
             ]
         },
-        "cancelSummary":{
-            "statusText":{
-                "text":"キャンセル料率(授業当日より)"
-            }
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
         },
-        "cancelDetail":{
-            "statusText":{
-                "class":"cancelText"
-            },
-            "cancelText":[
+        "cancelRateDetail":{
+            "statusText":[
                 "当日：100%",
                 "1日前：50%",
                 "2日前：20%"
             ]
         },
         "addPointSummary":{
-            "statusText":{
-                "text":"加算ポイント(受講者人数が)"
-            }
+            "text":"加算ポイント(受講者人数が)"
         },
         "addPointDetail":{
-            "statusText":{
-                "class":"addPointText"
-            },
-            "addPointText":[
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "secondDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "thirdDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "fourthDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "fifthDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "sixthDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
+                "1人：0pt",
+                "2人~3人：1pt",
+                "4人~7人：2pt",
+                "8人~：3pt"
+            ]
+        }
+    },
+    "seventhDetail":{
+        "rateDetail1":{
+            "statusText":[
+                "受講料：",
+                "3000円",
+                "追加料金",
+                "0円"
+            ]
+        },
+        "rateDetail2":{
+            "statusText":[
+                "ステージ:",
+                "1",
+                "レベル",
+                "1",
+                "催行未定"
+            ]
+        },
+        "cancelRateSummary":{
+            "text":"キャンセル料率(授業当日より)"
+        },
+        "cancelRateDetail":{
+            "statusText":[
+                "当日：100%",
+                "1日前：50%",
+                "2日前：20%"
+            ]
+        },
+        "addPointSummary":{
+            "text":"加算ポイント(受講者人数が)"
+        },
+        "addPointDetail":{
+            "statusText":[
                 "1人：0pt",
                 "2人~3人：1pt",
                 "4人~7人：2pt",

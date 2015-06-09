@@ -223,6 +223,10 @@ a:active {
   font-size: 12px;		/* フォントサイズを12pxにする */
 }
 
+.accordion {
+	display: none;
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 	/* 
@@ -291,5 +295,39 @@ a:active {
 	.memberStatus {
 		margin-top: 5px;		/* 上に5pxの余白をとる */
 		font-size: 15px;		/* 文字サイズを14pxにする */
+	}
+
+	/* 
+	 * セレクタ :.passArea, .topLinkArea
+	 * 概要   :パスワード領域とトップページリンク領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passArea, .topLinkArea {
+		width: 90%;				/* 幅を90%にする */
+		margin: 5px auto;		/* 上下5pxの余白をとり、中央揃えにする */
+		text-align: center;		/* 文字を中央揃えにする */
+		font-size: 14px;		/* フォントサイズを14pxにする */
+	}
+
+	/* 
+	 * セレクタ :.passArea input[type="password"]
+	 * 概要   :パスワードテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passArea input[type="password"] {
+		width: 200px;			/* 幅を200pxにする */
+	}
+
+	/* 
+	 * セレクタ :.updateButton
+	 * 概要   :更新ボタン
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.updateButton {
+		display: block;			/* ブロック要素にする */
+		margin: 10px 0 5px auto;/* 上に10px、下に5pxの余白をとり、右寄せにする */
 	}
 }
