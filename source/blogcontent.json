@@ -6,6 +6,118 @@
                 "text": "プリザ"
             },
             "blogArticleDate": {
+                "text": "2015/06/09"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/11081108_837040676389321_5411623329185612304_n.jpg?oh=7748d28f2380f0bdf6a81a66bfc69c6b&oe=5600EE30"
+            },
+            "blogArticleImage2": {
+                "src": ""
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "夏のキャンペーンレッスン第一弾のお知らせです🐚 \nメルマガ配信まで今暫くお待ち下さい。"
+        }
+    },
+    "2": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "プリザ"
+            },
+            "blogArticleDate": {
+                "text": "2015/06/05"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-9/s480x480/11406484_834694683290587_1031195378479763263_n.jpg?oh=37d67d92210460780003a69bf316fa37&oe=56053354"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xft1/v/t1.0-9/11391376_834694696623919_8629897406972057987_n.jpg?oh=1dfc3f558c19dd945243d6de80085d25&oe=5601A939"
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "お友達の出産祝いにカーネーションプードル💕 \n優しい色合いに癒されますネ"
+        }
+    },
+    "3": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "NFD"
+            },
+            "blogArticleDate": {
+                "text": "2015/05/29"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xta1/v/t1.0-9/11295606_829547977138591_6206544596698417783_n.jpg?oh=cc7473fc999d262188e5925536bcd7f9&oe=55E7FF31"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/p480x480/10262106_829547990471923_1756607174407856783_n.jpg?oh=85220f8fc9035c2c5cca20c8c62743f1&oe=55E97413"
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "NFD資格取得コース生徒さんの作品です。 \n交差と非対称の花嫁の花束 \nどちらも綺麗に完成です。"
+        }
+    },
+    "4": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "プリザ"
+            },
+            "blogArticleDate": {
+                "text": "2015/05/28"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/s480x480/10403051_828942707199118_2497212214261300565_n.jpg?oh=3984381431d23d6309c1360dde7f64c0&oe=55E68D40"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/s480x480/11025732_828942740532448_6962982809164645327_n.jpg?oh=7eef1c13b6e86330d71c30639d28bc31&oe=55FAAA05"
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "本日のレッスンはバスケットアレンジまたまた登場のストロベリーミルフィーユちゃん相変わらず可愛いです。"
+        }
+    },
+    "5": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "プリザ"
+            },
+            "blogArticleDate": {
                 "text": "2015/05/25"
             },
             "blogArticleUserName": {
@@ -27,7 +139,7 @@
             "text": "本日午前中のレッスン生徒さんの作品です。\nマグノリアリーフとテトラゴナの実が可愛いドライで飾れ大型リースです。"
         }
     },
-    "2": {
+    "6": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -55,7 +167,7 @@
             "text": "今日の生花はまん丸トピアリーお花はバラストロベリーミルフィーユ、マトリカリアたまごピンク名前もとっても可愛いですね。"
         }
     },
-    "3": {
+    "7": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -83,7 +195,7 @@
             "text": "本日のレッスン生徒さんの作品です。バスケットに可愛くアレンジして頂きました。"
         }
     },
-    "4": {
+    "8": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -111,7 +223,7 @@
             "text": "プリザーブドフラワー生徒さんの作品です。\nいつ見ても可愛いトピアリーまん丸に仕上がりました。"
         }
     },
-    "5": {
+    "9": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -139,7 +251,7 @@
             "text": "週末レッスン生徒さんの作品です。\nビダーマイヤー(同心円状)とってもバランス良く出来てますね\nお花はバラ、ナデシコ、カーネ、ブアリアです。"
         }
     },
-    "6": {
+    "10": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -167,7 +279,7 @@
             "text": "今日の生花はビダーマイヤー同一円心に作成して頂きました。ケーキみたいですね"
         }
     },
-    "7": {
+    "11": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -195,7 +307,7 @@
             "text": "プリザーブドフラワー生徒さんの作品です。1日で3作品、全てお友達への誕生日プレゼント 素敵ですね"
         }
     },
-    "8": {
+    "12": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -223,7 +335,7 @@
             "text": "本日午前中の生徒さんの作品です。芍薬、バラ、ローズマリー香りに癒されます。"
         }
     },
-    "9": {
+    "13": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -251,7 +363,7 @@
             "text": "今日は夏のお花芍薬を使ってアレンジして頂きました。\n今日の芍薬はかぐや姫可愛い名前ですね"
         }
     },
-    "10": {
+    "14": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -279,7 +391,7 @@
             "text": "今日も可愛いお花を仕入れて来ました\nバラ ランハーツとピーチアバランシェ大好きな色味です。\n生徒さんに早速バスケットアレンジ作って頂きました。"
         }
     },
-    "11": {
+    "15": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -307,7 +419,7 @@
             "text": "おはようございます。台風接近中で風が強い朝ですね、今日は早めの帰宅が良いかもですね。\n花のネスト(巣)生徒さんの作品です。卵もお作り頂きました。"
         }
     },
-    "12": {
+    "16": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -335,7 +447,7 @@
             "text": "本日の生花は母の日の花束です。皆様綺麗にお作り頂きました。"
         }
     },
-    "13": {
+    "17": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -363,7 +475,7 @@
             "text": "本日午前中のキャンペーンレッスン生徒さんの作品です。可愛いプードルちゃん勢揃いです"
         }
     },
-    "14": {
+    "18": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -391,7 +503,7 @@
             "text": "皆様こんにちは～ゴールデンウイーク楽しんでらっしゃいますか？\nスクールは本日午後、明日はお休みを頂いております。さて最近人気のガーデンリース生徒さんの作品です。"
         }
     },
-    "15": {
+    "19": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -419,7 +531,7 @@
             "text": "プリザーブドフラワー母の日のアレンジです。本日は新作up\nゴールデンウイーク3,4も開講しております。遠くに行くより近場で可愛いお花に触れるのも楽しいですよ\nご予約お待ちしております"
         }
     },
-    "16": {
+    "20": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -447,7 +559,7 @@
             "text": "爽やかなキャンドルアレンジと可愛いフラワーコーン出来ました。"
         }
     },
-    "17": {
+    "21": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -475,7 +587,7 @@
             "text": "今日も可愛いお花が一杯出来ました"
         }
     },
-    "18": {
+    "22": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -503,7 +615,7 @@
             "text": "生花ファーストステージ生徒さんの作品です。基本の形トライアンギュラーです。"
         }
     },
-    "19": {
+    "23": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -531,7 +643,7 @@
             "text": "プリザーブドフラワー生徒さんの作品とキャンペーンレッスンの作品です。\n今日から大阪でお花の研修です。皆様に素敵な作品がご紹介出来ます様にしっかりお勉強して来ます"
         }
     },
-    "20": {
+    "24": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -557,6 +669,86 @@
         },
         "blogArticleText": {
             "text": "今日も可愛いアレンジが一杯出来ました\n皆さま素敵にて完成です。\n本日母の日キャンペーンメルマガを配信いたしました。ご予約お待ちしております"
+        }
+    },
+    "currentArticleList": {
+        "currentArticleListTitle": {
+            "text": "最新記事"
+        },
+        "currentArticleListContent1": {
+            "class": "currentArticleListContent1 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent2": {
+            "class": "currentArticleListContent2 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent3": {
+            "class": "currentArticleListContent3 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent4": {
+            "class": "currentArticleListContent4 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent5": {
+            "class": "currentArticleListContent5 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
         }
     }
 }
