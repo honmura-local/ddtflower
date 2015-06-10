@@ -156,7 +156,7 @@ a:active {
 }
 
 /* 
- * セレクタ :.lessonDetail
+ * セレクタ :.lessonTable
  * 概要   :授業についてのテーブル領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.08
@@ -170,7 +170,7 @@ a:active {
 }
 
 /* 
- * セレクタ :.lessonDetail th, .lessonDetail td
+ * セレクタ :.lessonTable th, .lessonTable td
  * 概要   :授業についてのテーブルのカラム領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.08
@@ -192,16 +192,6 @@ a:active {
 }
 
 /* 
- * セレクタ :.wrapList
- * 概要   :データのテーブル領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.wrapList {
-	margin: 10px 0;		/* 上下に10pxの余白をとる */
-}
-
-/* 
  * セレクタ :.anotion
  * 概要   :データの注釈領域
  * 作成者 :T.Yamamoto
@@ -219,12 +209,18 @@ a:active {
  * 作成日 :2015.06.04
  */
 .selectThemeButton {
-  float: right;			/* 右側に回り込みする */
-  font-size: 12px;		/* フォントサイズを12pxにする */
+	float: right;			/* 右側に回り込みする */
+	font-size: 12px;		/* フォントサイズを12pxにする */
 }
 
+/* 
+ * セレクタ :.accordion
+ * 概要   :アコーディオン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.09
+ */
 .accordion {
-	display: none;
+	display: none;			/* 非表示にする */
 }
 
 /* スマホ・タブレットレイアウト */
@@ -240,14 +236,14 @@ a:active {
 	}
 
 	/* 
-	 * セレクタ :.memberPageHead
-	 * 概要   :ページ全体の領域
+	 * セレクタ :.memberHeader, .userBanner
+	 * 概要   :会員ページヘッダとバナー領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	.memberPageHead {
+	.memberHeader, .userBanner {
 		width: 90%;			/* 幅を90%にする */ 
-		margin: 0 auto;		/* 中央揃えにする */ 
+		margin: 5px auto;	/* 中央揃えにする */ 
 	}
 
 	/* 
@@ -287,14 +283,13 @@ a:active {
 	}
 
 	/* 
-	 * セレクタ :.memberStatus
-	 * 概要   :会員情報領域
+	 * セレクタ :.keepMoney, .hasPoint
+	 * 概要   :「お預かり金額」と「所持ポイント領域」
 	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.04
+	 * 作成日 :2015.06.09
 	 */
-	.memberStatus {
-		margin-top: 5px;		/* 上に5pxの余白をとる */
-		font-size: 15px;		/* 文字サイズを14pxにする */
+	.keepMoney, .hasPoint {
+		text-align: center;		/* 中央揃えにする */
 	}
 
 	/* 
@@ -329,5 +324,57 @@ a:active {
 	.updateButton {
 		display: block;			/* ブロック要素にする */
 		margin: 10px 0 5px auto;/* 上に10px、下に5pxの余白をとり、右寄せにする */
+	}
+
+	/* 
+	 * セレクタ :.lessonStatusText:nth-of-type(1)
+	 * 概要   :残席領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.lessonStatusText:nth-of-type(1) {
+		display: block;			/* ブロック要素として扱う */
+		float: left;			/* 左に回り込む */
+		height: 40px;			/* 高さを40pxにする */
+		line-height: 40px;		/* 行間を40pxにする */
+		width: 20%;				/* 幅を20%にする */
+	}
+
+	/* 
+	 * セレクタ :.lessonStatusText
+	 * 概要   :残席の記号説明領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.lessonStatusText {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+		padding-right: 1em;		/*　要素の幅を1文字分広げる　*/
+	}
+
+	.accordionDetail li {
+		padding-top: 5px;
+		/*padding: 5px;*/
+	}
+
+	.lessonRateUnit,
+	.stageNumber,
+	.levelNumber,
+	.addPoint1ValueUnit,
+	.addPoint4ValueUnit {
+		/*text-align: left;*/
+		padding-right: 2em;
+	}
+
+	.cancelDayValueUnit,  .cancel1DayValueUnit {
+		padding-right: 1em;
+		margin-left: -5px;
+	}
+
+	.rateDetail1,
+	.rateDetail2,
+	.cancelRateText,
+	.addPointText1,
+	.addPointText1 {
+		font-size: 13px;
 	}
 }

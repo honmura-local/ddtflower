@@ -1,31 +1,31 @@
 {
     "memberStatus":{
-        "class":"memberPageHead",
+        "class":"memberHeader",
         "keepMoney":{
             "keepMoneyText":{
-                "text":"お預かり金額"
+                "text":"お預かり金額:"
             },
-            "keeoMoneyNumber":{
+            "keepMoneyNumber":{
                 "text":"30000"
             },
-            "keeoMoneyUnit":{
+            "keepMoneyUnit":{
                 "text":"円"
             }
         },
         "hasPoint":{
             "hasPointText":{
-                "text":"所持ポイント"
+                "text":"所持ポイント:"
             },
             "hasPointNumber":{
                 "text":"90000"
             },
             "hasPointUnit":{
-                "text":"ポイント"
+                "text":"pt"
             }
         }
     },
     "lessonTableArea":{
-        "class":"memberPageHead",
+        "class":"userBanner",
         "memberTable":{
             "class":"lessonTable",
             "recordHead":{
@@ -39,150 +39,180 @@
                     "詳細"
                 ]
             },
-            "recordContent":[
-                {
-                    "class":"firstRecord",
-                    "text":"1レコード"
+            "row0":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
                 },
-                {
-                    "class":"firstDetail",
-                    "colspan":"7"
+                "storePlace":{
+                    "text":"新宿"
                 },
-                {
-                    "class":"secondRecord",
-                    "text":"2レコード"
+                "theme":{
+                    "text":"プリザ"
                 },
-                {
-                    "class":"secondDetail",
-                    "colspan":"7"
+                "rate":{
+                    "text":"3000円"
                 },
-                {
-                    "class":"thirdRecord",
-                    "text":"3レコード"
+                "vacantSeat":{
+                    "text":"○"
                 },
-                {
-                    "class":"thirdDetail",
-                    "colspan":"7"
+                "situation":{
+                    "text":"予約可能"
                 },
-                {
-                    "class":"fourthRecord",
-                    "text":"4レコード"
-                },
-                {
-                    "class":"fourthDetail",
-                    "colspan":"7"
-                },
-
-                {
-                    "class":"fifthRecord",
-                    "text":"5レコード"
-                },
-                {
-                    "class":"fifthDetail",
-                    "colspan":"7"
-                },
-                {
-                    "class":"sixthRecord",
-                    "text":"6レコード"
-                },
-                {
-                    "class":"sixthDetail",
-                    "colspan":"7"
-                },
-
-                {
-                    "class":"seventhRecord",
-                    "text":"7レコード"
-                },
-                {
-                    "class":"seventhDetail",
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "firstAccordion":{
+                "class":"accordion firstAccordion",
+                "row0":{
                     "colspan":"7"
                 }
-            ]
-        },
-        "firstRecord":[
-            "11:00~12:00",
-            "新宿",
-            "プリザ",
-            "3000円",
-            "○",
-            "予約可能",
-            "▽"
-        ],
-        "firstDetail":{
-            "class":"accordion firstAccordion"
-        },
-        "secondRecord":[
-            "11:00~12:00",
-            "新宿",
-            "生花",
-            "16000円",
-            "◎",
-            "予約可能",
-            "▽"
-        ],
-        "secondDetail":{
-            "class":"accordion secondAccordion"
-        },
-        "thirdRecord":[
-            "11:00~12:00",
-            "新宿",
-            "プリザ",
-            "4500円",
-            "×",
-            "満席",
-            "▽"
-        ],
-        "thirdDetail":{
-            "class":"accordion thirdAccordion"
-        },
-        "fourthRecord":[
-            "11:00~12:00",
-            "新宿",
-            "生花",
-            "4900円",
-            "◎",
-            "予約可能",
-            "▽"
-        ],
-        "fourthDetail":{
-            "class":"accordion fourthAccordion"
-        },
-        "fifthRecord":[
-            "13:00~14:00",
-            "新宿",
-            "NFD",
-            "6900",
-            "△",
-            "予約可能",
-            "▽"
-        ],
-        "fifthDetail":{
-            "class":"accordion fifthAccordion"
-        },
-        "sixthRecord":[
-            "13:00~14:00",
-            "新宿",
-            "生花",
-            "7000円",
-            "○",
-            "予約中",
-            "▽"
-        ],
-        "sixthDetail":{
-            "class":"accordion sixthAccordion"
-        },
-        "seventhRecord":[
-            "13:00~14:00",
-            "新宿",
-            "プリザ",
-            "7000円",
-            "×",
-            "中止",
-            "▽"
-        ],
-        "seventhDetail":{
-            "class":"accordion seventhAccordion"
+            },
+            "row1":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "vacantSeat":{
+                    "text":"○"
+                },
+                "situation":{
+                    "text":"予約可能"
+                },
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "secondAccordion":{
+                "class":"accordion secondAccordion",
+                "row1":{
+                    "colspan":"7"
+                }
+            },
+            "row2":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "vacantSeat":{
+                    "text":"○"
+                },
+                "situation":{
+                    "text":"予約可能"
+                },
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "thirdAccordion":{
+                "class":"accordion thirdAccordion",
+                "row2":{
+                    "colspan":"7"
+                }
+            },
+            "row3":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "vacantSeat":{
+                    "text":"○"
+                },
+                "situation":{
+                    "text":"予約可能"
+                },
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "fourthAccordion":{
+                "class":"accordion fourthAccordion",
+                "row3":{
+                    "colspan":"7"
+                }
+            },
+            "row4":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "vacantSeat":{
+                    "text":"○"
+                },
+                "situation":{
+                    "text":"予約可能"
+                },
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "fifthAccordion":{
+                "class":"accordion fifthAccordion",
+                "row4":{
+                    "colspan":"7"
+                }
+            },
+            "row5":{
+                "timeSchedule":{
+                    "text":"11:00~12:00"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "vacantSeat":{
+                    "text":"○"
+                },
+                "situation":{
+                    "text":"予約可能"
+                },
+                "detailButton":{
+                    "text":"▽"
+                }
+            },
+            "sixthAccordion":{
+                "class":"accordion sixthAccordion",
+                "row5":{
+                    "colspan":"7"
+                }
+            }
         }
     },
     "lessonStatus":{
@@ -197,282 +227,686 @@
     },
     "firstDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日:"
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前:"
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
+        },
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     },
     "secondDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日:"
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前:"
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
+        },
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     },
     "thirdDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日："
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前："
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
+        },
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     },
     "fourthDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日："
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前："
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
+        },
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     },
     "fifthDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日："
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前："
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
+        },
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     },
     "sixthDetail":{
         "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+            "lessonRate":{
+                "text":"受講料："
+            },
+            "lessonRateNumber":{
+                "text":"3000"
+            },
+            "lessonRateUnit":{
+                "text":"円"
+            },
+            "addRate":{
+                "text":"追加料金"
+            },
+            "addRateNumber":{
+                "text":"0"
+            },
+            "addRateUnit":{
+                "text":"円"
+            }
         },
         "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
+            "stageLabel":{
+                "text":"ステージ:"
+            },
+            "stageNumber":{
+                "text":"1"
+            },
+            "levelLabel":{
+                "text":"レベル"
+            },
+            "levelNumber":{
+                "text":"1"
+            },
+            "schedule":{
+                "text":"催行未定"
+            }
         },
         "cancelRateSummary":{
             "text":"キャンセル料率(授業当日より)"
         },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
+        "cancelRateText":{
+            "cancelDayLabel":{
+                "text":"当日："
+            },
+            "cancelDayValue":{
+                "text":"100"
+            },
+            "cancelDayValueUnit":{
+                "text":"%"
+            },
+            "cancel1DayLabel":{
+                "text":"1日前:"
+            },
+            "cancel1DayValue":{
+                "text":"50"
+            },
+            "cancel1DayValueUnit":{
+                "text":"%"
+            },
+            "cancel2DayLabel":{
+                "text":"2日前："
+            },
+            "cancel2DayValue":{
+                "text":"20"
+            },
+            "cancel2DayValueUnit":{
+                "text":"%"
+            }
         },
         "addPointSummary":{
             "text":"加算ポイント(受講者人数が)"
         },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
-        }
-    },
-    "seventhDetail":{
-        "rateDetail1":{
-            "statusText":[
-                "受講料：",
-                "3000円",
-                "追加料金",
-                "0円"
-            ]
+        "addPointText1":{
+            "addPoint1Label":{
+                "text":"1人："
+            },
+            "addPoint1Value":{
+                "text":"0"
+            },
+            "addPoint1ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint2Label":{
+                "text":"2人~3人："
+            },
+            "addPoint2Value":{
+                "text":"1"
+            },
+            "addPoint2ValueUnit":{
+                "text":"pt"
+            }
         },
-        "rateDetail2":{
-            "statusText":[
-                "ステージ:",
-                "1",
-                "レベル",
-                "1",
-                "催行未定"
-            ]
-        },
-        "cancelRateSummary":{
-            "text":"キャンセル料率(授業当日より)"
-        },
-        "cancelRateDetail":{
-            "statusText":[
-                "当日：100%",
-                "1日前：50%",
-                "2日前：20%"
-            ]
-        },
-        "addPointSummary":{
-            "text":"加算ポイント(受講者人数が)"
-        },
-        "addPointDetail":{
-            "statusText":[
-                "1人：0pt",
-                "2人~3人：1pt",
-                "4人~7人：2pt",
-                "8人~：3pt"
-            ]
+        "addPointText2":{
+            "addPoint4Label":{
+                "text":"4人~7人："
+            },
+            "addPoint4Value":{
+                "text":"2"
+            },
+            "addPoint4ValueUnit":{
+                "text":"pt"
+            },
+            "addPoint8Label":{
+                "text":"8人~："
+            },
+            "addPoint8Value":{
+                "text":"3"
+            },
+            "addPoint8ValueUnit":{
+                "text":"pt"
+            }
         }
     }
 }

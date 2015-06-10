@@ -1,47 +1,5 @@
 {
-    "memberPageHead": {
-        "memberStatus": {
-            "memberNumber": {
-                "noArea": {
-                    "text": "No."
-                },
-                "numberArea": {
-                    "text": "00000000"
-                }
-            },
-            "memberPoint": {
-                "pointNumberArea": {
-                    "text": "900"
-                },
-                "ptArea": {
-                    "text": "pt"
-                }
-            },
-            "memberName": {
-                "nameArea": {
-                    "text": "山田花子"
-                },
-                "nameTitleArea": {
-                    "text": "様"
-                }
-            }
-        },
-        "memberMenu": {
-            "memberMenuList": [
-                {
-                    "href": "",
-                    "text": "サポートメール"
-                },
-                {
-                    "href": "",
-                    "text": "プロフィール"
-                },
-                {
-                    "href": "",
-                    "text": "ログアウト"
-                }
-            ]
-        },
+    "userBanner":{
         "bannerArea": {
             "banner": [
                 {
@@ -139,105 +97,148 @@
                     "ポイント"
                 ]
             },
-            "tableContents":[
-                {
-                    "class":"firstRecord",
-                    "text":"1"
+            "db_getQuery":"",
+            "row0":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
                 },
-                {
-                    "class":"secondRecord",
-                    "text":"2"
+                "finisihTime":{
+                    "text":"14:00"
                 },
-                {
-                    "class":"thirdRecord",
-                    "text":"3"
+                "theme":{
+                    "text":"NFD"
                 },
-                {
-                    "class":"fourthRecord",
-                    "text":"4"
+                "storePlace":{
+                    "text":"新宿"
                 },
-                {
-                    "class":"fifthRecord",
-                    "text":"5"
+                "rate":{
+                    "text":"10000円"
                 },
-                {
-                    "class":"sixthRecord",
-                    "text":"6"
-                },
-                {
-                    "class":"seventhRecord",
-                    "text":"7"
-                },
-                {
-                    "class":"eighthRecord",
-                    "text":"8"
+                "point":{
+                    "text":"20pt"
                 }
-            ]
+            },
+            "row1":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row2":{
+                "startDayTime":{
+                    "text":"15/07/02 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"生花"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"8000円"
+                },
+                "point":{
+                    "text":"0pt"
+                }
+            },
+            "row3":{
+                "startDayTime":{
+                    "text":"15/07/01 18:00"
+                },
+                "finisihTime":{
+                    "text":"20:00"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"3000円円"
+                },
+                "point":{
+                    "text":"5pt"
+                }
+            },
+            "row4":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row5":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row6":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            }
         },
-        "firstRecord":[
-            "15/07/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "20pt"
-        ],
-        "secondRecord":[
-            "15/07/02 12:00",
-            "14:00",
-            "生花",
-            "新宿",
-            "8000円",
-            "0pt"
-        ],
-        "thirdRecord":[
-            "15/07/02 18:00",
-            "20:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "5pt"
-        ],
-        "fourthRecord":[
-            "15/07/10 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "12pt"
-        ],
-        "fifthRecord":[
-            "15/07/17 14:00",
-            "16:00",
-            "生花",
-            "新宿",
-            "8000円",
-            "8pt"
-        ],
-        "sixthRecord":[
-            "15/07/24 12:00",
-            "14:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "3pt"
-        ],
-        "seventhRecord":[
-            "15/07/24 16:00",
-            "18:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "2pt"
-        ],
-        "eighthRecord":[
-            "15/08/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "16pt"
-        ],
         "anotion":{
             "text":"※ポイントは参加人数と共に変動します"
         }
@@ -255,105 +256,148 @@
                     "ポイント"
                 ]
             },
-            "tableContents":[
-                {
-                    "class":"firstRecord",
-                    "text":"1"
+            "db_getQuery":"",
+            "row0":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
                 },
-                {
-                    "class":"secondRecord",
-                    "text":"2"
+                "finisihTime":{
+                    "text":"14:00"
                 },
-                {
-                    "class":"thirdRecord",
-                    "text":"3"
+                "theme":{
+                    "text":"NFD"
                 },
-                {
-                    "class":"fourthRecord",
-                    "text":"4"
+                "storePlace":{
+                    "text":"新宿"
                 },
-                {
-                    "class":"fifthRecord",
-                    "text":"5"
+                "rate":{
+                    "text":"10000円"
                 },
-                {
-                    "class":"sixthRecord",
-                    "text":"6"
-                },
-                {
-                    "class":"seventhRecord",
-                    "text":"7"
-                },
-                {
-                    "class":"eighthRecord",
-                    "text":"8"
+                "point":{
+                    "text":"20pt"
                 }
-            ]
+            },
+            "row1":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row2":{
+                "startDayTime":{
+                    "text":"15/07/02 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"生花"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"8000円"
+                },
+                "point":{
+                    "text":"0pt"
+                }
+            },
+            "row3":{
+                "startDayTime":{
+                    "text":"15/07/01 18:00"
+                },
+                "finisihTime":{
+                    "text":"20:00"
+                },
+                "theme":{
+                    "text":"プリザ"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"3000円"
+                },
+                "point":{
+                    "text":"5pt"
+                }
+            },
+            "row4":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row5":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            },
+            "row6":{
+                "startDayTime":{
+                    "text":"15/07/01 12:00"
+                },
+                "finisihTime":{
+                    "text":"14:00"
+                },
+                "theme":{
+                    "text":"NFD"
+                },
+                "storePlace":{
+                    "text":"新宿"
+                },
+                "rate":{
+                    "text":"10000円"
+                },
+                "point":{
+                    "text":"20pt"
+                }
+            }
         },
-        "firstRecord":[
-            "15/07/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "20pt"
-        ],
-        "secondRecord":[
-            "15/07/02 12:00",
-            "14:00",
-            "生花",
-            "新宿",
-            "8000円",
-            "0pt"
-        ],
-        "thirdRecord":[
-            "15/07/02 18:00",
-            "20:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "5pt"
-        ],
-        "fourthRecord":[
-            "15/07/10 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "12pt"
-        ],
-        "fifthRecord":[
-            "15/07/17 14:00",
-            "16:00",
-            "生花",
-            "新宿",
-            "8000円",
-            "8pt"
-        ],
-        "sixthRecord":[
-            "15/07/24 12:00",
-            "14:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "3pt"
-        ],
-        "seventhRecord":[
-            "15/07/24 16:00",
-            "18:00",
-            "プリザ",
-            "新宿",
-            "3000円",
-            "2pt"
-        ],
-        "eighthRecord":[
-            "15/08/01 12:00",
-            "14:00",
-            "NFD",
-            "新宿",
-            "10000円",
-            "16pt"
-        ],
         "anotion":{
             "text":"※ポイントは参加人数と共に変動します"
         }

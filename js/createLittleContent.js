@@ -1831,3 +1831,21 @@ function insertArticleListText(elems, articleNode){
 		}
 	}
 }
+
+/*
+ * 関数名 :createAccordion
+ * 引数  　:element targetClick:クリックするとアコーディオンを表示するボタン
+ * 戻り値　:なし
+ * 概要  　:アコーディオンパネルを実装する
+ * 作成日　:2015.06.09
+ * 作成者　:T.Yamamoto
+ */
+function createAccordion(targetClick) {
+	// 第一引数がクリックされた時のイベント
+	$(targetClick).on("click", function() {
+		// クリックされた番号を取得する
+		var accordNumber = $(".detailButton").index(this);
+		// 番号に対応したアコーディオン部分を表示する
+		var y = $('.accordion').eq(accordNumber).toggle();
+	});
+}
