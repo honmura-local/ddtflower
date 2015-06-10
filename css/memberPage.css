@@ -146,7 +146,7 @@ a:active {
 }
 
 /* 
- * セレクタ :.memberStatus
+ * セレクタ :.tab.active
  * 概要   :選択中のタブ領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
@@ -236,14 +236,34 @@ a:active {
 	}
 
 	/* 
-	 * セレクタ :.memberHeader, .userBanner
-	 * 概要   :会員ページヘッダとバナー領域
+	 * セレクタ :	.memberHeader,
+				.userBanner,
+				#container .calendar,
+				#tab-container,
+				.passArea,
+				.topLinkArea,
+				.memberInfo
+	 * 概要   :幅を90%にし、上下5pxの余白をとって中央揃えにする
+	 		対象領域：会員ページヘッダー
+	 				バナー
+	 				カレンダー
+	 				タブ
+					パスワード
+					トップページリンク
+					会員情報
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	.memberHeader, .userBanner {
+	.memberHeader,
+	.userBanner,
+	#container .calendar,
+	#tab-container,
+	.passArea,
+	.topLinkArea,
+	.memberInfo
+	{
 		width: 90%;			/* 幅を90%にする */ 
-		margin: 5px auto;	/* 中央揃えにする */ 
+		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
 	}
 
 	/* 
@@ -254,8 +274,6 @@ a:active {
 	 */
 	#container .calendar, #tab-container {
 		float:none;					/* 回り込みをなくす */ 
-		width: 90%;					/* 幅を90%にする */ 
-		margin: 5px auto 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
 	}
 
 	/* 
@@ -299,8 +317,6 @@ a:active {
 	 * 作成日 :2015.06.09
 	 */
 	.passArea, .topLinkArea {
-		width: 90%;				/* 幅を90%にする */
-		margin: 5px auto;		/* 上下5pxの余白をとり、中央揃えにする */
 		text-align: center;		/* 文字を中央揃えにする */
 		font-size: 14px;		/* フォントサイズを14pxにする */
 	}
@@ -351,30 +367,194 @@ a:active {
 		padding-right: 1em;		/*　要素の幅を1文字分広げる　*/
 	}
 
+	/* 
+	 * セレクタ :.accordionDetail li
+	 * 概要   :アコーディオンそれぞれの行の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
 	.accordionDetail li {
-		padding-top: 5px;
-		/*padding: 5px;*/
+		padding-top: 5px;		/* 上から5pxの余白を空ける */
 	}
 
+	/* 
+	 * セレクタ :	.lessonRateUnit,
+				.stageNumber,
+				.levelNumber,
+				.addPoint1ValueUnit,
+				.addPoint4ValueUnit
+	 * 概要   :アコーディオン内の単位の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
 	.lessonRateUnit,
 	.stageNumber,
 	.levelNumber,
 	.addPoint1ValueUnit,
 	.addPoint4ValueUnit {
-		/*text-align: left;*/
-		padding-right: 2em;
+		padding-right: 2em;		/* 2文字分右に余白をとる */
 	}
 
-	.cancelDayValueUnit,  .cancel1DayValueUnit {
-		padding-right: 1em;
-		margin-left: -5px;
+	/* 
+	 * セレクタ :.cancelDayValueUnit, .cancel1DayValueUnit
+	 * 概要   :キャンセル料内の単位領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.cancelDayValueUnit, .cancel1DayValueUnit {
+		padding-right: 1em;		/* 右に余白を1文字分とる */
+		margin-left: -5px;		/* 左に5px幅を詰める */
 	}
 
+	/* 
+	 * セレクタ :.rateDetail1,
+			.rateDetail2,
+			.cancelRateText,
+			.addPointText1,
+			.addPointText1
+	 * 概要   :アコーディオン詳細部分領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
 	.rateDetail1,
 	.rateDetail2,
 	.cancelRateText,
 	.addPointText1,
 	.addPointText1 {
-		font-size: 13px;
+		font-size: 13px;		/* フォントサイズを13pxにする */
 	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.subHeader {
+		text-align: center;		/* 中央揃えにする */
+		font-size: 14px;		/* フォントサイズを14pxにする */
+	}
+
+	/* 
+	 * セレクタ :.memberInfo
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.memberInfo {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	label {
+		display: inline-block;	/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.label2Area {
+		width: 11%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.textbox2Area {
+		width: 85%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.label4Area {
+		width: 20%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.textbox4Area {
+		width: 76%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.sex {
+		width: 20%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.birthdayLabel {
+		margin-left: 8px;		/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.birthday {
+		width: 40%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.addressLabel,
+	.mailaddressLabel {
+		display: block;			/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.address,
+	.mailaddress {
+		width: 98%;				/*  */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.infoForm div {
+		margin-bottom: 5px;
+	}
+
 }

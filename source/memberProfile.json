@@ -1,0 +1,118 @@
+{
+    "subHeader":{
+        "keepMoney":{
+            "keepMoneyText":{
+                "text":"お預かり金額:"
+            },
+            "keepMoneyNumber":{
+                "text":"30000"
+            },
+            "keepMoneyUnit":{
+                "text":"円"
+            }
+        },
+        "passLinkArea":{
+            "passLink":{
+                "text":"パスワード変更"
+            }
+        }
+    },
+    "memberInfo":{
+        "infoForm":{
+            "action":""
+        }
+    },
+    "firstNameArea":{
+        "labelArea":{
+            "class":"label2Area firstNameLabel",
+            "text":"姓:"
+        },
+        "textboxArea":{
+            "class":"textbox2Area firstName",
+            "name":"firstName",
+            "value":"山田"
+        }
+    },
+    "lastNameArea":{
+        "labelArea":{
+            "class":"label2Area lastNameLabel",
+            "text":"名:"
+        },
+        "textboxArea":{
+            "class":"textbox2Area lastName",
+            "name":"lastName",
+            "value":"花子"
+        }
+    },
+    "subInfo":{
+        "sexLabel":{
+            "class":"label2Area",
+            "text":"性別:"
+        },
+        "sex":{
+            "name":"sex",
+            "male":{
+                "value":"男性",
+                "text":"男性"
+            },
+            "female":{
+                "value":"女性",
+                "text":"女性"
+            }
+        },
+        "birthdayLabel":{
+            "text":"生年月日:"
+        },
+        "birthday":{
+            "type":"text",
+            "name":"birthday",
+            "value":"1989/02/02"
+        }
+    },
+    "addressArea":{
+        "addressLabel":{
+            "class":"label2Area addressLabel",
+            "text":"住所:"
+        },
+        "address":{
+            "text":""
+        }
+    },
+    "mailaddressArea":{
+        "labelArea":{
+            "class":"labelArea mailaddressLabel",
+            "text":"メールアドレス:"
+        },
+        "textboxArea":{
+            "class":"textboxArea mailaddress",
+            "name":"mailaddress",
+            "value":"example@mail.com"
+        }
+    },
+    "phoneArea":{
+        "labelArea":{
+            "class":"label4Area phoneLabel",
+            "text":"電話番号:"
+        },
+        "textboxArea":{
+            "class":"textbox4Area phone",
+            "name":"phone",
+            "value":"800909999"
+        }
+    },
+    "emergencyArea":{
+        "labelArea":{
+            "class":"label4Area emergencyLabel",
+            "text":"緊急番号:"
+        },
+        "textboxArea":{
+            "class":"textbox4Area emergency",
+            "name":"emergency",
+            "value":"3344555"
+        }
+    },
+    "updateButtonArea":{
+        "type":"submit",
+        "value":"更新"
+    }
+}
