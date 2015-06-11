@@ -42,9 +42,9 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				fixXCoordinateOnScroll('header')
 				
 				var dateArray = extractDateArray(creator.json);	//日付の配列を作る。
-				
-				//datepickerによるカレンダーを作成する。
-				createBlogCalendar('.calendar', dateArray);
+				//datepickerによるカレンダーのクラスを作成する。
+				var bCalendar = new blogCalendar('.calendar', dateArray);
+				bCalendar.create();	//カレンダーを実際に作成する
 				//ブログ記事の中にMSLのリストを配置する
 				$('.blogRightContent').prepend($('#mslongtail_1984').show());
 			</script>

@@ -121,9 +121,10 @@ $msl_infos = new MSLListInfo();
 			// 左側領域に最新記事一覧を作る
 			creator.outputTag('currentArticleList','currentArticleList','.blogLeftContent');
 
-			//datepickerによるカレンダーを作成する。
-			createBlogCalendar('.calendar', null, function(){});
-			//ブログ記事の前にMSLのリストを配置する
+			//datepickerによるカレンダーのクラスを作成する。
+			var mslBlogCalendar = new blogCalendar('.calendar', dateArray);
+			mslBlogCalendar.create();	//カレンダーを実際に作成する
+						//ブログ記事の前にMSLのリストを配置する
 			$('.blog').append($('#mslongtail_1984').show());
 			//花の上下の画像にMSL記事を移動する
 			$('.createImage:first').after($('.blogLeftContent'));

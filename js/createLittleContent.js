@@ -1,3 +1,11 @@
+/* 
+ * ファイル名:createLittleContent.js
+ * 概要  :小規模の処理の関数を定義する
+ * 作成者:T.M
+ * 作成日:2015.
+ * パス　:/js/createLittleContent.js
+ */
+
 /**
  * 小規模のパーツ、コンテンツを作るためのJSファイル。
  */
@@ -104,131 +112,138 @@ var dpJpSetting = {
 		                               showMonthAfterYear: true,
 		                               yearSuffix: '年'};
 
-/*
- * 関数名:createCalendar(selector)
- * 引数  :string selector:カレンダーにするタグのセレクタ
- * 戻り値:なし
- * 概要  :カレンダーを作る
- * 作成日:2015.02.06
- * 作成者:T.Y
- * 変更者:2015.02.10
- * 作成者:T.M
- * 概要  :カレンダーをクリックした時のコールバック関数を追加しました。
- * 変更者:2015.02.21
- * 作成者:T.M
- * 概要  :カレンダーのタグを作る記述を削除しました。
- */
-function createCalendar (selector) {
-  // jqueryの記述の始まり
-    $(function() {
-        $.datepicker.regional['ja'] = dpJpSetting;
-		$.datepicker.setDefaults($.datepicker.regional['ja']);
+//Datepickerによるカレンダー作成時に関数に渡すオプションをまとめた連想配列を定義する
+var calendarOptions = {};
 
-        $(selector).datepicker();
-        // ここまで追加・修正しました。
-    });// jqueryの記述の終わり
-}
+//ブログページのカレンダー
+calendarOptions['blog'] = {
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			//絞り込まれたブログ記事を書き出す
+			creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
+		},
+		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
+		beforeShowDay:function(date){
+			//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
+			return putDisableDate(date, this.dateArray);
+		}
+	}
 
-/*
- * 関数名:createReservedCalendar(selector, dateRange)
- * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:本日を基準にした予約可能な日数
- * 戻り値:なし
- * 概要  :予約のカレンダーを作る。
- * 作成日:2015.03.18
- * 作成者:T.Masuda
- * 修正日:2015.04.10
- * 修正者:T.Masuda
- * 内容  :自身に予約用カレンダーのクラスを付加するように変更しました。
- */
-function createReservedCalendar (selector, dateRange) {
-	// jqueryの記述の始まり
-	$(function() {
-		$.datepicker.regional['ja'] = dpJpSetting;
-		$.datepicker.setDefaults($.datepicker.regional['ja']);
-		
-		//カレンダー化するタグを取得する。
-		var $calendar = $(selector);
-		$calendar.datepicker({		//カレンダーを作る。
-			// カレンダーの日付を選択したら
-			onSelect: function(dateText, inst){
-				// 予約のダイアログを出す。
-				callReservedDialog(dateText, $calendar);
-			},
-			maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-			minDate:1			//今日以前はクリックできなくする。
-		});
-		// ここまで追加・修正しました。
-	});// jqueryの記述の終わり
-}
-
-/*
- * 関数名:createMyPageReservedCalendar(selector, dateRange)
- * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:本日を基準にした予約可能な日数
- * 戻り値:なし
- * 概要  :マイページ予約のカレンダーを作る。
- * 作成日:2015.04.16
- * 作成者:T.Masuda
- */
-function createMyPageReservedCalendar(selector, dateRange) {
-	//datepickerのロケール設定を行う。
-	$.datepicker.regional['ja'] = dpJpSetting;
-	$.datepicker.setDefaults($.datepicker.regional['ja']);
-		
-	$(selector).datepicker({
+//マイページの予約カレンダー
+calendarOptions['myPageReserved'] = {
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			// 開発中のメッセージを出す。
 			alert('現在この機能は開発中となっています。');
 		},
-		maxDate:dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
 		minDate:1			//過去はクリックできなくする。
-	});
+	}
+
+//予約ダイアログ
+calendarOptions['reserved'] = {		//カレンダーを作る。
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			// 予約のダイアログを出す。
+			callReservedDialog(dateText, $(this));
+		},
+		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		minDate:1			//今日以前はクリックできなくする。
+	}
+
+/*
+ * クラス名:calendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 戻り値:なし
+ * 概要  :カレンダーを作る
+ * 作成日:2015.06.10
+ * 作成者:T.Masuda
+ */
+function calendar(selector) {
+	//コンストラクタの引数をメンバに格納する
+	this.selector = selector;
+	this.calendarName = '';	//カレンダー名を設定する
+	
+	this.calendarOptions = {};	//オプションをオブジェクトで記述する
+	
+	//datepickerの日本語設定を行う
+    $.datepicker.regional['ja'] = dpJpSetting;	
+	$.datepicker.setDefaults($.datepicker.regional['ja']);
+
+	/* 
+	 * 関数名:create
+	 * 概要  :カレンダーを作る処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.create = function(){
+			
+		$(selector).datepicker(this.calendarOptions);
+	}
 }
 
 /*
- * 関数名:createBlogCalendar(selector)
+ * クラス名:reservedCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　　:Array dateArray:日付の配列
- * 　　　:function callBack:onSelectイベントの処理
+ * 　　  :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
- * 概要  :ブログページのカレンダーを作る。
- * 作成日:2015.04.16
+ * 概要  :予約カレンダーを作る
+ * 作成日:2015.06.10
  * 作成者:T.Masuda
- * 変更日:2015.06.04
- * 変更者:T.Masuda
- * 内容　:引数追加。第3引数にonSelectイベントのコールバック関数を指定可能にしました。
- * 　　　:また、第2引数がnullであれば日付の絞り込みを行わないようにしました。
  */
-function createBlogCalendar(selector, dateArray, callBack) {
-	//datepickerのロケール設定を行う。
-	$.datepicker.regional['ja'] = dpJpSetting;
-	$.datepicker.setDefaults($.datepicker.regional['ja']);
-	
-	//カレンダーを作る。
-	$(selector).datepicker({
-		// カレンダーの日付を選択したら
-		onSelect: function(dateText, inst){
-			//@add 2015.0604 T.Masuda コールバック関数を指定できるようにしました
-			//コールバック関数が指定してなければ
-			if(callBack === void(0)){
-				//@mod 2015.0527 T.Masuda 処理を追加しました
-				//絞り込まれたブログ記事を書き出す
-				creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
-			//コールバック関数が指定されていたら
-			} else {
-				//コールバック関数を実行する
-				callBack(dateText, inst);
-			}
-		},
-		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
-		beforeShowDay:function(date){
-			//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
-			return putDisableDate(date, dateArray);
-		}
-	});
+function reservedCalendar (selector, dateRange) {
+	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
+	this.calendarName = 'reserved';	//カレンダー名をセットする
+	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['reserved'];
 }
+
+/*
+ * クラス名:myPageReserved
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :int dateRange:クリック可能な日付の期間
+ * 戻り値:なし
+ * 概要  :マイページのカレンダーを作る
+ * 作成日:2015.06.10
+ * 作成者:T.Masuda
+ */
+function myPageReservedCalendar(selector, dateRange) {
+	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
+	this.calendarName = 'myPageReserved';	//カレンダー名をセットする
+	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['myPageReserved'];
+}
+
+/*
+ * クラス名:blogCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :int dateRange:クリック可能な日付の期間
+ * 戻り値:なし
+ * 概要  :ブログページのカレンダーを作る
+ * 作成日:2015.06.10
+ * 作成者:T.Masuda
+ */
+function blogCalendar(selector, dateArray) {
+	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
+	this.calendarName = 'blog';		//カレンダー名をセットする
+	$(selector)[0].dateArray = dateArray;		//有効な日付設定の文字列をカレンダーのタグにセットする
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['blog'];
+}
+
+//カレンダークラスの親子関係を設定する
+reservedCalendar.prototype = new calendar();
+myPageReservedCalendar.prototype = new calendar();
+blogCalendar.prototype = new calendar();
+//サブクラスのコンストラクタを有効にする
+reservedCalendar.prototype.constructor = reservedCalendar;
+myPageReservedCalendar.prototype.constructor = myPageReservedCalendar;
+blogCalendar.prototype.constructor = blogCalendar;
+
 
 /*
  * 関数名:function putDisableDate(date, dateArray)
@@ -483,8 +498,10 @@ function callReservedDialog(dateText, calendar){
 	// 日付配列を取得する。
 	var date = createDateArray(dateText)
 	
-	// コンテンツ名、レッスン予約のダイアログを生成する関数、日付の配列を引数にしてcreateText関数をコールする
-	createSpecialReservedDialog(contentName, date);
+	// 予約希望ダイアログを作成する
+	 var reservedDialog = new specialReservedDialog(null, contentName, date);
+	reservedDialog.open();	//ダイアログを開く
+
 }
 
 /*
@@ -1565,7 +1582,7 @@ var optionSubmitHandler = { submitHandler:function(form){
 		}
 	}
 }
-	
+
 
 /*
  * 関数名:function deleteRowData(form)
