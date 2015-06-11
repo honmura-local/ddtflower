@@ -13,13 +13,6 @@ a:active {
 }
 
 /* 
- * セレクタ :.main
- * 概要   :コンテンツ全体の領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-
-/* 
  * セレクタ :.memberName
  * 概要   :会員名領域
  * 作成者 :T.Yamamoto
@@ -85,7 +78,7 @@ a:active {
 }
 
 /* 
- * セレクタ :.banner
+ * セレクタ :.banner:nth-of-type(2)
  * 概要   :右のバナー領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
@@ -141,8 +134,7 @@ a:active {
  * 作成日 :2015.06.04
  */
 .themeText {
-    display: inline-block; /* インラインブロック要素として扱う */
-    
+	display: inline-block; /* インラインブロック要素として扱う */
 }
 
 /* 
@@ -152,7 +144,7 @@ a:active {
  * 作成日 :2015.06.04
  */
 .tab.active {
-    background-color: #ce6;		/* 背景を薄い黄緑にする */
+	background-color: #ce6;		/* 背景を薄い黄緑にする */
 }
 
 /* 
@@ -188,7 +180,7 @@ a:active {
  */
 #container .calendar {
 	margin-top: 5px;		/* 上下に5pxの余白をとる */
-	float: left;
+	float: left;			/* 左側に回り込みする */
 }
 
 /* 
@@ -201,16 +193,15 @@ a:active {
 	margin-bottom: 20px;		/* 下に20pxの余白をとる */
 }
 
-
 /* 
- * セレクタ :.selectThemeButton
- * 概要   :絞り込みボタン領域
+ * セレクタ :.pageHeader
+ * 概要   :ページのヘッダー部分(hタグにつけるスタイル)
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
-.selectThemeButton {
-	float: right;			/* 右側に回り込みする */
-	font-size: 12px;		/* フォントサイズを12pxにする */
+.pageHeader {
+	margin-top: 20px;		/* 上から20pxの余白を空ける */
+	text-align: left;		/* 左側に回り込みする */
 }
 
 /* 
@@ -222,6 +213,64 @@ a:active {
 .accordion {
 	display: none;			/* 非表示にする */
 }
+
+/* 
+ * セレクタ :.topLink
+ * 概要   :トップページリンク領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.topLink {
+	text-align: center;		/* 中央揃えにする */
+}
+
+/* 
+ * セレクタ :.passLabel
+ * 概要   :パスワードラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.passLabel {
+	display: inline-block;		/* 	インラインブロック要素として扱う */
+	width: 20%;					/* 幅を20%にする */
+}
+
+/* 
+ * セレクタ :.passTextbox
+ * 概要   :パスワードテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.passTextbox {
+	display: inline-block;		/* 	インラインブロック要素として扱う */
+	width: 60%;					/* 幅を60%にする */
+}
+
+/* 
+ * セレクタ :.postPass label
+ * 概要   :パスワードラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.postPass label {
+	display: block;		/* ブロック要素として扱う */
+	margin-left: 1em;	/* 1文字分余白を空ける */
+	padding: 10px 0;	/* 上下に10px要素の幅を広げる */
+}
+
+/* 
+ * セレクタ :.updaeButon
+ * 概要   :更新ボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.updateButton {
+	display: block;
+	margin-left: auto;
+	margin-right: 148px;
+}
+
+
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
@@ -321,14 +370,25 @@ a:active {
 		font-size: 14px;		/* フォントサイズを14pxにする */
 	}
 
+
+/* 
+	 * セレクタ .passLabel
+	 * 概要   :パスワードラべル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passLabel {
+		display: inline;		/* インライン要素にする */
+	}
+
 	/* 
-	 * セレクタ :.passArea input[type="password"]
+	 * セレクタ .passTextbox
 	 * 概要   :パスワードテキストボックス領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.09
 	 */
-	.passArea input[type="password"] {
-		width: 200px;			/* 幅を200pxにする */
+	.passTextbox {
+		width: 90%;			/* 幅を90%にする */
 	}
 
 	/* 
@@ -338,7 +398,6 @@ a:active {
 	 * 作成日 :2015.06.09
 	 */
 	.updateButton {
-		display: block;			/* ブロック要素にする */
 		margin: 10px 0 5px auto;/* 上に10px、下に5pxの余白をとり、右寄せにする */
 	}
 
@@ -437,7 +496,7 @@ a:active {
 
 	/* 
 	 * セレクタ :.memberInfo
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 概要   :会員情報領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
@@ -446,115 +505,107 @@ a:active {
 	}
 
 	/* 
-	 * セレクタ :.subHeader
+	 * セレクタ :label
 	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	label {
-		display: inline-block;	/*  */
+		display: inline-block;	/* インラインブロック要素として扱う */
 	}
 
 	/* 
 	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 概要   :ラベルが二文字分の領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.label2Area {
-		width: 11%;				/*  */
+		width: 11%;				/* 幅を11%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.textbox2Area
+	 * 概要   :ラベルが2文字分に対応するテキストボックス領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.textbox2Area {
-		width: 85%;				/*  */
+		width: 85%;				/* 幅を85%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.label4Area, .sex
+	 * 概要   :ラベルが4文字分の領域と性別の領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
-	.label4Area {
-		width: 20%;				/*  */
+	.label4Area, .sex {
+		width: 20%;				/* 幅を20%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.textbox4Area
+	 * 概要   :ラベルが4文字分に対応するテキストボックス領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.textbox4Area {
-		width: 76%;				/*  */
+		width: 76%;				/* 幅を76%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.10
-	 */
-	.sex {
-		width: 20%;				/*  */
-	}
-
-	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.birthdayLabel
+	 * 概要   :生年月日のラベル領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.birthdayLabel {
-		margin-left: 8px;		/*  */
+		margin-left: 8px;		/* 左から8pxの空白をとる */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.birthday
+	 * 概要   :生年月日テキストボックス領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.birthday {
-		width: 40%;				/*  */
+		width: 40%;				/* 幅を40%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :	.addressLabel,
+				.mailaddressLabel
+	 * 概要   :住所のラベルとメールアドレスのラベル領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.addressLabel,
 	.mailaddressLabel {
-		display: block;			/*  */
+		display: block;			/* ブロック要素にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :	.address,
+				.mailaddress
+	 * 概要   :住所のテキストボックスとメールアドレスのテキストボックス領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.address,
 	.mailaddress {
-		width: 98%;				/*  */
+		width: 98%;				/* 幅を98%にする */
 	}
 
 	/* 
-	 * セレクタ :.subHeader
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * セレクタ :.infoForm div
+	 * 概要   :会員情報をそれぞれの情報についての領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
 	.infoForm div {
-		margin-bottom: 5px;
+		margin-bottom: 5px;		/* 下に5pxの余白をとる */
 	}
 
 }
