@@ -491,77 +491,39 @@ function getJSONFile(path){
 	return returns;
 }
 
-/* クラス名:dialog
- * 概要　　:jQueryUIダイアログを作成するためのクラスの基底クラス
+
+/* クラス名:createDialog
+ * 概要　　:jQueryUIダイアログを作成するためのクラス
+ * 引数　　:String className:ダイアログのクラス名
+ * 引数　　:String title:ダイアログのタイトル
  * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
  * 作成日　:2015.0610
  * 作成者　:T.Masuda
  */
-function dialog(position){
+function createDialog(className, title, functionObject){
 	//ダイアログのオプション
 	this.options = {
 		width : 300,		//幅
 		autoOpen : true,	//作成時の自動オープン
-		title : "",			//タイトル文字列
+		//タイトル文字列。入力がなければ空文字にする
+		title : title !== void(0) && title != ''? title : '',
 		modal : true,		//モーダル表示
 		resizable : false,	//ドラッグでのリサイズ可否
-		//表示位置の指定。引数での指定がなければデフォルトの値を設定する
-		position : position !== void(0) && position !== null? position : {my:'center center',at:'center center', of:window},
+		//表示位置の指定。
+		position :{my:'center center',at:'center center', of:window},
 		closeOnEscape : false	//escキーを押して閉じるか
 	}
 	
-	this.className = '';		//ダイアログのクラス名
-	this.closeBox = false;		//クローズボックスを表示するかの設定
+	//引数の関数定義オブジェクトが用意されていれば
+	if(functionObject !== void(0) && functionObject != null && typeof functionObject != 'Object'){
+		//ダイアログのオプションと引数のオブジェクトを統合する
+		//キーがかぶったら、引数のオブジェクトのvalueで上書きする
+		$.extend(this.options, functionObject);
+	}
 	
-	/* 
-	 * 関数名:addOption
-	 * 概要  :オプションを追加する
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.addOption = function(option){
-		//引数のオプションを追加する
-		this.options = $.extend(true, this.options, option);
-	};
-	
-	/* 
-	 * 関数名:pushCancelButton
-	 * 概要  :OKボタンの処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.pushOkButton = function(){
-		
-	};
-	
-	/* 
-	 * 関数名:pushCancelButton
-	 * 概要  :キャンセルボタンの処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.pushCancelButton = function(){
-		
-	};
-	
-	/* 
-	 * 関数名:open
-	 * 概要  :ダイアログを開く前の準備の処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.beforeOpenFunc = function(){
-		
-	};
-	
+	//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
+	$('.' + className).dialog(this.options[className]);
+
 	/* 
 	 * 関数名:open
 	 * 概要  :画面を開くときの処理
@@ -571,7 +533,6 @@ function dialog(position){
 	 * 作成日:2015.06.10
 	 */
 	this.open = function(){
-		this.beforeOpenFunc();	//ダイアログを開く直前の処理を行う
 		//ダイアログを作成し、開く
 		$('.' + this.className).dialog(this.options);
 	}
@@ -585,8 +546,8 @@ function dialog(position){
  * 作成日　:2015.0610
  * 作成者　:T.Masuda
  */
-function specialReservedDialog(position, content, array){
-	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
+function specialReservedDialog(className, title, functionObject, content, array){
+	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	
 	//コンストラクタの引数をメンバにセットする
 	this.content = content;
@@ -595,44 +556,31 @@ function specialReservedDialog(position, content, array){
 	
 	//optionsに予約ダイアログのオプションをセットする
 	this.options = dialogOption['specialReservedDialog'];
-	/* 
-	 * 関数名:open
-	 * 概要  :ダイアログを開く前の準備の処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.beforeOpenFunc = function(){
+
+	this.open = function(){
 		//予約希望ダイアログを作る下準備をする
-		readyDialogFunc['specialReservedDialog'](this.content, this.array);
-	};
+		readyDialogFunc[this.className](this.content, this.array);
+		$('.' + this.className).dialog(dialogOption[this.className]);
+	}
 }
 
-/* クラス名:specialReservedDialog
- * 概要　　:体験レッスン予約希望のダイアログを作る
+/* クラス名:specialReservedConfirmDialog
+ * 概要　　:体験レッスン予約希望の確認ダイアログを作る
  * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
  * 作成日　:2015.0610
  * 作成者　:T.Masuda
  */
-function specialReservedConfirmDialog(position){
-	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
+function specialReservedConfirmDialog(className, title, functionObject){
+	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	//optionsに予約ダイアログのオプションをセットする
 	this.options = dialogOption['specialReservedConfirmDialog'];
 	this.className = 'specialReservedConfirmDialog';		//ダイアログのクラス名
 	
-	/* 
-	 * 関数名:open
-	 * 概要  :ダイアログを開く前の準備の処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.beforeOpenFunc = function(){
-		//ダイアログのDOMを作る
-		readyDialogFunc['specialReservedConfirmDialog']();
-	};
+	this.open = function(){
+		//予約希望ダイアログを作る下準備をする
+		readyDialogFunc[this.className]();
+		$('.' + this.className).dialog(dialogOption[this.className]);
+	}
 }
 
 /* クラス名:loginDialog
@@ -641,54 +589,25 @@ function specialReservedConfirmDialog(position){
  * 作成日　:2015.0610
  * 作成者　:T.Masuda
  */
-function loginDialog(position){
-	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
-	//optionsに予約ダイアログのオプションをセットする
-	this.options = dialogOption['loginDialog'];
+function loginDialog(className, title, functionObject){
+	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	this.className = 'loginDialog';		//ダイアログのクラス名
 	
-	/* 
-	 * 関数名:open
-	 * 概要  :ダイアログを開く前の準備の処理
-	 * 引数  :なし
-	 * 返却値 :なし
-	 * 作成者:T.M
-	 * 作成日:2015.06.10
-	 */
-	this.beforeOpenFunc = function(){
-		//ダイアログのDOMを作る
-		readyDialogFunc['loginDialog']();
-	};
+	this.open = function(){
+		//予約希望ダイアログを作る下準備をする
+		readyDialogFunc[this.className](this.content, this.array);
+		$('.' + this.className).dialog(dialogOption[this.className]);
+	}
 }
 
 //ダイアログクラスの親子関係を設定する
-specialReservedDialog.prototype = new dialog();
-specialReservedConfirmDialog.prototype = new dialog();
-loginDialog.prototype = new dialog();
+specialReservedDialog.prototype = new createDialog();
+specialReservedConfirmDialog.prototype = new createDialog();
+loginDialog.prototype = new createDialog();
 //サブクラスのコンストラクタを有効にする
 specialReservedDialog.prototype.constructor = specialReservedDialog;
 specialReservedConfirmDialog.prototype.constructor = specialReservedConfirmDialog;
 loginDialog.prototype.constructor = loginDialog;
-
-/* 
- * 関数名:createDialog
- * 概要  :ダイアログを生成する。
- * 引数  :String className:ダイアログのクラス名
- * 　　　:Function readyFunction:ダイアログコール前に呼ぶ関数
- * 返却値 :なし
- * 作成者:T.M
- * 作成日:2015.06.10
- */
-function createDialog(className, readyFunction){
-	//引数に関数がセットされていれば
-	if(readyFunction !== void(0)){
-		//引数の関数を実行する
-		readyFunction();
-	}
-	
-	//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
-	$('.' + className).dialog(dialogOption[className]);
-}
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
 dialogOption['loginDialog'] = {
@@ -844,7 +763,7 @@ dialogOption['specialReservedDialog'] = {
 				        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
 				        		 if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
 					        		 // 入力確認ダイアログのクラスインスタンスを作る。
-				        			 var confirmDialog = new specialReservedConfirmDialog(null);
+				        			 var confirmDialog = new specialReservedConfirmDialog();
 				        			 confirmDialog.open();	//ダイアログを開く
 					        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
 					        		 $('.personEmailCheck input').attr('disabled', 'disabled');
@@ -1047,7 +966,7 @@ function checkLoginState(){
 		//ログインボタンのイベントを設定する。
 		$('.login').on('click', function(){
 			// ログインダイアログを作る
-			var login = new loginDialog(null);
+			var login = new loginDialog();
 			login.open();	//ログインダイアログを開く
 		});
 	}
