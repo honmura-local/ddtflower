@@ -2,6 +2,9 @@
 
 //createTagコール時の引数として使う定数。
 CREATETAG_FIRST = -1;
+//@add 2015.0610 T,Masuda「JSON」と「DOM」の文字列の定数を追加しました
+STR_JSON = 'json';
+STR_DOM = 'dom';
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -11,40 +14,46 @@ function createTag(){
 	var own = this;				//自分自身の要素を変数に入れる
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
-	//@add 2015.0528 T.Masuda 絞り込んだJSONを一時保存するメンバを追加
-	this.filteredMap = null;	
+
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
 	 * 引数  :String jsonPath:JSONを要求する先。
-	 * 		:Object map:サーバへ渡す値の連想配列。
-	 * 返却値  :なし
+	 * 		:Object map:サーバへ渡す値の連想配列。実際に送信する際にはJSON文字列への変換を行う
+	 * 		:String key:取得したJSONを格納するためのキー。
+	 * 返却値  :Object
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 * 変更者:T.Masuda
 	 * 変更日:2015.03.30
 	 * 内容　:サーバへ連想配列を渡せる様に変更しました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.06.09
+	 * 内容　:サーバへJSON文字列を渡せる様に変更しました。また、キー名を指定してJSONを格納できるように変更しました。
 	 */
-	this.getJsonFile = function(jsonPath, map){
+	this.getJsonFile = function(jsonPath, map, key){
 		//一時的に値を保存する変数tmpを宣言する。
 		var tmp;
-		//mapに何も入力されていなければ、空の連想配列を代入する。
-		map = map === undefined ? {"blank":""} : map;
+		
+		//mapに何も入力されていなければ、空の連想配列を代入する。入力されていればJSON文字列に変換する
+		map = map === void(0) ? {json:""} : JSON.stringify(map);
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
 			//jsonファイルのURLを指定する。
 			url: jsonPath,
 			//取得するファイルの形式をJSONに指定する。
 			dataType: 'JSON',
+			//POSTメソッドでデータを送信する
+			type:'POST',
 			//同期通信を行う。
 			async: false,
 			//サーバへ連想配列を送信する。
-			data: map,
+			data: {json:map},
 			//キャッシュを無効にする。
 			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
-				//取得したJSONの連想配列をtmpに一時保存する。
+				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
 				tmp = json;
 			},
 			//通信失敗時の処理。
@@ -54,10 +63,16 @@ function createTag(){
 			}
 		});
 
+		//@mod 2015.0609 T.Masuda 条件分岐を追加しました
 		//フィールドのメンバのjsonが空であれば
 		if(this.json == null){
-			//クラスのメンバのjsonにtmpの連想配列を格納する。
-			this.json = tmp;
+			//keyが入力されていたら、オブジェクトを生成し、その中にtmpを格納する。
+			//そうでなければ、そのままtmpを格納する
+			this.json = key !== void(0) && key!= ''?{key:tmp}:tmp;
+			//キーが入力されていたら
+		} else if(key !== void(0)){
+			//指定したキーにJSONを格納する
+			this.json[key] = tmp;
 		//既にJSONが格納されていたら
 		} else {
 			//連想配列を連結する。
@@ -66,10 +81,10 @@ function createTag(){
 	};
 
 	/* 
-	 * 関数名:this.getDomFile = function(domPath)
-	 * 概要  :テンプレートのHTMLのDOMを取得して返す。
-	 * 引数  :String domPath
-	 * 返却値  :なし
+	 * 関数名:this.getDomFile = function((domPath))
+	 * 概要  :JSONファイルを取得して返す。
+	 * 引数  :String jsonPath
+	 * 返却値  :Object
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 */
@@ -111,27 +126,44 @@ function createTag(){
 	};
 
 	/* 
+	 * 関数名:readyCreateTag
+	 * 概要  :JSON、DOMのトップノードを引数で指定して返す
+	 * 引数  :String key, String domNodeName
+	 * 返却値  :Object:JSON、DOMのトップノードをオブジェクトにまとめて返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.09
+	 */
+	this.readyCreateTag = function(key, domNodeName){
+		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
+		domNodeName = domNodeName === undefined ? key : domNodeName;
+			
+		//JSONとDOMのトップノードをオブジェクトにまとめて返す
+		return {json:this.getMapNode(key), dom:this.getDomNode(domNodeName)};
+	}	
+	
+	/* 
 	 * 関数名:this.outputTag = function(key, domNodeName, appendTo)
-	 * 概要  :キーからパーツを作り配置する。
+	 * 概要  :JSONのキー、DOMのノードを指定して画面パーツを作り追加する。
 	 * 引数  :String key, String domNodeName, String appendTo
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.20
+	 * 修正者:T.Masuda
+	 * 修正日:2015.06.09
+	 * 内容　:createTagに渡す値を取得するコードをサブ関数化しました(指示者:H.Kaneko)
 	 */
 	this.outputTag = function(key, domNodeName, appendTo){
-		//domNodeNameがundefined(未入力)であれば、キー名をdomNodeNameにする。
-		domNodeName = domNodeName === undefined ? key : domNodeName;
-			
-		//JSONの先頭のキーの連想配列と、DOMの先頭を取得する。
-		mapNode = this.filteredMap == null?this.getMapNode(key):this.filteredMap[key];			//マップの先頭を取得する。
-		domNode = this.getDomNode(domNodeName);	//DOMの先頭を取得する。
-
+		//@mod 2015.0609 T.Masuda JSON、DOMをオブジェクトにまとめて取得するようにしました(指示者:H.Kaneko)
+		var headNodes = this.readyCreateTag(key, domNodeName);
+		
+		//@mod 2015.0609 T.Masuda createTagの引数をオブジェクトから取得した値にしました(指示者:H.Kaneko)
 		// createTagでキーに対応したHTMLのパーツを作成し、変数tagに格納する。
-		var tag = this.createTag(mapNode, domNode);
+		var tag = this.createTag(headNodes[STR_JSON], headNodes[STR_DOM]);
 		// パーツの作成に成功したならば
 		if(tag != null){
-			//@mod 2015.03.10 T.Masuda 第三引数appendToに対応しました。
+			//@mod 2015.03.10 T.Masuda 第三引数appendToに対応しました。(指示者:H.Kaneko)
 			//appendToが入力されていれば
 			if(appendTo != null){
 				//appendで、作成したタグをappendToに追加する。
@@ -141,18 +173,19 @@ function createTag(){
 				//appendで作成したタグをmainに追加する。
 				$('.main').append(tag);
 			}
-			//@mod 2015.03.10 T.Masuda ここまで変更しました。
+			//@mod 2015.03.10 T.Masuda ここまで変更しました。(指示者:H.Kaneko)
 		// パーツの作成に失敗したならば
 		} else{
 			//失敗のメッセージダイアログを出す。
 			console.log(key + 'の作成に失敗しました。');
 		}
-	}	
+	}
 	
 	/* 
 	 * 関数名:this.createTag = function(curMapNode, curDomNode)
 	 * 概要  :JSON連想配列のキーからタグに値を格納する。
-	 * 引数  :Object curMapNode
+	 * 引数  :Object curMapNode:カレントのJSONのオブジェクト
+	 * 　　  :Element curDomNode:カレントのDOMの先頭
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -187,8 +220,9 @@ function createTag(){
 			} else if(typeof mapNode == 'object'){
 				//カレントの子DOMノードからkeyを持つDOMノードを取得する。
 				var domNode = this.getDomChild(key, curDomNode);
-				//domNodeがnullでなければ
-				if(domNode){
+				//domNodeがundefinedでなければ
+				//@mod 2015.0611 T.Masuda 「DOMが取得できなかったとき」の条件文を修正しました
+				if(domNode[0] !== void(0)){
 					//子ノードへ再帰する。
 					this.createTag(mapNode, domNode);
 				}
@@ -206,8 +240,8 @@ function createTag(){
 	/* 
 	 * 関数名:this.getMapNode = function(key)
 	 * 概要  :JSON連想配列の最上階層からキーに対応した値を取り出す。
-	 * 引数  :String key:JSONのキー
-	 * 返却値  :Object:取得した連想配列
+	 * 引数  :String key
+	 * 返却値  :Object
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 */
@@ -219,8 +253,8 @@ function createTag(){
 	/* 
 	 * 関数名:this.getDomNode = function(key)
 	 * 概要  :キーに対応するHTMLのパーツを返す。
-	 * 引数  :String key:JSONのキーの文字列。DOMのクラス名でもある。
-	 * 返却値  :Element:取得したDOMを返す。
+	 * 引数  :String key
+	 * 返却値  :jQuery
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.12
 	 * 内容  :テンプレートのHTMLそのものではなく、コピーを返す様に変更しました。
@@ -233,7 +267,7 @@ function createTag(){
 	/* 
 	 * 関数名:this.createTagArray = function(mapNode, domNode)
 	 * 概要  :リストタイプのタグを配置する。
-	 * 引数  :String key, Object mapNode, Element domNode
+	 * 引数  :String key, Object mapNode, jQuery domNode
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -249,7 +283,7 @@ function createTag(){
 			//処理をやめる。
 			return;
 		}
-		
+
 		//不足しているタグの個数を算出する。
 		var clones = mapNode.length - 1;
 		//domNodeを必要な分コピーする。
@@ -286,10 +320,9 @@ function createTag(){
 
 	/* 
 	 * 関数名:this.getDomChild = function(key, domNode)
-	 * 概要  :DOMから子要素のDOMを取得して返す。
-	 * 引数  :String key:JSONのキー。子要素のクラスと合致する
-	 		 Element domNode:子要素を取得する元のDOMノード
-	 * 返却値  :Element:取得したDOMを返す。
+	 * 概要  :リストタイプのタグを配置する。
+	 * 引数  :String key, jQuery domNode
+	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.02.19
@@ -316,7 +349,7 @@ function createTag(){
 	
 	/* 
 	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea)
-	 * 概要  :ナンバリングと、それに応じた記事を作る。
+	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
 	 * 引数  :String jsonName:処理対象となるJSONのキー名。
 	 * 		 int startPage:表示する1つ目のナンバリングの数
 	 * 		 int displayPageMax:表示するナンバリングの最大数
@@ -334,27 +367,22 @@ function createTag(){
 	 * 変更日:2015.04.09
 	 * 内容　:引数に作成した記事の追加先を追加しました。
 	 */
-	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, date){
+	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		
 		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
 		this.numbering = {};		
-		//dateの値が文字列でのundefinedならば、本物のundefinedにする
-		date = date == "undefined"?void(0) : date;
 
 		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, date);
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea);
 		
 		//記事を消す
 		$(targetArea).empty();
-		//JSONを日付で絞り込む
-		this.filteredMap = this.filterJSON(this.json, date);
 		//コンテンツ表示
-		outputKeyNumberObject(this.filteredMap, jsonName, targetArea, pageNum, displayPage)
-
+		outputKeyNumberObject(this.json, jsonName, targetArea, pageNum, displayPage)
+		
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
-		//filteredMapを初期化する
-		this.filteredMap = null;
+		
 		// add T.Masuda 2015/0421 ナンバリングが生成されない時にcreateTagのエラーがコンソールに出力されるバグの修正
 		// add T.Masuda 2015/0422 numberingオブジェクトが生成されていない状況への対応
 		//ナンバリングのオブジェクトがあれば
@@ -364,8 +392,7 @@ function createTag(){
 			//現在表示中のページに対応するナンバリングの色を変える。
 			this.selectPageNumber(displayPage);
 		}
-		//@add T.Masuda 2015/0527 ナンバリングのノードを削除するように追加
-		delete this.json.numbering;
+		
 		//スクロール位置が低ければ
 		if($(window).scrollTop() > $(".main").offset().top){
 			//スクロール位置を上に戻す。記事が見えなくならないようにするため、.mainの縦座標を基準に移動する。
@@ -380,7 +407,6 @@ function createTag(){
 	 * 		 int startPage:表示する1つ目のナンバリングの番号。
 	 * 		 int displayPageMax:表示するナンバリングの最大個数。
 	 * 		 int pageNum:1ページに表示する記事数。
-	 * 		 Date date:絞り込む日付
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -388,13 +414,10 @@ function createTag(){
 	 * 変更者:T.Masuda
 	 * 変更日:2015.04.08
 	 * 内容　:引数pageNumを追加し、1ページに複数の記事を載せることに対応しました。
-	 * 変更者:T.Masuda
-	 * 変更日:2015.05.27
-	 * 内容　:日付による絞り込みに対応
 	 */
-	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, date){
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		//ページ数を取得する。
-		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName, date) / pageNum);
+		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName) / pageNum);
 		
 		//ページ数が1以下ならナンバリングを作成せずに終了する。
 		if(pageMax <= 1){
@@ -403,7 +426,7 @@ function createTag(){
 		
 		// <<ボタンを作る。(1ページ前に進める)
 		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
-										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea, date);
+										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea);
 
 		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
 		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
@@ -417,16 +440,15 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
-			//@mod 2015.0528 T.Masuda 出力される関数文字列に引数を追加しました
 			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
-				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '","' + date + '")';
+				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
 		}
 			
 		// <<ボタンを作る。(1ページ後に進める)
 		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
-										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea, date);
+										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea);
 			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
 		this.json['numbering'] = this.numbering;
@@ -447,14 +469,13 @@ function createTag(){
 	 * 		String jsonName:JSON名。
 	 * 		int pageNum:1ページに表示する記事数。
 	 * 		String targetArea:記事の追加先。
-	 * 		Date date:絞り込む日付。
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea, date){
-		var startAroundPage;	//ナンバリングの表示開始ページ数を格納する変数を宣言する。
+	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea){
+		var startAroundPage;
 		
 		//開始ページを算出する
 		//前移動の場合
@@ -467,7 +488,7 @@ function createTag(){
 			startAroundPage = (startPage+displayPageMax) < displayPage ? startPage+1 : startPage;		
 		//上記以外の場合
 		} else {
-			return;	//途中終了する。
+			return;
 		}
 		
 		var keyObj = {};	//keyオブジェクトを生成する。
@@ -480,25 +501,21 @@ function createTag(){
 		
 		//関数実行属性をoutputNumberingTagに設定する。
 		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
-			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '","' + date + '")';
+			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '")';
 		
 		//numberingオブジェクトの中に追加する。
 		numbering[key] = keyObj[key];
 	}
 
 	/* 
-	 * 関数名:this.getJsonObjectNum = function(jsonName, date)
-	 * 概要  :jsonの指定キー直下の数字キーの数を返す。
+	 * 関数名:this.getJsonObjectNum = function(jsonName)
+	 * 概要  :jsonの指定キー直下ののキーの数を返す。
 	 * 引数  :String jsonName:処理対象のJSONのキー名。
-	 * 　　  :Date date:絞り込む日付。
-	 * 返却値  :int:チェック対象の数を返す。
+	 * 返却値  :int
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
-	 * 変更者:T.Masuda
-	 * 変更日:2015.05.27
-	 * 内容　:日付絞り込みに対応しました
 	 */
-	this.getJsonObjectNum = function(jsonName, date){
+	this.getJsonObjectNum = function(jsonName){
 		//返却する値を格納するための変数を宣言、0で初期化する。
 		var retNum = 0;
 
@@ -506,57 +523,13 @@ function createTag(){
 		for(key in this.json){
 			//キーが数字であれば
 			if(!(isNaN(key))){
-				//@add 2015.0527 T.Masuda 引数のundefinedチェックのため、特定のキーの値を取得するようにしました
-				var blogCheck = this.json[key].blogArticleTitle;
-				//@add 2015.0527 T.Masuda 条件式を追加しました
-				//日付が合うか、日付の入力がなければ
-				if((blogCheck !== void(0) && blogCheck.blogArticleDate.text == date)|| date === void(0)){
-					//retNumに1を足す
-					retNum++;
-				}
+				//retNumに1を足す
+				retNum++;
 			}
 		}
 		
 		//retNumを返す。
 		return retNum;
-	}
-	
-	/* 
-	 * 関数名:this.filterJSON = function(json, date)
-	 * 概要  :JSONでの記事を日付で絞り込む
-	 * 引数  :String json:JSON連想配列
-	 * 　　  :Date date:絞り込む日付。
-	 * 返却値  :Object:絞り込んだJSONを返す
-	 * 作成者:T.Masuda
-	 * 作成日:2015.03.13
-	 * 変更者:T.Masuda
-	 * 変更日:2015.05.27
-	 * 内容　:日付絞り込みに対応しました
-	 */
-	this.filterJSON = function(jsonName, date){
-		//返却する値を格納するための変数を宣言、空オブジェクトで初期化する。
-		var retObj = {};
-		var counter = 1;	//カウンター変数を用意、1で初期化する
-		
-		//jsonのキー走査する。
-		for(key in this.json){
-			//キーが数字であれば
-			if(!(isNaN(key))){
-				//@add 2015.0527 T.Masuda 引数のundefinedチェックのため、特定のキーの値を取得するようにしました
-				var blogCheck = this.json[key].blogArticleTitle;
-				//@add 2015.0527 T.Masuda 条件式を追加しました
-				//日付が合うか、日付の入力がなければ
-				if((blogCheck !== void(0) && blogCheck.blogArticleDate.text == date)|| date === void(0)){
-					//絞り込みをクリアした記事を返すオブジェクトに追加する
-					retObj[String(counter)] = this.json[key];
-					//カウンターを回す
-					counter++;
-				}
-			}
-		}
-		
-		//retObjを返す。
-		return retObj;
 	}
 	
 	/* 
@@ -577,9 +550,9 @@ function createTag(){
 	/*
 	 * 関数名:this.createElementTag = function(stackKey, curMapNode, topDomNode)
 	 * 概要  :JSONのノードに対応したタグを作る。
-	 * 引数  :Array stackKey:キーを格納するスタック形式の配列
-	 * 　　　:Object curMapNode:現在さしているJSONのノード
-	 * 　　　:Element topDomNode:現在さしているDOMの先頭
+	 * 引数  :String stackKey:
+	 * 　　　:Object curMapNode:
+	 * 　　　:Element topDomNode:
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -591,9 +564,9 @@ function createTag(){
 			return;	//処理を終える。
 		}
 		
-		//curMapNodeにキーがある限りループする。
+		//ノードがある限りループする。
 		for(key in curMapNode){
-			var mapNode = curMapNode[key];	//現在走査しているキーの値を取得する。
+			var mapNode = curMapNode[key];	//ループで走査しているキーの値を取得する。
 			var curDomNode = null;			//カレントのDOMノードを格納する変数を宣言、nullで初期化する。
 			
 			//mapNodeが配列であれば
@@ -643,7 +616,7 @@ function createTag(){
 								.addClass('values')
 						);
 
-		//キーのタグ群を作る。
+		//キーのタグを群を作る。
 		var keys = this.createKeyTags(curStackKey);
 		//キーのタグをまとめるタグに追加する。
 		$('.keys', retDom).append(keys);
@@ -669,7 +642,7 @@ function createTag(){
 	 * 引数  :Array curStackKey:キー名のスタック。
 	 * 　　　:String mapNode:JSONの文字列配列。
 	 * 　　　:String key:カレントのキー。
-	 * 返却値  :Element:作成したDOM要素を返す。
+	 * 返却値  :Element
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -695,10 +668,10 @@ function createTag(){
 		//テキスト編集用のタグを入れるタグのjQueryオブジェクトを生成、保存する。
 		var $values = $('.values', retDom);
 		//ループのカウント用にmapNodeの要素数を取得する。
-		var mapNodeLength = mapNode.length;
+		var mapNodeArrayLength = mapNode.length;
 		
 		//mapNodeを走査する。
-		for(var i = 0; i < mapNodeLength; i++){
+		for(var i = 0; i < mapNodeArrayLength; i++){
 			//編集用テキストエリアを追加する。name属性には_で区切ったキーを格納する。
 			$values.append($('<textarea></textarea>').addClass('editValue').val(mapNode[i]).attr('name', connectedKey));
 		}
@@ -713,7 +686,7 @@ function createTag(){
 	 * 関数名:this.createKeyTags = function(curStackKey)
 	 * 概要  :キーのタグ群を作る。
 	 * 引数  :Array curStackKey:キーのスタック。
-	 * 返却値  :Element:作成したDOMを返す。
+	 * 返却値  :Element
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -731,7 +704,7 @@ function createTag(){
 				$(retDom).append($('<span></span>').addClass('key').text(curStackKey[i]));
 			//最後の要素なら
 			} else {
-				//カレントのキーのタグをretDomに追加する。
+				//キーのタグをretDomに追加する。
 				$(retDom).append($('<span></span>').addClass('key currentKey').text(curStackKey[i]));
 			}
 		}
@@ -755,7 +728,7 @@ function createTag(){
 		//弟DOMがある限りループする。編集用テキストエリアのDOMを走査することで、この処理を実現する。
 		$('.editValue', topDomNode).each(function(){
 			var thisName = $(this).attr('name');	//現在のDOMのname属性を取得する。
-			//今回の走査が配列ノードの2番目以降であればスキップする。
+			//前回の走査が配列ノードの2番目以降であればスキップする。
 			if(thisName != prevName){
 				//テキストエリアのname属性からスタックキーを生成する。
 				var stackKey = thisName.split('_');
@@ -798,7 +771,7 @@ function createTag(){
 	 * 概要  :トークン文字列に該当するJSONノードを探し返す。
 	 * 引数  :Array curStackKey:スタックされたキーの配列
 	 * 　　　:Object curMapNode:カレントの連想配列のノード
-	 * 返却値  :Object:連想配列を返す。
+	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.04.01
@@ -860,7 +833,7 @@ function createTag(){
 			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
-				//tmpに取得したJSONのデータを一時保存する。
+				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
 				tmp = json;
 			},
 			//通信失敗時の処理。
@@ -870,7 +843,7 @@ function createTag(){
 			}
 		});
 
-		//JSONが取得できていれば
+		//フィールドのメンバのjsonが空であれば
 		if(tmp != null){
 			//クラスのメンバのjsonにtmpの連想配列を格納する。
 			this.json[rootName] = tmp;
@@ -914,7 +887,7 @@ function createTag(){
 			}
 		});
 	});
-
+	
 	
 	/*
 	 * 関数名:this.reservedDialog['experience'] = function()
@@ -963,6 +936,158 @@ function createTag(){
 		
 		//DBから会員情報を取得してpersonInformationの各フォームにデータを格納する。
 		getMemberInformation('.specialReservedDialog');
+	}
+
+	/* 
+	 * 関数名:this.outputTagTable = function(key, appendTo)
+	 * 概要  :JSON配列からテーブルを作り、画面に追加する
+	 * 引数  :String key:JSON配列を格納しているキー
+	 * 	　　 :String domNodeName:テーブルのクラス名
+	 * 	　　 :String appendTo:作成したテーブルの追加先
+	 * 返却値  :なし
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.09
+	 */
+	this.outputTagTable = function(key, domNodeName, appendTo){
+		//取得するJSONとDOMの先頭のノードをオブジェクトにまとめて取得する
+		var headNodes = this.readyCreateTag(key, domNodeName);
+		
+		// createTagTableでテーブルを作成し、変数tagに格納する。
+		var tag = this.createTagTable(headNodes[STR_JSON], headNodes[STR_DOM]);
+		// パーツの作成に成功したならば
+		if(tag != null){
+			//appendToが入力されていれば
+			if(appendTo != null){
+				//appendで、作成したタグをappendToに追加する。
+				$(appendTo).append(tag);
+			//appendToが空であれば	
+			} else {
+				//appendで作成したタグをmainに追加する。
+				$('.main').append(tag);
+			}
+		// テーブルの作成に失敗した場合
+		} else{
+			//失敗のメッセージダイアログを出す。
+			console.log(key + 'の作成に失敗しました。');
+		}
+	}	
+
+	/*
+	 * 関数名:createTagTable
+	 * 概要  :配列と、その配列に格納された行に相当するオブジェクト群からレコード数可変のテーブルを作る
+	 * 引数  :Array mapNode:テーブルのデータを格納した配列
+	 * 　　  :Element domNode:テーブルのHTML
+	 * 返却値 :Element:作成したテーブルのDOMを返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.09
+	 */
+	this.createTagTable = function(mapNode, domNode){
+		//mapNodeからテーブル用のデータを取り出す
+		var mapNodeArray = mapNode.table;
+		//見出し行用のDOMを格納する変数を宣言する
+		var colNameNode = null;
+		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
+		var $table = $(domNode);
+		//mapNodeの要素数を取得する。
+		var mapNodeArrayLength = mapNodeArray.length;
+		//レコードの列数を取得する
+		var mapObjectLength = Object.keys(mapNodeArray[0]).length;
+		//設定データを格納するための変数を用意する
+		var config = null;
+		
+		//設定データが存在すれば
+		if(mapNode.config !== void(0)){
+			config = mapNode.config;	//列設定データを取得する
+		}
+
+		//テーブルの1行目のjQueryオブジェクトを生成し、変数に保存する。
+		//tableタグ直下に自動生成されるtbodyタグの取得をスキップするため、children関数を2度コールする
+		var $firstRow = $table.children().eq(0).children().eq(0);
+		
+		//配列のオブジェクト数分のdomNodeを作成する
+		for(var j = 1; j < mapObjectLength; j++){
+			//1行目の行の最初の子供(tdタグ)を必要なだけ増やす。
+			$firstRow.append($firstRow.children().eq(0).clone(false));
+		}
+
+		//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
+		for(var i = 1; i < mapNodeArrayLength; i++){
+			//テーブルに必要なだけの行を追加する
+			$table.append($firstRow.clone(false));
+		}
+
+		//見出し行にセルを追加する
+		colNameNode = $firstRow.clone(false);
+		//mapNodeの要素数分ループする
+		for(var i = 0; i < mapNodeArrayLength; i++){
+			//i番目の行を取得してjQueryオブジェクトに変換し、変数に格納する
+			var $row = $table.children().eq(0).children().eq(i);
+			var j = 0;	//オブジェクト用ループ内でのカウンターを用意する
+			//テーブルの行に相当するオブジェクトを、テーブルに相当する配列から取得する
+			var mapObject = mapNodeArray[i];
+			//テーブルの行に相当するオブジェクトの要素分ループする
+			for(key in mapObject){
+				if(i == 0){
+					//見出し行のセルに値を入れる
+					$(colNameNode).children().eq(j).text(this.getColumnName(config, key));
+				}
+				//セルにクラスとテキストを追加していく
+				$row.children().eq(j++).text(mapObject[key]).addClass(this.getClassName(config, key));
+			}
+		}
+		
+		//colNameNodeを行の先頭に配置する
+		$table.prepend(colNameNode);
+		
+		return $table;	//作成したテーブルを返す
+	}
+	
+	/*
+	 * 関数名:getColumnName
+	 * 概要  :列設定のJSONから列のカラム名を取得する。見出し行に日本語の列名を設定するために使う
+	 * 引数  :Object configNode:設定データを定義したオブジェクト
+	 * 　　  :String key:列名
+	 * 返却値 :String:取得した列名を返す。取得できなければkeyを返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.10
+	 */
+	this.getColumnName = function(configNode, key){
+		var ret = "";	//返却する値を持つオブジェクトを格納する変数を準備する
+		//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
+		var oneColumn = configNode.columns[key];
+			//取得に成功した
+			if(oneColumn !== void(0)){
+				ret = oneColumn;	//列のオブジェクトを返却用の変数に格納する
+			}
+		
+		//列名を取得して返す。取得できなければキーを返す
+		return ret['columnName'] !== void(0)? ret['columnName']: key;
+	}
+	
+	/*
+	 * 関数名:getClassName
+	 * 概要  :列設定のJSONからセルに設定するクラス名を取得する
+	 * 引数  :Object configNode:設定データを定義したオブジェクト
+	 * 　　  :String key:列名
+	 * 返却値 :String:取得した列名を返す。取得できなけれ空文字を出す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.10
+	 */
+	this.getClassName = function(configNode, key){
+		var ret = "";	//返却する値を持つオブジェクトを格納する変数を準備する
+		//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
+		var oneColumn = configNode.columns[key];
+		//取得に成功した
+		if(oneColumn !== void(0)){
+			ret = oneColumn;	//列のオブジェクトを返却用の変数に格納する
+		}
+		
+		//列名を取得して返す。取得できなければ空文字を返す
+		return ret['className'] !== void(0)? ret['className']: "";
 	}
 }
 	
