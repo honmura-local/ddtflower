@@ -46,6 +46,10 @@
 				creator.getJsonFile('source/memberPage.json');
 				// 会員共通のパーツのJSONを取得する。
 				creator.getJsonFile('source/memberCommon.json');
+				//告知領域のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['userBanner'], 'userBanner');
+
+
 				// パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// 会員共通のパーツのJSONを取得する。
@@ -56,6 +60,12 @@
 				creator.outputTag('memberHeader');
 				// バナー領域を作る
 				creator.outputTag('userBanner');
+				
+				//通知領域の内容があれば
+				if($('.advertise p:not(:empty)').length){
+					$('.advertise').show();		//通知領域を表示する
+				}
+				
 				// 会員ページのカレンダーを作る
 				creator.outputTag('lessonCalendar', 'calendar');
 
@@ -84,7 +94,7 @@
 				// レッスンのステータスを示すテーブルを作る
 				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
 				// テーブルのステータスを概要を表示する領域を作る
-				creator.outputTag('lessonStatus', 'lessonStatus', '.userBanner');
+				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 
 				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.calendar', 90);
@@ -93,10 +103,12 @@
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
 				//テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberTable'], 'memberTable');
 
-				creator.outputTagTable('lessonFinishedDetailTable','lessonFinishedDetailTable','.finishedDetail');
-				creator.outputTagTable('lessonReservedDetailTable','lessonReservedDetailTable','.reservedDetail');
+				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
+				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
+				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
 			});
 			</script>
 		</div>

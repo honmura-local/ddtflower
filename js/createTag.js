@@ -48,7 +48,7 @@ function createTag(){
 			//同期通信を行う。
 			async: false,
 			//サーバへ連想配列を送信する。
-			data: {json:map},
+			data: {json:map,key:''},
 			//キャッシュを無効にする。
 			cache:false,
 			//通信完了時の処理を記述する。
