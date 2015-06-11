@@ -28,10 +28,6 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
-				// ナンバリング領域を作る
-				creator.outputTag('numberingOuter');
-				//ギャラリーの内容を追加する。
-				creator.outputNumberingTag('photo', 1, 4, 1, 8, '.gallery');	// ブログの記事を作る。
 				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				creator.outputTag('footer');						// フッターを作る
 			
@@ -41,6 +37,10 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。
 				useZoomImage('photo');
+
+				//@add 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを定義しました
+				//MSLの記事リストをギャラリーの前に配置する
+				$('.gallery').append($('#mslongtail_1985').show());
 			</script>
 			<!-- MSLの記事を表示する -->
 			<?php echo $msl_infos2->get('html_article'); ?>

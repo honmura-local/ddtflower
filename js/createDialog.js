@@ -1,10 +1,71 @@
+/* 
+ * ファイル名:createDialog.js
+ * 概要  :ダイアログと関係する関数を定義する
+ * 作成者:T.M
+ * 作成日:2015.
+ * パス　:/js/createDialog.js
+ */
+
 /**
  * ダイアログを作る関数をまとめたJSファイル。
  */
 
+//ファイルパスの定数
+MSL_LIST_PHP = 'list.php';
+MSL_DETAIL_PHP = 'detail.php';
+INIT_JSON = 'source/init.json';
+
+
+/* 
+ * 関数名:getCurrentPageFileName()
+ * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
+ * 引数  :String identifier:探す拡張子
+ * 返却値  :String:ファイル名を返す
+ * 作成者:T.M
+ * 作成日:2015.06.03
+ */
+function getCurrentPageFileName(identifier){
+	var retFileName = '';	//ファイル名を返却するための変数を宣言、初期化する
+	//現在のページのパスを配列で取得する
+	var path = location.pathname.split('/');
+	//ファイル名取得の前準備としてパスの要素数を取得する
+	var pathLength = path.length;
+	
+	//拡張子の指定があったら
+	if(identifier){
+		//拡張子の文字列を作成する
+		var identifierString = '.' + identifier;
+		//ループしてパスを走査する
+		for(var i = 0; i < pathLength; i++){
+			//配列の要素が指定した拡張子を含んでいたら
+			if(path[i].indexOf(identifierString) != -1){
+				//現在走査しているパスを返却するように、変数にセットする
+				retFileName = path[i];
+				break;	//ループ終了
+			}
+		}
+	//拡張子の指定がなければ
+	} else {
+		//最後の文字列 = ファイル名として返却するようにする
+		retFileName = path[pathLength - 1];
+	}
+	
+	return retFileName;	//取得したファイル名を返す
+}
+
 /**
  * 体験レッスンページのコンテンツ作成用JavaScript関数 + 汎用テキスト作成JavaScript関数ファイル。
  */
+
+var currentPage = getCurrentPageFileName('php');	//現在のページ名を取得する。phpでなければ空文字を返す
+
+//現在のページがMSLのphpであれば
+if(currentPage == MSL_LIST_PHP || currentPage == MSL_DETAIL_PHP){
+	INIT_JSON_PATH = "../../../" + INIT_JSON;		//2階層下がってファイルを取得する
+//他のページなら
+} else {
+	INIT_JSON_PATH = INIT_JSON;		//階層を下げない
+}
 
 
 /* 
@@ -201,123 +262,7 @@ function makeFailedAlertString(lists, jpNameMap, messages){
 	return errorString;
 }
 
-/* 
- * 関数名:createSpecialReservedDialog(json, array)
- * 概要  :特別レッスン予約用ダイアログを生成する。
- * 引数  :String content:コンテンツ名。通常レッスンや体験レッスンといった意味合いの文字を受け取る
- * 引数  :Array array:年月日の日付の配列。
- * 返却値  :なし
- * 作成者:T.M
- * 作成日:2015.02.09
- * 変更者:T.M
- * 変更日:2015.03.31
- * 内容　:submitイベントで処理するようにしました。
- * 変更者:T.M
- * 変更日:2015.04.17
- * 内容　:各コンテンツ別のタグを生成するように変更しました。
- */
-function createSpecialReservedDialog(content, array){
 	
-	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
-	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
-	
-	//@add 2015.0527 T.Masuda この関数が呼ばれるたびにreserved.htmlを読み込んでいた不具合を修正
-	//予約ダイアログのDOMを読み込んでいなければ
-	if(!$('.specialReservedDialog' ,creator.dom).length){
-		creator.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
-	}
-	
-	// ダイアログの本体となるdivタグを生成する。
-	creator.reservedDialog[content]();
-
-	//希望曜日の選択があれば
-	if($('input[name="dayOfWeek"]').length){
-		// 全ての曜日のチェックボックスにチェックする
-		allCheckbox('.allDayCheckbox', 'input[name="dayOfWeek"]');
-	}
-	//希望週の選択があれば
-	if($('input[name="week"]').length){
-		// 全ての週のチェックボックスにチェックする
-		allCheckbox('.allWeekCheckbox', 'input[name="week"]');
-	}
-	
-	// ダイアログに日付欄を追加する。
-	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
-	// 生成したdivタグをjQuery UIのダイアログにする。
-	$('.specialReservedDialog').dialog({
-		// 幅を設定する。
-		width			: '300px',
-		// 予約ダイアログのクラスを追加する。
-		dialogClass		:'reservedDialog',
-		// ダイアログを生成と同時に開く。
-		autoOpen		: true,
-		// Escキーを押してもダイアログが閉じないようにする。
-		closeOnEscape	: false,
-		// モーダルダイアログとして生成する。
-		modal			: true,
-		// リサイズしない。
-		resizable		: false, 
-		// 作成完了時のコールバック関数。
-		create:function(event, ui){
-			// タイトルバーを見えなくする。
-			$(this).prev().children().filter('.ui-dialog-titlebar-close').remove();
-			$(this).next().css('font-size', '0.5em');
-		},
-		// 位置を指定する。
-		position:{
-			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-			my:'center center',
-			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-			at:'center center',
-			// ウィンドウをダイアログを配置する位置の基準に指定する。
-			of:window
-		},
-		// ボタンの生成と設定を行う。
-		buttons:[
-			         {
-			        	 // OKボタンのテキスト。
-			        	 text:'OK',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 //必須入力チェックを行う。
-			        		 var emptyList = checkEmptyInput(checkNames);
-		        			//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
-			        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]');
-			        		 //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
-			        		 var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
-			        		 //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。
-			        		 var numberList = numberCheck('.count');
-			        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-			        		 if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
-				        		 // 入力確認ダイアログを呼び出す。
-				        		 createSpecialReservedConfirmDialog();
-				        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
-				        		 $('.personEmailCheck input').attr('disabled', 'disabled');
-				        		 //ダイアログ内のフォームをsubmitする。
-				        		 $('form.specialReservedDialog').submit();				        		 
-				        		 // このダイアログの入力要素を一時的に無効化する。
-				        		 disableInputs($(this));
-			        		 } else {
-			        			 //警告のテキストを作る。
-			        			 var alerts = makeFailedAlertString({'emptyList':emptyList,'onlyAlphabetList':onlyAlphabetList,'emailCheck':emailCheck,'numberList':numberList},checkNamesJp, messages);
-			        			 //アラートを出す。
-			        			 alert(alerts);
-			        		 }
-			        	 }
-			         },
-			         {
-			        	 // キャンセルボタンのテキスト。
-			        	 text:'Cancel',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 // ダイアログと、入力された予約データを消去する。
-			        		 removeInputDialog($(this), reservedData);
-			        	 }
-			         }
-		         ]
-	});
-}
-
 /* 
  * 関数名:createSpecialDate(year, month, day)
  * 概要  :予約希望日時のパーツを追加する。
@@ -490,60 +435,6 @@ function checkAlphabet(str){
 }
 
 /* 
- * 関数名:createSpecialReservedConfirmDialog(reservedData)
- * 概要  :入力内容を表示して送信を確定するダイアログを表示する。
- * 引数  :Object reservedData
- * 返却値  :なし
- * 作成者:T.M
- * 作成日:2015.02.09
- * 変更者:T.M
- * 変更日:2015.03.31
- * 内容　:フォームメール対応
- */
-function createSpecialReservedConfirmDialog(reservedData){
-	// ダイアログの本体となるdivタグを生成する。
-	creator.outputTag('specialReservedConfirmDialog');
-	
-	// 生成したdivタグをjQuery UIのダイアログにする。
-	$('.specialReservedConfirmDialog').dialog({
-		// 幅を設定する。
-		width			: '300px',
-		// 予約ダイアログのクラスを追加する。
-		dialogClass		:'reservedDialog',
-		// ダイアログを生成と同時に開く。
-		autoOpen		: true,
-		// Escキーを押してもダイアログが閉じないようにする。
-		closeOnEscape	: false,
-		//タイトルをつける。
-		title:"レッスン予約希望 送信内容確認",
-		// モーダルダイアログとして生成する。
-		modal			: true,
-		// リサイズしない。
-		resizable		: false, 
-		// 作成完了時のコールバック関数。
-		create:function(event, ui){
-			var c = this;
-			// タイトルバーを見えなくする。
-			$('.reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
-		},
-		// ダイアログが閉じられる前のイベント
-		beforeClose:function(event, ui){
-			//下のダイアログのロックを解除する。
-			moveToPrevDialog($(this));
-		},
-		// 位置を指定する。
-		position:{
-			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-			my:'center center',
-			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-			at:'center center',
-			// ウィンドウをダイアログを配置する位置の基準に指定する。
-			of:window
-		}
-	});
-}
-
-/* 
  * 関数名:getInitData(path, continues)
  * 概要  :初期化用データの連想配列を取得して返す。
  * 引数  :String path, int continues
@@ -600,23 +491,207 @@ function getJSONFile(path){
 	return returns;
 }
 
+/* クラス名:dialog
+ * 概要　　:jQueryUIダイアログを作成するためのクラスの基底クラス
+ * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
+ * 作成日　:2015.0610
+ * 作成者　:T.Masuda
+ */
+function dialog(position){
+	//ダイアログのオプション
+	this.options = {
+		width : 300,		//幅
+		autoOpen : true,	//作成時の自動オープン
+		title : "",			//タイトル文字列
+		modal : true,		//モーダル表示
+		resizable : false,	//ドラッグでのリサイズ可否
+		//表示位置の指定。引数での指定がなければデフォルトの値を設定する
+		position : position !== void(0) && position !== null? position : {my:'center center',at:'center center', of:window},
+		closeOnEscape : false	//escキーを押して閉じるか
+	}
+	
+	this.className = '';		//ダイアログのクラス名
+	this.closeBox = false;		//クローズボックスを表示するかの設定
+	
+	/* 
+	 * 関数名:addOption
+	 * 概要  :オプションを追加する
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.addOption = function(option){
+		//引数のオプションを追加する
+		this.options = $.extend(true, this.options, option);
+	};
+	
+	/* 
+	 * 関数名:pushCancelButton
+	 * 概要  :OKボタンの処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.pushOkButton = function(){
+		
+	};
+	
+	/* 
+	 * 関数名:pushCancelButton
+	 * 概要  :キャンセルボタンの処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.pushCancelButton = function(){
+		
+	};
+	
+	/* 
+	 * 関数名:open
+	 * 概要  :ダイアログを開く前の準備の処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.beforeOpenFunc = function(){
+		
+	};
+	
+	/* 
+	 * 関数名:open
+	 * 概要  :画面を開くときの処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.open = function(){
+		this.beforeOpenFunc();	//ダイアログを開く直前の処理を行う
+		//ダイアログを作成し、開く
+		$('.' + this.className).dialog(this.options);
+	}
+}
+
+/* クラス名:specialReservedDialog
+ * 概要　　:体験レッスン予約希望のダイアログを作る
+ * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
+ * 　　　　:String content:コンテンツ名
+ * 　　　　:Array array:日付等の情報が格納された配列
+ * 作成日　:2015.0610
+ * 作成者　:T.Masuda
+ */
+function specialReservedDialog(position, content, array){
+	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
+	
+	//コンストラクタの引数をメンバにセットする
+	this.content = content;
+	this.array = array;
+	this.className = 'specialReservedDialog';		//ダイアログのクラス名
+	
+	//optionsに予約ダイアログのオプションをセットする
+	this.options = dialogOption['specialReservedDialog'];
+	/* 
+	 * 関数名:open
+	 * 概要  :ダイアログを開く前の準備の処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.beforeOpenFunc = function(){
+		//予約希望ダイアログを作る下準備をする
+		readyDialogFunc['specialReservedDialog'](this.content, this.array);
+	};
+}
+
+/* クラス名:specialReservedDialog
+ * 概要　　:体験レッスン予約希望のダイアログを作る
+ * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
+ * 作成日　:2015.0610
+ * 作成者　:T.Masuda
+ */
+function specialReservedConfirmDialog(position){
+	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
+	//optionsに予約ダイアログのオプションをセットする
+	this.options = dialogOption['specialReservedConfirmDialog'];
+	this.className = 'specialReservedConfirmDialog';		//ダイアログのクラス名
+	
+	/* 
+	 * 関数名:open
+	 * 概要  :ダイアログを開く前の準備の処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.beforeOpenFunc = function(){
+		//ダイアログのDOMを作る
+		readyDialogFunc['specialReservedConfirmDialog']();
+	};
+}
+
+/* クラス名:loginDialog
+ * 概要　　:体験レッスン予約希望のダイアログを作る
+ * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
+ * 作成日　:2015.0610
+ * 作成者　:T.Masuda
+ */
+function loginDialog(position){
+	dialog.call(this, position);	//スーパークラスのコンストラクタをコールする
+	//optionsに予約ダイアログのオプションをセットする
+	this.options = dialogOption['loginDialog'];
+	this.className = 'loginDialog';		//ダイアログのクラス名
+	
+	/* 
+	 * 関数名:open
+	 * 概要  :ダイアログを開く前の準備の処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.10
+	 */
+	this.beforeOpenFunc = function(){
+		//ダイアログのDOMを作る
+		readyDialogFunc['loginDialog']();
+	};
+}
+
+//ダイアログクラスの親子関係を設定する
+specialReservedDialog.prototype = new dialog();
+specialReservedConfirmDialog.prototype = new dialog();
+loginDialog.prototype = new dialog();
+//サブクラスのコンストラクタを有効にする
+specialReservedDialog.prototype.constructor = specialReservedDialog;
+specialReservedConfirmDialog.prototype.constructor = specialReservedConfirmDialog;
+loginDialog.prototype.constructor = loginDialog;
+
 /* 
- * 関数名:createLoginDialog()
- * 概要  :ログインダイアログを生成する。
- * 引数  :なし
+ * 関数名:createDialog
+ * 概要  :ダイアログを生成する。
+ * 引数  :String className:ダイアログのクラス名
+ * 　　　:Function readyFunction:ダイアログコール前に呼ぶ関数
  * 返却値 :なし
  * 作成者:T.M
- * 作成日:2015.02.18
+ * 作成日:2015.06.10
  */
-function createLoginDialog(){
-	creator.getJsonFile('source/login.json');	// ファイルのデータをjsonを用いて持ってくる
-	creator.getDomFile('source/template.html');		// ファイルのhtmlデータをdomを用いて持ってくる
-
-	//ダイアログのタグを作る。
-	creator.outputTag('loginDialog');
+function createDialog(className, readyFunction){
+	//引数に関数がセットされていれば
+	if(readyFunction !== void(0)){
+		//引数の関数を実行する
+		readyFunction();
+	}
 	
-	// 生成したdivタグをjQuery UIのダイアログにする。
- 	$('.loginDialog').dialog({
+	//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
+	$('.' + className).dialog(dialogOption[className]);
+}
+
+var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
+dialogOption['loginDialog'] = {
 		// 幅を設定する。
 		width			: '300',
 		// 幅を設定する。
@@ -658,14 +733,12 @@ function createLoginDialog(){
 			        			 var transResult = {"result":false};
 			        			 // ajax通信を行いサーバにユーザ情報を送る。
 			        			 $.ajax({
-			        				 //ログイン認証のPHPにデータを送信する。
-//			        				url:"loginauth.php",
+			        				 //ログイン認証のサーバにデータを送信する。
 			        				url:location.href,
 			        				//ユーザ名とパスワードをPHPに送信する。
 			        				data:{'userName':$('input.userName' ,this).val(),
 			        					'password':$('input.password' ,this).val()},
 			        				//JSONで結果を返してもらう。
-//			        				dataType:'JSON',
 			        				dataType:'HTML',
 			        				//同期通信を行う。
 			        				async:false,
@@ -673,7 +746,6 @@ function createLoginDialog(){
 			        				success:function(json){
 			        					// 通信結果のデータをtransResultに格納する。
 			        					transResult = {"result":"true","user":"testuser","userName":"user"};
-//			        					transResult = json;
 			        				},
 			        				//通信失敗時の処理
 			        				error:function(){
@@ -686,11 +758,6 @@ function createLoginDialog(){
 			        			 if(transResult["result"]){
 			        				// ユーザ情報の取得に成功していたら
 			        				 if('user' in transResult){
-			        					 //@mod T.Masuda 2015.03.27 Cookieを期限付きにしました。
-			        					//クッキーにユーザ情報を格納する。
-//			        					 document.cookie = 'user='+transResult["user"];
-//			        					 document.cookie = 'userName='+transResult["userName"];
-			        					
 			        					 //日付クラスインスタンスを生成する。
 			        					 var cookieLimit = new Date();
 			        					 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
@@ -728,8 +795,169 @@ function createLoginDialog(){
 			        	 }
 			         }
 		         ]
-	});
+	};
+
+//予約希望ダイアログ
+dialogOption['specialReservedDialog'] = {
+			// 幅を設定する。
+			width			: '300',
+			// 予約ダイアログのクラスを追加する。
+			dialogClass		:'reservedDialog',
+			// ダイアログを生成と同時に開く。
+			autoOpen		: true,
+			// Escキーを押してもダイアログが閉じないようにする。
+			closeOnEscape	: false,
+			// モーダルダイアログとして生成する。
+			modal			: true,
+			// リサイズしない。
+			resizable		: false, 
+			// 作成完了時のコールバック関数。
+			create:function(event, ui){
+				// タイトルバーを見えなくする。
+				$(this).prev().children().filter('.ui-dialog-titlebar-close').remove();
+				$(this).next().css('font-size', '0.5em');
+			},
+			// 位置を指定する。
+			position:{
+				// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+				my:'center center',
+				// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+				at:'center center',
+				// ウィンドウをダイアログを配置する位置の基準に指定する。
+				of:window
+			},
+			// ボタンの生成と設定を行う。
+			buttons:[
+				         {
+				        	 // OKボタンのテキスト。
+				        	 text:'OK',
+				        	 // ボタン押下時の処理を記述する。
+				        	 click:function(event, ui){
+				        		 //必須入力チェックを行う。
+				        		 var emptyList = checkEmptyInput(checkNames);
+			        			//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
+				        		 var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]');
+				        		 //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
+				        		 var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
+				        		 //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。
+				        		 var numberList = numberCheck('.count');
+				        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
+				        		 if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
+					        		 // 入力確認ダイアログのクラスインスタンスを作る。
+				        			 var confirmDialog = new specialReservedConfirmDialog(null);
+				        			 confirmDialog.open();	//ダイアログを開く
+					        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
+					        		 $('.personEmailCheck input').attr('disabled', 'disabled');
+					        		 //ダイアログ内のフォームをsubmitする。
+					        		 $('form.specialReservedDialog').submit();				        		 
+					        		 // このダイアログの入力要素を一時的に無効化する。
+					        		 disableInputs($(this));
+				        		 } else {
+				        			 //警告のテキストを作る。
+				        			 var alerts = makeFailedAlertString({'emptyList':emptyList,'onlyAlphabetList':onlyAlphabetList,'emailCheck':emailCheck,'numberList':numberList},checkNamesJp, messages);
+				        			 //アラートを出す。
+				        			 alert(alerts);
+				        		 }
+				        	 }
+				         },
+				         {
+				        	 // キャンセルボタンのテキスト。
+				        	 text:'Cancel',
+				        	 // ボタン押下時の処理を記述する。
+				        	 click:function(event, ui){
+				        		 // ダイアログと、入力された予約データを消去する。
+				        		 removeInputDialog($(this), reservedData);
+				        	 }
+				         }
+			         ]
+		}
+
+//予約希望送信前の確認ダイアログ
+dialogOption['specialReservedConfirmDialog'] = {
+			// 幅を設定する。
+			width			: '300',
+			// 予約ダイアログのクラスを追加する。
+			dialogClass		:'reservedDialog',
+			// ダイアログを生成と同時に開く。
+			autoOpen		: true,
+			// Escキーを押してもダイアログが閉じないようにする。
+			closeOnEscape	: false,
+			//タイトルをつける。
+			title:"レッスン予約希望 送信内容確認",
+			// モーダルダイアログとして生成する。
+			modal			: true,
+			// リサイズしない。
+			resizable		: false, 
+			// 作成完了時のコールバック関数。
+			create:function(event, ui){
+				var c = this;
+				// タイトルバーを見えなくする。
+				$('.reservedDialog .ui-dialog-titlebar-close').css('display', 'none');
+			},
+			// ダイアログが閉じられる前のイベント
+			beforeClose:function(event, ui){
+				//下のダイアログのロックを解除する。
+				moveToPrevDialog($(this));
+			},
+			// 位置を指定する。
+			position:{
+				// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+				my:'center center',
+				// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+				at:'center center',
+				// ウィンドウをダイアログを配置する位置の基準に指定する。
+				of:window
+			}
+		}		
+
+
+
+//ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
+var readyDialogFunc = {};
+
+//ログインダイアログの準備関数
+readyDialogFunc['loginDialog'] = function(){
+	creator.getJsonFile('source/login.json');	// ファイルのデータをjsonを用いて持ってくる
+
+	//ダイアログのタグを作る。
+	creator.outputTag('loginDialog');
+};
+
+//予約ダイアログの準備関数
+readyDialogFunc['specialReservedDialog'] = function(content, array){
+	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
+	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
+	
+	//@add 2015.0527 T.Masuda この関数が呼ばれるたびにreserved.htmlを読み込んでいた不具合を修正
+	//予約ダイアログのDOMを読み込んでいなければ
+	if(!$('.specialReservedDialog' ,creator.dom).length){
+		creator.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
+	}
+	
+	// ダイアログの本体となるdivタグを生成する。
+	creator.reservedDialog[content]();
+
+	//希望曜日の選択があれば
+	if($('input[name="dayOfWeek"]').length){
+		// 全ての曜日のチェックボックスにチェックする
+		allCheckbox('.allDayCheckbox', 'input[name="dayOfWeek"]');
+	}
+	//希望週の選択があれば
+	if($('input[name="week"]').length){
+		// 全ての週のチェックボックスにチェックする
+		allCheckbox('.allWeekCheckbox', 'input[name="week"]');
+	}
+	
+	// ダイアログに日付欄を追加する。
+	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
+};
+
+//予約希望情報送信前の確認ダイアログ
+readyDialogFunc['specialReservedConfirmDialog'] = function(reservedData){
+		// ダイアログの本体となるdivタグを生成する。
+		creator.outputTag('specialReservedConfirmDialog');
 }
+
 
 /* 
  * 関数名:checkLogin()
@@ -809,14 +1037,18 @@ function getUserId(){
  * 返却値  :なし
  * 作成者:T.Masuda
  * 作成日:2015.02.20
+ * 変更者:T.Masuda
+ * 変更日:2015.06.10
+ * 内容　:ダイアログを呼ぶ関数を共通化したものにしました
  */
 function checkLoginState(){
 	// ログイン状態をチェックする。
 	if(!(checkLogin())){
 		//ログインボタンのイベントを設定する。
 		$('.login').on('click', function(){
-			// ログインダイアログを呼び出す。
-			createLoginDialog();
+			// ログインダイアログを作る
+			var login = new loginDialog(null);
+			login.open();	//ログインダイアログを開く
 		});
 	}
 }
@@ -860,7 +1092,7 @@ var errorMessages = [
 ];
 
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
-var init = getInitData("source/init.json", 100);
+var init = getInitData(INIT_JSON_PATH, 100);
 
 /* 
  * 関数名:showEditDialog(editElem)

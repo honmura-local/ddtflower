@@ -63,8 +63,9 @@
 				fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
-				//datepickerによるカレンダーを作成する。
-				createReservedCalendar('.myPageReservedCalendar', 90);
+				//datepickerによるカレンダーのクラスを作成する。
+				var mPRCalendar = new reservedCalendar('.calendar', 90);
+				mPRCalendar.create();	//カレンダーを実際に作成する
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

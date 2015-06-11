@@ -52,7 +52,7 @@ class MSLInfo
 
 	function set_infos($path, $enc = null)
 	{
-		$infos = unserialize(@file_get_contents($this->msl_url.$path));
+		$infos = unserialize(@$this->curl_get_contents($this->msl_url.$path));
 		if (!empty($infos)) {
 			$enc !== null and $this->enc = $enc;
 			$this->enc = in_array(strtoupper($this->enc), $this->enc_arr) ? strtoupper($this->enc) : 'UTF-8';
@@ -76,6 +76,19 @@ class MSLInfo
 			}
 		}
 		return $contents;
+	}
+
+	function curl_get_contents($url, $timeout = 60){
+		if (empty($url)) return false;
+
+		$ch = @curl_init();
+		@curl_setopt($ch, CURLOPT_URL, $url);
+		@curl_setopt($ch, CURLOPT_HEADER, false);
+		@curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		@curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+		$result = @curl_exec($ch);
+		@curl_close( $ch );
+		return $result;
 	}
 }
 

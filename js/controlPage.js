@@ -1,6 +1,8 @@
 // 画面遷移を操作する関数を中心にまとめたJSファイル。
 
 currentLocation = '';	//現在選択中のページの変数
+//トップページのファイル名の定数
+TOPPAGE_NAME = 'index.php';
 
 /*
  * 関数名:isSupportPushState()
@@ -79,6 +81,14 @@ function overwrightContent(target, data){
 	//コードが書かれているscriptタグを収集する。
 //	var scripts = $(data).filter('script:not(:empty)');
 	var scripts = $('script:not(:empty)', data);
+	
+	//@add 2015.0604 T.Masuda MSL記事一覧があれば見えない状態にして配置するように変更しました。
+	//MSLの記事リストがあれば
+	if($('#mslongtail_1984,#mslongtail_1985', data).length){
+		//隠した上で現在表示しているHTMLの中に配置する
+		$('body').append($('#mslongtail_1984,#mslongtail_1985', data).hide());
+	}
+	
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。
@@ -90,18 +100,7 @@ function overwrightContent(target, data){
 		$(target).append($(this));
 	});
 	
-	//トップページでなく、MSLのリストがあったら
-	if($('.main .mslongtail_wrapper', data).length && $('.topic').length <= 0){
-		//ギャラリーページなら
-		if($('.gallery').length){
-			//MSLの記事リストをギャラリーの前に配置する
-			$('.gallery').before($('.main .mslongtail_wrapper', data).parent());
-		//ブログページなら
-		} else if($('.blogRightContent').length){
-			//ブログ記事の前にMSLのリストを配置する
-			$('.blogRightContent').prepend($('.main .mslongtail_wrapper', data).parent());
-		}
-	}
+	//@mod 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを各PHPに定義しました
 }
 
 /*
@@ -172,7 +171,8 @@ function callPage(url, state){
 			}
 
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
-			if(state === void(0) && isSupportPushState()){
+			//@mod 2015.0604 T.Masuda 1つ目の条件式のtrue条件に || state == null を追加しました
+			if((state === void(0) || state == null) && isSupportPushState()){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + currentLocation}, '', location.href);
 			}
@@ -505,29 +505,6 @@ function chooseOKBeforeCallFunc(message, title, func, arg1, arg2, arg3){
 
 
 /*
- * 関数名:functionFilter
- * 引数  :var filterTarget
- * 戻り値:なし
- * 概要  :引数をセレクターにしてマウスオーバーしたときに透過率を0.5にする
- * 作成日:2015.02.05
- * 作成者:T.Y
- * 変更日:2015.02.22
- * 変更者:T.Masuda
- * 内容  :トップメニューにある表示中のページのボタンの背景色を変える。
- */
-function functionFilter (filterTarget) {
-  // jqueryの記述の始まり
-	//現在表示中のページのボタン以外に対して
-    $(document)
-        .on('mouseenter', filterTarget, function() {	// 引数の要素にマウスを乗せた時の処理
-            $(this).addClass('active');   				 // 引数の要素にactiveクラスを付与する。
-        })
-        .on('mouseleave', filterTarget, function() {	// 引数の要素からマウスが離れたときの処理
-            $(this).removeClass('active');  			// 引数の要素からactiveクラスを除去する。
-        });
-}
-	
-/*
  * 関数名:changeSelectedButtonColor
  * 引数  :var filterTarget
  * 戻り値:なし
@@ -604,17 +581,35 @@ if (isSupportPushState()){
  * 概要  　 :ページの読み込みを終えた後の処理。
  * 作成日　　:2015.03.09
  * 作成者　　:T.Masuda
+ * 変更日　　:2015.06.04
+ * 変更者　　:T.Masuda
+ * 内容　　　:トップページを2回読み込まないように修正しました。
  */
 $(window).on('load', function(){
 	//pushStateに対応していれば、pushStateで更新のイベント
 	if (isSupportPushState()){
+		//@mod 2015.0604 T.Masuda コードの重複を減らしました
+		var state = null;		//pushstateで保存されているstateを格納する変数を用意する
+		var currentUrl = null;	//URLを格納する変数を用意する
 		//初回ロードでなければ
 		if (window.history.state){
-			//履歴からURLを引き出す
-			var currentUrl = window.history.state.url;
+			//履歴からURLとstateを引き出す
+			currentUrl = window.history.state.url;
+			state = window.history.state;
 			//ページを読み込む。更新なので履歴を積まないために第二引数を入力する。
-			callPage(currentUrl, window.history.state);
+		//@add 2015.0603 T.Masuda URLのハッシュに応じて画面を遷移させるように変更しました
+		//URLにハッシュがあれば
+		} else if(location.hash){
+			//HTMLまたはPHPの拡張子がハッシュにあれば、URLのハッシュを取得する
+			currentUrl = location.hash.indexOf('.html') != -1 
+			|| location.hash.indexOf('.php') != -1? location.hash: currentUrl;
 		}
+		
+		//URLを取得していてかつ、トップページのURLでなければ
+		if(currentUrl != null && currentUrl != TOPPAGE_NAME){
+			callPage(currentUrl, state);	//画面遷移を行う
+		}
+		// 2015.0604の@mod終了
 	//pushStateに対応していなければhashchangeのイベントで更新を行う。
 	}else{
 		//ハッシュ切り替えイベント発生時の処理

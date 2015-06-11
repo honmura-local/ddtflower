@@ -45,8 +45,9 @@
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header');
 				
-				//関数でカレンダーを作る。
-				createReservedCalendar('.calendar', 90);
+				//datepickerによるカレンダーのクラスを作成する。
+				var eRCalendar = new reservedCalendar('.calendar', 90);
+				eRCalendar.create();	//カレンダーを実際に作成する
 			</script>
 		</div>
 	</div>

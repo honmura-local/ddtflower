@@ -13,5 +13,85 @@
     },
     "blog":{},
     "blogLeftContent":{},
-    "blogRightContent":{}
+    "blogRightContent":{},
+    "currentArticleList": {
+        "currentArticleListTitle": {
+            "text": "最新記事"
+        },
+        "currentArticleListContent1": {
+            "class": "currentArticleListContent1 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent2": {
+            "class": "currentArticleListContent2 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent3": {
+            "class": "currentArticleListContent3 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent4": {
+            "class": "currentArticleListContent4 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        },
+        "currentArticleListContent5": {
+            "class": "currentArticleListContent5 currentArticleListContent",
+            "currentArticleListContentLink": {
+                "href": "#",
+                "currentArticleListContentDate": {
+                    "text": ""
+                },
+                "currentArticleListContentUser": {
+                    "text": ""
+                },
+                "currentArticleListContentTitle": {
+                    "text": ""
+                }
+            }
+        }
+    }
 }
