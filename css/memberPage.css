@@ -137,6 +137,10 @@ a:active {
 	display: inline-block; /* インラインブロック要素として扱う */
 }
 
+.selectThemeButton {
+	float: right;
+}
+
 /* 
  * セレクタ :.tab.active
  * 概要   :選択中のタブ領域
