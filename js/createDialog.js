@@ -578,7 +578,7 @@ function specialReservedConfirmDialog(className, title, functionObject){
 	
 	this.open = function(){
 		//予約希望ダイアログを作る下準備をする
-		readyDialogFunc[this.className];
+		readyDialogFunc[this.className]();
 		$('.' + this.className).dialog(dialogOption[this.className]);
 	}
 }
