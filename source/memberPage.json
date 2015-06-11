@@ -1,15 +1,15 @@
 {
-    "userBanner":{
+    "userBanner": {
         "bannerArea": {
             "banner": [
                 {
                     "src": "",
-                    "title":"blogbanner",
+                    "title": "blogbanner",
                     "value": "ブログバナー"
                 },
                 {
                     "src": "",
-                    "title":"mypagebanner",
+                    "title": "mypagebanner",
                     "value": "マイページバナー"
                 }
             ]
@@ -17,389 +17,147 @@
         "advertise": {
             "advertiseImage": {
                 "src": "",
-                "title":"告知領域"
+                "title": "告知領域"
             }
         }
     },
-    "lessonCalendar":{
-    	"name":"lessonCalendar"
+    "lessonCalendar": {
+        "name": "lessonCalendar"
     },
     "lessonTab": {
-    	"class":"tab-container",
-    	"id":"tab-container",
-    	"tabs":{
-    		"tab":
-    		[
-    			{
-    				"href":"#alreadyReserved",
-    				"text":"予約中の授業"
-    			},
-    			{
-    				"href":"#finishedLesson",
-    				"text":"受講済の授業"
-    			}
-    		]
-    	}
+        "class": "tab-container",
+        "id": "tab-container",
+        "tabs": {
+            "tab": [
+                {
+                    "href": "#alreadyReserved",
+                    "text": "予約中の授業"
+                },
+                {
+                    "href": "#finishedLesson",
+                    "text": "受講済の授業"
+                }
+            ]
+        }
     },
-    "alreadyReserved":{
-		"class":"alreadyReserved tabPanel",
-		"id":"alreadyReserved",
-		"selectTheme":{
-			"themeText":{
-				"text":"テーマ"
-			}
-		},
-		"selectThemebox":{
-			"themeValue":
-			[
-				"プリザ",
-				"生花",
-				"NFD"
-			]
-		},
-		"selectThemeButton":{
-			"text":"絞込"
-		}
-	},
-	"finishedLesson":{
-		"class":"finishedLesson tabPanel",
-		"id":"finishedLesson",
-		"selectTheme":{
-			"themeText":{
-				"text":"テーマ"
-			}
-		},
-		"selectThemebox":{
-			"themeValue":
-			[
+    "alreadyReserved": {
+        "class": "alreadyReserved tabPanel",
+        "id": "alreadyReserved",
+        "selectTheme": {
+            "themeText": {
+                "text": "テーマ"
+            }
+        },
+        "selectThemebox": {
+            "themeValue": [
                 "プリザ",
                 "生花",
                 "NFD"
-			]
-		},
-		"selectThemeButton":{
-			"text":"絞込"
-		},
-		"anotion":{
-			"text":"※ポイントは参加人数と共に変動します"
-		}
-	},
-    "reservedDetail":{
-        "lessonTable":{
-            "border":"1",
-            "tablehead":{
-                "fieldHead":[
-                    "開始日時",
-                    "終了",
-                    "テーマ",
-                    "店舗",
-                    "料金(円)",
-                    "ポイント(pt)"
-                ]
-            },
-            "db_getQuery":"",
-            "row0":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row1":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row2":{
-                "startDayTime":{
-                    "text":"15/07/02 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"生花"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"8000円"
-                },
-                "point":{
-                    "text":"0pt"
-                }
-            },
-            "row3":{
-                "startDayTime":{
-                    "text":"15/07/01 18:00"
-                },
-                "finisihTime":{
-                    "text":"20:00"
-                },
-                "theme":{
-                    "text":"プリザ"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"3000円円"
-                },
-                "point":{
-                    "text":"5pt"
-                }
-            },
-            "row4":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row5":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row6":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            }
+            ]
         },
-        "anotion":{
-            "text":"※ポイントは参加人数と共に変動します"
+        "selectThemeButton": {
+            "text": "絞込"
         }
     },
-    "finishedDetail":{
-        "lessonTable":{
-            "border":"1",
-            "tablehead":{
-                "fieldHead":[
-                    "開始日時",
-                    "終了",
-                    "テーマ",
-                    "店舗",
-                    "料金",
-                    "ポイント"
-                ]
+    "finishedLesson": {
+        "class": "finishedLesson tabPanel",
+        "id": "finishedLesson",
+        "selectTheme": {
+            "themeText": {
+                "text": "テーマ"
+            }
+        },
+        "selectThemebox": {
+            "themeValue": [
+                "プリザ",
+                "生花",
+                "NFD"
+            ]
+        },
+        "selectThemeButton": {
+            "text": "絞込"
+        },
+        "anotion": {
+            "text": "※ポイントは参加人数と共に変動します"
+        }
+    },
+    "reservedDetail": {
+        "lessonTable": {
+            "db_getQuery": "SELECT user_classwork_cost, user_classwork_cost_aj, flower_cost, flower_cost_aj, user_classwork.extension_cost AS extension_cost, lesson_name, school_name, start_time, end_time, time_table_day.lesson_date AS lesson_date, lesson_point_rate.point_rate AS point_rate, students, order_students FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id;",
+            "user_key": {
+                "value": "00000001"
             },
-            "db_getQuery":"",
-            "row0":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row1":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row2":{
-                "startDayTime":{
-                    "text":"15/07/02 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"生花"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"8000円"
-                },
-                "point":{
-                    "text":"0pt"
-                }
-            },
-            "row3":{
-                "startDayTime":{
-                    "text":"15/07/01 18:00"
-                },
-                "finisihTime":{
-                    "text":"20:00"
-                },
-                "theme":{
-                    "text":"プリザ"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"3000円"
-                },
-                "point":{
-                    "text":"5pt"
-                }
-            },
-            "row4":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row5":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
-                }
-            },
-            "row6":{
-                "startDayTime":{
-                    "text":"15/07/01 12:00"
-                },
-                "finisihTime":{
-                    "text":"14:00"
-                },
-                "theme":{
-                    "text":"NFD"
-                },
-                "storePlace":{
-                    "text":"新宿"
-                },
-                "rate":{
-                    "text":"10000円"
-                },
-                "point":{
-                    "text":"20pt"
+            "border": "1",
+            "config": {
+                "columns": {
+                    "startDayTime": {
+                        "columnName": "開始日時",
+                        "className": ""
+                    },
+                    "finisihTime": {
+                        "columnName": "終了",
+                        "className": ""
+                    },
+                    "theme": {
+                        "columnName": "テーマ",
+                        "className": ""
+                    },
+                    "storePlace": {
+                        "columnName": "店舗",
+                        "className": ""
+                    },
+                    "rate": {
+                        "columnName": "料金",
+                        "className": ""
+                    },
+                    "point": {
+                        "columnName": "ポイント",
+                        "className": ""
+                    }
                 }
             }
         },
-        "anotion":{
-            "text":"※ポイントは参加人数と共に変動します"
+        "anotion": {
+            "text": "※ポイントは参加人数と共に変動します"
+        }
+    },
+    "finishedDetail": {
+        "lessonTable": {
+            "db_getQuery": "SELECT user_classwork_cost, user_classwork_cost_aj, flower_cost, flower_cost_aj, user_classwork.extension_cost AS extension_cost, lesson_name, school_name, start_time, end_time, time_table_day.lesson_date AS lesson_date, lesson_point_rate.point_rate AS point_rate, students, order_students FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id;",
+            "user_key": {
+                "value": "00000001"
+            },
+            "config": {
+                "columns": {
+                    "startDayTime": {
+                        "columnName": "開始日時",
+                        "className": ""
+                    },
+                    "finisihTime": {
+                        "columnName": "終了",
+                        "className": ""
+                    },
+                    "theme": {
+                        "columnName": "テーマ",
+                        "className": ""
+                    },
+                    "storePlace": {
+                        "columnName": "店舗",
+                        "className": ""
+                    },
+                    "rate": {
+                        "columnName": "料金",
+                        "className": ""
+                    },
+                    "point": {
+                        "columnName": "ポイント",
+                        "className": ""
+                    }
+                }
+            }
+        },
+        "anotion": {
+            "text": "※ポイントは参加人数と共に変動します"
         }
     }
 }

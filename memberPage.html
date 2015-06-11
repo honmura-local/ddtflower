@@ -89,8 +89,14 @@
 				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.calendar', 90);
 				memCalendar.create();	//カレンダーを実際に作成する
+				
+				//テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				//テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
 
-
+				creator.outputTagTable('lessonFinishedDetailTable','lessonFinishedDetailTable','.finishedDetail');
+				creator.outputTagTable('lessonReservedDetailTable','lessonReservedDetailTable','.reservedDetail');
 			});
 			</script>
 		</div>
