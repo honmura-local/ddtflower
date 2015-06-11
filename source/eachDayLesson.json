@@ -1,4 +1,7 @@
 {
+    "memberDialog":{
+        "text":""
+    },
     "memberStatus": {
         "class": "memberHeader",
         "keepMoney": {

@@ -151,6 +151,17 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 		minDate:1			//今日以前はクリックできなくする。
 	}
 
+//会員ダイアログ
+calendarOptions['member'] = {		//カレンダーを作る。
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			// 予約のダイアログを出す。
+			callMemberDialog(dateText, $(this));
+		},
+		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		minDate:1			//今日以前はクリックできなくする。
+	}
+
 /*
  * クラス名:calendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
@@ -216,6 +227,23 @@ function myPageReservedCalendar(selector, dateRange) {
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['myPageReserved'];
+}
+
+/*
+ * クラス名:memberCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :int dateRange:クリック可能な日付の期間
+ * 戻り値:なし
+ * 概要  :マイページのカレンダーを作る
+ * 作成日:2015.06.11
+ * 作成者:T.Yamamoto
+ */
+function memberCalendar(selector, dateRange) {
+	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
+	this.calendarName = 'member';	//カレンダー名をセットする
+	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['member'];
 }
 
 /*
@@ -502,6 +530,25 @@ function callReservedDialog(dateText, calendar){
 	 var reservedDialog = new specialReservedDialog(null,null,null, contentName, date);
 	reservedDialog.open();	//ダイアログを開く
 
+}
+
+/*
+ * 関数名:callMemberDialog
+ * 引数  :String dateText:日付テキスト
+ * 　　　 :jQuery calendar:カレンダーの要素
+ * 戻り値:なし
+ * 概要  :ページに対応した予約ダイアログを生成する。
+ * 作成日:2015.02.10
+ * 作成者:T.Yamamoto
+ */
+function callMemberDialog(dateText, calendar){
+	// カレンダーからコンテンツ名を取得する。
+	var contentName = calendar.attr('name');
+	// 日付配列を取得する。
+	var date = createDateArray(dateText)
+	// 予約希望ダイアログを作成する
+	 var mDialog = new memberDialog('memberDialog',date,null, contentName, date);
+	mDialog.open();	//ダイアログを開く
 }
 
 /*
@@ -1900,6 +1947,8 @@ function createAccordion(targetClick) {
 		// 番号に対応したアコーディオン部分を表示する
 		var y = $('.accordion').eq(accordNumber).toggle();
 	});
+}
+
 /*
  * 関数名 :insertArticleListText
  * 引数  　:element elems:記事リストのDOM

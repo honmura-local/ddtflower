@@ -600,14 +600,42 @@ function loginDialog(className, title, functionObject){
 	}
 }
 
+/* クラス名:memberDialog
+ * 概要　　:会員ページダイアログ
+ * 引数　　:Object position:ダイアログを表示する位置を設定したオブジェクト。詳細はjQuery UIのリファレンスを参照されたし
+ * 　　　　:String content:コンテンツ名
+ * 　　　　:Array array:日付等の情報が格納された配列
+ * 作成日　:2015.0611
+ * 作成者　:T.Yamamoto
+ */
+function memberDialog(className, title, functionObject, content, array){
+	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
+	
+	//コンストラクタの引数をメンバにセットする
+	this.content = content;
+	this.array = array;
+	this.className = 'memberDialog';		//ダイアログのクラス名
+	
+	//optionsに予約ダイアログのオプションをセットする
+	this.options = dialogOption['specialReservedDialog'];
+
+	this.open = function(){
+		//予約希望ダイアログを作る下準備をする
+		// readyDialogFunc[this.className](this.content, this.array);
+		// $('.' + this.className).dialog(dialogOption[this.className]);
+	}
+}
+
 //ダイアログクラスの親子関係を設定する
 specialReservedDialog.prototype = new createDialog();
 specialReservedConfirmDialog.prototype = new createDialog();
 loginDialog.prototype = new createDialog();
+memberDialog.prototype = new createDialog();
 //サブクラスのコンストラクタを有効にする
 specialReservedDialog.prototype.constructor = specialReservedDialog;
 specialReservedConfirmDialog.prototype.constructor = specialReservedConfirmDialog;
 loginDialog.prototype.constructor = loginDialog;
+memberDialog.prototype.constructor = memberDialog;
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
 dialogOption['loginDialog'] = {
@@ -829,7 +857,33 @@ dialogOption['specialReservedConfirmDialog'] = {
 			}
 		}		
 
-
+dialogOption['memberDialog'] = {
+		// 幅を設定する。
+		width			: 'auto',
+		// 幅を設定する。
+		// ダイアログを生成と同時に開く。
+		autoOpen		: true,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		// モーダルダイアログとして生成する。
+		modal			: true,
+		// リサイズしない。
+		resizable		: false, 
+		// 作成完了時のコールバック関数。
+		create:function(event, ui){
+			//文字サイズを小さめにする。
+			$(this).next().css('font-size', '0.5em');
+		},
+		// 位置を指定する。
+		position:{
+			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+			my:'center center',
+			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+			at:'center center',
+			// ウィンドウをダイアログを配置する位置の基準に指定する。
+			of:window
+		}
+	};
 
 //ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
 var readyDialogFunc = {};

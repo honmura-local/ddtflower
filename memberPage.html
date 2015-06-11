@@ -72,25 +72,25 @@
 				// 予約済み授業と受講済み授業についてタブを作る
 				createTab('#tab-container');
 
+				// 日ごと授業のjsonを読み込む
+				creator.getJsonFile('source/eachDayLesson.json');
+				// 日ごと授業のテンプレートを読み込む
+				creator.getDomFile('template/eachDayLesson.html');
+
+				// 日ごとダイアログ領域を作る
+				creator.outputTag('memberDialog', 'memberDialog', 'body');
+				// 会員ステータスを表示する領域を作る
+				creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
+				// レッスンのステータスを示すテーブルを作る
+				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
+				// テーブルのステータスを概要を表示する領域を作る
+				creator.outputTag('lessonStatus', 'lessonStatus', '.userBanner');
+
+				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.calendar', 90);
 				memCalendar.create();	//カレンダーを実際に作成する
 
-				// // 日ごと授業のjsonを読み込む
-				// creator.getJsonFile('source/eachDayLesson.json');
-				// // 日ごと授業のテンプレートを読み込む
-				// creator.getDomFile('template/eachDayLesson.html');
 
-				// // 日ごとダイアログ領域を作る
-				// creator.outputTag('memberDialog', 'memberDialog', 'body');
-				// // 会員ステータスを表示する領域を作る
-				// creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
-				// // レッスンのステータスを示すテーブルを作る
-				// creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
-				// // テーブルのステータスを概要を表示する領域を作る
-				// creator.outputTag('lessonStatus', 'lessonStatus', '.userBanner');
-
-				// // カレンダーを作る(カレンダークリックでダイアログが表示される)
-				// createCalendar('.calendar');
 			});
 			</script>
 		</div>
