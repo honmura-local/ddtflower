@@ -527,9 +527,8 @@ function callReservedDialog(dateText, calendar){
 	var date = createDateArray(dateText)
 	
 	// 予約希望ダイアログを作成する
-	 var reservedDialog = new specialReservedDialog(null,null,null, contentName, date);
+	 var reservedDialog = new specialReservedDialog(null, null, {autoOpen:true}, contentName, date);
 	reservedDialog.open();	//ダイアログを開く
-
 }
 
 /*
