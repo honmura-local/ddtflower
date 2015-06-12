@@ -524,7 +524,7 @@ function createDialog(className, title, functionObject){
 	//自動でダイアログを開かない設定がされていれば
 	if(this.options.autoOpen == false){
 		//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
-		$('.' + className).dialog(this.options[className]);
+		$('.' + className).dialog(this.options);
 	}
 	
 	/* 
@@ -632,13 +632,8 @@ function memberDialog(className, title, functionObject, content, array){
 	this.className = 'memberDialog';		//ダイアログのクラス名
 	
 	//optionsに予約ダイアログのオプションをセットする
-	this.options = dialogOption['specialReservedDialog'];
-
-	this.open = function(){
-		//予約希望ダイアログを作る下準備をする
-		// readyDialogFunc[this.className](this.content, this.array);
-		// $('.' + this.className).dialog(dialogOption[this.className]);
-	}
+	this.options = dialogOption['memberDialog'];
+	
 }
 
 //ダイアログクラスの親子関係を設定する
