@@ -1,8 +1,9 @@
 {
     "userBanner": {
-			"db_getQuery":"SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
-			"user_key":{"value":"35"},
-
+        "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
+        "user_key": {
+            "value": "35"
+        },
         "bannerArea": {
             "banner": [
                 {
@@ -18,19 +19,18 @@
             ]
         },
         "advertise": {
-			"advertiseLink":{
-	            "advertiseImage": {
-    	            "src": "",
-        	        "title": "告知領域"
-            	}
-			},
-			"message_title":{
-				"text":""
-			},
-			"message_content":{
-				"text":""
-			}
-			
+            "advertiseLink": {
+                "advertiseImage": {
+                    "src": "",
+                    "title": "告知領域"
+                }
+            },
+            "message_title": {
+                "text": ""
+            },
+            "message_content": {
+                "text": ""
+            }
         }
     },
     "lessonCalendar": {
@@ -99,36 +99,54 @@
         }
     },
     "lessonReservedDetailTable": {
-        "db_getQuery": "SELECT user_classwork_cost, user_classwork_cost_aj, flower_cost, flower_cost_aj, user_classwork.extension_cost AS extension_cost, lesson_name, school_name, start_time, end_time, time_table_day.lesson_date AS lesson_date, lesson_point_rate.point_rate AS point_rate, students, order_students FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id;",
+        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
             "value": "22"
         },
         "border": "1",
         "config": {
             "columns": {
-                "startDayTime": {
-                    "columnName": "開始日時",
-                    "className": ""
+                "start_time": {
+                    "columnName": "開始日時"
                 },
-                "finisihTime": {
-                    "columnName": "終了",
-                    "className": ""
+                "end_time": {
+                    "columnName": "終了"
                 },
-                "theme": {
-                    "columnName": "テーマ",
-                    "className": ""
+                "lesson_name": {
+                    "columnName": "テーマ"
                 },
-                "storePlace": {
-                    "columnName": "店舗",
-                    "className": ""
+                "school_name": {
+                    "columnName": "店舗"
                 },
-                "rate": {
-                    "columnName": "料金",
-                    "className": ""
+                "user_classwork_cost": {
+                    "columnName": "料金(円)"
                 },
-                "point": {
-                    "columnName": "ポイント",
-                    "className": ""
+                "point_rate": {
+                    "columnName": "ポイント(pt)"
+                },
+                "user_classwork_cost_aj": {
+                    "style": "display:none;"
+                },
+                "get_point": {
+                    "style": "display:none;"
+                },
+                "flower_cost": {
+                    "style": "display:none;"
+                },
+                "flower_cost_aj": {
+                    "style": "display:none;"
+                },
+                "extension_cost": {
+                    "style": "display:none;"
+                },
+                "lesson_date": {
+                    "style": "display:none;"
+                },
+                "students": {
+                    "style": "display:none;"
+                },
+                "order_students": {
+                    "style": "display:none;"
                 }
             }
         }
@@ -139,35 +157,54 @@
         }
     },
     "lessonFinishedDetailTable": {
-        "db_getQuery": "SELECT user_classwork_cost, user_classwork_cost_aj, flower_cost, flower_cost_aj, user_classwork.extension_cost AS extension_cost, lesson_name, school_name, start_time, end_time, time_table_day.lesson_date AS lesson_date, lesson_point_rate.point_rate AS point_rate, students, order_students FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id;",
+        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
             "value": "22"
         },
+        "border": "1",
         "config": {
             "columns": {
-                "startDayTime": {
-                    "columnName": "開始日時",
-                    "className": ""
+                "start_time": {
+                    "columnName": "開始日時"
                 },
-                "finisihTime": {
-                    "columnName": "終了",
-                    "className": ""
+                "end_time": {
+                    "columnName": "終了"
                 },
-                "theme": {
-                    "columnName": "テーマ",
-                    "className": ""
+                "lesson_name": {
+                    "columnName": "テーマ"
                 },
-                "storePlace": {
-                    "columnName": "店舗",
-                    "className": ""
+                "school_name": {
+                    "columnName": "店舗"
                 },
-                "rate": {
-                    "columnName": "料金",
-                    "className": ""
+                "user_classwork_cost": {
+                    "columnName": "料金(円)"
                 },
-                "point": {
-                    "columnName": "ポイント",
-                    "className": ""
+                "point_rate": {
+                    "columnName": "ポイント(pt)"
+                },
+                "user_classwork_cost_aj": {
+                    "style": "display:none;"
+                },
+                "get_point": {
+                    "style": "display:none;"
+                },
+                "flower_cost": {
+                    "style": "display:none;"
+                },
+                "flower_cost_aj": {
+                    "style": "display:none;"
+                },
+                "extension_cost": {
+                    "style": "display:none;"
+                },
+                "lesson_date": {
+                    "style": "display:none;"
+                },
+                "students": {
+                    "style": "display:none;"
+                },
+                "order_students": {
+                    "style": "display:none;"
                 }
             }
         }
