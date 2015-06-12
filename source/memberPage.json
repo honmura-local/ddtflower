@@ -171,5 +171,111 @@
                 }
             }
         }
+    },
+    "memberReservedConfirmDialog": {
+        "db_getQuery": "",
+        "置換したい文字列": {
+            "value": "置換後の文字列"
+        },
+        "lessonConfirm": {
+            "lessonInfo": {
+                "データベースの授業時間列名": {
+                    "text": ""
+                },
+                "データベースの店舗列名": {
+                    "text": ""
+                },
+                "データベースのコース列名": {
+                    "text": ""
+                },
+                "データベースの料金の列名": {
+                    "text": ""
+                }
+            },
+            "lessonStage": {
+                "stageLabel": {
+                    "text": "ステージ:"
+                },
+                "データベースのステージ列名": {
+                    "text": ""
+                },
+                "levelLabel": {
+                    "text": "レベル:"
+                },
+                "データベースのレベル列名": {
+                    "text": ""
+                },
+                "doScheduleLabel": {
+                    "text": "催行:"
+                },
+                "データベースの催行の列名": {
+                    "text": ""
+                }
+            }
+        },
+        "attention": {
+            "cancelRateLabel": {
+                "cancelRateLabelText": {
+                    "text": "キャンセル料率(授業当日より)"
+                }
+            },
+            "cancelRateValue": {
+                "thatDayLabel": {
+                    "text": "当日:"
+                },
+                "データベースの当日キャンセルのレート列名": {
+                    "text": ""
+                },
+                "thatDayUnit": {
+                    "text": "%"
+                },
+                "oneBeforeDayLabel": {
+                    "text": "1日前:"
+                },
+                "データベースの1日前キャンセルのレート列名": {
+                    "text": ""
+                },
+                "oneBeforeDayUnit": {
+                    "text": "%"
+                },
+                "twoBeforeDayLabel": {
+                    "text": "2日前:"
+                },
+                "データベースの2日前キャンセルのレート列名": {
+                    "text": ""
+                },
+                "twoBeforeDayUnit": {
+                    "text": "%"
+                }
+            },
+            "addPointLabel": {
+                "addPointLabelText": {
+                    "text": "加算ポイント(受講者人数)"
+                }
+            },
+            "addPointValueFirst": {
+                "fourPersonLabel": {
+                    "text": "4人~7人:"
+                },
+                "データーベースの受講者が4人から7人の時のポイント数": {
+                    "text": ""
+                },
+                "fourPersonUnit": {
+                    "text": "pt"
+                },
+                "eightPeopleLabel": {
+                    "text": "8人:"
+                },
+                "データーベースの受講者が8人の時のポイント数": {
+                    "text": ""
+                },
+                "eightPeopleDayUnit": {
+                    "text": "pt"
+                }
+            },
+            "confirmText": {
+                "text": "上記の授業を予約しますか?"
+            }
+        }
     }
 }
