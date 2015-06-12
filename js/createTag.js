@@ -5,6 +5,39 @@ CREATETAG_FIRST = -1;
 //@add 2015.0610 T,Masuda「JSON」と「DOM」の文字列の定数を追加しました
 STR_JSON = 'json';
 STR_DOM = 'dom';
+//固定の文字列の定数を定義していく
+STR_JSON = 'json';
+STR_DOM = 'dom';
+STR_OBJECT = 'object';
+STR_TRANSPORT_FAILD_MESSAGE = '通信に失敗しました。';
+STR_POST = 'POST';
+STR_HTML = 'HTML';
+SELECTOR_ALL_CHILD = '> *';
+STR_FAILD_TO_CREATE = 'の作成に失敗しました。';
+SELECTOR_MAIN = '.main';
+STR_TEXT = 'text';
+STR_HTML = 'html';
+SELECTOR_ALLCHILD_CLASS_FRONT = ' > *[class="';
+SELECTOR_CLOSE_ATTRIBUTE = '"]';
+CHAR_RIGHT_ARROW = '>';
+CHAR_DOT = '.';
+SELECTOR_NUMBERING_OUGHTER = '.numberingOuter';
+STR_NUMBERING = 'numbering';
+STR_PRE ='pre';
+STR_ARROW_LEFT_DOUBLE = '<<';
+TAG_DIV = '<div></div>';
+STR_KEY_AND_VALUE = 'keyAndValue';
+TAG_SPAN = '<span></span>'; 
+STR_KEYS = 'keys';
+STR_VALUES = 'values';
+SELECTOR_KEYS = '.keys'; 
+TAG_LABEL = '<label></label>';
+STR_VALUELABEL = 'valueLabel';
+SELECTOR_VALUES = '.values';		
+TAG_TEXTAREA = '<textarea></textarea>'; 
+STR_EDITVALUE = 'editValue';
+STR_NAME = 'name';
+STR_STYLE = 'style';
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -887,8 +920,7 @@ function createTag(){
 			}
 		});
 	});
-	
-	
+
 	/*
 	 * 関数名:this.reservedDialog['experience'] = function()
 	 * 概要  :体験レッスン予約希望ダイアログのタグを作る。
@@ -923,7 +955,7 @@ function createTag(){
 	this.reservedDialog['usually'] = function(){
 		//体験レッスン予約ダイアログ用のJSONを取得する。。
 		own.getJsonFile(init['usuallyLesson']);
-		
+
 		//createTagでダイアログに必要なタグを生成する。
 		own.outputTag('specialReservedDialog','specialReservedDialog','body');
 		own.outputTag('reservedDate','reservedDate','.specialReservedDialog');
@@ -933,7 +965,7 @@ function createTag(){
 		own.outputTag('subInfo','subInfo','.specialReservedDialog');
 		own.outputTag('memberInformation','memberInformation','.specialReservedDialog');
 		own.outputTag('mailSubject','mailSubject','.specialReservedDialog');
-		
+
 		//DBから会員情報を取得してpersonInformationの各フォームにデータを格納する。
 		getMemberInformation('.specialReservedDialog');
 	}
@@ -1012,6 +1044,16 @@ function createTag(){
 			$firstRow.append($firstRow.children().eq(0).clone(false));
 		}
 
+		var objectCounter = 0;	//行のオブジェクトを操作するためのカウンター変数を用意する
+		//複製したdomNodeに属性の値を指定していくループ
+		for(column in mapNodeArray[0]){
+			//各domNodeに属性の値を指定していく
+			$firstRow.children().eq(objectCounter++)
+				.addClass(this.getClassName(config, column))
+				.attr(STR_STYLE, this.getStyle(config, column)
+			);
+		}
+		
 		//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
 		for(var i = 1; i < mapNodeArrayLength; i++){
 			//テーブルに必要なだけの行を追加する
@@ -1034,7 +1076,7 @@ function createTag(){
 					$(colNameNode).children().eq(j).text(this.getColumnName(config, key));
 				}
 				//セルにクラスとテキストを追加していく
-				$row.children().eq(j++).text(mapObject[key]).addClass(this.getClassName(config, key));
+				$row.children().eq(j++).text(mapObject[key]);
 			}
 		}
 		
@@ -1055,14 +1097,8 @@ function createTag(){
 	 * 作成日:2015.06.10
 	 */
 	this.getColumnName = function(configNode, key){
-		var ret = "";	//返却する値を持つオブジェクトを格納する変数を準備する
-		//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
-		var oneColumn = configNode.columns[key];
-			//取得に成功した
-			if(oneColumn !== void(0)){
-				ret = oneColumn;	//列のオブジェクトを返却用の変数に格納する
-			}
-		
+		//keyで指定された列のオブジェクトを取得する
+		var ret = this.getConfigColumn(configNode, key);
 		//列名を取得して返す。取得できなければキーを返す
 		return ret['columnName'] !== void(0)? ret['columnName']: key;
 	}
@@ -1078,7 +1114,40 @@ function createTag(){
 	 * 作成日:2015.06.10
 	 */
 	this.getClassName = function(configNode, key){
-		var ret = "";	//返却する値を持つオブジェクトを格納する変数を準備する
+		//keyで指定された列のオブジェクトを取得する
+		var ret = this.getConfigColumn(configNode, key);
+		//列名を取得して返す。取得できなければ空文字を返す
+		return ret['className'] !== void(0)? ret['className']: "";
+	}
+	/*
+	 * 関数名:getStyle
+	 * 概要  :列設定のJSONからセルに設定するスタイルを取得し、セットする
+	 * 引数  :Object configNode:設定データを定義したオブジェクト
+	 * 　　  :String key:列名
+	 * 返却値 :String:取得したスタイルの文字列を返す。取得できなけれ空文字を出す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.12
+	 */
+	this.getStyle = function(configNode, key){
+		//keyで指定された列のオブジェクトを取得する
+		var ret = this.getConfigColumn(configNode, key);
+		//スタイルの文字列を取得して返す。取得できなければ空文字を返す
+		return ret[STR_STYLE] !== void(0)? ret[STR_STYLE]: '';
+	}
+
+	/*
+	 * 関数名:getConfigColumn
+	 * 概要  :設定のJSONから行のオブジェクトを取得して返す
+	 * 引数  :Object configNode:設定データを定義したオブジェクト
+	 * 　　  :String key:列名
+	 * 返却値 :Object:取得した列のオブジェクトを返す。取得できなければ空オブジェクトを返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.12
+	 */
+	this.getConfigColumn = function(configNode, key){
+		var ret = {};	//返却する値を持つオブジェクトを格納する変数を準備する
 		//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
 		var oneColumn = configNode.columns[key];
 		//取得に成功した
@@ -1086,8 +1155,9 @@ function createTag(){
 			ret = oneColumn;	//列のオブジェクトを返却用の変数に格納する
 		}
 		
-		//列名を取得して返す。取得できなければ空文字を返す
-		return ret['className'] !== void(0)? ret['className']: "";
+		return ret;	//処理の結果を返す
 	}
 }
+
+
 	
