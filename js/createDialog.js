@@ -504,7 +504,7 @@ function createDialog(className, title, functionObject){
 	//ダイアログのオプション
 	this.options = {
 		width : 300,		//幅
-		autoOpen : true,	//作成時の自動オープン
+		autoOpen : false,	//作成時の自動オープンを無効にする
 		//タイトル文字列。入力がなければ空文字にする
 		title : title !== void(0) && title != ''? title : '',
 		modal : true,		//モーダル表示
@@ -513,7 +513,7 @@ function createDialog(className, title, functionObject){
 		position :{my:'center center',at:'center center', of:window},
 		closeOnEscape : false	//escキーを押して閉じるか
 	}
-	
+
 	//引数の関数定義オブジェクトが用意されていれば
 	if(functionObject !== void(0) && functionObject != null && typeof functionObject != 'Object'){
 		//ダイアログのオプションと引数のオブジェクトを統合する
@@ -521,9 +521,12 @@ function createDialog(className, title, functionObject){
 		$.extend(this.options, functionObject);
 	}
 	
-	//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
-	$('.' + className).dialog(this.options[className]);
-
+	//自動でダイアログを開かない設定がされていれば
+	if(this.options.autoOpen == false){
+		//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
+		$('.' + className).dialog(this.options[className]);
+	}
+	
 	/* 
 	 * 関数名:open
 	 * 概要  :画面を開くときの処理
@@ -534,7 +537,19 @@ function createDialog(className, title, functionObject){
 	 */
 	this.open = function(){
 		//ダイアログを作成し、開く
-		$('.' + this.className).dialog(this.options);
+		$('.' + this.className).dialog('open');
+	}
+	/* 
+	 * 関数名:close
+	 * 概要  :画面を閉じるの処理
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.12
+	 */
+	this.close = function(){
+		//ダイアログを作成し、開く
+		$('.' + this.className).dialog('close');
 	}
 }
 
@@ -548,12 +563,12 @@ function createDialog(className, title, functionObject){
  */
 function specialReservedDialog(className, title, functionObject, content, array){
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
-	
+
 	//コンストラクタの引数をメンバにセットする
 	this.content = content;
 	this.array = array;
 	this.className = 'specialReservedDialog';		//ダイアログのクラス名
-	
+
 	//optionsに予約ダイアログのオプションをセットする
 	this.options = dialogOption['specialReservedDialog'];
 
@@ -791,7 +806,7 @@ dialogOption['specialReservedDialog'] = {
 				        		 // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
 				        		 if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
 					        		 // 入力確認ダイアログのクラスインスタンスを作る。
-				        			 var confirmDialog = new specialReservedConfirmDialog();
+				        			 var confirmDialog = new specialReservedConfirmDialog(null, null, {autoOpen:true});
 				        			 confirmDialog.open();	//ダイアログを開く
 					        		 //入力確認のものは送信すべきではないので、送信前に前持って無効化する
 					        		 $('.personEmailCheck input').attr('disabled', 'disabled');
@@ -1020,7 +1035,7 @@ function checkLoginState(){
 		//ログインボタンのイベントを設定する。
 		$('.login').on('click', function(){
 			// ログインダイアログを作る
-			var login = new loginDialog();
+			var login = new loginDialog(null, null, {autoOpen:true});
 			login.open();	//ログインダイアログを開く
 		});
 	}
