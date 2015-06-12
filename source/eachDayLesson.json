@@ -1,6 +1,6 @@
 {
-    "memberDialog":{
-        "text":""
+    "memberDialog": {
+        "text": ""
     },
     "memberStatus": {
         "class": "memberHeader",
@@ -27,14 +27,10 @@
             }
         }
     },
-    "lessonTable": {
-        "db_getQuery": "SELECT od.date AS order_date, od.order_code, og.organization as customer, od.delivery_date, p1.person_name AS scribedby, ot.order_type, p2.person_name AS permiter, SUM(od.price * od. quantity) AS amount FROM Order_ddt AS od, Person as p1, Person as p2, Organization as og, Order_Type as ot WHERE od.custom_organization_code = og.organization_code and od.deliver_organization_code = og.organization_code and od.inputter = p1.person_code and od.submitter = p2.person_code and od.order_type_code = ot.order_type_code AND od.date >='from_date' AND od.date <= 'to_date' GROUP BY order_code;",
-        "from_date": {
-            "value": "2015-05-01"
-        },
-        "to_date": {
-            "value": "2015-05-30"
-        },
+    "memberTable": {
+        "db_getQuery": "SELECT user_classwork_cost, user_classwork_cost_aj, flower_cost, flower_cost_aj, user_classwork.extension_cost AS extension_cost, user_classwork.stage_no AS stage_no, user_classwork.level_no AS level_no, lesson_name, pre_order_days, school_name, start_time, end_time, time_table_day.lesson_date AS lesson_date, order_students, classwork.max_students AS max_students, classwork.min_students AS min_students, time_table_day.max_num AS max_num, time_table_day.min_num AS min_num FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' LEFT JOIN user_classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "user_key":{"value":"22"},
+        "date":{"value":"2010-03-06"},
         "config": {
             "columns": {
                 "time_schedule": {
@@ -61,140 +57,6 @@
         }
     },
     "lessonTableArea": {
-        "class": "userBanner",
-        "memberTable": {
-            "class": "lessonTable",
-            "recordHead": {
-                "fieldHead": [
-                    "時間割",
-                    "店舗",
-                    "テーマ",
-                    "料金(円)",
-                    "残席",
-                    "状況"
-                ]
-            },
-            "row0": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            },
-            "row1": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            },
-            "row2": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            },
-            "row3": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            },
-            "row4": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            },
-            "row5": {
-                "timeSchedule": {
-                    "text": "11:00~12:00"
-                },
-                "storePlace": {
-                    "text": "新宿"
-                },
-                "theme": {
-                    "text": "プリザ"
-                },
-                "rate": {
-                    "text": "3000円"
-                },
-                "vacantSeat": {
-                    "text": "○"
-                },
-                "situation": {
-                    "text": "予約可能"
-                }
-            }
-        }
     },
     "lessonStatus": {
         "lessonStatusText": [

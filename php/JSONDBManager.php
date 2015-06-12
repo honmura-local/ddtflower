@@ -18,9 +18,9 @@ define('KEY_VALUE', 'value');
 $KEY_LIST = array('text', 'html', 'src');
 
 // データベースに接続するための値を定数として宣言する
-define('DSN', 'mysql:host=localhost;dbname=borg');		// データソースネーム(ホスト名、DB名)
-define('DB_USER', 'user');								// データベースユーザ
-define('DB_PASSWORD', 'user');						// データベースパスワード
+define('DSN', 'mysql:host=localhost;dbname=ddthink-com00006');		// データソースネーム(ホスト名、DB名)
+define('DB_USER', 'root');								// データベースユーザ
+define('DB_PASSWORD', 'root');						// データベースパスワード
 
 /*
  * クラス名:DB_ResultTree
