@@ -1,0 +1,645 @@
+@CHARSET "UTF-8";
+
+a {
+	display: block;		/* ブロック要素にしてクリックしやすくする */
+}
+
+a:hover {
+	opacity: 0.6;		/* 透過度を80%にする */
+}
+
+a:active {
+	color: #999;		/* クリックしたときに文字の色を薄くする */ 
+}
+
+/* 
+ * セレクタ :.memberName
+ * 概要   :会員名領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberName {
+	padding-right: 1em;		/* 2文字分空白を空ける */
+}
+
+/* 
+ * セレクタ :.memberPoint
+ * 概要   :会員所持ポイント領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberName, .memberPoint {
+	float:right;			/* 右側に回り込みする */
+}
+
+/* 
+ * セレクタ :.memberMenu
+ * 概要   :ヘッダのメニュー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu {
+	margin: 5px 0;			/* 上下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.memberMenu li
+ * 概要   :ヘッダのメニューそれぞれの項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu li {
+	display: inline-block;	/* インラインブロック要素として扱う */
+	text-align: center;		/* 中央寄せにする */
+	width: 33.333%;				/* 幅を33%にする */
+}
+
+/* 
+ * セレクタ :.banner
+ * 概要   :バナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner {
+	display: inline-block;		/* インラインブロック要素として扱う */
+	width: 50%;					/* 幅を50%にする */
+	height: 40px;
+	background: #ddd;			/* 背景を灰色にする */
+}
+
+/* 
+ * セレクタ :.banner:nth-of-type(1)
+ * 概要   :左のバナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner:nth-of-type(1) {
+	background: #de3;			/* 背景を黄緑にする */
+}
+
+/* 
+ * セレクタ :.banner:nth-of-type(2)
+ * 概要   :右のバナー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.banner:nth-of-type(2) {
+  background: #eee;				/* 背景をグレーにする */
+}
+
+/* 
+ * セレクタ :.advertise
+ * 概要   :告知領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.advertise {
+	/*height: 30px;*/			/* 高さを30pxにする */
+	border: 1px solid #ddd; /* 灰色の線で囲む */
+	margin: 7px 0;			/* 上下に7pxの余白をあける */
+	display: none;			/* 最初は非表示にしておく */
+}
+
+
+/* 
+ * セレクタ :#tab-container
+ * 概要   :タブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+#tab-container {
+	width: 49%;		/* 幅を49%にする */
+	float: right;	/* 右に回り込みする */
+}
+
+/* 
+ * セレクタ :.tab
+ * 概要   :タブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.tab {
+	margin: 5px 0;				/* 上下に5pxの余白をとる */
+    display: inline-block;		/* インラインブロック要素として扱う */
+	width: 50%;					/* 幅を45%にする */
+    text-align: center;			/* 中央揃えにする */
+	padding: 5px 0;				/* 5px要素の幅を広げる */
+    background-color: #cedc3a;	/* 背景を黄緑色にする */
+}
+
+/* 
+ * セレクタ :.themeText
+ * 概要  :「テーマ」のテキスト領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.themeText {
+	display: inline-block; /* インラインブロック要素として扱う */
+}
+
+.selectThemeButton {
+	float: right;
+}
+
+/* 
+ * セレクタ :.tab.active
+ * 概要   :選択中のタブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.tab.active {
+	background-color: #ce6;		/* 背景を薄い黄緑にする */
+}
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :授業についてのテーブル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+.lessonTable {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	font-size: 14px;			/* フォントサイズを14pxにする */
+	margin-top: 5px;			/* 上から5pの余白をとる */
+	text-align: center;			/* 文字を中央揃えにする */
+	width: 100%;				/* 幅を100%にする */
+}
+
+/* 
+ * セレクタ :.lessonTable th, .lessonTable td
+ * 概要   :授業についてのテーブルのカラム領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+.lessonTable th, .lessonTable td {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	padding: 2px;				/* 要素の幅を2px広げる */
+}
+
+/* 
+ * セレクタ :.calendar
+ * 概要   :カレンダー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+#container .calendar {
+	margin-top: 5px;		/* 上下に5pxの余白をとる */
+	float: left;			/* 左側に回り込みする */
+}
+
+/* 
+ * セレクタ :.anotion
+ * 概要   :データの注釈領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.anotion {
+	margin-bottom: 20px;		/* 下に20pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.pageHeader
+ * 概要   :ページのヘッダー部分(hタグにつけるスタイル)
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.pageHeader {
+	margin-top: 20px;		/* 上から20pxの余白を空ける */
+	text-align: left;		/* 左側に回り込みする */
+}
+
+/* 
+ * セレクタ :.accordion
+ * 概要   :アコーディオン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.09
+ */
+.accordion {
+	display: none;			/* 非表示にする */
+}
+
+/* 
+ * セレクタ :.topLink
+ * 概要   :トップページリンク領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.topLink {
+	text-align: center;		/* 中央揃えにする */
+}
+
+/* 
+ * セレクタ :.passLabel
+ * 概要   :パスワードラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.passLabel {
+	display: inline-block;		/* 	インラインブロック要素として扱う */
+	width: 20%;					/* 幅を20%にする */
+}
+
+/* 
+ * セレクタ :.passTextbox
+ * 概要   :パスワードテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.passTextbox {
+	display: inline-block;		/* 	インラインブロック要素として扱う */
+	width: 60%;					/* 幅を60%にする */
+}
+
+/* 
+ * セレクタ :.postPass label
+ * 概要   :パスワードラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.postPass label {
+	display: block;		/* ブロック要素として扱う */
+	margin-left: 1em;	/* 1文字分余白を空ける */
+	padding: 10px 0;	/* 上下に10px要素の幅を広げる */
+}
+
+/* 
+ * セレクタ :.updaeButon
+ * 概要   :更新ボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.updateButton {
+	display: block;
+	margin-left: auto;
+	margin-right: 148px;
+}
+
+
+
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+	/* 
+	 * セレクタ :#container
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container {
+		/*font-size: 16px;*/	/* フォントサイズを16pxにする */
+	}
+
+	/* 
+	 * セレクタ :	.memberHeader,
+				.userBanner,
+				#container .calendar,
+				#tab-container,
+				.passArea,
+				.topLinkArea,
+				.memberInfo
+	 * 概要   :幅を90%にし、上下5pxの余白をとって中央揃えにする
+	 		対象領域：会員ページヘッダー
+	 				バナー
+	 				カレンダー
+	 				タブ
+					パスワード
+					トップページリンク
+					会員情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	.memberHeader,
+	.userBanner,
+	#container .calendar,
+	#tab-container,
+	.passArea,
+	.topLinkArea,
+	.memberInfo
+	{
+		width: 90%;			/* 幅を90%にする */ 
+		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
+	}
+
+	/* 
+	 * セレクタ :#container .calendar, #tab-container
+	 * 概要   :カレンダーとタブ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container .calendar, #tab-container {
+		float:none;					/* 回り込みをなくす */ 
+	}
+
+	/* 
+	 * セレクタ :#container .calendar > div
+	 * 概要   :カレンダーの直下の子供領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#container .calendar > div {
+		width: 100%;		/* 幅を100%にする */ 
+	}
+
+	/* 
+	 * セレクタ :#tab-container
+	 * 概要   :タブ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	 #tab-container {
+	 	width: 86%;				/* 幅を86%にする */
+	 	border: 1px solid #ddd;	/* グレーの線を引く */
+	 	padding: 5px;			/* 要素の幅を5pxにする */
+	 }
+
+	 .advertise {
+	 	padding: 5px;
+	 }
+
+	 .memberStatus {
+	 	font-size: 16px;
+	 }
+
+/* 
+	 * セレクタ :body .ui-dialog .ui-dialog-content
+	 * 概要   :ダイアログ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	 body .ui-dialog .ui-dialog-content {
+	 	padding: .5em;			/* 要素の幅を半文字分広げる */
+	 }
+}
+
+/* スマホ用微調整 */
+@media(max-width:400px){
+	/* 
+	 * セレクタ :.memberMenu li
+	 * 概要   :ページ全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	.memberMenu li {
+		text-align: right;		/* 右揃えにする */ 
+		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ :.keepMoney, .hasPoint
+	 * 概要   :「お預かり金額」と「所持ポイント領域」
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.keepMoney, .hasPoint {
+		text-align: center;		/* 中央揃えにする */
+	}
+
+	/* 
+	 * セレクタ :.passArea, .topLinkArea
+	 * 概要   :パスワード領域とトップページリンク領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passArea, .topLinkArea {
+		text-align: center;		/* 文字を中央揃えにする */
+		font-size: 14px;		/* フォントサイズを14pxにする */
+	}
+
+
+/* 
+	 * セレクタ .passLabel
+	 * 概要   :パスワードラべル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passLabel {
+		display: inline;		/* インライン要素にする */
+	}
+
+	/* 
+	 * セレクタ .passTextbox
+	 * 概要   :パスワードテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.passTextbox {
+		width: 90%;			/* 幅を90%にする */
+	}
+
+	/* 
+	 * セレクタ :.updateButton
+	 * 概要   :更新ボタン
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.updateButton {
+		margin: 10px 0 5px auto;/* 上に10px、下に5pxの余白をとり、右寄せにする */
+	}
+
+	/* 
+	 * セレクタ :.lessonStatusText:nth-of-type(1)
+	 * 概要   :残席領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.lessonStatusText:nth-of-type(1) {
+		display: block;			/* ブロック要素として扱う */
+		float: left;			/* 左に回り込む */
+		height: 40px;			/* 高さを40pxにする */
+		line-height: 40px;		/* 行間を40pxにする */
+		width: 20%;				/* 幅を20%にする */
+	}
+
+	/* 
+	 * セレクタ :.lessonStatusText
+	 * 概要   :残席の記号説明領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.09
+	 */
+	.lessonStatusText {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+		padding-right: 1em;		/*　要素の幅を1文字分広げる　*/
+	}
+
+	/* 
+	 * セレクタ :.accordionDetail li
+	 * 概要   :アコーディオンそれぞれの行の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.accordionDetail li {
+		padding-top: 5px;		/* 上から5pxの余白を空ける */
+	}
+
+	/* 
+	 * セレクタ :	.lessonRateUnit,
+				.stageNumber,
+				.levelNumber,
+				.addPoint1ValueUnit,
+				.addPoint4ValueUnit
+	 * 概要   :アコーディオン内の単位の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.lessonRateUnit,
+	.stageNumber,
+	.levelNumber,
+	.addPoint1ValueUnit,
+	.addPoint4ValueUnit {
+		padding-right: 2em;		/* 2文字分右に余白をとる */
+	}
+
+	/* 
+	 * セレクタ :.cancelDayValueUnit, .cancel1DayValueUnit
+	 * 概要   :キャンセル料内の単位領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.cancelDayValueUnit, .cancel1DayValueUnit {
+		padding-right: 1em;		/* 右に余白を1文字分とる */
+		margin-left: -5px;		/* 左に5px幅を詰める */
+	}
+
+	/* 
+	 * セレクタ :.rateDetail1,
+			.rateDetail2,
+			.cancelRateText,
+			.addPointText1,
+			.addPointText1
+	 * 概要   :アコーディオン詳細部分領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.rateDetail1,
+	.rateDetail2,
+	.cancelRateText,
+	.addPointText1,
+	.addPointText1 {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.subHeader {
+		text-align: center;		/* 中央揃えにする */
+		font-size: 14px;		/* フォントサイズを14pxにする */
+	}
+
+	/* 
+	 * セレクタ :.memberInfo
+	 * 概要   :会員情報領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.memberInfo {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ :label
+	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	label {
+		display: inline-block;	/* インラインブロック要素として扱う */
+	}
+
+	/* 
+	 * セレクタ :.subHeader
+	 * 概要   :ラベルが二文字分の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.label2Area {
+		width: 11%;				/* 幅を11%にする */
+	}
+
+	/* 
+	 * セレクタ :.textbox2Area
+	 * 概要   :ラベルが2文字分に対応するテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.textbox2Area {
+		width: 85%;				/* 幅を85%にする */
+	}
+
+	/* 
+	 * セレクタ :.label4Area, .sex
+	 * 概要   :ラベルが4文字分の領域と性別の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.label4Area, .sex {
+		width: 20%;				/* 幅を20%にする */
+	}
+
+	/* 
+	 * セレクタ :.textbox4Area
+	 * 概要   :ラベルが4文字分に対応するテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.textbox4Area {
+		width: 76%;				/* 幅を76%にする */
+	}
+
+	/* 
+	 * セレクタ :.birthdayLabel
+	 * 概要   :生年月日のラベル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.birthdayLabel {
+		margin-left: 8px;		/* 左から8pxの空白をとる */
+	}
+
+	/* 
+	 * セレクタ :.birthday
+	 * 概要   :生年月日テキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.birthday {
+		width: 40%;				/* 幅を40%にする */
+	}
+
+	/* 
+	 * セレクタ :	.addressLabel,
+				.mailaddressLabel
+	 * 概要   :住所のラベルとメールアドレスのラベル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.addressLabel,
+	.mailaddressLabel {
+		display: block;			/* ブロック要素にする */
+	}
+
+	/* 
+	 * セレクタ :	.address,
+				.mailaddress
+	 * 概要   :住所のテキストボックスとメールアドレスのテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.address,
+	.mailaddress {
+		width: 98%;				/* 幅を98%にする */
+	}
+
+	/* 
+	 * セレクタ :.infoForm div
+	 * 概要   :会員情報をそれぞれの情報についての領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.10
+	 */
+	.infoForm div {
+		margin-bottom: 5px;		/* 下に5pxの余白をとる */
+	}
+
+}

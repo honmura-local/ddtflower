@@ -1,0 +1,103 @@
+{
+    "adminTab": {
+        "class": "tabContainer adminTab",
+        "id": "adminTab",
+        "tabs": {
+            "tab": [
+                {
+                    "href": "#dayReserver",
+                    "text": "日ごと予約者一覧"
+                },
+                {
+                    "href": "#lecturePermit",
+                    "text": "受講承認"
+                },
+                {
+                    "href": "#userList",
+                    "text": "ユーザ一覧"
+                }
+            ]
+        },
+        "tabContentArea":{
+        	"class":"tabContentArea panelContainer"
+        }
+    },
+	"dayReserver": {
+	    "class": "dayReserver tabPanel",
+		"id": "dayReserver"
+	},
+	"lecturePermit": {
+	    "class": "lecturePermit tabPanel",
+	    "id": "lecturePermit"
+	},
+	"userList": {
+	    "class": "userList tabPanel",
+	    "id": "userList"
+	},
+    "dateBelt":{
+    	"text":"2015/06/12"
+    },
+    "dateSelect":{
+    	"dateHeadLabel":{"text":"日付指定:"},
+    	"dateInput":{"type":"date", "value":"2015/06/12"},
+    	"searchButton":{"type":"button", "value":"検索"}
+    },
+    "userInfoTable":{},
+    "lecturePermitTab": {
+        "class": "tabContainer lecturePermitTab",
+        "id": "lecturePermitTab",
+        "tabs": {
+            "tab": [
+                {
+                    "href": "#doLecturePermit",
+                    "text": "受講承認"
+                },
+                {
+                    "href": "#lecturePermitList",
+                    "text": "受講承認一覧"
+                }
+            ]
+        },
+        "tabContentArea":{
+        	"class":"tabContentArea panelContainer"
+        }
+    },
+	"doLecturePermit": {
+	    "class": "doLecturePermit tabPanel",
+		"id": "doLecturePermit"
+	},
+	"lecturePermitList": {
+	    "class": "lecturePermitList tabPanel",
+	    "id": "lecturePermitList"
+	},
+    "doLecturePermitInfoTable":{},
+    "doLecturePermitButton":{"type":"button", "value":"承認"},
+    "lecturePermitListInfoTable":{},
+    "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
+    "userListInfoTable":{},
+    "userListButtons":{
+    	"firstRow":{
+    		"next":{
+	    		"type":"button",
+	    		"value":"前"
+    		},
+    		"records":{
+    			"text":""
+    		},
+    		"prev":{
+	    		"type":"button",
+	    		"value":"後"
+    		}
+    	},
+    	"secondRow":{
+    		"createMail":{
+	    		"type":"button",
+	    		"value":"メール・メッセージ"
+    		},
+    		"register":{
+	    		"type":"button",
+	    		"value":"新規登録"
+    		}
+    	}
+    }
+}

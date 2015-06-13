@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 画面の幅を使用している端末に依存する。加えてズームを許可しない。 -->
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+<meta charset="UTF-8">
+<title>DDTFlowers</title>
+<!-- メインのCSSファイルを読み込む。 -->
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<!-- 会員ページのcssを読み込む -->
+<link href="css/memberPage.css" rel="stylesheet" type="text/css">
+<!-- カレンダーのために体験ページのCSSファイルを読み込む。 -->
+<link href="css/experience.css" rel="stylesheet" type="text/css">
+<!-- jqueryUIのcssを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
+<!-- jQueryの本体を読み込む。 -->
+<script src="js/jquery-1.11.0.min.js"></script>
+<!-- jQueryUIを読み込む。 -->
+<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- タグを作成するJSの関数群を読み込む -->
+<script type="text/javascript" src="js/createTag.js"></script>
+<!-- easytabsの本体を読み込む。 -->
+<script type="text/javascript" src="js/jquery.easytabs.js"></script>
+<!-- 入力チェック機能のjQueryプラグイン -->
+<script src="js/jquery.validate.min.js"></script>
+<!-- validate.jsの日本語対応プラグイン -->
+<script type="text/javascript" src="js/messages_ja.js"></script>
+<!-- タッチ操作のライブラリ。 -->
+<script src="js/jquery.finger.js"></script>
+<!-- 画面操作の処理を記述したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/controlPage.js"></script>
+<!-- ダイアログ作成の処理を記述したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/createDialog.js"></script>
+<!-- 小規模のの処理を記述したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/createLittleContent.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/controlAction.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div class="main">
+			<script>
+			//ドキュメント配備後
+			$(document).ready(function(){
+				creator = new createTag();
+				creator.getJsonFile('source/memberPage.json');
+				// 会員共通のパーツのJSONを取得する。
+				creator.getJsonFile('source/memberCommon.json');
+				//告知領域のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['userBanner'], 'userBanner');
+
+
+				// パーツのテンプレートのDOMを取得する。
+				creator.getDomFile('template/common.html');
+				// 会員共通のパーツのJSONを取得する。
+				creator.getDomFile('template/memberCommon.html');
+				// 会員ページのjsonを読み込む
+				creator.getDomFile('template/memberPage.html');
+				// 会員ページヘッダーを作る
+				creator.outputTag('memberHeader');
+				// バナー領域を作る
+				creator.outputTag('userBanner');
+				
+				//通知領域の内容があれば
+				if($('.advertise p:not(:empty)').length){
+					$('.advertise').show();		//通知領域を表示する
+				}
+				
+				// 会員ページのカレンダーを作る
+				creator.outputTag('lessonCalendar', 'calendar');
+
+				// タブ機能を作る
+				creator.outputTag('lessonTab');
+				// 予約済み授業のタブ内コンテンツを作る
+				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
+				// 受講済み授業のタブ内コンテンツを作る
+				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
+				// 予約済み授業のタブ内テーブルを作る
+				creator.outputTag('reservedDetail', 'lessonDetail', '#alreadyReserved');
+				// 受講済み授業のタブ内テーブルを作る
+				creator.outputTag('finishedDetail', 'lessonDetail', '#finishedLesson');
+				// 予約済み授業と受講済み授業についてタブを作る
+				createTab('#tab-container');
+
+				// 日ごと授業のjsonを読み込む
+				creator.getJsonFile('source/eachDayLesson.json');
+				// 日ごと授業のテンプレートを読み込む
+				creator.getDomFile('template/eachDayLesson.html');
+
+				// 日ごとダイアログ領域を作る
+				creator.outputTag('memberDialog', 'memberDialog', 'body');
+				// 会員ステータスを表示する領域を作る
+				creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
+				// レッスンのステータスを示すテーブルを作る
+				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
+
+				// カレンダーを作り、クリックでダイアログ作成を作る
+				var memCalendar = new memberCalendar('.calendar', 90);
+				memCalendar.create();	//カレンダーを実際に作成する
+				
+				//テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				//テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberTable'], 'memberTable');
+
+				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
+				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
+				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
+				// テーブルのステータスを概要を表示する領域を作る
+				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
+			});
+			</script>
+		</div>
+	</div>
+</body>
+</html>

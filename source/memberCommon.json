@@ -1,0 +1,52 @@
+{
+    "memberHeader": {
+        "memberStatus": {
+            "memberNumber": {
+                "noArea": {
+                    "text": "No."
+                },
+                "numberArea": {
+                    "text": "00000000"
+                }
+            },
+            "memberPoint": {
+                "pointNumberArea": {
+                    "text": "900"
+                },
+                "ptArea": {
+                    "text": "pt"
+                }
+            },
+            "memberName": {
+                "nameArea": {
+                    "text": "山田花子"
+                },
+                "nameTitleArea": {
+                    "text": "様"
+                }
+            }
+        },
+        "memberMenu": {
+            "memberMenuList": [
+                {
+                    "href": "",
+                    "text": "サポートメール"
+                },
+                {
+                    "href": "",
+                    "text": "プロフィール"
+                },
+                {
+                    "href": "",
+                    "text": "ログアウト"
+                }
+            ]
+        }
+    },
+    "topLinkArea":{
+        "topLink":{
+            "href":"",
+            "text":"トップページへ"
+        }
+    }
+}
