@@ -5,7 +5,7 @@ a {
 }
 
 a:hover {
-	opacity: 0.6;		/* 透過度を80%にする */
+	opacity: 0.6;		 /*透過度を80%にする */
 }
 
 a:active {
@@ -51,8 +51,49 @@ a:active {
 .memberMenu li {
 	display: inline-block;	/* インラインブロック要素として扱う */
 	text-align: center;		/* 中央寄せにする */
-	width: 33.333%;				/* 幅を33%にする */
 }
+
+/* 
+ * セレクタ :.memberMenu li:nth-of-type(1)
+ * 概要   :ヘッダのメニュー1つ目の項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu li:nth-of-type(1) {
+	width: 34%;				/* 幅を34%にする */
+}
+
+/* 
+ * セレクタ :.memberMenu li:nth-of-type(2), .memberMenu li:nth-of-type(3)
+ * 概要   :ヘッダのメニュー2つ目と3つ目の項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenu li:nth-of-type(2), .memberMenu li:nth-of-type(3) {
+	width: 33%;				/* 幅を33%にする */
+}
+
+/* 
+ * セレクタ :.memberMenu li:nth-of-type(1)
+ * 概要   :ヘッダのメニュー1つ目の項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenuLink {
+	padding: 5px 0;			/* 上下に5px要素の幅を指定する */
+	border-bottom: 3px solid #dfdfdf;	/* 太さ3pxで灰色の線を底に引く */
+}
+
+/* 
+ * セレクタ :.memberMenu li:nth-of-type(1)
+ * 概要   :ヘッダのメニュー1つ目の項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.memberMenuLink:hover {
+	border-bottom: 3px solid #CEDC3A;
+}
+
 
 /* 
  * セレクタ :.banner
@@ -62,29 +103,8 @@ a:active {
  */
 .banner {
 	display: inline-block;		/* インラインブロック要素として扱う */
-	width: 50%;					/* 幅を50%にする */
-	height: 40px;
-	background: #ddd;			/* 背景を灰色にする */
-}
+	margin-left: 3px
 
-/* 
- * セレクタ :.banner:nth-of-type(1)
- * 概要   :左のバナー領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.banner:nth-of-type(1) {
-	background: #de3;			/* 背景を黄緑にする */
-}
-
-/* 
- * セレクタ :.banner:nth-of-type(2)
- * 概要   :右のバナー領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.banner:nth-of-type(2) {
-  background: #eee;				/* 背景をグレーにする */
 }
 
 /* 
@@ -94,7 +114,6 @@ a:active {
  * 作成日 :2015.06.04
  */
 .advertise {
-	/*height: 30px;*/			/* 高さを30pxにする */
 	border: 1px solid #ddd; /* 灰色の線で囲む */
 	margin: 7px 0;			/* 上下に7pxの余白をあける */
 	display: none;			/* 最初は非表示にしておく */
@@ -119,7 +138,6 @@ a:active {
  * 作成日 :2015.06.04
  */
 .tab {
-	margin: 5px 0;				/* 上下に5pxの余白をとる */
     display: inline-block;		/* インラインブロック要素として扱う */
 	width: 50%;					/* 幅を45%にする */
     text-align: center;			/* 中央揃えにする */
@@ -137,8 +155,23 @@ a:active {
 	display: inline-block; /* インラインブロック要素として扱う */
 }
 
+/* 
+ * セレクタ :.selectThemebox
+ * 概要  :絞り込みセレクトボックス
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.selectThemebox {
+	height:32px;			/* 高さを32pxにする */
+}
+/* 
+ * セレクタ :.selectThemeButton
+ * 概要  :絞り込みボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 .selectThemeButton {
-	float: right;
+	float: right;			/* 右側に回り込みする */
 }
 
 /* 
@@ -172,7 +205,7 @@ a:active {
  * 作成日 :2015.06.08
  */
 .lessonTable th, .lessonTable td {
-	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
 
@@ -229,6 +262,16 @@ a:active {
 }
 
 /* 
+ * セレクタ :.advertise, .tab-container
+ * 概要   :告知領域とタブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
+.advertise, .tab-container {
+	border-radius: 3px;
+}
+
+/* 
  * セレクタ :.passLabel
  * 概要   :パスワードラベル領域
  * 作成者 :T.Yamamoto
@@ -269,24 +312,15 @@ a:active {
  * 作成日 :2015.06.11
  */
 .updateButton {
-	display: block;
-	margin-left: auto;
-	margin-right: 148px;
+	display: block;		/* ブロック要素として扱う */
+	margin-left: auto;	/* 左からの余白を自動にする */
+	margin-right: 148px;/* 右から148px余白を空ける */
 }
 
 
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
-	/* 
-	 * セレクタ :#container
-	 * 概要   :ページ全体の領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.08
-	 */
-	#container {
-		/*font-size: 16px;*/	/* フォントサイズを16pxにする */
-	}
 
 	/* 
 	 * セレクタ :	.memberHeader,
@@ -346,9 +380,20 @@ a:active {
 	 * 作成日 :2015.06.08
 	 */
 	 #tab-container {
-	 	width: 86%;				/* 幅を86%にする */
-	 	border: 1px solid #ddd;	/* グレーの線を引く */
-	 	padding: 5px;			/* 要素の幅を5pxにする */
+	 	width: 90%;				/* 幅を86%にする */
+	 	border: 1px solid #dfdfdf;	/* グレーの線を引く */
+	 }
+
+	/* 
+	 * セレクタ :.tabs,
+	 		 .tabContentArea
+	 * 概要   :タブの内側の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.13
+	 */
+	 .tabs,
+	 .tabContentArea {
+	 	padding: 3px; 			/* 3px要素の幅を広げる */
 	 }
 
 	/* 
@@ -358,42 +403,76 @@ a:active {
 	 * 作成日 :2015.06.08
 	 */
 	 .advertise {
-	 	padding: 5px;			/*  要素の幅を5px広げる*/
+	 	padding: 5px;			/* 要素の幅を5px広げる */
 	 }
 
 	/* 
-	 * セレクタ :.memberStatus
+	 * セレクタ :.memberNumber
 	 * 概要   :会員情報
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	 .memberStatus {
-	 	font-size: 16px;		/* フォントサイズを16pxにする */
+	 .memberNumber {
+	 	vertical-align: sub;		/* フォントサイズを16pxにする */
 	 }
 
-/* 
+	/* 
+	 * セレクタ :.memberName, .memberPoint
+	 * 概要   :会員情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.13
+	 */
+	 .memberName, .memberPoint {
+	 	font-size: 15px;			/* フォントサイズを15pxにする */
+	 }
+
+
+	/* 
 	 * セレクタ :body .ui-dialog .ui-dialog-content
+	 * 概要   :ダイアログ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.13
+	 */
+	 body .ui-dialog .ui-dialog-content {
+	 	padding: .2em;			/* 要素の幅を半文字分広げる */
+	 }
+
+
+	/* 
+	 * セレクタ :.memberHeader p
+	 * 概要   :ダイアログ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.13
+	 */
+	 .memberHeader p {
+	 	font-size: 12px;		/* フォントサイズを12pxにする */
+	 	padding: 5px 0;			/* 上下に5px要素の幅を広げる */
+	 }
+
+	/* 
+	 * セレクタ :.memberHeader p:nth-of-type(1)
 	 * 概要   :ダイアログ領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	 body .ui-dialog .ui-dialog-content {
-	 	padding: .5em;			/* 要素の幅を半文字分広げる */
+	 .memberHeader p:nth-of-type(1) {
+	 	float: left;			/* 左に回り込みする */
 	 }
+
+	/* 
+	 * セレクタ :.memberHeader p:nth-of-type(2)
+	 * 概要   :ダイアログ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	 .memberHeader p:nth-of-type(2) {
+	 	float: right;			/* 右側に回り込みする */
+	 }
+
 }
 
 /* スマホ用微調整 */
 @media(max-width:400px){
-	/* 
-	 * セレクタ :.memberMenu li
-	 * 概要   :ページ全体の領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.08
-	 */
-	.memberMenu li {
-		text-align: right;		/* 右揃えにする */ 
-		font-size: 13px;		/* フォントサイズを13pxにする */
-	}
 
 	/* 
 	 * セレクタ :.keepMoney, .hasPoint
@@ -456,8 +535,8 @@ a:active {
 	.lessonStatusText:nth-of-type(1) {
 		display: block;			/* ブロック要素として扱う */
 		float: left;			/* 左に回り込む */
-		height: 40px;			/* 高さを40pxにする */
-		line-height: 40px;		/* 行間を40pxにする */
+		height: 50px;			/* 高さを40pxにする */
+		line-height: 50px;		/* 行間を40pxにする */
 		width: 20%;				/* 幅を20%にする */
 	}
 

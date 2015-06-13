@@ -7,14 +7,28 @@
         "bannerArea": {
             "banner": [
                 {
-                    "src": "",
-                    "title": "blogbanner",
-                    "value": "ブログバナー"
+                    "src": "image/icon(blog50).png"
                 },
                 {
-                    "src": "",
-                    "title": "mypagebanner",
-                    "value": "マイページバナー"
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(blog50).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(blog50).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(blog50).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
                 }
             ]
         },

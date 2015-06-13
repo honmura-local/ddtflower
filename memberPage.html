@@ -9,8 +9,6 @@
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <!-- 会員ページのcssを読み込む -->
 <link href="css/memberPage.css" rel="stylesheet" type="text/css">
-<!-- カレンダーのために体験ページのCSSファイルを読み込む。 -->
-<link href="css/experience.css" rel="stylesheet" type="text/css">
 <!-- jqueryUIのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
 <!-- jQueryの本体を読み込む。 -->
@@ -116,6 +114,9 @@
 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
 				// テーブルのステータスを概要を表示する領域を作る
 				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
+
+				// 絞り込みボタンをjqueryのボタンにする
+				$('.selectThemeButton').button();
 			});
 			</script>
 		</div>
