@@ -533,7 +533,7 @@ function callReservedDialog(dateText, calendar){
 
 /*
  * 関数名:callMemberDialog
- * 引数  :String dateText:日付テキスト
+ * 引数  :String dateText:日付テキスト(クリックされた日付)
  * 　　　 :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
@@ -544,9 +544,11 @@ function callMemberDialog(dateText, calendar){
 	// カレンダーからコンテンツ名を取得する。
 	var contentName = calendar.attr('name');
 	// 日付配列を取得する。
-	var date = createDateArray(dateText)
+	var date = createDateArray(dateText);
+	// ダイアログのタイトルを設定する
+	var dialogTitle = createDialogTiteDate(date[0], date[1], date[2]);
 	// 予約希望ダイアログを作成する
-	 var mDialog = new memberDialog('memberDialog',date,null, contentName, date);
+	 var mDialog = new memberDialog('memberDialog',dialogTitle,null, contentName, date);
 	mDialog.open();	//ダイアログを開く
 }
 

@@ -286,6 +286,28 @@ function createSpecialDate(year, month, day){
 }
 
 /* 
+ * 関数名:createDialogTiteDate(year, month, day)
+ * 概要  :ダイアログのタイトルバーに表示する日時のパーツを追加する。
+ * 引数  :int year, int month, int day
+ * 返却値  :なし
+ * 設計者:T.Masuda
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.13
+ */
+function createDialogTiteDate(year, month, day){
+	// 曜日の配列を宣言、初期化する。
+	var weekChars = [ '日', '月', '火', '水', '木', '金', '土' ];
+	// 予約希望ダイアログに予約希望日時が書かれたタグを追加する。
+	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
+	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + ')';
+	// 日付を返す
+	return date;
+	// $('.' + dialogClass).attr('title', date);
+	//日付のinputタグにも日付を追加する。
+	// $('.reservedDate').val(date);
+}
+
+/* 
  * 関数名:function getMemberInformation(form)
  * 概要  :フォームの会員情報欄に情報を格納する。。
  * 引数  :String form:対象のフォーム
@@ -624,6 +646,7 @@ function loginDialog(className, title, functionObject){
  * 作成者　:T.Yamamoto
  */
 function memberDialog(className, title, functionObject, content, array){
+	console.log(array);
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	
 	//コンストラクタの引数をメンバにセットする

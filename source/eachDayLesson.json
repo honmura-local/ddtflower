@@ -3,13 +3,17 @@
         "text": ""
     },
     "memberStatus": {
+        "db_getQuery": "SELECT * FROM user_inf WHERE id = 'user_key'",
+        "user_key": {
+            "value": "35"
+        },
         "class": "memberHeader",
         "keepMoney": {
             "keepMoneyText": {
                 "text": "お預かり金額:"
             },
-            "keepMoneyNumber": {
-                "text": "30000"
+            "pre_paid": {
+                "text": ""
             },
             "keepMoneyUnit": {
                 "text": "円"
@@ -19,8 +23,8 @@
             "hasPointText": {
                 "text": "所持ポイント:"
             },
-            "hasPointNumber": {
-                "text": "90000"
+            "get_point": {
+                "text": ""
             },
             "hasPointUnit": {
                 "text": "pt"
@@ -127,9 +131,9 @@
         "lessonStatusText": [
             "※残席:",
             "◎=余裕あり",
-            "○=4席以上の空席",
+            "〇=4席以上の空席",
             "△=残りわずか",
-            "×=満席"
+            "✕=満席"
         ]
     },
     "firstDetail": {

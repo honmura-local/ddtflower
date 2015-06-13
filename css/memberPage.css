@@ -351,12 +351,24 @@ a:active {
 	 	padding: 5px;			/* 要素の幅を5pxにする */
 	 }
 
+	/* 
+	 * セレクタ :.advertise
+	 * 概要   :告知領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
 	 .advertise {
-	 	padding: 5px;
+	 	padding: 5px;			/*  要素の幅を5px広げる*/
 	 }
 
+	/* 
+	 * セレクタ :.memberStatus
+	 * 概要   :会員情報
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
 	 .memberStatus {
-	 	font-size: 16px;
+	 	font-size: 16px;		/* フォントサイズを16pxにする */
 	 }
 
 /* 

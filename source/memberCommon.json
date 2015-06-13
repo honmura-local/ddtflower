@@ -1,29 +1,36 @@
 {
     "memberHeader": {
+        "db_getQuery": "SELECT * FROM user_inf WHERE id = 'user_key'",
+        "user_key": {
+            "value": "35"
+        },
         "memberStatus": {
             "memberNumber": {
                 "noArea": {
                     "text": "No."
                 },
-                "numberArea": {
-                    "text": "00000000"
+                "id": {
+                    "text": ""
                 }
             },
             "memberPoint": {
-                "pointNumberArea": {
-                    "text": "900"
+                "get_point": {
+                    "text": ""
                 },
                 "ptArea": {
                     "text": "pt"
                 }
             },
             "memberName": {
-                "nameArea": {
-                    "text": "山田花子"
+                "user_name": {
+                    "text": ""
                 },
                 "nameTitleArea": {
                     "text": "様"
                 }
+            },
+            "pre_paid":{
+                "style":"display:none"
             }
         },
         "memberMenu": {
