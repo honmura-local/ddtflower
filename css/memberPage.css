@@ -94,7 +94,7 @@ a:active {
  * 作成日 :2015.06.04
  */
 .advertise {
-	height: 30px;			/* 高さを30pxにする */
+	/*height: 30px;*/			/* 高さを30pxにする */
 	border: 1px solid #ddd; /* 灰色の線で囲む */
 	margin: 7px 0;			/* 上下に7pxの余白をあける */
 	display: none;			/* 最初は非表示にしておく */
@@ -285,7 +285,7 @@ a:active {
 	 * 作成日 :2015.06.08
 	 */
 	#container {
-		font-size: 16px;	/* フォントサイズを16pxにする */
+		/*font-size: 16px;*/	/* フォントサイズを16pxにする */
 	}
 
 	/* 
@@ -321,7 +321,7 @@ a:active {
 
 	/* 
 	 * セレクタ :#container .calendar, #tab-container
-	 * 概要   :ページ全体の領域
+	 * 概要   :カレンダーとタブ領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
@@ -331,13 +331,43 @@ a:active {
 
 	/* 
 	 * セレクタ :#container .calendar > div
-	 * 概要   :ページ全体の領域
+	 * 概要   :カレンダーの直下の子供領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
 	#container .calendar > div {
 		width: 100%;		/* 幅を100%にする */ 
 	}
+
+	/* 
+	 * セレクタ :#tab-container
+	 * 概要   :タブ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	 #tab-container {
+	 	width: 86%;				/* 幅を86%にする */
+	 	border: 1px solid #ddd;	/* グレーの線を引く */
+	 	padding: 5px;			/* 要素の幅を5pxにする */
+	 }
+
+	 .advertise {
+	 	padding: 5px;
+	 }
+
+	 .memberStatus {
+	 	font-size: 16px;
+	 }
+
+/* 
+	 * セレクタ :body .ui-dialog .ui-dialog-content
+	 * 概要   :ダイアログ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	 body .ui-dialog .ui-dialog-content {
+	 	padding: .5em;			/* 要素の幅を半文字分広げる */
+	 }
 }
 
 /* スマホ用微調整 */

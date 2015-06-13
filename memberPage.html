@@ -93,8 +93,6 @@
 				creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
 				// レッスンのステータスを示すテーブルを作る
 				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
-				// テーブルのステータスを概要を表示する領域を作る
-				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 
 				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.calendar', 90);
@@ -109,6 +107,8 @@
 				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
 				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
+				// テーブルのステータスを概要を表示する領域を作る
+				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 			});
 			</script>
 		</div>
