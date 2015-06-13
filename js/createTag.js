@@ -39,6 +39,10 @@ STR_EDITVALUE = 'editValue';
 STR_NAME = 'name';
 STR_STYLE = 'style';
 
+//処理の分岐のフラグの数値
+PATTERN_ADD = 0;
+PATTERN_REPLACE = 1;
+
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
 	this.dom = '';				//ひな形のHTMLのDOMを格納する変数。
@@ -1157,7 +1161,45 @@ function createTag(){
 		
 		return ret;	//処理の結果を返す
 	}
-}
-
-
 	
+	/*
+	 * 関数名:replaceData
+	 * 概要  :オブジェクトからオブジェクトへデータを追加、または置き換える
+	 * 引数  :int process:オブジェクトへデータを追加するか、置き換えを行うかを判断する
+	 * 　　  :Object baseObject:追加先となるオブジェクト
+	 * 　　  :Object appendObject:追加元となるオブジェクト
+	 * 　　  :String key:追加指定するオブジェクトのキー
+	 * 返却値 :Object:データの追加・置き換えを行ったオブジェクトを返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.13
+	 */
+	this.replaceData = function(process, baseObject, appendObject, key){
+		//返すオブジェクトを入れる変数を用意する
+		var retObject = {};
+		//追加するオブジェクトを格納する変数を用意する。まずは空のオブジェクトで初期化する
+		var append = {};
+		//keyが入力されていれば
+		if(key !== void(0) && key != null && key != ''){
+			//keyに該当する要素だけを追加するようにする
+			append[key] = appendObject[key];
+		} else {
+			append = appendObject;	//引数の追加元オブジェクトを丸まる追加するようにする
+		}
+		
+		//新規作成するなら
+		if(process == PATTERN_REPLACE){
+			///追加先のオブジェクトを走査する
+			for(objKey in baseObject){
+				//キーに被りがあったら
+				if(objKey in append){
+					//該当するキーを消す
+					delete baseObject[objKey];
+				}
+			}
+		}
+		
+		//2つのオブジェクトを統合したオブジェクトを作って返す
+		return $.extend(true, baseObject, append);
+	}	
+}	
