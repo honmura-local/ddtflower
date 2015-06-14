@@ -11,15 +11,36 @@ class ClassLoader {
 		$this->dirs[] = $dir;
 	}
 
-	public function loader($classname){
+	public function loader(){
 
 		foreach ($this->dirs as $dir) {
-
-			$file = $dir . '/' .  $classname . '.php';
-			if(is_readable($file)){
-				require $file;
-				return;
+			$files = $this->getPHPFiles($dir);
+			foreach ($files as $file) {
+				$full_path = $dir . '/' . $file;
+				if(is_readable($full_path)){
+					require_once $full_path;
+				}
 			}
 		}
+	}
+	
+	protected function getPHPFiles($dir) {
+		$filesArr = array();
+		$res_dir = opendir( $dir);
+		$limit = 500;
+		$cnt = 0; 
+		while($fileName = readdir($res_dir)){
+			if($cnt >= $limit) {
+				break;
+			}
+			if(!strpos($fileName, '.php')) {
+				$cnt++;
+				continue;
+			}
+			$filesArr[] = $fileName;
+			$cnt++;
+		}
+		closedir($res_dir);
+		return $filesArr;
 	}
 }

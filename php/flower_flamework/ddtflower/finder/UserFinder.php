@@ -5,6 +5,8 @@ use database\ConnectionFactory;
 
 use database\connector;
 
+use \PDO;
+
 class UserFinder extends FinderAbstracrt {
 	protected $connection = null;
 	
@@ -17,23 +19,26 @@ class UserFinder extends FinderAbstracrt {
 	 */
 	public function getByIdAndPW($loginID, $password) {
 		$pdo = $this->getConnection();
+		$result = array();
 		$sql =<<<EOF
 			SELECT
 				*
 			FROM
 				user_inf
 			WHERE
-				login_id = $loginID
+				login_id = '$loginID'
 			AND
-				password = $password
+				password = '$password'
 EOF;
 		$stmt = $pdo->query($sql);
-		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($stmt) {
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		}
 		if(!$result) {
 			throw new UserNotFoundException('指定されたユーザを取得できませんでした。' . $loginID);
 		}
 		
-		return result;
+		return $result;
 	}
 	
 	/**

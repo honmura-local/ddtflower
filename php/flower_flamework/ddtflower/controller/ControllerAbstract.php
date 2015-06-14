@@ -6,5 +6,6 @@ namespace controller;
  * コントローラの規定クラス。
  */
 abstract class ControllerAbstract {
-	abstract public function getSession();
+	abstract static protected function getSession();
+	abstract static protected function setSession($value);
 } 

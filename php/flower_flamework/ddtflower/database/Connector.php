@@ -1,6 +1,9 @@
 <?php
 namespace database;
 
+use \PDO;
+use \PDOException;
+
 class Connector {
 	
 	/**
@@ -13,14 +16,14 @@ class Connector {
 		$pdo = null;
 		try {
 			$pdo = new PDO(
-					$this->buildConnectionStr($connection)
+					self::buildConnectionStr($connection)
 					,$connection->getUser()
 					,$connection->getPassword()
-					,array(PDO::ATTR_EMULATE_PREPARES => false
-			));
+			);
 		} catch (PDOException $e){
-			$message = $this->buildConnectFailMessage($connection, $e);
+			$message = self::buildConnectFailMessage($connection, $e);
 			error_log($message);
+			error_log($e->getMessage());
 			throw new DbConnectFailException($message, $e->getCode() ,$e);
 		}
 		return $pdo;
@@ -30,7 +33,7 @@ class Connector {
 	 * @param ConnectionAbstract $connection
 	 * @param PDOException $e
 	 */
-	protected function buildConnectFailMessage(ConnectionAbstract $connection, PDOException $e) {
+	static protected function buildConnectFailMessage(ConnectionAbstract $connection, PDOException $e) {
 		return $connection->getHost().'/'.$connection->getDatabase().
 		'への接続に失敗しました。';
 	}
@@ -39,9 +42,9 @@ class Connector {
 	 * @param ConnectionAbstract $connection
 	 * @return string
 	 */
-	protected function buildConnectionStr(ConnectionAbstract $connection) {
+	static protected function buildConnectionStr(ConnectionAbstract $connection) {
 		return $connection->getRdb().':host='.
 				$connection->getHost().';dbname='.
-				$connection->getDatabase().';charset=utf8';
+				$connection->getDatabase();
 	}
 }

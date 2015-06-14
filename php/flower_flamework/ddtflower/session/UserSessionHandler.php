@@ -6,10 +6,10 @@ class UserSessionHandler implements \ISessionHandler {
 	const USER_SESSION_KEY = '__user__session__';
 	
 	public function get() {
-		return SessionAsJson::get(USER_SESSION_KEY);
+		return SessionAsJson::get(self::USER_SESSION_KEY);
 	}
 	
 	public function set($value) {
-		SessionAsJson::set(USER_SESSION_KEY, $value);
+		SessionAsJson::set(self::USER_SESSION_KEY, $value);
 	} 
 }
