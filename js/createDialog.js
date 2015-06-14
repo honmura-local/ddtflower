@@ -514,6 +514,9 @@ function createDialog(className, title, functionObject){
 		closeOnEscape : false	//escキーを押して閉じるか
 	}
 
+	//クラス名を保存する
+	this.className = className;
+	
 	//引数の関数定義オブジェクトが用意されていれば
 	if(functionObject !== void(0) && functionObject != null && typeof functionObject != 'Object'){
 		//ダイアログのオプションと引数のオブジェクトを統合する
@@ -525,6 +528,18 @@ function createDialog(className, title, functionObject){
 	if(this.options.autoOpen == false){
 		//引数のクラス名を指定してダイアログを呼ぶ。連想配列に定義したオプションのオブジェクトを引数にセットする
 		$('.' + className).dialog(this.options);
+	}
+	
+	/* 
+	 * 関数名:create
+	 * 概要  :DOMを作成する関数。オーバーライドして使う
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.06.13
+	 */
+	this.create = function(){
+		
 	}
 	
 	/* 
@@ -636,16 +651,99 @@ function memberDialog(className, title, functionObject, content, array){
 	
 }
 
+/* クラス名:tagDialog
+ * 概要　　:表示するときに内容を更新するダイアログ
+ * 引数　　:String className:クラス名
+ * 　　　　:String title:ダイアログのタイトル
+ * 　　　　:Object functionObject:追加設定のオブジェクト
+ * 　　　　:function createTags:DOMを作成する記述の関数
+ * 作成日　:2015.0612
+ * 作成者　:T.Masuda
+ */
+function tagDialog(className, title, functionObject, createTags){
+	createTags();	//DOMを作成する
+	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
+	
+	//ダイアログとクラスのインスタンスは一対一になっているが、同一の存在ではないので互いの参照を確保する
+	//メンバにダイアログのタグへの参照を保存する
+	this.dialogDom = $(CHAR_DOT + this.className)[0];
+	//ダイアログのDOMにクラスインスタンスへの参照を保存する
+	this.dialogDom.dialogClass = this;
+	
+	//ダイアログのオプションのオブジェクト内にeventのキーがあれば
+	if(STR_EVENT in this.options){
+		//eventのキーの値に設定されている関数を実行する
+		this.options.event();
+	}
+	
+	/* 関数名　:getJsonFile
+	 * 概要　　:JSONをサーバへ送信し、それを元にデータを取得する一連の処理
+	 * 引数　　:Object queryReplaceData:クエリの置換を行うデータを格納したオブジェクト
+	 * 　　　　:Object dialogObject:ダイアログを開くときに必要になるパラメータの集合のオブジェクト
+	 * 作成日　:2015.0613
+	 * 作成者　:T.Masuda
+	 */
+	this.getJsonFile = function(queryReplaceData, dialogObject){
+		//受け取ったオブジェクトをダイアログのクラスのインスタンスにコピーした上で保存する
+		this.queryReplaceData = $.extend(true, {}, queryReplaceData);
+		//受け取ったオブジェクトを元にJSONデータを更新する。追加元のオブジェクトはJSONDBManagerで置換できる形にしておく
+		creator.replaceData(PATTERN_ADD, creator.json[dialogObject.key], creator.replaveValueNode(queryReplaceData));
+		//サーバへJSONを送信し、テーブルのデータを取得する
+		creator.getJsonFile(dialogObject.url, creator.json[dialogObject.key], dialogObject.key);
+		//作成する要素と同名のクラスの要素があれば削除しておく
+		creator.removeDomNode($(CHAR_DOT + dialogObject.domName, $(CHAR_DOT + this.className)));
+	}
+
+	/* 関数名　:openTag
+	 * 概要　　:タグを作ってダイアログを開く
+	 * 引数　　:Object queryReplaceData:クエリの置換を行うデータを格納したオブジェクト
+	 * 　　　　:Object dialogObject:ダイアログを開くときに必要になるパラメータの集合のオブジェクト
+	 * 作成日　:2015.0613
+	 * 作成者　:T.Masuda
+	 */
+	this.openTag = function(queryReplaceData, dialogObject){
+		this.getJsonFile(queryReplaceData, dialogObject);	//タグを出力する準備を行う
+		//テーブルを出力する
+		creator.outputTag(dialogObject.key, dialogObject.domName, dialogObject.appendTo);
+		//ダイアログを開く
+		$(CHAR_DOT + this.className).dialog(STR_OPEN);
+	}
+
+	/* 関数名　:openTagTable
+	 * 概要　　:テーブルを作ってダイアログを開く
+	 * 引数　　:Object queryReplaceData:クエリの置換を行うデータを格納したオブジェクト
+	 * 　　　　:Object dialogObject:ダイアログを開くときに必要になるパラメータの集合のオブジェクト
+	 * 作成日　:2015.0613
+	 * 作成者　:T.Masuda
+	 */
+	this.openTagTable = function(queryReplaceData, dialogObject){
+		this.openTag(queryReplaceData, dialogObject);	//openTagを通常通り実行する
+		//jsonのdb_getQueryのキーの値を上書きする
+		creator.json[dialogObject.key].db_getQuery = creator.json[dialogObject.key].replaceTable.replace_getQuery;
+		//テーブル用のデータを取得する
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[dialogObject.key], dialogObject.key);
+		//テーブルを出力する
+		creator.outputTagTable(dialogObject.key, STR_LESSON_TABLE, CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE);
+		//テーブルを配置するターゲットのタグを削除する
+		$(CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE).children(':first').unwrap();
+		//ダイアログを開く
+		$(CHAR_DOT + this.className).dialog(STR_OPEN);
+	}
+}
+
 //ダイアログクラスの親子関係を設定する
 specialReservedDialog.prototype = new createDialog();
 specialReservedConfirmDialog.prototype = new createDialog();
 loginDialog.prototype = new createDialog();
 memberDialog.prototype = new createDialog();
+tagDialog.prototype = new createDialog();
+
 //サブクラスのコンストラクタを有効にする
 specialReservedDialog.prototype.constructor = specialReservedDialog;
 specialReservedConfirmDialog.prototype.constructor = specialReservedConfirmDialog;
 loginDialog.prototype.constructor = loginDialog;
 memberDialog.prototype.constructor = memberDialog;
+tagDialog.prototype.constructor = tagDialog;
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
 dialogOption['loginDialog'] = {
@@ -869,7 +967,7 @@ dialogOption['specialReservedConfirmDialog'] = {
 
 dialogOption['memberDialog'] = {
 		// 幅を設定する。
-		width			: 'auto',
+		width			: STR_AUTO,
 		// 幅を設定する。
 		// ダイアログを生成と同時に開く。
 		autoOpen		: true,
@@ -882,18 +980,92 @@ dialogOption['memberDialog'] = {
 		// 作成完了時のコールバック関数。
 		create:function(event, ui){
 			//文字サイズを小さめにする。
-			$(this).next().css('font-size', '0.5em');
+			$(this).next().css(STR_FONT_SIZE, VALUE_0_5EM);
 		},
 		// 位置を指定する。
 		position:{
 			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-			my:'center center',
+			my:STR_CENTER_CENTER,
 			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-			at:'center center',
+			at:STR_CENTER_CENTER,
 			// ウィンドウをダイアログを配置する位置の基準に指定する。
 			of:window
 		}
 	};
+
+//予約ダイアログ用設定
+dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
+		// 幅を設定する。
+		width			: STR_AUTO,
+		// 幅を設定する。
+		// ダイアログを生成と同時に開く。
+		autoOpen		: false,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		//ダイアログを閉じるときのイベント
+		close			:function(){
+			//読み込んだテーブルのデータを消す
+			delete creator.json[STR_MEMBER_INFORMATION].table;
+		},
+		//イベント
+		event:function(){
+			//予約決定ダイアログを表示する処理
+			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
+				//予約決定ダイアログのクラスインスタンスを取得する
+				var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
+				//レッスン一覧ダイアログを取得する
+				var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
+				//クリックしたセルの親の行番号を取得する
+				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
+				//次のダイアログに渡すオブジェクトを作る
+				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
+						creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
+				
+				insertConfirmReserveJsonDialogValue(sendObject);
+				
+				//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
+				$nextDialog.openTag(sendObject,
+						{
+							url:URL_GET_JSON_STRING_PHP, 
+							key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
+							domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
+							appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
+						}
+				);
+			});
+		}
+};
+
+//予約決定ダイアログ用設定
+dialogOption['memberReservedConfirmDialog'] = {
+		// 幅を設定する。
+		width			: 'auto',
+		// 幅を設定する。
+		// ダイアログを生成と同時に開く。
+		autoOpen		: false,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		// ボタン
+		buttons:[
+		        //はいボタン
+		        {
+		        	text:'はい',	//ボタンのテキスト
+		        	//クリックイベントの記述
+		        	click:function(){
+		        		
+		        	}
+		        },
+		        //いいえボタン
+		        {
+		        	text:'いいえ',	//ボタンのテキスト
+		        	//クリックイベントの記述
+			        	click:function(){
+			        		
+			        }
+		        }
+		]
+		
+};
 
 //ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
 var readyDialogFunc = {};
@@ -1078,14 +1250,40 @@ var errorMessages = [
 var init = getInitData(INIT_JSON_PATH, 100);
 
 /* 
- * 関数名:showEditDialog(editElem)
- * 概要  :テキストを編集するダイアログを表示する。
- * 引数  :Element editElem:編集対象となる要素。
+ * 関数名:insertConfirmReserveJsonDialogValue
+ * 概要  :授業一覧レコードの値を予約確定ダイアログのJSONに渡す。
+ * 引数  :Object sendObject:値を渡す元となるオブジェクト
  * 返却値  :なし
  * 作成者:T.M
- * 作成日:2015.03.18
+ * 作成日:2015.06.14
  */
-function showEditDialog(editElem){
+function insertConfirmReserveJsonDialogValue(sendObject){
+	//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
+	var object = creator.json.memberReservedConfirmDialogContent;
+	
+	//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
+	object.lessonConfirm.lessonInfo.timeSchedule.text = sendObject.start_time + SYMBOL_UNIT + sendObject.end_time;
+	object.lessonConfirm.lessonInfo.store.text = sendObject.school_name;
+	object.lessonConfirm.lessonInfo.course.text = sendObject.lesson_name;
+	object.lessonConfirm.lessonInfo.price.text = 0;
+//	object.lessonConfirm.lessonInfo.price.text = sendObject.;
+	object.lessonConfirm.lessonStage.stageValue.text = sendObject.stage_no;
+	object.lessonConfirm.lessonStage.levelValue.text = sendObject.level_no;
+	object.attention.cancelRateValue.thatDayValue.text = 0;
+	object.attention.cancelRateValue.oneBeforeDayValue.text = 0;
+	object.attention.cancelRateValue.twoBeforeDayValue.text = 0;
+	object.attention.addPointValueFirst.onePersonValue.text = 0;
+	object.attention.addPointValueFirst.twoPeopleDayValue.text = 0;
+	object.attention.addPointValueSecond.fourPersonValue.text = 0;
+	object.attention.addPointValueSecond.eightPeopleDayValue.text = 0;
+//	object.attention.cancelRateValue.thatDayValue.text = sendObject.;
+//	object.attention.cancelRateValue.oneBeforeDayValue.text = sendObject.;
+//	object.attention.cancelRateValue.twoBeforeDayValue.text = sendObject.;
+//	object.attention.addPointValueFirst.onePersonValue.text = sendObject.;
+//	object.attention.addPointValueFirst.twoPeopleDayValue.text = sendObject.;
+//	object.attention.addPointValueSecond.fourPersonValue.text = sendObject.;
+//	object.attention.addPointValueSecond.eightPeopleDayValue.text = sendObject.;
 	
 }
+
 

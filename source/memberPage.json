@@ -2,7 +2,7 @@
     "userBanner": {
         "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
         "user_key": {
-            "value": "35"
+            "value": "285"
         },
         "bannerArea": {
             "banner": [
@@ -99,9 +99,9 @@
         }
     },
     "lessonReservedDetailTable": {
-        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
+        "db_getQuery": "SELECT time_table_day.lesson_date AS lesson_date,start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
-            "value": "22"
+            "value": "285"
         },
         "border": "1",
         "config": {
@@ -140,7 +140,7 @@
                     "style": "display:none;"
                 },
                 "lesson_date": {
-                    "style": "display:none;"
+                    "columnName": "日付"
                 },
                 "students": {
                     "style": "display:none;"
@@ -159,7 +159,7 @@
     "lessonFinishedDetailTable": {
         "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
-            "value": "22"
+            "value": "285"
         },
         "border": "1",
         "config": {
@@ -198,7 +198,7 @@
                     "style": "display:none;"
                 },
                 "lesson_date": {
-                    "style": "display:none;"
+                    "columnName": "日付"
                 },
                 "students": {
                     "style": "display:none;"
@@ -209,23 +209,21 @@
             }
         }
     },
-    "memberReservedConfirmDialog": {
-        "db_getQuery": "",
-        "置換したい文字列": {
-            "value": "置換後の文字列"
-        },
+    "memberReservedConfirmDialog": {},
+    "memberReservedConfirmDialogContent": {
+    	"db_getQuery":"",
         "lessonConfirm": {
             "lessonInfo": {
-                "データベースの授業時間列名": {
+                "timeSchedule": {
                     "text": ""
                 },
-                "データベースの店舗列名": {
+                "store": {
                     "text": ""
                 },
-                "データベースのコース列名": {
+                "course": {
                     "text": ""
                 },
-                "データベースの料金の列名": {
+                "price": {
                     "text": ""
                 }
             },
@@ -233,19 +231,13 @@
                 "stageLabel": {
                     "text": "ステージ:"
                 },
-                "データベースのステージ列名": {
+                "stageValue": {
                     "text": ""
                 },
                 "levelLabel": {
                     "text": "レベル:"
                 },
-                "データベースのレベル列名": {
-                    "text": ""
-                },
-                "doScheduleLabel": {
-                    "text": "催行:"
-                },
-                "データベースの催行の列名": {
+                "levelValue": {
                     "text": ""
                 }
             }
@@ -260,7 +252,7 @@
                 "thatDayLabel": {
                     "text": "当日:"
                 },
-                "データベースの当日キャンセルのレート列名": {
+                "thatDayValue": {
                     "text": ""
                 },
                 "thatDayUnit": {
@@ -269,7 +261,7 @@
                 "oneBeforeDayLabel": {
                     "text": "1日前:"
                 },
-                "データベースの1日前キャンセルのレート列名": {
+                "oneBeforeDayValue": {
                     "text": ""
                 },
                 "oneBeforeDayUnit": {
@@ -278,7 +270,7 @@
                 "twoBeforeDayLabel": {
                     "text": "2日前:"
                 },
-                "データベースの2日前キャンセルのレート列名": {
+                "twoBeforeDayValue": {
                     "text": ""
                 },
                 "twoBeforeDayUnit": {
@@ -291,10 +283,30 @@
                 }
             },
             "addPointValueFirst": {
+                "onePersonLabel": {
+                    "text": "4人~7人:"
+                },
+                "onePersonValue": {
+                    "text": ""
+                },
+                "onePersonUnit": {
+                    "text": "pt"
+                },
+                "twoPeopleLabel": {
+                    "text": "8人:"
+                },
+                "twoPeopleDayValue": {
+                    "text": ""
+                },
+                "twoPeopleDayUnit": {
+                    "text": "pt"
+                }
+            },
+            "addPointValueSecond": {
                 "fourPersonLabel": {
                     "text": "4人~7人:"
                 },
-                "データーベースの受講者が4人から7人の時のポイント数": {
+                "fourPersonValue": {
                     "text": ""
                 },
                 "fourPersonUnit": {
@@ -303,7 +315,7 @@
                 "eightPeopleLabel": {
                     "text": "8人:"
                 },
-                "データーベースの受講者が8人の時のポイント数": {
+                "eightPeopleDayValue": {
                     "text": ""
                 },
                 "eightPeopleDayUnit": {

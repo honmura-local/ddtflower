@@ -1,43 +1,77 @@
 //JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
 
 //createTagコール時の引数として使う定数。
-CREATETAG_FIRST = -1;
+CREATETAG_FIRST 				= -1;
 //@add 2015.0610 T,Masuda「JSON」と「DOM」の文字列の定数を追加しました
-STR_JSON = 'json';
-STR_DOM = 'dom';
 //固定の文字列の定数を定義していく
-STR_JSON = 'json';
-STR_DOM = 'dom';
-STR_OBJECT = 'object';
-STR_TRANSPORT_FAILD_MESSAGE = '通信に失敗しました。';
-STR_POST = 'POST';
-STR_HTML = 'HTML';
-SELECTOR_ALL_CHILD = '> *';
-STR_FAILD_TO_CREATE = 'の作成に失敗しました。';
-SELECTOR_MAIN = '.main';
-STR_TEXT = 'text';
-STR_HTML = 'html';
-SELECTOR_ALLCHILD_CLASS_FRONT = ' > *[class="';
-SELECTOR_CLOSE_ATTRIBUTE = '"]';
-CHAR_RIGHT_ARROW = '>';
-CHAR_DOT = '.';
-SELECTOR_NUMBERING_OUGHTER = '.numberingOuter';
-STR_NUMBERING = 'numbering';
-STR_PRE ='pre';
-STR_ARROW_LEFT_DOUBLE = '<<';
-TAG_DIV = '<div></div>';
-STR_KEY_AND_VALUE = 'keyAndValue';
-TAG_SPAN = '<span></span>'; 
-STR_KEYS = 'keys';
-STR_VALUES = 'values';
-SELECTOR_KEYS = '.keys'; 
-TAG_LABEL = '<label></label>';
-STR_VALUELABEL = 'valueLabel';
-SELECTOR_VALUES = '.values';		
-TAG_TEXTAREA = '<textarea></textarea>'; 
-STR_EDITVALUE = 'editValue';
-STR_NAME = 'name';
-STR_STYLE = 'style';
+CHAR_DOT										= '.';
+CHAR_HYPHEN										= '-';
+CHAR_RIGHT_ARROW								= '>';
+SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
+SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
+SELECTOR_CLOSE_ATTRIBUTE						= '"]';
+SELECTOR_KEYS									= '.keys'; 
+SELECTOR_MAIN									= '.main';
+SELECTOR_NUMBERING_OUGHTER						= '.numberingOuter';
+SELECTOR_VALUES									= '.values';
+SELECTOR_LESSON_TABLE							= '.lessonTable';
+SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR			= '.reserveLessonListDialog table tr';
+SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD			= '.reserveLessonListDialog table tr td';
+SELECTOR_RESERVE_LESSON_LIST_DIALOG				= '.reserveLessonListDialog';
+SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG			= '.memberReservedConfirmDialog';
+SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT	= '.memberReservedConfirmDialogContent';
+STR_FAILD_TO_CREATE								= 'の作成に失敗しました。';	//outputTagでパーツの作成を失敗したときのメッセージ
+STR_ARROW_LEFT_DOUBLE							= '<<';
+STR_TEXT										= 'text';
+STR_HTML										= 'html';
+STR_BODY										= 'body';
+STR_NUMBERING									= 'numbering';
+STR_PRE											='pre';
+STR_KEY_AND_VALUE								= 'keyAndValue';
+STR_VALUELABEL									= 'valueLabel';
+STR_VALUES										= 'values';
+STR_KEYS										= 'keys';
+STR_EDITVALUE									= 'editValue';
+STR_NAME										= 'name';
+STR_CLICK										= 'click';
+STR_STYLE										= 'style';
+STR_OPEN										= 'open';
+STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
+STR_LESSON_TABLE_AREA							= 'lessonTableArea';
+STR_DIALOG										= 'dialog';
+STR_TR											= 'tr';
+STR_JSON  										= 'json';				//json
+STR_DOM  										= 'dom';				//dom
+STR_OBJECT 										= 'object';				//objectかどうかの判定に使う
+STR_TRANSPORT_FAILD_MESSAGE						= '通信に失敗しました。';	//通信失敗のメッセージ
+STR_POST										= 'POST';				//リクエストのPOSTメソッド設定
+STR_HTML										= 'HTML';				//AJAXのレスポンスの指定をHTMLにする時に使う
+STR_AUTO										= 'auto';
+STR_FONT_SIZE									= 'font-size';
+STR_TAG_TABLE									= 'tagTable';
+STR_LESSON_TABLE								= 'lessonTable';
+STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT		= 'memberReservedConfirmDialogContent';
+SYMBOL_UNIT										= ' 〜 ';
+TAG_DIV											= '<div></div>';
+TAG_SPAN										= '<span></span>'; 
+TAG_LABEL										= '<label></label>';
+TAG_TEXTAREA									= '<textarea></textarea>'; 
+URL_GET_JSON_STRING_PHP							= 'php/getJSONString.php';
+URL_GET_JSON_ARRAY_PHP							= 'php/getJSONArray.php';
+URL_GET_JSON_ARRAY_FOR_JQGRID_PHP				= 'php/getJSONArrayForJqGrid.php';
+URL_SAVE_JSON_DATA_PHP							= 'php/saveJSONData.php';
+STR_LESSON_TABLE								= 'lessonTable';
+STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
+STR_CENTER_CENTER								= 'center center';
+STR_MEMBER_RESERVED_CONFIRM_DIALOG				= 'memberReservedConfirmDialog';
+STR_EVENT										= 'event';
+VALUE_0_5EM										= '0.5em';
+STR_MEMBER_INFORMATION							= 'memberInfomation';
+STR_REPLACE_TABLE								= 'replaceTable';
+SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
+//処理の分岐のフラグの数値
+PATTERN_ADD = 0;
+PATTERN_REPLACE = 1;
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -105,7 +139,8 @@ function createTag(){
 			//キーが入力されていたら
 		} else if(key !== void(0)){
 			//指定したキーにJSONを格納する
-			this.json[key] = tmp;
+//			this.json[key] = tmp;
+			this.replaceData(PATTERN_ADD, this.json[key], tmp);
 		//既にJSONが格納されていたら
 		} else {
 			//連想配列を連結する。
@@ -1157,7 +1192,75 @@ function createTag(){
 		
 		return ret;	//処理の結果を返す
 	}
-}
-
-
 	
+	/*
+	 * 関数名:replaceData
+	 * 概要  :オブジェクトからオブジェクトへデータを追加、または置き換える
+	 * 引数  :int process:オブジェクトへデータを追加するか、置き換えを行うかを判断する
+	 * 　　  :Object baseObject:追加先となるオブジェクト
+	 * 　　  :Object appendObject:追加元となるオブジェクト
+	 * 　　  :String key:追加指定するオブジェクトのキー
+	 * 返却値 :Object:データの追加・置き換えを行ったオブジェクトを返す
+	 * 設計者:H.Kaneko
+	 * 作成者:T.Masuda
+	 * 作成日:2015.06.13
+	 */
+	this.replaceData = function(process, baseObject, appendObject, key){
+		//返すオブジェクトを入れる変数を用意する
+		var retObject = {};
+		//追加するオブジェクトを格納する変数を用意する。まずは空のオブジェクトで初期化する
+		var append = {};
+		//keyが入力されていれば
+		if(key !== void(0) && key != null && key != ''){
+			//keyに該当する要素だけを追加するようにする
+			append[key] = appendObject[key];
+		} else {
+			append = appendObject;	//引数の追加元オブジェクトを丸まる追加するようにする
+		}
+		
+		//新規作成するなら
+		if(process == PATTERN_REPLACE){
+			///追加先のオブジェクトを走査する
+			for(objKey in baseObject){
+				//キーに被りがあったら
+				if(objKey in append){
+					//該当するキーを消す
+					delete baseObject[objKey];
+				}
+			}
+		}
+		
+		//2つのオブジェクトを統合したオブジェクトを作って返す
+		return $.extend(true, baseObject, append);
+	}
+	
+	
+	/* 関数名　:removeDomNode
+	 * 概要　　:引数で指定された要素を削除する
+	 * 引数　　:Element element:削除する要素
+	 * 戻り値　:boolean:削除できたかどうかを返す
+	 * 作成日　:2015.0614
+	 * 作成者　:T.Masuda
+	 */
+	this.removeDomNode = function(element){
+		//指定された要素が存在していたら削除する
+		element !== void(0)? $(element).remove():console.log("");
+	}
+	
+	/* 関数名　:replaveValueNode
+	 * 概要　　:引数で指定されたオブジェクトのルートのキーの値を、新たなオブジェクトのvalueキーのvalueにセットして元のキーにセットする
+	 * 引数　　:Object object:処理対象のオブジェクト
+	 * 戻り値　:なし
+	 * 作成日　:2015.0614
+	 * 作成者　:T.Masuda
+	 */
+	this.replaveValueNode = function(object){
+		//オブジェクトを走査する
+		for(key in object){
+			//keyのvalueを、新たに生成したオブジェクトのvalueのkeyにセットし、元のkeyにセットする
+			object[key] = {value:object[key]};
+		}
+		
+		return object;	//処理を終えたobjectを返す
+	}	
+}	

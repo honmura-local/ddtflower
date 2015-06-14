@@ -155,11 +155,17 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			// 予約のダイアログを出す。
-			callMemberDialog(dateText, $(this));
-		},
-		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-		minDate:1			//今日以前はクリックできなくする。
+			// 講座一覧ダイアログを開く
+			this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
+					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG});
+		}
+//
+//		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+//		minDate:1			//今日以前はクリックできなくする。
+		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
+//		beforeShowDay:function(date){
+//			return putDisableDate(date, this.dateArray);
+//		}
 	}
 
 /*
@@ -233,17 +239,27 @@ function myPageReservedCalendar(selector, dateRange) {
  * クラス名:memberCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
  * 　　  :int dateRange:クリック可能な日付の期間
+ * 　　  :int userId:ユーザID
+ * 　　  :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
  * 作成者:T.Yamamoto
+ * 変更日:2015.06.13
+ * 変更者:T.Masuda
  */
-function memberCalendar(selector, dateRange) {
+function memberCalendar(selector, dateRange, userId, dialog) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'member';	//カレンダー名をセットする
+	
+	$calendar = $(selector)[0];		//カレンダーの要素を取得する
+	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
+	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
+	$calendar.userId = userId;		//ユーザIDを保存する
+	
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する
-	this.calendarOptions = calendarOptions['member'];
+	this.calendarOptions = calendarOptions[this.calendarName];
 }
 
 /*
