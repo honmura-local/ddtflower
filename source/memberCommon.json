@@ -5,20 +5,11 @@
             "value": "35"
         },
         "memberStatus": {
-            "memberNumber": {
-                "noArea": {
-                    "text": "No."
-                },
-                "id": {
-                    "text": ""
-                }
-            },
-            "memberPoint": {
-                "get_point": {
-                    "text": ""
-                },
-                "ptArea": {
-                    "text": "pt"
+            "topLogoArea":{
+                "topLink":{
+                    "topLogoImage":{
+                        "src":"image/top(logo).png"
+                    }
                 }
             },
             "memberName": {
@@ -29,31 +20,21 @@
                     "text": "様"
                 }
             },
-            "pre_paid":{
-                "style":"display:none"
+            "memberPoint": {
+                "get_point": {
+                    "text": ""
+                },
+                "ptArea": {
+                    "text": "pt"
+                }
             }
         },
-        "memberMenu": {
-            "memberMenuList": [
-                {
-                    "href": "",
-                    "text": "サポートメール"
-                },
-                {
-                    "href": "",
-                    "text": "プロフィール"
-                },
-                {
-                    "href": "",
-                    "text": "ログアウト"
+        "logoutArea":{
+            "logoutLink":{
+                "logoutImage":{
+                    "src":"image/icon(logout22-50).png"
                 }
-            ]
-        }
-    },
-    "topLinkArea":{
-        "topLink":{
-            "href":"",
-            "text":"トップページへ"
+            }
         }
     }
 }

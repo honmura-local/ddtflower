@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/createLittleContent.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/dailyClasses.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -55,12 +57,14 @@
 
 				// 会員ページヘッダーを作る
 				creator.outputTag('memberHeader');
-
-				//告知領域のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['userBanner'], 'userBanner');
-
 				// バナー領域を作る
 				creator.outputTag('userBanner');
+
+				//告知領域のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
+
+				// 告知領域を作る
+				creator.outputTag('advertise');
 				
 				//通知領域の内容があれば
 				if($('.advertise p:not(:empty)').length){
@@ -109,14 +113,27 @@
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberTable'], 'memberTable');
 
+				// 受講済み授業テーブルを作る
 				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
+				// 予約中授業のテーブルを作る
 				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
+				// 予約テーブルを作る
 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
 				// テーブルのステータスを概要を表示する領域を作る
 				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
+
+				// 予約中授業の連想配列を変数に入れる 
+				var reservedNow = creator.json['lessonReservedDetailTable']['table'];
+				// console.log(creator.json);
+
+				// 日ごと授業テーブルの連想配列を変数に入れる
+				var eachDayLessonTable = creator.json['memberTable']['table'];
+
+				tableColumnValueInput('.lessonTable', 0, eachDayLessonTable, 'buildHourFromToEx');
+
 			});
 			</script>
 		</div>

@@ -12,34 +12,26 @@ a:active {
 	color: #999;		/* クリックしたときに文字の色を薄くする */ 
 }
 
-/* 
- * セレクタ :.memberName
- * 概要   :会員名領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberName {
-	padding-right: 1em;		/* 2文字分空白を空ける */
+label
+.memberMenu li,
+.banner,
+.tab,
+.themeText,
+.passLabel,
+.passTextbox {
+	display: inline-block;
 }
 
-/* 
- * セレクタ :.memberPoint
- * 概要   :会員所持ポイント領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberName, .memberPoint {
-	float:right;			/* 右側に回り込みする */
-}
-
-/* 
- * セレクタ :.memberMenu
- * 概要   :ヘッダのメニュー領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberMenu {
-	margin: 5px 0;			/* 上下に5pxの余白をとる */
+.memberMenu li,
+.tab,
+.lessonTable,
+.topLink,
+.keepMoney,
+.hasPoint,
+.passArea,
+.topLinkArea,
+.subHeader {
+	text-align: center;
 }
 
 /* 
@@ -48,9 +40,31 @@ a:active {
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
-.memberMenu li {
-	display: inline-block;	/* インラインブロック要素として扱う */
-	text-align: center;		/* 中央寄せにする */
+.topLogoArea,
+.memberHeader
+.nameTitleArea,
+.ptArea,
+.banner {
+	margin-left: 3px;
+}
+
+.logoutArea,
+.banner:nth-of-type(6) {
+	margin-right: 3px;
+}
+
+
+#container .calendar,
+.topLogoArea,
+.memberHeader p:nth-of-type(1) {
+	float: left;
+}
+
+#tab-container,
+.selectThemeButton,
+.logoutArea,
+.memberHeader p:nth-of-type(2) {
+	float: right;
 }
 
 /* 
@@ -74,40 +88,6 @@ a:active {
 }
 
 /* 
- * セレクタ :.memberMenu li:nth-of-type(1)
- * 概要   :ヘッダのメニュー1つ目の項目の領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberMenuLink {
-	padding: 5px 0;			/* 上下に5px要素の幅を指定する */
-	border-bottom: 3px solid #dfdfdf;	/* 太さ3pxで灰色の線を底に引く */
-}
-
-/* 
- * セレクタ :.memberMenu li:nth-of-type(1)
- * 概要   :ヘッダのメニュー1つ目の項目の領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.memberMenuLink:hover {
-	border-bottom: 3px solid #CEDC3A;
-}
-
-
-/* 
- * セレクタ :.banner
- * 概要   :バナー領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.banner {
-	display: inline-block;		/* インラインブロック要素として扱う */
-	margin-left: 3px
-
-}
-
-/* 
  * セレクタ :.advertise
  * 概要   :告知領域
  * 作成者 :T.Yamamoto
@@ -119,6 +99,9 @@ a:active {
 	display: none;			/* 最初は非表示にしておく */
 }
 
+.userBanner {
+	border-bottom: 3px solid #ddd;
+}
 
 /* 
  * セレクタ :#tab-container
@@ -128,7 +111,6 @@ a:active {
  */
 #tab-container {
 	width: 49%;		/* 幅を49%にする */
-	float: right;	/* 右に回り込みする */
 }
 
 /* 
@@ -138,21 +120,9 @@ a:active {
  * 作成日 :2015.06.04
  */
 .tab {
-    display: inline-block;		/* インラインブロック要素として扱う */
 	width: 50%;					/* 幅を45%にする */
-    text-align: center;			/* 中央揃えにする */
 	padding: 5px 0;				/* 5px要素の幅を広げる */
-    background-color: #cedc3a;	/* 背景を黄緑色にする */
-}
-
-/* 
- * セレクタ :.themeText
- * 概要  :「テーマ」のテキスト領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.themeText {
-	display: inline-block; /* インラインブロック要素として扱う */
+	background-color: #cedc3a;	/* 背景を黄緑色にする */
 }
 
 /* 
@@ -164,15 +134,6 @@ a:active {
 .selectThemebox {
 	height:32px;			/* 高さを32pxにする */
 }
-/* 
- * セレクタ :.selectThemeButton
- * 概要  :絞り込みボタン
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.selectThemeButton {
-	float: right;			/* 右側に回り込みする */
-}
 
 /* 
  * セレクタ :.tab.active
@@ -181,7 +142,7 @@ a:active {
  * 作成日 :2015.06.04
  */
 .tab.active {
-	background-color: #ce6;		/* 背景を薄い黄緑にする */
+	background-color: #ce6;	/* 背景を薄い黄緑にする */
 }
 
 /* 
@@ -192,9 +153,8 @@ a:active {
  */
 .lessonTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
-	font-size: 14px;			/* フォントサイズを14pxにする */
+	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin-top: 5px;			/* 上から5pの余白をとる */
-	text-align: center;			/* 文字を中央揃えにする */
 	width: 100%;				/* 幅を100%にする */
 }
 
@@ -217,7 +177,6 @@ a:active {
  */
 #container .calendar {
 	margin-top: 5px;		/* 上下に5pxの余白をとる */
-	float: left;			/* 左側に回り込みする */
 }
 
 /* 
@@ -251,14 +210,8 @@ a:active {
 	display: none;			/* 非表示にする */
 }
 
-/* 
- * セレクタ :.topLink
- * 概要   :トップページリンク領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.11
- */
-.topLink {
-	text-align: center;		/* 中央揃えにする */
+.bannerArea {
+	clear: both;
 }
 
 /* 
@@ -278,7 +231,6 @@ a:active {
  * 作成日 :2015.06.11
  */
 .passLabel {
-	display: inline-block;		/* 	インラインブロック要素として扱う */
 	width: 20%;					/* 幅を20%にする */
 }
 
@@ -289,7 +241,6 @@ a:active {
  * 作成日 :2015.06.11
  */
 .passTextbox {
-	display: inline-block;		/* 	インラインブロック要素として扱う */
 	width: 60%;					/* 幅を60%にする */
 }
 
@@ -317,6 +268,47 @@ a:active {
 	margin-right: 148px;/* 右から148px余白を空ける */
 }
 
+/* 予約確認ダイアログ領域 */
+
+.lessonInfo span {
+	padding-right: .5em;
+}
+
+.attention span {
+	display: inline-block;
+}
+
+.stageValue,
+.levelValue,
+.doScheduleValue,
+.thatDayValue,
+.thatDayUnit,
+.oneBeforeDayValue,
+.oneBeforeDayUnit,
+.twoBeforeDayValue,
+.twoBeforeDayUnit,
+.onePersonValue,
+.onePersonUnit,
+.twoPeopleDayValue,
+.twoPeopleDayUnit,
+.fourPersonValue,
+.fourPersonUnit,
+.eightPeopleDayValue,
+.eightPeopleDayUnit
+{
+	margin-left: -3px
+}
+
+.memberReservedConfirmDialog {
+	font-size: 12px
+}
+
+.confirmText {
+	text-align: center;
+}
+
+
+/* 予約確認ダイアログ領域 */
 
 
 /* スマホ・タブレットレイアウト */
@@ -331,25 +323,21 @@ a:active {
 				.topLinkArea,
 				.memberInfo
 	 * 概要   :幅を90%にし、上下5pxの余白をとって中央揃えにする
-	 		対象領域：会員ページヘッダー
-	 				バナー
-	 				カレンダー
-	 				タブ
-					パスワード
-					トップページリンク
-					会員情報
+	 		対象領域：会員ページヘッダー, バナー, カレンダー, タブ, パスワード, トップページリンク, 会員情報
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	.memberHeader,
-	.userBanner,
+	/*.memberHeader,*/
+	/*.userBanner,*/
+	.advertise,
 	#container .calendar,
 	#tab-container,
 	.passArea,
 	.topLinkArea,
-	.memberInfo
+	.memberInfo,
+	#tab-container
 	{
-		width: 90%;			/* 幅を90%にする */ 
+		width: 97%;			/* 幅を90%にする */ 
 		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
 	}
 
@@ -380,7 +368,6 @@ a:active {
 	 * 作成日 :2015.06.08
 	 */
 	 #tab-container {
-	 	width: 90%;				/* 幅を86%にする */
 	 	border: 1px solid #dfdfdf;	/* グレーの線を引く */
 	 }
 
@@ -392,18 +379,11 @@ a:active {
 	 * 作成日 :2015.06.13
 	 */
 	 .tabs,
-	 .tabContentArea {
+	 .tabContentArea,
+	 .advertiseLink,
+	 .message_title,
+	 .message_content {
 	 	padding: 3px; 			/* 3px要素の幅を広げる */
-	 }
-
-	/* 
-	 * セレクタ :.advertise
-	 * 概要   :告知領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.08
-	 */
-	 .advertise {
-	 	padding: 5px;			/* 要素の幅を5px広げる */
 	 }
 
 	/* 
@@ -423,9 +403,13 @@ a:active {
 	 * 作成日 :2015.06.13
 	 */
 	 .memberName, .memberPoint {
-	 	font-size: 15px;			/* フォントサイズを15pxにする */
+	 	vertical-align: sub;
+	 	padding-left: 1em;
 	 }
 
+	 .lessonTable td {
+	 	font-size: 12px;
+	 }
 
 	/* 
 	 * セレクタ :body .ui-dialog .ui-dialog-content
@@ -448,6 +432,11 @@ a:active {
 	 	font-size: 12px;		/* フォントサイズを12pxにする */
 	 	padding: 5px 0;			/* 上下に5px要素の幅を広げる */
 	 }
+
+	 .memberHeader {
+	 	padding-top: 3px;
+	 }
+
 
 	/* 
 	 * セレクタ :.memberHeader p:nth-of-type(1)
@@ -547,7 +536,7 @@ a:active {
 	 * 作成日 :2015.06.09
 	 */
 	.lessonStatusText {
-		font-size: 13px;		/* フォントサイズを13pxにする */
+		font-size: 12px;
 		padding-right: 1em;		/*　要素の幅を1文字分広げる　*/
 	}
 
@@ -600,6 +589,8 @@ a:active {
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.10
 	 */
+	.lessonStatusText,
+	.memberInfo,
 	.rateDetail1,
 	.rateDetail2,
 	.cancelRateText,
@@ -615,28 +606,7 @@ a:active {
 	 * 作成日 :2015.06.10
 	 */
 	.subHeader {
-		text-align: center;		/* 中央揃えにする */
 		font-size: 14px;		/* フォントサイズを14pxにする */
-	}
-
-	/* 
-	 * セレクタ :.memberInfo
-	 * 概要   :会員情報領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.10
-	 */
-	.memberInfo {
-		font-size: 13px;		/* フォントサイズを13pxにする */
-	}
-
-	/* 
-	 * セレクタ :label
-	 * 概要   :プロフィールページヘッダーの下に来るサブ情報
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.10
-	 */
-	label {
-		display: inline-block;	/* インラインブロック要素として扱う */
 	}
 
 	/* 
