@@ -10,7 +10,6 @@
 		</tr>
 	</table>
 
-
 	<!-- 情報領域 -->
 	<div class="userBanner">
 		<!-- バナーエリア -->
@@ -85,6 +84,10 @@
 	<!-- 予約確認ダイアログ領域 -->
 	<!-- 授業予約確認ダイアログの外側 -->
 	<div class="memberReservedConfirmDialog">
+	</div>
+
+	<!-- 授業予約確認ダイアログの内側 -->
+	<span class="memberReservedConfirmDialogContent">
 		<!--授業内容確認 -->
 		<ul class="lessonConfirm">
 			<!-- 1行目、授業情報領域 -->
@@ -94,7 +97,7 @@
 				<!-- 店舗名 -->
 				<span class="store"></span>
 				<!-- コース名 -->
-				<span class="course">
+				<span class="course"></span>
 				<!-- 料金 -->
 				<span class="price"></span>
 			</li>
@@ -108,10 +111,6 @@
 				<span class="levelLabel"></span>
 				<!-- レベル値 -->
 				<span class="levelValue"></span>
-				<!-- 催行ラベル -->
-				<span class="doScheduleLabel"></span>
-				<!-- 催行値 -->
-				<span class="doScheduleValue"></span>
 			</li>
 		</ul>
 
@@ -182,10 +181,30 @@
 
 		<!-- 確認テキスト「上記の授業を予約しますか？」領域 -->
 		<p class="confirmText"></p>
+	</span>
 
-	</div>
 	<!-- 予約確認ダイアログ領域 終わり -->
 
+	<!-- レッスン情報取得用のダミーHTML -->
+	<div class="lessonInfo">
+		<var class="lessonCancelRate">
+			<var class="lessonKey~0">
+				<var class="lesson_key"></var>
+			</var>
+			<var class="lessonKey~1">
+				<var class="lesson_key"></var>
+			</var>
+			<var class="lessonKey~2">
+				<var class="lesson_key"></var>
+			</var>
+		</var>
+		<var class="lesonPointRate">
+		<var class="lessonPointRate~">
+			<var class="point_rate"></var>
+			<var class="point_rate"></var>
+		</var>
+		</var>
+	</div>
 </div>
 </body>
 </html>

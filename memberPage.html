@@ -87,28 +87,30 @@
 				// 日ごと授業のテンプレートを読み込む
 				creator.getDomFile('template/eachDayLesson.html');
 
-				// 日ごとダイアログ領域を作る
-				creator.outputTag('memberDialog', 'memberDialog', 'body');
-				// 会員ステータスを表示する領域を作る
-				creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
-				// レッスンのステータスを示すテーブルを作る
-				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
-
+				//予約一覧ダイアログを作る
+				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
+					// 日ごとダイアログ領域を作る
+					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+				});
+				
+				//予約確定ダイアログを作る
+				var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
+					// テーブルのステータスを概要を表示する領域を作る
+					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
+				});
+				
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.calendar', 90);
+				var memCalendar = new memberCalendar('.calendar', 90, 117, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
+				
 				
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberTable'], 'memberTable');
 
 				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
 				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
-				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
-				// テーブルのステータスを概要を表示する領域を作る
-				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 			});
 			</script>
 		</div>
