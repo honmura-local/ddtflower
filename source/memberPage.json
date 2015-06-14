@@ -223,43 +223,22 @@
         }
     },
     "memberReservedConfirmDialog": {
-        "db_getQuery": "",
-        "置換したい文字列": {
-            "value": "置換後の文字列"
-        },
         "lessonConfirm": {
             "lessonInfo": {
-                "データベースの授業時間列名": {
+                "start_time": {
                     "text": ""
                 },
-                "データベースの店舗列名": {
+                "school_name": {
                     "text": ""
                 },
-                "データベースのコース列名": {
+                "lesson_name": {
                     "text": ""
                 },
-                "データベースの料金の列名": {
-                    "text": ""
-                }
-            },
-            "lessonStage": {
-                "stageLabel": {
-                    "text": "ステージ:"
-                },
-                "データベースのステージ列名": {
+                "user_classwork_cost": {
                     "text": ""
                 },
-                "levelLabel": {
-                    "text": "レベル:"
-                },
-                "データベースのレベル列名": {
-                    "text": ""
-                },
-                "doScheduleLabel": {
-                    "text": "催行:"
-                },
-                "データベースの催行の列名": {
-                    "text": ""
+                "priceUnit":{
+                    "text":"円"
                 }
             }
         },
@@ -270,32 +249,51 @@
                 }
             },
             "cancelRateValue": {
-                "thatDayLabel": {
-                    "text": "当日:"
+                "db_getQuery": "SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
+                "lesson_key": {
+                    "value": ""
                 },
-                "データベースの当日キャンセルのレート列名": {
-                    "text": ""
+                "cancelFirstRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 },
-                "thatDayUnit": {
-                    "text": "%"
+                "cancelSecondRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 },
-                "oneBeforeDayLabel": {
-                    "text": "1日前:"
-                },
-                "データベースの1日前キャンセルのレート列名": {
-                    "text": ""
-                },
-                "oneBeforeDayUnit": {
-                    "text": "%"
-                },
-                "twoBeforeDayLabel": {
-                    "text": "2日前:"
-                },
-                "データベースの2日前キャンセルのレート列名": {
-                    "text": ""
-                },
-                "twoBeforeDayUnit": {
-                    "text": "%"
+                "cancelThirdRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 }
             },
             "addPointLabel": {
@@ -303,29 +301,71 @@
                     "text": "加算ポイント(受講者人数)"
                 }
             },
-            "addPointValueFirst": {
-                "fourPersonLabel": {
-                    "text": "4人~7人:"
+            "addPointValue": {
+                "db_getQuery": "SELECT * FROM lesson_point_rate WHERE lesson_key = 'lesson_key'",
+                "lesson_key": {
+                    "value": ""
                 },
-                "データーベースの受講者が4人から7人の時のポイント数": {
-                    "text": ""
+                "addPointFirstRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "fourPersonUnit": {
-                    "text": "pt"
+                "addPointSecondRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "eightPeopleLabel": {
-                    "text": "8人:"
+                "addPointThirdRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "データーベースの受講者が8人の時のポイント数": {
-                    "text": ""
-                },
-                "eightPeopleDayUnit": {
-                    "text": "pt"
+                "addPointFourthRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 }
-            },
-            "confirmText": {
-                "text": "上記の授業を予約しますか?"
             }
+        },
+        "confirmText": {
+            "text": "上記の授業を予約しますか?"
         }
     }
 }

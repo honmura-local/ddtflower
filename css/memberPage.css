@@ -25,6 +25,8 @@ label
 .memberMenu li,
 .tab,
 .lessonTable,
+.reservedLessonTable,
+.finishedLessonTable,
 .topLink,
 .keepMoney,
 .hasPoint,
@@ -151,7 +153,9 @@ label
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.08
  */
-.lessonTable {
+.lessonTable,
+.reservedLessonTable,
+.finishedLessonTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin-top: 5px;			/* 上から5pの余白をとる */
@@ -164,7 +168,9 @@ label
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.08
  */
-.lessonTable th, .lessonTable td {
+.lessonTable td,
+.reservedLessonTable td,
+.finishedLessonTable td {
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
@@ -407,7 +413,9 @@ label
 	 	padding-left: 1em;
 	 }
 
-	 .lessonTable td {
+	 .lessonTable td,
+	 .reservedLessonTable td,
+	 .finishedLessonTable td {
 	 	font-size: 12px;
 	 }
 

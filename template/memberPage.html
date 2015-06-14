@@ -90,28 +90,15 @@
 			<!-- 1行目、授業情報領域 -->
 			<li class="lessonInfo">
 				<!-- 授業時間 -->
-				<span class="timeSchedule"></span>
+				<span class="start_time"></span>
 				<!-- 店舗名 -->
-				<span class="store"></span>
+				<span class="school_name"></span>
 				<!-- コース名 -->
-				<span class="course">
+				<span class="lesson_name">
 				<!-- 料金 -->
-				<span class="price"></span>
-			</li>
-			<!-- 2行目、授業ステージ -->
-			<li class="lessonStage">
-				<!-- ステージラベル -->
-				<span class="stageLabel"></span>
-				<!-- ステージ値 -->
-				<span class="stageValue"></span>
-				<!-- レベルラベル -->
-				<span class="levelLabel"></span>
-				<!-- レベル値 -->
-				<span class="levelValue"></span>
-				<!-- 催行ラベル -->
-				<span class="doScheduleLabel"></span>
-				<!-- 催行値 -->
-				<span class="doScheduleValue"></span>
+				<span class="user_classwork_cost"></span>
+				<!-- 料金「円」単位 -->
+				<span class="priceUnit"></span>
 			</li>
 		</ul>
 
@@ -124,24 +111,39 @@
 			</li>
 			<!-- キャンセル料率の値領域 -->
 			<li class="cancelRateValue">
-				<!-- 「当日:」領域 -->
-				<span class="thatDayLabel"></span>
-				<!-- 当日の値 -->
-				<span class="thatDayValue"></span>
-				<!-- 当日の値、単位「%」 -->
-				<span class="thatDayUnit"></span>
-				<!-- 「1日前:」領域 -->
-				<span class="oneBeforeDayLabel"></span>
-				<!-- 1日前の値 -->
-				<span class="oneBeforeDayValue"></span>
-				<!-- 1日前の値、単位「%」 -->
-				<span class="oneBeforeDayUnit"></span>
-				<!-- 「2日前:」領域 -->
-				<span class="twoBeforeDayLabel"></span>
-				<!-- 2日前の値 -->
-				<span class="twoBeforeDayValue"></span>
-				<!-- 2日前、単位「%」 -->
-				<span class="twoBeforeDayUnit"></span>
+				<!-- 最初の行の領域 -->
+				<span class="cancelFirstRecord">
+					<!-- 「日付の値」領域 -->
+					<span class="cancel_days"></span>
+					<!-- 「日前:」領域 -->
+					<span class="canselText"></span>
+					<!-- 「キャンセル率の値」領域 -->
+					<span class="cancel_rate"></span>
+					<!-- 「%」領域 -->
+					<span class="canselUnit"></span>
+				</span>
+				<!-- 2行目の行の領域 -->
+				<span class="cancelSecondRecord">
+					<!-- 「日付の値」領域 -->
+					<span class="cancel_days"></span>
+					<!-- 「日前:」領域 -->
+					<span class="canselText"></span>
+					<!-- 「キャンセル率の値」領域 -->
+					<span class="cancel_rate"></span>
+					<!-- 「%」領域 -->
+					<span class="canselUnit"></span>
+				</span>
+				<!-- 2行目の行の領域 -->
+				<span class="cancelThirdRecord">
+					<!-- 「日付の値」領域 -->
+					<span class="cancel_days"></span>
+					<!-- 「日前:」領域 -->
+					<span class="canselText"></span>
+					<!-- 「キャンセル率の値」領域 -->
+					<span class="cancel_rate"></span>
+					<!-- 「%」領域 -->
+					<span class="canselUnit"></span>
+				</span>
 			</li>
 			<!-- 加算ポイントラベル領域 -->
 			<li class="addPointLabel">
@@ -149,37 +151,53 @@
 				<span class="addPointLabelText"></span>
 			</li>
 			<!-- 加算ポイントの値領域1行目 -->
-			<li class="addPointValueFirst">
-				<!-- 「1人:」領域 -->
-				<span class="onePersonLabel"></span>
-				<!-- 1人の値 -->
-				<span class="onePersonValue"></span>
-				<!-- 1人、単位「pt」 -->
-				<span class="onePersonUnit"></span>
-				<!-- 「2人~3人:」領域 -->
-				<span class="twoPeopleLabel"></span>
-				<!-- 2人~3人の値 -->
-				<span class="twoPeopleDayValue"></span>
-				<!-- 2人~3人、単位「pt」 -->
-				<span class="twoPeopleDayUnit"></span>
-			</li>
-			<!-- 加算ポイントの値領域2行目 -->
-			<li class="addPointValueSecond">
-				<!-- 「4人~7人:」領域 -->
-				<span class="fourPersonLabel"></span>
-				<!-- 4人~7人の値 -->
-				<span class="fourPersonValue"></span>
-				<!-- 4人~7人、単位「pt」 -->
-				<span class="fourPersonUnit"></span>
-				<!-- 「8人:」領域 -->
-				<span class="eightPeopleLabel"></span>
-				<!-- 8人の値 -->
-				<span class="eightPeopleDayValue"></span>
-				<!-- 8人、単位「pt」 -->
-				<span class="eightPeopleDayUnit"></span>
+			<li class="addPointValue">
+				<!-- dbの１行目の領域 -->
+				<span class="addPointFirstRecord">
+					<!-- 「生徒の数」の値領域 -->
+					<span class="students"></span>
+					<!-- 「人:」領域 -->
+					<span class="studentsUnit"></span>
+					<!-- 「ポイント数」の値領域 -->
+					<span class="point_rate"></span>
+					<!-- 「pt」領域 -->
+					<span class="pointUnit"></span>
+				</span>
+				<!-- dbの2行目の領域 -->
+				<span class="addPointSecondRecord">
+					<!-- 「生徒の数」の値領域 -->
+					<span class="students"></span>
+					<!-- 「人:」領域 -->
+					<span class="studentsUnit"></span>
+					<!-- 「ポイント数」の値領域 -->
+					<span class="point_rate"></span>
+					<!-- 「pt」領域 -->
+					<span class="pointUnit"></span>
+				</span>
+				<!-- dbの3行目の領域 -->
+				<span class="addPointThirdRecord">
+					<!-- 「生徒の数」の値領域 -->
+					<span class="students"></span>
+					<!-- 「人:」領域 -->
+					<span class="studentsUnit"></span>
+					<!-- 「ポイント数」の値領域 -->
+					<span class="point_rate"></span>
+					<!-- 「pt」領域 -->
+					<span class="pointUnit"></span>
+				</span>
+				<!-- dbの4行目の領域 -->
+				<span class="addPointFourthRecord">
+					<!-- 「生徒の数」の値領域 -->
+					<span class="students"></span>
+					<!-- 「人:」領域 -->
+					<span class="studentsUnit"></span>
+					<!-- 「ポイント数」の値領域 -->
+					<span class="point_rate"></span>
+					<!-- 「pt」領域 -->
+					<span class="pointUnit"></span>
+				</span>
 			</li>
 		</ul>
-
 		<!-- 確認テキスト「上記の授業を予約しますか？」領域 -->
 		<p class="confirmText"></p>
 
