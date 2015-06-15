@@ -1,5 +1,6 @@
 (SELECT 
-	user_name
+	,user_classwork.id AS id
+	,user_name
 	,lesson_name
 	,user_classwork.level_no AS level_no
 	,user_classwork.stage_no AS stage_no
@@ -32,6 +33,7 @@ ON
 ORDER BY time_table_day.lesson_date DESC)
 UNION ALL
 (SELECT
+	,commodity_sell.id AS id
 	user_name
 	,'' AS lesson_name
 	,1 AS level_no
