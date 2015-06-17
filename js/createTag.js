@@ -7,6 +7,9 @@ CREATETAG_FIRST 				= -1;
 CHAR_DOT										= '.';
 CHAR_HYPHEN										= '-';
 CHAR_RIGHT_ARROW								= '>';
+MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
+MESSAGE_FAILED_RESERVED							= '予約の処理に失敗しました。時間をおいてもう一度お試しください。';
+MESSAGE_FAILED_CONNECT							= '通信に失敗しました。時間をおいてもう一度お試しください。';
 SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
 SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
 SELECTOR_CLOSE_ATTRIBUTE						= '"]';
@@ -26,7 +29,7 @@ STR_TEXT										= 'text';
 STR_HTML										= 'html';
 STR_BODY										= 'body';
 STR_NUMBERING									= 'numbering';
-STR_PRE											='pre';
+STR_PRE											= 'pre';
 STR_KEY_AND_VALUE								= 'keyAndValue';
 STR_VALUELABEL									= 'valueLabel';
 STR_VALUES										= 'values';
@@ -56,10 +59,10 @@ TAG_DIV											= '<div></div>';
 TAG_SPAN										= '<span></span>'; 
 TAG_LABEL										= '<label></label>';
 TAG_TEXTAREA									= '<textarea></textarea>'; 
-URL_GET_JSON_STRING_PHP							= 'php/getJSONString.php';
-URL_GET_JSON_ARRAY_PHP							= 'php/getJSONArray.php';
-URL_GET_JSON_ARRAY_FOR_JQGRID_PHP				= 'php/getJSONArrayForJqGrid.php';
-URL_SAVE_JSON_DATA_PHP							= 'php/saveJSONData.php';
+URL_GET_JSON_STRING_PHP							= 'php/GetJSONString.php';
+URL_GET_JSON_ARRAY_PHP							= 'php/GetJSONArray.php';
+URL_GET_JSON_ARRAY_FOR_JQGRID_PHP				= 'php/GetJSONArrayForJqGrid.php';
+URL_SAVE_JSON_DATA_PHP							= 'php/SaveJSONRecord.php';
 STR_LESSON_TABLE								= 'lessonTable';
 STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
 STR_CENTER_CENTER								= 'center center';
@@ -1247,14 +1250,14 @@ function createTag(){
 		element !== void(0)? $(element).remove():console.log("");
 	}
 	
-	/* 関数名　:replaveValueNode
+	/* 関数名　:replaceValueNode
 	 * 概要　　:引数で指定されたオブジェクトのルートのキーの値を、新たなオブジェクトのvalueキーのvalueにセットして元のキーにセットする
 	 * 引数　　:Object object:処理対象のオブジェクト
 	 * 戻り値　:なし
 	 * 作成日　:2015.0614
 	 * 作成者　:T.Masuda
 	 */
-	this.replaveValueNode = function(object){
+	this.replaceValueNode = function(object){
 		//オブジェクトを走査する
 		for(key in object){
 			//keyのvalueを、新たに生成したオブジェクトのvalueのkeyにセットし、元のkeyにセットする

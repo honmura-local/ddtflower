@@ -687,7 +687,7 @@ function tagDialog(className, title, functionObject, createTags){
 		//受け取ったオブジェクトをダイアログのクラスのインスタンスにコピーした上で保存する
 		this.queryReplaceData = $.extend(true, {}, queryReplaceData);
 		//受け取ったオブジェクトを元にJSONデータを更新する。追加元のオブジェクトはJSONDBManagerで置換できる形にしておく
-		creator.replaceData(PATTERN_ADD, creator.json[dialogObject.key], creator.replaveValueNode(queryReplaceData));
+		creator.replaceData(PATTERN_ADD, creator.json[dialogObject.key], creator.replaceValueNode(queryReplaceData));
 		//サーバへJSONを送信し、テーブルのデータを取得する
 		creator.getJsonFile(dialogObject.url, creator.json[dialogObject.key], dialogObject.key);
 		//作成する要素と同名のクラスの要素があれば削除しておく
@@ -1045,6 +1045,11 @@ dialogOption['memberReservedConfirmDialog'] = {
 		autoOpen		: false,
 		// Escキーを押してもダイアログが閉じないようにする。
 		closeOnEscape	: false,
+		//ダイアログを閉じるときの処理
+		close:function(){
+			//前のダイアログから送信されたデータを破棄する
+			delete this.dialogClass.queryReplaceData;
+		},
 		// ボタン
 		buttons:[
 		        //はいボタン
@@ -1052,7 +1057,29 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'はい',	//ボタンのテキスト
 		        	//クリックイベントの記述
 		        	click:function(){
-		        		
+		        		var send = $.extend(true, {}, creator.json.sendReservedData, creator.replaceValueNode(this.dialogClass.queryReplaceData))
+		        		//Ajax通信を行う
+		        		$.ajax({
+		        			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
+		        			//予約情報のJSONを送信する
+		        			data:{json:send},								//送信するデータを設定する
+		        			dataType: STR_TEXT,					//テキストデータを返してもらう
+		        			type: STR_POST,						//POSTメソッドで通信する
+		        			success:function(ret){				//通信成功時の処理
+		        				//更新成功であれば
+		        				if(!parseInt(parseInt(ret.message))){
+		        					alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
+		        					$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG).dialogClass.close();			//ダイアログを閉じる
+		        				//更新失敗であれば
+		        				} else {
+		        					alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
+		        				}
+		        			},
+		        			error:function(xhr, status, error){	//通信失敗時の処理
+		        				//通信失敗のアラートを出す
+		        				alert(MESSAGE_FAILED_CONNECT);
+		        			}
+		        		});
 		        	}
 		        },
 		        //いいえボタン
