@@ -269,6 +269,29 @@ label
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
+
+/* 
+ * セレクタ :.lessonTable td:nth-of-type(1)
+ * 概要   :授業一覧テーブルの最初の列領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.17
+ */
+.lessonTable td:nth-of-type(1) {
+	width: 50px;			/* 幅を50pxに固定する */
+}
+
+/* 
+ * セレクタ :.reservedLessonTable td:nth-of-type(1),
+		.finishedLessonTable td:nth-of-type(1)
+ * 概要   :予約中と受講済みのテーブルのカラム領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.17
+ */
+.reservedLessonTable td:nth-of-type(1),
+.finishedLessonTable td:nth-of-type(1) {
+	width: 77px;				/* 幅を77pxで固定する */
+}
+
 /* DBから読込んだテーブル領域終わり */
 
 /* サブヘッダー領域 */
