@@ -1,0 +1,32 @@
+/*@CHARSET "UTF-8";*/
+
+/* 
+ * セレクタ :.memberMenu li
+ * 概要   :ヘッダのメニューそれぞれの項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+#adminTab .tab {
+	width: 33%;
+	display: inline-block;
+}
+
+.adminHeader .memberNumber, .adminHeader .memberName {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.adminHeader .topLink {
+	float: right;
+}
+
+/* スマホ・タブレットレイアウト */
+@media(max-width:680px){
+
+}
+
+/* スマホ用微調整 */
+@media(max-width:400px){
+
+
+}

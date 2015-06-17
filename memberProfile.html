@@ -83,7 +83,13 @@
 				// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
 				$('.birthday').datepicker({
 					// 年月日の順番で表示するフォーマットにする
-					"dateFormat": 'yy/mm/dd'
+					"dateFormat": 'yy/mm/dd',
+					// 月をセレクトボックスで選択できるようにする
+					changeMonth: true,
+					// 年をセレクトボックスで選択できるようにする
+					changeYear: true,
+					// 選択できる年は1910年から2050年の範囲にする
+					yearRange: '1910:2050',
 				});
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();

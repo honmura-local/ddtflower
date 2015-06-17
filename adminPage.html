@@ -12,6 +12,12 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
 <meta charset="UTF-8">
 <title>DDTFlowers/管理者</title>
+<!-- 共通のcssを読み込む-->
+<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+<!-- 会員ページのcssを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/memberPage.css" media="screen" />
+<!-- 管理者ページのcssを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/adminPage.css" media="screen" />
 <!-- jqueryUIのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
 <!-- jQueryの本体を読み込む。 -->
@@ -53,8 +59,10 @@
 				creator.getDomFile('template/adminCommon.html');
 				
 				//パーツのHTMLを順次作成し、画面に追加していく
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['adminHeader'], 'adminHeader');
 				//ヘッダー
-				creator.outputTag('memberHeader');
+				creator.outputTag('adminHeader');
 				//タブ領域
 				creator.outputTag('adminTab', 'tabContainer');
 				//タブコンテンツ3個
