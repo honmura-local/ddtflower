@@ -1,5 +1,8 @@
 {
     "subHeader":{
+        "pageHeader":{
+            "text":"プロフィール"
+        },
         "keepMoney":{
             "keepMoneyText":{
                 "text":"お預かり金額:"
@@ -29,6 +32,7 @@
         },
         "textboxArea":{
             "class":"textbox2Area firstName",
+            "type":"text",
             "name":"firstName",
             "value":"山田"
         }
@@ -41,6 +45,7 @@
         "textboxArea":{
             "class":"textbox2Area lastName",
             "name":"lastName",
+            "type":"text",
             "value":"花子"
         }
     },
@@ -86,6 +91,7 @@
         "textboxArea":{
             "class":"textboxArea mailaddress",
             "name":"mailaddress",
+            "type":"text",
             "value":"example@mail.com"
         }
     },
@@ -97,6 +103,7 @@
         "textboxArea":{
             "class":"textbox4Area phone",
             "name":"phone",
+            "type":"text",
             "value":"800909999"
         }
     },
@@ -108,10 +115,11 @@
         "textboxArea":{
             "class":"textbox4Area emergency",
             "name":"emergency",
+            "type":"text",
             "value":"3344555"
         }
     },
-    "updateButtonArea":{
+    "updateButton":{
         "type":"submit",
         "value":"更新"
     }

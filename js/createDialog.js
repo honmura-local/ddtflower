@@ -646,7 +646,6 @@ function loginDialog(className, title, functionObject){
  * 作成者　:T.Yamamoto
  */
 function memberDialog(className, title, functionObject, content, array){
-	console.log(array);
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	
 	//コンストラクタの引数をメンバにセットする

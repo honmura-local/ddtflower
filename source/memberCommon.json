@@ -36,5 +36,32 @@
                 }
             }
         }
+    },
+    "userBanner": {
+        "bannerArea": {
+            "banner": [
+                {
+                    "src": "image/icon(myPage).png"
+                },
+                {
+                    "src": "image/icon(profile).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(gallery).png"
+                },
+                {
+                    "src": "image/icon(blog).png"
+                },
+                {
+                    "src": "image/icon(myGallery).png"
+                },
+                {
+                    "src": "image/icon(myBlog).png"
+                }
+            ]
+        }
     }
 }

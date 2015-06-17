@@ -1,31 +1,4 @@
 {
-    "userBanner": {
-        "bannerArea": {
-            "banner": [
-                {
-                    "src": "image/icon(myPage).png"
-                },
-                {
-                    "src": "image/icon(profile).png"
-                },
-                {
-                    "src": "image/icon(mail).png"
-                },
-                {
-                    "src": "image/icon(gallery).png"
-                },
-                {
-                    "src": "image/icon(blog).png"
-                },
-                {
-                    "src": "image/icon(myGallery).png"
-                },
-                {
-                    "src": "image/icon(myBlog).png"
-                }
-            ]
-        }
-    },
     "advertise": {
         "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
         "user_key": {
