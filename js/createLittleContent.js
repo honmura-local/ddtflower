@@ -155,17 +155,11 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			// 講座一覧ダイアログを開く
-			this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
-					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG});
-		}
-//
-//		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-//		minDate:1			//今日以前はクリックできなくする。
-		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
-//		beforeShowDay:function(date){
-//			return putDisableDate(date, this.dateArray);
-//		}
+			// 予約のダイアログを出す。
+			callMemberDialog(dateText, $(this));
+		},
+		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
+		minDate:1			//今日以前はクリックできなくする。
 	}
 
 /*
@@ -239,27 +233,17 @@ function myPageReservedCalendar(selector, dateRange) {
  * クラス名:memberCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
  * 　　  :int dateRange:クリック可能な日付の期間
- * 　　  :int userId:ユーザID
- * 　　  :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
  * 作成者:T.Yamamoto
- * 変更日:2015.06.13
- * 変更者:T.Masuda
  */
-function memberCalendar(selector, dateRange, userId, dialog) {
+function memberCalendar(selector, dateRange) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'member';	//カレンダー名をセットする
-	
-	$calendar = $(selector)[0];		//カレンダーの要素を取得する
-	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
-	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
-	$calendar.userId = userId;		//ユーザIDを保存する
-	
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する
-	this.calendarOptions = calendarOptions[this.calendarName];
+	this.calendarOptions = calendarOptions['member'];
 }
 
 /*
@@ -549,7 +533,7 @@ function callReservedDialog(dateText, calendar){
 
 /*
  * 関数名:callMemberDialog
- * 引数  :String dateText:日付テキスト
+ * 引数  :String dateText:日付テキスト(クリックされた日付)
  * 　　　 :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
@@ -560,9 +544,11 @@ function callMemberDialog(dateText, calendar){
 	// カレンダーからコンテンツ名を取得する。
 	var contentName = calendar.attr('name');
 	// 日付配列を取得する。
-	var date = createDateArray(dateText)
+	var date = createDateArray(dateText);
+	// ダイアログのタイトルを設定する
+	var dialogTitle = createDialogTiteDate(date[0], date[1], date[2]);
 	// 予約希望ダイアログを作成する
-	 var mDialog = new memberDialog('memberDialog',date,null, contentName, date);
+	 var mDialog = new memberDialog('memberDialog',dialogTitle,null, contentName, date);
 	mDialog.open();	//ダイアログを開く
 }
 

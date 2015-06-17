@@ -1,52 +1,67 @@
 {
     "memberHeader": {
+        "db_getQuery": "SELECT * FROM user_inf WHERE id = 'user_key'",
+        "user_key": {
+            "value": "35"
+        },
         "memberStatus": {
-            "memberNumber": {
-                "noArea": {
-                    "text": "No."
-                },
-                "numberArea": {
-                    "text": "00000000"
-                }
-            },
-            "memberPoint": {
-                "pointNumberArea": {
-                    "text": "900"
-                },
-                "ptArea": {
-                    "text": "pt"
+            "topLogoArea":{
+                "topLink":{
+                    "topLogoImage":{
+                        "src":"image/top(logo).png"
+                    }
                 }
             },
             "memberName": {
-                "nameArea": {
-                    "text": "山田花子"
+                "user_name": {
+                    "text": ""
                 },
                 "nameTitleArea": {
                     "text": "様"
                 }
+            },
+            "memberPoint": {
+                "get_point": {
+                    "text": ""
+                },
+                "ptArea": {
+                    "text": "pt"
+                }
             }
         },
-        "memberMenu": {
-            "memberMenuList": [
-                {
-                    "href": "",
-                    "text": "サポートメール"
-                },
-                {
-                    "href": "",
-                    "text": "プロフィール"
-                },
-                {
-                    "href": "",
-                    "text": "ログアウト"
+        "logoutArea":{
+            "logoutLink":{
+                "logoutImage":{
+                    "src":"image/icon(logout22-50).png"
                 }
-            ]
+            }
         }
     },
-    "topLinkArea":{
-        "topLink":{
-            "href":"",
-            "text":"トップページへ"
+    "userBanner": {
+        "bannerArea": {
+            "banner": [
+                {
+                    "src": "image/icon(myPage).png"
+                },
+                {
+                    "src": "image/icon(profile).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(gallery).png"
+                },
+                {
+                    "src": "image/icon(blog).png"
+                },
+                {
+                    "src": "image/icon(myGallery).png"
+                },
+                {
+                    "src": "image/icon(myBlog).png"
+                }
+            ]
         }
     }
 }

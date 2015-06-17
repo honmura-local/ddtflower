@@ -54,12 +54,14 @@
 				creator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberProfile.html');
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
 				// 会員ページヘッダーを作る
 				creator.outputTag('memberHeader');
-				// 会員ページのカレンダーを作る
-				creator.outputTag('topLinkArea', 'topLinkArea', '.memberHeader');
-				// 会員ページのサブヘッダーを作る
-				creator.outputTag('subHeader', 'subHeader', '.memberHeader');
+				// バナー領域を作る
+				creator.outputTag('userBanner');
+				// サブヘッダーを作る
+				creator.outputTag('subHeader');
 				// 会員情報を表示する領域を作る
 				creator.outputTag('memberInfo');
 				// 「姓：」領域を作る
@@ -77,10 +79,20 @@
 				// 「緊急：」領域を作る
 				creator.outputTag('emergencyArea', 'labelTextbox', '.infoForm');
 				// 更新ボタン領域を作る
-				creator.outputTag('updateButtonArea', 'updateButtonArea', '.infoForm');
+				creator.outputTag('updateButton', 'updateButton', '.infoForm');
+				// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
 				$('.birthday').datepicker({
-					"dateFormat": 'yy/mm/dd'
+					// 年月日の順番で表示するフォーマットにする
+					"dateFormat": 'yy/mm/dd',
+					// 月をセレクトボックスで選択できるようにする
+					changeMonth: true,
+					// 年をセレクトボックスで選択できるようにする
+					changeYear: true,
+					// 選択できる年は1910年から2050年の範囲にする
+					yearRange: '1910:2050',
 				});
+				// ボタンの見た目をjqueryuiのものにする
+				$('.updateButton').button();
 			});
 			</script>
 		</div>

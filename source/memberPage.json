@@ -1,36 +1,20 @@
-{
-    "userBanner": {
+﻿{
+    "advertise": {
         "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
         "user_key": {
-            "value": "285"
+            "value": "35"
         },
-        "bannerArea": {
-            "banner": [
-                {
-                    "src": "",
-                    "title": "blogbanner",
-                    "value": "ブログバナー"
-                },
-                {
-                    "src": "",
-                    "title": "mypagebanner",
-                    "value": "マイページバナー"
-                }
-            ]
-        },
-        "advertise": {
-            "advertiseLink": {
-                "advertiseImage": {
-                    "src": "",
-                    "title": "告知領域"
-                }
-            },
-            "message_title": {
-                "text": ""
-            },
-            "message_content": {
-                "text": ""
+        "advertiseLink": {
+            "advertiseImage": {
+                "src": "",
+                "title": "告知領域"
             }
+        },
+        "message_title": {
+            "text": ""
+        },
+        "message_content": {
+            "text": ""
         }
     },
     "lessonCalendar": {
@@ -99,9 +83,9 @@
         }
     },
     "lessonReservedDetailTable": {
-        "db_getQuery": "SELECT time_table_day.lesson_date AS lesson_date,start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
+        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
-            "value": "285"
+            "value": "22"
         },
         "border": "1",
         "config": {
@@ -110,7 +94,8 @@
                     "columnName": "開始日時"
                 },
                 "end_time": {
-                    "columnName": "終了"
+                    "columnName": "終了",
+                    "style":"display:none"
                 },
                 "lesson_name": {
                     "columnName": "テーマ"
@@ -140,7 +125,7 @@
                     "style": "display:none;"
                 },
                 "lesson_date": {
-                    "columnName": "日付"
+                    "style": "display:none;"
                 },
                 "students": {
                     "style": "display:none;"
@@ -159,7 +144,7 @@
     "lessonFinishedDetailTable": {
         "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
         "user_key": {
-            "value": "285"
+            "value": "22"
         },
         "border": "1",
         "config": {
@@ -168,7 +153,8 @@
                     "columnName": "開始日時"
                 },
                 "end_time": {
-                    "columnName": "終了"
+                    "columnName": "終了",
+                    "style":"display:none"
                 },
                 "lesson_name": {
                     "columnName": "テーマ"
@@ -198,7 +184,7 @@
                     "style": "display:none;"
                 },
                 "lesson_date": {
-                    "columnName": "日付"
+                    "style": "display:none;"
                 },
                 "students": {
                     "style": "display:none;"
@@ -209,36 +195,23 @@
             }
         }
     },
-    "memberReservedConfirmDialog": {},
-    "memberReservedConfirmDialogContent": {
-    	"db_getQuery":"",
+    "memberReservedConfirmDialog": {
         "lessonConfirm": {
             "lessonInfo": {
-                "timeSchedule": {
+                "start_time": {
                     "text": ""
                 },
-                "store": {
+                "school_name": {
                     "text": ""
                 },
-                "course": {
+                "lesson_name": {
                     "text": ""
                 },
-                "price": {
-                    "text": ""
-                }
-            },
-            "lessonStage": {
-                "stageLabel": {
-                    "text": "ステージ:"
-                },
-                "stageValue": {
+                "user_classwork_cost": {
                     "text": ""
                 },
-                "levelLabel": {
-                    "text": "レベル:"
-                },
-                "levelValue": {
-                    "text": ""
+                "priceUnit":{
+                    "text":"円"
                 }
             }
         },
@@ -249,32 +222,51 @@
                 }
             },
             "cancelRateValue": {
-                "thatDayLabel": {
-                    "text": "当日:"
+                "db_getQuery": "SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
+                "lesson_key": {
+                    "value": ""
                 },
-                "thatDayValue": {
-                    "text": ""
+                "cancelFirstRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 },
-                "thatDayUnit": {
-                    "text": "%"
+                "cancelSecondRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 },
-                "oneBeforeDayLabel": {
-                    "text": "1日前:"
-                },
-                "oneBeforeDayValue": {
-                    "text": ""
-                },
-                "oneBeforeDayUnit": {
-                    "text": "%"
-                },
-                "twoBeforeDayLabel": {
-                    "text": "2日前:"
-                },
-                "twoBeforeDayValue": {
-                    "text": ""
-                },
-                "twoBeforeDayUnit": {
-                    "text": "%"
+                "cancelThirdRecord":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "canselText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "canselUnit":{
+                        "text":"%"
+                    }
                 }
             },
             "addPointLabel": {
@@ -282,49 +274,71 @@
                     "text": "加算ポイント(受講者人数)"
                 }
             },
-            "addPointValueFirst": {
-                "onePersonLabel": {
-                    "text": "4人~7人:"
+            "addPointValue": {
+                "db_getQuery": "SELECT * FROM lesson_point_rate WHERE lesson_key = 'lesson_key'",
+                "lesson_key": {
+                    "value": ""
                 },
-                "onePersonValue": {
-                    "text": ""
+                "addPointFirstRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "onePersonUnit": {
-                    "text": "pt"
+                "addPointSecondRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "twoPeopleLabel": {
-                    "text": "8人:"
+                "addPointThirdRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 },
-                "twoPeopleDayValue": {
-                    "text": ""
-                },
-                "twoPeopleDayUnit": {
-                    "text": "pt"
+                "addPointFourthRecord":{
+                    "students":{
+                        "text":""
+                    },
+                    "studentsUnit":{
+                        "text":"人:"
+                    },
+                    "point_rate":{
+                        "text":""
+                    },
+                    "pointUnit":{
+                        "text":"人:"
+                    }
                 }
-            },
-            "addPointValueSecond": {
-                "fourPersonLabel": {
-                    "text": "4人~7人:"
-                },
-                "fourPersonValue": {
-                    "text": ""
-                },
-                "fourPersonUnit": {
-                    "text": "pt"
-                },
-                "eightPeopleLabel": {
-                    "text": "8人:"
-                },
-                "eightPeopleDayValue": {
-                    "text": ""
-                },
-                "eightPeopleDayUnit": {
-                    "text": "pt"
-                }
-            },
-            "confirmText": {
-                "text": "上記の授業を予約しますか?"
             }
+        },
+        "confirmText": {
+            "text": "上記の授業を予約しますか?"
         }
     },
     "sendReservedData":{
