@@ -6,6 +6,118 @@
                 "text": "プリザ"
             },
             "blogArticleDate": {
+                "text": "2015/06/17"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xat1/v/t1.0-9/11412291_841198565973532_5530805883211051077_n.jpg?oh=ac0a8d91edbc832e2a390373c6215874&oe=5626A0A9"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xft1/v/t1.0-9/1549393_841198575973531_275734458129079708_n.jpg?oh=2852eb34a344fec50e589f61fa8a2373&oe=55EE476E"
+            },
+            "blogArticleImage3": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpf1/v/t1.0-9/1898086_841198602640195_9104087368763873742_n.jpg?oh=954319ac70116c0128d1aad11ac2e9c3&oe=55E90EBE"
+            }
+        },
+        "blogArticleText": {
+            "text": "プリザーブドフラワー夏のアレンジです。貝殻に夏色カラーのお花達をアレンジして見ました。 \nそして人気の向日葵さんはアーティシャルフラワーとプリザーブドフラワーのバラのキャンドルアレンジです🌻"
+        }
+    },
+    "2": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "プリザ"
+            },
+            "blogArticleDate": {
+                "text": "2015/06/14"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/11377308_839526726140716_8868367104980869695_n.jpg?oh=21a7147cde435fc20b222854fbcdbbb2&oe=55EB3B39"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xpt1/v/t1.0-9/11165230_839526736140715_3725765497570789381_n.jpg?oh=68e619f45fe54a9c93385dc6aff895a1&oe=55E9949D"
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "プリザーブドフラワーリングピローです。お友達へのプレゼントに優しい色合いが大人な女性にピッタリですね"
+        }
+    },
+    "3": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "生花"
+            },
+            "blogArticleDate": {
+                "text": "2015/06/14"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/10402627_839434506149938_8958631774559051606_n.jpg?oh=e7cd3d78e84856fa858ad9b972026a52&oe=56279E63"
+            },
+            "blogArticleImage2": {
+                "src": "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xpa1/v/t1.0-9/10561838_839434522816603_86925530143469574_n.jpg?oh=b0d1b23081627350e2f0cdd22768880b&oe=5633902C&__gda__=1441634478_fc6993f9d6536bd4a323a60d8ae55557"
+            },
+            "blogArticleImage3": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xft1/v/t1.0-9/11407168_839434536149935_6509052667848791479_n.jpg?oh=6a9203d7e8358584add12e445710f3c0&oe=55EA2C33"
+            }
+        },
+        "blogArticleText": {
+            "text": "今日も元気な向日葵で可愛いアレンジをお作り頂きました。 \n向日葵のパワーは絶大ですね🌻"
+        }
+    },
+    "4": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "生花"
+            },
+            "blogArticleDate": {
+                "text": "2015/06/12"
+            },
+            "blogArticleUserName": {
+                "text": "DDTFlowers"
+            }
+        },
+        "blogArticleImages": {
+            "blogArticleImage1": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/11390034_838644239562298_9123009838391684035_n.jpg?oh=2eed2a7c1f1ad1f8c84a6bf96965052f&oe=5627650A"
+            },
+            "blogArticleImage2": {
+                "src": "https://scontent.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/10985567_838644226228966_7669652296452439851_n.jpg?oh=aab4b003cb3073016529babe75e4e870&oe=5634CD8E"
+            },
+            "blogArticleImage3": {
+                "src": ""
+            }
+        },
+        "blogArticleText": {
+            "text": "本日のレッスン生徒さんの作品です。花材は可愛い向日葵と夏らしいスモークツリー、香りのガーデニアなどなど盛りだくさんです。"
+        }
+    },
+    "5": {
+        "class": "blogArticle cf",
+        "blogArticleTitle": {
+            "blogArticleTitleText": {
+                "text": "プリザ"
+            },
+            "blogArticleDate": {
                 "text": "2015/06/09"
             },
             "blogArticleUserName": {
@@ -27,11 +139,11 @@
             "text": "夏のキャンペーンレッスン第一弾のお知らせです🐚 \nメルマガ配信まで今暫くお待ち下さい。"
         }
     },
-    "2": {
+    "6": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/06/05"
@@ -55,7 +167,7 @@
             "text": "お友達の出産祝いにカーネーションプードル💕 \n優しい色合いに癒されますネ"
         }
     },
-    "3": {
+    "7": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -83,11 +195,11 @@
             "text": "NFD資格取得コース生徒さんの作品です。 \n交差と非対称の花嫁の花束 \nどちらも綺麗に完成です。"
         }
     },
-    "4": {
+    "8": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/28"
@@ -111,11 +223,11 @@
             "text": "本日のレッスンはバスケットアレンジまたまた登場のストロベリーミルフィーユちゃん相変わらず可愛いです。"
         }
     },
-    "5": {
+    "9": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/25"
@@ -139,11 +251,11 @@
             "text": "本日午前中のレッスン生徒さんの作品です。\nマグノリアリーフとテトラゴナの実が可愛いドライで飾れ大型リースです。"
         }
     },
-    "6": {
+    "10": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/24"
@@ -167,11 +279,11 @@
             "text": "今日の生花はまん丸トピアリーお花はバラストロベリーミルフィーユ、マトリカリアたまごピンク名前もとっても可愛いですね。"
         }
     },
-    "7": {
+    "11": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/18"
@@ -195,7 +307,7 @@
             "text": "本日のレッスン生徒さんの作品です。バスケットに可愛くアレンジして頂きました。"
         }
     },
-    "8": {
+    "12": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -223,11 +335,11 @@
             "text": "プリザーブドフラワー生徒さんの作品です。\nいつ見ても可愛いトピアリーまん丸に仕上がりました。"
         }
     },
-    "9": {
+    "13": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/17"
@@ -251,11 +363,11 @@
             "text": "週末レッスン生徒さんの作品です。\nビダーマイヤー(同心円状)とってもバランス良く出来てますね\nお花はバラ、ナデシコ、カーネ、ブアリアです。"
         }
     },
-    "10": {
+    "14": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
-                "text": "プリザ"
+                "text": "生花"
             },
             "blogArticleDate": {
                 "text": "2015/05/17"
@@ -279,7 +391,7 @@
             "text": "今日の生花はビダーマイヤー同一円心に作成して頂きました。ケーキみたいですね"
         }
     },
-    "11": {
+    "15": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -307,7 +419,7 @@
             "text": "プリザーブドフラワー生徒さんの作品です。1日で3作品、全てお友達への誕生日プレゼント 素敵ですね"
         }
     },
-    "12": {
+    "16": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -335,7 +447,7 @@
             "text": "本日午前中の生徒さんの作品です。芍薬、バラ、ローズマリー香りに癒されます。"
         }
     },
-    "13": {
+    "17": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -363,7 +475,7 @@
             "text": "今日は夏のお花芍薬を使ってアレンジして頂きました。\n今日の芍薬はかぐや姫可愛い名前ですね"
         }
     },
-    "14": {
+    "18": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -391,7 +503,7 @@
             "text": "今日も可愛いお花を仕入れて来ました\nバラ ランハーツとピーチアバランシェ大好きな色味です。\n生徒さんに早速バスケットアレンジ作って頂きました。"
         }
     },
-    "15": {
+    "19": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -419,7 +531,7 @@
             "text": "おはようございます。台風接近中で風が強い朝ですね、今日は早めの帰宅が良いかもですね。\n花のネスト(巣)生徒さんの作品です。卵もお作り頂きました。"
         }
     },
-    "16": {
+    "20": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -447,7 +559,7 @@
             "text": "本日の生花は母の日の花束です。皆様綺麗にお作り頂きました。"
         }
     },
-    "17": {
+    "21": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -475,7 +587,7 @@
             "text": "本日午前中のキャンペーンレッスン生徒さんの作品です。可愛いプードルちゃん勢揃いです"
         }
     },
-    "18": {
+    "22": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -503,7 +615,7 @@
             "text": "皆様こんにちは～ゴールデンウイーク楽しんでらっしゃいますか？\nスクールは本日午後、明日はお休みを頂いております。さて最近人気のガーデンリース生徒さんの作品です。"
         }
     },
-    "19": {
+    "23": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -531,7 +643,7 @@
             "text": "プリザーブドフラワー母の日のアレンジです。本日は新作up\nゴールデンウイーク3,4も開講しております。遠くに行くより近場で可愛いお花に触れるのも楽しいですよ\nご予約お待ちしております"
         }
     },
-    "20": {
+    "24": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -559,7 +671,7 @@
             "text": "爽やかなキャンドルアレンジと可愛いフラワーコーン出来ました。"
         }
     },
-    "21": {
+    "25": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -587,7 +699,7 @@
             "text": "今日も可愛いお花が一杯出来ました"
         }
     },
-    "22": {
+    "26": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -615,7 +727,7 @@
             "text": "生花ファーストステージ生徒さんの作品です。基本の形トライアンギュラーです。"
         }
     },
-    "23": {
+    "27": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {
@@ -643,7 +755,7 @@
             "text": "プリザーブドフラワー生徒さんの作品とキャンペーンレッスンの作品です。\n今日から大阪でお花の研修です。皆様に素敵な作品がご紹介出来ます様にしっかりお勉強して来ます"
         }
     },
-    "24": {
+    "28": {
         "class": "blogArticle cf",
         "blogArticleTitle": {
             "blogArticleTitleText": {

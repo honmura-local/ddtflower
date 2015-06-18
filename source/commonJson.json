@@ -58,7 +58,7 @@
             "guideBlogLink": {
                 "href": "#blog.php",
                 "guideBlogIcon": {
-                    "src": "image/icon(blog50).png"
+                    "src": "image/icon(blog).png"
                 }
             }
         },
