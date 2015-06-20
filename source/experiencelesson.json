@@ -147,6 +147,9 @@
         "dialogContentHead": {
             "text": "予備情報"
         },
+        "subInfoSummary":{
+            "html":"希望された日時が予約不可能な場合、以下の情報を参考にこちらからおすすめする予約可能な日時を連絡させて頂きます。<br>"
+        },
         "canDayAll": {
             "subHeadText": {
                 "text": "可能曜日"
