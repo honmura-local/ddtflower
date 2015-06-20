@@ -1091,7 +1091,7 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        				//更新成功であれば
 		        				if(!parseInt(parseInt(ret.message))){
 		        					alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
-		        					$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG).dialogClass.close();			//ダイアログを閉じる
+		        					$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass.close();			//ダイアログを閉じる
 		        				//更新失敗であれば
 		        				} else {
 		        					alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
