@@ -1,52 +1,56 @@
 {
     "memberHeader": {
+        "db_getQuery": "SELECT id AS numberArea, user_name AS userName, get_point AS getPoint  FROM user_inf WHERE id = 'user_key'",
+        "user_key": {
+            "value": "117"
+        },
         "memberStatus": {
+            "topLogoArea": {
+                "topLink": {
+                    "href": "",
+                    "topLogoImage": {
+                        "src": ""
+                    }
+                }
+            },
             "memberNumber": {
                 "noArea": {
                     "text": "No."
                 },
                 "numberArea": {
-                    "text": "00000000"
+                    "text": ""
                 }
             },
             "memberPoint": {
-                "pointNumberArea": {
-                    "text": "900"
+                "getPoint": {
+                    "text": ""
                 },
                 "ptArea": {
                     "text": "pt"
                 }
             },
             "memberName": {
-                "nameArea": {
-                    "text": "山田花子"
+                "userName": {
+                    "text": ""
                 },
                 "nameTitleArea": {
                     "text": "様"
                 }
-            }
-        },
-        "memberMenu": {
-            "memberMenuList": [
-                {
+            },
+            "logoutArea": {
+                "logoutLink": {
                     "href": "",
-                    "text": "サポートメール"
-                },
-                {
-                    "href": "",
-                    "text": "プロフィール"
-                },
-                {
-                    "href": "",
-                    "text": "ログアウト"
+                    "logoutImage": {
+                        "src": ""
+                    }
                 }
-            ]
+            }
         }
     },
-    "topLinkArea":{
-        "topLink":{
-            "href":"",
-            "text":"トップページへ"
+    "topLinkArea": {
+        "topLink": {
+            "href": "",
+            "text": "トップページへ"
         }
     }
 }

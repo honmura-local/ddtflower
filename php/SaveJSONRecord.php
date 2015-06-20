@@ -42,7 +42,7 @@ try {
 }
 
 //クライアントへ返すメッセージを作成する。
-$returnMessage = '{"message":"' . $jdbm->processedRecords . '件のレコードを操作しました。"}';
+$returnMessage = '{"message":"' . $jdbm->processedRecords . '"}';
 
 // 作成したJson文字列を出力する
 print($returnMessage);

@@ -1,4 +1,29 @@
 {
+    "adminHeader": {
+        "db_getQuery": "SELECT * FROM user_inf WHERE id = 'user_key'",
+        "user_key": {
+            "value": "1"
+        },
+        "memberStatus": {
+            "memberNumber":{
+                "noArea":{
+                    "text":"No."
+                }
+            },
+            "id": {
+                "text": ""
+            },
+            "memberName": {
+                "user_name": {
+                    "text": ""
+                }
+            },
+            "topLink":{
+                "href":"",
+                "text":"トップページへ"
+            }
+        }
+    },
     "memberHeader": {
         "memberStatus": {
             "memberNumber": {

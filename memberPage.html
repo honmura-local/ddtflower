@@ -9,8 +9,6 @@
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <!-- 会員ページのcssを読み込む -->
 <link href="css/memberPage.css" rel="stylesheet" type="text/css">
-<!-- カレンダーのために体験ページのCSSファイルを読み込む。 -->
-<link href="css/experience.css" rel="stylesheet" type="text/css">
 <!-- jqueryUIのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
 <!-- jQueryの本体を読み込む。 -->
@@ -35,6 +33,8 @@
 <script type="text/javascript" src="js/createLittleContent.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/dailyClasses.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -56,11 +56,14 @@
 				creator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberPage.html');
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+
 				// 会員ページヘッダーを作る
 				creator.outputTag('memberHeader');
 				// バナー領域を作る
 				creator.outputTag('userBanner');
-				
+
 				//通知領域の内容があれば
 				if($('.advertise p:not(:empty)').length){
 					$('.advertise').show();		//通知領域を表示する
@@ -87,28 +90,60 @@
 				// 日ごと授業のテンプレートを読み込む
 				creator.getDomFile('template/eachDayLesson.html');
 
-				// 日ごとダイアログ領域を作る
-				creator.outputTag('memberDialog', 'memberDialog', 'body');
-				// 会員ステータスを表示する領域を作る
-				creator.outputTag('memberStatus', 'memberStatus', '.memberDialog');
-				// レッスンのステータスを示すテーブルを作る
-				creator.outputTag('lessonTableArea', 'lessonTableArea', '.memberDialog');
 
+
+				//予約一覧ダイアログを作る
+				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
+					// 日ごとダイアログ領域を作る
+					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+				});
+				
+				//予約確定ダイアログを作る
+				var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
+					// テーブルのステータスを概要を表示する領域を作る
+					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
+				});
+				
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.calendar', 90);
+				var memCalendar = new memberCalendar('.calendar', 90, 117, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
+				
 				
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberTable'], 'memberTable');
+
+
+
+				// 受講済み授業テーブルを作る
+				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
+				// 予約中授業のテーブルを作る
+				creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
+				// 予約テーブルを作る
+// 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
+				// テーブルのステータスを概要を表示する領域を作る
+//				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
+
+				// 絞り込みボタンをjqueryのボタンにする
+				$('.selectThemeButton').button();
+
+ 				// 予約中授業の連想配列を変数に入れる 
+				var reservedNow = creator.json['lessonReservedDetailTable']['table'];
+				// 受講済みの連想配列を変数に入れる
+				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
+				// 日ごと授業テーブルの連想配列を変数に入れる
+				var eachDayLessonTable = creator.json['memberTable']['table'];
+				// 予約中授業のテーブルの値を正規のものにする
+//				reservedLessonValueInput('.lessonTable', eachDayLessonTable);
+//				reservedValueInput('.reservedLessonTable', reservedNow);
+ 				// 受講済み授業のテーブルの値を正規のものにする
+//				 tableColumnValueInput('.finishedLessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
+				// 授業のテーブルの値を正規のものにする
+//				 tableColumnValueInput('.lessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
 
 				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
 				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
-				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
-				// テーブルのステータスを概要を表示する領域を作る
-				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
 			});
 			</script>
 		</div>
