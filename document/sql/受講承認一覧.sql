@@ -2,8 +2,8 @@
 	,user_classwork.id AS id
 	,user_name
 	,lesson_name
-	,user_classwork.level_no AS level_no
-	,user_classwork.stage_no AS stage_no
+	,lesson_sub.level_no AS level_no
+	,stage_inf.stage_no AS stage_no
 	,user_classwork.user_classwork_cost AS cost
 	,user_classwork.use_point AS use_point
 	,1 AS sell_number
@@ -30,6 +30,14 @@ INNER JOIN
 	lesson_inf
 ON
 	lesson_inf.id = classwork.lesson_key
+INNERR JOIN
+	stage_inf
+ON
+	stage_inf.id = user_classwork.stage_key
+INNER JOIN
+	lesson_sub
+ON
+	lesson_sub.id = user_classwork.level_key
 ORDER BY time_table_day.lesson_date DESC)
 UNION ALL
 (SELECT
