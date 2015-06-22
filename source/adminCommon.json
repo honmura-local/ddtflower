@@ -51,7 +51,7 @@
         "config": {
             "columns": {
                 "time_table_key": {
-                    "columnName": "id"
+                    "columnName": "No."
                 },
                 "lesson_date":{
                     "style":"display:none;"
@@ -69,7 +69,8 @@
                     "columnName": "名前"
                 },
                 "stage_no": {
-                    "columnName": "Stg-Lv"
+                    "columnName": "Stg-Lv",
+                    "style":"display:none;"
                 },
                 "level_no": {
                     "columnName": "レベル",
@@ -163,6 +164,56 @@
                 },
                 "content":{
                     "style":"display:none;"
+                }
+            }
+        }
+    },
+    "searchUser":{
+        "searchList":{
+            "searchNameColumn":{
+                "searchName":{
+                    "searchNameLabel":{
+                        "text":"氏名"
+                    },
+                    "searchNameTextbox":{
+                        "type":"text",
+                        "name":"user_name"
+                    }
+                },
+                "searchNameKana":{
+                    "searchNameKanaLabel":{
+                        "text":"氏名(カナ)"
+                    },
+                    "searchNameKanaTextbox":{
+                        "type":"text",
+                        "name":"user_name_kana"
+                    }
+                }
+            },
+            "searchInfoColumn":{
+                "searchPhoneNumber":{
+                    "searchPhoneLabel":{
+                        "text":"電話番号"
+                    },
+                    "searchPhoneTextbox":{
+                        "type":"text",
+                        "name":"telephone"
+                    }
+                },
+                "searchMailAddress":{
+                    "searchMailAddressLabel":{
+                        "text":"メールアドレス"
+                    },
+                    "searchMailAddressTextbox":{
+                        "type":"text",
+                        "name":"mail_address"
+                    }
+                }
+            },
+            "searchButtonArea":{
+                "searchButton":{
+                    "type":"submit",
+                    "value":"検索"
                 }
             }
         }

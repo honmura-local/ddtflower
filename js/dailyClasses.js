@@ -410,6 +410,33 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 }
 
 /* 
+ * 関数名:callEachDayReservedValue
+ * 概要  :日ごと予約者一覧テーブルの値を置換する
+ * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+ 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 counter:カウンタ変数
+ 		 rowNumber:行番号
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.22
+ */
+var callEachDayReservedValue = function(tableName, roopData, counter, rowNumber) {
+	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+	recordData = roopData[counter];
+	// 時間割の始まりの時間を求める
+	start_time = backThreeStringDelete(recordData, 'start_time');
+	// 時間割の終わりの時間を求める
+	end_time = backThreeStringDelete(recordData, 'end_time');
+	// No.を入力する
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
+	// 開始時間を表示する
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(start_time);
+	// 終了時間を表示する
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(end_time);
+}
+
+
+/* 
  * 関数名:reservedLessonValueInput
  * 概要  :予約テーブルについてデータベースから取り出した値を固定値で入れる
  * 引数  :

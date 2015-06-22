@@ -132,6 +132,48 @@ label.records {
   margin: 0 1em;
 }
 
+
+/* 会員一覧の検索領域 */
+/* 
+ * セレクタ :.searchNameColumn,
+		.searchInfoColumn,
+		.searchButton
+ * 概要   :会員一覧検索の外側の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchNameColumn,
+.searchInfoColumn,
+.searchButton,
+.searchList li label {
+	margin-bottom: 5px;		/* 下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.searchList li span
+ * 概要   :検索のテキストボックスのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchList li span {
+	display: inline-block;	/* インラインブロック要素として扱う */
+	width: 15%;				/* 幅を15%にする */
+}
+
+/* 
+ * セレクタ :.searchList li input[type="text"]
+ * 概要   :検索のテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchList li input[type="text"] {
+	width: 30%;				/* 幅を30%にする */
+	margin-right: 10px;		/* 右に10pxの余白をとる */
+}
+
+/* 会員一覧の検索領域終わり */
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -140,5 +182,50 @@ label.records {
 /* スマホ用微調整 */
 @media(max-width:400px){
 
+	/* 会員一覧の検索領域 */
+	/* 
+	 * セレクタ :.searchNameColumn,
+			.searchInfoColumn
+	 * 概要   :会員一覧検索の外側の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchNameColumn,
+	.searchInfoColumn {
+		margin-bottom: 0;		/*余白をなくす*/
+	}
+
+	/* 会員一覧の検索領域 */
+	/* 
+	 * セレクタ :.searchList li label
+	 * 概要   :会員一覧検索のラベル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li label {
+		display: block;			/* ブロック要素としてあつかう */
+	}
+
+	/* 
+	 * セレクタ :.searchList li span
+	 * 概要   :会員一覧検索のラベルテキスト領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li span {
+		width: 30%;				/* 幅を30%にする */
+	}
+
+	/* 
+	 * セレクタ :.searchList li input[type="text"]
+	 * 概要   :会員一覧検索のテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li input[type="text"] {
+		margin-right: 0; 		/* 右の余白をなくす */
+		width: 67%;				/* 幅を67%にする */
+	}
+/* 会員一覧の検索領域終わり */
 
 }

@@ -257,7 +257,8 @@ label
 .lessonTable,
 .reservedLessonTable,
 .finishedLessonTable,
-.infoTable {
+.infoTable,
+.eachDayReservedInfoTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin-top: 5px;			/* 上から5pの余白をとる */
@@ -273,7 +274,8 @@ label
 .lessonTable td,
 .reservedLessonTable td,
 .finishedLessonTable td,
-.infoTable td {
+.infoTable td,
+.eachDayReservedInfoTable td {
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }

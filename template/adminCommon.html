@@ -29,6 +29,13 @@
 		</tr>
 	</table>
 
+	<!-- 日ごと予約者一覧のテーブルを作る -->
+	<table class="eachDayReservedInfoTable">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
 	<!-- 日毎予約者一覧の日付領域 -->
 	<p class="dateBelt"></p>
 
@@ -37,7 +44,51 @@
 		<input class="dateInput" type="" >
 		<input class="searchButton" type="" value="">
 	</div>
-	
+
+	<!-- 会員一覧、ユーザ検索テキストボックス -->
+	<div class="searchUser">
+		<!-- 検索するリスト -->
+		<ul class="searchList">
+			<!-- 名前で検索する領域 -->
+			<li class="searchNameColumn">
+				<!-- 氏名から検索するためのテキストボックス領域 -->
+				<label class="searchName">
+					<!-- ラベル領域 -->
+					<span class="searchNameLabel"></span>
+					<!-- テキストボックス領域 -->
+					<input class="searchNameTextbox" type="" name="">
+				</label>
+				<!-- 氏名カナから検索するためのテキストボックス領域 -->
+				<label class="searchNameKana">
+					<!-- ラベル領域 -->
+					<span class="searchNameKanaLabel"></span>
+					<!-- テキストボックス領域 -->
+					<input class="searchNameKanaTextbox" type="" name="">
+				</label>
+			</li>
+			<!-- 情報で検索する領域 -->
+			<li class="searchInfoColumn">
+				<!-- 電話番号から検索するためのテキストボックス領域 -->
+				<label class="searchPhoneNumber">
+					<!-- ラベル領域 -->
+					<span class="searchPhoneLabel"></span>
+					<!-- テキストボックス領域 -->
+					<input class="searchPhoneTextbox" type="" name="">
+				</label>
+				<!-- メールアドレスから検索するためのテキストボックス領域 -->
+				<label class="searchMailAddress">
+					<!-- ラベル領域 -->
+					<span class="searchMailAddressLabel"></span>
+					<!-- テキストボックス領域 -->
+					<input class="searchMailAddressTextbox" type="" name="">
+				</label>
+			</li>
+			<li class="searchButtonArea">
+				<input class="searchButton" type="" value="">
+			</li>
+		</ul>
+	</div>
+
 	<!-- ユーザ一覧を操作するボタン -->
 	<div class="userListButtons">
 		<div class="firstRow">
