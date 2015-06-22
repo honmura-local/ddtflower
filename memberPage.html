@@ -46,10 +46,6 @@
 				creator.getJsonFile('source/memberPage.json');
 				// 会員共通のパーツのJSONを取得する。
 				creator.getJsonFile('source/memberCommon.json');
-				//告知領域のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['userBanner'], 'userBanner');
-
-
 				// パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// 会員共通のパーツのJSONを取得する。
@@ -63,7 +59,10 @@
 				creator.outputTag('memberHeader');
 				// バナー領域を作る
 				creator.outputTag('userBanner');
-
+				//告知領域のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
+				// 告知領域を作る
+				creator.outputTag('advertise');
 				//通知領域の内容があれば
 				if($('.advertise p:not(:empty)').length){
 					$('.advertise').show();		//通知領域を表示する
@@ -78,10 +77,6 @@
 				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 				// 受講済み授業のタブ内コンテンツを作る
 				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
-				// 予約済み授業のタブ内テーブルを作る
-				creator.outputTag('reservedDetail', 'lessonDetail', '#alreadyReserved');
-				// 受講済み授業のタブ内テーブルを作る
-				creator.outputTag('finishedDetail', 'lessonDetail', '#finishedLesson');
 				// 予約済み授業と受講済み授業についてタブを作る
 				createTab('#tab-container');
 
@@ -89,8 +84,6 @@
 				creator.getJsonFile('source/eachDayLesson.json');
 				// 日ごと授業のテンプレートを読み込む
 				creator.getDomFile('template/eachDayLesson.html');
-
-
 
 				//予約一覧ダイアログを作る
 				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
@@ -113,8 +106,6 @@
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
 				//テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
-
-
 
 				// 受講済み授業テーブルを作る
 				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
@@ -142,8 +133,8 @@
 				// 授業のテーブルの値を正規のものにする
 //				 tableColumnValueInput('.lessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
 
-				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
-				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
+				// 注釈を作る
+				creator.outputTag('anotion', 'anotion', '.tabPanel');
 			});
 			</script>
 		</div>

@@ -1,56 +1,67 @@
 {
     "memberHeader": {
-        "db_getQuery": "SELECT id AS numberArea, user_name AS userName, get_point AS getPoint  FROM user_inf WHERE id = 'user_key'",
+        "db_getQuery": "SELECT id AS numberArea, user_name, get_point FROM user_inf WHERE id = 'user_key'",
         "user_key": {
             "value": "117"
         },
         "memberStatus": {
-            "topLogoArea": {
-                "topLink": {
-                    "href": "",
-                    "topLogoImage": {
-                        "src": ""
+            "topLogoArea":{
+                "topLink":{
+                    "topLogoImage":{
+                        "src":"image/top(logo).png"
                     }
                 }
             },
-            "memberNumber": {
-                "noArea": {
-                    "text": "No."
-                },
-                "numberArea": {
-                    "text": ""
-                }
-            },
-            "memberPoint": {
-                "getPoint": {
-                    "text": ""
-                },
-                "ptArea": {
-                    "text": "pt"
-                }
-            },
             "memberName": {
-                "userName": {
+                "user_name": {
                     "text": ""
                 },
                 "nameTitleArea": {
                     "text": "様"
                 }
             },
-            "logoutArea": {
-                "logoutLink": {
-                    "href": "",
-                    "logoutImage": {
-                        "src": ""
+            "memberPoint": {
+                "get_point": {
+                    "text": ""
+                },
+                "ptArea": {
+                    "text": "pt"
+                }
+            },
+            "logoutArea":{
+                "logoutLink":{
+                    "logoutImage":{
+                        "src":"image/icon(logout22-50).png"
                     }
                 }
             }
         }
     },
-    "topLinkArea": {
-        "topLink": {
-            "href": "",
-            "text": "トップページへ"
+    "userBanner": {
+        "bannerArea": {
+            "banner": [
+                {
+                    "src": "image/icon(myPage).png"
+                },
+                {
+                    "src": "image/icon(profile).png"
+                },
+                {
+                    "src": "image/icon(mail).png"
+                },
+                {
+                    "src": "image/icon(gallery).png"
+                },
+                {
+                    "src": "image/icon(blog).png"
+                },
+                {
+                    "src": "image/icon(myGallery).png"
+                },
+                {
+                    "src": "image/icon(myBlog).png"
+                }
+            ]
         }
     }
 }

@@ -1,36 +1,20 @@
 ﻿{
-    "userBanner": {
+    "advertise": {
         "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
         "user_key": {
-            "value": "117"
+            "value": "35"
         },
-        "bannerArea": {
-            "banner": [
-                {
-                    "src": "",
-                    "title": "blogbanner",
-                    "value": "ブログバナー"
-                },
-                {
-                    "src": "",
-                    "title": "mypagebanner",
-                    "value": "マイページバナー"
-                }
-            ]
-        },
-        "advertise": {
-            "advertiseLink": {
-                "advertiseImage": {
-                    "src": "",
-                    "title": "告知領域"
-                }
-            },
-            "message_title": {
-                "text": ""
-            },
-            "message_content": {
-                "text": ""
+        "advertiseLink": {
+            "advertiseImage": {
+                "src": "",
+                "title": ""
             }
+        },
+        "message_title": {
+            "text": ""
+        },
+        "message_content": {
+            "text": ""
         }
     },
     "lessonCalendar": {
@@ -88,15 +72,10 @@
         },
         "selectThemeButton": {
             "text": "絞込"
-        },
-        "anotion": {
-            "text": "※ポイントは参加人数と共に変動します"
         }
     },
-    "reservedDetail": {
-        "anotion": {
-            "text": "※ポイントは参加人数と共に変動します"
-        }
+    "anotion": {
+        "text": "※ポイントは参加人数と共に変動します"
     },
     "lessonReservedDetailTable": {
         "db_getQuery": "SELECT time_table_day.lesson_date AS lesson_date,start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
@@ -150,11 +129,6 @@
                     "style": "display:none;"
                 }
             }
-        }
-    },
-    "finishedDetail": {
-        "anotion": {
-            "text": "※ポイントは参加人数と共に変動します"
         }
     },
     "lessonFinishedDetailTable": {
