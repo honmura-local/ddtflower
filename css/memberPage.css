@@ -12,6 +12,10 @@ a:active {
 	color: #999;		/* クリックしたときに文字の色を薄くする */ 
 }
 
+td {
+	vertical-align: middle;/* 縦について中央位置にする */
+}
+
 label
 .memberMenu li,
 .banner,

@@ -89,8 +89,11 @@
 				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
 					// 日ごとダイアログ領域を作る
 					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+				// テーブルのステータスを概要を表示する領域を作る
+				// creator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+				// 予約一覧テーブルの値を置換する
+				// lessonTableValueInput('.lessonTable', eachDayLessonTable, "callReservedLessonValue");
 				});
-				
 				//予約確定ダイアログを作る
 				var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
 					// テーブルのステータスを概要を表示する領域を作る
@@ -111,11 +114,8 @@
 				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
 				// 予約中授業のテーブルを作る
 				creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
-				// 予約テーブルを作る
-// 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
-				// テーブルのステータスを概要を表示する領域を作る
-//				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
-
+				// 注釈を作る
+				creator.outputTag('anotion', 'anotion', '.tabPanel');
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
 
@@ -125,16 +125,10 @@
 				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
 				// 日ごと授業テーブルの連想配列を変数に入れる
 				var eachDayLessonTable = creator.json['memberTable']['table'];
-				// 予約中授業のテーブルの値を正規のものにする
-//				reservedLessonValueInput('.lessonTable', eachDayLessonTable);
-//				reservedValueInput('.reservedLessonTable', reservedNow);
- 				// 受講済み授業のテーブルの値を正規のものにする
-//				 tableColumnValueInput('.finishedLessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
-				// 授業のテーブルの値を正規のものにする
-//				 tableColumnValueInput('.lessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
-
-				// 注釈を作る
-				creator.outputTag('anotion', 'anotion', '.tabPanel');
+				// 予約中テーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
+				// 受講済みテーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.finishedLessonTable', lessonFinished, "callMemberLessonValue");
 			});
 			</script>
 		</div>
