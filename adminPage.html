@@ -73,8 +73,10 @@
 				//日ごと予約者一覧タブのコンテンツ
 				//選択された日付を表示する領域
 				creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
-				//一覧テーブル
-				creator.outputTag('userInfoTable', 'infoTable', '#dayReserver');
+				// 日ごと予約者一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['userInfoTable'], 'userInfoTable');
+				//日ごと予約者一覧テーブルを作る
+				creator.outputTagTable('userInfoTable','infoTable','#dayReserver');
 				//日付選択パーツのセット
 				creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 				
@@ -85,18 +87,23 @@
 				creator.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
 				//受講承認一覧タブ
 				creator.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
-				//受講承認タブのリスト
-				creator.outputTag('doLecturePermitInfoTable', 'infoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+
+				// 受講承認一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+				//受講承認タブのリスト
+				creator.outputTagTable('lecturePermitListInfoTable', 'infoTable', '#lecturePermitList');
 				//受講承認一覧タブのリスト
-				creator.outputTag('lecturePermitListInfoTable', 'infoTable', '#lecturePermitList');
+				// creator.outputTag('lecturePermitListInfoTable', 'infoTable', '#lecturePermitList');
 				//受講承認一覧のリスト更新ボタン
 				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
 				
 				//会員一覧タブのコンテンツ
+				// 日ごと予約者一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 				//会員一覧タブのリスト
-				creator.outputTag('userListInfoTable', 'infoTable', '#userList');
+				creator.outputTagTable('userListInfoTable', 'infoTable', '#userList');
 				//会員一覧タブのボタン群れ
 				creator.outputTag('userListButtons', 'userListButtons', '#userList');
 				
@@ -106,6 +113,9 @@
 				//タブを作る
 				createTab('.adminTab');
 				createTab('.lecturePermitTab');
+
+				// ボタンの見た目をjqueryuiのものにする
+				$('button, .searchButton, input[type="button"]').button();
 			});
 			</script>
 		</div>

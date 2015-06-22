@@ -3,6 +3,7 @@
         "class": "tabContainer adminTab",
         "id": "adminTab",
         "tabs": {
+            "class":"tabs outsideArea",
             "tab": [
                 {
                     "href": "#dayReserver",
@@ -19,7 +20,7 @@
             ]
         },
         "tabContentArea":{
-        	"class":"tabContentArea panelContainer"
+        	"class":"tabContentArea panelContainer outsideArea"
         }
     },
 	"dayReserver": {
@@ -42,7 +43,41 @@
     	"dateInput":{"type":"date", "value":"2015/06/12"},
     	"searchButton":{"type":"button", "value":"検索"}
     },
-    "userInfoTable":{},
+    "userInfoTable":{
+        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "date": {
+            "value": "2015-04-10"
+        },
+        "config": {
+            "columns": {
+                "time_table_key": {
+                    "columnName": "id"
+                },
+                "lesson_date":{
+                    "style":"display:none;"
+                },
+                "start_time": {
+                    "columnName": "開始"
+                },
+                "end_time": {
+                    "columnName": "終了"
+                },
+                "lesson_name": {
+                    "columnName": "テーマ"
+                },
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "stage_no": {
+                    "columnName": "Stg-Lv"
+                },
+                "level_no": {
+                    "columnName": "レベル",
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
     "lecturePermitTab": {
         "class": "tabContainer lecturePermitTab",
         "id": "lecturePermitTab",
@@ -70,23 +105,102 @@
 	    "class": "lecturePermitList tabPanel",
 	    "id": "lecturePermitList"
 	},
-    "doLecturePermitInfoTable":{},
-    "doLecturePermitButton":{"type":"button", "value":"承認"},
-    "lecturePermitListInfoTable":{},
+    "doLecturePermitInfoTable":{
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf ORDER BY update_datetime DESC;",
+        "config": {
+            "columns": {
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "pre_paid": {
+                    "columnName": "残高"
+                },
+                "get_point": {
+                    "columnName": "ポイント"
+                },
+                "update_date": {
+                    "columnName": "最終予約日"
+                }
+            }
+        }
+    },
+    "doLecturePermitButton":{ "type":"button", "value":"承認"},
+    "lecturePermitListInfoTable":{
+        "db_getQuery": "(SELECT user_inf.id AS id ,user_name ,lesson_name ,user_classwork.user_classwork_cost AS cost ,user_classwork.use_point AS use_point ,user_classwork.level_no AS level_no ,user_classwork.stage_no AS stage_no ,1 AS sell_number ,'' AS content FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date <= 'toDate' AND time_table_day.lesson_date >= 'FromDate' INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key ORDER BY time_table_day.lesson_date DESC) UNION ALL (SELECT user_inf.id AS id ,user_name ,'' AS lesson_name ,pay_cash AS cost ,commodity_sell.use_point AS use_point ,1 AS level_no ,1 AS stage_no ,sell_number ,content FROM commodity_sell INNER JOIN user_inf ON user_inf.id = commodity_sell.user_key AND sell_datetime <= 'toDate' AND sell_datetime >= 'FromDate' ORDER BY sell_datetime DESC);",
+        "FromDate":{
+            "value":"2015-03-01"
+        },
+        "toDate":{
+            "value":"2015-03-31"
+        },
+        "config": {
+            "columns": {
+                "id": {
+                    "columnName": "id"
+                },
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "lesson_name": {
+                    "columnName": "内容"
+                },
+                "cost": {
+                    "columnName": "入金(円)",
+                    "className":"replaceTextbox"
+                },
+                "use_point": {
+                    "columnName": "使用pt(pt)",
+                    "className":"replaceTextbox"
+                },
+                "stage_no":{
+                    "style":"display:none;"
+                },
+                "level_no":{
+                    "style":"display:none;"
+                },
+                "sell_number":{
+                    "style":"display:none;"
+                },
+                "content":{
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
-    "userListInfoTable":{},
+    "userListInfoTable":{
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf ORDER BY update_datetime DESC;",
+        "config": {
+            "columns": {
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "pre_paid": {
+                    "columnName": "残高"
+                },
+                "get_point": {
+                    "columnName": "ポイント"
+                },
+                "update_date": {
+                    "columnName": "最終予約日"
+                }
+            }
+        }
+    },
     "userListButtons":{
     	"firstRow":{
-    		"next":{
+    		"prev":{
+                "class":"prev",
 	    		"type":"button",
-	    		"value":"前"
+	    		"value":"前へ"
     		},
     		"records":{
-    			"text":""
+    			"text":"1111/9999"
     		},
-    		"prev":{
+    		"next":{
+                "class":"next",
 	    		"type":"button",
-	    		"value":"後"
+	    		"value":"次へ"
     		}
     	},
     	"secondRow":{
@@ -95,6 +209,7 @@
 	    		"value":"メール・メッセージ"
     		},
     		"register":{
+                "class":"register fRight",
 	    		"type":"button",
 	    		"value":"新規登録"
     		}

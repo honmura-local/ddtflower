@@ -82,7 +82,8 @@ label
 #container .calendar,
 .topLogoArea,
 .memberHeader p:nth-of-type(1),
-.lessonStatusText:nth-of-type(1) {
+.lessonStatusText:nth-of-type(1),
+.fLeft {
 	float: left;
 }
 
@@ -90,7 +91,8 @@ label
 .selectThemeButton,
 .logoutArea,
 .memberHeader p:nth-of-type(2),
-.passLinkArea {
+.passLinkArea,
+.fRight {
 	float: right;
 }
 
@@ -250,7 +252,8 @@ label
  */
 .lessonTable,
 .reservedLessonTable,
-.finishedLessonTable {
+.finishedLessonTable,
+.infoTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin-top: 5px;			/* 上から5pの余白をとる */
@@ -265,7 +268,8 @@ label
  */
 .lessonTable td,
 .reservedLessonTable td,
-.finishedLessonTable td {
+.finishedLessonTable td,
+.infoTable td {
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
@@ -300,18 +304,6 @@ label
 	margin-bottom: 10px;	/* 底に10px余白をとる */
 }
 /* サブヘッダー領域終わり */
-
-/* 注釈領域 */
-/* 
- * セレクタ :.anotion
- * 概要   :データの注釈領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.04
- */
-.anotion {
-	margin-bottom: 20px;		/* 下に20pxの余白をとる */
-}
-/*注釈領域の終わり*/
 
 /* 
  * セレクタ :.accordion
@@ -587,7 +579,7 @@ label
 	.passArea,
 	.topLinkArea,
 	.memberInfo,
-	#tab-container {
+	.outsideArea {
 		width: 97%;			/* 幅を90%にする */ 
 		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
 	}
