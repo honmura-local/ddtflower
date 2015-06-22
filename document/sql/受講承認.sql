@@ -9,6 +9,7 @@ SELECT
 	,user_classwork.level_no AS level_no
 	,user_classwork_cost
 	,user_inf.get_point AS get_point
+	,user_classwork.id = user_classwork_key
 FROM
 	time_table_day
 INNER JOIN
@@ -33,3 +34,14 @@ INNER JOIN
 	timetable_inf
 ON
 	timetable_inf.id = time_table_day.timetable_key;
+	
+# 備品名リスト用クエリ
+# selling_priceは個数入力時の代金自動計算に使う
+SELECT 
+	commodity_name
+	,selling_price
+	,id AS commodity_key
+FROM
+	commodity_inf
+WHERE
+	school_key = {{セッションのschool_key}}
