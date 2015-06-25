@@ -1,5 +1,9 @@
 /*@CHARSET "UTF-8";*/
 
+#conteiner .main {
+	margin-top: 5px;
+}
+
 a {
 	display: block;		/* ブロック要素にしてクリックしやすくする */
 }
@@ -83,7 +87,7 @@ label
 	margin-left: -3px;
 }
 
-#container .calendar,
+#container .lessonCalendar,
 .topLogoArea,
 .memberHeader p:nth-of-type(1),
 .lessonStatusText:nth-of-type(1),
@@ -258,7 +262,10 @@ label
 .reservedLessonTable,
 .finishedLessonTable,
 .infoTable,
-.eachDayReservedInfoTable {
+.eachDayReservedInfoTable,
+.doLecturePermitInfoTable,
+.lecturePermitListInfoTable,
+.userListInfoTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin-top: 5px;			/* 上から5pの余白をとる */
@@ -275,7 +282,10 @@ label
 .reservedLessonTable td,
 .finishedLessonTable td,
 .infoTable td,
-.eachDayReservedInfoTable td {
+.eachDayReservedInfoTable td,
+.doLecturePermitInfoTable td,
+.lecturePermitListInfoTable td,
+.userListInfoTable td {
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
@@ -570,7 +580,7 @@ label
 @media(max-width:680px){
 
 	/* 
-	 * セレクタ :	#container .calendar,
+	 * セレクタ :	#container .lessonCalendar,
 				#tab-container,
 				.passArea,
 				.topLinkArea,
@@ -580,7 +590,7 @@ label
 	 * 作成日 :2015.06.08
 	 */
 	.advertise,
-	#container .calendar,
+	#container .lessonCalendar,
 	#tab-container,
 	.passArea,
 	.topLinkArea,
@@ -591,22 +601,22 @@ label
 	}
 
 	/* 
-	 * セレクタ :#container .calendar, #tab-container
+	 * セレクタ :#container .lessonCalendar, #tab-container
 	 * 概要   :カレンダーとタブ領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	#container .calendar, #tab-container {
+	#container .lessonCalendar, #tab-container {
 		float:none;					/* 回り込みをなくす */ 
 	}
 
 	/* 
-	 * セレクタ :#container .calendar > div
+	 * セレクタ :#container .lessonCalendar > div
 	 * 概要   :カレンダーの直下の子供領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	#container .calendar > div {
+	#container .lessonCalendar > div {
 		width: 100%;		/* 幅を100%にする */ 
 	}
 

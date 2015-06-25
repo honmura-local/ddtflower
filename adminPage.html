@@ -94,25 +94,27 @@
 				creator.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
 				//受講承認一覧タブ
 				creator.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
+
+				// 受講承認テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+				//受講承認タブのリストテーブル
+				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
 
 				// 受講承認一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
-				//受講承認タブのリスト
-				creator.outputTagTable('lecturePermitListInfoTable', 'infoTable', '#lecturePermitList');
 				//受講承認一覧タブのリスト
-				// creator.outputTag('lecturePermitListInfoTable', 'infoTable', '#lecturePermitList');
+				creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
 				//受講承認一覧のリスト更新ボタン
 				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
-				
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 				//会員一覧タブのリスト
-				creator.outputTagTable('userListInfoTable', 'infoTable', '#userList');
+				creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
 				//会員一覧タブのボタン群れ
 				creator.outputTag('userListButtons', 'userListButtons', '#userList');
 				

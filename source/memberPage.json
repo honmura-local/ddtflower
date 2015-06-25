@@ -2,7 +2,7 @@
     "advertise": {
         "db_getQuery": "SELECT message_title, message_content FROM message_inf WHERE id IN (SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
         "user_key": {
-            "value": "285"
+            "value": ""
         },
         "advertiseLink": {
             "advertiseImage": {
@@ -18,6 +18,7 @@
         }
     },
     "lessonCalendar": {
+        "class":"lessonCalendar calendar",
         "name": "lessonCalendar"
     },
     "lessonTab": {
@@ -78,18 +79,17 @@
         "text": "※ポイントは参加人数と共に変動します"
     },
     "lessonReservedDetailTable": {
-        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date >= NOW()-1;",
+        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date >= 'lesson_date' ORDER BY lesson_date ASC;",
         "user_key": {
-            "value": "117"
+            "value": ""
         },
         "lesson_date":{
-            "value":"2015-04-01"
+            "value":"2015-04-20"
         },
-        "border": "1",
         "config": {
             "columns": {
                 "start_time": {
-                    "columnName": "開始日時"
+                    "columnName": "開催日時"
                 },
                 "end_time": {
                     "columnName": "終了",
@@ -135,15 +135,15 @@
         }
     },
     "lessonFinishedDetailTable": {
-        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id;",
+        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date <= NOW() ORDER BY lesson_date DESC;",
         "user_key": {
-            "value": "117"
+            "value": ""
         },
         "border": "1",
         "config": {
             "columns": {
                 "start_time": {
-                    "columnName": "開始日時"
+                    "columnName": "開催日時"
                 },
                 "end_time": {
                     "columnName": "終了",
@@ -219,47 +219,47 @@
             "cancelRateValue": {
                 "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"18"
+                    "value":"14"
                 },
-                "cancelRate~0":{
+                "cancel__0":{
                     "cancel_days":{
                         "text":""
                     },
-                    "canselText":{
+                    "cancelText":{
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
-                    "canselUnit":{
+                    "cancelUnit":{
                         "text":"%"
                     }
                 },
-                "cancelRate~1":{
+                "cancel__1":{
                     "cancel_days":{
                         "text":""
                     },
-                    "canselText":{
+                    "cancelText":{
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
-                    "canselUnit":{
+                    "cancelUnit":{
                         "text":"%"
                     }
                 },
-                "cancelRate~2":{
+                "cancel__2":{
                     "cancel_days":{
                         "text":""
                     },
-                    "canselText":{
+                    "cancelText":{
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
-                    "canselUnit":{
+                    "cancelUnit":{
                         "text":"%"
                     }
                 }
@@ -272,9 +272,9 @@
             "addPointValue":{
                 "db_getQuery":"SELECT * FROM lesson_point_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"18"
+                    "value":"14"
                 },
-                "addPointFirstRecord": {
+                "addPoint__0": {
                     "students": {
                         "text": ""
                     },
@@ -288,7 +288,7 @@
                         "text": "pt"
                     }
                 },
-                "addPointSecondRecord": {
+                "addPoint__1": {
                     "students": {
                         "text": ""
                     },
@@ -302,7 +302,7 @@
                         "text": "pt"
                     }
                 },
-                "addPointThirdRecord": {
+                "addPoint__2": {
                     "students": {
                         "text": ""
                     },
@@ -316,7 +316,7 @@
                         "text": "pt"
                     }
                 },
-                "addPointFourthRecord": {
+                "addPoint__3": {
                     "students": {
                         "text": ""
                     },
@@ -338,5 +338,85 @@
     },
     "sendReservedData":{
     	"db_setQuery":"INSERT INTO user_classwork (user_work_status,user_classwork_cost,flower_cost,user_key,classwork_key,stage_key,stage_no,level_key,level_no,order_datetime,create_datetime,update_datetime)VALUES (1,'default_user_classwork_cost','default_flower_cost','user_key','classwork_key','stage_key','stage_no_present','level_key','level_no_present',NOW(),NOW(),NOW());"
+    },
+    "cancelLessonDialog":{},
+    "cancelLessonDialogContent":{
+         "lessonConfirm": {
+            "lessonInfo": {
+                "timeSchedule": {
+                    "text": ""
+                },
+                "store": {
+                    "text": ""
+                },
+                "course": {
+                    "text": ""
+                },
+                "price": {
+                    "text": ""
+                },
+                "priceUnit": {
+                    "text": "円"
+                }
+            }
+        },
+        "attention": {
+            "cancelRateLabel": {
+                "cancelRateLabelText": {
+                    "text": "キャンセル料率(授業当日より)"
+                }
+            },
+            "cancelRateValue": {
+                "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
+                "lesson_key":{
+                    "value":"14"
+                },
+                "cancel__0":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "cancelText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "cancelUnit":{
+                        "text":"%"
+                    }
+                },
+                "cancel__1":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "cancelText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "cancelUnit":{
+                        "text":"%"
+                    }
+                },
+                "cancel__2":{
+                    "cancel_days":{
+                        "text":""
+                    },
+                    "cancelText":{
+                        "text":"日前:"
+                    },
+                    "cancel_rate":{
+                        "text":""
+                    },
+                    "cancelUnit":{
+                        "text":"%"
+                    }
+                }
+            }
+        },
+        "confirmText": {
+            "text": "上記の授業をキャンセルしますか?"
+        }
     }
 }

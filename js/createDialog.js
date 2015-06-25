@@ -796,6 +796,7 @@ dialogOption['loginDialog'] = {
 		create:function(event, ui){
 			//文字サイズを小さめにする。
 			$(this).next().css('font-size', '0.5em');
+			creator.getJsonFile('source/memberPage.json');
 		},
 		// 位置を指定する。
 		position:{
@@ -836,10 +837,118 @@ dialogOption['loginDialog'] = {
 			        				async:false,
 			        				//通信成功時の処理
 			        				success:function(json){
-			        					// 通信結果のデータをtransResultに格納する。
-			        					console.log(json);
+			        					//表示している内容を全て消去する
+			        					$('.main, header').empty();
+			        					creator.getJsonFile('source/memberPage.json');
+										// 会員共通のパーツのJSONを取得する。
+										creator.getJsonFile('source/memberCommon.json');
+			        					//jsonのルートの数だけループする
+			        					for(var key in creator.json) {
+			        						//子供にuser_keyがあるときにvalueの値を書き換える 
+			        						if('user_key' in creator.json[key]) {
+			        							//jsonの値をセットする
+			        							creator.json[key]['user_key']['value'] = json['id'];
+			        						}else {
+			        							//次のループに行く
+			        							continue;
+			        						}
+			        					}
+										callPage('memberPage.html');
 
+// 				// パーツのテンプレートのDOMを取得する。
+// 				creator.getDomFile('template/common.html');
+// 				// 会員共通のパーツのJSONを取得する。
+// 				creator.getDomFile('template/memberCommon.html');
+// 				// 会員ページのjsonを読み込む
+// 				creator.getDomFile('template/memberPage.html');
+// 				//ユーザ情報のテキストをDBから取得する
+// 				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+
+// $('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
+// $('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
+
+// 				// 会員ページヘッダーを作る
+// 				creator.outputTag('memberHeader');
+// 				// バナー領域を作る
+// 				creator.outputTag('userBanner');
+// 				//告知領域のテキストをDBから取得する
+// 				creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
+// 				// 告知領域を作る
+// 				creator.outputTag('advertise');
+// 				//通知領域の内容があれば
+// 				if($('.advertise p:not(:empty)').length){
+// 					$('.advertise').show();		//通知領域を表示する
+// 				}
+				
+// 				// 会員ページのカレンダーを作る
+// 				creator.outputTag('lessonCalendar', 'calendar');
+
+// 				// タブ機能を作る
+// 				creator.outputTag('lessonTab');
+// 				// 予約済み授業のタブ内コンテンツを作る
+// 				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
+// 				// 受講済み授業のタブ内コンテンツを作る
+// 				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
+// 				// 予約済み授業と受講済み授業についてタブを作る
+// 				createTab('#tab-container');
+
+// 				// 日ごと授業のjsonを読み込む
+// 				creator.getJsonFile('source/eachDayLesson.json');
+// 				// 日ごと授業のテンプレートを読み込む
+// 				creator.getDomFile('template/eachDayLesson.html');
+
+// 				//予約一覧ダイアログを作る
+// 				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
+// 					// 日ごとダイアログ領域を作る
+// 					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+// 				// テーブルのステータスを概要を表示する領域を作る
+// 				// creator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+// 				// 予約一覧テーブルの値を置換する
+// 				// lessonTableValueInput('.lessonTable', eachDayLessonTable, "callReservedLessonValue");
+// 				});
+// 				//予約確定ダイアログを作る
+// 				var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
+// 					// テーブルのステータスを概要を表示する領域を作る
+// 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
+// 				});
+				
+// 				// カレンダーを作り、クリックでダイアログ作成を作る
+// 				var memCalendar = new memberCalendar('.lessonCalendar', 90, 117, lessonList);
+// 				memCalendar.create();	//カレンダーを実際に作成する
+				
+				
+// 				//テーブル用のJSON配列を取得する
+// 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+// 				//テーブル用のJSON配列を取得する
+// 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
+
+// 				// 受講済み授業テーブルを作る
+// 				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
+// 				// 予約中授業のテーブルを作る
+// 				creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
+// 				// 注釈を作る
+// 				creator.outputTag('anotion', 'anotion', '.tabPanel');
+// 				// 絞り込みボタンをjqueryのボタンにする
+// 				$('.selectThemeButton').button();
+// 				lessonThemeSearch();
+
+
+//  				// 予約中授業の連想配列を変数に入れる 
+// 				var reservedNow = creator.json['lessonReservedDetailTable']['table'];
+// 				// 受講済みの連想配列を変数に入れる
+// 				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
+// 				// 日ごと授業テーブルの連想配列を変数に入れる
+// 				var eachDayLessonTable = creator.json['memberTable']['table'];
+// 				// 予約中テーブルのテーブルの値をしかるべき値にする
+// 				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
+// 				// 受講済みテーブルのテーブルの値をしかるべき値にする
+// 				lessonTableValueInput('.finishedLessonTable', lessonFinished, "callMemberLessonValue");
+
+
+
+			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
+			        					//console.log(json);
 			        				},
 			        				//通信失敗時の処理
 			        				error:function(){
@@ -848,30 +957,33 @@ dialogOption['loginDialog'] = {
 			        				}
 			        				
 			        			 });
+// ダイアログを消去する。
+
+			        		 $(this).dialog('close').dialog('destroy').remove();
 			        			// 通信が成功していたら
 			        			 if(transResult["result"]){
-			        				// ユーザ情報の取得に成功していたら
-			        				 if('user' in transResult){
-			        					 //日付クラスインスタンスを生成する。
-			        					 var cookieLimit = new Date();
-			        					 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
-			        					 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
-			        					 //cookieにユーザ情報と期限の日付を格納する。
-			        					 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
-			        					 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
-			        					 //ここまで変更しました。
-			        					 // ダイアログを消去する。
-						        		 $(this).dialog('close').dialog('destroy').remove();
-						        		 //画面を更新する。
-						        		 location.reload();
-			        				 } else {
-			        					 // 認証失敗のメッセージを出す。
-			        					 alert(errorMessages[1]);
-			        				 }
+			        				// // ユーザ情報の取得に成功していたら
+			        				//  if('user' in transResult){
+			        				// 	 //日付クラスインスタンスを生成する。
+			        				// 	 var cookieLimit = new Date();
+			        				// 	 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			        				// 	 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
+			        				// 	 //cookieにユーザ情報と期限の日付を格納する。
+			        				// 	 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
+			        				// 	 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
+			        				// 	 //ここまで変更しました。
+			        				// 	 // ダイアログを消去する。
+						        	// 	 $(this).dialog('close').dialog('destroy').remove();
+						        	// 	 //画面を更新する。
+						        	// 	 location.reload();
+			        				//  } else {
+			        				// 	 // 認証失敗のメッセージを出す。
+			        				// 	 alert(errorMessages[1]);
+			        				//  }
 			        			//通信に失敗していたら。 
 			        			 } else {
 			        			//通信エラーのメッセージを出す。
-		        				alert(errorMessages[2]);
+		        				// alert(errorMessages[2]);
 			        			}
 			        		//空欄に入力するようにメッセージを出す。
 			        		 } else {
@@ -1050,8 +1162,10 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			setTimeout(function(){
 				//変数に予約一覧テーブルのjsonの連想配列を入れる
 				var lessonTable = creator.json['memberInfomation']['table'];
+				// 時間割1限分の生徒の合計人数が入った連想配列を作る
+				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 				//予約一覧テーブルの値を置換する
-				lessonTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue");
+				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
 			},1);
 		},
 		//イベント
@@ -1344,6 +1458,8 @@ function insertConfirmReserveJsonDialogValue(sendObject){
 	object.lessonConfirm.lessonInfo.course.text = sendObject.lesson_name;
 	object.lessonConfirm.lessonInfo.price.text = sendObject.default_user_classwork_cost;
 	object.lessonConfirm.lessonInfo.priceUnit.text = '円';
+	// object.attention.cancelRateValue.lesson_key = sendObject.lesson_key;
+	// object.attention.addPointValue.lesson_key = sendObject.lesson_key;
 	// object.lessonConfirm.lessonInfo.price.text = sendObject.;
 //	object.lessonConfirm.lessonStage.stageValue.text = sendObject.stage_no;
 //	object.lessonConfirm.lessonStage.levelValue.text = sendObject.level_no;

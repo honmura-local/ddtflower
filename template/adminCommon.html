@@ -36,6 +36,27 @@
 		</tr>
 	</table>
 
+	<!-- 受講承認テーブル -->
+	<table class="doLecturePermitInfoTable">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
+	<!-- 受講承認一覧テーブル -->
+	<table class="lecturePermitListInfoTable">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
+	<!-- ユーザリストテーブル -->
+	<table class="userListInfoTable">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
 	<!-- 日毎予約者一覧の日付領域 -->
 	<p class="dateBelt"></p>
 
@@ -121,6 +142,69 @@
 		<!-- 検索ボタン -->
 		<input class="searchButton" type="" name="" value="">
 	</div>
+
+	<!-- 受講承認、アコーディオン概要領域 -->
+	<tr class="accordionSummary">
+		<!-- 備品名領域 -->
+		<td class="equipmentNameSummary"></td>
+		<!-- 個数領域 -->
+		<td class="equipmentCountSummary"></td>
+		<!-- 備品代領域 -->
+		<td class="equipmentPriceSummary"></td>
+		<!-- 所持pt領域 -->
+		<td class="get_pointSummary"></td>
+		<!-- 使用pt領域 -->
+		<td class="use_pointSummary"></td>
+		<!-- 遅刻領域 -->
+		<td class="beLateSummary"></td>
+		<!-- 会計領域 -->
+		<td class="sumPriceSummary"></td>
+		<!-- ステータス領域 -->
+		<td class="lessonStatusSummary"></td>
+	</tr>
+	<!-- 受講承認　アコーディオン内容領域 -->
+	<tr class="accordion">
+		<!-- 備品名 -->
+		<td class="equipmentName">
+			<!-- 備品名セレクトボックス -->
+			<select class="equipmentSelect">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option value="" class="equipmentOption"></option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="equipmentCount">
+			<!-- 備品個数テキストボックス -->
+			<input class="equipmentCountTextbox" type="" name="" value="">
+		</td>
+		<!-- 備品代 -->
+		<td class="equipmentPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="equipmentPriceTextbox" type="" name="" value="">
+		</td>
+		<!-- 所持pt -->
+		<td class="get_point"></td>
+		<!-- 使用ポイント -->
+		<td class="use_point">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="" name="" value="">
+		</td>
+		<!-- 遅刻 -->
+		<td class="beLate">
+			<!-- 遅刻テキストボックス -->
+			<input class="beLateTextbox" type="" name="" value="">
+		</td>
+		<!-- 会計 -->
+		<td class="sumPrice"></td>
+		<!-- ステータス -->
+		<td class="lessonStatus">
+			<!-- ステータスセレクトボックス -->
+			<select class="lessonStatusSelect">
+				<!-- ステータス、セレクトボックスの中身 -->
+				<option value="" class="lessonStatusOption"></option>
+			</select>
+		</td>
+	</tr>
 
 </div>
 </body>

@@ -2,7 +2,7 @@
     "memberHeader": {
         "db_getQuery": "SELECT id AS numberArea, user_name, get_point FROM user_inf WHERE id = 'user_key'",
         "user_key": {
-            "value": "117"
+            "value": ""
         },
         "memberStatus": {
             "topLogoArea":{

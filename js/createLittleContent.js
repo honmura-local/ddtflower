@@ -1991,3 +1991,40 @@ function insertArticleListText(elems, articleNodes){
 		}
 	}
 }
+
+/* 
+ * 関数名:setOptionValue
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :optionタグのvalue属性に値を入れる
+ * 作成日 :2015.06.24
+ * 作成者:T.Yamamoto
+*/
+function setOptionValue() {
+	// optionタグをループで全て操作する
+	$("select option").each(function(i){
+		// optionタグの文字列を変数に入れる
+		var selectValue = $(this).text();
+		// 取得した文字列をvalue属性に入れる
+		$(this).val(selectValue);
+	});
+}
+
+/*
+ * 関数名 :lessonThemeSerch
+ * 引数  　:element elems:記事リストのDOM
+ * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
+ * 戻り値　:なし
+ * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
+ * 作成日　:2015.06.24
+ * 作成者　:T.Yamamoto
+ */
+function lessonThemeSearch() {
+	setOptionValue()
+	//テーマボタンがクリックされた時のイベントを設定する
+	$('.selectThemeButton').click(function() {
+		//テーマのセレクトボックスの値を取得する
+		var selectTheme = $('.selectThemebox').val();
+		
+	});
+}

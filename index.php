@@ -141,12 +141,12 @@ $(document).ready(function(){
 	// トップメニューにマウスオーバーのフィルターを配置する。
 	functionFilter('.topMenu li');
 
-	// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-	fixYCoordinate('header', '.flowerBackground');
-	// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-	fixXCoordinateOnScroll('header')
+	// // メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+	// fixYCoordinate('header', '.flowerBackground');
+	// // position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+	// fixXCoordinateOnScroll('header');
 	//テーブルの全レコード選択の処理をオンにする。
-	checkAllRecord()
+	checkAllRecord();
 	//JSONデータを格納する変数を初期化する。
 	creator.json = null;
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
