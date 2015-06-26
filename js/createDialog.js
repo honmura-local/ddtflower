@@ -871,7 +871,7 @@ dialogOption['loginDialog'] = {
 			        			 });
 // ダイアログを消去する。
 
-			        		 $(this).dialog('close').dialog('destroy').remove();
+			        		 // $(this).dialog('close').dialog('destroy').remove();
 			        			// 通信が成功していたら
 			        			 if(transResult["result"]){
 			        				// // ユーザ情報の取得に成功していたら
@@ -1084,6 +1084,7 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		event:function(){
 			//予約決定ダイアログを表示する処理
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
+				
 				//予約決定ダイアログのクラスインスタンスを取得する
 				var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
 				//レッスン一覧ダイアログを取得する
@@ -1134,12 +1135,14 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'はい',	//ボタンのテキスト
 		        	//クリックイベントの記述
 		        	click:function(){
+		        		creator.json.sendReservedData
 		        		var send = $.extend(true, {}, creator.json.sendReservedData, creator.replaceValueNode(this.dialogClass.queryReplaceData))
+		        		var sendJson = JSON.stringify(send);
 		        		//Ajax通信を行う
 		        		$.ajax({
 		        			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
 		        			//予約情報のJSONを送信する
-		        			data:{json:send},								//送信するデータを設定する
+		        			data:{json:sendJson},								//送信するデータを設定する
 		        			dataType: STR_TEXT,					//テキストデータを返してもらう
 		        			type: STR_POST,						//POSTメソッドで通信する
 		        			success:function(ret){				//通信成功時の処理
@@ -1164,7 +1167,8 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'いいえ',	//ボタンのテキスト
 		        	//クリックイベントの記述
 			        	click:function(){
-			        		
+			        		 // ダイアログを消去する。
+			        		 $(this).dialog('close');
 			        }
 		        }
 		]
