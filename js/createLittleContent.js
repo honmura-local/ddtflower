@@ -155,9 +155,13 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			// 講座一覧ダイアログを開く
+			//ダイアログのタイトルの日付を設定する
+			var titleDate = changeJapaneseDate(dateText);
+			//講座一覧ダイアログを開く
 			this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
-					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG});
+					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
+					titleDate
+			);
 		}
 //
 //		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
@@ -1986,4 +1990,41 @@ function insertArticleListText(elems, articleNodes){
 			$('small',elems[i]).text(articleNodes[i].user);
 		}
 	}
+}
+
+/* 
+ * 関数名:setOptionValue
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :optionタグのvalue属性に値を入れる
+ * 作成日 :2015.06.24
+ * 作成者:T.Yamamoto
+*/
+function setOptionValue() {
+	// optionタグをループで全て操作する
+	$("select option").each(function(i){
+		// optionタグの文字列を変数に入れる
+		var selectValue = $(this).text();
+		// 取得した文字列をvalue属性に入れる
+		$(this).val(selectValue);
+	});
+}
+
+/*
+ * 関数名 :lessonThemeSerch
+ * 引数  　:element elems:記事リストのDOM
+ * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
+ * 戻り値　:なし
+ * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
+ * 作成日　:2015.06.24
+ * 作成者　:T.Yamamoto
+ */
+function lessonThemeSearch() {
+	setOptionValue()
+	//テーマボタンがクリックされた時のイベントを設定する
+	$('.selectThemeButton').click(function() {
+		//テーマのセレクトボックスの値を取得する
+		var selectTheme = $('.selectThemebox').val();
+		
+	});
 }

@@ -77,6 +77,11 @@
                     "src": "image/icon(titter22).png"
                 }
             }
+        },
+        "guideLogin":{
+            "login":{
+                "src":"image/icon(login22-50).png"
+            }
         }
     },
     "topMenu": {

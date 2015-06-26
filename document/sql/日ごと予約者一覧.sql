@@ -5,8 +5,8 @@ SELECT
 	,end_time
 	,lesson_name
 	,user_name
-	,user_classwork.stage_no
-	,user_classwork.level_no
+	,stage_inf.stage_no
+	,lesson_sub.level_no
 FROM
 	time_table_day
 INNER JOIN
@@ -31,3 +31,12 @@ INNER JOIN
 	timetable_inf
 ON
 	timetable_inf.id = time_table_day.timetable_key;
+INNERR JOIN
+	stage_inf
+ON
+	stage_inf.id = user_classwork.stage_key
+INNER JOIN
+	lesson_sub
+ON
+	lesson_sub.id = user_classwork.level_key
+	

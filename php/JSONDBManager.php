@@ -14,13 +14,17 @@ define('KEY_HTML', 'html');
 define('KEY_SRC', 'src');
 // JSONのvalueキーの文字列を定数にセットする
 define('KEY_VALUE', 'value');
+//アンダーバー二つを定数に入れる
+define('STR_TWO_UNDERBAR', '__');
 //JSONの値を入れるノードのキーの文字列リストを配列にセットする
 $KEY_LIST = array('text', 'html', 'src');
+//会員番号列を定数に入れる
+define('COLUMN_NAME_USER_KEY', 'user_key');
 
 // データベースに接続するための値を定数として宣言する
 define('DSN', 'mysql:host=localhost;dbname=ddthink-com00006');		// データソースネーム(ホスト名、DB名)
 define('DB_USER', 'root');								// データベースユーザ
-define('DB_PASSWORD', 'root');						// データベースパスワード
+define('DB_PASSWORD', 'bnp2525');						// データベースパスワード
 
 /*
  * クラス名:DB_ResultTree
@@ -126,6 +130,10 @@ class JSONDBManager {
 				$this->processedRecords = $stmt->rowCount();
 				// 結果セットを返す
 				$retRS = $stmt->fetchALL(PDO::FETCH_ASSOC);  //結果セット
+				//queryが特定の文字列を含んでいたら
+//				if(strstr($query, 'lesson_cancel_rate') != false){
+//					var_dump($retRS);	//クエリを出力する
+//				}
 			}
 		}
 		// 結果セットを返す
@@ -149,10 +157,10 @@ class JSONDBManager {
 		
 		$columnNumber = 0;		//取得対象が列の何行目かをセットする
 		//dbrTreeの親のキーが、これが配列の要素であるということを示す~の文字を含んでいれば
-		if ($dbrTree->parent != null && strpos($dbrTree->parent->keyData, "~") != false) {
+		if ($dbrTree->parent != null && strpos($dbrTree->parent->keyData, STR_TWO_UNDERBAR) != false) {
 			//keyを~を境に分離する
 			
-			$keyString = explode("~", $dbrTree->parent->keyData);
+			$keyString = explode(STR_TWO_UNDERBAR, $dbrTree->parent->keyData);
 			//デミリタを元に行数のトークンに分ける
 			$columnNumber = $keyString[1]; //行数をセットする
 		}
@@ -346,5 +354,3 @@ class JSONDBManager {
 		return $retArray;	//作成した文字列を返す
 	}
 }
-
-

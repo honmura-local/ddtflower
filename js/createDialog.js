@@ -286,7 +286,7 @@ function createSpecialDate(year, month, day){
 }
 
 /* 
- * 関数名:createDialogTiteDate(year, month, day)
+ * 関数名:changeJapaneseDate(year, month, day)
  * 概要  :ダイアログのタイトルバーに表示する日時のパーツを追加する。
  * 引数  :int year, int month, int day
  * 返却値  :なし
@@ -294,14 +294,18 @@ function createSpecialDate(year, month, day){
  * 作成者:T.Yamamoto
  * 作成日:2015.06.13
  */
-function createDialogTiteDate(year, month, day){
+function changeJapaneseDate(dateText){
+	//受け取った日付をスラッシュで配列に分割する
+	var dateArray = createDateArray(dateText);
+	// dateText	をオブジェクトを生成する
+	// var date = new Date(dateText);
 	// 曜日の配列を宣言、初期化する。
 	var weekChars = [ '日', '月', '火', '水', '木', '金', '土' ];
 	// 予約希望ダイアログに予約希望日時が書かれたタグを追加する。
 	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
-	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + ')';
+	var resultDate = dateArray[0] + '年' + dateArray[1] + '月' + dateArray[2] + '日' + '(' + weekChars[new Date(dateArray[0], dateArray[1] - 1, dateArray[2]).getDay()] + ')';
 	// 日付を返す
-	return date;
+	return resultDate;
 	// $('.' + dialogClass).attr('title', date);
 	//日付のinputタグにも日付を追加する。
 	// $('.reservedDate').val(date);
@@ -720,13 +724,18 @@ function tagDialog(className, title, functionObject, createTags){
 	 * 概要　　:タグを作ってダイアログを開く
 	 * 引数　　:Object queryReplaceData:クエリの置換を行うデータを格納したオブジェクト
 	 * 　　　　:Object dialogObject:ダイアログを開くときに必要になるパラメータの集合のオブジェクト
+	 		:String dialogTitle:ダイアログのタイトル
 	 * 作成日　:2015.0613
 	 * 作成者　:T.Masuda
 	 */
-	this.openTag = function(queryReplaceData, dialogObject){
+	this.openTag = function(queryReplaceData, dialogObject, dialogTitle){
 		this.getJsonFile(queryReplaceData, dialogObject);	//タグを出力する準備を行う
 		//テーブルを出力する
 		creator.outputTag(dialogObject.key, dialogObject.domName, dialogObject.appendTo);
+		//ダイアログのタイトルを設定する
+		$(CHAR_DOT + this.className).dialog({
+			title: dialogTitle
+		});
 		//ダイアログを開く
 		$(CHAR_DOT + this.className).dialog(STR_OPEN);
 	}
@@ -735,17 +744,19 @@ function tagDialog(className, title, functionObject, createTags){
 	 * 概要　　:テーブルを作ってダイアログを開く
 	 * 引数　　:Object queryReplaceData:クエリの置換を行うデータを格納したオブジェクト
 	 * 　　　　:Object dialogObject:ダイアログを開くときに必要になるパラメータの集合のオブジェクト
+	 		:String dialogTitle:ダイアログのタイトル
 	 * 作成日　:2015.0613
 	 * 作成者　:T.Masuda
 	 */
-	this.openTagTable = function(queryReplaceData, dialogObject){
-		this.openTag(queryReplaceData, dialogObject);	//openTagを通常通り実行する
+	this.openTagTable = function(queryReplaceData, dialogObject, dialogTitle){
+		this.openTag(queryReplaceData, dialogObject, dialogTitle);	//openTagを通常通り実行する
 		//jsonのdb_getQueryのキーの値を上書きする
 		creator.json[dialogObject.key].db_getQuery = creator.json[dialogObject.key].replaceTable.replace_getQuery;
 		//テーブル用のデータを取得する
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[dialogObject.key], dialogObject.key);
 		//テーブルを出力する
 		creator.outputTagTable(dialogObject.key, STR_LESSON_TABLE, CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE);
+
 		//テーブルを配置するターゲットのタグを削除する
 		$(CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE).children(':first').unwrap();
 		//ダイアログを開く
@@ -785,6 +796,7 @@ dialogOption['loginDialog'] = {
 		create:function(event, ui){
 			//文字サイズを小さめにする。
 			$(this).next().css('font-size', '0.5em');
+			creator.getJsonFile('source/memberPage.json');
 		},
 		// 位置を指定する。
 		position:{
@@ -810,19 +822,45 @@ dialogOption['loginDialog'] = {
 			        			 var transResult = {"result":false};
 			        			 // ajax通信を行いサーバにユーザ情報を送る。
 			        			 $.ajax({
+			        			 	type: 'POST',
 			        				 //ログイン認証のサーバにデータを送信する。
-			        				url:location.href,
+			        				// url:location.href,
+			        				// フォームで入力されたidとパスワードを送信する先のURL
+									url : 'php/login.php',
 			        				//ユーザ名とパスワードをPHPに送信する。
 			        				data:{'userName':$('input.userName' ,this).val(),
-			        					'password':$('input.password' ,this).val()},
+			        					'password':$('input.password' ,this).val()
+			        				},
 			        				//JSONで結果を返してもらう。
-			        				dataType:'HTML',
+			        				dataType:'json',
 			        				//同期通信を行う。
 			        				async:false,
 			        				//通信成功時の処理
 			        				success:function(json){
+			        					//表示している内容を全て消去する
+			        					$('.main, header').empty();
+			        					creator.getJsonFile('source/memberPage.json');
+										// 会員共通のパーツのJSONを取得する。
+										creator.getJsonFile('source/memberCommon.json');
+			        					//jsonのルートの数だけループする
+			        					for(var key in creator.json) {
+			        						//子供にuser_keyがあるときにvalueの値を書き換える 
+			        						if('user_key' in creator.json[key]) {
+			        							//jsonの値をセットする
+			        							creator.json[key]['user_key']['value'] = json['id'];
+			        						}else {
+			        							//次のループに行く
+			        							continue;
+			        						}
+			        					}
+			        					$('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
+										$('head link:last').after('<link href="css/courseGuide.css" rel="stylesheet" type="text/css">');
+										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
+										//会員ページを読み込む
+										callPage('memberPage.html');
 			        					// 通信結果のデータをtransResultに格納する。
-			        					transResult = {"result":"true","user":"testuser","userName":"user"};
+			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
+			        					//console.log(json);
 			        				},
 			        				//通信失敗時の処理
 			        				error:function(){
@@ -831,30 +869,33 @@ dialogOption['loginDialog'] = {
 			        				}
 			        				
 			        			 });
+// ダイアログを消去する。
+
+			        		 // $(this).dialog('close').dialog('destroy').remove();
 			        			// 通信が成功していたら
 			        			 if(transResult["result"]){
-			        				// ユーザ情報の取得に成功していたら
-			        				 if('user' in transResult){
-			        					 //日付クラスインスタンスを生成する。
-			        					 var cookieLimit = new Date();
-			        					 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
-			        					 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
-			        					 //cookieにユーザ情報と期限の日付を格納する。
-			        					 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
-			        					 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
-			        					 //ここまで変更しました。
-			        					 // ダイアログを消去する。
-						        		 $(this).dialog('close').dialog('destroy').remove();
-						        		 //画面を更新する。
-						        		 location.reload();
-			        				 } else {
-			        					 // 認証失敗のメッセージを出す。
-			        					 alert(errorMessages[1]);
-			        				 }
+			        				// // ユーザ情報の取得に成功していたら
+			        				//  if('user' in transResult){
+			        				// 	 //日付クラスインスタンスを生成する。
+			        				// 	 var cookieLimit = new Date();
+			        				// 	 //現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			        				// 	 cookieLimit.setTime(cookieLimit.getTime() + parseInt(init['cookieLimitTime']));
+			        				// 	 //cookieにユーザ情報と期限の日付を格納する。
+			        				// 	 document.cookie = 'user=' + transResult["user"] + ';expires=' + cookieLimit.toGMTString();
+			        				// 	 document.cookie = 'userName=' + transResult["userName"] + ';expires=' + cookieLimit.toGMTString();
+			        				// 	 //ここまで変更しました。
+			        				// 	 // ダイアログを消去する。
+						        	// 	 $(this).dialog('close').dialog('destroy').remove();
+						        	// 	 //画面を更新する。
+						        	// 	 location.reload();
+			        				//  } else {
+			        				// 	 // 認証失敗のメッセージを出す。
+			        				// 	 alert(errorMessages[1]);
+			        				//  }
 			        			//通信に失敗していたら。 
 			        			 } else {
 			        			//通信エラーのメッセージを出す。
-		        				alert(errorMessages[2]);
+		        				// alert(errorMessages[2]);
 			        			}
 			        		//空欄に入力するようにメッセージを出す。
 			        		 } else {
@@ -1029,10 +1070,21 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			//読み込んだテーブルのデータを消す
 			delete creator.json[STR_MEMBER_INFORMATION].table;
 		},
+		open 			:function(){
+			setTimeout(function(){
+				//変数に予約一覧テーブルのjsonの連想配列を入れる
+				var lessonTable = creator.json['memberInfomation']['table'];
+				// 時間割1限分の生徒の合計人数が入った連想配列を作る
+				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
+				//予約一覧テーブルの値を置換する
+				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
+			},1);
+		},
 		//イベント
 		event:function(){
 			//予約決定ダイアログを表示する処理
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
+				
 				//予約決定ダイアログのクラスインスタンスを取得する
 				var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
 				//レッスン一覧ダイアログを取得する
@@ -1042,9 +1094,12 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 				//次のダイアログに渡すオブジェクトを作る
 				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
 						creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
-				
+				//日付を置換前のスラッシュ区切りにする
+				var date = sendObject.lesson_date.replace(/-/g,"/");
+				// 日付を日本語表示にする
+				var titleDate = changeJapaneseDate(date);
+				// 確認ダイアログにしかるべき値を挿入する関数を実行する
 				insertConfirmReserveJsonDialogValue(sendObject);
-				
 				//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
 				$nextDialog.openTag(sendObject,
 						{
@@ -1052,7 +1107,8 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 							key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
 							domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
 							appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
-						}
+						},
+						titleDate
 				);
 			});
 		}
@@ -1079,12 +1135,14 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'はい',	//ボタンのテキスト
 		        	//クリックイベントの記述
 		        	click:function(){
+		        		creator.json.sendReservedData
 		        		var send = $.extend(true, {}, creator.json.sendReservedData, creator.replaceValueNode(this.dialogClass.queryReplaceData))
+		        		var sendJson = JSON.stringify(send);
 		        		//Ajax通信を行う
 		        		$.ajax({
 		        			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
 		        			//予約情報のJSONを送信する
-		        			data:{json:send},								//送信するデータを設定する
+		        			data:{json:sendJson},								//送信するデータを設定する
 		        			dataType: STR_TEXT,					//テキストデータを返してもらう
 		        			type: STR_POST,						//POSTメソッドで通信する
 		        			success:function(ret){				//通信成功時の処理
@@ -1109,7 +1167,8 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'いいえ',	//ボタンのテキスト
 		        	//クリックイベントの記述
 			        	click:function(){
-			        		
+			        		 // ダイアログを消去する。
+			        		 $(this).dialog('close');
 			        }
 		        }
 		]
@@ -1309,22 +1368,24 @@ var init = getInitData(INIT_JSON_PATH, 100);
 function insertConfirmReserveJsonDialogValue(sendObject){
 	//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
 	var object = creator.json.memberReservedConfirmDialogContent;
-	
 	//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-	object.lessonConfirm.lessonInfo.timeSchedule.text = sendObject.start_time + SYMBOL_UNIT + sendObject.end_time;
+	object.lessonConfirm.lessonInfo.timeSchedule.text = buildHourFromTo(sendObject);
 	object.lessonConfirm.lessonInfo.store.text = sendObject.school_name;
 	object.lessonConfirm.lessonInfo.course.text = sendObject.lesson_name;
-	object.lessonConfirm.lessonInfo.price.text = 0;
-//	object.lessonConfirm.lessonInfo.price.text = sendObject.;
-	object.lessonConfirm.lessonStage.stageValue.text = sendObject.stage_no;
-	object.lessonConfirm.lessonStage.levelValue.text = sendObject.level_no;
-	object.attention.cancelRateValue.thatDayValue.text = 0;
-	object.attention.cancelRateValue.oneBeforeDayValue.text = 0;
-	object.attention.cancelRateValue.twoBeforeDayValue.text = 0;
-	object.attention.addPointValueFirst.onePersonValue.text = 0;
-	object.attention.addPointValueFirst.twoPeopleDayValue.text = 0;
-	object.attention.addPointValueSecond.fourPersonValue.text = 0;
-	object.attention.addPointValueSecond.eightPeopleDayValue.text = 0;
+	object.lessonConfirm.lessonInfo.price.text = sendObject.default_user_classwork_cost;
+	object.lessonConfirm.lessonInfo.priceUnit.text = '円';
+	// object.attention.cancelRateValue.lesson_key = sendObject.lesson_key;
+	// object.attention.addPointValue.lesson_key = sendObject.lesson_key;
+	// object.lessonConfirm.lessonInfo.price.text = sendObject.;
+//	object.lessonConfirm.lessonStage.stageValue.text = sendObject.stage_no;
+//	object.lessonConfirm.lessonStage.levelValue.text = sendObject.level_no;
+//	object.attention.cancelRateValue.thatDayValue.text = 0;
+//	object.attention.cancelRateValue.oneBeforeDayValue.text = 0;
+//	object.attention.cancelRateValue.twoBeforeDayValue.text = 0;
+//	object.attention.addPointValueFirst.onePersonValue.text = 0;
+//	object.attention.addPointValueFirst.twoPeopleDayValue.text = 0;
+//	object.attention.addPointValueSecond.fourPersonValue.text = 0;
+//	object.attention.addPointValueSecond.eightPeopleDayValue.text = 0;
 //	object.attention.cancelRateValue.thatDayValue.text = sendObject.;
 //	object.attention.cancelRateValue.oneBeforeDayValue.text = sendObject.;
 //	object.attention.cancelRateValue.twoBeforeDayValue.text = sendObject.;

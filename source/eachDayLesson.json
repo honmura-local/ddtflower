@@ -92,17 +92,6 @@
     "memberInfomation": {
     "db_getQuery":"SELECT (pre_paid + pre_paid_flower) AS keepMoneyNumber , get_point AS hasPointNumber FROM user_inf WHERE id='userId';",
         "class": "memberInfomation memberHeader",
-        "keepMoney": {
-            "keepMoneyText": {
-                "text": "お預かり金額:"
-            },
-            "keepMoneyNumber": {
-                "text": ""
-            },
-            "keepMoneyUnit": {
-                "text": "円"
-            }
-        },
         "hasPoint": {
             "hasPointText": {
                 "text": "所持ポイント:"

@@ -81,25 +81,24 @@ function overwrightContent(target, data){
 	//コードが書かれているscriptタグを収集する。
 //	var scripts = $(data).filter('script:not(:empty)');
 	var scripts = $('script:not(:empty)', data);
-	
+
 	//@add 2015.0604 T.Masuda MSL記事一覧があれば見えない状態にして配置するように変更しました。
 	//MSLの記事リストがあれば
 	if($('#mslongtail_1984,#mslongtail_1985', data).length){
 		//隠した上で現在表示しているHTMLの中に配置する
 		$('body').append($('#mslongtail_1984,#mslongtail_1985', data).hide());
 	}
-	
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。
 		$(target).append($(this));
 	});
+
 	//scriptタグを展開する。
 	scripts.each(function(){
 		//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
 		$(target).append($(this));
 	});
-	
 	//@mod 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを各PHPに定義しました
 }
 
@@ -148,8 +147,9 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
+			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
 			//JSONデータを格納する変数を初期化する。
-			creator.json = null;
+			// creator.json = null;
 			//ひな形のHTMLのDOMを格納する変数を初期化する。
 			creator.dom = '';
 			//list.phpかdetail.phpであれば

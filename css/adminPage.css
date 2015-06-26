@@ -1,4 +1,15 @@
-/*@CHARSET "UTF-8";*/
+@CHARSET "UTF-8";
+
+/* 
+ * セレクタ :#adminHeader
+ * 概要   :ヘッダのメニューそれぞれの項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.adminHeader {
+	font-size: 13px;
+	padding: 7px 0;
+}
 
 /* 
  * セレクタ :.memberMenu li
@@ -7,8 +18,25 @@
  * 作成日 :2015.06.04
  */
 #adminTab .tab {
+	font-size: 11px;
 	width: 33%;
 	display: inline-block;
+	background: #cedc3a;
+	border: none;
+	border-radius: 0;
+}
+
+#adminTab .tab:nth-of-type(2) {
+	/*border-left: 1px dotted #fff;*/
+	/*border-right: 1px dotted #fff;*/
+	width: 34%;
+}
+
+#adminTab .tab.active {
+	padding-top: 7px;
+	position: static;
+	font-weight: normal;
+	background: #ce6;
 }
 
 .adminHeader .memberNumber, .adminHeader .memberName {
@@ -20,6 +48,132 @@
 	float: right;
 }
 
+.tabContentArea {
+	padding: 5px 0;
+}
+
+/* タイトルの日付領域 */
+/* 
+ * セレクタ :.dateBelt
+ * 概要   :日ごと予約者一覧タブのタイトルの日付部分
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.dateBelt {
+	text-align: center;		/* 文字を中央寄せにする */
+	padding: 5px 0;			/* 上下に要素の幅を5pxずつ広げる */
+	background: #cedc3a;	/* 背景を黄緑にする */
+	font-weight: bold;		/* 太字にする */
+}
+/* タイトルの日付領域終わり */
+
+/* 日付選択領域 */
+/* 
+ * セレクタ :.dateSelect
+ * 概要   :日ごと予約者一覧タブの日付選択領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.dateSelect {
+	margin-top: 10px;		/* 上から10pxの余白をとる */
+}
+
+/* 
+ * セレクタ :dateInput
+ * 概要   :日付を入力するテキストボックス
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.dateInput {
+	padding: 4px 0;			/* 要素の幅を上下それぞれに4px広げる */
+}
+
+/* 
+ * セレクタ :.searchButton
+ * 概要   :検索ボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.searchButton {
+	float: right;			/* 右側に回り込みする */
+}
+/* 日付選択領域終わり */
+
+/* スクロールボタン領域 */
+/* 
+ * セレクタ :.returnTopPosition
+ * 概要   :トップにスクロールするボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.returnTopPosition {
+	position: fixed;		/* 表示位置を固定にする */
+	right: 15px;			/* 右から15pxの場所に表示する */
+	bottom: 15px;			/* 下から15pxの場所に表示する */
+}
+/* スクロールボタン領域終わり */
+
+#lecturePermit .tab {
+	border: none;
+	width: 50%;
+	display: inline-block;
+}
+
+#lecturePermit .tab:nth-of-type(2) {
+	width: 50%;
+}
+
+.firstRow {
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+label.records {
+  margin: 0 1em;
+}
+
+
+/* 会員一覧の検索領域 */
+/* 
+ * セレクタ :.searchNameColumn,
+		.searchInfoColumn,
+		.searchButton
+ * 概要   :会員一覧検索の外側の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchNameColumn,
+.searchInfoColumn,
+.searchButton,
+.searchList li label {
+	margin-bottom: 5px;		/* 下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.searchList li span
+ * 概要   :検索のテキストボックスのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchList li span {
+	display: inline-block;	/* インラインブロック要素として扱う */
+	width: 15%;				/* 幅を15%にする */
+}
+
+/* 
+ * セレクタ :.searchList li input[type="text"]
+ * 概要   :検索のテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchList li input[type="text"] {
+	width: 30%;				/* 幅を30%にする */
+	margin-right: 10px;		/* 右に10pxの余白をとる */
+}
+
+/* 会員一覧の検索領域終わり */
+
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -28,5 +182,50 @@
 /* スマホ用微調整 */
 @media(max-width:400px){
 
+	/* 会員一覧の検索領域 */
+	/* 
+	 * セレクタ :.searchNameColumn,
+			.searchInfoColumn
+	 * 概要   :会員一覧検索の外側の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchNameColumn,
+	.searchInfoColumn {
+		margin-bottom: 0;		/*余白をなくす*/
+	}
+
+	/* 会員一覧の検索領域 */
+	/* 
+	 * セレクタ :.searchList li label
+	 * 概要   :会員一覧検索のラベル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li label {
+		display: block;			/* ブロック要素としてあつかう */
+	}
+
+	/* 
+	 * セレクタ :.searchList li span
+	 * 概要   :会員一覧検索のラベルテキスト領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li span {
+		width: 30%;				/* 幅を30%にする */
+	}
+
+	/* 
+	 * セレクタ :.searchList li input[type="text"]
+	 * 概要   :会員一覧検索のテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.22
+	 */
+	.searchList li input[type="text"] {
+		margin-right: 0; 		/* 右の余白をなくす */
+		width: 67%;				/* 幅を67%にする */
+	}
+/* 会員一覧の検索領域終わり */
 
 }

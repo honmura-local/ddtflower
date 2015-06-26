@@ -274,6 +274,10 @@ function createTag(){
 		for(key in curMapNode){
 			var mapNode = curMapNode[key];	//mapNodeの内容をcurMapNode内のmapNodeの参照に切り替える。
 			var attribute = false;				//属性値を格納する変数
+				if(key == 'cancel~0'){
+					console.log('key:' + key + ' dom:' + curDomNode);
+					//break;
+				}
 			
 			//キーがtextであれば
 			if(key == 'text'){
@@ -401,6 +405,7 @@ function createTag(){
 	 */
 	this.getDomChild = function(key, domNode){
 		var domNodeReturn;							//domNodeの返却用変数を作る。
+
 		//子要素の識別子が記述されていなければ
 		if(key.indexOf('>') == -1){
 			domNodeReturn = $('.' + key, domNode);	//domNodeの子の階層からkeyのクラスを持つノードを取得する。
@@ -1120,7 +1125,7 @@ function createTag(){
 		
 		//colNameNodeを行の先頭に配置する
 		$table.prepend(colNameNode);
-		
+
 		return $table;	//作成したテーブルを返す
 	}
 	

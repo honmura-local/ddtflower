@@ -4,6 +4,7 @@
         "user_key": {
             "value": "1"
         },
+        "class":"adminHeader outsideArea",
         "memberStatus": {
             "memberNumber":{
                 "noArea":{

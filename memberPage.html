@@ -42,15 +42,12 @@
 			<script>
 			//ドキュメント配備後
 			$(document).ready(function(){
-				creator = new createTag();
-				creator.getJsonFile('source/memberPage.json');
-				// 会員共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/memberCommon.json');
-				//告知領域のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['userBanner'], 'userBanner');
-
-
-				// パーツのテンプレートのDOMを取得する。
+				//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
+				//creator = new createTag();
+				//creator.getJsonFile('source/memberPage.json');
+				//// 会員共通のパーツのJSONを取得する。
+				//creator.getJsonFile('source/memberCommon.json');
+				//パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// 会員共通のパーツのJSONを取得する。
 				creator.getDomFile('template/memberCommon.html');
@@ -63,12 +60,14 @@
 				creator.outputTag('memberHeader');
 				// バナー領域を作る
 				creator.outputTag('userBanner');
-
+				//告知領域のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
+				// 告知領域を作る
+				creator.outputTag('advertise');
 				//通知領域の内容があれば
 				if($('.advertise p:not(:empty)').length){
 					$('.advertise').show();		//通知領域を表示する
 				}
-				
 				// 会員ページのカレンダーを作る
 				creator.outputTag('lessonCalendar', 'calendar');
 
@@ -78,10 +77,7 @@
 				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 				// 受講済み授業のタブ内コンテンツを作る
 				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
-				// 予約済み授業のタブ内テーブルを作る
-				creator.outputTag('reservedDetail', 'lessonDetail', '#alreadyReserved');
-				// 受講済み授業のタブ内テーブルを作る
-				creator.outputTag('finishedDetail', 'lessonDetail', '#finishedLesson');
+
 				// 予約済み授業と受講済み授業についてタブを作る
 				createTab('#tab-container');
 
@@ -90,43 +86,46 @@
 				// 日ごと授業のテンプレートを読み込む
 				creator.getDomFile('template/eachDayLesson.html');
 
-
-
 				//予約一覧ダイアログを作る
 				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
 					// 日ごとダイアログ領域を作る
 					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+				// テーブルのステータスを概要を表示する領域を作る
+				// creator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+				// 予約一覧テーブルの値を置換する
+				// lessonTableValueInput('.lessonTable', eachDayLessonTable, "callReservedLessonValue");
 				});
-				
+
 				//予約確定ダイアログを作る
 				var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
 					// テーブルのステータスを概要を表示する領域を作る
 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				});
-				
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.calendar', 90, 117, lessonList);
+				var memCalendar = new memberCalendar('.lessonCalendar', 90, 117, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
-				
-				
-				//テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
-				//テーブル用のJSON配列を取得する
+
+				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
-
-
-
-				// 受講済み授業テーブルを作る
-				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
-				// 予約中授業のテーブルを作る
-				creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
-				// 予約テーブルを作る
-// 				creator.outputTagTable('memberTable','lessonTable','.lessonTableArea');
-				// テーブルのステータスを概要を表示する領域を作る
-//				creator.outputTag('lessonStatus', 'lessonStatus', '.lessonTableArea');
-
+				//予約中の授業があった時のテーブルを作る
+				if(creator.json['lessonReservedDetailTable']['table'] !== void(0)) {
+					// 予約中授業のテーブルを作る
+					creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
+				}
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				//受講済みの授業があったときテーブルを作る
+				if(creator.json['lessonFinishedDetailTable']['table'] !== void(0)) {
+					//受講済み授業テーブルを作る
+					creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
+				}
+				//注釈を作る
+				creator.outputTag('anotion', 'anotion', '.tabPanel');
+				
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
+				//
+				lessonThemeSearch();
 
  				// 予約中授業の連想配列を変数に入れる 
 				var reservedNow = creator.json['lessonReservedDetailTable']['table'];
@@ -134,16 +133,10 @@
 				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
 				// 日ごと授業テーブルの連想配列を変数に入れる
 				var eachDayLessonTable = creator.json['memberTable']['table'];
-				// 予約中授業のテーブルの値を正規のものにする
-//				reservedLessonValueInput('.lessonTable', eachDayLessonTable);
-//				reservedValueInput('.reservedLessonTable', reservedNow);
- 				// 受講済み授業のテーブルの値を正規のものにする
-//				 tableColumnValueInput('.finishedLessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
-				// 授業のテーブルの値を正規のものにする
-//				 tableColumnValueInput('.lessonTable', 0, reservedNow, getTotalStudentsOfTimeTable);
-
-				creator.outputTagTable('lessonFinishedDetailTable','lessonTable','.finishedLesson');
-				creator.outputTagTable('lessonReservedDetailTable','lessonTable','.alreadyReserved');
+				// 予約中テーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
+				// 受講済みテーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.finishedLessonTable', lessonFinished, "callMemberLessonValue");
 			});
 			</script>
 		</div>

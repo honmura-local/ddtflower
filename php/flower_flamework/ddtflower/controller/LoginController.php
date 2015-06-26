@@ -13,6 +13,12 @@ class LoginController extends UserControllerBase {
 
 	const LOGIN_ID_KEY = 'loinID';
 	const PASSWORD_KEY = 'password';
+    
+    // @TODO権限の対応がわからないので一旦適当に書いてます
+    protected $destsDipendsAuth = array() {
+        0 => 'http://localhost/memberPage.html',
+        1 => 'http://localhost/memberAdminPage.html'
+    }
 
 	static public function executeLogin() {
 		
@@ -38,13 +44,21 @@ class LoginController extends UserControllerBase {
 		// セッションつめて
 		LoginController::setSession($user);
 		// トップページへredirectする。
-		LoginController::rediretToTop();
+		LoginController::rediretToTop($user['authority']);
 	}
 	
-	static protected function rediretToTop() {
-		header('http://localhost/memberPage.html', true, 301);
+	static protected function rediretToTop($auth=0) {
+        $path = 'http://localhost/memberPage.html';
+        if(array_key_exists($auth, $this->destsDipendsAuth)) {
+            $path = $this->destsDipendsAuth[$auth];
+        }
+		header($path, true, 301);
 		exit();
 	}
+    
+    static protected function getDest($admin_flg) {
+        
+    }
 	
 	static protected function validate() {
 		if(!array_key_exists(self::LOGIN_ID_KEY,$_POST) || 
