@@ -32,7 +32,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				creator.outputTag('footer');						// フッターを作る
 			
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-				fixYCoordinate('header', '.main');
+				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。

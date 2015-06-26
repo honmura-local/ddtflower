@@ -28,7 +28,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
 //会員番号をセッションに入れる
 //$_SESSION['id'] = $result['id'];
 //結果を返す
-print json_encode($result); 
+print json_encode($result);
 
 
 

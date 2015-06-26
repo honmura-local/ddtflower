@@ -41,19 +41,23 @@
         "bannerArea": {
             "banner": [
                 {
-                    "src": "image/icon(myPage).png"
+                    "src": "image/icon(myPage).png",
+                    "href":"memberPage.html"
                 },
                 {
-                    "src": "image/icon(profile).png"
+                    "src": "image/icon(profile).png",
+                    "href":"memberProfile.html"
                 },
                 {
                     "src": "image/icon(mail).png"
                 },
                 {
-                    "src": "image/icon(gallery).png"
+                    "src": "image/icon(gallery).png",
+                    "href":"gallery.php"
                 },
                 {
-                    "src": "image/icon(blog).png"
+                    "src": "image/icon(blog).png",
+                    "href":"blog.php"
                 },
                 {
                     "src": "image/icon(myGallery).png"

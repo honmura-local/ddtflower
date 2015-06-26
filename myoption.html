@@ -43,7 +43,7 @@
 				loadValue(creator.json);	//セーブ済みの設定を反映する。
 				$('input[name="emailOld"]').attr('readonly','readonly');	//現在のメールアドレスはいじれないようにする。
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
-				fixYCoordinate('header', '.main');
+				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 

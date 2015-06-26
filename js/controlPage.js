@@ -147,8 +147,9 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
+			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
 			//JSONデータを格納する変数を初期化する。
-			creator.json = null;
+			// creator.json = null;
 			//ひな形のHTMLのDOMを格納する変数を初期化する。
 			creator.dom = '';
 			//list.phpかdetail.phpであれば

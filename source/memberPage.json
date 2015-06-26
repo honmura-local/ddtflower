@@ -18,7 +18,7 @@
         }
     },
     "lessonCalendar": {
-        "class":"lessonCalendar calendar",
+        "class":"lessonCalendar",
         "name": "lessonCalendar"
     },
     "lessonTab": {
@@ -212,6 +212,7 @@
         },
         "attention": {
             "cancelRateLabel": {
+                "class":"cancelRateLabel contentsBorder",
                 "cancelRateLabelText": {
                     "text": "キャンセル料率(授業当日より)"
                 }
@@ -265,6 +266,7 @@
                 }
             },
             "addPointLabel": {
+                "class":"addPointLabel contentsBorder",
                 "addPointLabelText": {
                     "text": "加算ポイント(受講者人数)"
                 }

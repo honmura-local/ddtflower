@@ -542,7 +542,7 @@ button.ui-button-text-only span.ui-button-text {
  */
 .main{
     width		: 800px;      /* コンテンツ幅を800pxにする。 */
-    margin		: 0 auto 0;   /* 横位置を中心に寄せる。 */
+    margin		: 115px auto 0 auto;   /* 横位置を中心に寄せる。 */
     background	: inherit;    /* containerの背景色を継承する。 */
     position	: relative;   /* 相対位置の要素にする。 */
     z-index		: 0;          /* 重なり順の優先順位を低くする。 */

@@ -1,9 +1,5 @@
 /*@CHARSET "UTF-8";*/
 
-#conteiner .main {
-	margin-top: 5px;
-}
-
 a {
 	display: block;		/* ブロック要素にしてクリックしやすくする */
 }
@@ -102,6 +98,16 @@ label
 .passLinkArea,
 .fRight {
 	float: right;
+}
+
+/* 
+ * セレクタ :#container .main
+ * 概要   :ページ全体の囲む領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+#container .main {
+	margin-top: 5px;	/* 上空の余白が115pxであるのを5pxにする */
 }
 
 /* 
@@ -204,6 +210,32 @@ label
 }
 /* 告知領域終わり */
 
+/* カレンダー領域 */
+/* 
+ * セレクタ :#container .lessonCalendar
+ * 概要   :カレンダー全体領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+#container .lessonCalendar {
+	width: 48%;					/* 幅を48%にする */
+}
+
+/* 
+ * セレクタ :#container .lessonCalendar > div
+ * 概要   :カレンダーの直下の子供領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+#container .lessonCalendar > div {
+	width: 100%;		/* 幅を100%にする */ 
+}
+/* カレンダー領域終わり */
+
+#container .lessonCalendar, #tab-container {
+	margin-top: 5px;
+}
+
 /* タブ領域 */
 /* 
  * セレクタ :#tab-container
@@ -268,7 +300,7 @@ label
 .userListInfoTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
-	margin-top: 5px;			/* 上から5pの余白をとる */
+	margin: 5px 0;				/* 上下5pxの余白をとる */
 	width: 100%;				/* 幅を100%にする */
 }
 
@@ -425,6 +457,20 @@ label
 
 /* 予約確認ダイアログ領域 */
 /* 
+ * セレクタ :.lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
+ * 概要   :予約一覧ダイアログ、予約確認ダイアログの幅
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.lessonConfirm,
+.lessonInfo,
+.attention,
+.confirmText,
+.memberInfomation {
+	width: 430px;		/* ダイアログの幅を430pxにする */
+}
+
+/* 
  * セレクタ :.lessonInfo span
  * 概要   :予約情報の内側の領域
  * 作成者 :T.Yamamoto
@@ -434,12 +480,87 @@ label
 	padding-right: .5em;	/*右に半文字分の余白をとる*/
 }
 
+/* 
+ * セレクタ :.memberReservedConfirmDialog,.keepMoney,.hasPoint
+ * 概要   :予約情報の内側の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.11
+ */
 .memberReservedConfirmDialog,
 .keepMoney,
 .hasPoint {
-	font-size: 13px;
+	font-size: 16px;		/* フォントサイズを16pxにする */
 }
 
+/* 
+ * セレクタ :.addPointValue,.cancelRateValue,.lessonConfirm 
+ * 概要   :予約確認ダイアログの追加ポイントとキャンセルレートと授業内容確認領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.addPointValue,
+.cancelRateValue,
+.lessonConfirm {
+	text-align: center;		/* 中央寄せにする */
+}
+
+/* 
+ * セレクタ :.attention .contentsBorder
+ * 概要   :キャンセル率のラベルと追加ポイントのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.attention .contentsBorder {
+	border-left: none;		/* 左の線をなくす */
+	margin-top: 5px;		/* 上から5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :
+ * 概要   :sapnタグで区切られているところの幅を調整する
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.cancel_rate,
+.cancelText,
+.cancelUnit,
+.studentsUnit,
+.point_rate,
+.pointUnit {
+	margin-left: -3px;		/* 左から3px余白を詰める */
+}
+
+/* 
+ * セレクタ :.cancelUnit,.pointUnit
+ * 概要   :それぞれのパーセンテージやポイントを区切るために単位にセレクタを当てる
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.cancelUnit,
+.pointUnit {
+	margin-right: .5em;		/* 右に半文字の余白を付ける */
+}
+
+/* 
+ * セレクタ :.confirmText
+ * 概要   :予約を行う、またはキャンセルを行う確認のテキスト領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.confirmText {
+	font-weight: bold;		/* 太字にする */
+	margin-top:5px;			/* 上から5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.tabLink
+ * 概要   :タブの切り替えを行うボタンの領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.tabLink {
+	color: #555;			/* 文字色を黒にする */
+}
 /* 予約確認ダイアログ領域終わり */
 
 /* 
@@ -591,6 +712,7 @@ label
 	 */
 	.advertise,
 	#container .lessonCalendar,
+	#container .lessonCalendar > div,
 	#tab-container,
 	.passArea,
 	.topLinkArea,
@@ -610,16 +732,6 @@ label
 		float:none;					/* 回り込みをなくす */ 
 	}
 
-	/* 
-	 * セレクタ :#container .lessonCalendar > div
-	 * 概要   :カレンダーの直下の子供領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.08
-	 */
-	#container .lessonCalendar > div {
-		width: 100%;		/* 幅を100%にする */ 
-	}
-
 	 .lessonTable td,
 	 .reservedLessonTable td,
 	 .finishedLessonTable td,
@@ -636,6 +748,34 @@ label
 	 .memberHeader p {
 	 	padding: 5px 0;			/* 上下に5px要素の幅を広げる */
 	 }
+
+	/* 予約ダイアログ、予約確認ダイアログ領域 */
+	/* 
+	 * セレクタ :.lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
+	 * 概要   :予約一覧ダイアログ、予約確認ダイアログの幅
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.26
+	 */
+	.lessonConfirm,
+	.lessonInfo,
+	.attention,
+	.confirmText,
+	.memberInfomation {
+		width: 280px;		/* ダイアログの幅を430pxにする */
+	}
+
+	/* 
+	 * セレクタ :.memberReservedConfirmDialog,.keepMoney,.hasPoint
+	 * 概要   :予約情報の内側の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.11
+	 */
+	.memberReservedConfirmDialog,
+	.keepMoney,
+	.hasPoint {
+		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+	/* 予約ダイアログ、予約確認ダイアログ領域終わり */
 }
 
 /* スマホ用微調整 */

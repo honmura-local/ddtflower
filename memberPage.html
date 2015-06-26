@@ -42,11 +42,12 @@
 			<script>
 			//ドキュメント配備後
 			$(document).ready(function(){
-				creator = new createTag();
-				creator.getJsonFile('source/memberPage.json');
-				// 会員共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/memberCommon.json');
-				// パーツのテンプレートのDOMを取得する。
+				//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
+				//creator = new createTag();
+				//creator.getJsonFile('source/memberPage.json');
+				//// 会員共通のパーツのJSONを取得する。
+				//creator.getJsonFile('source/memberCommon.json');
+				//パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// 会員共通のパーツのJSONを取得する。
 				creator.getDomFile('template/memberCommon.html');
@@ -100,24 +101,30 @@
 					// テーブルのステータスを概要を表示する領域を作る
 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				});
-				
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.calendar', 90, 117, lessonList);
+				var memCalendar = new memberCalendar('.lessonCalendar', 90, 117, lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
-				
-				//テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
-				//テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
 
-				// 受講済み授業テーブルを作る
-				creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
-				// 予約中授業のテーブルを作る
-				creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
-				// 注釈を作る
+				//予約中授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
+				//予約中の授業があった時のテーブルを作る
+				if(creator.json['lessonReservedDetailTable']['table'] !== void(0)) {
+					// 予約中授業のテーブルを作る
+					creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
+				}
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				//受講済みの授業があったときテーブルを作る
+				if(creator.json['lessonFinishedDetailTable']['table'] !== void(0)) {
+					//受講済み授業テーブルを作る
+					creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
+				}
+				//注釈を作る
 				creator.outputTag('anotion', 'anotion', '.tabPanel');
+				
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
+				//
 				lessonThemeSearch();
 
  				// 予約中授業の連想配列を変数に入れる 
