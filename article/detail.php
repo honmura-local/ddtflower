@@ -45,6 +45,8 @@ exit;
 <link href="../../../css/style.css" rel="stylesheet" type="text/css">
 <!-- jQueryの本体を読み込む。 -->
 <script src="../../../js/jquery-1.11.0.min.js"></script>
+<!-- ユーティリティクラスのjsファイル。 -->
+<script src="../../../js/utils.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
 <script src="../../../js/flowersstylefix.js"></script>
 <!-- タグを作成するJSの関数群を読み込む -->
@@ -57,7 +59,8 @@ exit;
 
 <script>
 	$(document).ready(function(){
-		var creator = new createTag();	//createTagのクラスオブジェクトを生成する
+		util = new utils();			//汎用関数のクラスのインスタンスを用意する
+		creator = new createTag();	//createTagのクラスオブジェクトを生成する
 
 		creator.getJsonFile('../../../source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 		creator.getDomFile('../../../template/common.html');				// 共通パーツのDOMを取得する。

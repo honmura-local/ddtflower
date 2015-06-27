@@ -60,6 +60,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->
 <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- ユーティリティクラスのjsファイル。 -->
+<script src="js/utils.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
 <script src="js/flowersstylefix.js"></script>
 <!-- タグを作成するJSの関数群を読み込む -->
@@ -114,7 +116,9 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 //ドキュメント配備後
 $(document).ready(function(){
-	creator = new createTag();
+	util = new utils();			//汎用関数のクラスのインスタンスを用意する
+	
+	creator = new createTag();	//createTagクラスのインスタンスを生成する
 
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる

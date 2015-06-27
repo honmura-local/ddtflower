@@ -64,6 +64,8 @@ $msl_infos = new MSLListInfo();
 <script type="text/javascript" src="../../../js/jquery-ui-1.9.2.custom.min.js"></script>
 <!-- タグを作成するJSの関数群を読み込む -->
 <script type="text/javascript" src="../../../js/createTag.js"></script>
+<!-- ユーティリティクラスのjsファイル。 -->
+<script src="../../../js/utils.js"></script>
 <!-- 初期化変数を配置するための関数をコールするためのファイルを読み込む -->
 <script type="text/javascript" src="../../../js/createDialog.js"></script>
 <!-- MSLページ用の関数ファイルを読み込む -->
@@ -73,7 +75,8 @@ $msl_infos = new MSLListInfo();
 
 <script>
 	$(document).ready(function(){
-		var creator = new createTag();	//createTagのクラスオブジェクトを生成する
+		util = new utils();			//汎用関数のクラスのインスタンスを用意する
+		creator = new createTag();	//createTagのクラスオブジェクトを生成する
 
 		creator.getJsonFile('../../../source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 		creator.getJsonFile('../../../source/blog.json');			// ファイルのデータをjsonを用いて持ってくる

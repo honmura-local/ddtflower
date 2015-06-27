@@ -164,12 +164,6 @@ function callPage(url, state){
 			//カレントのURLを更新する。
 			currentLocation = url;
 
-			//ログインダイアログが出ていれば
-			if($('.loginDialog').length){
-				//ログインダイアログを直ちに消す。
-				$('.loginDialog').dialog('close').dialog('destroy').remove();
-			}
-
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
 			//@mod 2015.0604 T.Masuda 1つ目の条件式のtrue条件に || state == null を追加しました
 			if((state === void(0) || state == null) && isSupportPushState()){
