@@ -872,7 +872,7 @@ function afterLogin(json, creator){
 	$(SELECTOR_HEAD_LAST).after(PATH_COURCEGUIDE_CSS);
 	$(SELECTOR_HEAD_LAST).after(PATH_DAILYCLASSES_JS);
 	//会員ページを読み込む
-	callPage(MEMBERPAGE_HTML);
+	//callPage(MEMBERPAGE_HTML);
 }
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
@@ -958,11 +958,6 @@ dialogOption[LOGIN_DIALOG] = {
 
 			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
 			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
-			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
-			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
-//			        					$(CLASS_HEADER).hide();		//ヘッダーを隠す
-
 										//管理者の会員番号であったら
 										if(json['id'] == 1) {
 											callPage('adminPage.html');
@@ -971,7 +966,12 @@ dialogOption[LOGIN_DIALOG] = {
 											memberInfo = json;
 											callPage('memberPage.html');
 										}
-//										$dialog.dialog(CLOSE);	//ダイアログを閉じる
+			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
+			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
+
+
+
 			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
 			        					//console.log(json);
