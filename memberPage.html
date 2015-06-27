@@ -102,7 +102,7 @@
 					creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				});
 				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.lessonCalendar', 90, 117, lessonList);
+				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo['id'], lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
 
 				//予約中授業テーブル用のJSON配列を取得する

@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * ファイル名:createDialog.js
  * 概要  :ダイアログと関係する関数を定義する
  * 作成者:T.M
@@ -779,7 +779,6 @@ function tagDialog(className, title, functionObject, createTags){
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[dialogObject.key], dialogObject.key);
 		//テーブルを出力する
 		creator.outputTagTable(dialogObject.key, STR_LESSON_TABLE, CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE);
-
 		//テーブルを配置するターゲットのタグを削除する
 		$(CHAR_DOT + dialogObject.domName + SP_SELECTOR_REPLACE_TABLE).children(':first').unwrap();
 		//ダイアログを開く
@@ -873,7 +872,7 @@ function afterLogin(json, creator){
 	$(SELECTOR_HEAD_LAST).after(PATH_COURCEGUIDE_CSS);
 	$(SELECTOR_HEAD_LAST).after(PATH_DAILYCLASSES_JS);
 	//会員ページを読み込む
-	callPage(MEMBERPAGE_HTML);
+	//callPage(MEMBERPAGE_HTML);
 }
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
@@ -952,33 +951,27 @@ dialogOption[LOGIN_DIALOG] = {
 			        				async:false,
 			        				//通信成功時の処理
 			        				success:function(json){
+										// 会員共通のパーツのJSONを取得する。
+										creator.getJsonFile('source/eachDayLesson.json');
+
+			        					$('head link:last').after('<link href="css/adminPage.css" rel="stylesheet" type="text/css">');
+
 			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
 			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
+										//管理者の会員番号であったら
+										if(json['id'] == 1) {
+											callPage('adminPage.html');
+										} else {
+											//会員ページを読み込む
+											memberInfo = json;
+											callPage('memberPage.html');
+										}
 			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
 			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
 			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
-//			        					$(CLASS_HEADER).hide();		//ヘッダーを隠す
-//			        					creator.getJsonFile('source/memberPage.json');
-//										// 会員共通のパーツのJSONを取得する。
-//										creator.getJsonFile('source/memberCommon.json');
-//			        					//jsonのルートの数だけループする
-//			        					for(var key in creator.json) {
-//			        						//子供にuser_keyがあるときにvalueの値を書き換える 
-//			        						if('user_key' in creator.json[key]) {
-//			        							//jsonの値をセットする
-//			        							creator.json[key]['user_key']['value'] = json['id'];
-//			        						}else {
-//			        							//次のループに行く
-//			        							continue;
-//			        						}
-//			        					}
-//			        					$('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
-//										$('head link:last').after('<link href="css/courseGuide.css" rel="stylesheet" type="text/css">');
-//										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
-										//会員ページを読み込む
-//										callPage('memberPage.html');
-										//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
-//										$dialog.dialog(CLOSE);	//ダイアログを閉じる
+
+
+
 			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
 			        					//console.log(json);
@@ -1256,31 +1249,8 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	text:'はい',	//ボタンのテキスト
 		        	//クリックイベントの記述
 		        	click:function(){
-		        		creator.json.sendReservedData
-		        		var send = $.extend(true, {}, creator.json.sendReservedData, creator.replaceValueNode(this.dialogClass.queryReplaceData))
-		        		var sendJson = JSON.stringify(send);
-		        		//Ajax通信を行う
-		        		$.ajax({
-		        			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
-		        			//予約情報のJSONを送信する
-		        			data:{json:sendJson},								//送信するデータを設定する
-		        			dataType: STR_TEXT,					//テキストデータを返してもらう
-		        			type: STR_POST,						//POSTメソッドで通信する
-		        			success:function(ret){				//通信成功時の処理
-		        				//更新成功であれば
-		        				if(!parseInt(parseInt(ret.message))){
-		        					alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
-		        					$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass.close();			//ダイアログを閉じる
-		        				//更新失敗であれば
-		        				} else {
-		        					alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
-		        				}
-		        			},
-		        			error:function(xhr, status, error){	//通信失敗時の処理
-		        				//通信失敗のアラートを出す
-		        				alert(MESSAGE_FAILED_CONNECT);
-		        			}
-		        		});
+		        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
+						setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
 		        	}
 		        },
 		        //いいえボタン
@@ -1505,8 +1475,8 @@ function insertConfirmReserveJsonDialogValue(sendObject){
 	object.lessonConfirm.lessonInfo.course.text = sendObject.lesson_name;
 	object.lessonConfirm.lessonInfo.price.text = sendObject.default_user_classwork_cost;
 	object.lessonConfirm.lessonInfo.priceUnit.text = '円';
-	// object.attention.cancelRateValue.lesson_key = sendObject.lesson_key;
-	// object.attention.addPointValue.lesson_key = sendObject.lesson_key;
+	object.attention.cancelRateValue.lesson_key.value = sendObject.lesson_key;
+	object.attention.addPointValue.lesson_key.value = sendObject.lesson_key;
 	// object.lessonConfirm.lessonInfo.price.text = sendObject.;
 //	object.lessonConfirm.lessonStage.stageValue.text = sendObject.stage_no;
 //	object.lessonConfirm.lessonStage.levelValue.text = sendObject.level_no;
@@ -1526,5 +1496,3 @@ function insertConfirmReserveJsonDialogValue(sendObject){
 //	object.attention.addPointValueSecond.eightPeopleDayValue.text = sendObject.;
 	
 }
-
-
