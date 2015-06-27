@@ -14,9 +14,9 @@
 MSL_LIST_PHP				= 'list.php';						//MSLのリスト
 MSL_DETAIL_PHP				= 'detail.php';						//MSLの記事詳細
 INIT_JSON					= 'source/init.json';				//初期化の値のJSONファイル
+//@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
 PATH_LOGIN_DIALOG_JSON		= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
 PATH_LOGIN_DIALOG_HTML		= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
-
 //文字列定数をここで定義する
 LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
@@ -26,6 +26,19 @@ EMPTY						= '';								//空文字
 SLASH						= '/';								//スラッシュ記号
 DOT							= '.';								//ドット
 CLOSE						= 'close';							//closeの文字列
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+PATH_MEMBERPAGE_JSON		= 'source/memberPage.json';			//会員ページのJSON
+PATH_MEMBERCOMMON_JSON		= 'source/memberCommon.json';		//会員ページ共通のJSON
+MEMBERPAGE_HTML				= 'memberPage.html';				//会員ページのHTML
+USER_KEY					= 'user_key';						//ユーザキー
+VALUE						= 'value';							//バリュー
+ID							= 'id';								//ID
+SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
+PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
+PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
 
 /* 
  * 関数名:getCurrentPageFileName()
@@ -788,6 +801,81 @@ loginDialog.prototype.constructor = loginDialog;
 memberDialog.prototype.constructor = memberDialog;
 tagDialog.prototype.constructor = tagDialog;
 
+
+/*
+ * 関数名:inspectAfterLoad
+ * 概要:AJAX通信が終わった後にコールされるイベントを定義する
+ * 引数:function func:AJAX通信が終わった後にコールするイベント
+ * 戻り値:なし
+ * 作成日:2015.0627
+ * 作成者:T.Masuda
+ */
+function inspectAfterLoad(func, object){
+	//引数のオブジェクトを複製する。オブジェクトが入っていなければ空のオブジェクトを用意する
+	var parameter = object !== void(0)? $.extend(true, {}, object) : {};
+	//AJAX通信終了後のイベントを定義する
+	$(document).ajaxStop(function(){
+		func(parameter);	//引数の関数を実行する
+	});
+}
+
+/* 関数名　:toggleElement
+ * 概要　　:要素の表示/非表示を切り替える
+ * 引数　　:Object targetObject:処理対象と、判断の基準となる要素のセレクタの文字列を格納したオブジェクト
+ * 戻り値　:なし
+ * 作成日　:2015.0627
+ * 作成者　:T.Masuda
+ */
+function toggleHeader(targetObject){
+	//判断基準となる要素が存在したら
+	if(!$(targetObject.evaluation).length){
+		//指定された要素を表示する
+		$(targetObject.target).show();
+	} else {
+		//指定された要素を非表示にする
+		$(targetObject.target).hide();
+	}
+}
+
+//@add 2015. T.Masuda 会員ページならヘッダーを消すイベントを設定しました。
+//会員ページでのみヘッダーを表示するようにイベントを登録する
+//注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
+//短絡的な判断基準ですので、後々詰めるべきであると思います。
+inspectAfterLoad(toggleHeader, {evaluation:CLASS_LOGOUT_LINK,target:CLASS_HEADER})
+
+/* 関数名　:afterLogin
+ * 概要　　:ログイン後の処理の関数
+ * 引数　　:Object json:サーバと通信して帰ってきたJSONを変換したオブジェクト
+ * 　　　　:createTag creator:createTagクラスのインスタンス
+ * 戻り値　:なし
+ * 作成日　:2015.0627
+ * 作成者　:T.Masuda
+ */
+function afterLogin(json, creator){
+	//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+	$(CLASS_HEADER).hide();		//ヘッダーを隠す
+	creator.getJsonFile(PATH_MEMBERPAGE_JSON);
+	// 会員共通のパーツのJSONを取得する。
+	creator.getJsonFile(PATH_MEMBERCOMMON_JSON);
+	//jsonのルートの数だけループする
+	for(var key in creator.json) {
+		//子供にuser_keyがあるときにvalueの値を書き換える 
+		if(USER_KEY in creator.json[key]) {
+			//jsonの値をセットする
+			creator.json[key][USER_KEY][VALUE] = json[ID];
+		}else {
+			//次のループに行く
+			continue;
+		}
+	}
+
+	$(SELECTOR_HEAD_LAST).after(PATH_MEMBERPAGE_CSS);
+	$(SELECTOR_HEAD_LAST).after(PATH_COURCEGUIDE_CSS);
+	$(SELECTOR_HEAD_LAST).after(PATH_DAILYCLASSES_JS);
+	//会員ページを読み込む
+	callPage(MEMBERPAGE_HTML);
+}
+
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
 dialogOption[LOGIN_DIALOG] = {
 		// 幅を設定する。
@@ -864,29 +952,33 @@ dialogOption[LOGIN_DIALOG] = {
 			        				async:false,
 			        				//通信成功時の処理
 			        				success:function(json){
-			        					//表示している内容を全て消去する
-			        					$('.main, header').empty();
-			        					creator.getJsonFile('source/memberPage.json');
-										// 会員共通のパーツのJSONを取得する。
-										creator.getJsonFile('source/memberCommon.json');
-			        					//jsonのルートの数だけループする
-			        					for(var key in creator.json) {
-			        						//子供にuser_keyがあるときにvalueの値を書き換える 
-			        						if('user_key' in creator.json[key]) {
-			        							//jsonの値をセットする
-			        							creator.json[key]['user_key']['value'] = json['id'];
-			        						}else {
-			        							//次のループに行く
-			        							continue;
-			        						}
-			        					}
-			        					$('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
-										$('head link:last').after('<link href="css/courseGuide.css" rel="stylesheet" type="text/css">');
-										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
+			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
+			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
+			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
+			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
+//			        					$(CLASS_HEADER).hide();		//ヘッダーを隠す
+//			        					creator.getJsonFile('source/memberPage.json');
+//										// 会員共通のパーツのJSONを取得する。
+//										creator.getJsonFile('source/memberCommon.json');
+//			        					//jsonのルートの数だけループする
+//			        					for(var key in creator.json) {
+//			        						//子供にuser_keyがあるときにvalueの値を書き換える 
+//			        						if('user_key' in creator.json[key]) {
+//			        							//jsonの値をセットする
+//			        							creator.json[key]['user_key']['value'] = json['id'];
+//			        						}else {
+//			        							//次のループに行く
+//			        							continue;
+//			        						}
+//			        					}
+//			        					$('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
+//										$('head link:last').after('<link href="css/courseGuide.css" rel="stylesheet" type="text/css">');
+//										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
 										//会員ページを読み込む
-										callPage('memberPage.html');
+//										callPage('memberPage.html');
 										//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
-										$dialog.dialog(CLOSE);	//ダイアログを閉じる
+//										$dialog.dialog(CLOSE);	//ダイアログを閉じる
 			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
 			        					//console.log(json);
