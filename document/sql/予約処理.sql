@@ -47,3 +47,21 @@ WHERE
 	id = {{id}}
 #-----------------------------------------------------
 
+#-----------------------------------------------------
+# 予約の時に追加してほしいSQL
+UPDATE 
+	classwork
+SET
+	order_students = order_students+1
+WHERE
+	id = {{classwoek_key}};
+
+#-----------------------------------------------------
+# キャンセルのときに追加してほしいSQL
+UPDATE 
+	classwork
+SET
+	order_students = order_students-1
+WHERE
+	id = {{classwoek_key}};
+
