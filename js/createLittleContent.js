@@ -2043,7 +2043,6 @@ function setDBdata(sendQueryJsonArray, queryReplaceData) {
 	var send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
 	//変更者:T.Yamamoto 日付:2015.06.26 内容:jsondbManagerに送信する値はjson文字列でないといけないので連想配列を文字列にする処理を追加しました。
 	var sendJsonString = JSON.stringify(send);
-	console.log(sendJsonString);
 	//Ajax通信を行う
 	$.ajax({
 		url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す

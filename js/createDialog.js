@@ -841,6 +841,8 @@ dialogOption['loginDialog'] = {
 			        					creator.getJsonFile('source/memberPage.json');
 										// 会員共通のパーツのJSONを取得する。
 										creator.getJsonFile('source/memberCommon.json');
+										// 会員共通のパーツのJSONを取得する。
+										creator.getJsonFile('source/eachDayLesson.json');
 			        					//jsonのルートの数だけループする
 			        					for(var key in creator.json) {
 			        						//子供にuser_keyがあるときにvalueの値を書き換える 
@@ -861,6 +863,7 @@ dialogOption['loginDialog'] = {
 											callPage('adminPage.html');
 										} else {
 											//会員ページを読み込む
+											memberInfo = json;
 											callPage('memberPage.html');
 										}
 			        					// 通信結果のデータをtransResultに格納する。
@@ -1083,7 +1086,6 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 				//予約一覧テーブルの値を置換する
 				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
-				console.log(lessonTable);
 			},1);
 		},
 		//イベント
@@ -1097,11 +1099,9 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 				var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				console.log(rowNum);
 				//次のダイアログに渡すオブジェクトを作る
 				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
 						creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
-				console.log(sendObject);
 				//日付を置換前のスラッシュ区切りにする
 				var date = sendObject.lesson_date.replace(/-/g,"/");
 				// 日付を日本語表示にする

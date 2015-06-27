@@ -339,7 +339,7 @@
         }
     },
     "sendReservedData":{
-    	"db_setQuery":"INSERT INTO user_classwork (user_work_status,user_classwork_cost,flower_cost,user_key,classwork_key,stage_key,stage_no,level_key,level_no,order_datetime,create_datetime,update_datetime)VALUES (1,'default_user_classwork_cost','default_flower_cost','user_key','classwork_key','stage_key','stage_no_present','level_key','level_no_present',NOW(),NOW(),NOW());"
+    	"db_setQuery":"INSERT INTO user_classwork (user_work_status,user_classwork_cost,flower_cost,user_key,classwork_key,stage_key,stage_no,level_key,level_no,order_datetime,create_datetime,update_datetime) VALUES (1,'default_user_classwork_cost','default_flower_cost','userId','classwork_key','stage_key','stage_no_present','level_key','level_no_present',NOW(),NOW(),NOW());"
     },
     "cancelLessonDialog":{},
     "cancelLessonDialogContent":{
