@@ -47,18 +47,18 @@ COLUMN_NAME_TODAY					= 'today';						// 今日の日付
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
 
-var classworkCostColumns = {
+var classworkCostColumns = [
 	'user_classwork_cost'
 	,'user_classwork_cost_aj'
 	,'flower_cost'
 	,'flower_cost_aj'
 	,'extension_cost'
-};
+];
 
-var defaultClassworkCostColumns = {
+var defaultClassworkCostColumns = [
 	'default_user_classwork_cost'
 	,'default_flower_cost'
-};
+];
 
 /*
 * 授業のステータスを表す文字列を取得する
@@ -397,17 +397,17 @@ var getPoint = function (targetTable, sumCost) {
  * @param rowData mixed 対象の列
  * @return int 料金合計
  */
-var getCost = function(rowData) {
+var sumCost = function(rowData) {
 	isExist(rowData, COLUMN_USER_CLASSWORK_COST);
 	// 予約済でないならデフォルトの値を使う
-	if(rowData[COLUMN_USER_CLASSWORK_COST] === null) {
-		return sumDefaultCost(rowData);
+	if(rowData[COLUMN_USER_CLASSWORK_COST] === "") {
+		return getDefaultCost(rowData);
 	}
 	
 	var result = 0;
 	for (var i = 0; i < classworkCostColumns.length; i ++) {
 		isExist(rowData, classworkCostColumns[i]);
-		result += classworkCostColumns[i];
+		result += Number(rowData[classworkCostColumns[i]]);
 		
 	}
 	return result;
@@ -422,7 +422,7 @@ var getDefaultCost = function(rowData) {
 	var result = 0;
 	for (var i = 0; i < defaultClassworkCostColumns.length; i ++) {
 		isExist(rowData, defaultClassworkCostColumns[i]);
-		result += defaultClassworkCostColumns[i];
+		result += Number(rowData[defaultClassworkCostColumns[i]]);
 		
 	}
 	return result;
@@ -519,9 +519,17 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
 	// 料金を求める
-	cost = sumCost(recordData, counter);
+	var cost = 0;
+	if(recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === "") {
+		cost = "";
+	} else {
+		cost = sumCost(recordData);
+	}
 	// 残席を求める
-	rest = getRestMark(recordData, timeTableStudents);
+	var rest = restMarks[0];
+	if(cost !== "") {
+		rest = getRestMark(recordData, timeTableStudents);
+	}
 	// 授業ステータスを求める
 	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
@@ -552,13 +560,16 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 	allDay = allDateTime(recordData);
 	// 料金を求める
 	var cost = 0;
-	if(rowData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === null) {
-		cost ="";
+	if(recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === "") {
+		cost = "";
 	} else {
-		cost = getCost(recordData);
+		cost = sumCost(recordData);
 	}
 	// ポイントを求める
-	point = getPoint(recordData, cost);
+	var point = 0;
+	if(cost) {
+		point = getPoint(recordData, cost);
+	}
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(allDay);
 	// 料金の表示を正規の表示にする
