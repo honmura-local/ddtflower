@@ -20,9 +20,7 @@
             }
         }
     },
-    "memberInfo":{
-
-    },
+    "memberInfo":{},
     "firstNameArea":{
         "labelArea":{
             "class":"label2Area firstNameLabel",
