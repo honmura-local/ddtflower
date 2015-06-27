@@ -11,10 +11,21 @@
  */
 
 //ファイルパスの定数
-MSL_LIST_PHP = 'list.php';
-MSL_DETAIL_PHP = 'detail.php';
-INIT_JSON = 'source/init.json';
+MSL_LIST_PHP				= 'list.php';						//MSLのリスト
+MSL_DETAIL_PHP				= 'detail.php';						//MSLの記事詳細
+INIT_JSON					= 'source/init.json';				//初期化の値のJSONファイル
+PATH_LOGIN_DIALOG_JSON		= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
+PATH_LOGIN_DIALOG_HTML		= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
 
+//文字列定数をここで定義する
+LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
+CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
+CLICK						= 'click';							//クリックイベントの文字列
+EMPTY						= '';								//空文字
+SLASH						= '/';								//スラッシュ記号
+DOT							= '.';								//ドット
+CLOSE						= 'close';							//closeの文字列
 
 /* 
  * 関数名:getCurrentPageFileName()
@@ -25,16 +36,16 @@ INIT_JSON = 'source/init.json';
  * 作成日:2015.06.03
  */
 function getCurrentPageFileName(identifier){
-	var retFileName = '';	//ファイル名を返却するための変数を宣言、初期化する
+	var retFileName = EMPTY;	//ファイル名を返却するための変数を宣言、初期化する
 	//現在のページのパスを配列で取得する
-	var path = location.pathname.split('/');
+	var path = location.pathname.split(SLASH);
 	//ファイル名取得の前準備としてパスの要素数を取得する
 	var pathLength = path.length;
 	
 	//拡張子の指定があったら
 	if(identifier){
 		//拡張子の文字列を作成する
-		var identifierString = '.' + identifier;
+		var identifierString = DOT + identifier;
 		//ループしてパスを走査する
 		for(var i = 0; i < pathLength; i++){
 			//配列の要素が指定した拡張子を含んでいたら
@@ -647,7 +658,6 @@ function specialReservedConfirmDialog(className, title, functionObject){
  */
 function loginDialog(className, title, functionObject){
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
-	this.className = 'loginDialog';		//ダイアログのクラス名
 	
 	this.open = function(){
 		//予約希望ダイアログを作る下準備をする
@@ -779,7 +789,7 @@ memberDialog.prototype.constructor = memberDialog;
 tagDialog.prototype.constructor = tagDialog;
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
-dialogOption['loginDialog'] = {
+dialogOption[LOGIN_DIALOG] = {
 		// 幅を設定する。
 		width			: '300',
 		// 幅を設定する。
@@ -798,6 +808,22 @@ dialogOption['loginDialog'] = {
 			$(this).next().css('font-size', '0.5em');
 			creator.getJsonFile('source/memberPage.json');
 		},
+		//ダイアログを閉じるときのイベント
+		close:function(){
+			//createTagクラスからDOMとJSONを削除する
+			//ログインダイアログのDOMが存在していたら
+			if(!$(CLASS_LOGIN_DIALOG ,creator.dom).length){
+				//ログインダイアログのテンプレートのDOMを消す
+				$(CLASS_LOGIN_DIALOG ,creator.dom).remove();
+			}
+			//ログインダイアログのJSONが存在していたら
+			if(LOGIN_DIALOG in creator.json){
+				//ログインダイアログのJSONを消す
+				delete creator.json[LOGIN_DIALOG];
+			}
+			//画面に展開されている、このダイアログのDOMを削除する
+			$(CLASS_LOGIN_DIALOG).remove();
+		},
 		// 位置を指定する。
 		position:{
 			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
@@ -814,6 +840,7 @@ dialogOption['loginDialog'] = {
 			        	 text:'ログイン',
 			        	 // ボタン押下時の処理を記述する。
 			        	 click:function(event, ui){
+			        		 var $dialog = $(this);		//ダイアログ自身の要素を変数に格納しておく
 			        		 // 必須入力項目が皆入力済みであれば
 			        		 if($('input.userName' ,this).val() != ''
 			        			 &&  $('input.userName' ,this).val() != ''){
@@ -858,6 +885,8 @@ dialogOption['loginDialog'] = {
 										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
 										//会員ページを読み込む
 										callPage('memberPage.html');
+										//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
+										$dialog.dialog(CLOSE);	//ダイアログを閉じる
 			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
 			        					//console.log(json);
@@ -1179,11 +1208,21 @@ dialogOption['memberReservedConfirmDialog'] = {
 var readyDialogFunc = {};
 
 //ログインダイアログの準備関数
-readyDialogFunc['loginDialog'] = function(){
-	creator.getJsonFile('source/login.json');	// ファイルのデータをjsonを用いて持ってくる
+readyDialogFunc[LOGIN_DIALOG] = function(){
+	//ダイアログのDOMとJSONを用意する
+	//ログインダイアログのDOMが用意されていなければ
+	if(!$(CLASS_LOGIN_DIALOG ,creator.dom).length){
+		//ログインダイアログのDOMを取得する
+		creator.getDomFile(PATH_LOGIN_DIALOG_HTML);
+	}
+	//ログインダイアログのJSONが用意されていなければ
+	if(util.checkEmpty(creator)|| !(LOGIN_DIALOG in creator.json)){
+		//ログインダイアログのJSONを取得する
+		creator.getJsonFile(PATH_LOGIN_DIALOG_JSON);
+	}
 
 	//ダイアログのタグを作る。
-	creator.outputTag('loginDialog');
+	creator.outputTag(LOGIN_DIALOG);
 };
 
 //予約ダイアログの準備関数
@@ -1308,9 +1347,9 @@ function checkLoginState(){
 	// ログイン状態をチェックする。
 	if(!(checkLogin())){
 		//ログインボタンのイベントを設定する。
-		$('.login').on('click', function(){
+		$(CLASS_LOGIN).on(CLICK, function(){
 			// ログインダイアログを作る
-			var login = new loginDialog(null, null, {autoOpen:true});
+			var login = new loginDialog(LOGIN_DIALOG, null, {autoOpen:true});
 			login.open();	//ログインダイアログを開く
 		});
 	}
