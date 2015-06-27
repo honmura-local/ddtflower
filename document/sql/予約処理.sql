@@ -28,7 +28,7 @@ INSERT INTO
 		,NOW()
 		,NOW()
 		,NOW()
-	)
+	);
 #-----------------------------------------------------
 
 #-----------------------------------------------------
@@ -44,6 +44,33 @@ SET
 	,level_key = {{level_key}}
 	,level_no = {{level_no_present}}
 WHERE
-	id = {{id}}
+	id = {{id}};
 #-----------------------------------------------------
+
+#-----------------------------------------------------
+# キャンセルSQL
+UPDATE
+	user_classwork
+SET
+	user_work_status = 10
+WHERE
+	id = {{id}}
+
+#-----------------------------------------------------
+# 予約の時に追加してほしいSQL
+UPDATE 
+	classwork
+SET
+	order_students = order_students+1
+WHERE
+	id = {{classwoek_key}};
+
+#-----------------------------------------------------
+# キャンセルのときに追加してほしいSQL
+UPDATE 
+	classwork
+SET
+	order_students = order_students-1
+WHERE
+	id = {{classwoek_key}};
 

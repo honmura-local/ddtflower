@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * ファイル名:createDialog.js
  * 概要  :ダイアログと関係する関数を定義する
  * 作成者:T.M
@@ -11,10 +11,34 @@
  */
 
 //ファイルパスの定数
-MSL_LIST_PHP = 'list.php';
-MSL_DETAIL_PHP = 'detail.php';
-INIT_JSON = 'source/init.json';
-
+MSL_LIST_PHP				= 'list.php';						//MSLのリスト
+MSL_DETAIL_PHP				= 'detail.php';						//MSLの記事詳細
+INIT_JSON					= 'source/init.json';				//初期化の値のJSONファイル
+//@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
+PATH_LOGIN_DIALOG_JSON		= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
+PATH_LOGIN_DIALOG_HTML		= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
+//文字列定数をここで定義する
+LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
+CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
+CLICK						= 'click';							//クリックイベントの文字列
+EMPTY						= '';								//空文字
+SLASH						= '/';								//スラッシュ記号
+DOT							= '.';								//ドット
+CLOSE						= 'close';							//closeの文字列
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+PATH_MEMBERPAGE_JSON		= 'source/memberPage.json';			//会員ページのJSON
+PATH_MEMBERCOMMON_JSON		= 'source/memberCommon.json';		//会員ページ共通のJSON
+MEMBERPAGE_HTML				= 'memberPage.html';				//会員ページのHTML
+USER_KEY					= 'user_key';						//ユーザキー
+VALUE						= 'value';							//バリュー
+ID							= 'id';								//ID
+SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
+PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
+PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
 
 /* 
  * 関数名:getCurrentPageFileName()
@@ -25,16 +49,16 @@ INIT_JSON = 'source/init.json';
  * 作成日:2015.06.03
  */
 function getCurrentPageFileName(identifier){
-	var retFileName = '';	//ファイル名を返却するための変数を宣言、初期化する
+	var retFileName = EMPTY;	//ファイル名を返却するための変数を宣言、初期化する
 	//現在のページのパスを配列で取得する
-	var path = location.pathname.split('/');
+	var path = location.pathname.split(SLASH);
 	//ファイル名取得の前準備としてパスの要素数を取得する
 	var pathLength = path.length;
 	
 	//拡張子の指定があったら
 	if(identifier){
 		//拡張子の文字列を作成する
-		var identifierString = '.' + identifier;
+		var identifierString = DOT + identifier;
 		//ループしてパスを走査する
 		for(var i = 0; i < pathLength; i++){
 			//配列の要素が指定した拡張子を含んでいたら
@@ -647,7 +671,6 @@ function specialReservedConfirmDialog(className, title, functionObject){
  */
 function loginDialog(className, title, functionObject){
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
-	this.className = 'loginDialog';		//ダイアログのクラス名
 	
 	this.open = function(){
 		//予約希望ダイアログを作る下準備をする
@@ -777,8 +800,83 @@ loginDialog.prototype.constructor = loginDialog;
 memberDialog.prototype.constructor = memberDialog;
 tagDialog.prototype.constructor = tagDialog;
 
+
+/*
+ * 関数名:inspectAfterLoad
+ * 概要:AJAX通信が終わった後にコールされるイベントを定義する
+ * 引数:function func:AJAX通信が終わった後にコールするイベント
+ * 戻り値:なし
+ * 作成日:2015.0627
+ * 作成者:T.Masuda
+ */
+function inspectAfterLoad(func, object){
+	//引数のオブジェクトを複製する。オブジェクトが入っていなければ空のオブジェクトを用意する
+	var parameter = object !== void(0)? $.extend(true, {}, object) : {};
+	//AJAX通信終了後のイベントを定義する
+	$(document).ajaxStop(function(){
+		func(parameter);	//引数の関数を実行する
+	});
+}
+
+/* 関数名　:toggleElement
+ * 概要　　:要素の表示/非表示を切り替える
+ * 引数　　:Object targetObject:処理対象と、判断の基準となる要素のセレクタの文字列を格納したオブジェクト
+ * 戻り値　:なし
+ * 作成日　:2015.0627
+ * 作成者　:T.Masuda
+ */
+function toggleHeader(targetObject){
+	//判断基準となる要素が存在したら
+	if(!$(targetObject.evaluation).length){
+		//指定された要素を表示する
+		$(targetObject.target).show();
+	} else {
+		//指定された要素を非表示にする
+		$(targetObject.target).hide();
+	}
+}
+
+//@add 2015. T.Masuda 会員ページならヘッダーを消すイベントを設定しました。
+//会員ページでのみヘッダーを表示するようにイベントを登録する
+//注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
+//短絡的な判断基準ですので、後々詰めるべきであると思います。
+inspectAfterLoad(toggleHeader, {evaluation:CLASS_LOGOUT_LINK,target:CLASS_HEADER})
+
+/* 関数名　:afterLogin
+ * 概要　　:ログイン後の処理の関数
+ * 引数　　:Object json:サーバと通信して帰ってきたJSONを変換したオブジェクト
+ * 　　　　:createTag creator:createTagクラスのインスタンス
+ * 戻り値　:なし
+ * 作成日　:2015.0627
+ * 作成者　:T.Masuda
+ */
+function afterLogin(json, creator){
+	//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+	$(CLASS_HEADER).hide();		//ヘッダーを隠す
+	creator.getJsonFile(PATH_MEMBERPAGE_JSON);
+	// 会員共通のパーツのJSONを取得する。
+	creator.getJsonFile(PATH_MEMBERCOMMON_JSON);
+	//jsonのルートの数だけループする
+	for(var key in creator.json) {
+		//子供にuser_keyがあるときにvalueの値を書き換える 
+		if(USER_KEY in creator.json[key]) {
+			//jsonの値をセットする
+			creator.json[key][USER_KEY][VALUE] = json[ID];
+		}else {
+			//次のループに行く
+			continue;
+		}
+	}
+
+	$(SELECTOR_HEAD_LAST).after(PATH_MEMBERPAGE_CSS);
+	$(SELECTOR_HEAD_LAST).after(PATH_COURCEGUIDE_CSS);
+	$(SELECTOR_HEAD_LAST).after(PATH_DAILYCLASSES_JS);
+	//会員ページを読み込む
+	callPage(MEMBERPAGE_HTML);
+}
+
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
-dialogOption['loginDialog'] = {
+dialogOption[LOGIN_DIALOG] = {
 		// 幅を設定する。
 		width			: '300',
 		// 幅を設定する。
@@ -797,6 +895,22 @@ dialogOption['loginDialog'] = {
 			$(this).next().css('font-size', '0.5em');
 			creator.getJsonFile('source/memberPage.json');
 		},
+		//ダイアログを閉じるときのイベント
+		close:function(){
+			//createTagクラスからDOMとJSONを削除する
+			//ログインダイアログのDOMが存在していたら
+			if(!$(CLASS_LOGIN_DIALOG ,creator.dom).length){
+				//ログインダイアログのテンプレートのDOMを消す
+				$(CLASS_LOGIN_DIALOG ,creator.dom).remove();
+			}
+			//ログインダイアログのJSONが存在していたら
+			if(LOGIN_DIALOG in creator.json){
+				//ログインダイアログのJSONを消す
+				delete creator.json[LOGIN_DIALOG];
+			}
+			//画面に展開されている、このダイアログのDOMを削除する
+			$(CLASS_LOGIN_DIALOG).remove();
+		},
 		// 位置を指定する。
 		position:{
 			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
@@ -813,6 +927,7 @@ dialogOption['loginDialog'] = {
 			        	 text:'ログイン',
 			        	 // ボタン押下時の処理を記述する。
 			        	 click:function(event, ui){
+			        		 var $dialog = $(this);		//ダイアログ自身の要素を変数に格納しておく
 			        		 // 必須入力項目が皆入力済みであれば
 			        		 if($('input.userName' ,this).val() != ''
 			        			 &&  $('input.userName' ,this).val() != ''){
@@ -836,28 +951,18 @@ dialogOption['loginDialog'] = {
 			        				async:false,
 			        				//通信成功時の処理
 			        				success:function(json){
-			        					//表示している内容を全て消去する
-			        					$('.main, header').empty();
-			        					creator.getJsonFile('source/memberPage.json');
-										// 会員共通のパーツのJSONを取得する。
-										creator.getJsonFile('source/memberCommon.json');
 										// 会員共通のパーツのJSONを取得する。
 										creator.getJsonFile('source/eachDayLesson.json');
-			        					//jsonのルートの数だけループする
-			        					for(var key in creator.json) {
-			        						//子供にuser_keyがあるときにvalueの値を書き換える 
-			        						if('user_key' in creator.json[key]) {
-			        							//jsonの値をセットする
-			        							creator.json[key]['user_key']['value'] = json['id'];
-			        						}else {
-			        							//次のループに行く
-			        							continue;
-			        						}
-			        					}
-			        					$('head link:last').after('<link href="css/memberPage.css" rel="stylesheet" type="text/css">');
+
 			        					$('head link:last').after('<link href="css/adminPage.css" rel="stylesheet" type="text/css">');
-										$('head link:last').after('<link href="css/courseGuide.css" rel="stylesheet" type="text/css">');
-										$('head link:last').after('<script type="text/javascript" src="js/dailyClasses.js"></script>');
+
+			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
+			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
+			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
+			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加
+//			        					$(CLASS_HEADER).hide();		//ヘッダーを隠す
+
 										//管理者の会員番号であったら
 										if(json['id'] == 1) {
 											callPage('adminPage.html');
@@ -866,6 +971,7 @@ dialogOption['loginDialog'] = {
 											memberInfo = json;
 											callPage('memberPage.html');
 										}
+//										$dialog.dialog(CLOSE);	//ダイアログを閉じる
 			        					// 通信結果のデータをtransResultに格納する。
 			        					// transResult = {"result":"true","user":"testuser","userName":"user"};
 			        					//console.log(json);
@@ -1164,11 +1270,21 @@ dialogOption['memberReservedConfirmDialog'] = {
 var readyDialogFunc = {};
 
 //ログインダイアログの準備関数
-readyDialogFunc['loginDialog'] = function(){
-	creator.getJsonFile('source/login.json');	// ファイルのデータをjsonを用いて持ってくる
+readyDialogFunc[LOGIN_DIALOG] = function(){
+	//ダイアログのDOMとJSONを用意する
+	//ログインダイアログのDOMが用意されていなければ
+	if(!$(CLASS_LOGIN_DIALOG ,creator.dom).length){
+		//ログインダイアログのDOMを取得する
+		creator.getDomFile(PATH_LOGIN_DIALOG_HTML);
+	}
+	//ログインダイアログのJSONが用意されていなければ
+	if(util.checkEmpty(creator)|| !(LOGIN_DIALOG in creator.json)){
+		//ログインダイアログのJSONを取得する
+		creator.getJsonFile(PATH_LOGIN_DIALOG_JSON);
+	}
 
 	//ダイアログのタグを作る。
-	creator.outputTag('loginDialog');
+	creator.outputTag(LOGIN_DIALOG);
 };
 
 //予約ダイアログの準備関数
@@ -1293,9 +1409,9 @@ function checkLoginState(){
 	// ログイン状態をチェックする。
 	if(!(checkLogin())){
 		//ログインボタンのイベントを設定する。
-		$('.login').on('click', function(){
+		$(CLASS_LOGIN).on(CLICK, function(){
 			// ログインダイアログを作る
-			var login = new loginDialog(null, null, {autoOpen:true});
+			var login = new loginDialog(LOGIN_DIALOG, null, {autoOpen:true});
 			login.open();	//ログインダイアログを開く
 		});
 	}
