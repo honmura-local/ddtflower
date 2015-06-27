@@ -33,18 +33,32 @@ var noLongerBookable = "予約締切";
 var fullHouse = "満席";
 
 //テーブルから取り出す列名
-COLUMN_NAME_MAX_NUM					= 'max_num';					//１限に予約できる最大の数
-COLUMN_NAME_START_TIME				= 'start_time';					//授業開始時間
-COLUMN_NAME_END_TIME				= 'end_time';					//授業終了時間
-COLUMN_NAME_ORDER_STUDENTS			= 'order_students';				//予約している生徒の数
-COLUMN_NAME_MAX_STUDENTS			= 'max_students';				//個別の予約できる最大の数
-COLUMN_NAME_LESSON_DATE				= 'lesson_date';				//授業受講日
-COLUMN_NAME_USER_WORK_STATUS		= 'user_work_status';			//ユーザ授業ステータス
-COLUMN_NAME_CLASSWORK_STATUS		= 'classwork_status';			//授業ステータス
-COLUMN_NAME_POINT_RATE				= 'point_rate';					//ポイントレート
-COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			//授業締切日？
-COLUMN_NAME_TODAY					= 'today';						//今日の日付
-COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';//花材費
+COLUMN_NAME_MAX_NUM					= 'max_num';					// １限に予約できる最大の数
+COLUMN_NAME_START_TIME				= 'start_time';					// 授業開始時間
+COLUMN_NAME_END_TIME				= 'end_time';					// 授業終了時間
+COLUMN_NAME_ORDER_STUDENTS			= 'order_students';				// 予約している生徒の数
+COLUMN_NAME_MAX_STUDENTS			= 'max_students';				// 個別の予約できる最大の数
+COLUMN_NAME_LESSON_DATE				= 'lesson_date';				// 授業受講日
+COLUMN_NAME_USER_WORK_STATUS		= 'user_work_status';			// ユーザ授業ステータス
+COLUMN_NAME_CLASSWORK_STATUS		= 'classwork_status';			// 授業ステータス
+COLUMN_NAME_POINT_RATE				= 'point_rate';					// ポイントレート
+COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			// 授業締切日？
+COLUMN_NAME_TODAY					= 'today';						// 今日の日付
+COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
+COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
+
+var classworkCostColumns = {
+	'user_classwork_cost'
+	,'user_classwork_cost_aj'
+	,'flower_cost'
+	,'flower_cost_aj'
+	,'extension_cost'
+};
+
+var defaultClassworkCostColumns = {
+	'default_user_classwork_cost'
+	,'default_flower_cost'
+};
 
 /*
 * 授業のステータスを表す文字列を取得する
@@ -378,29 +392,41 @@ var getPoint = function (targetTable, sumCost) {
 	return resultPoint;
 };
 
-/* 
- * 関数名:sumCost
- * 概要  :料金を求める
- * 引数  :rowData:連想配列名。テーブルから取り出した値
- 		:columnName:テーブルの列名(連想配列のキー名)
- * 返却値  :料金の合計
- * 作成者:T.Yamamoto
- * 作成日:2015.06.14
+/*
+ * 1行中の各料金の合計を得る
+ * @param rowData mixed 対象の列
+ * @return int 料金合計
  */
-var sumCost = function(rowData, rowNumber) {
-	// 合計の結果変数を作る
-	var sumResult = 0;
-	// key名にcostがつくものがあれば合計の変数に足す
-	for (var key in rowData) {
-		// key名にcostがつくものがあれば合計の変数に値を足す
-		if(key.match(/cost/)) {
-			// 合計の変数に連想配列の値を数字に変換して合計する
-			 sumResult += Number(rowData[key]);
-		}
+var getCost = function(rowData) {
+	isExist(rowData, COLUMN_USER_CLASSWORK_COST);
+	// 予約済でないならデフォルトの値を使う
+	if(rowData[COLUMN_USER_CLASSWORK_COST] === null) {
+		return sumDefaultCost(rowData);
 	}
-	// 合計の変数を返す
-	return sumResult;
+	
+	var result = 0;
+	for (var i = 0; i < classworkCostColumns.length; i ++) {
+		isExist(rowData, classworkCostColumns[i]);
+		result += classworkCostColumns[i];
+		
+	}
+	return result;
 };
+
+/*
+ * 1行中の各デフォルト料金の合計を得る
+ * @param rowData mixed 対象の列
+ * @return int デフォルト料金合計
+ */
+var getDefaultCost = function(rowData) {
+	var result = 0;
+	for (var i = 0; i < defaultClassworkCostColumns.length; i ++) {
+		isExist(rowData, defaultClassworkCostColumns[i]);
+		result += defaultClassworkCostColumns[i];
+		
+	}
+	return result;
+}
 
 /* 
  * 関数名:backThreeStringDelete
@@ -525,7 +551,12 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	allDay = allDateTime(recordData);
 	// 料金を求める
-	cost = sumCost(recordData, counter);
+	var cost = 0;
+	if(rowData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === null) {
+		cost ="";
+	} else {
+		cost = getCost(recordData);
+	}
 	// ポイントを求める
 	point = getPoint(recordData, cost);
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
