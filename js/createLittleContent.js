@@ -2028,3 +2028,64 @@ function lessonThemeSearch() {
 		
 	});
 }
+
+
+/* 
+ * 関数名:setDBdata
+ * 概要  :dbに接続し、データの挿入または更新または削除を行う
+ * 引数  :object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
+ 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.27
+ */
+function setDBdata(sendQueryJsonArray, queryReplaceData) {
+	var send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
+	//変更者:T.Yamamoto 日付:2015.06.26 内容:jsondbManagerに送信する値はjson文字列でないといけないので連想配列を文字列にする処理を追加しました。
+	var sendJsonString = JSON.stringify(send);
+	console.log(sendJsonString);
+	//Ajax通信を行う
+	$.ajax({
+		url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
+		//予約情報のJSONを送信する
+		//変更者:T.Yamamoto 日付:2015.06.26 内容:dataを変数sendから変数sendJsonStringに変更し、送信する値を配列から文字列を送信するように修正しました
+		data:{json:sendJsonString},				//送信するデータを設定する
+		dataType: STR_TEXT,					//テキストデータを返してもらう
+		type: STR_POST,						//POSTメソッドで通信する
+		success:function(ret){				//通信成功時の処理
+			//変更者:T.Yamamoto 日付:2015.06.26 内容:更新成功の条件に更新データが0件でないことを追加しました。
+			//更新成功であれば
+			if(!parseInt(parseInt(ret.message)) && ret.message != 0){
+				alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
+				$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass.close();			//ダイアログを閉じる
+			//更新失敗であれば
+			} else {
+				alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
+			}
+		},
+		error:function(xhr, status, error){	//通信失敗時の処理
+			//通信失敗のアラートを出す
+			alert(MESSAGE_FAILED_CONNECT);
+		}
+	});
+}
+
+/* 
+ * 関数名:setDBdataTriggerClick
+ * 概要  :第一引数のボタンが押された時にDBのデータを挿入または更新または削除する
+ * 引数  :string selector: トリガーとなるボタンのセレクター
+ 		:object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
+ 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.27
+ */
+function setDBdataTriggerClick(selector, sendQueryJsonArray, queryReplaceData){
+	//第一引数の要素がクリックされた時にイベントを開始する
+	$('.' + selector).click(function(){
+		//dbの値をデータを挿入または編集する
+		setDBdata(sendQueryJsonArray, queryReplaceData);
+	});
+}
+
+

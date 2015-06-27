@@ -220,7 +220,7 @@
             "cancelRateValue": {
                 "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "cancel__0":{
                     "cancel_days":{
@@ -274,7 +274,7 @@
             "addPointValue":{
                 "db_getQuery":"SELECT * FROM lesson_point_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "addPoint__0": {
                     "students": {
@@ -371,7 +371,7 @@
             "cancelRateValue": {
                 "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "cancel__0":{
                     "cancel_days":{
