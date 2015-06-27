@@ -43,11 +43,11 @@
 			//ドキュメント配備後
 			$(document).ready(function(){
 				// dom要素を作るクラスをインスタンス化する
-				creator = new createTag();
+				//creator = new createTag();
 				// パスワード変更画面のjsonを読み込む
 				creator.getJsonFile('source/memberProfile.json');
 				// 共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/memberCommon.json');
+				// creator.getJsonFile('source/memberCommon.json');
 				// パーツのテンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				// パーツのテンプレートのDOMを取得する。
@@ -65,37 +65,27 @@
 				// 会員情報を表示する領域を作る
 				creator.outputTag('memberInfo');
 				// 「姓：」領域を作る
-				creator.outputTag('firstNameArea', 'labelTextbox', '.infoForm');
+				creator.outputTag('firstNameArea', 'labelTextbox', '.memberInfo');
 				// 「名：」領域を作る
-				creator.outputTag('lastNameArea', 'labelTextbox', '.infoForm');
+				creator.outputTag('lastNameArea', 'labelTextbox', '.memberInfo');
 				// 「性別：」と「生年月日：」領域を作る
-				creator.outputTag('subInfo', 'subInfo', '.infoForm');
+				creator.outputTag('subInfo', 'subInfo', '.memberInfo');
 				// 「住所：」と領域を作る
-				creator.outputTag('addressArea', 'addressArea', '.infoForm');
+				creator.outputTag('addressArea', 'addressArea', '.memberInfo');
 				// 「メールアドレス：」領域を作る
-				creator.outputTag('mailaddressArea', 'labelTextbox', '.infoForm');
+				creator.outputTag('mailaddressArea', 'labelTextbox', '.memberInfo');
 				// 「電話番号：」領域を作る
-				creator.outputTag('phoneArea', 'labelTextbox', '.infoForm');
+				creator.outputTag('phoneArea', 'labelTextbox', '.memberInfo');
 				// 「緊急：」領域を作る
-				creator.outputTag('emergencyArea', 'labelTextbox', '.infoForm');
+				creator.outputTag('emergencyArea', 'labelTextbox', '.memberInfo');
 				// 更新ボタン領域を作る
-				creator.outputTag('updateButton', 'updateButton', '.infoForm');
+				creator.outputTag('updateButton', 'updateButton', '.memberInfo');
 				// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
-				$('.birthday').datepicker({
-					// 年月日の順番で表示するフォーマットにする
-					"dateFormat": 'yy/mm/dd',
-					// 月をセレクトボックスで選択できるようにする
-					changeMonth: true,
-					// 年をセレクトボックスで選択できるようにする
-					changeYear: true,
-					// 選択できる年は1910年から2050年の範囲にする
-					yearRange: '1910:2050',
-				});
+				clickCalendar('birthday_date');
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();
 				//更新ボタンをクリックしたときにユーザの情報を更新する
-				setDBdataTriggerClick(creator.json.updateUserInf, )
-
+				// setDBdataTriggerClick(creator.json.updateUserInf, )
 			});
 			</script>
 		</div>

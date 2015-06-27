@@ -2087,4 +2087,41 @@ function setDBdataTriggerClick(selector, sendQueryJsonArray, queryReplaceData){
 	});
 }
 
+/* 
+ * 関数名:clickCalendar
+ * 概要  :クリックしたときにカレンダーを表示し、日付を指定できるようにする
+ * 引数  :string selector:カレンダーをクリックしたときにだしたいセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.27
+ */
+function clickCalendar(selector) {
+	$('.' + selector).datepicker({
+		// 年月日の順番で表示するフォーマットにする
+		dateFormat: 'yy/mm/dd',
+		// 月をセレクトボックスで選択できるようにする
+		changeMonth: true,
+		// 年をセレクトボックスで選択できるようにする
+		changeYear: true,
+		// 選択できる年は1910年から2050年の範囲にする
+		yearRange: '1910:2100',
+	});
+}
 
+/* 
+ * 関数名:getInputData
+ * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
+		:クラス名をkey、入っている値をvalueの連想配列にして返す
+ * 引数  :string selector:値を走査したい親のセレクター名
+ * 返却値  :object resultArray:入力データの結果連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.27
+ */
+function getInutData(selector) {
+	//結果の変数を初期化する
+	var resultArray = {};
+	//
+	// $('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
+		
+	// }
+}
