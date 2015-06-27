@@ -2028,3 +2028,44 @@ function lessonThemeSearch() {
 		
 	});
 }
+
+/*
+ * 関数名:saveCustomizeTabJsonFile
+ * 引数  :createTag creator:createTagクラスのインスタンス
+ * 戻り値:なし
+ * 概要  :フラワースクール管理画面カスタマイズタブの保存を押したときのイベントを登録する
+ * 作成日:2015.06.27
+ * 作成者:T.Masuda
+ */
+function saveCustomizeTabJsonFile(creator){
+	var $creator = $(creator);	//createTagのインスタンスをjQueryオブジェクトに入れる
+	//管理画面カスタマイズタブの保存ボタンを押したときのイベントを登録する
+	$(document).on('click', '#customize .saveButton', function(){
+		//更新ボタンのtarget属性に仕込まれた更新対象のJSONのトップノード名を取得する。
+		var topNodeName = $(this).attr('target'); 
+		//トップノード名からDOMのトップのIDを指定し、JSONを更新する。
+		//thisの中身がボタンなので、ownに保存したクラスのインスタンスで関数を呼び出す。
+		$creator.updateElementJson($creator.json[topNodeName], $('#'+topNodeName));
+		//JSONを保存用に文字列に変換する。
+		var jsonString = JSON.stringify($creator.json[topNodeName]);
+		
+		//Ajax通信でJSONをファイルに保存する。
+		$.ajax({
+			url:'savetextfile.php',	//保存するプログラムのパスを指定する。
+			method:'POST',			//POSTメソッドで送信する。
+			//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
+			data:{text:jsonString, path:'source/' + topNodeName + '.json'},
+			dataType:'text',		//テキストデータを返してもらう。
+			//キャッシュを無効にする。
+			cache:false,
+			async:false,	//同期通信
+			success:function(text){	//通信成功時
+				alert(text);	//保存結果のログを出す。
+			},
+			error:function(){		//通信失敗時
+				//通信失敗のログを出す。
+				alert('通信に失敗しました。時間をおいて試してください。');
+			}
+		});
+	});
+}
