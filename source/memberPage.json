@@ -421,7 +421,7 @@
             "text": "上記の授業をキャンセルしますか?"
         },
         "cancelReservedData":{
-            "db_setQuery":"UPDATE user_classwork SET user_work_status = 10 WHERE id = 'userId'; UPDATE classwork　SET　order_students = order_students-1　WHERE　id = 'classwoek_key';",
+            "db_setQuery":"UPDATE user_classwork SET user_work_status = 10 WHERE id = 'userId'; UPDATE classwork　SET　order_students = order_students-1　WHERE　id = 'classwoek_key';"
         }
     }
 }
