@@ -90,6 +90,11 @@
 				var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
 					// 日ごとダイアログ領域を作る
 					creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+				//予約キャンセルダイアログを作る
+				// var cancelLessonLesson = new TagDialog('cancelLessonDialog', '', dialogOption['canselLessonDialog'], function() {
+					//予約キャンセルダイアログのdomを作る
+					// creator.outputTag('canselLessonDialog', 'canselLessonDialog', 'body');
+				// });
 				// テーブルのステータスを概要を表示する領域を作る
 				// creator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
 				// 予約一覧テーブルの値を置換する
@@ -104,13 +109,12 @@
 				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo['id'], lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
-
 				//予約中授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonReservedDetailTable'], 'lessonReservedDetailTable');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
 				//予約中の授業があった時のテーブルを作る
-				if(creator.json['lessonReservedDetailTable']['table'] !== void(0)) {
+				if(creator.json['reservedLessonTable']['table'] !== void(0)) {
 					// 予約中授業のテーブルを作る
-					creator.outputTagTable('lessonReservedDetailTable','reservedLessonTable','.alreadyReserved');
+					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
 				//受講済み授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
@@ -128,15 +132,21 @@
 				lessonThemeSearch();
 
  				// 予約中授業の連想配列を変数に入れる 
-				var reservedNow = creator.json['lessonReservedDetailTable']['table'];
+				var reservedNow = creator.json['reservedLessonTable']['table'];
 				// 受講済みの連想配列を変数に入れる
 				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
-				// 日ごと授業テーブルの連想配列を変数に入れる
-				var eachDayLessonTable = creator.json['memberTable']['table'];
 				// 予約中テーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
 				// 受講済みテーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput('.finishedLessonTable', lessonFinished, "callMemberLessonValue");
+
+				//予約キャンセルダイアログを作る
+				var cancelLesson = new tagDialog('cancelLessonDialog', '', dialogOption['cancelLessonDialog'], function() {
+					// 予約キャンセルダイアログのdomを作る
+					creator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
+				});
+
+
 			});
 			</script>
 		</div>

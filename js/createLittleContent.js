@@ -2120,8 +2120,15 @@ function clickCalendar(selector) {
 function getInutData(selector) {
 	//結果の変数を初期化する
 	var resultArray = {};
-	//
-	// $('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
-		
-	// }
+	//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
+	$('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
+		//入力データのクラス名を取得する
+		var className = $(this).attr('class');
+		//入力データの値を取得する
+		var valueData = $(this).val();
+		//入力データを結果の変数に、key名をクラス名にして保存する
+		resultArray[className] = valueData;
+	});
+	//結果を返す
+	return resultArray;
 }

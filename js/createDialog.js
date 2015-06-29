@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:createDialog.js
  * 概要  :ダイアログと関係する関数を定義する
  * 作成者:T.M
@@ -1230,6 +1230,72 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 
 //予約決定ダイアログ用設定
 dialogOption['memberReservedConfirmDialog'] = {
+		// 幅を設定する。
+		width			: 'auto',
+		// 幅を設定する。
+		// ダイアログを生成と同時に開く。
+		autoOpen		: false,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		//ダイアログを閉じるときの処理
+		close:function(){
+			//前のダイアログから送信されたデータを破棄する
+			delete this.dialogClass.queryReplaceData;
+		},
+		// ボタン
+		buttons:[
+		        //はいボタン
+		        {
+		        	text:'はい',	//ボタンのテキスト
+		        	//クリックイベントの記述
+		        	click:function(){
+		        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
+						setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
+		        	}
+		        },
+		        //いいえボタン
+		        {
+		        	text:'いいえ',	//ボタンのテキスト
+		        	//クリックイベントの記述
+			        	click:function(){
+			        		 // ダイアログを消去する。
+			        		 $(this).dialog('close');
+			        }
+		        }
+		],
+		//イベント
+		event:function(){
+	$(document).on('click','.reservedLessonTable tr',function(){
+						//キャンセルダイアログのインスタンスを変数に入れる
+		var $nextDialog = $('.canselLessonDialog')[0].dialogClass;
+		//クリックした行番号を取得する
+		var rowNum = $('.reservedLessonTable tr').index($(this)) - 1;
+		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる
+		var sendObject = $.extend(true, {userId:memberInfo['id']}, creator.json['reservedLessonTable']['table'][rowNum]);
+		//日付を置換前のスラッシュ区切りにする
+		var date = sendObject.lesson_date.replace(/-/g,"/");
+		//日付を日本語表示にする
+		var titleDate = changeJapaneseDate(date);
+		//キャンセルダイアログのjson配列lessonConfirmに値を直接設定する
+		insertConfirmReserveJsonDialogValue(sendObject);
+		//キャンセルダイアログを開く
+		$nextDialog.openTag(
+			sendObject,
+			{
+				url:URL_GET_JSON_STRING_PHP, 
+				key:'canselLessonDialogContent',
+				domName:'canselLessonDialogContent',
+				appendTo:'.canselLessonDialog'
+			},
+			titleDate
+		);
+		});
+	}
+		
+};
+
+//予約キャンセルダイアログ用設定
+dialogOption['cancelLessonDialog'] = {
 		// 幅を設定する。
 		width			: 'auto',
 		// 幅を設定する。
