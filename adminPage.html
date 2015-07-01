@@ -16,8 +16,6 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
 <!-- 会員ページのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/memberPage.css" media="screen" />
-<!-- 管理者ページのcssを読み込む -->
-<link rel="stylesheet" type="text/css" href="css/adminPage.css" media="screen" />
 <!-- jqueryUIのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
 <!-- jQueryの本体を読み込む。 -->
@@ -46,10 +44,12 @@
 <body>
 	<div id="container">
 		<div class="main">
+			<!-- 管理者ページのcssを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/adminPage.css" media="screen" />
 			<script>
 			//ドキュメント配備後
 			$(document).ready(function(){
-				creator = new createTag();
+				// creator = new createTag();
 				// ユーザーページのパーツのテンプレートのJSONを取得する。
 				creator.getJsonFile('source/commonUser.json');
 				// 管理者ページ共通のパーツのJSONを取得する。
@@ -67,10 +67,11 @@
 				creator.outputTag('adminHeader');
 				//タブ領域
 				creator.outputTag('adminTab', 'tabContainer');
-				//タブコンテンツ3個
+				//タブコンテンツ4個
 				creator.outputTag('dayReserver','tabInContent', '.tabContentArea');
 				creator.outputTag('lecturePermit','tabInContent', '.tabContentArea');
 				creator.outputTag('userList','tabInContent', '.tabContentArea');
+				creator.outputTag('lessonDetail','tabInContent', '.tabContentArea');
 				
 				//日ごと予約者一覧タブのコンテンツ
 				//選択された日付を表示する領域
@@ -108,6 +109,8 @@
 				creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
 				//受講承認一覧のリスト更新ボタン
 				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+				//受講承認一覧の検索領域を作る
+				creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');

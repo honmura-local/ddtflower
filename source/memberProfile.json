@@ -3,19 +3,10 @@
         "pageHeader":{
             "text":"プロフィール"
         },
-        "keepMoney":{
-            "keepMoneyText":{
-                "text":"お預かり金額:"
-            },
-            "keepMoneyNumber":{
-                "text":"30000"
-            },
-            "keepMoneyUnit":{
-                "text":"円"
-            }
-        },
         "passLinkArea":{
+            "class":"passLinkArea textCenter",
             "passLink":{
+                "href":"#memberPassword.html",
                 "text":"パスワード変更"
             }
         }
@@ -23,11 +14,11 @@
     "memberInfo":{},
     "firstNameArea":{
         "labelArea":{
-            "class":"label2Area firstNameLabel",
+            "class":"label2Area inlineBlock firstNameLabel",
             "text":"姓:"
         },
         "textboxArea":{
-            "class":"textbox2Area firstName",
+            "class":"textbox2Area inlineBlock firstName",
             "type":"text",
             "name":"firstName",
             "value":"山田"
@@ -35,11 +26,11 @@
     },
     "lastNameArea":{
         "labelArea":{
-            "class":"label2Area lastNameLabel",
+            "class":"label2Area inlineBlock lastNameLabel",
             "text":"名:"
         },
         "textboxArea":{
-            "class":"textbox2Area lastName",
+            "class":"textbox2Area inlineBlock lastName",
             "name":"lastName",
             "type":"text",
             "value":"花子"
@@ -47,7 +38,7 @@
     },
     "subInfo":{
         "sexLabel":{
-            "class":"label2Area",
+            "class":"label2Area inlineBlock",
             "text":"性別:"
         },
         "user_sex":{
@@ -62,9 +53,11 @@
             }
         },
         "birthdayLabel":{
+            "class":"birthdayLabel inlineBlock",
             "text":"生年月日:"
         },
         "birthday_date":{
+            "class":"birthday_date inlineBlock",
             "type":"text",
             "name":"birthday_date",
             "value":"1989/02/02"
@@ -72,7 +65,7 @@
     },
     "addressArea":{
         "addressLabel":{
-            "class":"label2Area addressLabel",
+            "class":"label2Area inlineBlock addressLabel",
             "text":"住所:"
         },
         "address":{
@@ -93,11 +86,11 @@
     },
     "phoneArea":{
         "labelArea":{
-            "class":"label4Area phoneLabel",
+            "class":"label4Area inlineBlock phoneLabel",
             "text":"電話番号:"
         },
         "textboxArea":{
-            "class":"textbox4Area telephone",
+            "class":"textbox4Area inlineBlock telephone",
             "name":"phone",
             "type":"text",
             "value":"800909999"
@@ -105,11 +98,11 @@
     },
     "emergencyArea":{
         "labelArea":{
-            "class":"label4Area emergencyLabel",
+            "class":"label4Area inlineBlock emergencyLabel",
             "text":"緊急番号:"
         },
         "textboxArea":{
-            "class":"textbox4Area emergency",
+            "class":"textbox4Area inlineBlock emergency",
             "name":"emergency",
             "type":"text",
             "value":"3344555"

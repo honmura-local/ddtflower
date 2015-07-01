@@ -16,31 +16,18 @@ td {
 	vertical-align: middle;/* 縦について中央位置にする */
 }
 
-label
-.memberMenu li,
-.banner,
-.tab,
-.themeText,
-.passLabel,
-.passTextbox,
+label,
 .attention span,
-.keepMoney,
-.label2Area,
-.label4Area {
+.tab,
+.inlineBlock {
 	display: inline-block;
 }
 
-.memberMenu li,
-.tab,
 .lessonTable,
 .reservedLessonTable,
 .finishedLessonTable,
-.topLink,
-.keepMoney,
-.hasPoint,
-.passArea,
-.topLinkArea,
-.confirmText {
+.tab,
+.textCenter {
 	text-align: center;
 }
 
@@ -54,33 +41,12 @@ label
 .memberHeader
 .nameTitleArea,
 .ptArea,
-.banner {
+.banner:nth-of-type(1) {
 	margin-left: 3px;
 }
 
-.logoutArea,
-.banner:nth-of-type(6) {
-	margin-right: 3px;
-}
-
-.stageValue,
-.levelValue,
-.doScheduleValue,
-.thatDayValue,
-.thatDayUnit,
-.oneBeforeDayValue,
-.oneBeforeDayUnit,
-.twoBeforeDayValue,
-.twoBeforeDayUnit,
-.onePersonValue,
-.onePersonUnit,
-.twoPeopleDayValue,
-.twoPeopleDayUnit,
-.fourPersonValue,
-.fourPersonUnit,
-.eightPeopleDayValue,
-.eightPeopleDayUnit {
-	margin-left: -3px;
+.ptArea {
+	margin-right: 1em;
 }
 
 #container .lessonCalendar,
@@ -93,9 +59,7 @@ label
 
 #tab-container,
 .selectThemeButton,
-.logoutArea,
 .memberHeader p:nth-of-type(2),
-.passLinkArea,
 .fRight {
 	float: right;
 }
@@ -122,7 +86,7 @@ label
  .advertiseLink,
  .message_title,
  .message_content {
- 	padding: 3px; 			/* 3px要素の幅を広げる */
+ 	padding: 4px; 			/* 4px要素の幅を広げる */
  }
 
 /* ヘッダー領域 */
@@ -145,7 +109,7 @@ label
 .memberNumber,
 .memberName,
 .memberPoint {
-	vertical-align: sub;		/* 縦について並列並びにする */
+	vertical-align: top;		/* 縦について並列並びにする */
 }
 
 /* 
@@ -232,8 +196,14 @@ label
 }
 /* カレンダー領域終わり */
 
+/* 
+ * セレクタ :#container .lessonCalendar, #tab-container
+ * 概要   :カレンダーとタブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
 #container .lessonCalendar, #tab-container {
-	margin-top: 5px;
+	margin-top: 5px;		/* 上から5pxの余白をとる */
 }
 
 /* タブ領域 */
@@ -256,7 +226,6 @@ label
  */
 .tab {
 	width: 50%;					/* 幅を45%にする */
-	padding: 7px 0;				/* 5px要素の幅を広げる */
 	background-color: #cedc3a;	/* 背景を黄緑色にする */
 }
 
@@ -431,13 +400,13 @@ label
 }
 
 /* 
- * セレクタ :.infoForm div
+ * セレクタ :.memberInfo div
  * 概要   :会員情報をそれぞれの情報についての領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.10
  */
-.infoForm div {
-	margin-bottom: 5px;		/* 下に5pxの余白をとる */
+.memberInfo div {
+  margin-top: 10px;		/* 上から10px余白をとる */
 }
 /* 会員情報領域終わり */
 
@@ -448,7 +417,7 @@ label
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.11
  */
-.memberInfo .updateButton {
+.updateButton {
 	display: block;		/* ブロック要素として扱う */
 	margin-left: auto;	/* 左からの余白を自動にする */
 	margin-top: 5%;	/* 右から5%余白を空ける */
@@ -487,9 +456,20 @@ label
  * 作成日 :2015.06.11
  */
 .memberReservedConfirmDialog,
+.cancelLessonDialog,
 .keepMoney,
 .hasPoint {
 	font-size: 16px;		/* フォントサイズを16pxにする */
+}
+
+/* 
+ * セレクタ :.priceUnit
+ * 概要   :確認ダイアログの「円」の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.priceUnit {
+	margin-left: -12px;		/* 12px幅を縮める */
 }
 
 /* 
@@ -516,18 +496,13 @@ label
 }
 
 /* 
- * セレクタ :
- * 概要   :sapnタグで区切られているところの幅を調整する
+ * セレクタ :.unitSpace
+ * 概要   :spanタグで区切られているところの幅を調整する
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.26
  */
-.cancel_rate,
-.cancelText,
-.cancelUnit,
-.studentsUnit,
-.point_rate,
-.pointUnit {
-	margin-left: -3px;		/* 左から3px余白を詰める */
+.unitSpace {
+	margin-left: -5px;		/* 左から5px余白を詰める */
 }
 
 /* 
@@ -538,7 +513,7 @@ label
  */
 .cancelUnit,
 .pointUnit {
-	margin-right: .5em;		/* 右に半文字の余白を付ける */
+	margin-right: 1em;		/* 右に半文字の余白を付ける */
 }
 
 /* 
@@ -559,6 +534,7 @@ label
  * 作成日 :2015.06.26
  */
 .tabLink {
+	padding: 9px 0;				/* 上下に9px要素の幅を広げる */
 	color: #555;			/* 文字色を黒にする */
 }
 /* 予約確認ダイアログ領域終わり */
@@ -623,7 +599,7 @@ label
  * 作成日 :2015.06.10
  */
 .textbox4Area {
-	width: 74%;				/* 幅を76%にする */
+	width: 75%;				/* 幅を76%にする */
 }
 
 /* 
@@ -666,7 +642,7 @@ label
  * 作成日 :2015.06.10
  */
 .address,
-.mailaddress {
+.mail_address {
 	width: 95%;				/* 幅を98%にする */
 }
 /* プロフィール入力情報入力領域終わり */
@@ -732,6 +708,26 @@ label
 		float:none;					/* 回り込みをなくす */ 
 	}
 
+	/* 
+	 * セレクタ :#tab-container
+	 * 概要   :タブ領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.08
+	 */
+	#tab-container {
+		width: 94%;					/* 幅を94%にする */ 
+	}
+
+	/* 
+	 * セレクタ :.priceUnit
+	 * 概要   :確認ダイアログの「円」の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
+	.priceUnit {
+		margin-left: -8px;		/* 8px幅を縮める */
+	}
+
 	 .lessonTable td,
 	 .reservedLessonTable td,
 	 .finishedLessonTable td,
@@ -771,9 +767,20 @@ label
 	 * 作成日 :2015.06.11
 	 */
 	.memberReservedConfirmDialog,
+	.cancelLessonDialog,
 	.keepMoney,
 	.hasPoint {
 		font-size: 13px;		/* フォントサイズを13pxにする */
+	}
+
+	/* 
+	 * セレクタ :.cancelUnit, .pointUnit
+	 * 概要   :予約情報の内側の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.11
+	 */
+	.cancelUnit, .pointUnit {
+		margin-right: 0.5em;
 	}
 	/* 予約ダイアログ、予約確認ダイアログ領域終わり */
 }
@@ -791,7 +798,7 @@ label
 		font-size: 14px;		/* フォントサイズを14pxにする */
 	}
 
-/* 
+	/* 
 	 * セレクタ .passLabel
 	 * 概要   :パスワードラべル領域
 	 * 作成者 :T.Yamamoto
@@ -877,5 +884,15 @@ label
 	.addPointText1,
 	.addPointText1 {
 		font-size: 13px;		/* フォントサイズを13pxにする */
+	},
+
+	/* 
+	 * セレクタ :.banner:nth-of-type(6)
+	 * 概要   :バナーの6個目の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
+	.banner:nth-of-type(6) {
+		margin-left: 3px;		/* 左から3pxの余白を付ける */
 	}
 }

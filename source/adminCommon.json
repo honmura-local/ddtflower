@@ -3,19 +3,23 @@
         "class": "tabContainer adminTab",
         "id": "adminTab",
         "tabs": {
-            "class":"tabs outsideArea",
+            "class":"tabs textCenter outsideArea",
             "tab": [
                 {
                     "href": "#dayReserver",
-                    "text": "日ごと予約者一覧"
+                    "html": "日ごと<br>予約者一覧"
                 },
                 {
                     "href": "#lecturePermit",
-                    "text": "受講承認"
+                    "html": "受講<br>承認"
                 },
                 {
                     "href": "#userList",
-                    "text": "ユーザ一覧"
+                    "html": "ユーザ<br>一覧"
+                },
+                {
+                    "href": "#lessonDetail",
+                    "html": "授業<br>設定"
                 }
             ]
         },
@@ -36,7 +40,21 @@
 	    "id": "userList"
 	},
     "dateBelt":{
-    	"text":"2015/06/12"
+        "twoDaysBefore":{
+            "text":"前々日"
+        },
+        "oneDayBefore":{
+            "text":"前日"
+        },
+        "theDay":{
+            "text":"当日"
+        },
+        "oneDayAfter":{
+            "text":"翌日"
+        },
+        "twoDayAfter":{
+            "text":"翌々日"
+        }
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
@@ -83,6 +101,9 @@
         "class": "tabContainer lecturePermitTab",
         "id": "lecturePermitTab",
         "tabs": {
+            "tab":{
+                "class":"tab inlineBlock textCenter"
+            },
             "tab": [
                 {
                     "href": "#doLecturePermit",
@@ -199,6 +220,33 @@
             }
         }
     },
+    "permitListSearch":{
+        "fromArea":{
+            "fromLabel":{
+                "class":"fromLabel inlineBlock",
+                "text":"検索 From"
+            },
+            "fromTextbox":{
+                "type":"text",
+                "name":"fromSearach"
+            }
+        },
+        "toArea":{
+            "toLabel":{
+                "class":"toLabel inlineBlock",
+                "text":"検索 To"
+            },
+            "toTextbox":{
+                "type":"text",
+                "name":"toSearach"
+            }
+        },
+        "searchButton":{
+            "type":"button",
+            "name":"search",
+            "value":"検索"
+        }
+    },
     "searchUser":{
         "searchList":{
             "searchNameColumn":{
@@ -296,5 +344,9 @@
 	    		"value":"新規登録"
     		}
     	}
+    },
+    "lessonDetail":{
+        "class": "userList tabPanel",
+        "id": "userList"
     }
 }

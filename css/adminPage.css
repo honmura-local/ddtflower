@@ -1,55 +1,83 @@
 @CHARSET "UTF-8";
 
 /* 
- * セレクタ :#adminHeader
+ * セレクタ :.adminHeader
  * 概要   :ヘッダのメニューそれぞれの項目の領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
 .adminHeader {
-	font-size: 13px;
-	padding: 7px 0;
+	font-size: 13px;			/* フォントサイズを13pxにする */
+	padding: 7px 0;				/* 上下に7px要素の幅を広げる */
 }
 
 /* 
- * セレクタ :.memberMenu li
- * 概要   :ヘッダのメニューそれぞれの項目の領域
+ * セレクタ :#adminTab .tab
+ * 概要   :管理者画面、タブ領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.04
  */
 #adminTab .tab {
-	font-size: 11px;
-	width: 33%;
-	display: inline-block;
-	background: #cedc3a;
-	border: none;
-	border-radius: 0;
+	font-size: 11px;			/* フォントサイズを11pxにする */
+	width: 25%;					/* 幅を25%にする */
+	display: inline-block;		/* インラインブロック要素としてあつかう */
+	background: #cedc3a;		/* 背景を黄緑にする */
+	border: none;				/* 線をなくす */
+	border-radius: 0;			/* 角丸をなくす */
 }
 
-#adminTab .tab:nth-of-type(2) {
-	/*border-left: 1px dotted #fff;*/
-	/*border-right: 1px dotted #fff;*/
-	width: 34%;
-}
-
+/* 
+ * セレクタ :#adminTab .tab.active
+ * 概要   :管理者画面、選択中のタブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 #adminTab .tab.active {
-	padding-top: 7px;
-	position: static;
-	font-weight: normal;
-	background: #ce6;
+	padding-top: 0px;			/* 上向きに0px要素の幅を広げる */
+	position: static;			/* ポジションを静的にする */
+	font-weight: normal;		/* 文字の太さを普通にする */
+	background: #ce6;			/* 背景を薄い緑にする */
 }
 
+/* 
+ * セレクタ :#adminTab .tab .tabLink
+ * 概要   :管理者画面、タブのクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+#adminTab .tab .tabLink {
+	padding: 7px 0;				/* 要素の幅を上下に7px広げる */
+}
+
+/* 
+ * セレクタ :.adminHeader .memberNumber, .adminHeader .memberName
+ * 概要   :会員名、会員番号領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 .adminHeader .memberNumber, .adminHeader .memberName {
-	display: inline-block;
-	vertical-align: middle;
+	display: inline-block;		/* インラインブロック要素として扱う */
+	vertical-align: middle;		/* 縦に中央揃えにする */
 }
 
+/* 
+ * セレクタ :.adminHeader .topLink
+ * 概要   :トップページリンク領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 .adminHeader .topLink {
-	float: right;
+	float: right;				/* 右に回り込みする */
 }
 
+/* 
+ * セレクタ :.tabContentArea
+ * 概要   :タブのコンテンツ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 .tabContentArea {
-	padding: 5px 0;
+	padding: 5px 0;				/* 上下に5px幅を広げる */
 }
 
 /* タイトルの日付領域 */
@@ -64,6 +92,18 @@
 	padding: 5px 0;			/* 上下に要素の幅を5pxずつ広げる */
 	background: #cedc3a;	/* 背景を黄緑にする */
 	font-weight: bold;		/* 太字にする */
+}
+
+/* 
+ * セレクタ :.dateBelt a
+ * 概要   :日ごと予約者一覧タブのタイトルの領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.19
+ */
+.dateBelt a {
+	display: inline-block;	/* インラインブロック要素として扱う */
+	padding: 5px 2em ;			/* 要素の幅を5px広げる */
+	cursor: pointer;		/* マウスオーバー時に指にする */
 }
 /* タイトルの日付領域終わり */
 
@@ -113,23 +153,37 @@
 }
 /* スクロールボタン領域終わり */
 
+/* 
+ * セレクタ :#lecturePermit .tab
+ * 概要   :受講承認、タブ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 #lecturePermit .tab {
-	border: none;
-	width: 50%;
-	display: inline-block;
+	border: none;			/* 実線をなくす */
+	width: 50%;				/* 幅を50%にする */
+	display: inline-block;	/* インラインブロック要素にする */
 }
 
-#lecturePermit .tab:nth-of-type(2) {
-	width: 50%;
-}
-
+/* 
+ * セレクタ :.firstRow
+ * 概要   :ユーザ一覧　ページング領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
 .firstRow {
-	margin-bottom: 5px;
-	text-align: center;
+	margin-bottom: 5px;		/* 下に5pxの余白をつける */
+	text-align: center;		/* 中央揃えにする */
 }
 
-label.records {
-  margin: 0 1em;
+/* 
+ * セレクタ :.records
+ * 概要   :ページングで表示する件数の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.04
+ */
+.records {
+	margin: 0 1em;			/* 左右に1文字分の余白をとる */
 }
 
 
@@ -145,8 +199,18 @@ label.records {
 .searchNameColumn,
 .searchInfoColumn,
 .searchButton,
-.searchList li label {
+.searchList li {
 	margin-bottom: 5px;		/* 下に5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.searchList li label
+ * 概要   :会員一覧検索の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.22
+ */
+.searchList li label {
+	display: inline;		/* インライン要素として扱う */
 }
 
 /* 
@@ -170,9 +234,31 @@ label.records {
 	width: 30%;				/* 幅を30%にする */
 	margin-right: 10px;		/* 右に10pxの余白をとる */
 }
-
 /* 会員一覧の検索領域終わり */
 
+
+/* 受講者一覧の検索領域 */
+/* 
+ * セレクタ :.fromArea, .toArea
+ * 概要   :受講者一覧のfromとtoの領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.fromArea, .toArea {
+	display: block;			/* ブロック要素にする */
+	margin-top: 5px;		/* 上から5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.permitListSearch label span
+ * 概要   :受講者一覧のラベルテキスト領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.permitListSearch label span {
+	width: 12%;				/* 幅を12%にする */
+}
+/* 受講者一覧の検索領域終わり */
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){

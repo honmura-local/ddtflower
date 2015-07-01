@@ -18,13 +18,16 @@
         }
     },
     "lessonCalendar": {
-        "class":"lessonCalendar",
+        "class":"lessonCalendar calendar",
         "name": "lessonCalendar"
     },
     "lessonTab": {
         "class": "tab-container",
         "id": "tab-container",
         "tabs": {
+            "tab":{
+                "class":"tab inlineBlock textCenter"
+            },
             "tab": [
                 {
                     "href": "#alreadyReserved",
@@ -42,6 +45,7 @@
         "id": "alreadyReserved",
         "selectTheme": {
             "themeText": {
+                "class":"themeText inlineBlock",
                 "text": "テーマ"
             }
         },
@@ -61,6 +65,7 @@
         "id": "finishedLesson",
         "selectTheme": {
             "themeText": {
+                "class":"themeText inlineBlock",
                 "text": "テーマ"
             }
         },
@@ -79,7 +84,7 @@
         "text": "※ポイントは参加人数と共に変動します"
     },
     "reservedLessonTable": {
-        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date >= 'lesson_date' ORDER BY lesson_date ASC;",
+        "db_getQuery": "SELECT start_time ,end_time ,lesson_name ,school_name ,user_classwork_cost ,lesson_point_rate.point_rate AS point_rate ,user_classwork_cost_aj ,user_classwork.get_point AS get_point ,flower_cost ,flower_cost_aj ,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date ,students ,order_students ,SUBSTRING(NOW(), 1,10) AS today ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,classwork.lesson_key AS lesson_key FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date >= 'lesson_date' ORDER BY lesson_date ASC;",
         "user_key": {
             "value": ""
         },
@@ -130,12 +135,24 @@
                 },
                 "order_students": {
                     "style": "display:none;"
+                },
+                "today": {
+                    "style": "display:none;"
+                },
+                "stage_no": {
+                    "style": "display:none;"
+                },
+                "level_no": {
+                    "style": "display:none;"
+                },
+                "lesson_key": {
+                    "style": "display:none;"
                 }
             }
         }
     },
     "lessonFinishedDetailTable": {
-        "db_getQuery": "SELECT start_time,end_time,lesson_name,school_name,user_classwork_cost,lesson_point_rate.point_rate AS point_rate,user_classwork_cost_aj,user_classwork.get_point AS get_point,flower_cost,flower_cost_aj,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date,students,order_students FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON  lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date <= NOW() ORDER BY lesson_date DESC;",
+        "db_getQuery": "SELECT start_time ,end_time ,lesson_name ,school_name ,user_classwork_cost ,lesson_point_rate.point_rate AS point_rate ,user_classwork_cost_aj ,user_classwork.get_point AS get_point ,flower_cost ,flower_cost_aj ,user_classwork.extension_cost AS extension_cost ,time_table_day.lesson_date AS lesson_date ,students ,order_students ,SUBSTRING(NOW(), 1,10) AS today ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,classwork.lesson_key AS lesson_key FROM  user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key AND user_classwork.user_key = 'user_key' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN lesson_point_rate ON lesson_point_rate.lesson_key = lesson_inf.id WHERE lesson_date <= NOW() ORDER BY lesson_date ASC;",
         "user_key": {
             "value": ""
         },
@@ -184,6 +201,18 @@
                 },
                 "order_students": {
                     "style": "display:none;"
+                },
+                "today": {
+                    "style": "display:none;"
+                },
+                "stage_no": {
+                    "style": "display:none;"
+                },
+                "level_no": {
+                    "style": "display:none;"
+                },
+                "lesson_key": {
+                    "style": "display:none;"
                 }
             }
         }
@@ -227,12 +256,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 },
@@ -241,12 +272,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 },
@@ -255,12 +288,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 }
@@ -281,12 +316,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -295,12 +332,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -309,12 +348,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -323,18 +364,21 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 }
             }
         },
         "confirmText": {
+            "class":"confirmText textCenter",
             "text": "上記の授業を予約しますか?"
         }
     },
@@ -379,12 +423,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 },
@@ -393,12 +439,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 },
@@ -407,12 +455,14 @@
                         "text":""
                     },
                     "cancelText":{
+                        "class":"cancelText unitSpace",
                         "text":"日前:"
                     },
                     "cancel_rate":{
                         "text":""
                     },
                     "cancelUnit":{
+                        "class":"cancelUnit unitSpace",
                         "text":"%"
                     }
                 }
@@ -433,12 +483,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -447,12 +499,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -461,12 +515,14 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 },
@@ -475,22 +531,25 @@
                         "text": ""
                     },
                     "studentsUnit": {
+                        "class":"studentsUnit unitSpace",
                         "text": "人:"
                     },
                     "point_rate":{
                         "text":""
                     },
                     "pointUnit": {
+                        "class":"pointUnit unitSpace",
                         "text": "pt"
                     }
                 }
             }
         },
         "confirmText": {
+            "class":"confirmText textCenter",
             "text": "上記の授業をキャンセルしますか?"
-        },
-        "cancelReservedData":{
-            "db_setQuery":"UPDATE user_classwork SET user_work_status = 10 WHERE user_key = 'userId'; UPDATE classwork SET order_students = order_students-1 WHERE id = 'classwork_key';"
         }
+    },
+    "cancelReservedData":{
+        "db_setQuery":"UPDATE user_classwork SET user_work_status = 10 WHERE user_key = 'userId'; UPDATE classwork SET order_students = order_students-1 WHERE id = 'classwork_key';"
     }
 }

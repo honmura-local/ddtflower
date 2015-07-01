@@ -2056,7 +2056,7 @@ function setDBdata(sendQueryJsonArray, queryReplaceData) {
 			//更新成功であれば
 			if(!parseInt(parseInt(ret.message)) && ret.message != 0){
 				alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
-				$(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass.close();			//ダイアログを閉じる
+				$(this).dialog(CLOSE);			//ダイアログを閉じる
 			//更新失敗であれば
 			} else {
 				alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
@@ -2132,3 +2132,4 @@ function getInutData(selector) {
 	//結果を返す
 	return resultArray;
 }
+
