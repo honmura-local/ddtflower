@@ -172,6 +172,20 @@ calendarOptions['member'] = {		//カレンダーを作る。
 //		}
 	}
 
+//管理者ダイアログ
+calendarOptions['admin'] = {		//カレンダーを作る。
+	// カレンダーの日付を選択したら
+	onSelect: function(dateText, inst){
+		//ダイアログのタイトルの日付を設定する
+		var titleDate = changeJapaneseDate(dateText);
+		//講座一覧ダイアログを開く
+		this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
+				{url:URL_GET_JSON_STRING_PHP, key:ADMIN_EACH_DAY_LESSON_TABLE, domName:ADMIN_EACH_DAY_LESSON_TABLE, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
+				titleDate
+		);
+	}
+}
+
 /*
  * クラス名:calendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
@@ -265,6 +279,29 @@ function memberCalendar(selector, dateRange, userId, dialog) {
 	//オプションを設定する
 	this.calendarOptions = calendarOptions[this.calendarName];
 }
+
+/*
+ * クラス名:adminCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ * 　　  :element dialog:ダイアログへの参照
+ * 戻り値:なし
+ * 概要  :管理者のカレンダー
+ * 作成日:2015.07.01
+ * 作成者:T.Yamamoto
+ */
+function adminCalendar(selector, dialog) {
+	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
+	this.calendarName = 'admin';	//カレンダー名をセットする
+	
+	$calendar = $(selector)[0];		//カレンダーの要素を取得する
+	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
+	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
+	
+	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//オプションを設定する
+	this.calendarOptions = calendarOptions[this.calendarName];
+}
+
 
 /*
  * クラス名:blogCalendar
@@ -2040,9 +2077,18 @@ function lessonThemeSearch() {
  * 作成日:2015.06.27
  */
 function setDBdata(sendQueryJsonArray, queryReplaceData) {
-	var send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
+	//DBに送信するための連想配列
+	var send = {};
+	//置換済みでなければ置換する
+	if(!queryReplaceData.userId.value) {
+		send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
+	//置換済みであれば値をそのままｍ結合する	
+	} else {
+		send = $.extend(true, {}, sendQueryJsonArray, queryReplaceData);
+	}
 	//変更者:T.Yamamoto 日付:2015.06.26 内容:jsondbManagerに送信する値はjson文字列でないといけないので連想配列を文字列にする処理を追加しました。
 	var sendJsonString = JSON.stringify(send);
+	console.log(sendJsonString);
 	//Ajax通信を行う
 	$.ajax({
 		url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
@@ -2122,12 +2168,12 @@ function getInutData(selector) {
 	var resultArray = {};
 	//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
 	$('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
-		//入力データのクラス名を取得する
-		var className = $(this).attr('class');
+		//入力データのname属性を取得する
+		var name = $(this).attr('name');
 		//入力データの値を取得する
 		var valueData = $(this).val();
 		//入力データを結果の変数に、key名をクラス名にして保存する
-		resultArray[className] = valueData;
+		resultArray[name] = valueData;
 	});
 	//結果を返す
 	return resultArray;

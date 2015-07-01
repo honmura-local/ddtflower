@@ -504,7 +504,7 @@ var allDateTime = function (rowData) {
 
 /* 
  * 関数名:reservedLessonValueInput
- * 概要  :予約テーブルについてデータベースから取り出した値を入れる関数をコールする
+ * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
  		 roopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
@@ -518,20 +518,18 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 	recordData = roopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
-	// 料金を求める
-	var cost = 0;
-	if(recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === "") {
+	var cost;			//料金
+	var rest;			//残席
+	var lessonStatus;	//状況
+	if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
 		cost = "";
+		rest = '✕';
+		lessonStatus = '予約不可';
 	} else {
+		rest = getRestMark(recordData, timeTableStudents);
+		lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 		cost = sumCost(recordData);
 	}
-	// 残席を求める
-	var rest = restMarks[0];
-	if(cost !== "") {
-		rest = getRestMark(recordData, timeTableStudents);
-	}
-	// 授業ステータスを求める
-	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
 	// 料金の表示を正規の表示にする
@@ -580,7 +578,7 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 
 /* 
  * 関数名:callEachDayReservedValue
- * 概要  :日ごと予約者一覧テーブルの値を置換する
+ * 概要  :管理者日ごと予約者一覧テーブルの値を置換する
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
  		 roopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数

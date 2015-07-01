@@ -87,7 +87,6 @@
 				// 日ごと予約者一覧テーブルの値を置換する
 				lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
 
-
 				//受講承認タブのコンテンツ
 				//タブ
 				creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
@@ -130,6 +129,18 @@
 
 				// ボタンの見た目をjqueryuiのものにする
 				$('button, .searchButton, input[type="button"]').button();
+
+				//授業詳細タブ内にカレンダ-作る
+				creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
+				//
+				// var adminLessonList = new tagDialog(ADMIN_LESSON_LIST_DIALOG, '', dialogOption[ADMIN_LESSON_LIST_DIALOG], function(){
+				// 	// 日ごとダイアログ領域を作る
+				// 	creator.outputTag(ADMIN_LESSON_LIST_DIALOG, 'dialog', 'body');
+				// });
+				// カレンダーを作り、クリックでダイアログ作成を作る
+				// var admCalendar = new adminCalendar('.adminCalendar', adminLessonList);
+				// admCalendar.create();	//カレンダーを実際に作成する
+
 			});
 			</script>
 		</div>

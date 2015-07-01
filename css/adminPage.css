@@ -187,6 +187,80 @@
 }
 
 
+/* 管理者　授業詳細領域 */
+/* 
+ * セレクタ:.lessonData, .buttonArea
+ * 概要   :授業データ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonData, .buttonArea {
+	width: 280px;		/* 幅を280pxにする */
+	border: 1px solid #999; 
+}
+
+/* 
+ * セレクタ:.lessonData input:[type="text"]
+ * 概要   :授業データ　テキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonData input[type="text"] {
+	width: 50px;		/* テキストボックスの幅を50pxにする */
+}
+
+/* 
+ * セレクタ:.lessonData li
+ * 概要   :入力データリストのそれぞれの項目の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonData li {
+	padding: 5px 0;		/* 要素の幅を上下に5px広げる */
+}
+
+/* 
+ * セレクタ:.lessonData ul li label
+ * 概要   :入力データリストのそれぞれの項目のラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonData li label {
+	display: inline-block;	/* インラインブロック要素にする */
+	width: 27%;				/* 幅を27%で統一する */
+}
+
+/* 
+ * セレクタ:.memoLabel
+ * 概要   :「メモ」のラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.memoLabel {
+	vertical-align: top;	/* 表示位置を一番上を基準にする */
+}
+
+/* 
+ * セレクタ:.memoTextare
+ * 概要   :「メモ」のテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.memoTextare {
+	width: 65%;				/* 幅を65%にする */
+	height: 60px;			/* 縦幅を60pxにする */
+}
+
+/* 
+ * セレクタ:.memberClassListButton
+ * 概要   :受講一覧ボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.memberClassListButton {
+	float: right;			/* 右側に回り込みする */
+}
+/* 管理者　授業詳細領域終わり */
 /* 会員一覧の検索領域 */
 /* 
  * セレクタ :.searchNameColumn,

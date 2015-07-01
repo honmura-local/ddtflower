@@ -253,6 +253,17 @@ label,
 /* セレクトボックス領域終わり */
 
 /* DBから読込んだテーブル領域 */
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :授業についてのテーブル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.01
+ */
+.lessonTable {
+	display: none;			/* 最初は表示しない */
+}
+
 /* 
  * セレクタ :.lessonTable
  * 概要   :授業についてのテーブル領域
@@ -271,6 +282,23 @@ label,
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin: 5px 0;				/* 上下5pxの余白をとる */
 	width: 100%;				/* 幅を100%にする */
+}
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :DBから読込んだテーブルの行の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonTable tr:hover,
+.reservedLessonTable tr:hover,
+.finishedLessonTable tr:hover,
+.infoTable tr:hover,
+.eachDayReservedInfoTable tr:hover,
+.doLecturePermitInfoTable tr:hover,
+.lecturePermitListInfoTable tr:hover,
+.userListInfoTable tr:hover {
+	background: #E0F5E6;	/* 行の背景を水色っぽくする */
 }
 
 /* 
@@ -534,7 +562,7 @@ label,
  * 作成日 :2015.06.26
  */
 .tabLink {
-	padding: 9px 0;				/* 上下に9px要素の幅を広げる */
+	padding: 6px 0;				/* 上下に6px要素の幅を広げる */
 	color: #555;			/* 文字色を黒にする */
 }
 /* 予約確認ダイアログ領域終わり */
@@ -618,7 +646,7 @@ label,
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.10
  */
-.birthday {
+.birthday_date {
 	width: 39%;				/* 幅を40%にする */
 }
 
@@ -656,9 +684,9 @@ label,
  */
 .lessonStatusText:nth-of-type(1) {
 	display: block;			/* ブロック要素として扱う */
-	height: 50px;			/* 高さを40pxにする */
-	line-height: 50px;		/* 行間を40pxにする */
-	width: 20%;				/* 幅を20%にする */
+	height: 27px;			/* 高さを27pxにする */
+	line-height: 27px;		/* 行間を27pxにする */
+	width: 10%;				/* 幅を20%にする */
 }
 
 /* 
@@ -728,12 +756,33 @@ label,
 		margin-left: -8px;		/* 8px幅を縮める */
 	}
 
+	/* 
+	 * セレクタ :.lessonTable td,
+	 .reservedLessonTable td,
+	 .finishedLessonTable td,
+	 .memberHeader p
+	 * 概要   :確認ダイアログの「円」の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
 	 .lessonTable td,
 	 .reservedLessonTable td,
 	 .finishedLessonTable td,
 	 .memberHeader p {
 	 	font-size: 12px;		/* フォントサイズを12pxにする */
 	 }
+
+	 /*
+	 * セレクタ :.lessonStatusText:nth-of-type(1)
+	 * 概要   :残席領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
+	.lessonStatusText:nth-of-type(1) {
+		height: 50px;			/* 高さを50pxにする */
+		line-height: 50px;		/* 行間を50pxにする */
+		width: 21%;				/* 幅を21%にする */
+	}
 
 	/* 
 	 * セレクタ :.memberHeader p

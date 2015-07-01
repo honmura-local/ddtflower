@@ -64,11 +64,21 @@
         }
     },
     "addressArea":{
+        "zip_codeLabel":{
+            "class":"label4Area inlineBlock zip_codeLabel",
+            "text":"郵便番号:"
+        },
+        "zip_code":{
+            "class":"textbox4Area inlineBlock zip_code",
+            "type":"text",
+            "name":"zip_code"
+        },
         "addressLabel":{
             "class":"label2Area inlineBlock addressLabel",
             "text":"住所:"
         },
         "address":{
+            "name":"address",
             "text":""
         }
     },
@@ -91,7 +101,7 @@
         },
         "textboxArea":{
             "class":"textbox4Area inlineBlock telephone",
-            "name":"phone",
+            "name":"telephone",
             "type":"text",
             "value":"800909999"
         }
@@ -103,13 +113,14 @@
         },
         "textboxArea":{
             "class":"textbox4Area inlineBlock emergency",
-            "name":"emergency",
+            "name":"telephone2",
             "type":"text",
             "value":"3344555"
         }
     },
     "updateButton":{
         "type":"submit",
+        "name":"button",
         "value":"更新"
     },
     "updateUserInf":{

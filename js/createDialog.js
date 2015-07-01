@@ -40,13 +40,13 @@ PATH_ADMINPAGE_CSS			= '<link href="css/adminPage.css" rel="stylesheet" type="te
 PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
-RESERVED_LESSON_TABLE		= 'reservedLessonTable';			// 予約中授業のテーブル
-TAG_TR						= ' tr';							// trタグ
-TAG_TABLE					= 'table';							// tableタグ
-CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		// 授業予約キャンセルダイアログの中身のコンテンツセレクター
-CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				// 予約キャンセルダイアログの外枠
-
-
+RESERVED_LESSON_TABLE		= 'reservedLessonTable';			//予約中授業のテーブル
+TAG_TR						= ' tr';							//trタグ
+TAG_TABLE					= 'table';							//tableタグ
+CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
+CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
+ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
+ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
 /* 
  * 関数名:getCurrentPageFileName()
  * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
@@ -1200,6 +1200,7 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 				//予約一覧テーブルの値を置換する
 				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
+				$('.lessonTable').show();
 			},1);
 		},
 		//イベント
@@ -1258,7 +1259,17 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	//クリックイベントの記述
 		        	click:function(){
 		        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-						setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
+		        		//予約が初めてのとき
+		        		if(!this.dialogClass.queryReplaceData.user_work_status) {
+		        			//DBにデータを挿入して予約処理をする
+		        			setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
+		        		//以前にキャンセルしたことがある授業の場合
+		        		} else {
+		        			//DBにデータの更新で予約処理をする
+		        			setDBdata(creator.json.updateReservedData, this.dialogClass.queryReplaceData);
+		        		}
+			
+						$(this).dialog(CLOSE);
 		        	}
 		        },
 		        //いいえボタン
@@ -1295,7 +1306,8 @@ dialogOption['cancelLessonDialog'] = {
 	        	//クリックイベントの記述
 	        	click:function(){
 	        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-					setDBdata(creator.json.cancelReservedData, this.queryReplaceData);
+					setDBdata(creator.json.cancelReservedData, creator.json.cancelLessonReplace);
+					$(this).dialog(CLOSE);
 	        	}
 	        },
 	        //いいえボタン
@@ -1304,7 +1316,7 @@ dialogOption['cancelLessonDialog'] = {
 	        	//クリックイベントの記述
 		        	click:function(){
 		        		 // ダイアログを消去する。
-		        		 $(this).dialog('close');
+		        		 $(this).dialog(CLOSE);
 		        }
 	        }
 	]
@@ -1561,9 +1573,10 @@ function cancelDialogOpen (dialogObject, memberNumber) {
 		var date = sendObject.lesson_date.replace(/-/g,"/");
 		//日付を日本語表示にする
 		var titleDate = changeJapaneseDate(date);
+		//creatTagのオブジェクトにキャンセルのデータが入った連想配列を作る
+		creator.json.cancelLessonReplace = sendObject;
 		//キャンセルダイアログのjson配列lessonConfirmに値を直接設定する
 		insertConfirmReserveJsonDialogValue(sendObject, CANCEL_LESSON_DIALOG_CONTENT);
-		console.log(sendObject);
 		//キャンセルダイアログを開く
 		dialogObject.openTag(
 			sendObject,

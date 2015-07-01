@@ -85,7 +85,11 @@
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();
 				//更新ボタンをクリックしたときにユーザの情報を更新する
-				// setDBdataTriggerClick(creator.json.updateUserInf, )
+				// setDBdataTriggerClick(creator.json.updateUserInf, );
+				$('.updateButton').click(function(){
+				var x = getInutData('memberInfo');
+				console.log(x);
+				})
 			});
 			</script>
 		</div>
