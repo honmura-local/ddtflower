@@ -39,7 +39,9 @@ PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type=
 PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
-
+//定数
+EXPERIENCE	= 'experience';
+LESSON		= 'Lesson';
 /* 
  * 関数名:getCurrentPageFileName()
  * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
@@ -1298,9 +1300,23 @@ readyDialogFunc['specialReservedDialog'] = function(content, array){
 		creator.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
 	}
 	
-	// ダイアログの本体となるdivタグを生成する。
-	creator.reservedDialog[content]();
+	//レッスン予約ダイアログ用のJSONを取得する。。
+	creator.getJsonFile(init[content + LESSON]);
 
+	//体験レッスンであれば
+	if(content = EXPERIENCE){
+		//体験レッスンの予約ダイアログのDOMを作る
+		makeSpecialReservedDialogDom(creator);
+	//体験レッスンでなければ
+	} else {
+		//汎用的な予約ダイアログを作る
+		makeUsuallyReservedDialogDom(creator);
+	}
+	
+	//DBから会員情報を取得してpersonInformationの各フォームにデータを格納する。
+	getMemberInformation('.specialReservedDialog');
+	
+	
 	//希望曜日の選択があれば
 	if($('input[name="dayOfWeek"]').length){
 		// 全ての曜日のチェックボックスにチェックする
@@ -1320,6 +1336,46 @@ readyDialogFunc['specialReservedDialog'] = function(content, array){
 readyDialogFunc['specialReservedConfirmDialog'] = function(reservedData){
 		// ダイアログの本体となるdivタグを生成する。
 		creator.outputTag('specialReservedConfirmDialog');
+}
+
+/* 
+ * 関数名:makeSpecialReservedDialogDom
+ * 概要  :体験レッスン予約ダイアログのDOMを作る
+ * 引数  :createTag creator:createTagクラスのインスタンス
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.06.27
+ */
+function makeSpecialReservedDialogDom(creator){
+	//createTagでダイアログに必要なタグを生成する。
+	creator.outputTag('specialReservedDialog','specialReservedDialog','body');
+	creator.outputTag('reservedDate','reservedDate','.specialReservedDialog');
+	creator.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
+	creator.outputTag('radioButtonSpecialConstruct','radioButtonSpecialConstruct','.specialReservedDialog');
+	creator.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
+	creator.outputTag('subInfo','subInfo','.specialReservedDialog');
+	creator.outputTag('personInformation','personInformation','.specialReservedDialog');
+	creator.outputTag('mailSubject','mailSubject','.specialReservedDialog');
+}
+
+/* 
+ * 関数名:makeUsuallyReservedDialogDom
+ * 概要  :通常レッスン予約ダイアログのDOMを作る(旧マイページ)
+ * 引数  :createTag creator:createTagクラスのインスタンス
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.06.27
+ */
+function makeUsuallyReservedDialogDom(creator){
+	//createTagでダイアログに必要なタグを生成する。
+	creator.outputTag('specialReservedDialog','specialReservedDialog','body');
+	creator.outputTag('reservedDate','reservedDate','.specialReservedDialog');
+	creator.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
+	creator.outputTag('radioButtonUsuallyCourse','radioButtonUsuallyCourse','.specialReservedDialog');
+	creator.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
+	creator.outputTag('subInfo','subInfo','.specialReservedDialog');
+	creator.outputTag('memberInformation','memberInformation','.specialReservedDialog');
+	creator.outputTag('mailSubject','mailSubject','.specialReservedDialog');
 }
 
 

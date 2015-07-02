@@ -81,7 +81,6 @@ function createTag(){
 	this.dom = '';				//ひな形のHTMLのDOMを格納する変数。
 	this.numbering = '';		//ブログページのナンバリングのJSON連想配列。
 	this.formData = {};			//フォームデータを格納する連想配列。
-	var own = this;				//自分自身の要素を変数に入れる
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
 
@@ -800,6 +799,8 @@ function createTag(){
 	 * 作成日:2015.04.01
 	 */
 	this.updateElementJson = function(topMapNode, topDomNode){
+		//ループ内ではthisでクラスインスタンスを参照できないので、変数に格納しておく
+		var own = this;
 		var prevName = "";	//1回前の走査した要素のname属性を保存する変数を用意する。
 		//弟DOMがある限りループする。編集用テキストエリアのDOMを走査することで、この処理を実現する。
 		$('.editValue', topDomNode).each(function(){
@@ -876,7 +877,8 @@ function createTag(){
 			//そうでなければ
 			} else {
 				//再帰して階層を潜る。
-				returnMapNode = own.findMapNode(curStackKey, mapNode);
+				//@mod 2015.0627 T.Masuda 
+				returnMapNode = this.findMapNode(curStackKey, mapNode);
 			}
 		}
 		
@@ -926,93 +928,6 @@ function createTag(){
 		} 
 	}
 	
-	/*
-	 * イベント名:$(document).on('click', '#customize .saveButton')
-	 * 引数  　 	:string 'click':クリックイベントの文字列
-	 * 			:string '#customize .saveButton':カスタマイズタブの保存ボタンのセレクタ。
-	 * 戻り値　 :なし
-	 * 概要  　 :カスタマイズタブの保存ボタンを押したときのイベント。JSONの保存処理の関数をコールする。
-	 * 作成日　　:2015.04.02
-	 * 作成者　　:T.Masuda
-	 */
-	$(document).on('click', '#customize .saveButton', function(){
-		//更新ボタンのtarget属性に仕込まれた更新対象のJSONのトップノード名を取得する。
-		var topNodeName = $(this).attr('target'); 
-		//トップノード名からDOMのトップのIDを指定し、JSONを更新する。
-		//thisの中身がボタンなので、ownに保存したクラスのインスタンスで関数を呼び出す。
-		own.updateElementJson(own.json[topNodeName], $('#'+topNodeName));
-		//JSONを保存用に文字列に変換する。
-		var jsonString = JSON.stringify(own.json[topNodeName]);
-		
-		//Ajax通信でJSONをファイルに保存する。
-		$.ajax({
-			url:'savetextfile.php',	//保存するプログラムのパスを指定する。
-			method:'POST',			//POSTメソッドで送信する。
-			//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
-			data:{text:jsonString, path:'source/' + topNodeName + '.json'},
-			dataType:'text',		//テキストデータを返してもらう。
-			//キャッシュを無効にする。
-			cache:false,
-			async:false,	//同期通信
-			success:function(text){	//通信成功時
-				alert(text);	//保存結果のログを出す。
-			},
-			error:function(){		//通信失敗時
-				//通信失敗のログを出す。
-				alert('通信に失敗しました。時間をおいて試してください。');
-			}
-		});
-	});
-
-	/*
-	 * 関数名:this.reservedDialog['experience'] = function()
-	 * 概要  :体験レッスン予約希望ダイアログのタグを作る。
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Masuda
-	 * 作成日:2015.04.17
-	 */
-	this.reservedDialog['experience'] = function(){
-		//体験レッスン予約ダイアログ用のJSONを取得する。。
-		own.getJsonFile(init['experienceLesson']);
-		
-		//createTagでダイアログに必要なタグを生成する。
-		own.outputTag('specialReservedDialog','specialReservedDialog','body');
-		own.outputTag('reservedDate','reservedDate','.specialReservedDialog');
-		own.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
-		own.outputTag('radioButtonSpecialConstruct','radioButtonSpecialConstruct','.specialReservedDialog');
-		own.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
-		own.outputTag('subInfo','subInfo','.specialReservedDialog');
-		own.outputTag('personInformation','personInformation','.specialReservedDialog');
-		own.outputTag('mailSubject','mailSubject','.specialReservedDialog');
-	}
-
-	/*
-	 * 関数名:this.reservedDialog['usually'] = function()
-	 * 概要  :通常レッスン予約希望ダイアログのタグを作る。
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Masuda
-	 * 作成日:2015.04.17
-	 */
-	this.reservedDialog['usually'] = function(){
-		//体験レッスン予約ダイアログ用のJSONを取得する。。
-		own.getJsonFile(init['usuallyLesson']);
-
-		//createTagでダイアログに必要なタグを生成する。
-		own.outputTag('specialReservedDialog','specialReservedDialog','body');
-		own.outputTag('reservedDate','reservedDate','.specialReservedDialog');
-		own.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
-		own.outputTag('radioButtonUsuallyCourse','radioButtonUsuallyCourse','.specialReservedDialog');
-		own.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
-		own.outputTag('subInfo','subInfo','.specialReservedDialog');
-		own.outputTag('memberInformation','memberInformation','.specialReservedDialog');
-		own.outputTag('mailSubject','mailSubject','.specialReservedDialog');
-
-		//DBから会員情報を取得してpersonInformationの各フォームにデータを格納する。
-		getMemberInformation('.specialReservedDialog');
-	}
-
 	/* 
 	 * 関数名:this.outputTagTable = function(key, appendTo)
 	 * 概要  :JSON配列からテーブルを作り、画面に追加する
