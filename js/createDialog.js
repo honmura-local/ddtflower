@@ -47,6 +47,7 @@ CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャ
 CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
 ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
 ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
+COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
 /* 
  * 関数名:getCurrentPageFileName()
  * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
@@ -1207,32 +1208,35 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		event:function(){
 			//予約決定ダイアログを表示する処理
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
-				
-				//予約決定ダイアログのクラスインスタンスを取得する
-				var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
-				//レッスン一覧ダイアログを取得する
-				var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				//次のダイアログに渡すオブジェクトを作る
-				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
-						creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
-				//日付を置換前のスラッシュ区切りにする
-				var date = sendObject.lesson_date.replace(/-/g,"/");
-				// 日付を日本語表示にする
-				var titleDate = changeJapaneseDate(date);
-				// 確認ダイアログにしかるべき値を挿入する関数を実行する
-				insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
-				//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
-				$nextDialog.openTag(sendObject,
-						{
-							url:URL_GET_JSON_STRING_PHP, 
-							key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
-							domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
-							appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
-						},
-						titleDate
-				);
+				console.log(creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum]);
+				//予約できる授業の時予約確認ダイアログを出す
+				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
+					//予約決定ダイアログのクラスインスタンスを取得する
+					var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
+					//レッスン一覧ダイアログを取得する
+					var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
+					//次のダイアログに渡すオブジェクトを作る
+					var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
+							creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
+					//日付を置換前のスラッシュ区切りにする
+					var date = sendObject.lesson_date.replace(/-/g,"/");
+					// 日付を日本語表示にする
+					var titleDate = changeJapaneseDate(date);
+					// 確認ダイアログにしかるべき値を挿入する関数を実行する
+					insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
+					//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
+					$nextDialog.openTag(sendObject,
+							{
+								url:URL_GET_JSON_STRING_PHP, 
+								key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
+								domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
+								appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
+							},
+							titleDate
+					);
+				}
 			});
 		}
 };
