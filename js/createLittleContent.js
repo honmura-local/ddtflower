@@ -2057,12 +2057,42 @@ function setOptionValue() {
  * 作成者　:T.Yamamoto
  */
 function lessonThemeSearch() {
-	setOptionValue()
+	//セレクトボックスのvalueを画面に表示されている値にする
+	setOptionValue();
 	//テーマボタンがクリックされた時のイベントを設定する
 	$('.selectThemeButton').click(function() {
 		//テーマのセレクトボックスの値を取得する
 		var selectTheme = $('.selectThemebox').val();
-		
+		//対象テーブルのクラス名を取得する
+		var targetTableClassName = $(this).parent().next().attr('class');
+		//テーブルと注釈を消す
+		$('.' + targetTableClassName).remove().next().remove();
+		//jsonに取得したテーマの値を入れる
+		creator.json[targetTableClassName]['lesson_name']['value'] = selectTheme;
+		//クエリをテーマ検索用のものと入れ替える
+		creator.json[targetTableClassName].db_getQuery = creator.json[targetTableClassName].replace_query
+		//テーブルを作るためのjsonをDBから持ってきた値で作る
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[targetTableClassName], targetTableClassName);
+		//追加先の変数を作る
+		var appendTo;
+		//対象テーブルが予約中授業のテーブルの時、追加先のクラス名を設定する
+		if (targetTableClassName == 'reservedLessonTable') {
+			//予約中授業タブを変数に入れる
+			appendTo = '.alreadyReserved';
+		} else {
+			appendTo = '.finishedLesson';
+		}
+		//テーブルの値が存在するときにテーブルを作る時に
+		if(creator.json[targetTableClassName][TAG_TABLE][0]) {
+			//受講済み授業テーブルを作る
+			creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
+			//注釈を作る
+			creator.outputTag('anotion', 'anotion', appendTo);
+			// 受講済みの連想配列を変数に入れる
+			var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
+			// 予約中テーブルのテーブルの値をしかるべき値にする
+			lessonTableValueInput('.' + targetTableClassName, targetTableArray, "callMemberLessonValue");
+		}
 	});
 }
 

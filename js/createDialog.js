@@ -903,6 +903,14 @@ dialogOption[LOGIN_DIALOG] = {
 			//文字サイズを小さめにする。
 			$(this).next().css('font-size', '0.5em');
 			creator.getJsonFile('source/memberPage.json');
+			//ダイアログのidまたはパスワードの欄でエンターが押された時にログイン処理を開始する
+			$(".userName, .password").keypress(function (e) {
+				//エンターボタンが押された時の処理
+				if (e.which == 13) {
+					//ログインボタンを自動でクリックする
+					$(':button:contains("ログイン")').click();
+				}
+			});
 		},
 		//ダイアログを閉じるときのイベント
 		close:function(){

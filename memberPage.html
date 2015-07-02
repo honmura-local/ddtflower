@@ -65,8 +65,8 @@
 				// 告知領域を作る
 				creator.outputTag('advertise');
 				//通知領域の内容があれば
-				if($('.advertise p:not(:empty)').length){
-					$('.advertise').show();		//通知領域を表示する
+				if(creator.json.advertise.message_title.text){
+					$('.advertise').css('display', 'block');		//通知領域を表示する
 				}
 				// 会員ページのカレンダーを作る
 				creator.outputTag('lessonCalendar', 'calendar');
@@ -112,29 +112,28 @@
 				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
 				//予約中の授業があった時のテーブルを作る
-				if(creator.json['reservedLessonTable']['table'] !== void(0)) {
+				if(creator.json['reservedLessonTable']['table'][0]) {
 					// 予約中授業のテーブルを作る
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
 				//受講済み授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lessonFinishedDetailTable'], 'lessonFinishedDetailTable');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
 				//受講済みの授業があったときテーブルを作る
-				if(creator.json['lessonFinishedDetailTable']['table'] !== void(0)) {
+				if(creator.json['finishedLessonTable']['table'][0]) {
 					//受講済み授業テーブルを作る
-					creator.outputTagTable('lessonFinishedDetailTable','finishedLessonTable','.finishedLesson');
+					creator.outputTagTable('finishedLessonTable','finishedLessonTable','.finishedLesson');
 				}
 				//注釈を作る
 				creator.outputTag('anotion', 'anotion', '.tabPanel');
 				
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
-				//
-				lessonThemeSearch();
+lessonThemeSearch();
 
  				// 予約中授業の連想配列を変数に入れる 
 				var reservedNow = creator.json['reservedLessonTable']['table'];
 				// 受講済みの連想配列を変数に入れる
-				var lessonFinished = creator.json['lessonFinishedDetailTable']['table'];
+				var lessonFinished = creator.json['finishedLessonTable']['table'];
 				// 予約中テーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
 				// 受講済みテーブルのテーブルの値をしかるべき値にする
