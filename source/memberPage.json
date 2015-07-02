@@ -389,7 +389,7 @@
         },
         "confirmText": {
             "class":"confirmText textCenter",
-            "html": "上記の授業を<span color=\"red\">予約</span>しますか?"
+            "html": "上記の授業を予約しますか?"
         }
     },
     "sendReservedData":{
@@ -559,7 +559,7 @@
         },
         "confirmText": {
             "class":"confirmText textCenter",
-            "html": "上記の授業を<span color=\"red\">キャンセル</span>しますか?"
+            "text": "上記の授業をキャンセルしますか?"
         }
     },
     "cancelReservedData":{
