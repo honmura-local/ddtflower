@@ -220,7 +220,7 @@
             "cancelRateValue": {
                 "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "cancel__0":{
                     "cancel_days":{
@@ -274,7 +274,7 @@
             "addPointValue":{
                 "db_getQuery":"SELECT * FROM lesson_point_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "addPoint__0": {
                     "students": {
@@ -339,7 +339,7 @@
         }
     },
     "sendReservedData":{
-    	"db_setQuery":"INSERT INTO user_classwork (user_work_status,user_classwork_cost,flower_cost,user_key,classwork_key,stage_key,stage_no,level_key,level_no,order_datetime,create_datetime,update_datetime)VALUES (1,'default_user_classwork_cost','default_flower_cost','user_key','classwork_key','stage_key','stage_no_present','level_key','level_no_present',NOW(),NOW(),NOW());"
+    	"db_setQuery":"INSERT INTO user_classwork (user_work_status,user_classwork_cost,flower_cost,user_key,classwork_key,stage_key,stage_no,level_key,level_no,order_datetime,create_datetime,update_datetime) VALUES (1,'default_user_classwork_cost','default_flower_cost','userId','classwork_key','stage_key','stage_no_present','level_key','level_no_present',NOW(),NOW(),NOW()); UPDATE classwork SET order_students = order_students+1 WHERE id = 'classwork_key';"
     },
     "cancelLessonDialog":{},
     "cancelLessonDialogContent":{
@@ -371,7 +371,7 @@
             "cancelRateValue": {
                 "db_getQuery":"SELECT * FROM lesson_cancel_rate WHERE lesson_key = 'lesson_key'",
                 "lesson_key":{
-                    "value":"14"
+                    "value":""
                 },
                 "cancel__0":{
                     "cancel_days":{
@@ -419,6 +419,9 @@
         },
         "confirmText": {
             "text": "上記の授業をキャンセルしますか?"
+        },
+        "cancelReservedData":{
+            "db_setQuery":"UPDATE user_classwork SET user_work_status = 10 WHERE user_key = 'userId'; UPDATE classwork SET order_students = order_students-1 WHERE id = 'classwork_key';"
         }
     }
 }

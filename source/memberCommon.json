@@ -39,6 +39,9 @@
     },
     "userBanner": {
         "bannerArea": {
+            "banner":{
+                "href":"#memberProfile.html"
+            },
             "banner": [
                 {
                     "src": "image/icon(myPage).png",

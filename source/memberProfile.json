@@ -20,11 +20,7 @@
             }
         }
     },
-    "memberInfo":{
-        "infoForm":{
-            "action":""
-        }
-    },
+    "memberInfo":{},
     "firstNameArea":{
         "labelArea":{
             "class":"label2Area firstNameLabel",
@@ -54,8 +50,8 @@
             "class":"label2Area",
             "text":"性別:"
         },
-        "sex":{
-            "name":"sex",
+        "user_sex":{
+            "name":"user_sex",
             "male":{
                 "value":"男性",
                 "text":"男性"
@@ -68,9 +64,9 @@
         "birthdayLabel":{
             "text":"生年月日:"
         },
-        "birthday":{
+        "birthday_date":{
             "type":"text",
-            "name":"birthday",
+            "name":"birthday_date",
             "value":"1989/02/02"
         }
     },
@@ -89,8 +85,8 @@
             "text":"メールアドレス:"
         },
         "textboxArea":{
-            "class":"textboxArea mailaddress",
-            "name":"mailaddress",
+            "class":"textboxArea mail_address",
+            "name":"mail_address",
             "type":"text",
             "value":"example@mail.com"
         }
@@ -101,7 +97,7 @@
             "text":"電話番号:"
         },
         "textboxArea":{
-            "class":"textbox4Area phone",
+            "class":"textbox4Area telephone",
             "name":"phone",
             "type":"text",
             "value":"800909999"
@@ -122,5 +118,8 @@
     "updateButton":{
         "type":"submit",
         "value":"更新"
+    },
+    "updateUserInf":{
+        "db_setQuery":"UPDATE user_inf SET user_name = 'user_name' ,zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address' WHERE  id = 'user_key;"
     }
 }
