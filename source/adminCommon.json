@@ -41,24 +41,24 @@
 	},
     "dateBelt":{
         "twoDaysBefore":{
-            "text":"前々日"
+            "text":"<<"
         },
         "oneDayBefore":{
-            "text":"前日"
+            "text":"<"
         },
         "theDay":{
-            "text":"当日"
+            "text":"2015-04-10"
         },
         "oneDayAfter":{
-            "text":"翌日"
+            "text":">"
         },
         "twoDayAfter":{
-            "text":"翌々日"
+            "text":">>"
         }
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
-    	"dateInput":{"type":"date", "value":"2015/06/12"},
+    	"dateInput":{"type":"text", "name":"eachDateLessonDate", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
     "userInfoTable":{
@@ -147,16 +147,16 @@
                 "user_name": {
                     "columnName": "名前"
                 },
-                "id": {
-                    "columnName": "会員番号"
+                "get_point": {
+                    "columnName": "所持pt"
                 },
                 "lesson_name": {
                     "columnName": "内容"
                 },
                 "user_classwork_cost": {
-                    "columnName": "受講料"
+                    "style":"display:none;"
                 },
-                "get_point": {
+                "id": {
                     "style":"display:none;"
                 },
                 "stage_no": {
