@@ -37,6 +37,7 @@ SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
 PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
 PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
 PATH_ADMINPAGE_CSS			= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
+PATH_CONTACT_CSS			= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
 PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
@@ -957,13 +958,20 @@ dialogOption[LOGIN_DIALOG] = {
 			        				dataType:'json',
 			        				//同期通信を行う。
 			        				async:false,
-			        				//通信成功時の処理
 			        				success:function(json){
+			        					//正しいidとパスワードが入力されていなかったらエラーメッセージを出す
+			        					if (!json['id']) {
+			        						//エラーメッセージを表示する
+			        						alert(MESSAGE_LOGIN_ERROR);
+			        						//メッセージを出してプログラムを終わらせる
+			        						return;
+			        					}
 										// 会員共通のパーツのJSONを取得する。
 										creator.getJsonFile('source/eachDayLesson.json');
-
-			        					$('head link:last').after('<link href="css/adminPage.css" rel="stylesheet" type="text/css">');
-
+										//管理者ページのcssを読み込む
+			        					$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
+			        					//お問い合わせのcssを読み込む
+			        					$(SELECTOR_HEAD_LAST).after(PATH_CONTACT_CSS);
 			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
 			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
 										//管理者の会員番号であったら
@@ -1210,7 +1218,6 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				console.log(creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum]);
 				//予約できる授業の時予約確認ダイアログを出す
 				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
 					//予約決定ダイアログのクラスインスタンスを取得する
@@ -1266,14 +1273,14 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        		//予約が初めてのとき
 		        		if(!this.dialogClass.queryReplaceData.user_work_status) {
 		        			//DBにデータを挿入して予約処理をする
-		        			setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
+		        			setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData, MESSAGE_SUCCESS_RESERVED);
 		        		//以前にキャンセルしたことがある授業の場合
 		        		} else {
 		        			//DBにデータの更新で予約処理をする
-		        			setDBdata(creator.json.updateReservedData, this.dialogClass.queryReplaceData);
+		        			setDBdata(creator.json.updateReservedData, this.dialogClass.queryReplaceData, MESSAGE_SUCCESS_RESERVED);
 		        		}
 			
-						$(this).dialog(CLOSE);
+						$(this).dialog(CLOSE);			//ダイアログを閉じる
 		        	}
 		        },
 		        //いいえボタン
@@ -1310,7 +1317,7 @@ dialogOption['cancelLessonDialog'] = {
 	        	//クリックイベントの記述
 	        	click:function(){
 	        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-					setDBdata(creator.json.cancelReservedData, creator.json.cancelLessonReplace);
+					setDBdata(creator.json.cancelReservedData, creator.json.cancelLessonReplace, MESSAGE_SUCCESS_CANCELED);
 					$(this).dialog(CLOSE);
 	        	}
 	        },

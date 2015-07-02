@@ -18,6 +18,11 @@ try {
 	$jdbm->dbh->query('SET NAMES utf8');
 	//クライアントから送信されたJSON文字列を連想配列に変換する
 	$jdbm->getJSONMap($json);
+	//パスワードがkeyにあればハッシュ化する
+	if (array_key_exists('password', $jdbm->json)) {
+		//ハッシュ化する
+		$jdbm->json['password']['value'] = sha1($jdbm->json['password']['value']);
+	}
 	//INSERT、またはUPDATE命令を実行する
 	$jdbm->executeQuery($jdbm->json, DB_SETQUERY);
 	//SQL例外のcatchブロック

@@ -563,9 +563,22 @@ label,
  */
 .tabLink {
 	padding: 6px 0;				/* 上下に6px要素の幅を広げる */
-	color: #555;			/* 文字色を黒にする */
+	color: #555;				/* 文字色を黒にする */
 }
 /* 予約確認ダイアログ領域終わり */
+
+/* 予約中と受講済み授業のテーマと注釈領域 */
+/* 
+ * セレクタ :.themeText, .anotion
+ * 概要   :予約中と受講済み授業のテーマと注釈領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.02
+ */
+.themeText, .anotion {
+	font-size: 12px;			/* フォントサイズを12pxにする */
+}
+
+ /* 予約中と受講済み授業のテーマと注釈領域終わり */
 
 /* 
  * セレクタ :body .ui-dialog .ui-dialog-content
@@ -590,6 +603,46 @@ label,
 /* パスワードリンク領域終わり */
 
 /* プロフィール入力情報入力領域 */
+/* 
+ * セレクタ :#container .memberInfo dl
+ * 概要   :プロフィール全体領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07．02
+ */
+#container .memberInfo dl {
+	margin: 5px auto;		/* 5pxを上下に余白をとり中央揃えにする */
+}
+
+/* 
+ * セレクタ :.textboxArea
+ * 概要   :テキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07．02
+ */
+.textboxArea {
+	width: 95%;				/* 幅を95%にする */
+}
+
+/* 
+ * セレクタ :.textArea
+ * 概要   :テキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07．02
+ */
+.textArea {
+	width: 94%;				/* 幅を94%にする */
+}
+
+/* 
+ * セレクタ :.textboxArea, .textArea
+ * 概要   :テキストボックスとテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07．02
+ */
+.textboxArea, .textArea {
+	border: 1px solid #d8d8d8;	/* 灰色の線で要素を囲む */
+}
+
 /* 
  * セレクタ :.subHeader
  * 概要   :ラベルが二文字分の領域
@@ -721,7 +774,8 @@ label,
 	.passArea,
 	.topLinkArea,
 	.memberInfo,
-	.outsideArea {
+	.outsideArea,
+	#container .userInf {
 		width: 97%;			/* 幅を90%にする */ 
 		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
 	}

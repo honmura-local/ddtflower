@@ -2072,11 +2072,12 @@ function lessonThemeSearch() {
  * 概要  :dbに接続し、データの挿入または更新または削除を行う
  * 引数  :object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
  		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
+ 		:string successMessage: クエリが成功した時のメッセージ
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.06.27
  */
-function setDBdata(sendQueryJsonArray, queryReplaceData) {
+function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 	//DBに送信するための連想配列
 	var send = {};
 	//置換済みでなければ置換する
@@ -2088,7 +2089,6 @@ function setDBdata(sendQueryJsonArray, queryReplaceData) {
 	}
 	//変更者:T.Yamamoto 日付:2015.06.26 内容:jsondbManagerに送信する値はjson文字列でないといけないので連想配列を文字列にする処理を追加しました。
 	var sendJsonString = JSON.stringify(send);
-	console.log(sendJsonString);
 	//Ajax通信を行う
 	$.ajax({
 		url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
@@ -2100,9 +2100,8 @@ function setDBdata(sendQueryJsonArray, queryReplaceData) {
 		success:function(ret){				//通信成功時の処理
 			//変更者:T.Yamamoto 日付:2015.06.26 内容:更新成功の条件に更新データが0件でないことを追加しました。
 			//更新成功であれば
-			if(!parseInt(parseInt(ret.message)) && ret.message != 0){
-				alert(MESSAGE_SUCCESS_RESERVED);	//更新成功のメッセージを出す
-				$(this).dialog(CLOSE);			//ダイアログを閉じる
+			if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
+				alert(successMessage);	//更新成功のメッセージを出す
 			//更新失敗であれば
 			} else {
 				alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
@@ -2142,9 +2141,9 @@ function setDBdataTriggerClick(selector, sendQueryJsonArray, queryReplaceData){
  * 作成日:2015.06.27
  */
 function clickCalendar(selector) {
-	$('.' + selector).datepicker({
+	$('[name=' + selector + ']').datepicker({
 		// 年月日の順番で表示するフォーマットにする
-		dateFormat: 'yy/mm/dd',
+		dateFormat: 'yy-mm-dd',
 		// 月をセレクトボックスで選択できるようにする
 		changeMonth: true,
 		// 年をセレクトボックスで選択できるようにする
@@ -2175,7 +2174,81 @@ function getInutData(selector) {
 		//入力データを結果の変数に、key名をクラス名にして保存する
 		resultArray[name] = valueData;
 	});
+	//ユーザの会員番号を連想配列に付け足す
+	resultArray['userId'] = creator.json.memberHeader.user_key.value;
 	//結果を返す
 	return resultArray;
 }
 
+/* 
+ * 関数名:setValueDBdata()
+ * 概要  :連想配列から値を読み込んで、value属性に値を入れる。
+ 		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
+ 		テキストボックスのname属性値がDBの列名と対応している。
+ * 引数  :object outsideArray:値を走査したい親のセレクター名
+ 		 object insideArray:値を走査する連想配列名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function setValueDBdata(outsideArray, insideArray) {
+	//走査対象となる連想配列を変数に入れる
+	var roopArray = creator.json[outsideArray][insideArray];
+	//ループで連想配列を全てループする
+	for (var key in roopArray) {
+		//値を挿入する結果のvalueを変数に入れる
+		var resultValue = roopArray[key]['text'];
+		//対象の要素がテキストエリアのときにtextで値を入れる
+		if ($('[name="' + key + '"]')[0].tagName == 'TEXTAREA') {
+			//name属性がkeyのものに対して属性をDBから読み出した値にする
+			$('[name=' + key + ']').text(resultValue);
+		} else {
+			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
+			$('[name=' + key + ']').attr('value', resultValue);
+		}
+	}
+}
+
+/* 
+ * 関数名:updateProfile
+ * 概要  :プロフィール画面で更新ボタンを押されたときにテキストボックスに
+ 		 入っている値をDBに送信してデータを更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function setProfileUpdate() {
+	//更新ボタンが押された時の処理
+	$('.updateButton').click(function(){
+		//ユーザが入力した値を取得する
+		var queryReplaceData = getInutData('memberInfo');
+		//データべベースにクエリを発行してデータを更新する
+		setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+	})
+}
+
+/* 
+ * 関数名:updatePassword
+ * 概要  :パスワード変更画面で更新ボタンを押されたときにテキストボックスに
+ 		 入っている値をDBに送信してデータを更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function setPasswordUpdate() {
+	//更新ボタンが押された時の処理
+	$('.updateButton').click(function(){
+		//ユーザが入力した値を取得する
+		var queryReplaceData = getInutData('postPass');
+		//新しいパスワードと確認のパスワードが一致すれば登録する
+		if(queryReplaceData.newPass === queryReplaceData.password) {
+			//データべベースにクエリを発行してデータを更新する
+			setDBdata(creator.json.updatePassword, queryReplaceData, MESSAGE_SUCCESS_PASSWORD_UPDATE);
+		} else {
+			alert('パスワードが確認と異なります');
+		}
+		
+	});
+}
