@@ -136,7 +136,7 @@
             "columns": {
                 "columnCheckbox": {
                     "columnName": "",
-                    "className":"permitCheckbox"
+                    "className":"permitCheckboxArea"
                 },
                 "time_table_key": {
                     "columnName": "No."

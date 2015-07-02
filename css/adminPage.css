@@ -261,6 +261,31 @@
 	float: right;			/* 右側に回り込みする */
 }
 /* 管理者　授業詳細領域終わり */
+
+/* 管理者　受講承認領域 */
+/* 
+ * セレクタ:.permitCheckboxArea
+ * 概要   :受講承認チェックボックス外側領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.02
+ */
+.permitCheckboxArea {
+	width: 20px;			/* 幅を20pxにする */
+}
+
+/* 
+ * セレクタ:.permitCheck
+ * 概要   :受講承認チェックボックス外側領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.02
+ */
+.permitCheck {
+	width: 16px;			/* 幅を16pxにする */
+	height: 16px;			/* 高さを16pxにする */
+}
+
+/* 管理者　受講承認領域終わり */
+
 /* 会員一覧の検索領域 */
 /* 
  * セレクタ :.searchNameColumn,

@@ -974,6 +974,7 @@ form[target^="jquery_upload"]{
  */
 .toEntryPage{
 	color: darkseagreen!important;	/* 暗めの翠の文字にする。 */
+    display: inline;                /* インライン要素にする */
 }
  
 /* 

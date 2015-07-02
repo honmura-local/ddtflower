@@ -581,12 +581,16 @@ label,
  /* 予約中と受講済み授業のテーマと注釈領域終わり */
 
 /* 
- * セレクタ :body .ui-dialog .ui-dialog-content
+ * セレクタ :.reserveListDialog
+		,.memberReservedConfirmDialog
+		,.cancelLessonDialog
  * 概要   :ダイアログ領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.13
  */
- body .ui-dialog .ui-dialog-content {
+.reserveListDialog
+,.memberReservedConfirmDialog
+,.cancelLessonDialog {
  	padding: .2em;			/* 要素の幅を0.2文字分広げる */
  }
 

@@ -663,3 +663,26 @@ function lessonReservedTableValueInput(tableName, rowData, func, timeTableStuden
 	});
 }
 
+/* 
+ * 関数名:insertNo
+ * 概要  :テーブルに連番の番号を挿入する
+ * 引数  :rowData: テーブルのデータ。行数の親
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function insertNo (rowData, tableName, columnNumber) {
+	// カウンターを作る
+	var counter = 0;
+	// テーブルの行番号
+	rowNumber = 1;
+	// テーブルのすべての行に対してループで値を入れる
+	$.each(rowData, function() {
+		// 番号を連番で入れる
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(columnNumber).text(rowNumber);
+		// 行番号をインクリメントする
+		rowNumber++;
+		// カウンタ変数をインクリメントする
+		counter++;
+	});
+}

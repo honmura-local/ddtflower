@@ -141,6 +141,13 @@
 				// var admCalendar = new adminCalendar('.adminCalendar', adminLessonList);
 				// admCalendar.create();	//カレンダーを実際に作成する
 
+				//受講一覧のテーブルにチェックボックスを追加する
+				addCheckbox('permitCheckboxArea', 'permitCheckbox');
+				//受講承認に連番を入れる
+				insertNo (creator.json.doLecturePermitInfoTable.table, '.doLecturePermitInfoTable', 1);
+				//受講承認一覧に連番を入れる
+				insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+
 			});
 			</script>
 		</div>

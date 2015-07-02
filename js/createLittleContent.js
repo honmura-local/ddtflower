@@ -2282,3 +2282,17 @@ function setPasswordUpdate() {
 		
 	});
 }
+
+/* 
+ * 関数名:addCheckbox
+ * 概要  :チェックボックスを追加する
+ * 引数  :selector : チェックボックスをappendするセレクター名
+ 		 attrName : チェックボックスのクラス名とname属性名(共通)
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function addCheckbox(selector, attrName) {
+	$('.' + selector).append('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
+}
+
