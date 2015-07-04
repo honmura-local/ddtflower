@@ -426,6 +426,9 @@
         "class": "lessonDetail tabPanel",
         "id": "lessonDetail"
     },
+    "lessonDetailDialog":{
+    	"class":"lessonDetailDialog"
+    },
     "lessonData":{
         "minStudentsArea":{
             "minStudentsText":{

@@ -49,7 +49,7 @@ CANCEL_LESSON_DIALOG_CONTENT	= 'cancelLessonDialogContent';		//授業予約キ�
 CANCEL_LESSON_DIALOG 			= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
 ADMIN_EACH_DAY_LESSON_TABLE 	= 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
 ADMIN_LESSON_LIST_DIALOG		= 'adminLessonListDialog';			//管理者日ごとダイアログ
-ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
+ADMIN_LESSON_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
 CLASS							= 'class';							//クラス
 TABLE							= 'table';							//テーブル
 
@@ -87,6 +87,11 @@ ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと�
 ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
 COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
 WAIT_DEFAULT				= 0;								//待ち時間のデフォルト値
+LESSON_DETAIL_DIALOG		= 'lessonDetailDialog';				//管理者ページ授業詳細ダイアログ
+ADMIN_LESSON_LIST_DIALOG_TR = '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
+ADMIN_LESSON_LIST_DIALOG_TD = '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
+LESSON_DATA					= 'lessonData';						//管理者の授業詳細ダイアログのコンテンツ部分
+
 //定数
 EXPERIENCE	= 'experience';
 LESSON		= 'Lesson';
@@ -1480,13 +1485,60 @@ dialogOption[ADMIN_LESSON_LIST_DIALOG] = $.extend(true, {}, dialogOption[STR_RES
 		},
 		close			:function(){
 			//読み込んだテーブルのデータを消す
-			delete creator.json[ADMIN_LESSON_LIST_INFORMATION].table;
+			delete creator.json[ADMIN_LESSON_INFORMATION].table;
 		},
 		//イベント
 		event:function(){
-			
+			//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
+			//予約決定ダイアログを表示する処理
+			$(document).on(STR_CLICK, ADMIN_LESSON_LIST_DIALOG_TD, function(){
+				//クリックしたセルの親の行番号を取得する
+				var rowNum = $(ADMIN_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
+				
+				//管理者の日ごと列すンダイアログのクラスインスタンスを取得する
+				var $nextDialog = $(CHAR_DOT + LESSON_DETAIL_DIALOG)[0].dialogClass;
+				//レッスン詳細ダイアログのクラスインスタンスを取得する
+				var $prevDialog = $(CHAR_DOT + ADMIN_LESSON_LIST_DIALOG)[0].dialogClass;
+				//次のダイアログに渡すオブジェクトを作る
+				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
+						creator.json[ADMIN_LESSON_INFORMATION].table[rowNum]);
+				//日付を置換前のスラッシュ区切りにする
+				var date = sendObject.lesson_date.replace(/-/g,"/");
+				// 日付を日本語表示にする
+				var titleDate = changeJapaneseDate(date);
+				// 確認ダイアログにしかるべき値を挿入する関数を実行する
+//				insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
+				$prevDialog.registerChild($nextDialog);	//開くダイアログを子として登録する
+				//授業詳細ダイアログを開く
+				$nextDialog.openTag(sendObject,
+						{
+							url:URL_GET_JSON_STRING_PHP, 
+							key:LESSON_DATA, 
+							domName:LESSON_DATA,
+							appendTo:CHAR_DOT + LESSON_DETAIL_DIALOG
+						},
+						titleDate
+				);
+			});
 		}
 });
+
+//授業詳細ダイアログ用設定
+dialogOption[LESSON_DETAIL_DIALOG] = {
+		// 幅を設定する。
+		width			: 'auto',
+		// 幅を設定する。
+		// ダイアログを生成と同時に開く。
+		autoOpen		: false,
+		// Escキーを押してもダイアログが閉じないようにする。
+		closeOnEscape	: false,
+		//ダイアログを閉じるときの処理
+		close:function(){
+			//前のダイアログから送信されたデータを破棄する
+			delete this.dialogClass.queryReplaceData;
+		}
+};
+
 
 //ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
 var readyDialogFunc = {};
