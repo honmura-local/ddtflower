@@ -176,16 +176,6 @@ label,
 
 /* カレンダー領域 */
 /* 
- * セレクタ :#container .lessonCalendar
- * 概要   :カレンダー全体領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.26
- */
-#container .lessonCalendar {
-	width: 48%;					/* 幅を48%にする */
-}
-
-/* 
  * セレクタ :#container .lessonCalendar > div
  * 概要   :カレンダーの直下の子供領域
  * 作成者 :T.Yamamoto
@@ -581,16 +571,16 @@ label,
  /* 予約中と受講済み授業のテーマと注釈領域終わり */
 
 /* 
- * セレクタ :.reserveListDialog
-		,.memberReservedConfirmDialog
-		,.cancelLessonDialog
+ * セレクタ :.ui-dialog .reserveListDialog
+			,.ui-dialog .memberReservedConfirmDialog
+			,.ui-dialog .cancelLessonDialog
  * 概要   :ダイアログ領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.13
  */
-.reserveListDialog
-,.memberReservedConfirmDialog
-,.cancelLessonDialog {
+.ui-dialog .reserveListDialog
+,.ui-dialog .memberReservedConfirmDialog
+,.ui-dialog .cancelLessonDialog {
  	padding: .2em;			/* 要素の幅を0.2文字分広げる */
  }
 
@@ -762,7 +752,7 @@ label,
 @media(max-width:680px){
 
 	/* 
-	 * セレクタ :	#container .lessonCalendar,
+	 * セレクタ :
 				#tab-container,
 				.passArea,
 				.topLinkArea,
@@ -772,7 +762,6 @@ label,
 	 * 作成日 :2015.06.08
 	 */
 	.advertise,
-	#container .lessonCalendar,
 	#container .lessonCalendar > div,
 	#tab-container,
 	.passArea,
@@ -795,13 +784,13 @@ label,
 	}
 
 	/* 
-	 * セレクタ :#tab-container
-	 * 概要   :タブ領域
+	 * セレクタ :#container .lessonCalendar
+	 * 概要   :カレンダー領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.08
 	 */
-	#tab-container {
-		width: 94%;					/* 幅を94%にする */ 
+	#container .lessonCalendar {
+		width: 100%;					/* 幅を100%にする */ 
 	}
 
 	/* 
@@ -999,7 +988,7 @@ label,
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.30
 	 */
-	.banner:nth-of-type(6) {
-		margin-left: 3px;		/* 左から3pxの余白を付ける */
+	#container .banner:nth-of-type(6) {
+		margin-left: 3px;
 	}
 }

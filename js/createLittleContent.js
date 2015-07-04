@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:createLittleContent.js
  * 概要  :小規模の処理の関数を定義する
  * 作成者:T.M
@@ -2048,55 +2048,6 @@ function setOptionValue() {
 }
 
 /*
- * 関数名 :lessonThemeSerch
- * 引数  　:element elems:記事リストのDOM
- * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
- * 戻り値　:なし
- * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
- * 作成日　:2015.06.24
- * 作成者　:T.Yamamoto
- */
-function lessonThemeSearch() {
-	//セレクトボックスのvalueを画面に表示されている値にする
-	setOptionValue();
-	//テーマボタンがクリックされた時のイベントを設定する
-	$('.selectThemeButton').click(function() {
-		//テーマのセレクトボックスの値を取得する
-		var selectTheme = $('.selectThemebox').val();
-		//対象テーブルのクラス名を取得する
-		var targetTableClassName = $(this).parent().next().attr('class');
-		//テーブルと注釈を消す
-		$('.' + targetTableClassName).remove().next().remove();
-		//jsonに取得したテーマの値を入れる
-		creator.json[targetTableClassName]['lesson_name']['value'] = selectTheme;
-		//クエリをテーマ検索用のものと入れ替える
-		creator.json[targetTableClassName].db_getQuery = creator.json[targetTableClassName].replace_query
-		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[targetTableClassName], targetTableClassName);
-		//追加先の変数を作る
-		var appendTo;
-		//対象テーブルが予約中授業のテーブルの時、追加先のクラス名を設定する
-		if (targetTableClassName == 'reservedLessonTable') {
-			//予約中授業タブを変数に入れる
-			appendTo = '.alreadyReserved';
-		} else {
-			appendTo = '.finishedLesson';
-		}
-		//テーブルの値が存在するときにテーブルを作る時に
-		if(creator.json[targetTableClassName][TAG_TABLE][0]) {
-			//受講済み授業テーブルを作る
-			creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
-			//注釈を作る
-			creator.outputTag('anotion', 'anotion', appendTo);
-			// 受講済みの連想配列を変数に入れる
-			var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
-			// 予約中テーブルのテーブルの値をしかるべき値にする
-			lessonTableValueInput('.' + targetTableClassName, targetTableArray, "callMemberLessonValue");
-		}
-	});
-}
-
-/*
  * 関数名:saveCustomizeTabJsonFile
  * 引数  :createTag creator:createTagクラスのインスタンス
  * 戻り値:なし
@@ -2245,7 +2196,7 @@ function getInutData(selector) {
 		resultArray[name] = valueData;
 	});
 	//ユーザの会員番号を連想配列に付け足す
-	resultArray['userId'] = creator.json.memberHeader.user_key.value;
+	//resultArray['userId'] = creator.json.memberHeader.user_key.value;
 	//結果を返す
 	return resultArray;
 }
@@ -2336,3 +2287,274 @@ function addCheckbox(selector, attrName) {
 	$('.' + selector).append('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
 }
 
+//リプレイステーブル連想配列
+var replaceTableOption = {};
+//予約中授業テーブル
+replaceTableOption['reservedLessonTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'#alreadyReserved .selectTheme',
+	//置換のvalueが入ったdom名
+	replaceValueDom:'#alreadyReserved .selectThemebox',
+	//置換するkey名
+	replaceQueryKey:'lesson_name',
+	//テーブルの値を置換する関数名
+	replaceTableValuefunction:'callMemberLessonValue'
+}
+//受講済み授業テーブル
+replaceTableOption['finishedLessonTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'#finishedLesson .selectTheme',
+	//置換のvalueが入ったdom名
+	replaceValueDom:'#finishedLesson .selectThemebox',
+	//置換するkey名
+	replaceQueryKey:'lesson_name',
+	//テーブルの値を置換する関数名
+	replaceTableValuefunction:'callMemberLessonValue'
+}
+//ユーザ一覧
+replaceTableOption['userListInfoTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'add',
+	//テーブルのafterでの追加先
+	addDomPlace:'.searchUser',
+}
+
+/*
+ * 関数名 :addQueryExtractionCondition
+ * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する
+ * 引数  　:element inputDataParent:テキストボックスが入っているdom名
+ * 　　　　:string query:テーブル作成のためにDBに送信するクエリ文字列
+ * 戻り値　:なし
+ * 作成日　:2015.07.03
+ * 作成者　:T.Yamamoto
+ */
+function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
+	//inputタグの数ループする
+	$('.' + inputDataParent + ' input[type="text"]').each(function(){
+		//入力された値が空白でなければ
+		if($(this).val() != "") {
+				//入力値を取得する
+				var inputData = $(this).val();
+				//name属性を所得する
+				var attrName = $(this).attr('name');
+			//カウンターが0でなければ
+			if(counter != 0){
+				//追加する変数を作る
+				var addString = ' AND ' + attrName + "='" + inputData + "'";
+			} else {
+				//追加する変数を作る
+				var addString = ' WHERE ' + attrName + "='" + inputData + "'";
+				counter++;
+			}
+			//クエリに文字を付け加える
+			creator.json[queryArrayKey].db_getQuery += addString;
+		}
+	});
+}
+
+/*
+ * 関数名 :replaceTableQuery
+ * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する
+ * 引数  　:element inputDataParent:テキストボックスが入っているdom名
+ * 　　　　:string query:テーブル作成のためにDBに送信するクエリ文字列
+ * 戻り値　:なし
+ * 作成日　:2015.07.03
+ * 作成者　:T.Yamamoto
+ */
+function replaceTableQuery(queryArrayKey) {
+	//置換するための値を取得する
+	var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
+	//置換するためのkey名を取得する
+	var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
+	//取得した値をjsonの反映させる
+	creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
+	//クエリをテーマ検索用のものと入れ替える
+	creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query
+}
+
+
+/* 
+ * 関数名:setExtractionCondition
+ * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
+   ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
+ * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
+         queryArrayKey : クエリが入っている連想配列のkey
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.03
+ */
+function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
+	//対象のボタンがクリックされた時の処理
+	$('.' + inputDataParent + ' button').click(function(){
+		//クエリを初期状態を保存する
+		var queryDefault = creator.json[queryArrayKey].db_getQuery;
+		//クエリの置換フラグが追記のとき
+		if (replaceTableOption[queryArrayKey] == 'add') {
+			//クエリに追記を行う関数を実行する
+			addQueryExtractionCondition(inputDataParent, queryArrayKey);
+		//置換フラグが置換のとき
+		} else if (replaceTableOption[queryArrayKey] == 'replace') {
+			//クエリの置換を行う関数を実行する
+			replaceTableQuery(queryArrayKey);
+		}
+		//テーブルのjsonの値が既にあれば
+		if(creator.json[queryArrayKey].table[0]){
+			//テーブルのjsonを初期化する
+			creator.json[queryArrayKey].table = {};
+		}
+		//テーブルを作るためのjsonをDBから持ってきた値で作る
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[queryArrayKey], queryArrayKey);
+		//DBから取得した値があった時の処理
+		if(creator.json[queryArrayKey].table[0]){
+			//テーブルを消す
+			$('.' + targetTableClassName).remove();
+			//テーブルを作り直す
+			creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
+			//テーブルの値の置換が必要な場合は置換を行う
+			if(replaceTableOption[queryArrayKey].replaceTableValuefunction) {
+				//変更の必要があるテーブルの配列を変数に入れる
+				var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
+				// 予約中テーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.' + queryArrayKey, targetTableArray, replaceTableOption[queryArrayKey].replaceTableValuefunction);
+			}
+			//作ったテーブルをしかるべき場所に移動する
+			$('.' + queryArrayKey).after(replaceTableOption[queryArrayKey].addDomPlace);
+		} else {
+			alert('検索結果が見つかりませんでした');
+		}
+		// クエリを最初の状態に戻す
+		creator.json[queryArrayKey].db_getQuery = query;
+	});
+
+}
+
+/*
+ * 関数名 :lessonThemeSerch
+ * 引数  　:element elems:記事リストのDOM
+ * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
+ * 戻り値　:なし
+ * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
+ * 作成日　:2015.06.24
+ * 作成者　:T.Yamamoto
+ */
+function lessonThemeSearch() {
+	//テーマボタンがクリックされた時のイベントを設定する
+	$('.selectThemeButton').click(function() {
+		//テーマのセレクトボックスの値を取得する
+		var selectTheme = $('.selectThemebox').val();
+		//対象テーブルのクラス名を取得する
+		var targetTableClassName = $(this).parent().next().attr('class');
+		//テーブルの値があれば
+		if(creator.json[targetTableClassName].table[0]){
+			//テーブルを初期化する
+			creator.json[targetTableClassName].table = {};
+		}
+		//jsonに取得したテーマの値を入れる
+		creator.json[targetTableClassName]['lesson_name']['value'] = selectTheme;
+		//クエリをテーマ検索用のものと入れ替える
+		creator.json[targetTableClassName].db_getQuery = creator.json[targetTableClassName].replace_query
+		//テーブルを作るためのjsonをDBから持ってきた値で作る
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[targetTableClassName], targetTableClassName);
+		//DBから取得した値がなかった時の処理
+		if(creator.json[targetTableClassName].table[0]){
+			//注釈を消す
+			$('.' + targetTableClassName).next().remove()
+			//テーブルを消す
+			$('.' + targetTableClassName).remove();
+			//追加先の変数を作る
+			var appendTo;
+			//対象テーブルが予約中授業のテーブルの時、追加先のクラス名を設定する
+			if (targetTableClassName == 'reservedLessonTable') {
+				//予約中授業タブを変数に入れる
+				appendTo = '.alreadyReserved';
+			} else {
+				appendTo = '.finishedLesson';
+			}
+			//テーブルの値が存在するときにテーブルを作る時に
+			if(creator.json[targetTableClassName][TAG_TABLE][0]) {
+				//受講済み授業テーブルを作る
+				creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
+				//注釈を作る
+				creator.outputTag('anotion', 'anotion', appendTo);
+				// 受講済みの連想配列を変数に入れる
+				var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
+				// 予約中テーブルのテーブルの値をしかるべき値にする
+				lessonTableValueInput('.' + targetTableClassName, targetTableArray, "callMemberLessonValue");
+			}
+		} else {
+			alert('検索結果が見つかりませんでした');
+		}
+	});
+}
+
+/* 
+ * 関数名:setExtractionCondition
+ * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
+   ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
+ * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
+         queryArrayKey : クエリが入っている連想配列のkey
+ 		 inputDataParent: 走査対象テキストボックスの親のクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.03
+ */
+function setExtractionCondition(eventButtonParent, queryArrayKey, inputDataParent) {
+	//検索ボタンが押された時の処理
+	$('.' + eventButtonParent + ' .searchButton').click(function(){
+		//カウンタ変数を作る
+		var counter = 0;
+		//クエリを取得する
+		var query = creator.json[queryArrayKey].db_getQuery;
+		//inputタグの数ループする
+		$('.' + inputDataParent + ' input[type="text"]').each(function(){
+			//入力された値が空白でなければ
+			if($(this).val() != "") {
+					//入力値を取得する
+					var inputData = $(this).val();
+					//name属性を所得する
+					var attrName = $(this).attr('name');
+				//カウンターが0でなければ
+				if(counter != 0){
+					//追加する変数を作る
+					var addString = ' AND ' + attrName + "='" + inputData + "'";
+					//クエリに文字を付け加える
+					creator.json[queryArrayKey].db_getQuery += addString;
+				} else {
+					//追加する変数を作る
+					var addString = ' WHERE ' + attrName + "='" + inputData + "'";
+					//クエリに文字を付け加える
+					creator.json[queryArrayKey].db_getQuery += addString;
+					counter++;
+				}
+			}
+		});
+		//すでに作られていたテーブルがあれば
+		if(creator.json[queryArrayKey].table) {
+			//テーブルを初期化する
+			creator.json[queryArrayKey].table = {};
+		}
+		//クエリを発行してテーブルを作り直すための連想配列を取得する
+		creator.getJsonFile('php/GetJSONArray.php', creator.json[queryArrayKey], queryArrayKey);
+		if(creator.json[queryArrayKey].table[0]) {
+			//ボタン領域を消す
+			$('.' + queryArrayKey).next().remove();
+			//テーブルを消す
+			$('.' + queryArrayKey).remove();
+			// 日ごと予約者一覧テーブル用のJSON配列を取得する
+
+			//修正したクエリでテーブルのデータを読み込む
+			creator.outputTagTable(queryArrayKey, queryArrayKey, '#userList');
+			//会員一覧タブのボタン群れ
+			creator.outputTag('userListButtons', 'userListButtons', '#userList');
+			//ボタンの見た目を変える
+			$('button, .searchButton, input[type="button"]').button();
+		} else {
+			alert('検索結果が見つかりませんでした');
+		}
+	});
+
+}

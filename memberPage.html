@@ -128,7 +128,10 @@
 				
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
-lessonThemeSearch();
+				//セレクトボックスのvalueを画面に表示されている値にする
+				setOptionValue();
+				//絞り込みボタン機能を実装する
+				lessonThemeSearch();
 
  				// 予約中授業の連想配列を変数に入れる 
 				var reservedNow = creator.json['reservedLessonTable']['table'];

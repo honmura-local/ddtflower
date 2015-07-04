@@ -288,9 +288,7 @@
 
 /* 会員一覧の検索領域 */
 /* 
- * セレクタ :.searchNameColumn,
-		.searchInfoColumn,
-		.searchButton
+ * セレクタ :.searchNameColumn,.searchInfoColumn,.searchButton,.searchList li,.searchList li label
  * 概要   :会員一覧検索の外側の領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.22
@@ -298,7 +296,8 @@
 .searchNameColumn,
 .searchInfoColumn,
 .searchButton,
-.searchList li {
+.searchList li,
+.searchList li label {
 	margin-bottom: 5px;		/* 下に5pxの余白をとる */
 }
 
