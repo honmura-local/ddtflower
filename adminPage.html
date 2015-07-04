@@ -168,6 +168,16 @@
 				// 講座のカレンダーを作り、クリックでダイアログ作成を作る
 				var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
 				lessonCalendar.create();	//カレンダーを実際に作成する
+				
+				//授業詳細ダイアログを作る
+				var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
+					// 授業詳細ダイアログ領域を作る
+					creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+					//授業データ
+					creator.outputTag('lessonData', 'lessonData', CHAR_DOT + LESSON_DETAIL_DIALOG);
+					//ボタン群
+					creator.outputTag('buttonArea', 'buttonArea', CHAR_DOT + LESSON_DETAIL_DIALOG);
+				});
 			});
 			</script>
 		</div>

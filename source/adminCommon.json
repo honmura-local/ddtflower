@@ -24,21 +24,21 @@
             ]
         },
         "tabContentArea":{
-            "class":"tabContentArea panelContainer outsideArea"
+        	"class":"tabContentArea panelContainer outsideArea"
         }
     },
-    "dayReserver": {
-        "class": "dayReserver tabPanel",
-        "id": "dayReserver"
-    },
-    "lecturePermit": {
-        "class": "lecturePermit tabPanel",
-        "id": "lecturePermit"
-    },
-    "userList": {
-        "class": "userList tabPanel",
-        "id": "userList"
-    },
+	"dayReserver": {
+	    "class": "dayReserver tabPanel",
+		"id": "dayReserver"
+	},
+	"lecturePermit": {
+	    "class": "lecturePermit tabPanel",
+	    "id": "lecturePermit"
+	},
+	"userList": {
+	    "class": "userList tabPanel",
+	    "id": "userList"
+	},
     "dateBelt":{
         "twoDaysBefore":{
             "text":"<<"
@@ -47,7 +47,7 @@
             "text":"<"
         },
         "theDay":{
-            "text":"2015-05-04"
+            "text":"2015-04-10"
         },
         "oneDayAfter":{
             "text":">"
@@ -57,14 +57,13 @@
         }
     },
     "dateSelect":{
-        "dateHeadLabel":{"text":"日付指定:"},
-        "dateInput":{"type":"text", "name":"lesson_date", "value":""},
-        "searchButton":{"type":"button", "value":"検索"}
+    	"dateHeadLabel":{"text":"日付指定:"},
+    	"dateInput":{"type":"text", "name":"eachDateLessonDate", "value":""},
+    	"searchButton":{"type":"button", "value":"検索"}
     },
-    "eachDayReservedInfoTable":{
-        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
-        "replace_query": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
-        "lesson_date": {
+    "userInfoTable":{
+        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "date": {
             "value": "2015-04-10"
         },
         "config": {
@@ -117,17 +116,17 @@
             ]
         },
         "tabContentArea":{
-            "class":"tabContentArea panelContainer"
+        	"class":"tabContentArea panelContainer"
         }
     },
-    "doLecturePermit": {
-        "class": "doLecturePermit tabPanel",
-        "id": "doLecturePermit"
-    },
-    "lecturePermitList": {
-        "class": "lecturePermitList tabPanel",
-        "id": "lecturePermitList"
-    },
+	"doLecturePermit": {
+	    "class": "doLecturePermit tabPanel",
+		"id": "doLecturePermit"
+	},
+	"lecturePermitList": {
+	    "class": "lecturePermitList tabPanel",
+	    "id": "lecturePermitList"
+	},
     "doLecturePermitInfoTable":{
         "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.id AS id, lesson_name ,user_classwork_cost ,user_inf.get_point AS get_point,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
         "date":{
@@ -319,32 +318,32 @@
         }
     },
     "userListButtons":{
-        "firstRow":{
-            "prev":{
+    	"firstRow":{
+    		"prev":{
                 "class":"prev",
-                "type":"button",
-                "value":"前へ"
-            },
-            "records":{
-                "text":"1111/9999"
-            },
-            "next":{
+	    		"type":"button",
+	    		"value":"前へ"
+    		},
+    		"records":{
+    			"text":"1111/9999"
+    		},
+    		"next":{
                 "class":"next",
-                "type":"button",
-                "value":"次へ"
-            }
-        },
-        "secondRow":{
-            "createMail":{
-                "type":"button",
-                "value":"メール・メッセージ"
-            },
-            "register":{
+	    		"type":"button",
+	    		"value":"次へ"
+    		}
+    	},
+    	"secondRow":{
+    		"createMail":{
+	    		"type":"button",
+	    		"value":"メール・メッセージ"
+    		},
+    		"register":{
                 "class":"register fRight",
-                "type":"button",
-                "value":"新規登録"
-            }
-        }
+	    		"type":"button",
+	    		"value":"新規登録"
+    		}
+    	}
     },
     "adminCalendar":{
         "class":"adminCalendar calendar"
@@ -426,6 +425,9 @@
     "lessonDetail":{
         "class": "lessonDetail tabPanel",
         "id": "lessonDetail"
+    },
+    "lessonDetailDialog":{
+    	"class":"lessonDetailDialog"
     },
     "lessonData":{
         "minStudentsArea":{
