@@ -10,6 +10,7 @@ var classworkStatuses = {
 		,1:"開催済み"
 		,2:"中止"
 		,3:"中止"
+		,4:"予約不可"
 };
 
 var userClassworkStatuses = {
@@ -504,7 +505,7 @@ var allDateTime = function (rowData) {
 
 /* 
  * 関数名:reservedLessonValueInput
- * 概要  :予約テーブルについてデータベースから取り出した値を入れる関数をコールする
+ * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
  		 roopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
@@ -518,20 +519,28 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 	recordData = roopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
-	// 料金を求める
-	var cost = 0;
-	if(recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === "") {
+	var cost;			//料金
+	var rest;			//残席
+	var lessonStatus;	//状況
+	//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
+	if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
+		//料金を空白にする
 		cost = "";
+		//残席を罰にする
+		rest = restMarks[0];
+		//状況を予約不可にする
+		lessonStatus = classworkStatuses[4];
+		//行の色を赤っぽくする
+		$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#FDE4E5');
+	//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
 	} else {
+		//料金を入れる
 		cost = sumCost(recordData);
-	}
-	// 残席を求める
-	var rest = restMarks[0];
-	if(cost !== "") {
+		//残席を記号にする
 		rest = getRestMark(recordData, timeTableStudents);
+		//状況を入れる
+		lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 	}
-	// 授業ステータスを求める
-	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
 	// 料金の表示を正規の表示にする
@@ -580,7 +589,7 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
 
 /* 
  * 関数名:callEachDayReservedValue
- * 概要  :日ごと予約者一覧テーブルの値を置換する
+ * 概要  :管理者日ごと予約者一覧テーブルの値を置換する
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
  		 roopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
@@ -654,3 +663,26 @@ function lessonReservedTableValueInput(tableName, rowData, func, timeTableStuden
 	});
 }
 
+/* 
+ * 関数名:insertNo
+ * 概要  :テーブルに連番の番号を挿入する
+ * 引数  :rowData: テーブルのデータ。行数の親
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.02
+ */
+function insertNo (rowData, tableName, columnNumber) {
+	// カウンターを作る
+	var counter = 0;
+	// テーブルの行番号
+	rowNumber = 1;
+	// テーブルのすべての行に対してループで値を入れる
+	$.each(rowData, function() {
+		// 番号を連番で入れる
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(columnNumber).text(rowNumber);
+		// 行番号をインクリメントする
+		rowNumber++;
+		// カウンタ変数をインクリメントする
+		counter++;
+	});
+}

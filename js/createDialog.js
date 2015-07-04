@@ -36,9 +36,20 @@ ID							= 'id';								//ID
 SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
 PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
 PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_ADMINPAGE_CSS			= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
+PATH_CONTACT_CSS			= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
 PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
+
+RESERVED_LESSON_TABLE		= 'reservedLessonTable';			//予約中授業のテーブル
+TAG_TR						= ' tr';							//trタグ
+TAG_TABLE					= 'table';							//tableタグ
+CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
+CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
+ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
+ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
+COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
 //定数
 EXPERIENCE	= 'experience';
 LESSON		= 'Lesson';
@@ -896,6 +907,14 @@ dialogOption[LOGIN_DIALOG] = {
 			//文字サイズを小さめにする。
 			$(this).next().css('font-size', '0.5em');
 			creator.getJsonFile('source/memberPage.json');
+			//ダイアログのidまたはパスワードの欄でエンターが押された時にログイン処理を開始する
+			$(".userName, .password").keypress(function (e) {
+				//エンターボタンが押された時の処理
+				if (e.which == 13) {
+					//ログインボタンを自動でクリックする
+					$(':button:contains("ログイン")').click();
+				}
+			});
 		},
 		//ダイアログを閉じるときのイベント
 		close:function(){
@@ -951,17 +970,25 @@ dialogOption[LOGIN_DIALOG] = {
 			        				dataType:'json',
 			        				//同期通信を行う。
 			        				async:false,
-			        				//通信成功時の処理
 			        				success:function(json){
+			        					//正しいidとパスワードが入力されていなかったらエラーメッセージを出す
+			        					if (!json['id']) {
+			        						//エラーメッセージを表示する
+			        						alert(MESSAGE_LOGIN_ERROR);
+			        						//メッセージを出してプログラムを終わらせる
+			        						return;
+			        					}
 										// 会員共通のパーツのJSONを取得する。
 										creator.getJsonFile('source/eachDayLesson.json');
-
-			        					$('head link:last').after('<link href="css/adminPage.css" rel="stylesheet" type="text/css">');
-
+										//管理者ページのcssを読み込む
+			        					$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
+			        					//お問い合わせのcssを読み込む
+			        					$(SELECTOR_HEAD_LAST).after(PATH_CONTACT_CSS);
 			        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
 			        					afterLogin(json, creator);	//ログイン後の処理をまとめて実行する。
 										//管理者の会員番号であったら
 										if(json['id'] == 1) {
+											$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
 											callPage('adminPage.html');
 										} else {
 											//会員ページを読み込む
@@ -1194,38 +1221,42 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 				//予約一覧テーブルの値を置換する
 				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
+				$('.lessonTable').show();
 			},1);
 		},
 		//イベント
 		event:function(){
 			//予約決定ダイアログを表示する処理
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
-				
-				//予約決定ダイアログのクラスインスタンスを取得する
-				var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
-				//レッスン一覧ダイアログを取得する
-				var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
+
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				//次のダイアログに渡すオブジェクトを作る
-				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
-						creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
-				//日付を置換前のスラッシュ区切りにする
-				var date = sendObject.lesson_date.replace(/-/g,"/");
-				// 日付を日本語表示にする
-				var titleDate = changeJapaneseDate(date);
-				// 確認ダイアログにしかるべき値を挿入する関数を実行する
-				insertConfirmReserveJsonDialogValue(sendObject);
-				//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
-				$nextDialog.openTag(sendObject,
-						{
-							url:URL_GET_JSON_STRING_PHP, 
-							key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
-							domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
-							appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
-						},
-						titleDate
-				);
+				//予約できる授業の時予約確認ダイアログを出す
+				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
+					//予約決定ダイアログのクラスインスタンスを取得する
+					var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
+					//レッスン一覧ダイアログを取得する
+					var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
+					//次のダイアログに渡すオブジェクトを作る
+					var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
+							creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
+					//日付を置換前のスラッシュ区切りにする
+					var date = sendObject.lesson_date.replace(/-/g,"/");
+					// 日付を日本語表示にする
+					var titleDate = changeJapaneseDate(date);
+					// 確認ダイアログにしかるべき値を挿入する関数を実行する
+					insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
+					//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
+					$nextDialog.openTag(sendObject,
+							{
+								url:URL_GET_JSON_STRING_PHP, 
+								key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
+								domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
+								appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
+							},
+							titleDate
+					);
+				}
 			});
 		}
 };
@@ -1252,7 +1283,17 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	//クリックイベントの記述
 		        	click:function(){
 		        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-						setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData);
+		        		//予約が初めてのとき
+		        		if(!this.dialogClass.queryReplaceData.user_work_status) {
+		        			//DBにデータを挿入して予約処理をする
+		        			setDBdata(creator.json.sendReservedData, this.dialogClass.queryReplaceData, MESSAGE_SUCCESS_RESERVED);
+		        		//以前にキャンセルしたことがある授業の場合
+		        		} else {
+		        			//DBにデータの更新で予約処理をする
+		        			setDBdata(creator.json.updateReservedData, this.dialogClass.queryReplaceData, MESSAGE_SUCCESS_RESERVED);
+		        		}
+			
+						$(this).dialog(CLOSE);			//ダイアログを閉じる
 		        	}
 		        },
 		        //いいえボタン
@@ -1261,11 +1302,48 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        	//クリックイベントの記述
 			        	click:function(){
 			        		 // ダイアログを消去する。
-			        		 $(this).dialog('close');
+			        		 $(this).dialog(CLOSE);
 			        }
 		        }
 		]
-		
+};
+
+//予約キャンセルダイアログ用設定
+dialogOption['cancelLessonDialog'] = {
+	// 幅を設定する。
+	width			: 'auto',
+	// 幅を設定する。
+	// ダイアログを生成と同時に開く。
+	autoOpen		: false,
+	// Escキーを押してもダイアログが閉じないようにする。
+	closeOnEscape	: false,
+	//ダイアログを閉じるときの処理
+	close:function(){
+		//前のダイアログから送信されたデータを破棄する
+		// delete this.dialogClass.queryReplaceData;
+	},
+	// ボタン
+	buttons:[
+	        //はいボタン
+	        {
+	        	text:'はい',	//ボタンのテキスト
+	        	//クリックイベントの記述
+	        	click:function(){
+	        		//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
+					setDBdata(creator.json.cancelReservedData, creator.json.cancelLessonReplace, MESSAGE_SUCCESS_CANCELED);
+					$(this).dialog(CLOSE);
+	        	}
+	        },
+	        //いいえボタン
+	        {
+	        	text:'いいえ',	//ボタンのテキスト
+	        	//クリックイベントの記述
+		        	click:function(){
+		        		 // ダイアログを消去する。
+		        		 $(this).dialog(CLOSE);
+		        }
+	        }
+	]
 };
 
 //ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
@@ -1522,14 +1600,14 @@ var init = getInitData(INIT_JSON_PATH, 100);
  * 作成者:T.M
  * 作成日:2015.06.14
  */
-function insertConfirmReserveJsonDialogValue(sendObject){
+function insertConfirmReserveJsonDialogValue(sendObject, targetJson){
 	//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
-	var object = creator.json.memberReservedConfirmDialogContent;
+	var object = creator.json[targetJson];
 	//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
 	object.lessonConfirm.lessonInfo.timeSchedule.text = buildHourFromTo(sendObject);
 	object.lessonConfirm.lessonInfo.store.text = sendObject.school_name;
 	object.lessonConfirm.lessonInfo.course.text = sendObject.lesson_name;
-	object.lessonConfirm.lessonInfo.price.text = sendObject.default_user_classwork_cost;
+	object.lessonConfirm.lessonInfo.price.text = sumCost(sendObject);
 	object.lessonConfirm.lessonInfo.priceUnit.text = '円';
 	object.attention.cancelRateValue.lesson_key.value = sendObject.lesson_key;
 	object.attention.addPointValue.lesson_key.value = sendObject.lesson_key;
@@ -1551,4 +1629,42 @@ function insertConfirmReserveJsonDialogValue(sendObject){
 //	object.attention.addPointValueSecond.fourPersonValue.text = sendObject.;
 //	object.attention.addPointValueSecond.eightPeopleDayValue.text = sendObject.;
 	
+}
+
+/* 
+ * 関数名:cancelDialogOpen
+ * 概要  :予約キャンセルダイアログを開くための関数
+ * 引数  :Object dialogObject: キャンセルダイアログのオブジェクト
+ 		:string memberNumber:会員番号
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.06.14
+ */
+function cancelDialogOpen (dialogObject, memberNumber) {
+	//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
+	$(DOT + RESERVED_LESSON_TABLE + TAG_TR).click(function(){
+		//クリックした行番号を取得する
+		var rowNum = $(DOT + RESERVED_LESSON_TABLE + TAG_TR).index($(this)) - 1;
+		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる
+		var sendObject = $.extend(true, {userId:memberNumber}, creator.json[RESERVED_LESSON_TABLE][TAG_TABLE][rowNum]);
+		//日付を置換前のスラッシュ区切りにする
+		var date = sendObject.lesson_date.replace(/-/g,"/");
+		//日付を日本語表示にする
+		var titleDate = changeJapaneseDate(date);
+		//creatTagのオブジェクトにキャンセルのデータが入った連想配列を作る
+		creator.json.cancelLessonReplace = sendObject;
+		//キャンセルダイアログのjson配列lessonConfirmに値を直接設定する
+		insertConfirmReserveJsonDialogValue(sendObject, CANCEL_LESSON_DIALOG_CONTENT);
+		//キャンセルダイアログを開く
+		dialogObject.openTag(
+			sendObject,
+			{
+				url:URL_GET_JSON_STRING_PHP, 
+				key:CANCEL_LESSON_DIALOG_CONTENT,
+				domName:CANCEL_LESSON_DIALOG_CONTENT,
+				appendTo:DOT + CANCEL_LESSON_DIALOG
+			},
+			titleDate
+		);
+	});
 }

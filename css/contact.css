@@ -9,7 +9,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm dl{
+.contactForm dl, .memberInfo dl {
 	width: 700px;		/* 幅を700pxにする */
 	clear: both;		/* 回り込みさせない */
 	margin-left: 100px;	/* 左から100px寄せる */
@@ -28,7 +28,7 @@
  * 内容   :text-indent,marginを削除
 
  */
-.contactForm dt{
+.contactForm dt, .memberInfo dt{
 	float: left;		/* 内容と共に左寄せで横に並べる */
 	clear: both;		/* 回り込みをさせない */
 	display: block;		/* ブロックとして扱う */
@@ -43,7 +43,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm dd{
+.contactForm dd, .memberInfo dd{
 	float: left;					/* 左に寄せる */
 	width: 70%;						/* 70%にする */
 	padding-left: 40px;				/* 線と内容との間に間隔を取る */
@@ -73,7 +73,7 @@
  * 作成者 :T.Masuda
  * 作成日 :2015.02.18
  */
-.contactForm .contentTextArea textarea{
+.contactForm .contentTextArea textarea, .memberInfo textarea{
 	border: 1px solid #d8d8d8;	/* テキストエリアを灰色の線で囲む。 */
 	max-width: 500px;			/* 引き延ばせる最大の幅を設定する。 */
 }
@@ -209,7 +209,7 @@
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
 	 */
-	.contactForm dl{
+	.contactForm dl, .memberInfo dl{
 		width: 90%;		/* 幅を可変にする。 */
 		margin: 0 auto;	/* 中央寄せにする */
 		font-size: 12px;/* デフォルトより1px小さくする */
@@ -221,7 +221,7 @@
 	 * 作成者 :T.Masuda
 	 * 作成日 :2015.02.18
 	 */
-	.contactForm dt{
+	.contactForm dt, .memberInfo dt{
 		width: 36%;		/* 幅を40%にする */
 	}
 	
@@ -234,7 +234,7 @@
 	 * 修正日 :2015.03.10
 	 * 内容　 :幅を調整しました。
 	 */
-	.contactForm dd{
+	.contactForm dd, .memberInfo dd{
 		width: 60%;					/* 幅を画面の60%に指定する。 */
 		padding-left: 10px;
 		margin-left: 0px;

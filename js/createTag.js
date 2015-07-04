@@ -8,8 +8,12 @@ CHAR_DOT										= '.';
 CHAR_HYPHEN										= '-';
 CHAR_RIGHT_ARROW								= '>';
 MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
+MESSAGE_SUCCESS_CANCELED						= '予約をキャンセルしました。';
+MESSAGE_SUCCESS_PROFILE_UPDATE					= 'プロフィールを変更しました。';
+MESSAGE_SUCCESS_PASSWORD_UPDATE					= 'パスワードを変更しました。';
 MESSAGE_FAILED_RESERVED							= '予約の処理に失敗しました。時間をおいてもう一度お試しください。';
 MESSAGE_FAILED_CONNECT							= '通信に失敗しました。時間をおいてもう一度お試しください。';
+MESSAGE_LOGIN_ERROR								= 'idまたはパスワードが間違っています';
 SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
 SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
 SELECTOR_CLOSE_ATTRIBUTE						= '"]';

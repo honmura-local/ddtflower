@@ -62,30 +62,70 @@
 				creator.outputTag('userBanner');
 				// サブヘッダーを作る
 				creator.outputTag('subHeader');
+				//会員番号をjsonに入れる
+				creator.json.getUserInf.userId.value = creator.json.memberHeader.user_key.value;
+				//会員の情報をDBから読み込む
+				creator.getJsonFile('php/GetJSONString.php', creator.json['getUserInf'], 'getUserInf');
 				// 会員情報を表示する領域を作る
 				creator.outputTag('memberInfo');
-				// 「姓：」領域を作る
-				creator.outputTag('firstNameArea', 'labelTextbox', '.memberInfo');
-				// 「名：」領域を作る
-				creator.outputTag('lastNameArea', 'labelTextbox', '.memberInfo');
-				// 「性別：」と「生年月日：」領域を作る
-				creator.outputTag('subInfo', 'subInfo', '.memberInfo');
-				// 「住所：」と領域を作る
-				creator.outputTag('addressArea', 'addressArea', '.memberInfo');
-				// 「メールアドレス：」領域を作る
-				creator.outputTag('mailaddressArea', 'labelTextbox', '.memberInfo');
-				// 「電話番号：」領域を作る
-				creator.outputTag('phoneArea', 'labelTextbox', '.memberInfo');
-				// 「緊急：」領域を作る
-				creator.outputTag('emergencyArea', 'labelTextbox', '.memberInfo');
+				// 「氏名」概要領域を作る
+				creator.outputTag('nameSummary', 'inputLabel', '.userInf');
+				// 「氏名」テキストボックス領域を作る
+				creator.outputTag('nameTextbox', 'inputArea', '.userInf');
+
+				// 「カナ」概要領域を作る
+				creator.outputTag('nameKanaSummary', 'inputLabel', '.userInf');
+				// 「カナ」テキストボックス領域を作る
+				creator.outputTag('nameKana', 'inputArea', '.userInf');
+
+				// 「性別」概要領域を作る
+				creator.outputTag('userSexSummary', 'inputLabel', '.userInf');
+				// 「性別」セレクトボックス領域を作る
+				creator.outputTag('userSex', 'selectboxArea', '.userInf');
+
+				// 「生年月日」概要領域を作る
+				creator.outputTag('birthDayDateSummary', 'inputLabel', '.userInf');
+				// 「生年月日」セレクトボックス領域を作る
+				creator.outputTag('birthDayDate', 'inputArea', '.userInf');
+
+				// 「郵便番号」概要領域を作る
+				creator.outputTag('zipCodeSummary', 'inputLabel', '.userInf');
+				// 「郵便番号」テキストボックス領域を作る
+				creator.outputTag('zipCode', 'inputArea', '.userInf');
+
+				// 「住所」概要領域を作る
+				creator.outputTag('addressSummary', 'inputLabel', '.userInf');
+				// 「住所」テキストボックス領域を作る
+				creator.outputTag('addressArea', 'inputTextArea', '.userInf');
+
+				// 「メールアドレス」概要領域を作る
+				creator.outputTag('mailAddressSummary', 'inputLabel', '.userInf');
+				// 「メールアドレス」テキストボックス領域を作る
+				creator.outputTag('mailAddress', 'inputArea', '.userInf');
+
+				// 「電話番号」概要領域を作る
+				creator.outputTag('telephoneSummary', 'inputLabel', '.userInf');
+				// 「電話番号」テキストボックス領域を作る
+				creator.outputTag('telephoneTextbox', 'inputArea', '.userInf');
+
+				// 「緊急番号」概要領域を作る
+				creator.outputTag('telephone2Summary', 'inputLabel', '.userInf');
+				// 「緊急番号」テキストボックス領域を作る
+				creator.outputTag('telephone2Textbox', 'inputArea', '.userInf');
+
+				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
+				setValueDBdata('getUserInf', 'memberInfoValue');
+
 				// 更新ボタン領域を作る
 				creator.outputTag('updateButton', 'updateButton', '.memberInfo');
+
 				// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
 				clickCalendar('birthday_date');
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();
-				//更新ボタンをクリックしたときにユーザの情報を更新する
-				// setDBdataTriggerClick(creator.json.updateUserInf, )
+
+				//入力したデータでDBを更新する
+				setProfileUpdate();
 			});
 			</script>
 		</div>

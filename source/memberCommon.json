@@ -25,10 +25,12 @@
                     "text": ""
                 },
                 "ptArea": {
+                    "class":"ptArea unitSpace",
                     "text": "pt"
                 }
             },
             "logoutArea":{
+                "class":"logoutArea inlineBlock",
                 "logoutLink":{
                     "logoutImage":{
                         "src":"image/icon(logout22-50).png"
@@ -39,36 +41,55 @@
     },
     "userBanner": {
         "bannerArea": {
-            "banner":{
-                "href":"#memberProfile.html"
+            "banner1":{
+                "class":"banner inlineBlock",
+                "href":"#memberPage.html",
+                "bannerImage":{
+                    "src":"image/icon(myPage).png"
+                }
             },
-            "banner": [
-                {
-                    "src": "image/icon(myPage).png",
-                    "href":"memberPage.html"
-                },
-                {
-                    "src": "image/icon(profile).png",
-                    "href":"memberProfile.html"
-                },
-                {
+            "banner2":{
+                "class":"banner inlineBlock",
+                "href":"#memberProfile.html",
+                "bannerImage":{
+                    "src": "image/icon(profile).png"
+                }
+            },
+            "banner3":{
+                "class":"banner inlineBlock",
+                "href":"#memberMail.html",
+                "bannerImage":{
                     "src": "image/icon(mail).png"
-                },
-                {
-                    "src": "image/icon(gallery).png",
-                    "href":"gallery.php"
-                },
-                {
-                    "src": "image/icon(blog).png",
-                    "href":"blog.php"
-                },
-                {
+                }
+            },
+            "banner4":{
+                "class":"banner inlineBlock",
+                "href":"#gallery.php",
+                "bannerImage":{
+                    "src": "image/icon(gallery).png"
+                }
+            },
+            "banner5":{
+                "class":"banner inlineBlock",
+                "href":"#blog.php",
+                "bannerImage":{
+                    "src":"image/icon(blog).png"
+                }
+            },
+            "banner6":{
+                "class":"banner inlineBlock",
+                "href":"#myGallery.html",
+                "bannerImage":{
                     "src": "image/icon(myGallery).png"
-                },
-                {
+                }
+            },
+            "banner7":{
+                "class":"banner inlineBlock",
+                "href":"#myBlog.html",
+                "bannerImage":{
                     "src": "image/icon(myBlog).png"
                 }
-            ]
+            }
         }
     }
 }

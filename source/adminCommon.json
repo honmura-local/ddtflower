@@ -3,19 +3,23 @@
         "class": "tabContainer adminTab",
         "id": "adminTab",
         "tabs": {
-            "class":"tabs outsideArea",
+            "class":"tabs textCenter outsideArea",
             "tab": [
                 {
                     "href": "#dayReserver",
-                    "text": "日ごと予約者一覧"
+                    "html": "日ごと<br>予約者一覧"
                 },
                 {
                     "href": "#lecturePermit",
-                    "text": "受講承認"
+                    "html": "受講<br>承認"
                 },
                 {
                     "href": "#userList",
-                    "text": "ユーザ一覧"
+                    "html": "ユーザ<br>一覧"
+                },
+                {
+                    "href": "#lessonDetail",
+                    "html": "授業<br>詳細"
                 }
             ]
         },
@@ -36,11 +40,25 @@
 	    "id": "userList"
 	},
     "dateBelt":{
-    	"text":"2015/06/12"
+        "twoDaysBefore":{
+            "text":"<<"
+        },
+        "oneDayBefore":{
+            "text":"<"
+        },
+        "theDay":{
+            "text":"2015-04-10"
+        },
+        "oneDayAfter":{
+            "text":">"
+        },
+        "twoDayAfter":{
+            "text":">>"
+        }
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
-    	"dateInput":{"type":"date", "value":"2015/06/12"},
+    	"dateInput":{"type":"text", "name":"eachDateLessonDate", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
     "userInfoTable":{
@@ -83,6 +101,9 @@
         "class": "tabContainer lecturePermitTab",
         "id": "lecturePermitTab",
         "tabs": {
+            "tab":{
+                "class":"tab inlineBlock textCenter"
+            },
             "tab": [
                 {
                     "href": "#doLecturePermit",
@@ -115,7 +136,7 @@
             "columns": {
                 "columnCheckbox": {
                     "columnName": "",
-                    "className":"permitCheckbox"
+                    "className":"permitCheckboxArea"
                 },
                 "time_table_key": {
                     "columnName": "No."
@@ -126,16 +147,16 @@
                 "user_name": {
                     "columnName": "名前"
                 },
-                "id": {
-                    "columnName": "会員番号"
+                "get_point": {
+                    "columnName": "所持pt"
                 },
                 "lesson_name": {
                     "columnName": "内容"
                 },
                 "user_classwork_cost": {
-                    "columnName": "受講料"
+                    "style":"display:none;"
                 },
-                "get_point": {
+                "id": {
                     "style":"display:none;"
                 },
                 "stage_no": {
@@ -199,6 +220,33 @@
             }
         }
     },
+    "permitListSearch":{
+        "fromArea":{
+            "fromLabel":{
+                "class":"fromLabel inlineBlock",
+                "text":"検索 From"
+            },
+            "fromTextbox":{
+                "type":"text",
+                "name":"fromSearach"
+            }
+        },
+        "toArea":{
+            "toLabel":{
+                "class":"toLabel inlineBlock",
+                "text":"検索 To"
+            },
+            "toTextbox":{
+                "type":"text",
+                "name":"toSearach"
+            }
+        },
+        "searchButton":{
+            "type":"button",
+            "name":"search",
+            "value":"検索"
+        }
+    },
     "searchUser":{
         "searchList":{
             "searchNameColumn":{
@@ -217,7 +265,7 @@
                     },
                     "searchNameKanaTextbox":{
                         "type":"text",
-                        "name":"user_name_kana"
+                        "name":"name_kana"
                     }
                 }
             },
@@ -243,7 +291,7 @@
             },
             "searchButtonArea":{
                 "searchButton":{
-                    "type":"submit",
+                    "type":"button",
                     "value":"検索"
                 }
             }
@@ -251,7 +299,7 @@
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
     "userListInfoTable":{
-        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf ORDER BY update_datetime DESC;",
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf",
         "config": {
             "columns": {
                 "user_name": {
@@ -296,5 +344,146 @@
 	    		"value":"新規登録"
     		}
     	}
+    },
+    "adminCalendar":{
+        "class":"adminCalendar calendar"
+    },
+    "adminLessonDialog":{},
+    "hasPoint":{
+        "hasPointText":{
+            "text":"所持ポイント："
+        },
+        "hasPointNumber":{
+            "text":""
+        },
+        "hasPointUnit":{
+            "text":"pt"
+        }
+    },
+    "adminEachDayLessonTable":{
+        "db_getQuery": "SELECT start_time ,school_name ,lesson_name ,classwork.lesson_key AS lesson_key ,end_time ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classwork_note ,classroom FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = '2015-03-12' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "lesson_date":{
+            "value":"2015-03-31"
+        },
+        "config": {
+            "columns": {
+                "start_time": {
+                    "columnName": "時間割"
+                },
+                "school_name": {
+                    "columnName": "店舗"
+                },
+                "lesson_name": {
+                    "columnName": "テーマ"
+                },
+                "lesson_key": {
+                    "columnName": "残席"
+                },
+                "lesson_date": {
+                    "style":"display:none;"
+                },
+                "order_students":{
+                    "style":"display:none;"
+                },
+                "max_students":{
+                    "style":"display:none;"
+                },
+                "min_students":{
+                    "style":"display:none;"
+                },
+                "default_min_students": {
+                    "style":"display:none;"
+                },
+                "max_num": {
+                    "style":"display:none;"
+                },
+                "min_num": {
+                    "style":"display:none;"
+                },
+                "classwork_status": {
+                    "style":"display:none;"
+                },
+                "today":{
+                    "style":"display:none;"
+                },
+                "classwork_key":{
+                    "style":"display:none;"
+                },
+                "classwork_note":{
+                    "style":"display:none;"
+                },
+                "classroom":{
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
+    "lessonDetail":{
+        "class": "lessonDetail tabPanel",
+        "id": "lessonDetail"
+    },
+    "lessonData":{
+        "minStudentsArea":{
+            "minStudentsText":{
+                "text":"最少人数"
+            },
+            "minStudentsTextbox":{
+                "type":"text",
+                "name":"minStudentsTextbox"
+            },
+            "minStudentsUnit":{
+                "text":"人"
+            }
+        },
+        "maxStudentsArea":{
+            "maxStudentsText":{
+                "text":"最大人数"
+            },
+            "maxStudentsTextbox":{
+                "type":"text",
+                "name":"maxStudentsTextbox"
+            },
+            "maxStudentsUnit":{
+                "text":"人"
+            }
+        },
+        "statusArea":{
+            "lessonStatusLabel":{
+                "text":"ステータス"
+            },
+            "lessonStatusSelect":{
+                "lesssonState":[
+                    "予約可能",
+                    "中止"
+                ]
+            }
+        },
+        "classRoomArea":{
+            "classRoomLabel":{
+                "text":"教室"
+            },
+            "classRoomTextbox":{
+                "type":"text",
+                "name":"classRoomTextbox"
+            }
+        },
+        "memoArea":{
+            "memoLabel":{
+                "text":"メモ"
+            },
+            "memoTextarea":{
+                "name":"memoTextarea"
+            }
+        }
+    },
+    "buttonArea":{
+        "updateButton":{
+            "type":"button",
+            "value":"更新"
+        },
+        "memberClassListButton":{
+            "type":"button",
+            "value":"受講者一覧"
+        }
     }
 }

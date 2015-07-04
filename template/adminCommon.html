@@ -58,11 +58,22 @@
 	</table>
 
 	<!-- 日毎予約者一覧の日付領域 -->
-	<p class="dateBelt"></p>
+	<div class="dateBelt">
+		<!-- 前々日 -->
+		<a class="twoDaysBefore"></a>
+		<!-- 前日 -->
+		<a class="oneDayBefore"></a>
+		<!-- 当日 -->
+		<a class="theDay"></a>
+		<!-- 翌日 -->
+		<a class="oneDayAfter"></a>
+		<!-- 翌々日 -->
+		<a class="twoDayAfter"></a>
+	</div>
 
 	<div class="dateSelect">
 		<label class="dateHeadLabel"></label>
-		<input class="dateInput" type="" >
+		<input class="dateInput" type="" name="">
 		<input class="searchButton" type="" value="">
 	</div>
 
@@ -205,6 +216,86 @@
 			</select>
 		</td>
 	</tr>
+
+	<!-- 管理者のカレンダー領域 -->
+	<div class="adminCalendar"></div>
+
+	<!-- 管理者日ごと授業ダイアログ -->
+	<div class="adminLessonListDialog"></div>
+
+	<!-- 所持ポイント領域 -->
+	<p class="hasPoint">
+		<!-- 「所持ポイント：」領域 -->
+		<span class="hasPointText"></span>
+		<!-- 「ポイント」領域 -->
+		<span class="hasPointNumber"></span>
+		<!-- 「pt」領域 -->
+		<span class="hasPointUnit"></span>
+	</p>
+
+	<!-- 管理者日ごと授業一覧テーブル -->
+	<table class="adminEachDayLessonTable">
+		<tr>
+			<td></td>
+		</tr>
+	</table>
+
+	<!-- 授業詳細領域 -->
+	<!-- 授業データ入力領域 -->
+	<ul class="lessonData">
+		<!-- 最少人数領域 -->
+		<li class="minStudentsArea">
+			<!-- 最少人数ラベル領域 -->
+			<label class="minStudentsText"></label>
+			<!-- 最少人数テキストボックス領域 -->
+			<input class="minStudentsTextbox" type="" name="">
+			<!-- 最少人数単位領域 -->
+			<span class="minStudentsUnit"></span>
+		</li>
+		<!-- 最大人数領域 -->
+		<li class="maxStudentsArea">
+			<!-- 最大人数領域 -->
+			<label class="maxStudentsText"></label>
+			<!-- 最大人数テキストボックス領域 -->
+			<input class="maxStudentsTextbox" type="" name="">
+			<!-- 最大人数単位領域 -->
+			<span class="maxStudentsUnit"></span>
+		
+		</li>
+		<!-- ステータス領域 -->
+		<li class="statusArea">
+			<!-- ステータスのラベル領域 -->
+			<label class="lessonStatusLabel"></label>
+			<!-- ステータスを選ぶセレクトボックス領域 -->
+			<select class="lessonStatusSelect">
+				<!-- セレクトボックスで選択する領域 -->
+				<option class-"lesssonState" value=""><option>
+			</select>
+		</li>
+		<!-- 教室領域 -->
+		<li class="classRoomArea">
+			<!-- 教室、ラベル領域 -->
+			<label class="classRoomLabel"></label>
+			<!-- 教室テキストボックス領域 -->
+			<input class="classRoomTextbox" type="" name="">
+		</li>
+		<!-- メモ領域 -->
+		<li class="memoArea">
+			<!-- メモのラベル領域 -->
+			<label class="memoLabel"></label>
+			<!-- メモ入力テキストエリア領域 -->
+			<textarea class="memoTextarea" name=""></textarea>
+		</li>
+	</ul>
+
+	<!-- 更新ボタンと受講者一覧領域 -->
+	<div class="buttonArea">
+		<!-- 更新ボタン -->
+		<input class="updateButton" type="" value="">
+		<!-- 受講者一覧ボタン -->
+		<input class="memberClassListButton" type="" value="">
+	</div>
+
 
 </div>
 </body>

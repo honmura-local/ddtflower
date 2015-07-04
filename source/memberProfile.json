@@ -3,123 +3,147 @@
         "pageHeader":{
             "text":"プロフィール"
         },
-        "keepMoney":{
-            "keepMoneyText":{
-                "text":"お預かり金額:"
-            },
-            "keepMoneyNumber":{
-                "text":"30000"
-            },
-            "keepMoneyUnit":{
-                "text":"円"
-            }
-        },
         "passLinkArea":{
+            "class":"passLinkArea textCenter",
             "passLink":{
+                "href":"#memberPassword.html",
                 "text":"パスワード変更"
             }
         }
     },
-    "memberInfo":{},
-    "firstNameArea":{
-        "labelArea":{
-            "class":"label2Area firstNameLabel",
-            "text":"姓:"
-        },
-        "textboxArea":{
-            "class":"textbox2Area firstName",
-            "type":"text",
-            "name":"firstName",
-            "value":"山田"
+    "memberInfo":{
+        "userInf":{
+            "class":"userInf outsideArea"
         }
     },
-    "lastNameArea":{
-        "labelArea":{
-            "class":"label2Area lastNameLabel",
-            "text":"名:"
-        },
+    "nameSummary":{
+        "text":"名前"
+    },
+    "nameTextbox":{
         "textboxArea":{
-            "class":"textbox2Area lastName",
-            "name":"lastName",
             "type":"text",
-            "value":"花子"
+            "name":"user_name"
         }
     },
-    "subInfo":{
-        "sexLabel":{
-            "class":"label2Area",
-            "text":"性別:"
-        },
-        "user_sex":{
+    "nameKanaSummary":{
+        "text":"カナ"
+    },
+    "nameKana":{
+        "textboxArea":{
+            "type":"text",
+            "name":"name_kana"
+        }
+    },
+    "userSexSummary":{
+        "text":"性別"
+    },
+    "userSex":{
+        "select":{
             "name":"user_sex",
-            "male":{
-                "value":"男性",
-                "text":"男性"
+            "selectOption":{
+                "text":"女性",
+                "value":"2"
             },
-            "female":{
-                "value":"女性",
-                "text":"女性"
+            "selectOption2":{
+                "text":"男性",
+                "value":"1"
             }
-        },
-        "birthdayLabel":{
-            "text":"生年月日:"
-        },
-        "birthday_date":{
-            "type":"text",
-            "name":"birthday_date",
-            "value":"1989/02/02"
         }
+    },
+    "birthDayDateSummary":{
+        "text":"生年月日"
+    },
+    "birthDayDate":{
+        "textboxArea":{
+            "type":"text",
+            "name":"birthday_date"
+        }
+    },
+    "zipCodeSummary":{
+        "text":"郵便番号"
+    },
+    "zipCode":{
+        "textboxArea":{
+            "type":"text",
+            "name":"zip_code"
+        }
+    },
+    "addressSummary":{
+        "text":"住所"
     },
     "addressArea":{
-        "addressLabel":{
-            "class":"label2Area addressLabel",
-            "text":"住所:"
-        },
-        "address":{
-            "text":""
+        "textArea":{
+            "name":"address"
         }
     },
-    "mailaddressArea":{
-        "labelArea":{
-            "class":"labelArea mailaddressLabel",
-            "text":"メールアドレス:"
-        },
+    "mailAddressSummary":{
+        "text":"メールアドレス"
+    },
+    "mailAddress":{
         "textboxArea":{
-            "class":"textboxArea mail_address",
-            "name":"mail_address",
             "type":"text",
-            "value":"example@mail.com"
+            "name":"mail_address"
         }
     },
-    "phoneArea":{
-        "labelArea":{
-            "class":"label4Area phoneLabel",
-            "text":"電話番号:"
-        },
+    "telephoneSummary":{
+        "text":"電話番号"
+    },
+    "telephoneTextbox":{
         "textboxArea":{
-            "class":"textbox4Area telephone",
-            "name":"phone",
             "type":"text",
-            "value":"800909999"
+            "name":"telephone"
         }
     },
-    "emergencyArea":{
-        "labelArea":{
-            "class":"label4Area emergencyLabel",
-            "text":"緊急番号:"
-        },
+    "telephone2Summary":{
+        "text":"緊急番号"
+    },
+    "telephone2Textbox":{
         "textboxArea":{
-            "class":"textbox4Area emergency",
-            "name":"emergency",
             "type":"text",
-            "value":"3344555"
+            "name":"telephone2"
         }
     },
     "updateButton":{
         "type":"submit",
+        "name":"button",
         "value":"更新"
     },
     "updateUserInf":{
-        "db_setQuery":"UPDATE user_inf SET user_name = 'user_name' ,zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address' WHERE  id = 'user_key;"
+        "db_setQuery":"UPDATE user_inf SET user_name = 'user_name',name_kana = 'name_kana', zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address', update_datetime=NOW() WHERE  id = 'userId';"
+    },
+    "getUserInf":{
+        "db_getQuery":"SELECT user_name, name_kana, user_sex, birthday_date, zip_code, address, mail_address, telephone, telephone2 FROM user_inf WHERE id = 'userId';",
+        "userId":{
+            "value":""
+        },
+        "memberInfoValue":{
+            "user_name":{
+                "text":""
+             },
+             "name_kana":{
+                "text":""
+            },
+            "user_sex":{
+                "text":""
+             },
+             "birthday_date":{
+                "text":""
+            },
+            "zip_code":{
+                "text":""
+            },
+            "address":{
+                "text":""
+            },
+            "mail_address":{
+                "text":""
+            },
+            "telephone":{
+                "text":""
+            },
+            "telephone2":{
+                "text":""
+            }
+        }
     }
 }
