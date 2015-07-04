@@ -28,23 +28,13 @@ try {
 	//SQL例外のcatchブロック
 } catch (PDOException $e) {
 	// エラーメッセージを表示する
-	echo $e->getMessage();
+	error_log($e->getMessage());
 	// プログラムをそこで止める
+    echo 'データの更新に失敗しました';
 	exit;
-//最後に行う処理
-} finally{
-	//tryブロック
-	try {
-		//DBとの接続を必ず切る
-		$jdbm->dbh = null;
-	//DB切断時にエラーが出た場合
-	} catch (PDOException $e) {
-		// エラーメッセージを表示する
-		echo $e->getMessage();
-		// プログラムをそこで止める
-		exit;
-	}
 }
+//最後に行う処理
+$jdbm->dbh = null;
 
 //クライアントへ返すメッセージを作成する。
 $returnMessage = '{"message":"' . $jdbm->processedRecords . '"}';
