@@ -41,6 +41,7 @@ PATH_CONTACT_CSS			= '<link href="css/contact.css" rel="stylesheet" type="text/c
 PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
+CLASS_HEADERS				= '.memberHeader, .adminHeader';	//会員ページ、管理者ページのヘッダーのクラス
 
 RESERVED_LESSON_TABLE		= 'reservedLessonTable';			//予約中授業のテーブル
 TAG_TR						= ' tr';							//trタグ
@@ -853,7 +854,7 @@ function toggleHeader(targetObject){
 //会員ページでのみヘッダーを表示するようにイベントを登録する
 //注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
 //短絡的な判断基準ですので、後々詰めるべきであると思います。
-inspectAfterLoad(toggleHeader, {evaluation:CLASS_LOGOUT_LINK,target:CLASS_HEADER})
+inspectAfterLoad(toggleHeader, {evaluation:CLASS_HEADERS,target:CLASS_HEADER})
 
 /* 関数名　:afterLogin
  * 概要　　:ログイン後の処理の関数
