@@ -17,6 +17,8 @@ SELECT
 	,classwork.id AS classwork_key
 	,classwork_note
 	,classroom
+    ,school_inf.id AS school_key
+    ,school_name
 FROM 
 	time_table_day
 INNER JOIN
@@ -33,7 +35,10 @@ INNER JOIN
 	timetable_inf
 ON
 	timetable_inf.id = time_table_day.timetable_key
-	
+INNER JOIN
+    school_inf 
+ON
+    school_inf.id = lesson_inf.school_key
 #-------------------------------------------
 
 #-------------------------------------------
@@ -46,6 +51,7 @@ INSERT INTO
 		,classroom
 		,classwork_note
 		,teacher_key
+        ,school_key
 		,create_datetime
 		,update_datetime
 	)
@@ -56,6 +62,7 @@ INSERT INTO
 		,'{{classroom}}'
 		,'{{classwork_note}}'
 		,(select id from user_inf where authority = 10 limit 1)
+        ,{{school_key}}
 		,NOW()
 		,NOW()
 	)
