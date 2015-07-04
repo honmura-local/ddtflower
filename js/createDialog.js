@@ -9,15 +9,50 @@
 /**
  * ダイアログを作る関数をまとめたJSファイル。
  */
-
-//ファイルパスの定数
-MSL_LIST_PHP				= 'list.php';						//MSLのリスト
-MSL_DETAIL_PHP				= 'detail.php';						//MSLの記事詳細
-INIT_JSON					= 'source/init.json';				//初期化の値のJSONファイル
+	
+//ファイルパスの定数	
+MSL_LIST_PHP					= 'list.php';						//MSLのリスト
+MSL_DETAIL_PHP					= 'detail.php';						//MSLの記事詳細
+INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
 //@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
-PATH_LOGIN_DIALOG_JSON		= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
-PATH_LOGIN_DIALOG_HTML		= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
+PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
+PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
 //文字列定数をここで定義する
+LOGIN_DIALOG					= 'loginDialog';					//ログインダイアログ
+CLASS_LOGIN_DIALOG				= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+CLASS_LOGIN						= '.login';							//ログインボタンのクラスのセレクタ
+CLICK							= 'click';							//クリックイベントの文字列
+EMPTY							= '';								//空文字
+SLASH							= '/';								//スラッシュ記号
+DOT								= '.';								//ドット
+CLOSE							= 'close';							//closeの文字列
+CLASS_HEADER					= '.header';						//ヘッダーのクラス
+PATH_MEMBERPAGE_JSON			= 'source/memberPage.json';			//会員ページのJSON
+PATH_MEMBERCOMMON_JSON			= 'source/memberCommon.json';		//会員ページ共通のJSON
+MEMBERPAGE_HTML					= 'memberPage.html';				//会員ページのHTML
+USER_KEY						= 'user_key';						//ユーザキー
+VALUE							= 'value';							//バリュー
+ID								= 'id';								//ID
+SELECTOR_HEAD_LAST				= 'head link:last';					//headタグの最後のタグ
+PATH_MEMBERPAGE_CSS				= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
+PATH_COURCEGUIDE_CSS			= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_ADMINPAGE_CSS				= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
+PATH_CONTACT_CSS				= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
+PATH_DAILYCLASSES_JS			= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
+CLASS_HEADER					= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
+
+RESERVED_LESSON_TABLE			= 'reservedLessonTable';			//予約中授業のテーブル
+TAG_TR							= ' tr';							//trタグ
+TAG_TABLE						= 'table';							//tableタグ
+CANCEL_LESSON_DIALOG_CONTENT	= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
+CANCEL_LESSON_DIALOG 			= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
+ADMIN_EACH_DAY_LESSON_TABLE 	= 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
+ADMIN_LESSON_LIST_DIALOG		= 'adminLessonListDialog';			//管理者日ごとダイアログ
+ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
+CLASS							= 'class';							//クラス
+TABLE							= 'table';							//テーブル
+
 LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
 CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
@@ -724,7 +759,12 @@ function memberDialog(className, title, functionObject, content, array){
  * 作成者　:T.Masuda
  */
 function tagDialog(className, title, functionObject, createTags){
-	createTags();	//DOMを作成する
+	//ダイアログのDOMが作られていなければ以下のブロック内に入りDOMを作る。
+	//※同じクラス名のダイアログは2個ないことが前提となります。
+	//この部分のコードがないと、同じダイアログが複数作成されます。
+	if(!$(CHAR_DOT + className).length){
+		createTags();	//DOMを作成する
+	}
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	
 	//ダイアログとクラスのインスタンスは一対一になっているが、同一の存在ではないので互いの参照を確保する
@@ -1215,9 +1255,13 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			delete creator.json[STR_MEMBER_INFORMATION].table;
 		},
 		open 			:function(){
+			//setTimeoutのコールバック関数前にダイアログ自身への参照を保存する
+			var $this = $(this);	
 			setTimeout(function(){
+				//ダイアログの直下の子のクラス名を取得する
+				var className = $this.children().eq(0).attr(CLASS).split(' ')[0];
 				//変数に予約一覧テーブルのjsonの連想配列を入れる
-				var lessonTable = creator.json['memberInfomation']['table'];
+				var lessonTable = creator.json[className].table;
 				// 時間割1限分の生徒の合計人数が入った連想配列を作る
 				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 				//予約一覧テーブルの値を置換する
@@ -1346,6 +1390,28 @@ dialogOption['cancelLessonDialog'] = {
 	        }
 	]
 };
+
+//管理者ページの日ごと授業一覧ダイアログ用設定。予約一覧ダイアログの内容を踏襲する
+dialogOption[ADMIN_LESSON_LIST_DIALOG] = $.extend(true, {}, dialogOption[STR_RESERVE_LESSON_LIST_DIALOG], {
+		//ダイアログが開いたときのイベント
+		open:function(){
+			//setTimeoutのコールバック関数前にダイアログ自身への参照を保存する
+			var $this = $(this);	
+			//一定時間がたった後に実行する
+			setTimeout(function(){
+				//テーブルは最初は隠れているので、明示的に表示する
+				 $(TABLE, $this).show();
+			},1);
+		},
+		close			:function(){
+			//読み込んだテーブルのデータを消す
+			delete creator.json[ADMIN_LESSON_LIST_INFORMATION].table;
+		},
+		//イベント
+		event:function(){
+			
+		}
+});
 
 //ダイアログのコール前に呼ぶ関数を連想配列に格納しておく
 var readyDialogFunc = {};

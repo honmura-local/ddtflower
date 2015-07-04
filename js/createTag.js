@@ -379,7 +379,8 @@ function createTag(){
 			//mapNode[i]が子であれば
 			} else if(typeof mapNode[i] == 'object'){
 				//カレントのDOMノードの子ノードを取得する。子ノードは属性で特定する。
-				var childDomNode = this.getDomChild(' > [' + domNode[0].children[0].attributes[0].name + ']', domNode);
+				//@mod 2015.0704 T.Masuda テーブル用配列「table」によるエラー回避の修正をしました
+				var childDomNode = domNode[0] !== void(0) ? this.getDomChild(' > [' + domNode[0].children[0].attributes[0].name + ']', domNode) : null;
 				//childDomNodeがnullでなければ
 				if(childDomNode){
 					//子ノードへ再帰する。
