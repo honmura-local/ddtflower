@@ -18,7 +18,6 @@ INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
 PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
 PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
 //文字列定数をここで定義する
-<<<<<<< HEAD
 LOGIN_DIALOG					= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG				= '.loginDialog';					//ログインダイアログのクラスのセレクタ
 CLASS_LOGIN						= '.login';							//ログインボタンのクラスのセレクタ
@@ -54,7 +53,6 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 CLASS							= 'class';							//クラス
 TABLE							= 'table';							//テーブル
 
-=======
 LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
 CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
@@ -87,7 +85,6 @@ CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャ
 CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
 ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
 ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
->>>>>>> master
 COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
 //定数
 EXPERIENCE	= 'experience';
