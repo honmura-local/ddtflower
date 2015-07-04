@@ -759,7 +759,12 @@ function memberDialog(className, title, functionObject, content, array){
  * 作成者　:T.Masuda
  */
 function tagDialog(className, title, functionObject, createTags){
-	createTags();	//DOMを作成する
+	//ダイアログのDOMが作られていなければ以下のブロック内に入りDOMを作る。
+	//※同じクラス名のダイアログは2個ないことが前提となります。
+	//この部分のコードがないと、同じダイアログが複数作成されます。
+	if(!$(CHAR_DOT + className).length){
+		createTags();	//DOMを作成する
+	}
 	createDialog.call(this, className, title, functionObject);	//スーパークラスのコンストラクタをコールする
 	
 	//ダイアログとクラスのインスタンスは一対一になっているが、同一の存在ではないので互いの参照を確保する
