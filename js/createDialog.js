@@ -18,6 +18,7 @@ INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
 PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
 PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
 //文字列定数をここで定義する
+<<<<<<< HEAD
 LOGIN_DIALOG					= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG				= '.loginDialog';					//ログインダイアログのクラスのセレクタ
 CLASS_LOGIN						= '.login';							//ログインボタンのクラスのセレクタ
@@ -53,6 +54,40 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 CLASS							= 'class';							//クラス
 TABLE							= 'table';							//テーブル
 
+=======
+LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
+CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
+CLICK						= 'click';							//クリックイベントの文字列
+EMPTY						= '';								//空文字
+SLASH						= '/';								//スラッシュ記号
+DOT							= '.';								//ドット
+CLOSE						= 'close';							//closeの文字列
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+PATH_MEMBERPAGE_JSON		= 'source/memberPage.json';			//会員ページのJSON
+PATH_MEMBERCOMMON_JSON		= 'source/memberCommon.json';		//会員ページ共通のJSON
+MEMBERPAGE_HTML				= 'memberPage.html';				//会員ページのHTML
+USER_KEY					= 'user_key';						//ユーザキー
+VALUE						= 'value';							//バリュー
+ID							= 'id';								//ID
+SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
+PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
+PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_ADMINPAGE_CSS			= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
+PATH_CONTACT_CSS			= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
+PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
+CLASS_HEADERS				= '.memberHeader, .adminHeader';	//会員ページ、管理者ページのヘッダーのクラス
+
+RESERVED_LESSON_TABLE		= 'reservedLessonTable';			//予約中授業のテーブル
+TAG_TR						= ' tr';							//trタグ
+TAG_TABLE					= 'table';							//tableタグ
+CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
+CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
+ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
+ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
+>>>>>>> master
 COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
 //定数
 EXPERIENCE	= 'experience';
@@ -857,7 +892,7 @@ function toggleHeader(targetObject){
 //会員ページでのみヘッダーを表示するようにイベントを登録する
 //注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
 //短絡的な判断基準ですので、後々詰めるべきであると思います。
-inspectAfterLoad(toggleHeader, {evaluation:CLASS_LOGOUT_LINK,target:CLASS_HEADER})
+inspectAfterLoad(toggleHeader, {evaluation:CLASS_HEADERS,target:CLASS_HEADER})
 
 /* 関数名　:afterLogin
  * 概要　　:ログイン後の処理の関数
