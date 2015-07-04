@@ -43,6 +43,8 @@ SET
 	,stage_no = {{stage_no_present}}
 	,level_key = {{level_key}}
 	,level_no = {{level_no_present}}
+    ,update_datetime = NOW()
+    ,order_datetime = NOW()
 WHERE
 	id = {{id}};
 #-----------------------------------------------------
@@ -53,6 +55,7 @@ UPDATE
 	user_classwork
 SET
 	user_work_status = 10
+    ,update_datetime = NOW()
 WHERE
 	userr_key = {{id}}
 
@@ -62,6 +65,7 @@ UPDATE
 	classwork
 SET
 	order_students = order_students+1
+    ,update_datetime = NOW()
 WHERE
 	id = {{classwoek_key}};
 
@@ -71,6 +75,7 @@ UPDATE
 	classwork
 SET
 	order_students = order_students-1
+    ,update_datetime = NOW()
 WHERE
 	id = {{classwoek_key}};
 

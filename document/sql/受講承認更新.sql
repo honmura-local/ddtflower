@@ -5,6 +5,7 @@ SET
 	user_classwork_cost = {{受講料}}
 	,use_point = {{使用ポイント※但し受講料より多い場合は受講料と同額}}
 	,late_time = {{遅刻時間}}
+    ,update_datetime = NOW()
 WHERE
 	id = {{ユーザID}}
 
@@ -39,6 +40,7 @@ SET
 	,sell_number = {{個数}}
 	,pay_cash = {{備品代}}
 	,use_point = {{受講情報の更新時のポイントのあまり}
+	,update_datetime = NOW()
 WHERE
 	id = {{commodity_key※セレクトで指定した値}}
 
@@ -48,5 +50,6 @@ UPDATE
 SET
 	 use_point = use_point + {{使用ポイント}}
 	,get_point = get_point - {{使用ポイント}}
+	,update_datetime = NOW()
 WHERE
 	id = {{ユーザID}}
