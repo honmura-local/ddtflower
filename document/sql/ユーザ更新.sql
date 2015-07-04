@@ -9,5 +9,6 @@ SET
 	,telephone = {{電話番号}}
 	,telephone2 = {{緊急番号}}
 	,mail_address = {{メールアドレス}}
+    ,update_datetime = NOW()
 WHERE 
 	id = {{ユーザID}}

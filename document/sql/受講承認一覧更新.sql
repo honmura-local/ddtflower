@@ -3,6 +3,7 @@ UPDATE
 	user_classwork
 SET
 	user_classwork_cost = {{料金}}
+    ,update_datetime = NOW()
 WHERE
 	id = {{classwork_key}}
 
@@ -10,6 +11,7 @@ WHERE
 UPDATE
 	commodity_sell
 SET
-	pay_cash =  = {{料金}}
+	pay_cash = {{料金}}
+    ,update_datetime = NOW()
 WHERE
 	id = {{commodity_sell_key}}
