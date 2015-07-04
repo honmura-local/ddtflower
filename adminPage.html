@@ -77,13 +77,16 @@
 				//選択された日付を表示する領域
 				creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['userInfoTable'], 'userInfoTable');
-				//日ごと予約者一覧テーブルを作る
-				creator.outputTagTable('userInfoTable','eachDayReservedInfoTable','#dayReserver');
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
+				//日ごと予約者の情報がないときにテーブルを作らない
+				if(!creator.json.eachDayReservedInfoTable.table[0]) {
+					//日ごと予約者一覧テーブルを作る
+					creator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
+				}
 				//日付選択パーツのセット
 				creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 				// テーブルのデータが入った変数
-				var eachDayReserved = creator.json['userInfoTable']['table'];
+				var eachDayReserved = creator.json['eachDayReservedInfoTable']['table'];
 				// 日ごと予約者一覧テーブルの値を置換する
 				lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
 
@@ -148,8 +151,12 @@
 				//受講承認一覧に連番を入れる
 				insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
 				//クリックでテキストボックスにカレンダーを表示する
-				clickCalendar('eachDateLessonDate');
+				clickCalendar('lesson_date');
+				//会員一覧タブのユーザ検索機能を実装する
 				replaceTableTriggerClick('searchList', 'userListInfoTable');
+				//管理者日ごと授業の検索機能を実装する
+				replaceTableTriggerClick('dateSelect', 'eachDayReservedInfoTable');
+
 
 
 			});

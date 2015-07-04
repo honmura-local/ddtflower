@@ -2319,12 +2319,26 @@ replaceTableOption['finishedLessonTable'] = {
 	//テーブルの値を置換する関数名
 	replaceTableValuefunction:'callMemberLessonValue'
 }
-//ユーザ一覧
+//管理者画面、日ごと授業一覧
+replaceTableOption['eachDayReservedInfoTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'.dateBelt',
+	//置換のvalueが入ったdom名
+	replaceValueDom:'.dateInput',
+	//置換するkey名
+	replaceQueryKey:'lesson_date',
+	//テーブルの値を置換する関数名
+	replaceTableValuefunction:'callEachDayReservedValue'
+}
+
+//管理者画面、ユーザ一覧
 replaceTableOption['userListInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'add',
 	//テーブルのafterでの追加先
-	addDomPlace:'.searchUser',
+	addDomPlace:'.searchUser'
 }
 
 /*
@@ -2378,7 +2392,7 @@ function replaceTableQuery(queryArrayKey) {
 	//取得した値をjsonの反映させる
 	creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
 	//クエリをテーマ検索用のものと入れ替える
-	creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query
+	creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
 }
 
 
