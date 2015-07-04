@@ -86,6 +86,7 @@ CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイ�
 ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
 ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
 COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
+WAIT_DEFAULT				= 0;								//待ち時間のデフォルト値
 //定数
 EXPERIENCE	= 'experience';
 LESSON		= 'Lesson';
@@ -613,6 +614,10 @@ function createDialog(className, title, functionObject){
 		closeOnEscape : false	//escキーを押して閉じるか
 	}
 
+	//ダイアログ間の親子関係を構築するためのメンバ変数2つを用意する
+	this.parent = null;
+	this.child = null;
+	
 	//クラス名を保存する
 	this.className = className;
 	
@@ -629,6 +634,47 @@ function createDialog(className, title, functionObject){
 		$('.' + className).dialog(this.options);
 	}
 	
+	/* 
+	 * 関数名:registerChild
+	 * 概要  :子の要素を登録する
+	 * 引数  :createDialog child:子要素
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.0704
+	 */
+	this.registerChild = function(child){
+		this.child = child;			//子要素をメンバに登録する
+		this.child.parent = this;	//子要素に自身を親としてメンバに登録する
+	}
+	
+	/* 
+	 * 関数名:cutParentRelation
+	 * 概要  :親と縁を切る
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.0704
+	 */
+	this.cutParentRelation = function(){
+		this.parent.child = null;	//親から子への縁を切る
+		this.parent = null;			//自分自身の親との縁を切る
+	}
+
+	/* 
+	 * 関数名:onClose
+	 * 概要  :ダイアログが閉じる際にコールし、親に動いてもらうための関数
+	 * 引数  :なし
+	 * 返却値 :なし
+	 * 作成者:T.M
+	 * 作成日:2015.0704
+	 */
+	this.onClose = function(){
+		//子が閉じたときのイベントが登録されていれば
+		if('childClose' in this.parent.options){
+			this.parent.options.childClose();	//子が閉じたときのコールバック関数を実行する
+		}
+	}
+
 	/* 
 	 * 関数名:create
 	 * 概要  :DOMを作成する関数。オーバーライドして使う
@@ -789,6 +835,7 @@ function tagDialog(className, title, functionObject, createTags){
 	this.getJsonFile = function(queryReplaceData, dialogObject){
 		//受け取ったオブジェクトをダイアログのクラスのインスタンスにコピーした上で保存する
 		this.queryReplaceData = $.extend(true, {}, queryReplaceData);
+		this.dialogObject = $.extend(true, {}, dialogObject);
 		//受け取ったオブジェクトを元にJSONデータを更新する。追加元のオブジェクトはJSONDBManagerで置換できる形にしておく
 		creator.replaceData(PATTERN_ADD, creator.json[dialogObject.key], creator.replaceValueNode(queryReplaceData));
 		//サーバへJSONを送信し、テーブルのデータを取得する
@@ -813,6 +860,8 @@ function tagDialog(className, title, functionObject, createTags){
 		$(CHAR_DOT + this.className).dialog({
 			title: dialogTitle
 		});
+		//タイトルをメンバに保存する
+		this.title = dialogTitle;
 		//ダイアログを開く
 		$(CHAR_DOT + this.className).dialog(STR_OPEN);
 	}
@@ -1240,6 +1289,33 @@ dialogOption['memberDialog'] = {
 		}
 	};
 
+/* 
+ * 関数名:afterCreateClassList
+ * 概要  :予約一覧テーブルを作った後の加工を行う
+ * 引数  :Element elem:ダイアログのDOM
+ * 		:int time:処理を開始するまでの待ち時間
+ * 返却値  :なし
+ * 作成者:T.M
+ * 作成日:2015.06.14
+ */
+function afterCreateClassList(elem, time){
+	//setTimeoutのコールバック関数前にダイアログ自身への参照を保存する
+	var $this = $(elem);
+	//時間が入力されていなければ初期値を入れる
+	time = time === void(0)? WAIT_DEFAULT : time;
+	setTimeout(function(){
+		//ダイアログの直下の子のクラス名を取得する
+		var className = $this.children().eq(0).attr(CLASS).split(' ')[0];
+		//変数に予約一覧テーブルのjsonの連想配列を入れる
+		var lessonTable = creator.json[className].table;
+		// 時間割1限分の生徒の合計人数が入った連想配列を作る
+		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
+		//予約一覧テーブルの値を置換する
+		lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
+		$('.lessonTable').show();
+	},time);
+};
+
 //予約ダイアログ用設定
 dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		// 幅を設定する。
@@ -1254,20 +1330,16 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 			//読み込んだテーブルのデータを消す
 			delete creator.json[STR_MEMBER_INFORMATION].table;
 		},
+		//子が閉じられたときにコールされる関数を登録する
+		childClose:function(){
+			var thisClass = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
+			//テーブルを更新する
+			thisClass.openTagTable(thisClass.queryReplaceData, thisClass.dialogObject, thisClass.title);
+			afterCreateClassList(thisClass.dialogDom, 1);	//予約一覧を作った後の処理を行う
+		},
+		//ダイアログを開いた直後の処理
 		open 			:function(){
-			//setTimeoutのコールバック関数前にダイアログ自身への参照を保存する
-			var $this = $(this);	
-			setTimeout(function(){
-				//ダイアログの直下の子のクラス名を取得する
-				var className = $this.children().eq(0).attr(CLASS).split(' ')[0];
-				//変数に予約一覧テーブルのjsonの連想配列を入れる
-				var lessonTable = creator.json[className].table;
-				// 時間割1限分の生徒の合計人数が入った連想配列を作る
-				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
-				//予約一覧テーブルの値を置換する
-				lessonReservedTableValueInput('.lessonTable', lessonTable, "callReservedLessonValue", timeStudentsCount);
-				$('.lessonTable').show();
-			},1);
+			afterCreateClassList(this, 1);	//予約一覧を作った後の処理を行う
 		},
 		//イベント
 		event:function(){
@@ -1291,6 +1363,7 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 					var titleDate = changeJapaneseDate(date);
 					// 確認ダイアログにしかるべき値を挿入する関数を実行する
 					insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
+					$prevDialog.registerChild($nextDialog);	//開くダイアログを子として登録する
 					//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
 					$nextDialog.openTag(sendObject,
 							{
@@ -1339,6 +1412,8 @@ dialogOption['memberReservedConfirmDialog'] = {
 		        		}
 			
 						$(this).dialog(CLOSE);			//ダイアログを閉じる
+						this.dialogClass.onClose();					//自分が閉じられることを親に伝える
+						this.dialogClass.cutParentRelation();		//親子の縁を切る
 		        	}
 		        },
 		        //いいえボタン
