@@ -2244,6 +2244,8 @@ function setProfileUpdate() {
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = getInutData('memberInfo');
+		//ユーザ番号を追加する
+		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//データべベースにクエリを発行してデータを更新する
 		setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
 	})
@@ -2263,6 +2265,8 @@ function setPasswordUpdate() {
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = getInutData('postPass');
+		//ユーザ番号を追加する
+		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//新しいパスワードと確認のパスワードが一致すれば登録する
 		if(queryReplaceData.newPass === queryReplaceData.password) {
 			//データべベースにクエリを発行してデータを更新する
@@ -2333,6 +2337,7 @@ replaceTableOption['userListInfoTable'] = {
  * 作成者　:T.Yamamoto
  */
 function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
+	var counter = 0;
 	//inputタグの数ループする
 	$('.' + inputDataParent + ' input[type="text"]').each(function(){
 		//入力された値が空白でなければ
@@ -2389,15 +2394,15 @@ function replaceTableQuery(queryArrayKey) {
  */
 function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 	//対象のボタンがクリックされた時の処理
-	$('.' + inputDataParent + ' button').click(function(){
+	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"').click(function(){
 		//クエリを初期状態を保存する
 		var queryDefault = creator.json[queryArrayKey].db_getQuery;
 		//クエリの置換フラグが追記のとき
-		if (replaceTableOption[queryArrayKey] == 'add') {
+		if (replaceTableOption[queryArrayKey].replaceFlag == 'add') {
 			//クエリに追記を行う関数を実行する
 			addQueryExtractionCondition(inputDataParent, queryArrayKey);
 		//置換フラグが置換のとき
-		} else if (replaceTableOption[queryArrayKey] == 'replace') {
+		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
 			//クエリの置換を行う関数を実行する
 			replaceTableQuery(queryArrayKey);
 		}
@@ -2411,23 +2416,23 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 		//DBから取得した値があった時の処理
 		if(creator.json[queryArrayKey].table[0]){
 			//テーブルを消す
-			$('.' + targetTableClassName).remove();
+			$('.' + queryArrayKey).remove();
 			//テーブルを作り直す
-			creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
+			creator.outputTagTable(queryArrayKey,queryArrayKey,'body');
 			//テーブルの値の置換が必要な場合は置換を行う
 			if(replaceTableOption[queryArrayKey].replaceTableValuefunction) {
 				//変更の必要があるテーブルの配列を変数に入れる
-				var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
+				var targetTableArray = creator.json[queryArrayKey][TAG_TABLE];
 				// 予約中テーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput('.' + queryArrayKey, targetTableArray, replaceTableOption[queryArrayKey].replaceTableValuefunction);
 			}
 			//作ったテーブルをしかるべき場所に移動する
-			$('.' + queryArrayKey).after(replaceTableOption[queryArrayKey].addDomPlace);
+			$(replaceTableOption[queryArrayKey].addDomPlace).after($('.' + queryArrayKey));
 		} else {
 			alert('検索結果が見つかりませんでした');
 		}
 		// クエリを最初の状態に戻す
-		creator.json[queryArrayKey].db_getQuery = query;
+		creator.json[queryArrayKey].db_getQuery = queryDefault;
 	});
 
 }
