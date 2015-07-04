@@ -151,7 +151,18 @@
 				clickCalendar('eachDateLessonDate');
 				replaceTableTriggerClick('searchList', 'userListInfoTable');
 
-
+				
+				//予約一覧ダイアログを作る
+				var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
+					// 日ごとダイアログ領域を作る
+					creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
+				});
+				
+				// 講座のカレンダーを作り、クリックでダイアログ作成を作る
+				var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
+				lessonCalendar.create();	//カレンダーを実際に作成する
+				//デバッグコード　ヘッダー消し
+				$('header', document).css('visibility', 'hidden');
 			});
 			</script>
 		</div>

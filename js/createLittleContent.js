@@ -22,6 +22,11 @@ var uaName = 'unknown';
 var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
+//定数定義
+ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
+
+
+
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
   if (appVersion.indexOf('msie 6.') != -1) {
@@ -180,7 +185,7 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		var titleDate = changeJapaneseDate(dateText);
 		//講座一覧ダイアログを開く
 		this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-				{url:URL_GET_JSON_STRING_PHP, key:ADMIN_EACH_DAY_LESSON_TABLE, domName:ADMIN_EACH_DAY_LESSON_TABLE, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
+				{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
 				titleDate
 		);
 	}
@@ -297,7 +302,8 @@ function adminCalendar(selector, dialog) {
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
 	
-	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	//@mod 2015.0704 T.Masuda 引数にない変数を使おうとしているのでコメントアウトしました。
+	//this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する
 	this.calendarOptions = calendarOptions[this.calendarName];
 }
@@ -2183,7 +2189,7 @@ function clickCalendar(selector) {
  * 作成者:T.Yamamoto
  * 作成日:2015.06.27
  */
-function getInutData(selector) {
+function getInputData(selector) {
 	//結果の変数を初期化する
 	var resultArray = {};
 	//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
@@ -2243,7 +2249,7 @@ function setProfileUpdate() {
 	//更新ボタンが押された時の処理
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
-		var queryReplaceData = getInutData('memberInfo');
+		var queryReplaceData = getInputData('memberInfo');
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//データべベースにクエリを発行してデータを更新する
@@ -2264,7 +2270,7 @@ function setPasswordUpdate() {
 	//更新ボタンが押された時の処理
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
-		var queryReplaceData = getInutData('postPass');
+		var queryReplaceData = getInputData('postPass');
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//新しいパスワードと確認のパスワードが一致すれば登録する
