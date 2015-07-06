@@ -72,6 +72,7 @@ STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
 STR_CENTER_CENTER								= 'center center';
 STR_MEMBER_RESERVED_CONFIRM_DIALOG				= 'memberReservedConfirmDialog';
 STR_EVENT										= 'event';
+STR_COLSPAN										= 'colspan';
 VALUE_0_5EM										= '0.5em';
 STR_MEMBER_INFORMATION							= 'memberInfomation';
 STR_REPLACE_TABLE								= 'replaceTable';
@@ -1013,8 +1014,8 @@ function createTag(){
 			//各domNodeに属性の値を指定していく
 			$firstRow.children().eq(objectCounter++)
 				.addClass(this.getClassName(config, column))
-				.attr(STR_STYLE, this.getStyle(config, column)
-			);
+				.attr(STR_STYLE, this.getStyle(config, column))
+				.attr(STR_COLSPAN, this.getColspan(config, column));
 		}
 		
 		//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
@@ -1067,6 +1068,22 @@ function createTag(){
 	}
 	
 	/*
+	 * 関数名:getColspan
+	 * 概要  :列設定のJSONからセルに設定するcolspan属性の値を取得する
+	 * 引数  :Object configNode:設定データを定義したオブジェクト
+	 * 　　  :String key:列名
+	 * 返却値 :int:colspanの値を返す。取得できなけれ空文字を出す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.07.04
+	 */
+	this.getColspan = function(configNode, key){
+		//keyで指定された列のオブジェクトを取得する
+		var ret = this.getConfigColumn(configNode, key);
+		//列名を取得して返す。取得できなければ空文字を返す
+		return ret['colspan'] !== void(0)? ret['colspan']: "";
+	}
+	
+	/*
 	 * 関数名:getClassName
 	 * 概要  :列設定のJSONからセルに設定するクラス名を取得する
 	 * 引数  :Object configNode:設定データを定義したオブジェクト
@@ -1082,6 +1099,7 @@ function createTag(){
 		//列名を取得して返す。取得できなければ空文字を返す
 		return ret['className'] !== void(0)? ret['className']: "";
 	}
+	
 	/*
 	 * 関数名:getStyle
 	 * 概要  :列設定のJSONからセルに設定するスタイルを取得し、セットする
