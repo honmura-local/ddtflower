@@ -24,8 +24,9 @@ var appVersion = window.navigator.appVersion.toLowerCase();
  
 //定数定義
 ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
-
-
+NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
+PAGING 							= 'paging';							//ページングのクラス名
+PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -2314,7 +2315,9 @@ replaceTableOption['reservedLessonTable'] = {
 	//置換するkey名
 	replaceQueryKey:'lesson_name',
 	//テーブルの値を置換する関数名
-	replaceTableValuefunction:'callMemberLessonValue'
+	replaceTableValuefunction:'callMemberLessonValue',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'予約中の授業が見つかりませんでした。'
 }
 //受講済み授業テーブル
 replaceTableOption['finishedLessonTable'] = {
@@ -2329,7 +2332,9 @@ replaceTableOption['finishedLessonTable'] = {
 	//テーブルの値を置換する関数名
 	replaceTableValuefunction:'callMemberLessonValue',
 	//ページングの追加先
-	addPagingPlace:'.tabLink[href="#finishedLesson"]'
+	addPagingPlace:'.tabLink[href="#finishedLesson"]',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'受講済みの授業が見つかりませんでした。'
 }
 //管理者画面、日ごと授業一覧
 replaceTableOption['eachDayReservedInfoTable'] = {
@@ -2342,7 +2347,9 @@ replaceTableOption['eachDayReservedInfoTable'] = {
 	//置換するkey名
 	replaceQueryKey:'lesson_date',
 	//テーブルの値を置換する関数名
-	replaceTableValuefunction:'callEachDayReservedValue'
+	replaceTableValuefunction:'callEachDayReservedValue',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'この日の予約者はいません'
 }
 
 //管理者画面、ユーザ一覧
@@ -2350,7 +2357,9 @@ replaceTableOption['userListInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'add',
 	//テーブルのafterでの追加先
-	addDomPlace:'.searchUser'
+	addDomPlace:'.searchUser',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'検索結果が見つかりませんでした。'
 }
 
 /*
@@ -2431,32 +2440,13 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
 			//クエリの置換を行う関数を実行する
 			replaceTableQuery(queryArrayKey);
-		}
-		//テーブルのjsonの値が既にあれば
-		if(creator.json[queryArrayKey].table[0]){
-			//テーブルのjsonを初期化する
-			creator.json[queryArrayKey].table = {};
-		}
-		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[queryArrayKey], queryArrayKey);
-		//DBから取得した値があった時の処理
-		if(creator.json[queryArrayKey].table[0]){
-			//テーブルを消す
-			$('.' + queryArrayKey).remove();
-			//テーブルを作り直す
-			creator.outputTagTable(queryArrayKey,queryArrayKey,'body');
-			//テーブルの値の置換が必要な場合は置換を行う
-			if(replaceTableOption[queryArrayKey].replaceTableValuefunction) {
-				//変更の必要があるテーブルの配列を変数に入れる
-				var targetTableArray = creator.json[queryArrayKey][TAG_TABLE];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.' + queryArrayKey, targetTableArray, replaceTableOption[queryArrayKey].replaceTableValuefunction);
+			if(replaceTableOption[queryArrayKey].addPagingPlace) {
+				$(DOT + PAGING_AREA).remove();
+				var addQuery = tablePaging(queryArrayKey, 15);
+				creator.json[queryArrayKey].db_getQuery += addQuery;
 			}
-			//作ったテーブルをしかるべき場所に移動する
-			$(replaceTableOption[queryArrayKey].addDomPlace).after($('.' + queryArrayKey));
-		} else {
-			alert('検索結果が見つかりませんでした');
 		}
+		tableReload(queryArrayKey);
 		// クエリを最初の状態に戻す
 		creator.json[queryArrayKey].db_getQuery = queryDefault;
 	});
@@ -2487,7 +2477,7 @@ function tableReload(reloadTableClassName) {
 	//DBから取得した値があった時の処理
 	if(creator.json[reloadTableClassName].table[0]){
 		//テーブルを作り直す
-		creator.outputTagTable(reloadTableClassName,reloadTableClassName,'body');
+		creator.outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
 		//テーブルの値の置換が必要な場合は置換を行う
 		if(replaceTableOption[reloadTableClassName].replaceTableValuefunction) {
 			//変更の必要があるテーブルの配列を変数に入れる
@@ -2495,11 +2485,12 @@ function tableReload(reloadTableClassName) {
 			// 予約中テーブルのテーブルの値をしかるべき値にする
 			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 		}
-		//作ったテーブルをしかるべき場所に移動する
-		$(replaceTableOption[reloadTableClassName].addDomPlace).after($(DOT + reloadTableClassName));
 	} else {
-		//$(replaceTableOption[queryArrayKey].addDomPlace).after('<p>予約中の授業はありません</p>');
+		$(STR_BODY).append('<div class="' + reloadTableClassName + '"><div>');
+		$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
 	}
+	//作ったテーブルをしかるべき場所に移動する
+	$(replaceTableOption[reloadTableClassName].addDomPlace).after($(DOT + reloadTableClassName));
 }
 
 /* 
@@ -2603,20 +2594,70 @@ function getPagingCount(pagingTargetTable, displayNumber) {
 		//ループでページングを作る
 		while(resultPaging = recordCount - (displayCount * pagingCounter) >= 0){
 			//ページングボタンを指定要素の先に追加する
-			$('.pagingArea').append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+			$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
 			//ページングボタンが初回の時は
 			if(pagingCounter == 1) {
 				//現在のページを表すクラスを付ける
-				$('.paging').eq(0).addClass('nowPage');
+				$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
 			}
 			pagingCounter++;
 		}
 	} else {
 		//ページングボタンを指定要素の先に追加する
-		$('.pagingArea').append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+		$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
 		//現在のページを表すクラスを付ける
-		$('.paging').eq(0).addClass('nowPage');
+		$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
 	}
+}
+
+/* 
+ * 関数名:setTableReloadExecute
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :tableClassName:テーブルのクラス名
+ 		:addQueryString:クエリに追加する文字列
+ *       defaultQuery:デフォルトのクエリ
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function setTableReloadExecute(tableClassName, addQueryString, defaultQuery) {
+	//クエリに文字列を追加する
+	creator.json[tableClassName].db_getQuery += addQueryString;
+	//クエリからテーブルを作る
+	tableReload(tableClassName);
+	//クエリを追加前に戻す
+	creator.json[tableClassName].db_getQuery = defaultQuery;
+}
+
+/* 
+ * 関数名:getPagingMax
+ * 概要  :ページングの最大値を取得し、次のページングに行く
+ * 引数  :paging:ページングのクラス名
+ * 返却値  :max + 1 : 次のページングの値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingMax(paging) {
+	//最大値を0とする
+	var max = 0;
+	//現在のページのクラスをとる
+	$(paging).removeClass(NOW_PAGE);
+	// 要素から最大値を走査する
+	$(paging).each(function(){
+		//現在の値を取得する
+		var current = $(this).text();
+		//現在のテキストに1を足す
+		$(this).text(current + 1);
+		//現在の値がmaxより大きく、かつ数字の場合はmaxに現在の値を代入する
+		if (current > max && current.match(/[0-9][0-9]/)) {
+			//現在の値が最大値になる
+			max = current;
+		}
+	});
+	//現在の最大値のクラスを付ける
+	$(paging + ':contains(' + (max+1) + ')' ).addClass(NOW_PAGE);
+	//最大値に1を足したものを返す
+	return max + 1;
 }
 
 /* 
@@ -2640,29 +2681,23 @@ function tablePaging(pagingTargetTable, displayNumber) {
 	//追加するクエリ
 	var addQuery = ' LIMIT '　+ minRecord + ',' + maxRecord;
 	//タブリンクがクリックされたときにテーブルを読み込む
-	$(replaceTableOption[pagingTargetTable].addPagingPlace + ', button').click(function(){
-		//クエリに追加する
-		creator.json[pagingTargetTable].db_getQuery += addQuery;
-		//テーブルを作る
-		tableReload(pagingTargetTable)
-		//クエリを基に戻す
-		creator.json[pagingTargetTable].db_getQuery = defaultQuery;
+	$(replaceTableOption[pagingTargetTable].addPagingPlace).click(function(){
+		//クエリを実行してテーブルを作る
+		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
 	});
 	//ページングがクリックされた時の処理
-	$('.paging').click(function(){
+	$(DOT + PAGING).click(function(){
 		//全てのページングからnowPageクラスを取り除く
-		$('.paging').removeClass('nowPage');
+		$(DOT + PAGING).removeClass(NOW_PAGE);
 		//クリックされた要素の番号を取得する
 		var nowPaging = $(this).text();
 		//クリックされた要素にnowPageクラスを追加する
-		$(this).addClass('nowPage');
+		$(this).addClass(NOW_PAGE);
 		//クエリにLIMITを追加する
-		addQuery = ' LIMIT '　+ (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
-		//クエリに追加する
-		creator.json[pagingTargetTable].db_getQuery += addQuery;
-		//テーブルを作る
-		tableReload(pagingTargetTable)
-		//クエリを基に戻す
-		creator.json[pagingTargetTable].db_getQuery = defaultQuery;
+		var pagingAddQuery = ' LIMIT '　+ (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
+		//クエリを実行してテーブルを作る
+		setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
 	});
+	//加える文字列w返す
+	return addQuery;
 }
