@@ -2327,7 +2327,9 @@ replaceTableOption['finishedLessonTable'] = {
 	//置換するkey名
 	replaceQueryKey:'lesson_name',
 	//テーブルの値を置換する関数名
-	replaceTableValuefunction:'callMemberLessonValue'
+	replaceTableValuefunction:'callMemberLessonValue',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#finishedLesson"]'
 }
 //管理者画面、日ごと授業一覧
 replaceTableOption['eachDayReservedInfoTable'] = {
@@ -2373,10 +2375,10 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 			//カウンターが0でなければ
 			if(counter != 0){
 				//追加する変数を作る
-				var addString = ' AND ' + attrName + "='" + inputData + "'";
+				var addString = ' AND ' + attrName + " LIKE '" + inputData + "%'";
 			} else {
 				//追加する変数を作る
-				var addString = ' WHERE ' + attrName + "='" + inputData + "'";
+				var addString = ' WHERE ' + attrName + " LIKE '" + inputData + "%'";
 				counter++;
 			}
 			//クエリに文字を付け加える
@@ -2475,10 +2477,13 @@ function tableReload(reloadTableClassName) {
 		//テーブルのjsonを初期化する
 		creator.json[reloadTableClassName].table = {};
 	}
-			//テーブルを作るためのjsonをDBから持ってきた値で作る
+	//テーブルを作るためのjsonをDBから持ってきた値で作る
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[reloadTableClassName], reloadTableClassName);
-	//テーブルを消す
-	$(DOT + reloadTableClassName).remove();
+	//すでにテーブルがあるならテーブルを消す
+	if ($(DOT + reloadTableClassName)) {
+		//テーブルを消す
+		$(DOT + reloadTableClassName).remove();
+	}
 	//DBから取得した値があった時の処理
 	if(creator.json[reloadTableClassName].table[0]){
 		//テーブルを作り直す
@@ -2570,3 +2575,94 @@ function nowDatePaging(clickSelectorParent) {
 	});
 }
 
+
+/* 
+ * 関数名:getPagingCount
+ * 概要  :ページングの個数を取得する
+ * 引数  :pagingTargetTable:ページング対象となるテーブル名
+ *       displayNumber:ページングで表示する件数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingCount(pagingTargetTable, displayNumber) {
+	//DBからレコードのページングにしたいテーブルを取得する
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[pagingTargetTable], pagingTargetTable);
+	//テーブルの行数を取得する
+	var recordCount = creator.json[pagingTargetTable].table.length;
+	//表示件数の変数を作る
+	var displayCount = displayNumber;
+	//ページングの初期値を1にして変数に入れる
+	var pagingCounter = 1;
+	//ページングの値を求めるための結果変数
+	var resultPaging = recordCount - (displayCount * pagingCounter);
+	//ページング領域を作る
+	$(replaceTableOption[pagingTargetTable].addDomPlace).after('<div class="pagingArea textCenter"></div>');
+	//ページングした結果が0以上の時
+	if(resultPaging >= 0) {
+		//ループでページングを作る
+		while(resultPaging = recordCount - (displayCount * pagingCounter) >= 0){
+			//ページングボタンを指定要素の先に追加する
+			$('.pagingArea').append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+			//ページングボタンが初回の時は
+			if(pagingCounter == 1) {
+				//現在のページを表すクラスを付ける
+				$('.paging').eq(0).addClass('nowPage');
+			}
+			pagingCounter++;
+		}
+	} else {
+		//ページングボタンを指定要素の先に追加する
+		$('.pagingArea').append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+		//現在のページを表すクラスを付ける
+		$('.paging').eq(0).addClass('nowPage');
+	}
+}
+
+/* 
+ * 関数名:tablePaging
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :pagingTargetTable:ページング対象となるテーブル名
+ *       displayNumber:ページングで表示する件数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function tablePaging(pagingTargetTable, displayNumber) {
+	//ページング領域を作る
+	getPagingCount(pagingTargetTable, displayNumber);
+	//デフォルトのクエリを取得する
+	var defaultQuery = creator.json[pagingTargetTable].db_getQuery;
+	//最大の表示数
+	var maxRecord = displayNumber;
+	//最初の表示数
+	var minRecord = 1;
+	//追加するクエリ
+	var addQuery = ' LIMIT '　+ minRecord + ',' + maxRecord;
+	//タブリンクがクリックされたときにテーブルを読み込む
+	$(replaceTableOption[pagingTargetTable].addPagingPlace + ', button').click(function(){
+		//クエリに追加する
+		creator.json[pagingTargetTable].db_getQuery += addQuery;
+		//テーブルを作る
+		tableReload(pagingTargetTable)
+		//クエリを基に戻す
+		creator.json[pagingTargetTable].db_getQuery = defaultQuery;
+	});
+	//ページングがクリックされた時の処理
+	$('.paging').click(function(){
+		//全てのページングからnowPageクラスを取り除く
+		$('.paging').removeClass('nowPage');
+		//クリックされた要素の番号を取得する
+		var nowPaging = $(this).text();
+		//クリックされた要素にnowPageクラスを追加する
+		$(this).addClass('nowPage');
+		//クエリにLIMITを追加する
+		addQuery = ' LIMIT '　+ (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
+		//クエリに追加する
+		creator.json[pagingTargetTable].db_getQuery += addQuery;
+		//テーブルを作る
+		tableReload(pagingTargetTable)
+		//クエリを基に戻す
+		creator.json[pagingTargetTable].db_getQuery = defaultQuery;
+	});
+}

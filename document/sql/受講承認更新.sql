@@ -5,12 +5,12 @@ SET
 	user_classwork_cost = {{受講料}}
 	,use_point = {{使用ポイント※但し受講料より多い場合は受講料と同額}}
 	,late_time = {{遅刻時間}}
-    ,update_datetime = NOW()
+	,update_datetime = NOW()
 WHERE
-	id = {{ユーザID}}
+	user_key = {{ユーザID}}
 
 # 備品代情報の更新
-INSERT_INTO
+INSERT INTO
 	commodity_sell(
 		sell_datetime
 		, sell_number
@@ -33,6 +33,7 @@ INSERT_INTO
 		,{{commodity_key※セレクトで指定した値}}
 		,NOW()
 	)
+
 UPDATE
 	commodity_sell
 SET

@@ -116,6 +116,9 @@
 					// 予約中授業のテーブルを作る
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
+
+
+				tablePaging('finishedLessonTable', 15);
 				//受講済み授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
 				//受講済みの授業があったときテーブルを作る

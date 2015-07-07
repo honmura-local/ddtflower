@@ -106,7 +106,6 @@
 				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-
 				// 受講承認一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
 				//受講承認一覧タブのリスト
@@ -175,10 +174,6 @@
 				var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
 					// 授業詳細ダイアログ領域を作る
 					creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-					//授業データ
-					creator.outputTag('lessonData', 'lessonData', CHAR_DOT + LESSON_DETAIL_DIALOG);
-					//ボタン群
-					creator.outputTag('buttonArea', 'buttonArea', CHAR_DOT + LESSON_DETAIL_DIALOG);
 				});
 			});
 			</script>

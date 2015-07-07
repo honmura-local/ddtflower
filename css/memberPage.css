@@ -357,7 +357,7 @@ label,
  * 作成日 :2015.06.11
  */
 .advertise, .tab-container {
-	border-radius: 3px;
+	border-radius: 3px;		/* 角を3px丸くする */
 }
 
 /* パスワード変更領域 */
@@ -453,7 +453,8 @@ label,
 .lessonInfo,
 .attention,
 .confirmText,
-.memberInfomation {
+.memberInfomation,
+.lessonStatus {
 	width: 430px;		/* ダイアログの幅を430pxにする */
 }
 
@@ -748,6 +749,30 @@ label,
 }
 /* 授業状態注釈領域の終わり */
 
+/* テーブルページング領域 */
+/* 
+ * セレクタ :.paging
+ * 概要   :ページングクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.paging {
+	padding: 5px;			/* 要素の幅を5px広げる */
+	cursor: pointer;		/* マウスオーバー時にカーソルを指にする */
+}
+
+/* 
+ * セレクタ :.nowPage
+ * 概要   :ページング現在のページ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.nowPage {
+	color: red;				/* 文字色を赤色にする */
+}
+
+/* テーブルページング領域終わり */
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -852,7 +877,8 @@ label,
 	.lessonInfo,
 	.attention,
 	.confirmText,
-	.memberInfomation {
+	.memberInfomation,
+	.lessonStatus {
 		width: 280px;		/* ダイアログの幅を430pxにする */
 	}
 
@@ -879,6 +905,16 @@ label,
 		margin-right: 0.5em;
 	}
 	/* 予約ダイアログ、予約確認ダイアログ領域終わり */
+
+	/* 
+	 * セレクタ :.paging
+	 * 概要   :ページング領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.07
+	 */
+	 .paging {
+	 	font-size: 16px;		/* フォントサイズを16pxにする */
+	 }
 }
 
 /* スマホ用微調整 */

@@ -186,6 +186,27 @@
 	margin: 0 1em;			/* 左右に1文字分の余白をとる */
 }
 
+/* 管理者　カレンダー領域 */
+/* 
+ * セレクタ:.adminCalendar.calendar
+ * 概要   :管理者カレンダー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.adminCalendar.calendar {
+	width: 100%;		/* 横幅を100%にする */
+}
+
+/* 
+ * セレクタ:.adminCalendar td .ui-state-default
+ * 概要   :管理者カレンダークリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.adminCalendar td .ui-state-default {
+	padding: 10px 0px;	/* 上下に幅を10px広げる */
+}
+/* 管理者　カレンダー領域終わり */
 
 /* 管理者　授業詳細領域 */
 /* 
@@ -196,16 +217,15 @@
  */
 .lessonData, .buttonArea {
 	width: 280px;		/* 幅を280pxにする */
-	border: 1px solid #999; 
 }
 
 /* 
- * セレクタ:.lessonData input:[type="text"]
+ * セレクタ:.lessonData input:[type="text"], .lessonData input[type="number"]
  * 概要   :授業データ　テキストボックス領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.30
  */
-.lessonData input[type="text"] {
+.lessonData input[type="text"], .lessonData input[type="number"] {
 	width: 50px;		/* テキストボックスの幅を50pxにする */
 }
 
@@ -227,7 +247,7 @@
  */
 .lessonData li label {
 	display: inline-block;	/* インラインブロック要素にする */
-	width: 27%;				/* 幅を27%で統一する */
+	width: 30%;				/* 幅を30%で統一する */
 }
 
 /* 
@@ -241,14 +261,24 @@
 }
 
 /* 
- * セレクタ:.memoTextare
+ * セレクタ:.memoTextarea
  * 概要   :「メモ」のテキストエリア領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.30
  */
-.memoTextare {
+.memoTextarea {
 	width: 65%;				/* 幅を65%にする */
 	height: 60px;			/* 縦幅を60pxにする */
+}
+
+/* 
+ * セレクタ:.buttonArea .updateButton
+ * 概要   :「メモ」のテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.buttonArea .updateButton {
+	margin-top: 0;			/* 上の余白を0にする */
 }
 
 /* 

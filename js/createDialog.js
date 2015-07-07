@@ -20,13 +20,6 @@ PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイア
 CLASS_HEADER					= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
 
-RESERVED_LESSON_TABLE			= 'reservedLessonTable';			//予約中授業のテーブル
-TAG_TR							= ' tr';							//trタグ
-TAG_TABLE						= 'table';							//tableタグ
-CANCEL_LESSON_DIALOG_CONTENT	= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
-CANCEL_LESSON_DIALOG 			= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
-ADMIN_EACH_DAY_LESSON_TABLE 	= 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
-ADMIN_LESSON_LIST_DIALOG		= 'adminLessonListDialog';			//管理者日ごとダイアログ
 ADMIN_LESSON_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
 CLASS							= 'class';							//クラス
 TABLE							= 'table';							//テーブル
@@ -1478,9 +1471,15 @@ dialogOption[ADMIN_LESSON_LIST_DIALOG] = $.extend(true, {}, dialogOption[STR_RES
 		//ダイアログが開いたときのイベント
 		open:function(){
 			//setTimeoutのコールバック関数前にダイアログ自身への参照を保存する
-			var $this = $(this);	
+			var $this = $(this);
 			//一定時間がたった後に実行する
 			setTimeout(function(){
+				//変数に予約一覧テーブルのjsonの連想配列を入れる
+				var lessonTable = creator.json['adminLessonInformation'].table;
+				// 時間割1限分の生徒の合計人数が入った連想配列を作る
+				var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
+				//予約一覧テーブルの値を置換する
+				lessonReservedTableValueInput('.lessonTable', lessonTable, "callAdminReservedLessonValue", timeStudentsCount);
 				//テーブルは最初は隠れているので、明示的に表示する
 				 $(TABLE, $this).show();
 			},1);
@@ -1538,6 +1537,13 @@ dialogOption[LESSON_DETAIL_DIALOG] = {
 		close:function(){
 			//前のダイアログから送信されたデータを破棄する
 			delete this.dialogClass.queryReplaceData;
+			$('.buttonArea').remove();
+		},
+		open:function() {
+			//ボタン群
+			creator.outputTag('buttonArea', 'buttonArea', CHAR_DOT + LESSON_DETAIL_DIALOG);
+			//ボタンの見た目を制御する
+			$('input[type="button"]').button();
 		}
 };
 

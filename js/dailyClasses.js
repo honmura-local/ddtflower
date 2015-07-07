@@ -613,6 +613,35 @@ var callEachDayReservedValue = function(tableName, roopData, counter, rowNumber)
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(end_time);
 };
 
+/* 
+ * 関数名:callAdminReservedLessonValue
+ * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
+ * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+ 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 counter:カウンタ変数
+ 		 rowNumber:行番号
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+var callAdminReservedLessonValue = function(tableName, roopData, counter, rowNumber, timeTableStudents) {
+	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+	recordData = roopData[counter];
+	// 開始日時と終了時刻を組み合わせた値を入れる
+	timeSchedule = buildHourFromTo(recordData);
+	var rest;			//残席
+	var lessonStatus;	//状況
+	//残席を記号にする
+	rest = getRestMark(recordData, timeTableStudents);
+	//状況を入れる
+	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
+	// 残席の表示を正規の表示にする
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(rest);
+	// 残席の表示を正規の表示にする
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
+};
 
 /* 
  * 関数名:reservedLessonValueInput
