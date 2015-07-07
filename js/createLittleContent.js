@@ -2110,7 +2110,7 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 	//置換済みでなければ置換する
 	if(!queryReplaceData.userId.value) {
 		send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
-	//置換済みであれば値をそのままｍ結合する	
+	//置換済みであれば値をそのまま結合する	
 	} else {
 		send = $.extend(true, {}, sendQueryJsonArray, queryReplaceData);
 	}
@@ -2125,13 +2125,17 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 		dataType: STR_TEXT,					//テキストデータを返してもらう
 		type: STR_POST,						//POSTメソッドで通信する
 		success:function(ret){				//通信成功時の処理
-			//変更者:T.Yamamoto 日付:2015.06.26 内容:更新成功の条件に更新データが0件でないことを追加しました。
+			//受け取ったjson文字列を連想配列にする
+			var resultJsonArray = JSON.parse(ret);
 			//更新成功であれば
-			if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
+			//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
+			//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
+			//更新した内容が1件以上の時更新成功メッセージを出す
+			if(resultJsonArray.message >= 1) {
 				alert(successMessage);	//更新成功のメッセージを出す
 			//更新失敗であれば
 			} else {
-				alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
+				alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
 			}
 		},
 		error:function(xhr, status, error){	//通信失敗時の処理
@@ -2175,7 +2179,7 @@ function clickCalendar(selector) {
 		changeMonth: true,
 		// 年をセレクトボックスで選択できるようにする
 		changeYear: true,
-		// 選択できる年は1910年から2050年の範囲にする
+		// 選択できる年は1910年から2100年の範囲にする
 		yearRange: '1910:2100',
 	});
 }
@@ -2414,7 +2418,7 @@ function replaceTableQuery(queryArrayKey) {
  */
 function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 	//対象のボタンがクリックされた時の処理
-	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"').click(function(){
+	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"]').click(function(){
 		//クエリを初期状態を保存する
 		var queryDefault = creator.json[queryArrayKey].db_getQuery;
 		//クエリの置換フラグが追記のとき
@@ -2457,129 +2461,112 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 
 }
 
-/*
- * 関数名 :lessonThemeSerch
- * 引数  　:element elems:記事リストのDOM
- * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
- * 戻り値　:なし
- * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
- * 作成日　:2015.06.24
- * 作成者　:T.Yamamoto
+/* 
+ * 関数名:tableReload
+ * 概要  :テーブルをリロードする
+ * 引数  :reloadTableClassName:リロードする対象のテーブルのクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.06
  */
-function lessonThemeSearch() {
-	//テーマボタンがクリックされた時のイベントを設定する
-	$('.selectThemeButton').click(function() {
-		//テーマのセレクトボックスの値を取得する
-		var selectTheme = $('.selectThemebox').val();
-		//対象テーブルのクラス名を取得する
-		var targetTableClassName = $(this).parent().next().attr('class');
-		//テーブルの値があれば
-		if(creator.json[targetTableClassName].table[0]){
-			//テーブルを初期化する
-			creator.json[targetTableClassName].table = {};
+function tableReload(reloadTableClassName) {
+	//テーブルのjsonの値が既にあれば
+	if(creator.json[reloadTableClassName].table[0]){
+		//テーブルのjsonを初期化する
+		creator.json[reloadTableClassName].table = {};
+	}
+			//テーブルを作るためのjsonをDBから持ってきた値で作る
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[reloadTableClassName], reloadTableClassName);
+	//テーブルを消す
+	$(DOT + reloadTableClassName).remove();
+	//DBから取得した値があった時の処理
+	if(creator.json[reloadTableClassName].table[0]){
+		//テーブルを作り直す
+		creator.outputTagTable(reloadTableClassName,reloadTableClassName,'body');
+		//テーブルの値の置換が必要な場合は置換を行う
+		if(replaceTableOption[reloadTableClassName].replaceTableValuefunction) {
+			//変更の必要があるテーブルの配列を変数に入れる
+			var targetTableArray = creator.json[reloadTableClassName][TAG_TABLE];
+			// 予約中テーブルのテーブルの値をしかるべき値にする
+			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 		}
-		//jsonに取得したテーマの値を入れる
-		creator.json[targetTableClassName]['lesson_name']['value'] = selectTheme;
-		//クエリをテーマ検索用のものと入れ替える
-		creator.json[targetTableClassName].db_getQuery = creator.json[targetTableClassName].replace_query
-		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[targetTableClassName], targetTableClassName);
-		//DBから取得した値がなかった時の処理
-		if(creator.json[targetTableClassName].table[0]){
-			//注釈を消す
-			$('.' + targetTableClassName).next().remove()
-			//テーブルを消す
-			$('.' + targetTableClassName).remove();
-			//追加先の変数を作る
-			var appendTo;
-			//対象テーブルが予約中授業のテーブルの時、追加先のクラス名を設定する
-			if (targetTableClassName == 'reservedLessonTable') {
-				//予約中授業タブを変数に入れる
-				appendTo = '.alreadyReserved';
-			} else {
-				appendTo = '.finishedLesson';
-			}
-			//テーブルの値が存在するときにテーブルを作る時に
-			if(creator.json[targetTableClassName][TAG_TABLE][0]) {
-				//受講済み授業テーブルを作る
-				creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
-				//注釈を作る
-				creator.outputTag('anotion', 'anotion', appendTo);
-				// 受講済みの連想配列を変数に入れる
-				var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.' + targetTableClassName, targetTableArray, "callMemberLessonValue");
-			}
-		} else {
-			alert('検索結果が見つかりませんでした');
-		}
-	});
+		//作ったテーブルをしかるべき場所に移動する
+		$(replaceTableOption[reloadTableClassName].addDomPlace).after($(DOT + reloadTableClassName));
+	} else {
+		//$(replaceTableOption[queryArrayKey].addDomPlace).after('<p>予約中の授業はありません</p>');
+	}
 }
 
 /* 
- * 関数名:setExtractionCondition
- * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
-   ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
- * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
-         queryArrayKey : クエリが入っている連想配列のkey
- 		 inputDataParent: 走査対象テキストボックスの親のクラス名
+ * 関数名:getDateFormatDB
+ * 概要  :日付オブジェクトからフォーマットをyyyy-mm-dd方式に変換してその文字列を返す(DBに適したフォーマットにする)
+ * 引数  :date:日付型オブジェクト
  * 返却値  :なし
  * 作成者:T.Yamamoto
- * 作成日:2015.07.03
+ * 作成日:2015.07.06
  */
-function setExtractionCondition(eventButtonParent, queryArrayKey, inputDataParent) {
-	//検索ボタンが押された時の処理
-	$('.' + eventButtonParent + ' .searchButton').click(function(){
-		//カウンタ変数を作る
-		var counter = 0;
-		//クエリを取得する
-		var query = creator.json[queryArrayKey].db_getQuery;
-		//inputタグの数ループする
-		$('.' + inputDataParent + ' input[type="text"]').each(function(){
-			//入力された値が空白でなければ
-			if($(this).val() != "") {
-					//入力値を取得する
-					var inputData = $(this).val();
-					//name属性を所得する
-					var attrName = $(this).attr('name');
-				//カウンターが0でなければ
-				if(counter != 0){
-					//追加する変数を作る
-					var addString = ' AND ' + attrName + "='" + inputData + "'";
-					//クエリに文字を付け加える
-					creator.json[queryArrayKey].db_getQuery += addString;
-				} else {
-					//追加する変数を作る
-					var addString = ' WHERE ' + attrName + "='" + inputData + "'";
-					//クエリに文字を付け加える
-					creator.json[queryArrayKey].db_getQuery += addString;
-					counter++;
-				}
-			}
-		});
-		//すでに作られていたテーブルがあれば
-		if(creator.json[queryArrayKey].table) {
-			//テーブルを初期化する
-			creator.json[queryArrayKey].table = {};
-		}
-		//クエリを発行してテーブルを作り直すための連想配列を取得する
-		creator.getJsonFile('php/GetJSONArray.php', creator.json[queryArrayKey], queryArrayKey);
-		if(creator.json[queryArrayKey].table[0]) {
-			//ボタン領域を消す
-			$('.' + queryArrayKey).next().remove();
-			//テーブルを消す
-			$('.' + queryArrayKey).remove();
-			// 日ごと予約者一覧テーブル用のJSON配列を取得する
-
-			//修正したクエリでテーブルのデータを読み込む
-			creator.outputTagTable(queryArrayKey, queryArrayKey, '#userList');
-			//会員一覧タブのボタン群れ
-			creator.outputTag('userListButtons', 'userListButtons', '#userList');
-			//ボタンの見た目を変える
-			$('button, .searchButton, input[type="button"]').button();
-		} else {
-			alert('検索結果が見つかりませんでした');
-		}
-	});
-
+function getDateFormatDB(date) {
+	var year = date.getFullYear();		//年
+	var month = date.getMonth() + 1;	//月
+	var date = date.getDate();			//日
+	//月が1月から9月のとき先頭に0を足す
+	if (month < 10) { month = "0" + month; }
+	//日が1日から9日のとき先頭に0を足す
+	if (date < 10) {  date = "0" + date; }
+	//現在の日付を返す
+	var nowDate = year + "-" + month + "-" + date;
+	//現在日付を返す。
+	return nowDate;
 }
+
+/* 
+ * 関数名:nowDatePaging
+ * 概要  :現在の日付からページング機能を実装する
+ * 引数  :clickSelectorParent:クリックボタンのセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.06
+ */
+function nowDatePaging(clickSelectorParent) {
+	//現在時刻のオブジェクトを作る
+	var nowDateObject = new Date();
+	//日付の文字列を取得する
+	var nowDateString = getDateFormatDB(nowDateObject);
+	//日付をタイトルに入れる
+	$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	//jsonに日付の値を入れる
+	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//対象の要素がクリックされたときに日付を進退する
+	$(DOT + clickSelectorParent + ' a').click(function(){
+		//クリックされた番号を取得する
+		var className = $(this).attr('class');
+		//取得したクラスの名前によって処理を分ける
+		switch(className) {
+			//クリックされたのが2日前の時、日付を2日前にする
+			case 'twoDaysBefore':
+			nowDateObject.setDate(nowDateObject.getDate() - 2);
+			break;
+			//クリックされたのが1日前の時、日付を1日前にする
+			case 'oneDayBefore':
+			nowDateObject.setDate(nowDateObject.getDate() - 1);
+			break;
+			//クリックされたのが1日後の時、日付を1日後にする
+			case 'oneDayAfter':
+			nowDateObject.setDate(nowDateObject.getDate() + 1);
+			break;
+			//クリックされたのが2日後の時、日付を2日後にする
+			case 'twoDayAfter':
+			nowDateObject.setDate(nowDateObject.getDate() + 2);
+			break;
+		}
+		//日付を更新する
+		nowDateString = getDateFormatDB(nowDateObject);
+		//jsonに日付の値を入れる
+		creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+		//テーブルをリロードする
+		tableReload('eachDayReservedInfoTable');
+		//日付をタイトルに入れる
+		$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	});
+}
+

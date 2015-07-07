@@ -17,28 +17,6 @@ INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
 //@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
 PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
 PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
-//文字列定数をここで定義する
-LOGIN_DIALOG					= 'loginDialog';					//ログインダイアログ
-CLASS_LOGIN_DIALOG				= '.loginDialog';					//ログインダイアログのクラスのセレクタ
-CLASS_LOGIN						= '.login';							//ログインボタンのクラスのセレクタ
-CLICK							= 'click';							//クリックイベントの文字列
-EMPTY							= '';								//空文字
-SLASH							= '/';								//スラッシュ記号
-DOT								= '.';								//ドット
-CLOSE							= 'close';							//closeの文字列
-CLASS_HEADER					= '.header';						//ヘッダーのクラス
-PATH_MEMBERPAGE_JSON			= 'source/memberPage.json';			//会員ページのJSON
-PATH_MEMBERCOMMON_JSON			= 'source/memberCommon.json';		//会員ページ共通のJSON
-MEMBERPAGE_HTML					= 'memberPage.html';				//会員ページのHTML
-USER_KEY						= 'user_key';						//ユーザキー
-VALUE							= 'value';							//バリュー
-ID								= 'id';								//ID
-SELECTOR_HEAD_LAST				= 'head link:last';					//headタグの最後のタグ
-PATH_MEMBERPAGE_CSS				= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
-PATH_COURCEGUIDE_CSS			= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
-PATH_ADMINPAGE_CSS				= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
-PATH_CONTACT_CSS				= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
-PATH_DAILYCLASSES_JS			= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
 CLASS_HEADER					= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
 
@@ -1334,6 +1312,9 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		close			:function(){
 			//読み込んだテーブルのデータを消す
 			delete creator.json[STR_MEMBER_INFORMATION].table;
+			//テーブルをリロードする
+			tableReload(RESERVED_LESSON_TABLE);
+
 		},
 		//子が閉じられたときにコールされる関数を登録する
 		childClose:function(){
@@ -1350,35 +1331,56 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		event:function(){
 			//予約決定ダイアログを表示する処理
 			$(document).on(STR_CLICK, SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD, function(){
-
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
 				//予約できる授業の時予約確認ダイアログを出す
 				if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
-					//予約決定ダイアログのクラスインスタンスを取得する
-					var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
 					//レッスン一覧ダイアログを取得する
 					var $prevDialog = $(SELECTOR_RESERVE_LESSON_LIST_DIALOG)[0].dialogClass;
 					//次のダイアログに渡すオブジェクトを作る
 					var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
 							creator.json[STR_MEMBER_INFORMATION].table[rowNum]);
-					//日付を置換前のスラッシュ区切りにする
+					//日付のハイフンを置換前のスラッシュ区切りにする
 					var date = sendObject.lesson_date.replace(/-/g,"/");
 					// 日付を日本語表示にする
 					var titleDate = changeJapaneseDate(date);
-					// 確認ダイアログにしかるべき値を挿入する関数を実行する
-					insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
-					$prevDialog.registerChild($nextDialog);	//開くダイアログを子として登録する
-					//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
-					$nextDialog.openTag(sendObject,
+					//予約が初めてのときに予約ダイアログを開く
+					if (!creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum]['user_work_status'] || creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum]['user_work_status'] == 10) {
+						//予約決定ダイアログのクラスインスタンスを取得する
+						var $nextDialog = $(SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG)[0].dialogClass;
+						// 確認ダイアログにしかるべき値を挿入する関数を実行する
+						insertConfirmReserveJsonDialogValue(sendObject, STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT);
+						$prevDialog.registerChild($nextDialog);	//開くダイアログを子として登録する
+						//予約決定ダイアログを開く。ユーザIDと日付、選択したレコードのデータをまとめてオブジェクトにして渡す
+						$nextDialog.openTag(sendObject,
+								{
+									url:URL_GET_JSON_STRING_PHP, 
+									key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
+									domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
+									appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
+								},
+								titleDate
+						);
+					//すでに予約しているのであればキャンセルダイアログを開く
+					} else if (creator.json[STR_MEMBER_INFORMATION][TAG_TABLE][rowNum]['user_work_status'] == 1) {
+						//予約決定ダイアログのクラスインスタンスを取得する
+						var $nextDialog = $(DOT + CANCEL_LESSON_DIALOG)[0].dialogClass;
+						//creatTagのオブジェクトにキャンセルのデータが入った連想配列を作る
+						creator.json.cancelLessonReplace = sendObject;
+						//キャンセルダイアログのjson配列lessonConfirmに値を直接設定する
+						insertConfirmReserveJsonDialogValue(sendObject, CANCEL_LESSON_DIALOG_CONTENT);
+						//キャンセルダイアログを開く
+						$nextDialog.openTag(
+							sendObject,
 							{
 								url:URL_GET_JSON_STRING_PHP, 
-								key:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT, 
-								domName:STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT,
-								appendTo:SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG
+								key:CANCEL_LESSON_DIALOG_CONTENT,
+								domName:CANCEL_LESSON_DIALOG_CONTENT,
+								appendTo:DOT + CANCEL_LESSON_DIALOG
 							},
 							titleDate
-					);
+						);
+					}
 				}
 			});
 		}

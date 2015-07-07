@@ -145,8 +145,8 @@
 					// 予約キャンセルダイアログのdomを作る
 					creator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
 				});
-				//予約キャンセルダイアログを開くための関数を実行する
-				cancelDialogOpen(cancelLesson, memberInfo['id']);
+				//キャンセルダイアログを予約中授業テーブルから開く処理
+				//cancelDialogOpen(cancelLesson, memberInfo['id']);
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
 				//絞り込みボタン機能を実装する
