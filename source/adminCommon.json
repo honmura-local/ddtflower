@@ -215,11 +215,11 @@
                 },
                 "cost": {
                     "columnName": "入金(円)",
-                    "className":"replaceTextbox"
+                    "className":"replaceTextboxCostCell"
                 },
                 "use_point": {
                     "columnName": "使用pt",
-                    "className":"replaceTextbox"
+                    "className":"replaceTextboxUsePointCell"
                 },
                 "stage_no":{
                     "style":"display:none;"
@@ -352,21 +352,6 @@
         }
     },
     "userListButtons":{
-    	"firstRow":{
-    		"prev":{
-                "class":"prev",
-	    		"type":"button",
-	    		"value":"前へ"
-    		},
-    		"records":{
-    			"text":"1111/9999"
-    		},
-    		"next":{
-                "class":"next",
-	    		"type":"button",
-	    		"value":"次へ"
-    		}
-    	},
     	"secondRow":{
     		"createMail":{
 	    		"type":"button",
@@ -586,5 +571,13 @@
         "classwork_key":{
             "value":""
         }
+    },
+    "replaceTextboxCost":{
+        "type":"number",
+        "name":"cost"
+    },
+    "replaceTextboxUsePoint":{
+        "type":"number",
+        "name":"use_point"
     }
 }

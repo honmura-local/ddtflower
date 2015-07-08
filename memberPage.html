@@ -116,14 +116,8 @@
 					// 予約中授業のテーブルを作る
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
+				//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
 				tablePaging('finishedLessonTable', 15, 6);
-				// //受講済み授業テーブル用のJSON配列を取得する
-				// creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-				// //受講済みの授業があったときテーブルを作る
-				// if(creator.json['finishedLessonTable']['table'][0]) {
-				// 	//受講済み授業テーブルを作る
-				// 	creator.outputTagTable('finishedLessonTable','finishedLessonTable','.finishedLesson');
-				// }
 				//注釈を作る
 				creator.outputTag('anotion', 'anotion', '.tabPanel');
 				

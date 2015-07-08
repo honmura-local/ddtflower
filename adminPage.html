@@ -117,10 +117,12 @@
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');
+				//ページング機能付きでユーザ情報一覧テーブルを作る(レコードの表示数が15、ページングの最大値が9)
+				tablePaging('userListInfoTable', 15, 10);
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+				// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 				//会員一覧タブのリスト
-				creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
+				// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
 				//会員一覧タブのボタン群れ
 				creator.outputTag('userListButtons', 'userListButtons', '#userList');
 				

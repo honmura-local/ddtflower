@@ -2359,7 +2359,9 @@ replaceTableOption['userListInfoTable'] = {
 	//テーブルのafterでの追加先
 	addDomPlace:'.searchUser',
 	//検索結果がなかった時のエラーメッセージ
-	errorMessage:'検索結果が見つかりませんでした。'
+	errorMessage:'検索結果が見つかりませんでした。',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#userList"]'
 }
 
 /*
