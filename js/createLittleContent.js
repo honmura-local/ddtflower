@@ -3,7 +3,7 @@
  * 概要  :小規模の処理の関数を定義する
  * 作成者:T.M
  * 作成日:2015.
- * パス　:/js/createLittleContent.js
+ * パス :/js/createLittleContent.js
  */
 
 /**
@@ -228,7 +228,7 @@ function calendar(selector) {
 /*
  * クラス名:reservedCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :予約カレンダーを作る
  * 作成日:2015.06.10
@@ -245,7 +245,7 @@ function reservedCalendar (selector, dateRange) {
 /*
  * クラス名:myPageReserved
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.10
@@ -262,9 +262,9 @@ function myPageReservedCalendar(selector, dateRange) {
 /*
  * クラス名:memberCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
- * 　　  :int userId:ユーザID
- * 　　  :element dialog:ダイアログへの参照
+ *     :int dateRange:クリック可能な日付の期間
+ *     :int userId:ユーザID
+ *     :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
@@ -289,7 +289,7 @@ function memberCalendar(selector, dateRange, userId, dialog) {
 /*
  * クラス名:adminCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :element dialog:ダイアログへの参照
+ *     :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :管理者のカレンダー
  * 作成日:2015.07.01
@@ -313,7 +313,7 @@ function adminCalendar(selector, dialog) {
 /*
  * クラス名:blogCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :ブログページのカレンダーを作る
  * 作成日:2015.06.10
@@ -340,7 +340,7 @@ blogCalendar.prototype.constructor = blogCalendar;
 /*
  * 関数名:function putDisableDate(date, dateArray)
  * 引数  :Date date: 日付
- * 　　  :Array dateArray: 日付の配列
+ *     :Array dateArray: 日付の配列
  * 戻り値:Array:DatepickerのbeforeShowDayで要求されるbooleanの配列を返す
  * 概要  :配列に該当する日付があるかのチェックを行い、判定を返す
  * 作成日:2015.06.04
@@ -411,7 +411,7 @@ function createYMD(date){
 /*
  * 関数名:function compareYMD(target1, target2)
  * 引数  :Array target1: 比較対象1。
- * 　　  :Array target2: 比較対象2。
+ *     :Array target2: 比較対象2。
  * 戻り値:boolean:日付が同じかどうかの判定を返す。
  * 概要  :2つの日付型の配列が同じかどうかを判定して結果を返す。
  * 作成日:2015.04.19
@@ -452,7 +452,7 @@ function setCallCalendar (selector) {
 /*
  * 関数名:function checkDate(dateText, calendar)
  * 引数  :string dateText:日付のテキスト。
- * 　　  :element calendar:この関数をコールしたdatepicker。
+ *     :element calendar:この関数をコールしたdatepicker。
  * 戻り値:booelan:判定結果を返す。
  * 概要  :選択したカレンダーの日付が今日より前かどうかをチェックすり。
  * 作成日:2015.04.10
@@ -487,11 +487,11 @@ function checkDate(dateText, calendar){
  * 作成者:T.Y
  * 変更日:2015.03.10
  * 変更者:T.Masuda
- * 内容　:,を余計に書いてあった部分とコメント抜けを修正しました。
+ * 内容 :,を余計に書いてあった部分とコメント抜けを修正しました。
  */
 function toolTip() {
   $(function() {
-    //　要素を追加する処理
+    // 要素を追加する処理
     $('body').append('<div class="tip"></div>');
 
     $('.tip')                         // 表示するツールチップに関するcssを有効にする
@@ -575,14 +575,14 @@ function createDateArray(dateText){
 /*
  * 関数名:callReservedDialog
  * 引数  :String dateText:日付テキスト
- * 　　　 :jQuery calendar:カレンダーの要素
+ *     :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
  * 作成日:2015.02.10
  * 作成者:T.M
  * 修正日:2015.04.17
  * 修正者:T.M
- * 内容　:カレンダーのタグからコンテンツ名を取得するようにしました。
+ * 内容 :カレンダーのタグからコンテンツ名を取得するようにしました。
  */
 function callReservedDialog(dateText, calendar){
 	// カレンダーからコンテンツ名を取得する。
@@ -598,7 +598,7 @@ function callReservedDialog(dateText, calendar){
 /*
  * 関数名:callMemberDialog
  * 引数  :String dateText:日付テキスト
- * 　　　 :jQuery calendar:カレンダーの要素
+ *     :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
  * 作成日:2015.02.10
@@ -2440,12 +2440,17 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
 			//クエリの置換を行う関数を実行する
 			replaceTableQuery(queryArrayKey);
+			//ページング機能が実装されているのであればページング処理を行う
 			if(replaceTableOption[queryArrayKey].addPagingPlace) {
+				//テーブルページング領域を消す
 				$(DOT + PAGING_AREA).remove();
-				var addQuery = tablePaging(queryArrayKey, 15);
+				//テーブルページングを実装する
+				var addQuery = tablePaging(queryArrayKey, 15, 6);
+				//クエリを更新する
 				creator.json[queryArrayKey].db_getQuery += addQuery;
 			}
 		}
+		//テーブルをリロードする
 		tableReload(queryArrayKey);
 		// クエリを最初の状態に戻す
 		creator.json[queryArrayKey].db_getQuery = queryDefault;
@@ -2571,12 +2576,13 @@ function nowDatePaging(clickSelectorParent) {
  * 関数名:getPagingCount
  * 概要  :ページングの個数を取得する
  * 引数  :pagingTargetTable:ページング対象となるテーブル名
- *       displayNumber:ページングで表示する件数
- * 返却値  :なし
+ *       displayNumber:ページングで表示する行数の件数
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :pagingCounter:ページングの最大値
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
  */
-function getPagingCount(pagingTargetTable, displayNumber) {
+function getPagingCount(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	//DBからレコードのページングにしたいテーブルを取得する
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[pagingTargetTable], pagingTargetTable);
 	//テーブルの行数を取得する
@@ -2593,13 +2599,21 @@ function getPagingCount(pagingTargetTable, displayNumber) {
 	if(resultPaging >= 0) {
 		//ループでページングを作る
 		while(resultPaging = recordCount - (displayCount * pagingCounter) >= 0){
-			//ページングボタンを指定要素の先に追加する
-			$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+			//ページングが1以上5以下の時
+			if (pagingCounter >= 1 && pagingCounter < pagingDisplayCount) {
+				//ページングボタンを指定要素の先に追加する
+				$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+			//ページ数が6以上の時にページングを作らなくする
+			} else if (pagingCounter == pagingDisplayCount) {
+				//ページングの最後に次ページ記号を入れる
+				$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
+			}
 			//ページングボタンが初回の時は
 			if(pagingCounter == 1) {
 				//現在のページを表すクラスを付ける
 				$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
 			}
+			//カウンタをインクリメントする
 			pagingCounter++;
 		}
 	} else {
@@ -2608,6 +2622,8 @@ function getPagingCount(pagingTargetTable, displayNumber) {
 		//現在のページを表すクラスを付ける
 		$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
 	}
+	//ページングの最大値を返す
+	return Number(pagingCounter)-1;
 }
 
 /* 
@@ -2633,11 +2649,13 @@ function setTableReloadExecute(tableClassName, addQueryString, defaultQuery) {
  * 関数名:getPagingMax
  * 概要  :ページングの最大値を取得し、次のページングに行く
  * 引数  :paging:ページングのクラス名
- * 返却値  :max + 1 : 次のページングの値
+ 		maxPaging:最大のページ番号
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :max : 次のページングの値
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
  */
-function getPagingMax(paging) {
+function getPagingMax(paging, maxPaging, pagingDisplayCount) {
 	//最大値を0とする
 	var max = 0;
 	//現在のページのクラスをとる
@@ -2646,18 +2664,89 @@ function getPagingMax(paging) {
 	$(paging).each(function(){
 		//現在の値を取得する
 		var current = $(this).text();
-		//現在のテキストに1を足す
-		$(this).text(current + 1);
-		//現在の値がmaxより大きく、かつ数字の場合はmaxに現在の値を代入する
-		if (current > max && current.match(/[0-9][0-9]/)) {
-			//現在の値が最大値になる
-			max = current;
+		//数字にだけ処理をする
+		if(current.match(/\d/g)) {
+			//現在の値を数字に変換する
+			current = Number(current);
+			//現在のテキストに1を足す
+			$(this).text(current + 1);
+			//現在の値がmaxより大きく、かつ数字の場合はmaxに現在の値を代入する
+			if (current > max) {
+				//現在の値が最大値になる
+				max = current;
+			}
 		}
 	});
+	//最大値に1を足す
+	max = Number(max) + 1;
 	//現在の最大値のクラスを付ける
-	$(paging + ':contains(' + (max+1) + ')' ).addClass(NOW_PAGE);
+	$(paging + ':contains(' + max + ')' ).addClass(NOW_PAGE);
+	//最初に次のページへの記号をクリックされたとき
+	if(max == pagingDisplayCount) {
+		//前ページの記号を付け足す
+		$(DOT + PAGING_AREA).prepend('<a class="paging inlineBlock"><<</a>');
+	
+	}
+	//ページングが最大値まで来たとき 
+	if(max == maxPaging) {
+		//次ページの記号を取り除く
+		$(paging + ':contains(">>")').remove();
+	}
 	//最大値に1を足したものを返す
-	return max + 1;
+	return max;
+}
+
+/* 
+ * 関数名:getPagingMin
+ * 概要  :ページングの最小値を取得し、前のページングに行く
+ * 引数  :paging:ページングのクラス名
+ 		maxPaging:最大のページ番号
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :min : 前のページングの値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingMin(paging, maxPaging, pagingDisplayCount) {
+	//最小値を1000とする
+	var min = 1000;
+	//現在のページのクラスをとる
+	$(paging).removeClass(NOW_PAGE);
+	// 要素から最大値を走査する
+	$(paging).each(function(){
+		//現在の値を取得する
+		var current = $(this).text();
+		//数字にだけ処理をする
+		if(current.match(/\d/g)) {
+			//現在の値を数字に変換する
+			current = Number(current);
+			//現在のテキストに1を引く
+			$(this).text(current - 1);
+			//現在の値がminより小さい
+			if (current < min) {
+				//現在の値が最小値になる
+				min = current;
+			}
+		}
+	});
+	//最小値に1を引く
+	min = Number(min) - 1;
+	//現在の最小値にクラスを付ける
+	$(paging + ':contains(' + min + ')' ).addClass(NOW_PAGE);
+	//ページングが最小値まで来たとき 
+	if(min == 1) {
+		//次ページの記号を取り除く
+		$(paging + ':contains("<<")').remove();
+	}
+	//最大のページでない時に次のページの記号を出す
+	if((min+4) != maxPaging) {
+		//クラス名を取得し、なかったときに次のページの記号を作る
+		if (!($(paging + ':contains(">>")').attr('class'))) {
+			//次ページの記号を付け足す
+			$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
+		}
+	}
+	//最小値を返す
+	return min;
 }
 
 /* 
@@ -2665,13 +2754,14 @@ function getPagingMax(paging) {
  * 概要  :テーブルページング機能を実装する
  * 引数  :pagingTargetTable:ページング対象となるテーブル名
  *       displayNumber:ページングで表示する件数
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
  */
-function tablePaging(pagingTargetTable, displayNumber) {
+function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	//ページング領域を作る
-	getPagingCount(pagingTargetTable, displayNumber);
+	var maxPaging = getPagingCount(pagingTargetTable, displayNumber, pagingDisplayCount);
 	//デフォルトのクエリを取得する
 	var defaultQuery = creator.json[pagingTargetTable].db_getQuery;
 	//最大の表示数
@@ -2679,25 +2769,35 @@ function tablePaging(pagingTargetTable, displayNumber) {
 	//最初の表示数
 	var minRecord = 1;
 	//追加するクエリ
-	var addQuery = ' LIMIT '　+ minRecord + ',' + maxRecord;
+	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
 	//タブリンクがクリックされたときにテーブルを読み込む
 	$(replaceTableOption[pagingTargetTable].addPagingPlace).click(function(){
 		//クエリを実行してテーブルを作る
 		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
 	});
 	//ページングがクリックされた時の処理
-	$(DOT + PAGING).click(function(){
+	$(document).on('click', DOT + PAGING, function(){
 		//全てのページングからnowPageクラスを取り除く
 		$(DOT + PAGING).removeClass(NOW_PAGE);
 		//クリックされた要素の番号を取得する
 		var nowPaging = $(this).text();
-		//クリックされた要素にnowPageクラスを追加する
-		$(this).addClass(NOW_PAGE);
+		//クリックされた要素が次のページ記号だった場合
+		if (nowPaging == '>>') {
+			//次のページの値を取得する
+			nowPaging = getPagingMax(DOT + PAGING, maxPaging, pagingDisplayCount);
+		//クリックされた要素が前のページ記号だった場合
+		} else if (nowPaging == '<<') {
+			//前のページの値を取得する
+			nowPaging = getPagingMin(DOT + PAGING, maxPaging, pagingDisplayCount);
+		} else {
+			//クリックされた要素にnowPageクラスを追加する
+			$(this).addClass(NOW_PAGE);
+		}
 		//クエリにLIMITを追加する
-		var pagingAddQuery = ' LIMIT '　+ (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
+		var pagingAddQuery = ' LIMIT ' + (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
 		//クエリを実行してテーブルを作る
 		setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
 	});
-	//加える文字列w返す
+	//加える文字列を返す
 	return addQuery;
 }
