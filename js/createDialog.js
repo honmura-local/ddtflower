@@ -1844,7 +1844,7 @@ function insertConfirmReserveJsonDialogValue(sendObject, targetJson){
  */
 function cancelDialogOpen (dialogObject, memberNumber) {
 	//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
-	$(DOT + RESERVED_LESSON_TABLE + TAG_TR).click(function(){
+	$(document).on(CLICK, DOT + RESERVED_LESSON_TABLE + TAG_TR, function(){
 		//クリックした行番号を取得する
 		var rowNum = $(DOT + RESERVED_LESSON_TABLE + TAG_TR).index($(this)) - 1;
 		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる

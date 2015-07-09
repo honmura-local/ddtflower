@@ -298,12 +298,16 @@ function getClassworkStatus(rowData, timeTableStudents) {
 function getRestMark(rowData, timeTableStudents) {
 	var rest = getRestOfSheets(rowData, timeTableStudents);
 	var restMark = "";
-	for(var key in restMarks) {
-		if(key > rest) {
-			break;
+	if (lessonStatus == '予約締切') {
+		restMark = restMarks[0];
+	} else {
+		for(var key in restMarks) {
+			if(key > rest) {
+				break;
+			}
+			restMark = restMarks[key];
 		}
-		restMark = restMarks[key];
-    }
+	}
 	return restMark;
 };
 
@@ -521,7 +525,7 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 	timeSchedule = buildHourFromTo(recordData);
 	var cost;			//料金
 	var rest;			//残席
-	var lessonStatus;	//状況
+	// var lessonStatus;	//状況
 	//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
 	if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
 		//料金を空白にする
@@ -536,10 +540,10 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 	} else {
 		//料金を入れる
 		cost = sumCost(recordData);
-		//残席を記号にする
-		rest = getRestMark(recordData, timeTableStudents);
 		//状況を入れる
 		lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+		//残席を記号にする
+		rest = getRestMark(recordData, timeTableStudents);
 	}
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
@@ -629,12 +633,12 @@ var callAdminReservedLessonValue = function(tableName, roopData, counter, rowNum
 	recordData = roopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
-	var rest;			//残席
-	var lessonStatus;	//状況
-	//残席を記号にする
-	rest = getRestMark(recordData, timeTableStudents);
+	// var rest;			//残席
+	// var lessonStatus;	//状況
 	//状況を入れる
 	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+	//残席を記号にする
+	rest = getRestMark(recordData, timeTableStudents);
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
 	// 残席の表示を正規の表示にする
