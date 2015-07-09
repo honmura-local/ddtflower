@@ -20,6 +20,10 @@
                 {
                     "href": "#lessonDetail",
                     "html": "授業<br>詳細"
+                },
+                {
+                    "href": "#mailMagaAndAnnounce",
+                    "html": "メルマガ<br>アナウンス"
                 }
             ]
         },
@@ -579,5 +583,197 @@
     "replaceTextboxUsePoint":{
         "type":"number",
         "name":"use_point"
+    },
+    "mailMagaAndAnnounce":{
+        "class": "mailMagaAndAnnounce tabPanel",
+        "id": "mailMagaAndAnnounce"
+    },
+    "meilMagaSearchArea":{
+        "schoolNameLabel":{
+            "text":"店舗"
+        },
+        "schoolNameSelectBox":{
+            "schoolNameSelect":{
+                "text":"全て"
+            }
+        },
+        "typeLabel":{
+            "text":"種別"
+        },
+        "typeSelectBox":{
+            "typeSelect":{
+                "text":"全て"
+            }
+        },
+        "mailMagaContentSearchLabel":{
+            "mailMagaContentSearchText":{
+                "text":"内容"
+            },
+            "mailMagaContentSearchTextbox":{
+                "type":"text",
+                "name":"mailMageSearch"
+            }
+        },
+        "mailMagaSearchButton":{
+            "type":"button",
+            "value":"検索"
+        }
+    },
+    "mailMagaTableArea":{
+        "class":"tableOutsideArea mailMagaTableArea"
+    },
+    "mailMagaTable":{
+        "db_getQuery":"",
+        "config": {
+            "columns": {
+                "start_time": {
+                    "columnName": "時間割"
+                },
+                "school_name": {
+                    "columnName": "店舗"
+                },
+                "lesson_name": {
+                    "columnName": "テーマ"
+                },
+                "classwork_note": {
+                    "columnName": "残席"
+                },
+                "end_time": {
+                    "columnName": "状況"
+                },
+                "lesson_key": {
+                    "style":"display:none;"
+                },
+                "lesson_date": {
+                    "style":"display:none;"
+                },
+                "order_students":{
+                    "style":"display:none;"
+                },
+                "max_students":{
+                    "style":"display:none;"
+                },
+                "min_students":{
+                    "style":"display:none;"
+                },
+                "default_min_students": {
+                    "style":"display:none;"
+                },
+                "max_num": {
+                    "style":"display:none;"
+                },
+                "min_num": {
+                    "style":"display:none;"
+                },
+                "classwork_status": {
+                    "style":"display:none;"
+                },
+                "today":{
+                    "style":"display:none;"
+                },
+                "classwork_key":{
+                    "style":"display:none;"
+                },
+                "classroom":{
+                    "style":"display:none;"
+                },
+                "school_key":{
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
+    "mailMagaAndAnnounceArea":{
+        "messageInfo":{
+            "class":"messageInfo fLeft",
+            "NoLabel":{
+                "text":"No."
+            },
+            "numberTextox":{
+                "class":"numberTextox readonly",
+                "type":"text",
+                "name":"messageNumber"
+            },
+            "schoolNameLabel":{
+                "text":"店舗"
+            },
+            "schoolNameSelectBox":{
+                "schoolNameSelect":{
+                    "value":"",
+                    "text":"全て"
+                }
+            },
+            "typeLabel":{
+                "text":"種別"
+            },
+            "typeSelectBox":{
+                "typeSelect":{
+                    "value":"",
+                    "text":"全て"
+                }
+            }
+        },
+        "sendmessageDate":{
+            "class":"sendmessageDate fLeft",
+            "sendmessageDateLabel":{
+                "text":"送信日"
+            },
+            "sendmessageDateTextbox":{
+                "class":"sendmessageDateTextbox readonly",
+                "type":"text",
+                "name":"sendmessageDate",
+                "value":""
+            }
+        },
+        "messageTitleLabel":{
+            "class":"messageTitleLabel fLeft",
+            "text":"タイトル"
+        },
+        "messageTitleTextboxArea":{
+            "class":"messageTitleTextboxArea inlineBlock fLeft",
+            "messageTitleTextbox":{
+                "type":"text",
+                "name":"messageTitle",
+                "value":""
+            }
+        },
+        "messageContentLabel":{
+            "text":"内容"
+        },
+        "messageContentArea":{
+            "messageTextarea":{
+                "name":"messageContent"
+            }
+        },
+        "messageOptionArea":{
+            "class":"messageOptionArea fLeft",
+            "mailMagaRadio":{
+                "type":"radio",
+                "name":"messegeType",
+                "value":""
+            },
+            "mailMagaLabel":{
+                "text":"メルマガ"
+            },
+            "announceRadio":{
+                "type":"radio",
+                "name":"messegeType",
+                "value":""
+            },
+            "announceLabel":{
+                "text":"アナウンス"
+            }
+        },
+        "messageButtonArea":{
+            "class":"messageButtonArea fRight",
+            "sendButton":{
+                "type":"button",
+                "value":"送信"
+            },
+            "deleteButton":{
+                "type":"button",
+                "value":"削除"
+            }
+        }
     }
 }

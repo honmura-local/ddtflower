@@ -216,7 +216,7 @@ label,
  */
 .tab {
 	width: 50%;					/* 幅を45%にする */
-	background-color: #cedc3a;	/* 背景を黄緑色にする */
+	background-color: #ce6;	/* 背景を黄緑色にする */
 }
 
 /* 
@@ -226,7 +226,7 @@ label,
  * 作成日 :2015.06.04
  */
 .tab.active {
-	background-color: #ce6;	/* 背景を薄い黄緑にする */
+	background-color: #cedc3a;	/* 背景を薄い黄緑にする */
 }
 /* タブ領域終わり */
 
@@ -290,6 +290,44 @@ label,
 .userListInfoTable tr:hover {
 	background: #E0F5E6;	/* 行の背景を水色っぽくする */
 }
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :授業についてのテーブル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+.lessonTable,
+.reservedLessonTable,
+.finishedLessonTable,
+.infoTable,
+.eachDayReservedInfoTable,
+.doLecturePermitInfoTable,
+.lecturePermitListInfoTable,
+.userListInfoTable {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	font-size: 12px;			/* フォントサイズを14pxにする */
+	margin: 5px 0;				/* 上下5pxの余白をとる */
+	width: 100%;				/* 幅を100%にする */
+}
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :DBから読込んだテーブルの行の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonTable tr:nth-of-type(1),
+.reservedLessonTable tr:nth-of-type(1),
+.finishedLessonTable tr:nth-of-type(1),
+.infoTable tr:nth-of-type(1),
+.eachDayReservedInfoTable tr:nth-of-type(1),
+.doLecturePermitInfoTable tr:nth-of-type(1),
+.lecturePermitListInfoTable tr:nth-of-type(1),
+.userListInfoTable tr:nth-of-type(1) {
+	background: #F0F3F5;	/* 行の背景を水色っぽくする */
+}
+
 
 /* 
  * セレクタ :.lessonTable th, .lessonTable td

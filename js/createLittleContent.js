@@ -2341,7 +2341,7 @@ replaceTableOption['eachDayReservedInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'replace',
 	//テーブルのafterでの追加先
-	addDomPlace:'.dateBelt',
+	addDomPlace:'.dateSelect',
 	//置換のvalueが入ったdom名
 	replaceValueDom:'.dateInput',
 	//置換するkey名
