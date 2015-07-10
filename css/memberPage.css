@@ -2,6 +2,7 @@
 
 a {
 	display: block;		/* ブロック要素にしてクリックしやすくする */
+	cursor: pointer;	/* マウスオーバー時にカーソルを指にする */
 }
 
 a:hover {

@@ -359,7 +359,7 @@
  * 作成日 :2015.06.22
  */
 .searchList li input[type="text"] {
-	width: 30%;				/* 幅を30%にする */
+	width: 28%;				/* 幅を28%にする */
 	margin-right: 10px;		/* 右に10pxの余白をとる */
 }
 /* 会員一覧の検索領域終わり */

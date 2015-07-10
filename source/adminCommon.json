@@ -325,9 +325,7 @@
                         "type":"text",
                         "name":"mail_address"
                     }
-                }
-            },
-            "searchButtonArea":{
+                },
                 "searchButton":{
                     "type":"button",
                     "value":"検索"

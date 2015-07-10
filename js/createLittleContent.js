@@ -2410,12 +2410,15 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 function replaceTableQuery(queryArrayKey) {
 	//置換するための値を取得する
 	var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
-	//置換するためのkey名を取得する
-	var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
-	//取得した値をjsonの反映させる
-	creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
-	//クエリをテーマ検索用のものと入れ替える
-	creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
+	//置換するものが「全て以外であれば置換する」
+	if (replaceValue != '全て') {
+		//置換するためのkey名を取得する
+		var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
+		//取得した値をjsonの反映させる
+		creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
+		//クエリをテーマ検索用のものと入れ替える
+		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
+	}
 }
 
 
@@ -2432,7 +2435,7 @@ function replaceTableQuery(queryArrayKey) {
 function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 	//対象のボタンがクリックされた時の処理
 	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"]').click(function(){
-		//クエリを初期状態を保存する
+		//クエリ初期状態を保存する
 		var queryDefault = creator.json[queryArrayKey].db_getQuery;
 		//クエリの置換フラグが追記のとき
 		if (replaceTableOption[queryArrayKey].replaceFlag == 'add') {
@@ -2802,4 +2805,21 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	});
 	//加える文字列を返す
 	return addQuery;
+}
+
+/* 
+ * 関数名:accordionSetting
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
+ *       accordionDomSelector:アコーディオンの中身のdomセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.09
+ */
+function accordionSetting(clickSelector, accordionDomSelector) {
+	//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
+	$(document).on(CLICK, clickSelector, function(){
+		//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
+		$(accordionDomSelector).slideToggle();
+	});
 }

@@ -100,21 +100,25 @@
         "text":"メルマガ受信設定"
     },
     "mailMagaSetting":{
-        "acceptRadio":{
-            "type":"radio",
-            "name":"mailMagaSetting",
-            "value":""
-        },
         "acceptLabel":{
-            "text":"受信する"
-        },
-        "denyRadio":{
-            "type":"radio",
-            "name":"mailMagaSetting",
-            "value":""
+            "acceptRadio":{
+                "type":"radio",
+                "name":"mailMagaSetting",
+                "value":""
+            },
+            "acceptLabelText":{
+                "text":"受信する"
+            }
         },
         "denyLabel":{
-            "text":"受信しない"
+            "denyRadio":{
+                "type":"radio",
+                "name":"mailMagaSetting",
+                "value":""
+            },
+            "denyLabelText":{
+                "text":"受信しない"
+            }
         }
     },
     "updateButton":{
