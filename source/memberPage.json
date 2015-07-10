@@ -51,6 +51,7 @@
         },
         "selectThemebox": {
             "themeValue": [
+                "全て",
                 "プリザ",
                 "生花",
                 "NFD"
@@ -71,6 +72,7 @@
         },
         "selectThemebox": {
             "themeValue": [
+                "全て",
                 "プリザ",
                 "生花",
                 "NFD"
@@ -430,6 +432,9 @@
                     "text": "円"
                 }
             }
+        },
+        "cancelLessonDetail":{
+            "text":"授業の詳細はこちら"
         },
         "attention": {
             "cancelRateLabel": {

@@ -228,6 +228,17 @@ label,
 .tab.active {
 	background-color: #cedc3a;	/* 背景を薄い黄緑にする */
 }
+
+/* 
+ * セレクタ :.tab.active .tabLink
+ * 概要   :選択中のタブクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.tab.active .tabLink {
+	color: #38842F;			/* 文字色を濃い緑にする */
+	font-weight: bold;		/* 太字にする */
+}
 /* タブ領域終わり */
 
 /* セレクトボックス領域 */
@@ -476,7 +487,7 @@ label,
 .updateButton {
 	display: block;		/* ブロック要素として扱う */
 	margin-left: auto;	/* 左からの余白を自動にする */
-	margin-top: 5%;	/* 右から5%余白を空ける */
+	/*margin-top: 5%;*/	/* 右から5%余白を空ける */
 }
 /* 更新ボタン領域終わり */
 
@@ -539,6 +550,41 @@ label,
 .cancelRateValue,
 .lessonConfirm {
 	text-align: center;		/* 中央寄せにする */
+}
+
+/* 
+ * セレクタ :.cancelLessonDialogContent .attention
+ * 概要   :キャンセル率の注意領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.cancelLessonDialogContent .attention {
+	display: none;		/* 最初は表示しない */
+	font-size: 13px;	/* フォントサイズを13pxにす */
+}
+
+/* 
+ * セレクタ :.cancelLessonDialogContent .cancelLessonDetail
+ * 概要   :キャンセル率の注意領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.cancelLessonDialogContent .cancelLessonDetail {
+	font-size: 13px;	/* フォントサイズを13pxにする */
+	color: #6470EF;		/* 色を青色にする */
+	text-align: right;	/* 右寄せにする */
+	margin-right: 1em;	/* 右から1文字空ける */
+}
+
+/* 
+ * セレクタ :.attention .contentsBorder
+ * 概要   :キャンセル率のラベルと追加ポイントのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.attention .contentsBorder {
+	border-left: none;		/* 左の線をなくす */
+	margin-top: 5px;		/* 上から5pxの余白をとる */
 }
 
 /* 
@@ -632,6 +678,7 @@ label,
  */
 .passLinkArea {
 	margin-right: 1em;		/* 右に1文字分の余白をとる */
+	line-height: 35px;		/* 行間を35pxにする */
 }
 /* パスワードリンク領域終わり */
 
@@ -957,6 +1004,16 @@ label,
 
 /* スマホ用微調整 */
 @media(max-width:400px){
+
+	/* 
+	 * セレクタ :.passLinkArea
+	 * 概要   :パスワード変更リンク領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.17
+	 */
+	.passLinkArea {
+		line-height: 54px;		/* 行間を35pxにする */
+	}
 
 	/* 
 	 * セレクタ :.passArea, .topLinkArea

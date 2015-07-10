@@ -146,6 +146,9 @@
 				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
+				$(document).on('click', '.cancelLessonDetail', function(){
+						$('.cancelLessonDialogContent .attention').slideToggle();
+				});
 			});
 			</script>
 		</div>

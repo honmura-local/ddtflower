@@ -2,18 +2,11 @@
     "subHeader":{
         "pageHeader":{
             "text":"プロフィール"
-        },
-        "passLinkArea":{
-            "class":"passLinkArea textCenter",
-            "passLink":{
-                "href":"#memberPassword.html",
-                "text":"パスワード変更"
-            }
         }
     },
     "memberInfo":{
         "userInf":{
-            "class":"userInf outsideArea"
+            "class":"userInf outsideArea cf"
         }
     },
     "nameSummary":{
@@ -103,10 +96,39 @@
             "name":"telephone2"
         }
     },
+    "mailMagaSettingSummary":{
+        "text":"メルマガ受信設定"
+    },
+    "mailMagaSetting":{
+        "acceptRadio":{
+            "type":"radio",
+            "name":"mailMagaSetting",
+            "value":""
+        },
+        "acceptLabel":{
+            "text":"受信する"
+        },
+        "denyRadio":{
+            "type":"radio",
+            "name":"mailMagaSetting",
+            "value":""
+        },
+        "denyLabel":{
+            "text":"受信しない"
+        }
+    },
     "updateButton":{
+        "class":"updateButton fRight",
         "type":"submit",
         "name":"button",
         "value":"更新"
+    },
+    "passLinkArea":{
+        "class":"passLinkArea textCenter fRight",
+        "passLink":{
+            "href":"#memberPassword.html",
+            "text":"パスワード変更"
+        }
     },
     "updateUserInf":{
         "db_setQuery":"UPDATE user_inf SET user_name = 'user_name',name_kana = 'name_kana', zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address', update_datetime=NOW() WHERE  id = 'userId';"
