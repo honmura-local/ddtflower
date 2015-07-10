@@ -534,7 +534,7 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
 		rest = restMarks[0];
 		//状況を予約不可にする
 		lessonStatus = classworkStatuses[4];
-		//行の色を赤っぽくする
+		//行の色をグレーっぽくする
 		$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
 	//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
 	} else {
