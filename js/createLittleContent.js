@@ -2447,6 +2447,8 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 			replaceTableQuery(queryArrayKey);
 			//ページング機能が実装されているのであればページング処理を行う
 			if(replaceTableOption[queryArrayKey].addPagingPlace) {
+				//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
+				$(DOT + PAGING).parent().off(CLICK);
 				//テーブルページング領域を消す
 				$(DOT + PAGING_AREA).remove();
 				//テーブルページングを実装する
@@ -2693,7 +2695,7 @@ function getPagingMax(paging, maxPaging, pagingDisplayCount) {
 	
 	}
 	//ページングが最大値まで来たとき 
-	if(max == maxPaging) {
+	if(max >= maxPaging) {
 		//次ページの記号を取り除く
 		$(paging + ':contains(">>")').remove();
 	}
@@ -2781,7 +2783,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
 	});
 	//ページングがクリックされた時の処理
-	$(document).on('click', DOT + PAGING, function(){
+	$(DOT + PAGING).parent().on('click', DOT + PAGING, function(){
 		//全てのページングからnowPageクラスを取り除く
 		$(DOT + PAGING).removeClass(NOW_PAGE);
 		//クリックされた要素の番号を取得する
@@ -2818,7 +2820,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
  */
 function accordionSetting(clickSelector, accordionDomSelector) {
 	//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
-	$(document).on(CLICK, clickSelector, function(){
+	$(STR_BODY).on(CLICK, clickSelector, function(){
 		//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
 		$(accordionDomSelector).slideToggle();
 	});
