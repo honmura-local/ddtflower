@@ -187,6 +187,8 @@
 				creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
 				// ボタンの見た目をjqueryuiのものにする
 				$('button, .searchButton, input[type="button"]').button();
+				//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
+				enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '検索');
 			});
 			</script>
 		</div>
