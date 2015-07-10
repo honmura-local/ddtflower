@@ -490,6 +490,16 @@ label,
 	margin-left: auto;	/* 左からの余白を自動にする */
 	/*margin-top: 5%;*/	/* 右から5%余白を空ける */
 }
+
+/* 
+ * セレクタ :.passwordUpdate
+ * 概要   :パスワード更新ボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.10
+ */
+.passwordUpdate {
+	margin-right: 1em;		/* 右に1文字分の余白をとる */
+}
 /* 更新ボタン領域終わり */
 
 /* 予約確認ダイアログ領域 */
@@ -856,8 +866,38 @@ label,
 .nowPage {
 	color: red;				/* 文字色を赤色にする */
 }
-
 /* テーブルページング領域終わり */
+
+/* メルマガ受信設定は未完成なので文字色をグレーにする */
+.mailMaga ,.mailMagaSetting span {
+	color: #aaa;
+}
+
+/* 目安箱領域 */
+
+/* 
+ * セレクタ :.textareaLabel
+ * 概要   :目安箱お問い合わせ内容領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.010
+ */
+.textareaLabel {
+	width: 95%;			/* 幅を95%にする */
+	margin-top: 10px;	/* 上から10px余白をとる */
+}
+
+/* 
+ * セレクタ :.suggestion
+ * 概要   :目安箱お問い合わせ内容のテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.010
+ */
+.suggestion {
+	width: 100%;		/* 幅を100%にする */
+	height: 300px;		/* 高さ300pxにする */
+}
+
+/* 目安箱領域 */
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){

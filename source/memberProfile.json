@@ -97,6 +97,7 @@
         }
     },
     "mailMagaSettingSummary":{
+        "class":"inputLabel mailMaga",
         "text":"メルマガ受信設定"
     },
     "mailMagaSetting":{

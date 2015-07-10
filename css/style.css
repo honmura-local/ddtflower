@@ -161,12 +161,12 @@ span,label,h1,h2,h3,h4,h5,th{
 }
 
 /* 
- * セレクタ:button,input[type="submit"],input[type="button"]
+ * セレクタ:button,input[type="submit"],input[type="button"],input[type="reset"]
  * 概要   :ボタン。
  * 作成者 :T.Masuda
  * 作成日 :2015.04.16
  */
-button,input[type="submit"],input[type="button"]{
+button,input[type="submit"],input[type="button"],input[type="reset"]{
 	cursor:pointer;	/* カーソルを合わせたら指差しポインターを表示する。 */
 	outline:none;	/* クリック後の枠線をなくす。 */
 	font-size: 15px;/* 統一したボタンのフォントサイズを設定する。 */
