@@ -1295,6 +1295,8 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		autoOpen		: false,
 		// Escキーを押してもダイアログが閉じないようにする。
 		closeOnEscape	: false,
+		//画面上部にダイアログを表示する
+		position :{my:'center top',at:'center top', of:window},
 		//ダイアログを閉じるときのイベント
 		close			:function(){
 			//読み込んだテーブルのデータを消す
