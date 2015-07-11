@@ -2,18 +2,11 @@
     "subHeader":{
         "pageHeader":{
             "text":"プロフィール"
-        },
-        "passLinkArea":{
-            "class":"passLinkArea textCenter",
-            "passLink":{
-                "href":"#memberPassword.html",
-                "text":"パスワード変更"
-            }
         }
     },
     "memberInfo":{
         "userInf":{
-            "class":"userInf outsideArea"
+            "class":"userInf outsideArea cf"
         }
     },
     "nameSummary":{
@@ -55,7 +48,7 @@
     },
     "birthDayDate":{
         "textboxArea":{
-            "type":"text",
+            "type":"date",
             "name":"birthday_date"
         }
     },
@@ -81,7 +74,7 @@
     },
     "mailAddress":{
         "textboxArea":{
-            "type":"text",
+            "type":"email",
             "name":"mail_address"
         }
     },
@@ -103,10 +96,44 @@
             "name":"telephone2"
         }
     },
+    "mailMagaSettingSummary":{
+        "class":"inputLabel mailMaga",
+        "text":"メルマガ受信設定"
+    },
+    "mailMagaSetting":{
+        "acceptLabel":{
+            "acceptRadio":{
+                "type":"radio",
+                "name":"mailMagaSetting",
+                "value":""
+            },
+            "acceptLabelText":{
+                "text":"受信する"
+            }
+        },
+        "denyLabel":{
+            "denyRadio":{
+                "type":"radio",
+                "name":"mailMagaSetting",
+                "value":""
+            },
+            "denyLabelText":{
+                "text":"受信しない"
+            }
+        }
+    },
     "updateButton":{
+        "class":"updateButton fRight",
         "type":"submit",
         "name":"button",
         "value":"更新"
+    },
+    "passLinkArea":{
+        "class":"passLinkArea textCenter fRight",
+        "passLink":{
+            "href":"#memberPassword.html",
+            "text":"パスワード変更"
+        }
     },
     "updateUserInf":{
         "db_setQuery":"UPDATE user_inf SET user_name = 'user_name',name_kana = 'name_kana', zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address', update_datetime=NOW() WHERE  id = 'userId';"

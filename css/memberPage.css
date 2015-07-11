@@ -2,6 +2,7 @@
 
 a {
 	display: block;		/* ブロック要素にしてクリックしやすくする */
+	cursor: pointer;	/* マウスオーバー時にカーソルを指にする */
 }
 
 a:hover {
@@ -216,7 +217,7 @@ label,
  */
 .tab {
 	width: 50%;					/* 幅を45%にする */
-	background-color: #cedc3a;	/* 背景を黄緑色にする */
+	background-color: #ce6;	/* 背景を黄緑色にする */
 }
 
 /* 
@@ -226,7 +227,18 @@ label,
  * 作成日 :2015.06.04
  */
 .tab.active {
-	background-color: #ce6;	/* 背景を薄い黄緑にする */
+	background-color: #cedc3a;	/* 背景を薄い黄緑にする */
+}
+
+/* 
+ * セレクタ :.tab.active .tabLink
+ * 概要   :選択中のタブクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.tab.active .tabLink {
+	color: #333;			/* 文字色を黒色にする */
+	font-weight: bold;		/* 太字にする */
 }
 /* タブ領域終わり */
 
@@ -290,6 +302,44 @@ label,
 .userListInfoTable tr:hover {
 	background: #E0F5E6;	/* 行の背景を水色っぽくする */
 }
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :授業についてのテーブル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.08
+ */
+.lessonTable,
+.reservedLessonTable,
+.finishedLessonTable,
+.infoTable,
+.eachDayReservedInfoTable,
+.doLecturePermitInfoTable,
+.lecturePermitListInfoTable,
+.userListInfoTable {
+	border: 1px solid #999;		/* 少しグレー目の線で囲む */
+	font-size: 12px;			/* フォントサイズを14pxにする */
+	margin: 5px 0;				/* 上下5pxの余白をとる */
+	width: 100%;				/* 幅を100%にする */
+}
+
+/* 
+ * セレクタ :.lessonTable
+ * 概要   :DBから読込んだテーブルの行の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.lessonTable tr:nth-of-type(1),
+.reservedLessonTable tr:nth-of-type(1),
+.finishedLessonTable tr:nth-of-type(1),
+.infoTable tr:nth-of-type(1),
+.eachDayReservedInfoTable tr:nth-of-type(1),
+.doLecturePermitInfoTable tr:nth-of-type(1),
+.lecturePermitListInfoTable tr:nth-of-type(1),
+.userListInfoTable tr:nth-of-type(1) {
+	background: #F0F3F5;	/* 行の背景を水色っぽくする */
+}
+
 
 /* 
  * セレクタ :.lessonTable th, .lessonTable td
@@ -357,7 +407,7 @@ label,
  * 作成日 :2015.06.11
  */
 .advertise, .tab-container {
-	border-radius: 3px;
+	border-radius: 3px;		/* 角を3px丸くする */
 }
 
 /* パスワード変更領域 */
@@ -438,7 +488,17 @@ label,
 .updateButton {
 	display: block;		/* ブロック要素として扱う */
 	margin-left: auto;	/* 左からの余白を自動にする */
-	margin-top: 5%;	/* 右から5%余白を空ける */
+	/*margin-top: 5%;*/	/* 右から5%余白を空ける */
+}
+
+/* 
+ * セレクタ :.passwordUpdate
+ * 概要   :パスワード更新ボタン
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.10
+ */
+.passwordUpdate {
+	margin-right: 1em;		/* 右に1文字分の余白をとる */
 }
 /* 更新ボタン領域終わり */
 
@@ -453,7 +513,8 @@ label,
 .lessonInfo,
 .attention,
 .confirmText,
-.memberInfomation {
+.memberInfomation,
+.lessonStatus {
 	width: 430px;		/* ダイアログの幅を430pxにする */
 }
 
@@ -500,6 +561,41 @@ label,
 .cancelRateValue,
 .lessonConfirm {
 	text-align: center;		/* 中央寄せにする */
+}
+
+/* 
+ * セレクタ :.attention
+ * 概要   :キャンセル率の注意領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.attention {
+	display: none;		/* 最初は表示しない */
+	font-size: 12px;	/* フォントサイズを13pxにす */
+}
+
+/* 
+ * セレクタ :.ui-dialog .lessonAccordion
+ * 概要   :確認ダイアログのキャンセル料率と加算ポイント
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.ui-dialog .lessonAccordion {
+	font-size: 12px;	/* フォントサイズを13pxにする */
+	color: #6470EF;		/* 色を青色にする */
+	text-align: right;	/* 右寄せにする */
+	margin-right: 1em;	/* 右から1文字空ける */
+}
+
+/* 
+ * セレクタ :.attention .contentsBorder
+ * 概要   :キャンセル率のラベルと追加ポイントのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.26
+ */
+.attention .contentsBorder {
+	border-left: none;		/* 左の線をなくす */
+	margin-top: 5px;		/* 上から5pxの余白をとる */
 }
 
 /* 
@@ -553,7 +649,7 @@ label,
  */
 .tabLink {
 	padding: 6px 0;				/* 上下に6px要素の幅を広げる */
-	color: #555;				/* 文字色を黒にする */
+	color: #666;				/* 文字色を黒にする */
 }
 /* 予約確認ダイアログ領域終わり */
 
@@ -593,6 +689,7 @@ label,
  */
 .passLinkArea {
 	margin-right: 1em;		/* 右に1文字分の余白をとる */
+	line-height: 35px;		/* 行間を35pxにする */
 }
 /* パスワードリンク領域終わり */
 
@@ -748,6 +845,60 @@ label,
 }
 /* 授業状態注釈領域の終わり */
 
+/* テーブルページング領域 */
+/* 
+ * セレクタ :.paging
+ * 概要   :ページングクリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.paging {
+	padding: 5px;			/* 要素の幅を5px広げる */
+	cursor: pointer;		/* マウスオーバー時にカーソルを指にする */
+}
+
+/* 
+ * セレクタ :.nowPage
+ * 概要   :ページング現在のページ領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.nowPage {
+	color: red;				/* 文字色を赤色にする */
+}
+/* テーブルページング領域終わり */
+
+/* メルマガ受信設定は未完成なので文字色をグレーにする */
+.mailMaga ,.mailMagaSetting span {
+	color: #aaa;
+}
+
+/* 目安箱領域 */
+
+/* 
+ * セレクタ :.textareaLabel
+ * 概要   :目安箱お問い合わせ内容領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.010
+ */
+.textareaLabel {
+	width: 95%;			/* 幅を95%にする */
+	margin-top: 10px;	/* 上から10px余白をとる */
+}
+
+/* 
+ * セレクタ :.suggestion
+ * 概要   :目安箱お問い合わせ内容のテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.010
+ */
+.suggestion {
+	width: 100%;		/* 幅を100%にする */
+	height: 300px;		/* 高さ300pxにする */
+}
+
+/* 目安箱領域 */
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 
@@ -852,7 +1003,8 @@ label,
 	.lessonInfo,
 	.attention,
 	.confirmText,
-	.memberInfomation {
+	.memberInfomation,
+	.lessonStatus {
 		width: 280px;		/* ダイアログの幅を430pxにする */
 	}
 
@@ -866,7 +1018,7 @@ label,
 	.cancelLessonDialog,
 	.keepMoney,
 	.hasPoint {
-		font-size: 13px;		/* フォントサイズを13pxにする */
+		font-size: 14px;		/* フォントサイズを13pxにする */
 	}
 
 	/* 
@@ -879,10 +1031,30 @@ label,
 		margin-right: 0.5em;
 	}
 	/* 予約ダイアログ、予約確認ダイアログ領域終わり */
+
+	/* 
+	 * セレクタ :.paging
+	 * 概要   :ページング領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.07
+	 */
+	 .paging {
+	 	font-size: 16px;		/* フォントサイズを16pxにする */
+	 }
 }
 
 /* スマホ用微調整 */
 @media(max-width:400px){
+
+	/* 
+	 * セレクタ :.passLinkArea
+	 * 概要   :パスワード変更リンク領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.17
+	 */
+	.passLinkArea {
+		line-height: 54px;		/* 行間を35pxにする */
+	}
 
 	/* 
 	 * セレクタ :.passArea, .topLinkArea

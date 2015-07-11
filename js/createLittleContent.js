@@ -3,7 +3,7 @@
  * 概要  :小規模の処理の関数を定義する
  * 作成者:T.M
  * 作成日:2015.
- * パス　:/js/createLittleContent.js
+ * パス :/js/createLittleContent.js
  */
 
 /**
@@ -24,8 +24,9 @@ var appVersion = window.navigator.appVersion.toLowerCase();
  
 //定数定義
 ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
-
-
+NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
+PAGING 							= 'paging';							//ページングのクラス名
+PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -227,7 +228,7 @@ function calendar(selector) {
 /*
  * クラス名:reservedCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :予約カレンダーを作る
  * 作成日:2015.06.10
@@ -244,7 +245,7 @@ function reservedCalendar (selector, dateRange) {
 /*
  * クラス名:myPageReserved
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.10
@@ -261,9 +262,9 @@ function myPageReservedCalendar(selector, dateRange) {
 /*
  * クラス名:memberCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
- * 　　  :int userId:ユーザID
- * 　　  :element dialog:ダイアログへの参照
+ *     :int dateRange:クリック可能な日付の期間
+ *     :int userId:ユーザID
+ *     :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
@@ -288,7 +289,7 @@ function memberCalendar(selector, dateRange, userId, dialog) {
 /*
  * クラス名:adminCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :element dialog:ダイアログへの参照
+ *     :element dialog:ダイアログへの参照
  * 戻り値:なし
  * 概要  :管理者のカレンダー
  * 作成日:2015.07.01
@@ -312,7 +313,7 @@ function adminCalendar(selector, dialog) {
 /*
  * クラス名:blogCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- * 　　  :int dateRange:クリック可能な日付の期間
+ *     :int dateRange:クリック可能な日付の期間
  * 戻り値:なし
  * 概要  :ブログページのカレンダーを作る
  * 作成日:2015.06.10
@@ -339,7 +340,7 @@ blogCalendar.prototype.constructor = blogCalendar;
 /*
  * 関数名:function putDisableDate(date, dateArray)
  * 引数  :Date date: 日付
- * 　　  :Array dateArray: 日付の配列
+ *     :Array dateArray: 日付の配列
  * 戻り値:Array:DatepickerのbeforeShowDayで要求されるbooleanの配列を返す
  * 概要  :配列に該当する日付があるかのチェックを行い、判定を返す
  * 作成日:2015.06.04
@@ -410,7 +411,7 @@ function createYMD(date){
 /*
  * 関数名:function compareYMD(target1, target2)
  * 引数  :Array target1: 比較対象1。
- * 　　  :Array target2: 比較対象2。
+ *     :Array target2: 比較対象2。
  * 戻り値:boolean:日付が同じかどうかの判定を返す。
  * 概要  :2つの日付型の配列が同じかどうかを判定して結果を返す。
  * 作成日:2015.04.19
@@ -451,7 +452,7 @@ function setCallCalendar (selector) {
 /*
  * 関数名:function checkDate(dateText, calendar)
  * 引数  :string dateText:日付のテキスト。
- * 　　  :element calendar:この関数をコールしたdatepicker。
+ *     :element calendar:この関数をコールしたdatepicker。
  * 戻り値:booelan:判定結果を返す。
  * 概要  :選択したカレンダーの日付が今日より前かどうかをチェックすり。
  * 作成日:2015.04.10
@@ -486,11 +487,11 @@ function checkDate(dateText, calendar){
  * 作成者:T.Y
  * 変更日:2015.03.10
  * 変更者:T.Masuda
- * 内容　:,を余計に書いてあった部分とコメント抜けを修正しました。
+ * 内容 :,を余計に書いてあった部分とコメント抜けを修正しました。
  */
 function toolTip() {
   $(function() {
-    //　要素を追加する処理
+    // 要素を追加する処理
     $('body').append('<div class="tip"></div>');
 
     $('.tip')                         // 表示するツールチップに関するcssを有効にする
@@ -574,14 +575,14 @@ function createDateArray(dateText){
 /*
  * 関数名:callReservedDialog
  * 引数  :String dateText:日付テキスト
- * 　　　 :jQuery calendar:カレンダーの要素
+ *     :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
  * 作成日:2015.02.10
  * 作成者:T.M
  * 修正日:2015.04.17
  * 修正者:T.M
- * 内容　:カレンダーのタグからコンテンツ名を取得するようにしました。
+ * 内容 :カレンダーのタグからコンテンツ名を取得するようにしました。
  */
 function callReservedDialog(dateText, calendar){
 	// カレンダーからコンテンツ名を取得する。
@@ -597,7 +598,7 @@ function callReservedDialog(dateText, calendar){
 /*
  * 関数名:callMemberDialog
  * 引数  :String dateText:日付テキスト
- * 　　　 :jQuery calendar:カレンダーの要素
+ *     :jQuery calendar:カレンダーの要素
  * 戻り値:なし
  * 概要  :ページに対応した予約ダイアログを生成する。
  * 作成日:2015.02.10
@@ -2110,7 +2111,7 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 	//置換済みでなければ置換する
 	if(!queryReplaceData.userId.value) {
 		send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
-	//置換済みであれば値をそのままｍ結合する	
+	//置換済みであれば値をそのまま結合する	
 	} else {
 		send = $.extend(true, {}, sendQueryJsonArray, queryReplaceData);
 	}
@@ -2125,13 +2126,17 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 		dataType: STR_TEXT,					//テキストデータを返してもらう
 		type: STR_POST,						//POSTメソッドで通信する
 		success:function(ret){				//通信成功時の処理
-			//変更者:T.Yamamoto 日付:2015.06.26 内容:更新成功の条件に更新データが0件でないことを追加しました。
+			//受け取ったjson文字列を連想配列にする
+			var resultJsonArray = JSON.parse(ret);
 			//更新成功であれば
-			if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
+			//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
+			//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
+			//更新した内容が1件以上の時更新成功メッセージを出す
+			if(resultJsonArray.message >= 1) {
 				alert(successMessage);	//更新成功のメッセージを出す
 			//更新失敗であれば
 			} else {
-				alert(MESSAGE_FAILED_RESERVED);	//更新失敗のメッセージを出す
+				alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
 			}
 		},
 		error:function(xhr, status, error){	//通信失敗時の処理
@@ -2175,7 +2180,7 @@ function clickCalendar(selector) {
 		changeMonth: true,
 		// 年をセレクトボックスで選択できるようにする
 		changeYear: true,
-		// 選択できる年は1910年から2050年の範囲にする
+		// 選択できる年は1910年から2100年の範囲にする
 		yearRange: '1910:2100',
 	});
 }
@@ -2201,8 +2206,6 @@ function getInputData(selector) {
 		//入力データを結果の変数に、key名をクラス名にして保存する
 		resultArray[name] = valueData;
 	});
-	//ユーザの会員番号を連想配列に付け足す
-	//resultArray['userId'] = creator.json.memberHeader.user_key.value;
 	//結果を返す
 	return resultArray;
 }
@@ -2252,8 +2255,38 @@ function setProfileUpdate() {
 		var queryReplaceData = getInputData('memberInfo');
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
-		//データべベースにクエリを発行してデータを更新する
-		setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+		//入力項目に不備があったときにエラーメッセージを出す配列を作る
+		var updateError = [];
+		//メッセージを挿入するための関数を作る
+		function erroeMesseageInput (func ,checkTarget, errorMessage) {
+			//第一引数の関数を実行して第二引数の文字列をチェックをする
+			if(!func(queryReplaceData[checkTarget])) {
+				//エラー内容が初めてのときは改行を挟まずにエラーメッセージを表示する
+				if(updateError.length == 0) {
+					//エラーメッセージを配列に入れる
+					updateError.push(errorMessage);
+				} else {
+					//改行を含めて配列に入れる
+					updateError.push('\n' + errorMessage);
+				}
+			}
+		}
+		//名前の入力された文字をチェックする
+		erroeMesseageInput(checkInputName, 'user_name', '名前に数字や記号が入っています');
+		//カナの入力された文字をチェックする
+		erroeMesseageInput(checkInputName, 'name_kana', '名前(カナ)に数字や記号が入っています');
+		//電話番号の入力された文字をチェックする
+		erroeMesseageInput(checkInputPhone, 'telephone', '電話番号に文字や記号が入っています');
+
+		//入力内容エラーがあったときにメッセージを表示する
+		if(updateError.length) {
+			//配列を結合してエラーメッセージのアラートを出す
+			alert(updateError.join(','))
+		//入力内容にエラーがなかった時の処理
+		} else {
+			//データべベースにクエリを発行してデータを更新する
+			setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+		}
 	})
 }
 
@@ -2310,7 +2343,9 @@ replaceTableOption['reservedLessonTable'] = {
 	//置換するkey名
 	replaceQueryKey:'lesson_name',
 	//テーブルの値を置換する関数名
-	replaceTableValuefunction:'callMemberLessonValue'
+	replaceTableValuefunction:'callMemberLessonValue',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'予約中の授業が見つかりませんでした。'
 }
 //受講済み授業テーブル
 replaceTableOption['finishedLessonTable'] = {
@@ -2323,14 +2358,38 @@ replaceTableOption['finishedLessonTable'] = {
 	//置換するkey名
 	replaceQueryKey:'lesson_name',
 	//テーブルの値を置換する関数名
-	replaceTableValuefunction:'callMemberLessonValue'
+	replaceTableValuefunction:'callMemberLessonValue',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#finishedLesson"]',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'受講済みの授業が見つかりませんでした。'
 }
-//ユーザ一覧
+//管理者画面、日ごと授業一覧
+replaceTableOption['eachDayReservedInfoTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'.dateSelect',
+	//置換のvalueが入ったdom名
+	replaceValueDom:'.dateInput',
+	//置換するkey名
+	replaceQueryKey:'lesson_date',
+	//テーブルの値を置換する関数名
+	replaceTableValuefunction:'callEachDayReservedValue',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'この日の予約者はいません'
+}
+
+//管理者画面、ユーザ一覧
 replaceTableOption['userListInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'add',
 	//テーブルのafterでの追加先
 	addDomPlace:'.searchUser',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'検索結果が見つかりませんでした。',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#userList"]'
 }
 
 /*
@@ -2355,10 +2414,10 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 			//カウンターが0でなければ
 			if(counter != 0){
 				//追加する変数を作る
-				var addString = ' AND ' + attrName + "='" + inputData + "'";
+				var addString = ' AND ' + attrName + " LIKE '" + inputData + "%'";
 			} else {
 				//追加する変数を作る
-				var addString = ' WHERE ' + attrName + "='" + inputData + "'";
+				var addString = ' WHERE ' + attrName + " LIKE '" + inputData + "%'";
 				counter++;
 			}
 			//クエリに文字を付け加える
@@ -2379,12 +2438,15 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 function replaceTableQuery(queryArrayKey) {
 	//置換するための値を取得する
 	var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
-	//置換するためのkey名を取得する
-	var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
-	//取得した値をjsonの反映させる
-	creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
-	//クエリをテーマ検索用のものと入れ替える
-	creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query
+	//置換するものが「全て以外であれば置換する」
+	if (replaceValue != '全て') {
+		//置換するためのkey名を取得する
+		var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
+		//取得した値をjsonの反映させる
+		creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
+		//クエリをテーマ検索用のものと入れ替える
+		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
+	}
 }
 
 
@@ -2400,8 +2462,8 @@ function replaceTableQuery(queryArrayKey) {
  */
 function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 	//対象のボタンがクリックされた時の処理
-	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"').click(function(){
-		//クエリを初期状態を保存する
+	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"]').click(function(){
+		//クエリ初期状態を保存する
 		var queryDefault = creator.json[queryArrayKey].db_getQuery;
 		//クエリの置換フラグが追記のとき
 		if (replaceTableOption[queryArrayKey].replaceFlag == 'add') {
@@ -2411,161 +2473,447 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
 			//クエリの置換を行う関数を実行する
 			replaceTableQuery(queryArrayKey);
-		}
-		//テーブルのjsonの値が既にあれば
-		if(creator.json[queryArrayKey].table[0]){
-			//テーブルのjsonを初期化する
-			creator.json[queryArrayKey].table = {};
-		}
-		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[queryArrayKey], queryArrayKey);
-		//DBから取得した値があった時の処理
-		if(creator.json[queryArrayKey].table[0]){
-			//テーブルを消す
-			$('.' + queryArrayKey).remove();
-			//テーブルを作り直す
-			creator.outputTagTable(queryArrayKey,queryArrayKey,'body');
-			//テーブルの値の置換が必要な場合は置換を行う
-			if(replaceTableOption[queryArrayKey].replaceTableValuefunction) {
-				//変更の必要があるテーブルの配列を変数に入れる
-				var targetTableArray = creator.json[queryArrayKey][TAG_TABLE];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.' + queryArrayKey, targetTableArray, replaceTableOption[queryArrayKey].replaceTableValuefunction);
+			//ページング機能が実装されているのであればページング処理を行う
+			if(replaceTableOption[queryArrayKey].addPagingPlace) {
+				//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
+				$(DOT + PAGING).parent().off(CLICK);
+				//テーブルページング領域を消す
+				$(DOT + PAGING_AREA).remove();
+				//テーブルページングを実装する
+				var addQuery = tablePaging(queryArrayKey, 15, 6);
+				//クエリを更新する
+				creator.json[queryArrayKey].db_getQuery += addQuery;
 			}
-			//作ったテーブルをしかるべき場所に移動する
-			$(replaceTableOption[queryArrayKey].addDomPlace).after($('.' + queryArrayKey));
-		} else {
-			alert('検索結果が見つかりませんでした');
 		}
+		//テーブルをリロードする
+		tableReload(queryArrayKey);
 		// クエリを最初の状態に戻す
 		creator.json[queryArrayKey].db_getQuery = queryDefault;
 	});
 
 }
 
-/*
- * 関数名 :lessonThemeSerch
- * 引数  　:element elems:記事リストのDOM
- * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
- * 戻り値　:なし
- * 概要  　:会員トップの受講済み授業、予約中授業のテーマの検索ボタンをクリックするとテーブルの値が入れかわる
- * 作成日　:2015.06.24
- * 作成者　:T.Yamamoto
+/* 
+ * 関数名:tableReload
+ * 概要  :テーブルをリロードする
+ * 引数  :reloadTableClassName:リロードする対象のテーブルのクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.06
  */
-function lessonThemeSearch() {
-	//テーマボタンがクリックされた時のイベントを設定する
-	$('.selectThemeButton').click(function() {
-		//テーマのセレクトボックスの値を取得する
-		var selectTheme = $('.selectThemebox').val();
-		//対象テーブルのクラス名を取得する
-		var targetTableClassName = $(this).parent().next().attr('class');
-		//テーブルの値があれば
-		if(creator.json[targetTableClassName].table[0]){
-			//テーブルを初期化する
-			creator.json[targetTableClassName].table = {};
+function tableReload(reloadTableClassName) {
+	//テーブルのjsonの値が既にあれば
+	if(creator.json[reloadTableClassName].table[0]){
+		//テーブルのjsonを初期化する
+		creator.json[reloadTableClassName].table = {};
+	}
+	//テーブルを作るためのjsonをDBから持ってきた値で作る
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[reloadTableClassName], reloadTableClassName);
+	//すでにテーブルがあるならテーブルを消す
+	if ($(DOT + reloadTableClassName)) {
+		//テーブルを消す
+		$(DOT + reloadTableClassName).remove();
+	}
+	//DBから取得した値があった時の処理
+	if(creator.json[reloadTableClassName].table[0]){
+		//テーブルを作り直す
+		creator.outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
+		//テーブルの値の置換が必要な場合は置換を行う
+		if(replaceTableOption[reloadTableClassName].replaceTableValuefunction) {
+			//変更の必要があるテーブルの配列を変数に入れる
+			var targetTableArray = creator.json[reloadTableClassName][TAG_TABLE];
+			// 予約中テーブルのテーブルの値をしかるべき値にする
+			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 		}
-		//jsonに取得したテーマの値を入れる
-		creator.json[targetTableClassName]['lesson_name']['value'] = selectTheme;
-		//クエリをテーマ検索用のものと入れ替える
-		creator.json[targetTableClassName].db_getQuery = creator.json[targetTableClassName].replace_query
-		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[targetTableClassName], targetTableClassName);
-		//DBから取得した値がなかった時の処理
-		if(creator.json[targetTableClassName].table[0]){
-			//注釈を消す
-			$('.' + targetTableClassName).next().remove()
-			//テーブルを消す
-			$('.' + targetTableClassName).remove();
-			//追加先の変数を作る
-			var appendTo;
-			//対象テーブルが予約中授業のテーブルの時、追加先のクラス名を設定する
-			if (targetTableClassName == 'reservedLessonTable') {
-				//予約中授業タブを変数に入れる
-				appendTo = '.alreadyReserved';
-			} else {
-				appendTo = '.finishedLesson';
+	} else {
+		$(STR_BODY).append('<div class="' + reloadTableClassName + '"><div>');
+		$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
+	}
+	//作ったテーブルをしかるべき場所に移動する
+	$(replaceTableOption[reloadTableClassName].addDomPlace).after($(DOT + reloadTableClassName));
+}
+
+/* 
+ * 関数名:getDateFormatDB
+ * 概要  :日付オブジェクトからフォーマットをyyyy-mm-dd方式に変換してその文字列を返す(DBに適したフォーマットにする)
+ * 引数  :date:日付型オブジェクト
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.06
+ */
+function getDateFormatDB(date) {
+	var year = date.getFullYear();		//年
+	var month = date.getMonth() + 1;	//月
+	var date = date.getDate();			//日
+	//月が1月から9月のとき先頭に0を足す
+	if (month < 10) { month = "0" + month; }
+	//日が1日から9日のとき先頭に0を足す
+	if (date < 10) {  date = "0" + date; }
+	//現在の日付を返す
+	var nowDate = year + "-" + month + "-" + date;
+	//現在日付を返す。
+	return nowDate;
+}
+
+/* 
+ * 関数名:nowDatePaging
+ * 概要  :現在の日付からページング機能を実装する
+ * 引数  :clickSelectorParent:クリックボタンのセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.06
+ */
+function nowDatePaging(clickSelectorParent) {
+	//現在時刻のオブジェクトを作る
+	var nowDateObject = new Date();
+	//日付の文字列を取得する
+	var nowDateString = getDateFormatDB(nowDateObject);
+	//日付をタイトルに入れる
+	$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	//jsonに日付の値を入れる
+	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//対象の要素がクリックされたときに日付を進退する
+	$(DOT + clickSelectorParent + ' a').click(function(){
+		//クリックされた番号を取得する
+		var className = $(this).attr('class');
+		//取得したクラスの名前によって処理を分ける
+		switch(className) {
+			//クリックされたのが2日前の時、日付を2日前にする
+			case 'twoDaysBefore':
+			nowDateObject.setDate(nowDateObject.getDate() - 2);
+			break;
+			//クリックされたのが1日前の時、日付を1日前にする
+			case 'oneDayBefore':
+			nowDateObject.setDate(nowDateObject.getDate() - 1);
+			break;
+			//クリックされたのが1日後の時、日付を1日後にする
+			case 'oneDayAfter':
+			nowDateObject.setDate(nowDateObject.getDate() + 1);
+			break;
+			//クリックされたのが2日後の時、日付を2日後にする
+			case 'twoDayAfter':
+			nowDateObject.setDate(nowDateObject.getDate() + 2);
+			break;
+		}
+		//日付を更新する
+		nowDateString = getDateFormatDB(nowDateObject);
+		//jsonに日付の値を入れる
+		creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+		//テーブルをリロードする
+		tableReload('eachDayReservedInfoTable');
+		//日付をタイトルに入れる
+		$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	});
+}
+
+
+/* 
+ * 関数名:getPagingCount
+ * 概要  :ページングの個数を取得する
+ * 引数  :pagingTargetTable:ページング対象となるテーブル名
+ *       displayNumber:ページングで表示する行数の件数
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :pagingCounter:ページングの最大値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingCount(pagingTargetTable, displayNumber, pagingDisplayCount) {
+	//DBからレコードのページングにしたいテーブルを取得する
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[pagingTargetTable], pagingTargetTable);
+	//テーブルの行数を取得する
+	var recordCount = creator.json[pagingTargetTable].table.length;
+	//表示件数の変数を作る
+	var displayCount = displayNumber;
+	//ページングの初期値を1にして変数に入れる
+	var pagingCounter = 1;
+	//ページングの値を求めるための結果変数
+	var resultPaging = recordCount - (displayCount * pagingCounter);
+	//ページング領域を作る
+	$(replaceTableOption[pagingTargetTable].addDomPlace).after('<div class="pagingArea textCenter"></div>');
+	//ページングした結果が0以上の時
+	if(resultPaging >= 0) {
+		//ループでページングを作る
+		while(resultPaging = recordCount - (displayCount * pagingCounter) >= 0){
+			//ページングが1以上5以下の時
+			if (pagingCounter >= 1 && pagingCounter < pagingDisplayCount) {
+				//ページングボタンを指定要素の先に追加する
+				$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+			//ページ数が6以上の時にページングを作らなくする
+			} else if (pagingCounter == pagingDisplayCount) {
+				//ページングの最後に次ページ記号を入れる
+				$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
 			}
-			//テーブルの値が存在するときにテーブルを作る時に
-			if(creator.json[targetTableClassName][TAG_TABLE][0]) {
-				//受講済み授業テーブルを作る
-				creator.outputTagTable(targetTableClassName,targetTableClassName,appendTo);
-				//注釈を作る
-				creator.outputTag('anotion', 'anotion', appendTo);
-				// 受講済みの連想配列を変数に入れる
-				var targetTableArray = creator.json[targetTableClassName][TAG_TABLE];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.' + targetTableClassName, targetTableArray, "callMemberLessonValue");
+			//ページングボタンが初回の時は
+			if(pagingCounter == 1) {
+				//現在のページを表すクラスを付ける
+				$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
 			}
+			//カウンタをインクリメントする
+			pagingCounter++;
+		}
+	} else {
+		//ページングボタンを指定要素の先に追加する
+		$(DOT + PAGING_AREA).append('<a class="paging inlineBlock"> ' + pagingCounter + ' </a>');
+		//現在のページを表すクラスを付ける
+		$(DOT + PAGING).eq(0).addClass(NOW_PAGE);
+	}
+	//ページングの最大値を返す
+	return Number(pagingCounter)-1;
+}
+
+/* 
+ * 関数名:setTableReloadExecute
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :tableClassName:テーブルのクラス名
+ 		:addQueryString:クエリに追加する文字列
+ *       defaultQuery:デフォルトのクエリ
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function setTableReloadExecute(tableClassName, addQueryString, defaultQuery) {
+	//クエリに文字列を追加する
+	creator.json[tableClassName].db_getQuery += addQueryString;
+	//クエリからテーブルを作る
+	tableReload(tableClassName);
+	//クエリを追加前に戻す
+	creator.json[tableClassName].db_getQuery = defaultQuery;
+}
+
+/* 
+ * 関数名:getPagingMax
+ * 概要  :ページングの最大値を取得し、次のページングに行く
+ * 引数  :paging:ページングのクラス名
+ 		maxPaging:最大のページ番号
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :max : 次のページングの値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingMax(paging, maxPaging, pagingDisplayCount) {
+	//最大値を0とする
+	var max = 0;
+	//現在のページのクラスをとる
+	$(paging).removeClass(NOW_PAGE);
+	// 要素から最大値を走査する
+	$(paging).each(function(){
+		//現在の値を取得する
+		var current = $(this).text();
+		//数字にだけ処理をする
+		if(current.match(/\d/g)) {
+			//現在の値を数字に変換する
+			current = Number(current);
+			//現在のテキストに1を足す
+			$(this).text(current + 1);
+			//現在の値がmaxより大きく、かつ数字の場合はmaxに現在の値を代入する
+			if (current > max) {
+				//現在の値が最大値になる
+				max = current;
+			}
+		}
+	});
+	//最大値に1を足す
+	max = Number(max) + 1;
+	//現在の最大値のクラスを付ける
+	$(paging + ':contains(' + max + ')' ).addClass(NOW_PAGE);
+	//最初に次のページへの記号をクリックされたとき
+	if(max == pagingDisplayCount) {
+		//前ページの記号を付け足す
+		$(DOT + PAGING_AREA).prepend('<a class="paging inlineBlock"><<</a>');
+	
+	}
+	//ページングが最大値まで来たとき 
+	if(max >= maxPaging) {
+		//次ページの記号を取り除く
+		$(paging + ':contains(">>")').remove();
+	}
+	//最大値に1を足したものを返す
+	return max;
+}
+
+/* 
+ * 関数名:getPagingMin
+ * 概要  :ページングの最小値を取得し、前のページングに行く
+ * 引数  :paging:ページングのクラス名
+ 		maxPaging:最大のページ番号
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :min : 前のページングの値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function getPagingMin(paging, maxPaging, pagingDisplayCount) {
+	//最小値を1000とする
+	var min = 1000;
+	//現在のページのクラスをとる
+	$(paging).removeClass(NOW_PAGE);
+	// 要素から最大値を走査する
+	$(paging).each(function(){
+		//現在の値を取得する
+		var current = $(this).text();
+		//数字にだけ処理をする
+		if(current.match(/\d/g)) {
+			//現在の値を数字に変換する
+			current = Number(current);
+			//現在のテキストに1を引く
+			$(this).text(current - 1);
+			//現在の値がminより小さい
+			if (current < min) {
+				//現在の値が最小値になる
+				min = current;
+			}
+		}
+	});
+	//最小値に1を引く
+	min = Number(min) - 1;
+	//現在の最小値にクラスを付ける
+	$(paging + ':contains(' + min + ')' ).addClass(NOW_PAGE);
+	//ページングが最小値まで来たとき 
+	if(min == 1) {
+		//次ページの記号を取り除く
+		$(paging + ':contains("<<")').remove();
+	}
+	//最大のページでない時に次のページの記号を出す
+	if((min+4) != maxPaging) {
+		//クラス名を取得し、なかったときに次のページの記号を作る
+		if (!($(paging + ':contains(">>")').attr('class'))) {
+			//次ページの記号を付け足す
+			$(DOT + PAGING_AREA).append('<a class="paging inlineBlock">>></a>');
+		}
+	}
+	//最小値を返す
+	return min;
+}
+
+/* 
+ * 関数名:tablePaging
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :pagingTargetTable:ページング対象となるテーブル名
+ *       displayNumber:ページングで表示する件数
+ *       pagingDisplayCount:ページング領域で表示するページングの件数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.07
+ */
+function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
+	//ページング領域を作る
+	var maxPaging = getPagingCount(pagingTargetTable, displayNumber, pagingDisplayCount);
+	//デフォルトのクエリを取得する
+	var defaultQuery = creator.json[pagingTargetTable].db_getQuery;
+	//最大の表示数
+	var maxRecord = displayNumber;
+	//最初の表示数
+	var minRecord = 1;
+	//追加するクエリ
+	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
+	//タブリンクがクリックされたときにテーブルを読み込む
+	$(replaceTableOption[pagingTargetTable].addPagingPlace).click(function(){
+		//クエリを実行してテーブルを作る
+		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
+	});
+	//ページングがクリックされた時の処理
+	$(DOT + PAGING).parent().on('click', DOT + PAGING, function(){
+		//全てのページングからnowPageクラスを取り除く
+		$(DOT + PAGING).removeClass(NOW_PAGE);
+		//クリックされた要素の番号を取得する
+		var nowPaging = $(this).text();
+		//クリックされた要素が次のページ記号だった場合
+		if (nowPaging == '>>') {
+			//次のページの値を取得する
+			nowPaging = getPagingMax(DOT + PAGING, maxPaging, pagingDisplayCount);
+		//クリックされた要素が前のページ記号だった場合
+		} else if (nowPaging == '<<') {
+			//前のページの値を取得する
+			nowPaging = getPagingMin(DOT + PAGING, maxPaging, pagingDisplayCount);
 		} else {
-			alert('検索結果が見つかりませんでした');
+			//クリックされた要素にnowPageクラスを追加する
+			$(this).addClass(NOW_PAGE);
+		}
+		//クエリにLIMITを追加する
+		var pagingAddQuery = ' LIMIT ' + (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
+		//クエリを実行してテーブルを作る
+		setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
+	});
+	//加える文字列を返す
+	return addQuery;
+}
+
+/* 
+ * 関数名:accordionSetting
+ * 概要  :テーブルページング機能を実装する
+ * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
+ *       accordionDomSelector:アコーディオンの中身のdomセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.09
+ */
+function accordionSetting(clickSelector, accordionDomSelector) {
+	//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
+	$(STR_BODY).on(CLICK, clickSelector, function(){
+		//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
+		$(accordionDomSelector).slideToggle();
+	});
+}
+
+
+/* 
+ * 関数名:enterKeyButtonClick
+ * 概要  :エンターが押された時に第二引数のボタンをクリックしたイベントを発生させる
+		ログインダイアログのテキストボックスでエンターキーを押してログイン処理を開始するときや
+		ユーザ一覧の検索でテキストボックスからエンターキーで検索処理を開始するときなどに使う
+ * 引数  :enterTarget:エンターキーを押したときに対象となるセレクター名
+ *       buttonText:クリックイベントを起こすボタンに表示されているテキスト
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.10
+ */
+function enterKeyButtonClick(enterTarget, buttonText) {
+	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
+	$(enterTarget).keypress(function (e) {
+		//エンターボタンが押された時の処理
+		if (e.which == 13) {
+			//第二引数のボタンをクリックする
+			$('button:contains("' + buttonText + '"), input[value="' + buttonText + '"]').click();
 		}
 	});
 }
 
 /* 
- * 関数名:setExtractionCondition
- * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
-   ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
- * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
-         queryArrayKey : クエリが入っている連想配列のkey
- 		 inputDataParent: 走査対象テキストボックスの親のクラス名
- * 返却値  :なし
+ * 関数名:checkInputName
+ * 概要  :テキストボックスに入力された値が文字列のときはtrue、違うならfalseを返し、データ送信の入力チェックに使う
+ * 引数  :checkString:チェックする文字列
+ * 返却値  :resultbool:第一引数の文字列が数字や記号が入っているかどうかの判定結果
  * 作成者:T.Yamamoto
- * 作成日:2015.07.03
+ * 作成日:2015.07.11
  */
-function setExtractionCondition(eventButtonParent, queryArrayKey, inputDataParent) {
-	//検索ボタンが押された時の処理
-	$('.' + eventButtonParent + ' .searchButton').click(function(){
-		//カウンタ変数を作る
-		var counter = 0;
-		//クエリを取得する
-		var query = creator.json[queryArrayKey].db_getQuery;
-		//inputタグの数ループする
-		$('.' + inputDataParent + ' input[type="text"]').each(function(){
-			//入力された値が空白でなければ
-			if($(this).val() != "") {
-					//入力値を取得する
-					var inputData = $(this).val();
-					//name属性を所得する
-					var attrName = $(this).attr('name');
-				//カウンターが0でなければ
-				if(counter != 0){
-					//追加する変数を作る
-					var addString = ' AND ' + attrName + "='" + inputData + "'";
-					//クエリに文字を付け加える
-					creator.json[queryArrayKey].db_getQuery += addString;
-				} else {
-					//追加する変数を作る
-					var addString = ' WHERE ' + attrName + "='" + inputData + "'";
-					//クエリに文字を付け加える
-					creator.json[queryArrayKey].db_getQuery += addString;
-					counter++;
-				}
-			}
-		});
-		//すでに作られていたテーブルがあれば
-		if(creator.json[queryArrayKey].table) {
-			//テーブルを初期化する
-			creator.json[queryArrayKey].table = {};
-		}
-		//クエリを発行してテーブルを作り直すための連想配列を取得する
-		creator.getJsonFile('php/GetJSONArray.php', creator.json[queryArrayKey], queryArrayKey);
-		if(creator.json[queryArrayKey].table[0]) {
-			//ボタン領域を消す
-			$('.' + queryArrayKey).next().remove();
-			//テーブルを消す
-			$('.' + queryArrayKey).remove();
-			// 日ごと予約者一覧テーブル用のJSON配列を取得する
+function checkInputName (checkString) {
+	//結果の変数をデフォルト値trueで作る
+	var resultbool = true;
+	//名前をチェックするために、第一引数の文字列に記号や数字が入っているとfalseを返す
+	if(checkString.match(/[!-\/:-@≠\[-`{-~0-9]/)) {
+		//名前の入力に適していないことを返す
+		resultbool = false;
+	}
+	//名前の入力に適していたかどうかの結果を返す
+	return resultbool;
+}
 
-			//修正したクエリでテーブルのデータを読み込む
-			creator.outputTagTable(queryArrayKey, queryArrayKey, '#userList');
-			//会員一覧タブのボタン群れ
-			creator.outputTag('userListButtons', 'userListButtons', '#userList');
-			//ボタンの見た目を変える
-			$('button, .searchButton, input[type="button"]').button();
-		} else {
-			alert('検索結果が見つかりませんでした');
-		}
-	});
 
+/* 
+ * 関数名:checkInputPhone
+ * 概要  :テキストボックスに入力された値が数字かハイフンのときはtrue、違うならfalseを返し、データ送信の入力チェックに使う
+ * 引数  :checkString:チェックする文字列
+ * 返却値  :resultbool:数字かハイフンであったかどうかの判定結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function checkInputPhone (checkString) {
+	//結果の変数をデフォルト値trueで作る
+	var resultbool = true;
+	//電話番号をチェックするために、第一引数の文字列にハイフンを除く記号や文字が入っているとfalseを返す
+	if(checkString.match(/[\/\^\:\[\]\;\@\!\"\#\\%\&\'\(\)\=\~\<\>a-zA-Z]/)) {
+		//電話番号の入力に適していないことを返す
+		resultbool = false;
+	}
+	//電話番号に適していたかどうかの結果を返す
+	return resultbool;
 }

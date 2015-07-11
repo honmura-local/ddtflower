@@ -20,6 +20,10 @@
                 {
                     "href": "#lessonDetail",
                     "html": "授業<br>詳細"
+                },
+                {
+                    "href": "#mailMagaAndAnnounce",
+                    "html": "メルマガ<br>アナウンス"
                 }
             ]
         },
@@ -47,7 +51,7 @@
             "text":"<"
         },
         "theDay":{
-            "text":"2015-04-10"
+            "text":""
         },
         "oneDayAfter":{
             "text":">"
@@ -58,13 +62,14 @@
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
-    	"dateInput":{"type":"text", "name":"eachDateLessonDate", "value":""},
+    	"dateInput":{"type":"text", "name":"lesson_date", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
-    "userInfoTable":{
-        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
-        "date": {
-            "value": "2015-04-10"
+    "eachDayReservedInfoTable":{
+        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "replace_query":"SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "lesson_date": {
+            "value": ""
         },
         "config": {
             "columns": {
@@ -177,6 +182,21 @@
             }
         }
     },
+    "updateLecturePermit":{
+        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
+        "user_classwork_cost":{
+            "value":""
+        },
+        "use_point":{
+            "value":""
+        },
+        "late_time":{
+            "value":""
+        },
+        "user_key":{
+            "value":""
+        }
+    },
     "doLecturePermitButton":{ "type":"button", "value":"承認"},
     "lecturePermitListInfoTable":{
         "db_getQuery": "(SELECT user_inf.id AS id ,user_name ,lesson_name ,user_classwork.user_classwork_cost AS cost ,user_classwork.use_point AS use_point ,user_classwork.level_no AS level_no ,user_classwork.stage_no AS stage_no ,1 AS sell_number ,'' AS content FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date <= 'toDate' AND time_table_day.lesson_date >= 'FromDate' INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key ORDER BY time_table_day.lesson_date DESC) UNION ALL (SELECT user_inf.id AS id ,user_name ,'' AS lesson_name ,pay_cash AS cost ,commodity_sell.use_point AS use_point ,1 AS level_no ,1 AS stage_no ,sell_number ,content FROM commodity_sell INNER JOIN user_inf ON user_inf.id = commodity_sell.user_key AND sell_datetime <= 'toDate' AND sell_datetime >= 'FromDate' ORDER BY sell_datetime DESC);",
@@ -188,7 +208,7 @@
         },
         "config": {
             "columns": {
-                "No": {
+                "id": {
                     "columnName": "No."
                 },
                 "user_name": {
@@ -199,11 +219,11 @@
                 },
                 "cost": {
                     "columnName": "入金(円)",
-                    "className":"replaceTextbox"
+                    "className":"replaceTextboxCostCell"
                 },
                 "use_point": {
-                    "columnName": "使用pt(pt)",
-                    "className":"replaceTextbox"
+                    "columnName": "使用pt",
+                    "className":"replaceTextboxUsePointCell"
                 },
                 "stage_no":{
                     "style":"display:none;"
@@ -247,6 +267,24 @@
             "value":"検索"
         }
     },
+    "updateClassworkInfo":{
+        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'classwork_key';",
+        "user_classwork_cost":{
+            "value":""
+        },
+        "classwork_key":{
+            "value":""
+        }
+    },
+    "updateCommoditySell":{
+        "db_getQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';",
+        "pay_cash":{
+            "value":""
+        },
+        "commodity_sell_key":{
+            "value":""
+        }
+    },
     "searchUser":{
         "searchList":{
             "searchNameColumn":{
@@ -287,9 +325,7 @@
                         "type":"text",
                         "name":"mail_address"
                     }
-                }
-            },
-            "searchButtonArea":{
+                },
                 "searchButton":{
                     "type":"button",
                     "value":"検索"
@@ -318,21 +354,6 @@
         }
     },
     "userListButtons":{
-    	"firstRow":{
-    		"prev":{
-                "class":"prev",
-	    		"type":"button",
-	    		"value":"前へ"
-    		},
-    		"records":{
-    			"text":"1111/9999"
-    		},
-    		"next":{
-                "class":"next",
-	    		"type":"button",
-	    		"value":"次へ"
-    		}
-    	},
     	"secondRow":{
     		"createMail":{
 	    		"type":"button",
@@ -354,7 +375,7 @@
     "adminLessonInformation":{
 	    "class": "adminLessonInformation",
         "replaceTable":{
-        	"replace_getQuery":"SELECT start_time  ,lesson_name ,classwork.lesson_key AS lesson_key ,end_time ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classwork_note ,classroom FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;"
+        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key;"
         },
          "config": {
             "columns": {
@@ -364,14 +385,17 @@
                 "school_name": {
                     "columnName": "店舗"
                 },
-                "end_time": {
-                    "columnName": "終了時刻"
-                },
                 "lesson_name": {
                     "columnName": "テーマ"
                 },
-                "lesson_key": {
+                "classwork_note": {
                     "columnName": "残席"
+                },
+                "end_time": {
+                    "columnName": "状況"
+                },
+                "lesson_key": {
+                    "style":"display:none;"
                 },
                 "lesson_date": {
                     "style":"display:none;"
@@ -403,10 +427,10 @@
                 "classwork_key":{
                     "style":"display:none;"
                 },
-                "classwork_note":{
+                "classroom":{
                     "style":"display:none;"
                 },
-                "classroom":{
+                "school_key":{
                     "style":"display:none;"
                 }
             }
@@ -435,7 +459,7 @@
                 "text":"最少人数"
             },
             "minStudentsTextbox":{
-                "type":"text",
+                "type":"number",
                 "name":"minStudentsTextbox"
             },
             "minStudentsUnit":{
@@ -447,7 +471,7 @@
                 "text":"最大人数"
             },
             "maxStudentsTextbox":{
-                "type":"text",
+                "type":"number",
                 "name":"maxStudentsTextbox"
             },
             "maxStudentsUnit":{
@@ -459,10 +483,23 @@
                 "text":"ステータス"
             },
             "lessonStatusSelect":{
-                "lesssonState":[
-                    "予約可能",
-                    "中止"
-                ]
+                "name":"classwork_status",
+                "lessonState1":{
+                    "value":"0",
+                    "text":"予約可能"
+                },
+                "lessonState2":{
+                    "value":"1",
+                    "text":"開催済み"
+                },
+                "lessonState3":{
+                    "value":"2",
+                    "text":"定員未達による中止"
+                },
+                "lessonState4":{
+                    "value":"3",
+                    "text":"中止"
+                }
             }
         },
         "classRoomArea":{
@@ -484,13 +521,257 @@
         }
     },
     "buttonArea":{
+        "class":"buttonArea cf",
         "updateButton":{
+            "class":"fLeft",
             "type":"button",
             "value":"更新"
         },
         "memberClassListButton":{
             "type":"button",
             "value":"受講者一覧"
+        }
+    },
+    "insertClasswork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,create_datetime ,update_datetime ) VALUES( 'max_students' ,'min_students' ,'classwork_status' ,'classroom' ,'classwork_note' ,(select id from user_inf where authority = 10 limit 1) ,'school_key' ,NOW() ,NOW())",
+        "max_students":{
+            "value":""
+        },
+        "min_students":{
+            "value":""
+        },
+        "classwork_status":{
+            "value":""
+        },
+        "classroom":{
+            "value":""
+        },
+        "classwork_note":{
+            "value":""
+        },
+        "school_key":{
+            "value":""
+        }
+    },
+    "updateClasswork":{
+        "db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';",
+        "max_students":{
+            "value":""
+        },
+        "min_students":{
+            "value":""
+        },
+        "classwork_status":{
+            "value":""
+        },
+        "classroom":{
+            "value":""
+        },
+        "classwork_note":{
+            "value":""
+        },
+        "classwork_key":{
+            "value":""
+        }
+    },
+    "replaceTextboxCost":{
+        "type":"number",
+        "name":"cost"
+    },
+    "replaceTextboxUsePoint":{
+        "type":"number",
+        "name":"use_point"
+    },
+    "mailMagaAndAnnounce":{
+        "class": "mailMagaAndAnnounce tabPanel",
+        "id": "mailMagaAndAnnounce"
+    },
+    "meilMagaSearchArea":{
+        "schoolNameLabel":{
+            "text":"店舗"
+        },
+        "schoolNameSelectBox":{
+            "schoolNameSelect":{
+                "text":"全て"
+            }
+        },
+        "typeLabel":{
+            "text":"種別"
+        },
+        "typeSelectBox":{
+            "typeSelect":{
+                "text":"全て"
+            }
+        },
+        "mailMagaContentSearchLabel":{
+            "mailMagaContentSearchText":{
+                "text":"内容"
+            },
+            "mailMagaContentSearchTextbox":{
+                "type":"text",
+                "name":"mailMageSearch"
+            }
+        },
+        "mailMagaSearchButton":{
+            "type":"button",
+            "value":"検索"
+        }
+    },
+    "mailMagaTableArea":{
+        "class":"tableOutsideArea mailMagaTableArea"
+    },
+    "mailMagaTable":{
+        "db_getQuery":"",
+        "config": {
+            "columns": {
+                "start_time": {
+                    "columnName": "時間割"
+                },
+                "school_name": {
+                    "columnName": "店舗"
+                },
+                "lesson_name": {
+                    "columnName": "テーマ"
+                },
+                "classwork_note": {
+                    "columnName": "残席"
+                },
+                "end_time": {
+                    "columnName": "状況"
+                },
+                "lesson_key": {
+                    "style":"display:none;"
+                },
+                "lesson_date": {
+                    "style":"display:none;"
+                },
+                "order_students":{
+                    "style":"display:none;"
+                },
+                "max_students":{
+                    "style":"display:none;"
+                },
+                "min_students":{
+                    "style":"display:none;"
+                },
+                "default_min_students": {
+                    "style":"display:none;"
+                },
+                "max_num": {
+                    "style":"display:none;"
+                },
+                "min_num": {
+                    "style":"display:none;"
+                },
+                "classwork_status": {
+                    "style":"display:none;"
+                },
+                "today":{
+                    "style":"display:none;"
+                },
+                "classwork_key":{
+                    "style":"display:none;"
+                },
+                "classroom":{
+                    "style":"display:none;"
+                },
+                "school_key":{
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
+    "mailMagaAndAnnounceArea":{
+        "messageInfo":{
+            "class":"messageInfo fLeft",
+            "NoLabel":{
+                "text":"No."
+            },
+            "numberTextox":{
+                "class":"numberTextox readonly",
+                "type":"text",
+                "name":"messageNumber"
+            },
+            "schoolNameLabel":{
+                "text":"店舗"
+            },
+            "schoolNameSelectBox":{
+                "schoolNameSelect":{
+                    "value":"",
+                    "text":"全て"
+                }
+            },
+            "typeLabel":{
+                "text":"種別"
+            },
+            "typeSelectBox":{
+                "typeSelect":{
+                    "value":"",
+                    "text":"全て"
+                }
+            }
+        },
+        "sendmessageDate":{
+            "class":"sendmessageDate fLeft",
+            "sendmessageDateLabel":{
+                "text":"送信日"
+            },
+            "sendmessageDateTextbox":{
+                "class":"sendmessageDateTextbox readonly",
+                "type":"text",
+                "name":"sendmessageDate",
+                "value":""
+            }
+        },
+        "messageTitleLabel":{
+            "class":"messageTitleLabel fLeft",
+            "text":"タイトル"
+        },
+        "messageTitleTextboxArea":{
+            "class":"messageTitleTextboxArea inlineBlock fLeft",
+            "messageTitleTextbox":{
+                "type":"text",
+                "name":"messageTitle",
+                "value":""
+            }
+        },
+        "messageContentLabel":{
+            "text":"内容"
+        },
+        "messageContentArea":{
+            "messageTextarea":{
+                "name":"messageContent"
+            }
+        },
+        "messageOptionArea":{
+            "class":"messageOptionArea fLeft",
+            "mailMagaRadio":{
+                "type":"radio",
+                "name":"messegeType",
+                "value":""
+            },
+            "mailMagaLabel":{
+                "text":"メルマガ"
+            },
+            "announceRadio":{
+                "type":"radio",
+                "name":"messegeType",
+                "value":""
+            },
+            "announceLabel":{
+                "text":"アナウンス"
+            }
+        },
+        "messageButtonArea":{
+            "class":"messageButtonArea fRight",
+            "sendButton":{
+                "type":"button",
+                "value":"送信"
+            },
+            "deleteButton":{
+                "type":"button",
+                "value":"削除"
+            }
         }
     }
 }

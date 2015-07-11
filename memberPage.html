@@ -116,13 +116,8 @@
 					// 予約中授業のテーブルを作る
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
-				//受講済み授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-				//受講済みの授業があったときテーブルを作る
-				if(creator.json['finishedLessonTable']['table'][0]) {
-					//受講済み授業テーブルを作る
-					creator.outputTagTable('finishedLessonTable','finishedLessonTable','.finishedLesson');
-				}
+				//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
+				tablePaging('finishedLessonTable', 15, 6);
 				//注釈を作る
 				creator.outputTag('anotion', 'anotion', '.tabPanel');
 				
@@ -145,12 +140,14 @@
 					// 予約キャンセルダイアログのdomを作る
 					creator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
 				});
-				//予約キャンセルダイアログを開くための関数を実行する
+				//キャンセルダイアログを予約中授業テーブルから開く処理
 				cancelDialogOpen(cancelLesson, memberInfo['id']);
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
+				//キャンセルダイアログの注意の部分をアコーディオンにしてその機能を実装する
+				accordionSetting('.lessonAccordion', '.attention');
 			});
 			</script>
 		</div>

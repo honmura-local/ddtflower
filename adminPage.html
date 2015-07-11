@@ -67,26 +67,32 @@
 				creator.outputTag('adminHeader');
 				//タブ領域
 				creator.outputTag('adminTab', 'tabContainer');
-				//タブコンテンツ4個
+				//タブコンテンツ5個
 				creator.outputTag('dayReserver','tabInContent', '.tabContentArea');
 				creator.outputTag('lecturePermit','tabInContent', '.tabContentArea');
 				creator.outputTag('userList','tabInContent', '.tabContentArea');
 				creator.outputTag('lessonDetail','tabInContent', '.tabContentArea');
+				creator.outputTag('mailMagaAndAnnounce','tabInContent', '.tabContentArea');
 				
 				//日ごと予約者一覧タブのコンテンツ
 				//選択された日付を表示する領域
 				creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
-				// 日ごと予約者一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['userInfoTable'], 'userInfoTable');
-				//日ごと予約者一覧テーブルを作る
-				creator.outputTagTable('userInfoTable','eachDayReservedInfoTable','#dayReserver');
+				//日付ページングを実装する
+				nowDatePaging('dateBelt');
 				//日付選択パーツのセット
 				creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
-				// テーブルのデータが入った変数
-				var eachDayReserved = creator.json['userInfoTable']['table'];
-				// 日ごと予約者一覧テーブルの値を置換する
-				lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
-
+				// 日ごと予約者一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
+				//日ごと予約者の情報がないときにテーブルを作らない
+				if(creator.json.eachDayReservedInfoTable.table[0]) {
+					//日ごと予約者一覧テーブルを作る
+					creator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
+					// テーブルのデータが入った変数
+					var eachDayReserved = creator.json['eachDayReservedInfoTable']['table'];
+					// 日ごと予約者一覧テーブルの値を置換する
+					lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
+				}
+				
 				//受講承認タブのコンテンツ
 				//タブ
 				creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
@@ -101,7 +107,6 @@
 				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-
 				// 受講承認一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
 				//受講承認一覧タブのリスト
@@ -113,10 +118,12 @@
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');
+				//ページング機能付きでユーザ情報一覧テーブルを作る(レコードの表示数が15、ページングの最大値が9)
+				tablePaging('userListInfoTable', 15, 10);
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+				// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 				//会員一覧タブのリスト
-				creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
+				// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
 				//会員一覧タブのボタン群れ
 				creator.outputTag('userListButtons', 'userListButtons', '#userList');
 				
@@ -126,9 +133,6 @@
 				//タブを作る
 				createTab('.adminTab');
 				createTab('.lecturePermitTab');
-
-				// ボタンの見た目をjqueryuiのものにする
-				$('button, .searchButton, input[type="button"]').button();
 
 				//授業詳細タブ内にカレンダ-作る
 				creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
@@ -148,8 +152,12 @@
 				//受講承認一覧に連番を入れる
 				insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
 				//クリックでテキストボックスにカレンダーを表示する
-				clickCalendar('eachDateLessonDate');
+				clickCalendar('lesson_date');
+				//会員一覧タブのユーザ検索機能を実装する
 				replaceTableTriggerClick('searchList', 'userListInfoTable');
+				//管理者日ごと授業の検索機能を実装する
+				replaceTableTriggerClick('dateSelect', 'eachDayReservedInfoTable');
+
 
 				
 				//予約一覧ダイアログを作る
@@ -166,11 +174,21 @@
 				var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
 					// 授業詳細ダイアログ領域を作る
 					creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-					//授業データ
-					creator.outputTag('lessonData', 'lessonData', CHAR_DOT + LESSON_DETAIL_DIALOG);
-					//ボタン群
-					creator.outputTag('buttonArea', 'buttonArea', CHAR_DOT + LESSON_DETAIL_DIALOG);
 				});
+
+				//メルマガ＆アナウンスタブのコンテンツ
+				//過去のメルマガを検索するための領域を作る
+				creator.outputTag('meilMagaSearchArea', 'meilMagaSearchArea', '#mailMagaAndAnnounce');
+				//メルマガテーブルの外側を作る
+				creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+				//メルマガテーブルを作る
+				// creator.outputTag('adminCalendar', 'adminCalendar', '#mailMagaAndAnnounce');
+				//メルマガ・アナウンス入力領域を作る
+				creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+				// ボタンの見た目をjqueryuiのものにする
+				$('button, .searchButton, input[type="button"]').button();
+				//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
+				enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '検索');
 			});
 			</script>
 		</div>

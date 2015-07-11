@@ -1,5 +1,5 @@
 (SELECT 
-	,user_classwork.id AS id
+	user_classwork.id AS id
 	,user_name
 	,lesson_name
 	,lesson_sub.level_no AS level_no
@@ -30,7 +30,7 @@ INNER JOIN
 	lesson_inf
 ON
 	lesson_inf.id = classwork.lesson_key
-INNERR JOIN
+INNER JOIN
 	stage_inf
 ON
 	stage_inf.id = user_classwork.stage_key

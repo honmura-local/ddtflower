@@ -19,9 +19,9 @@
  */
 #adminTab .tab {
 	font-size: 11px;			/* フォントサイズを11pxにする */
-	width: 25%;					/* 幅を25%にする */
+	width: 20%;					/* 幅を20%にする */
 	display: inline-block;		/* インラインブロック要素としてあつかう */
-	background: #cedc3a;		/* 背景を黄緑にする */
+	background: #ce6;		/* 背景を黄緑にする */
 	border: none;				/* 線をなくす */
 	border-radius: 0;			/* 角丸をなくす */
 }
@@ -36,7 +36,7 @@
 	padding-top: 0px;			/* 上向きに0px要素の幅を広げる */
 	position: static;			/* ポジションを静的にする */
 	font-weight: normal;		/* 文字の太さを普通にする */
-	background: #ce6;			/* 背景を薄い緑にする */
+	background: #cedc3a;			/* 背景を薄い緑にする */
 }
 
 /* 
@@ -95,12 +95,12 @@
 }
 
 /* 
- * セレクタ :.dateBelt a
+ * セレクタ :.dateBelt a, .dateBelt p 
  * 概要   :日ごと予約者一覧タブのタイトルの領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.19
  */
-.dateBelt a {
+.dateBelt a, .dateBelt p {
 	display: inline-block;	/* インラインブロック要素として扱う */
 	padding: 5px 2em ;			/* 要素の幅を5px広げる */
 	cursor: pointer;		/* マウスオーバー時に指にする */
@@ -186,6 +186,27 @@
 	margin: 0 1em;			/* 左右に1文字分の余白をとる */
 }
 
+/* 管理者　カレンダー領域 */
+/* 
+ * セレクタ:.adminCalendar.calendar
+ * 概要   :管理者カレンダー領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.adminCalendar.calendar {
+	width: 100%;		/* 横幅を100%にする */
+}
+
+/* 
+ * セレクタ:.adminCalendar td .ui-state-default
+ * 概要   :管理者カレンダークリック領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.07
+ */
+.adminCalendar td .ui-state-default {
+	padding: 10px 0px;	/* 上下に幅を10px広げる */
+}
+/* 管理者　カレンダー領域終わり */
 
 /* 管理者　授業詳細領域 */
 /* 
@@ -196,16 +217,15 @@
  */
 .lessonData, .buttonArea {
 	width: 280px;		/* 幅を280pxにする */
-	border: 1px solid #999; 
 }
 
 /* 
- * セレクタ:.lessonData input:[type="text"]
+ * セレクタ:.lessonData input:[type="text"], .lessonData input[type="number"]
  * 概要   :授業データ　テキストボックス領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.30
  */
-.lessonData input[type="text"] {
+.lessonData input[type="text"], .lessonData input[type="number"] {
 	width: 50px;		/* テキストボックスの幅を50pxにする */
 }
 
@@ -227,7 +247,7 @@
  */
 .lessonData li label {
 	display: inline-block;	/* インラインブロック要素にする */
-	width: 27%;				/* 幅を27%で統一する */
+	width: 30%;				/* 幅を30%で統一する */
 }
 
 /* 
@@ -241,14 +261,24 @@
 }
 
 /* 
- * セレクタ:.memoTextare
+ * セレクタ:.memoTextarea
  * 概要   :「メモ」のテキストエリア領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.30
  */
-.memoTextare {
+.memoTextarea {
 	width: 65%;				/* 幅を65%にする */
 	height: 60px;			/* 縦幅を60pxにする */
+}
+
+/* 
+ * セレクタ:.buttonArea .updateButton
+ * 概要   :「メモ」のテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.buttonArea .updateButton {
+	margin-top: 0;			/* 上の余白を0にする */
 }
 
 /* 
@@ -329,7 +359,7 @@
  * 作成日 :2015.06.22
  */
 .searchList li input[type="text"] {
-	width: 30%;				/* 幅を30%にする */
+	width: 28%;				/* 幅を28%にする */
 	margin-right: 10px;		/* 右に10pxの余白をとる */
 }
 /* 会員一覧の検索領域終わり */
@@ -358,6 +388,141 @@
 }
 /* 受講者一覧の検索領域終わり */
 
+/* メルマガ・アナウンス画面領域 */
+/* 
+ * セレクタ :#mailMagaAndAnnounce
+ * 概要   :メルマガ&アナウンス全体の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+#mailMagaAndAnnounce {
+	font-size: 14px;		/* フォントサイズを14pxにする */
+}
+
+/* 
+ * セレクタ :.messageTitleLabel
+ * 概要   :送信するメッセージのタイトルのラベル領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageTitleLabel {
+	width: 15%;			/* 幅を15%にする */
+}
+
+/* 
+ * セレクタ :.messageTitleTextboxArea
+ * 概要   :送信するメッセージのタイトルのテキストボックスの親の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageTitleTextboxArea {
+	width: 80%;				/* 幅を80%でとる */
+}
+
+/* 
+ * セレクタ :.messageTitleTextbox
+ * 概要   :送信するメッセージのタイトルのテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageTitleTextbox {
+	width: 99%;			/* 幅を99%にする */
+}
+
+/* 
+ * セレクタ :.mailMagaContentSearchLabel
+ * 概要   :検索領域のラベルとテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.mailMagaContentSearchLabel {
+	width: 60%;		/* 幅を60%にする */
+}
+
+/* 
+ * セレクタ :.mailMagaContentSearchTextbox
+ * 概要   :検索領域のテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.mailMagaContentSearchTextbox {
+	width: 88%;		/* 幅を80%にする */
+}
+
+/* 
+ * セレクタ :.mailMagaAndAnnounce input[type="text"], .mailMagaAndAnnounce select
+ * 概要   :メルマガ＆アナウンスの中のテキストボックス領域とセレクトボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.mailMagaAndAnnounce input[type="text"], .mailMagaAndAnnounce select {
+	margin-right: 1em;		/* 右に1文字分の余白をとる */
+}
+
+/* 
+ * セレクタ :.messageTextarea
+ * 概要   :送信するメッセージのテキストエリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageTextarea {
+	width: 98%;		/* 横幅を98%にする */
+	height: 250px;		/* 縦幅を250pxにする */
+	overflow: auto;		/* 中身の要素がはみ出したときにスクロールにする */
+}
+
+/* 
+ * セレクタ :.messageInfo, .sendmessageDate
+ * 概要   :送信するメッセージの情報と送信日付領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageInfo, .sendmessageDate {
+	margin: 10px 0;		/* 上下に10pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.messageContentLabel
+ * 概要   :送信するメッセージのラベル「内容」の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.messageContentLabel {
+	padding-top: 5px;	/* 上から5pxの余白をとる */
+}
+
+/* 
+ * セレクタ :.messageTitleTextboxArea, .messageContentLabel
+ * 概要   :「タイトル」と「内容」の領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+ .messageTitleLabel, .messageContentLabel {
+ 	clear: both;		/* 回り込みをなくす */
+ }
+
+/* 
+ * セレクタ :.readonly
+ * 概要   :テキストボックスの読み取り専用領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.readonly {
+	background: #E2E2E2;	/* 背景をグレーにする */
+}
+
+/* 
+ * セレクタ :.numberTextox
+ * 概要   :No.のテキストボックス領域領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.09
+ */
+.numberTextox {
+	width: 43px;		/* 幅を6桁の数字が入る幅にする */
+}
+
+/* メルマガ・アナウンス画面領域終わり */
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
 	/* 
@@ -367,7 +532,27 @@
 	 * 作成日 :2015.06.19
 	 */
 	.dateBelt a {
-		padding: 5px 1em ;			/* 要素の幅を5px広げる */
+		padding: 5px .5em ;			/* 要素の幅を5px広げる */
+	}
+
+	/* 
+	 * セレクタ :.mailMagaContentSearchLabel
+	 * 概要   :検索領域のラベルとテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	.mailMagaContentSearchLabel {
+		width: 77%;		/* 幅を77%にする */
+	}
+
+	/* 
+	 * セレクタ :.mailMagaContentSearchTextbox
+	 * 概要   :検索領域のテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	.mailMagaContentSearchTextbox {
+		width: 80%;		/* 幅を80%にする */
 	}
 }
 
@@ -420,4 +605,25 @@
 	}
 /* 会員一覧の検索領域終わり */
 
+	/* メルマガ・アナウンス画面領域 */
+	/* 
+	 * セレクタ :#mailMagaAndAnnounce
+	 * 概要   :メルマガ&アナウンス全体の領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	#mailMagaAndAnnounce {
+		font-size: 12px;		/* フォントサイズを12pxにする */
+	}
+
+	/* 
+	 * セレクタ :.messageTitleLabel
+	 * 概要   :送信するメッセージのタイトルのラベル領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	.messageTitleLabel {
+		width: 19%;			/* 幅を19%にする */
+	}
+	/* メルマガ・アナウンス画面領域終わり */
 }

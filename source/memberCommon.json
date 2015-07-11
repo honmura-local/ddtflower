@@ -57,7 +57,7 @@
             },
             "banner3":{
                 "class":"banner inlineBlock",
-                "href":"#memberMail.html",
+                "href":"#memberSuggestionBox.html",
                 "bannerImage":{
                     "src": "image/icon(mail).png"
                 }
@@ -85,7 +85,7 @@
             },
             "banner7":{
                 "class":"banner inlineBlock",
-                "href":"#myBlog.html",
+                "href":"#memberMyBlog.html",
                 "bannerImage":{
                     "src": "image/icon(myBlog).png"
                 }
