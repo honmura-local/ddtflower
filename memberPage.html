@@ -139,6 +139,8 @@
 				var cancelLesson = new tagDialog('cancelLessonDialog', '', dialogOption['cancelLessonDialog'], function() {
 					// 予約キャンセルダイアログのdomを作る
 					creator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
+					//キャンセルダイアログの注意の部分をアコーディオンにしてその機能を実装する
+					accordionSetting('.lessonAccordion', '.attention');
 				});
 				//キャンセルダイアログを予約中授業テーブルから開く処理
 				cancelDialogOpen(cancelLesson, memberInfo['id']);
@@ -146,8 +148,6 @@
 				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
 				//絞り込みボタン機能を実装する
 				replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
-				//キャンセルダイアログの注意の部分をアコーディオンにしてその機能を実装する
-				accordionSetting('.lessonAccordion', '.attention');
 			});
 			</script>
 		</div>
