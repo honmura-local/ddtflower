@@ -114,7 +114,7 @@
 				creator.outputTag('telephone2Textbox', 'inputArea', '.userInf');
 
 				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
-				setValueDBdata('getUserInf', 'memberInfoValue');
+				setValueDBdata(creator.json['getUserInf']['memberInfoValue']);
 
 				// 「メルマガ受信設定」概要領域を作る
 				creator.outputTag('mailMagaSettingSummary', 'inputLabel', '.userInf');

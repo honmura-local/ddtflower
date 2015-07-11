@@ -219,11 +219,11 @@
                 },
                 "cost": {
                     "columnName": "入金(円)",
-                    "className":"replaceTextboxCostCell"
+                    "className":"replaceTextboxCostCell replaceTextboxTypeNumber"
                 },
                 "use_point": {
                     "columnName": "使用pt",
-                    "className":"replaceTextboxUsePointCell"
+                    "className":"replaceTextboxUsePointCell replaceTextboxTypeNumber"
                 },
                 "stage_no":{
                     "style":"display:none;"
@@ -247,7 +247,7 @@
                 "text":"検索 From"
             },
             "fromTextbox":{
-                "type":"text",
+                "type":"date",
                 "name":"fromSearach"
             }
         },
@@ -257,7 +257,7 @@
                 "text":"検索 To"
             },
             "toTextbox":{
-                "type":"text",
+                "type":"date",
                 "name":"toSearach"
             }
         },

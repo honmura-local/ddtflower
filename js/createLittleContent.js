@@ -2212,22 +2212,19 @@ function getInputData(selector) {
 
 /* 
  * 関数名:setValueDBdata()
- * 概要  :連想配列から値を読み込んで、value属性に値を入れる。
+ * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
  		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
  		テキストボックスのname属性値がDBの列名と対応している。
- * 引数  :object outsideArray:値を走査したい親のセレクター名
- 		 object insideArray:値を走査する連想配列名
+ * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.02
  */
-function setValueDBdata(outsideArray, insideArray) {
-	//走査対象となる連想配列を変数に入れる
-	var roopArray = creator.json[outsideArray][insideArray];
+function setValueDBdata(setArray) {
 	//ループで連想配列を全てループする
-	for (var key in roopArray) {
+	for (var key in setArray) {
 		//値を挿入する結果のvalueを変数に入れる
-		var resultValue = roopArray[key]['text'];
+		var resultValue = setArray[key]['text'];
 		//対象の要素がテキストエリアのときにtextで値を入れる
 		if ($('[name="' + key + '"]')[0].tagName == 'TEXTAREA') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
@@ -2237,6 +2234,73 @@ function setValueDBdata(outsideArray, insideArray) {
 			$('[name=' + key + ']').attr('value', resultValue);
 		}
 	}
+}
+
+/* 
+ * 関数名:insertTextboxToTable
+ * 概要  :テーブルにテキストボックスを挿入する。
+		受講承認テーブルなどでセルの内容をテキストボックスにする時に使う
+ * 引数  :string tableClassName 対象テーブルのクラス名
+ 		string appendDom 追加するdom名
+ 		string appendTo 追加先セレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function insertTextboxToTable (tableClassName, appendDom, appendTo) {
+	//テキストボックスを挿入するために表示しているセルのテキストを削除する
+	$(DOT + tableClassName + ' tr:eq(0) td').removeClass(appendTo);
+	//テキストボックス追加先のdomに表示している文字列を空白で初期化する
+	$(DOT + appendTo).text('');
+	//テキストボックスを追加する
+	creator.outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
+}
+
+/* 
+ * 関数名:setInputValueToLecturePermitListInfoTable
+ * 概要  :受講者一覧テーブルのテキストボックスにデフォルトで値を入れる。
+ 		使い方はsetTableTextboxValuefromDB関数で引数として呼ばれるときのみ使う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function setInputValueToLecturePermitListInfoTable() {
+		//DBから取得した料金の値を取得する
+		resultValueCost = recordData['cost'];
+		//DBから取得した使用ptの値を取得する
+		resultValueUsePoint = recordData['use_point'];
+		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
+		$('[name=cost]').eq(counter).attr('value', resultValueCost);
+		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
+		$('[name=' + 'use_point' + ']').eq(counter).attr('value', resultValueUsePoint);
+}
+
+/* 
+ * 関数名:setTableTextboxValuefromDB
+ * 概要 :テーブルのテキストボックスにDBから読込んだ値をデフォルトでセットする
+ * 引数 :tableArray:DBから読込んだテーブルのデータが入っている連想配列:例(受講者一覧テーブル) creator.json.LecturePermitListInfoTable.table
+		:setTablefunc:テーブルのテキストボックスに値をセットするための関数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function setTableTextboxValuefromDB(tableArray, setTablefunc) {
+	//DBから読込んだ値を取り出すためにカウンターを初期値0で作る
+	counter = 0;
+	//テーブルに値をセットするために行番号を初期値1で作る(0は見出しであるため、1から数え始める)
+	rowNumber = 1;
+	//DBから取り出したテーブルの行数分ループしてテキストボックスにデフォルト値をセットする
+	$.each(tableArray, function(){
+		//DBから読込んだ値を取り出すためにループのカウンターに対応した行の値を指定する
+		recordData = tableArray[counter];
+		//テキストボックスにDBから読込んだ値を入れる
+		setTablefunc();
+		//行番号をインクリメントする
+		rowNumber++;
+		//カウンタ変数をインクリメントする
+		counter++;
+	});
 }
 
 /* 

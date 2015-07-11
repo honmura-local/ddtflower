@@ -189,6 +189,13 @@
 				$('button, .searchButton, input[type="button"]').button();
 				//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 				enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '検索');
+				
+				//受講承認一覧テーブルの料金列をテキストボックスにする
+				insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+				//受講承認一覧テーブルの使用pt列をテキストボックスにする
+				insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+				//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+				setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 			});
 			</script>
 		</div>
