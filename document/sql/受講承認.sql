@@ -43,5 +43,3 @@ SELECT
 	,id AS commodity_key
 FROM
 	commodity_inf
-WHERE
-	school_key = {{セッションのschool_key}}
