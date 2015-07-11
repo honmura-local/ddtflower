@@ -2206,8 +2206,6 @@ function getInputData(selector) {
 		//入力データを結果の変数に、key名をクラス名にして保存する
 		resultArray[name] = valueData;
 	});
-	//ユーザの会員番号を連想配列に付け足す
-	//resultArray['userId'] = creator.json.memberHeader.user_key.value;
 	//結果を返す
 	return resultArray;
 }
@@ -2257,8 +2255,38 @@ function setProfileUpdate() {
 		var queryReplaceData = getInputData('memberInfo');
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
-		//データべベースにクエリを発行してデータを更新する
-		setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+		//入力項目に不備があったときにエラーメッセージを出す配列を作る
+		var updateError = [];
+		//メッセージを挿入するための関数を作る
+		function erroeMesseageInput (func ,checkTarget, errorMessage) {
+			//第一引数の関数を実行して第二引数の文字列をチェックをする
+			if(!func(queryReplaceData[checkTarget])) {
+				//エラー内容が初めてのときは改行を挟まずにエラーメッセージを表示する
+				if(updateError.length == 0) {
+					//エラーメッセージを配列に入れる
+					updateError.push(errorMessage);
+				} else {
+					//改行を含めて配列に入れる
+					updateError.push('\n' + errorMessage);
+				}
+			}
+		}
+		//名前の入力された文字をチェックする
+		erroeMesseageInput(checkInputName, 'user_name', '名前に数字や記号が入っています');
+		//カナの入力された文字をチェックする
+		erroeMesseageInput(checkInputName, 'name_kana', '名前(カナ)に数字や記号が入っています');
+		//電話番号の入力された文字をチェックする
+		erroeMesseageInput(checkInputPhone, 'telephone', '電話番号に文字や記号が入っています');
+
+		//入力内容エラーがあったときにメッセージを表示する
+		if(updateError.length) {
+			//配列を結合してエラーメッセージのアラートを出す
+			alert(updateError.join(','))
+		//入力内容にエラーがなかった時の処理
+		} else {
+			//データべベースにクエリを発行してデータを更新する
+			setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+		}
 	})
 }
 
@@ -2847,4 +2875,45 @@ function enterKeyButtonClick(enterTarget, buttonText) {
 			$('button:contains("' + buttonText + '"), input[value="' + buttonText + '"]').click();
 		}
 	});
+}
+
+/* 
+ * 関数名:checkInputName
+ * 概要  :テキストボックスに入力された値が文字列のときはtrue、違うならfalseを返し、データ送信の入力チェックに使う
+ * 引数  :checkString:チェックする文字列
+ * 返却値  :resultbool:第一引数の文字列が数字や記号が入っているかどうかの判定結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function checkInputName (checkString) {
+	//結果の変数をデフォルト値trueで作る
+	var resultbool = true;
+	//名前をチェックするために、第一引数の文字列に記号や数字が入っているとfalseを返す
+	if(checkString.match(/[!-\/:-@≠\[-`{-~0-9]/)) {
+		//名前の入力に適していないことを返す
+		resultbool = false;
+	}
+	//名前の入力に適していたかどうかの結果を返す
+	return resultbool;
+}
+
+
+/* 
+ * 関数名:checkInputPhone
+ * 概要  :テキストボックスに入力された値が数字かハイフンのときはtrue、違うならfalseを返し、データ送信の入力チェックに使う
+ * 引数  :checkString:チェックする文字列
+ * 返却値  :resultbool:数字かハイフンであったかどうかの判定結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function checkInputPhone (checkString) {
+	//結果の変数をデフォルト値trueで作る
+	var resultbool = true;
+	//電話番号をチェックするために、第一引数の文字列にハイフンを除く記号や文字が入っているとfalseを返す
+	if(checkString.match(/[\/\^\:\[\]\;\@\!\"\#\\%\&\'\(\)\=\~\<\>a-zA-Z]/)) {
+		//電話番号の入力に適していないことを返す
+		resultbool = false;
+	}
+	//電話番号に適していたかどうかの結果を返す
+	return resultbool;
 }

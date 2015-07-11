@@ -48,7 +48,7 @@
     },
     "birthDayDate":{
         "textboxArea":{
-            "type":"text",
+            "type":"date",
             "name":"birthday_date"
         }
     },
@@ -74,7 +74,7 @@
     },
     "mailAddress":{
         "textboxArea":{
-            "type":"text",
+            "type":"email",
             "name":"mail_address"
         }
     },
