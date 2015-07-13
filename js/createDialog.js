@@ -1315,6 +1315,7 @@ dialogOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		//ダイアログを開いた直後の処理
 		open 			:function(){
 			afterCreateClassList(this, 1);	//予約一覧を作った後の処理を行う
+			console.log(creator.json);
 		},
 		//イベント
 		event:function(){
@@ -1439,6 +1440,8 @@ dialogOption['cancelLessonDialog'] = {
 	close:function(){
 		//前のダイアログから送信されたデータを破棄する
 		// delete this.dialogClass.queryReplaceData;
+		//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
+		tableReload(RESERVED_LESSON_TABLE);
 	},
 	// ボタン
 	buttons:[

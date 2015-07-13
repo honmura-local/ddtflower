@@ -298,7 +298,11 @@ function getClassworkStatus(rowData, timeTableStudents) {
 function getRestMark(rowData, timeTableStudents) {
 	var rest = getRestOfSheets(rowData, timeTableStudents);
 	var restMark = "";
-	if (lessonStatus == '予約締切') {
+	if (lessonStatus == '予約締切' || 
+		rowData[COLUMN_NAME_MAX_NUM] == 0 ||
+		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 1 ||
+		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 2 ||
+		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 3) {
 		restMark = restMarks[0];
 	} else {
 		for(var key in restMarks) {
