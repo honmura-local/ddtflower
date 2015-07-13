@@ -9,6 +9,8 @@ SET
 	,telephone = {{電話番号}}
 	,telephone2 = {{緊急番号}}
 	,mail_address = {{メールアドレス}}
+	,mail_deny = {{メール受信拒否}}
     ,update_datetime = NOW()
 WHERE 
 	id = {{ユーザID}}
+# メール受信拒否は0なら拒否しないだったとおもう
