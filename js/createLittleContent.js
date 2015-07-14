@@ -2499,6 +2499,14 @@ replaceTableOption['mailMagaTable'] = {
 	errorMessage:'メルマガが見つかりませんでした。'
 }
 
+//受講承認一覧テーブル
+replaceTableOption['lecturePermitListInfoTable']  = {
+	//テーブルのafterでの追加先
+	addDomPlace:'.permitListSearch',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'受講承認一覧が見つかりませんでした。'
+}
+
 /*
  * 関数名 :addQueryExtractionCondition
  * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する
@@ -3064,5 +3072,64 @@ function loginInsteadOfMember (clickParentSelector, clickSelector) {
 		};
 		//会員ページを呼び出す
 		callPage('memberPage.html')
+	});
+}
+
+/* 
+ * 関数名:setPermitListFromToDate
+ * 概要  :受講承認一覧の検索する日付の範囲をデフォルトでは月の初日から末日に設定する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function setPermitListFromToDate() {
+	//今日の日付を取得する
+	var today = new Date();
+	//今月の初日オブジェクトを取得する
+	var monthStartday = new Date(today.getFullYear(), today.getMonth(), 1);
+	//今月の初日の日付を取得して、受講承認一覧のfromの部分で使う
+	monthStartday = getDateFormatDB(monthStartday);
+	//今月の末日オブジェクトを取得する
+	var monthEndday = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+	//今月の末日の日付を取得して、受講承認一覧のtoの部分で使う
+	monthEndday = getDateFormatDB(monthEndday);
+	//受講承認一覧に今月の初日を入れて一覧テーブルを検索するようにする
+	creator.json.lecturePermitListInfoTable.FromDate.value = monthStartday;
+	//受講承認一覧に今月の末日を入れて一覧テーブルを検索するようにする
+	creator.json.lecturePermitListInfoTable.toDate.value = monthEndday;
+}
+
+/* 
+ * 関数名:searchPermitListInfoTable
+ * 概要  :受講承認一覧の検索機能を実装する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function searchPermitListInfoTable () {
+	//受講承認の検索ボタンをクリックした時のイベント
+	$('.permitListSearch .searchButton').click(function(){
+		//検索初めの値を取得する
+		var fromDate = $('[name=fromSearach]').val();
+		//検索終わりの値を取得する
+		var toDate = $('[name=toSearach]').val();
+		//受講承認一覧の連想配列に検索初めの値を入れる
+		creator.json.lecturePermitListInfoTable.FromDate.value = fromDate;
+		//受講承認一覧の連想配列に検索終わりの値を入れる
+		creator.json.lecturePermitListInfoTable.toDate.value = toDate;
+		//テーブルを更新する
+		tableReload('lecturePermitListInfoTable');
+		//受講承認一覧に連番を入れる
+		insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+		//受講承認一覧テーブルの料金列をテキストボックスにする
+		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+		//受講承認一覧テーブルの使用pt列をテキストボックスにする
+		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	});
 }

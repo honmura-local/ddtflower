@@ -107,14 +107,25 @@
 				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-				// 受講承認一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
-				//受講承認一覧タブのリスト
-				creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
-				//受講承認一覧のリスト更新ボタン
-				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+
 				//受講承認一覧の検索領域を作る
 				creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+				//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+				setPermitListFromToDate();
+				// 受講承認一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+				if (creator.json.lecturePermitListInfoTable.table[0]) {
+					//受講承認一覧タブのリスト
+					creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
+				}
+				//受講承認一覧のリスト更新ボタン
+				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+				//クリックでテキストボックスにカレンダーを表示する
+				clickCalendar('fromSearach');
+				//クリックでテキストボックスにカレンダーを表示する
+				clickCalendar('toSearach');
+				//受講承認一覧の検索機能を実装する
+				searchPermitListInfoTable();
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');
@@ -202,7 +213,9 @@
 				// tablePaging('finishedLessonTable', 15, 6);
 				//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
 				loginInsteadOfMember('#userList', '.userListInfoTable tr');
-				
+				//受講承認一覧テーブルの検索機能を実装する
+				searchPermitListInfoTable();
+
 			});
 			</script>
 		</div>
