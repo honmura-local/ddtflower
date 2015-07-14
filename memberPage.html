@@ -128,12 +128,8 @@
 
  				// 予約中授業の連想配列を変数に入れる 
 				var reservedNow = creator.json['reservedLessonTable']['table'];
-				// 受講済みの連想配列を変数に入れる
-				var lessonFinished = creator.json['finishedLessonTable']['table'];
 				// 予約中テーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
-				// 受講済みテーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.finishedLessonTable', lessonFinished, "callMemberLessonValue");
 
 				//予約キャンセルダイアログを作る
 				var cancelLesson = new tagDialog('cancelLessonDialog', '', dialogOption['cancelLessonDialog'], function() {

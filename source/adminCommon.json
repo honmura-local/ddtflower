@@ -62,7 +62,7 @@
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
-    	"dateInput":{"type":"text", "name":"lesson_date", "value":""},
+    	"dateInput":{"type":"date", "name":"lesson_date", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
     "eachDayReservedInfoTable":{

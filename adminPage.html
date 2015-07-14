@@ -77,10 +77,10 @@
 				//日ごと予約者一覧タブのコンテンツ
 				//選択された日付を表示する領域
 				creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
-				//日付ページングを実装する
-				nowDatePaging('dateBelt');
 				//日付選択パーツのセット
 				creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
+				//日付ページングを実装する
+				nowDatePaging('dateBelt');
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 				//日ごと予約者の情報がないときにテーブルを作らない

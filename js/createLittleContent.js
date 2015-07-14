@@ -2603,8 +2603,11 @@ function tableReload(reloadTableClassName) {
 			// 予約中テーブルのテーブルの値をしかるべき値にする
 			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 		}
+	//DBから検索結果が見つからなかった時の処理
 	} else {
+		//見つからなかったことを表示するためのdivを作る
 		$(STR_BODY).append('<div class="' + reloadTableClassName + '"><div>');
+		//作ったdivに検索結果が見つからなかったメッセージを表示する
 		$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
 	}
 	//作ったテーブルをしかるべき場所に移動する
@@ -2681,6 +2684,15 @@ function nowDatePaging(clickSelectorParent) {
 		tableReload('eachDayReservedInfoTable');
 		//日付をタイトルに入れる
 		$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	});
+	//検索ボタンがクリックされた時の処理
+	$(DOT + 'dateSelect .searchButton').click(function(){
+		//表示されている日付を更新するために検索する日付のデータを取得する。
+		var changeDate = $('.dateInput').val();
+		//現在表示されている日付を入力された日付で更新する
+		$(DOT + clickSelectorParent + ' p').text(changeDate)
+		//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
+		nowDateObject = new Date(changeDate);
 	});
 }
 
