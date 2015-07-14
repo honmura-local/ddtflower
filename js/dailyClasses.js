@@ -515,16 +515,16 @@ var allDateTime = function (rowData) {
  * 関数名:reservedLessonValueInput
  * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
- 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
  		 rowNumber:行番号
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.06.13
  */
-var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, timeTableStudents) {
+var callReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
 	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-	recordData = roopData[counter];
+	recordData = loopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
 	var cost;			//料金
@@ -566,16 +566,16 @@ var callReservedLessonValue = function(tableName, roopData, counter, rowNumber, 
  * 関数名:callMemberLessonValue
  * 概要  :予約中テーブルと予約済みテーブルでセルに値を入れる関数を実行するための関数
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
- 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
  		 rowNumber:行番号
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.06.18
  */
-var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
+var callMemberLessonValue = function(tableName, loopData, counter, rowNumber) {
 	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-	recordData = roopData[counter];
+	recordData = loopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	allDay = allDateTime(recordData);
 	// 料金を求める
@@ -602,16 +602,16 @@ var callMemberLessonValue = function(tableName, roopData, counter, rowNumber) {
  * 関数名:callEachDayReservedValue
  * 概要  :管理者日ごと予約者一覧テーブルの値を置換する
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
- 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
  		 rowNumber:行番号
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.06.22
  */
-var callEachDayReservedValue = function(tableName, roopData, counter, rowNumber) {
+var callEachDayReservedValue = function(tableName, loopData, counter, rowNumber) {
 	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-	recordData = roopData[counter];
+	recordData = loopData[counter];
 	// 時間割の始まりの時間を求める
 	start_time = backThreeStringDelete(recordData, COLUMN_NAME_START_TIME);
 	// 時間割の終わりの時間を求める
@@ -628,16 +628,16 @@ var callEachDayReservedValue = function(tableName, roopData, counter, rowNumber)
  * 関数名:callAdminReservedLessonValue
  * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
- 		 roopData:ループ対象となるテーブルの行全体の連想配列
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
  		 counter:カウンタ変数
  		 rowNumber:行番号
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
  */
-var callAdminReservedLessonValue = function(tableName, roopData, counter, rowNumber, timeTableStudents) {
+var callAdminReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
 	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-	recordData = roopData[counter];
+	recordData = loopData[counter];
 	// 開始日時と終了時刻を組み合わせた値を入れる
 	timeSchedule = buildHourFromTo(recordData);
 	// var rest;			//残席

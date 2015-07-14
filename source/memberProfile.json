@@ -104,8 +104,8 @@
         "acceptLabel":{
             "acceptRadio":{
                 "type":"radio",
-                "name":"mailMagaSetting",
-                "value":""
+                "name":"mail_deny",
+                "value":"0"
             },
             "acceptLabelText":{
                 "text":"受信する"
@@ -114,8 +114,8 @@
         "denyLabel":{
             "denyRadio":{
                 "type":"radio",
-                "name":"mailMagaSetting",
-                "value":""
+                "name":"mail_deny",
+                "value":"2"
             },
             "denyLabelText":{
                 "text":"受信しない"
@@ -136,10 +136,10 @@
         }
     },
     "updateUserInf":{
-        "db_setQuery":"UPDATE user_inf SET user_name = 'user_name',name_kana = 'name_kana', zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address', update_datetime=NOW() WHERE  id = 'userId';"
+        "db_setQuery":"UPDATE user_inf SET user_name = 'user_name',name_kana = 'name_kana', zip_code = 'zip_code' ,address = 'address' ,user_sex = 'user_sex' ,birthday_date = 'birthday_date' ,telephone = 'telephone' ,telephone2 = 'telephone2' ,mail_address = 'mail_address',mail_deny = 'mail_deny' , update_datetime=NOW() WHERE  id = 'userId';"
     },
     "getUserInf":{
-        "db_getQuery":"SELECT user_name, name_kana, user_sex, birthday_date, zip_code, address, mail_address, telephone, telephone2 FROM user_inf WHERE id = 'userId';",
+        "db_getQuery":"SELECT user_name, name_kana, user_sex, birthday_date, zip_code, address, mail_address, telephone, telephone2, mail_deny FROM user_inf WHERE id = 'userId';",
         "userId":{
             "value":""
         },
@@ -169,6 +169,9 @@
                 "text":""
             },
             "telephone2":{
+                "text":""
+            },
+            "mail_deny":{
                 "text":""
             }
         }

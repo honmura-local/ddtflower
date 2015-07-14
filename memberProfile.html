@@ -113,9 +113,6 @@
 				// 「緊急番号」テキストボックス領域を作る
 				creator.outputTag('telephone2Textbox', 'inputArea', '.userInf');
 
-				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
-				setValueDBdata(creator.json['getUserInf']['memberInfoValue']);
-
 				// 「メルマガ受信設定」概要領域を作る
 				creator.outputTag('mailMagaSettingSummary', 'inputLabel', '.userInf');
 				//
@@ -130,6 +127,9 @@
 				clickCalendar('birthday_date');
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();
+
+				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
+				setValueDBdata(creator.json['getUserInf']['memberInfoValue']);
 
 				//入力したデータでDBを更新する
 				setProfileUpdate();

@@ -2203,8 +2203,19 @@ function getInputData(selector) {
 		var name = $(this).attr('name');
 		//入力データの値を取得する
 		var valueData = $(this).val();
-		//入力データを結果の変数に、key名をクラス名にして保存する
-		resultArray[name] = valueData;
+		//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+		var typeAttr = $(this).attr('type');
+		//ラジオボタンに対応する
+		if (typeAttr == 'radio') {
+			//ラジオボタンの値がチェックされているものだけ送信する
+			if($(this).prop('checked')) {
+				//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+				resultArray[name] = valueData;
+			}
+		} else {
+			//入力データを結果の変数に、key名をクラス名にして保存する
+			resultArray[name] = valueData;
+		}
 	});
 	//結果を返す
 	return resultArray;
@@ -2226,9 +2237,11 @@ function setValueDBdata(setArray) {
 		//値を挿入する結果のvalueを変数に入れる
 		var resultValue = setArray[key]['text'];
 		//対象の要素がテキストエリアのときにtextで値を入れる
-		if ($('[name="' + key + '"]')[0].tagName == 'TEXTAREA') {
+		if ($('[name="' + key + '"]').attr('class') == 'textArea') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
 			$('[name=' + key + ']').text(resultValue);
+		} else if($('[name=' + key + ']').attr('type') == 'radio') {
+			$('[name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
 		} else {
 			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
 			$('[name=' + key + ']').attr('value', resultValue);
@@ -2317,6 +2330,7 @@ function setProfileUpdate() {
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = getInputData('memberInfo');
+		console
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//入力項目に不備があったときにエラーメッセージを出す配列を作る

@@ -888,9 +888,9 @@ label,
 /* テーブルページング領域終わり */
 
 /* メルマガ受信設定は未完成なので文字色をグレーにする */
-.mailMaga ,.mailMagaSetting span {
+/*.mailMaga ,.mailMagaSetting span {
 	color: #aaa;
-}
+}*/
 
 /* 目安箱領域 */
 
