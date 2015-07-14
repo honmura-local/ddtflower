@@ -71,16 +71,6 @@
 				// 会員ページのカレンダーを作る
 				creator.outputTag('lessonCalendar', 'calendar');
 
-				// タブ機能を作る
-				creator.outputTag('lessonTab');
-				// 予約済み授業のタブ内コンテンツを作る
-				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
-				// 受講済み授業のタブ内コンテンツを作る
-				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
-
-				// 予約済み授業と受講済み授業についてタブを作る
-				createTab('#tab-container');
-
 				// 日ごと授業のjsonを読み込む
 				creator.getJsonFile('source/eachDayLesson.json');
 				// 日ごと授業のテンプレートを読み込む
@@ -109,8 +99,24 @@
 				// カレンダーを作り、クリックでダイアログ作成を作る
 				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo['id'], lessonList);
 				memCalendar.create();	//カレンダーを実際に作成する
+
+				// タブ機能を作る
+				creator.outputTag('lessonTab');
 				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
+				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+				setSelectboxText(creator.json.reservedLessonTable.table, creator.json.alreadyReserved.selectThemebox.themeValue, 'lesson_name');
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
+				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+				setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLesson.selectThemebox.themeValue, 'lesson_name');
+				// 予約済み授業のタブ内コンテンツを作る
+				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
+				// 受講済み授業のタブ内コンテンツを作る
+				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
+
+				// 予約済み授業と受講済み授業についてタブを作る
+				createTab('#tab-container');
 				//予約中の授業があった時のテーブルを作る
 				if(creator.json['reservedLessonTable']['table'][0]) {
 					// 予約中授業のテーブルを作る
@@ -124,7 +130,7 @@
 				// 絞り込みボタンをjqueryのボタンにする
 				$('.selectThemeButton').button();
 				//セレクトボックスのvalueを画面に表示されている値にする
-				setOptionValue();
+				setSelectboxValue();
 
  				// 予約中授業の連想配列を変数に入れる 
 				var reservedNow = creator.json['reservedLessonTable']['table'];

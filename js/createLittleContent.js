@@ -2037,14 +2037,44 @@ function insertArticleListText(elems, articleNodes){
 }
 
 /* 
- * 関数名:setOptionValue
+ * 関数名:setSelectboxText
+ * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う
+ 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名
+ 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名
+ * 戻り値:なし
+ * 概要  :selectタグのoptionタグに入るテキスト要素をoutput前にDBから取り出した値を連想配列に入れて実装する
+ * 作成日 :2015.07.14
+ * 作成者:T.Yamamoto
+　*/
+function setSelectboxText(rowData, selectboxArray, selectboxTextTarget) {
+	//テーブルに値がないときはなにもしないようにする
+	if(rowData[0]) {
+		//ループで行の番号をとるようにするためにカウンターを初期値0で作る
+		var counter = 0;
+		//テーブルの行の回数だけループし、テーマを取り出す
+		$.each(rowData, function(){
+			//取り出したテーマを変数に入れ、セレクトボックスに入れるかどうか判定に使う
+			var selectboxText = rowData[counter][selectboxTextTarget];
+			//セレクトボックスにテーマを全て抜き出すために同じ値はテーマに追加しないようにする
+			if(selectboxArray.indexOf(selectboxText) == -1) {
+				//jsonの連想配列にテーマのを追加する
+				selectboxArray.push(selectboxText);
+			}
+			//カウンター変数をインクリメントする
+			counter++;
+		});
+	}
+}
+
+/* 
+ * 関数名:setSelectboxValue
  * 引数  :なし
  * 戻り値:なし
  * 概要  :optionタグのvalue属性に値を入れる
  * 作成日 :2015.06.24
  * 作成者:T.Yamamoto
-*/
-function setOptionValue() {
+　*/
+function setSelectboxValue() {
 	// optionタグをループで全て操作する
 	$("select option").each(function(i){
 		// optionタグの文字列を変数に入れる
