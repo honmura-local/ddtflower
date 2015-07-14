@@ -2360,7 +2360,6 @@ function setProfileUpdate() {
 	$('.updateButton').click(function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = getInputData('memberInfo');
-		console
 		//ユーザ番号を追加する
 		queryReplaceData['userId'] = creator.json.memberHeader.user_key.value;
 		//入力項目に不備があったときにエラーメッセージを出す配列を作る
@@ -2498,6 +2497,24 @@ replaceTableOption['userListInfoTable'] = {
 	errorMessage:'検索結果が見つかりませんでした。',
 	//ページングの追加先
 	addPagingPlace:'.tabLink[href="#userList"]'
+}
+
+//メルマガテーブル
+replaceTableOption['mailMagaTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'.mailMagaSearchArea',
+	//置換のvalueが入ったdom名
+	replaceValueDom:'#finishedLesson .selectThemebox',
+	//置換するkey名
+	replaceQueryKey:'lesson_name',
+	//テーブルの値を置換する関数名
+	//replaceTableValuefunction:'',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#mailMagaAndAnnounce"]',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'メルマガが見つかりませんでした。'
 }
 
 /*

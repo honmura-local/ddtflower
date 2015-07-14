@@ -178,11 +178,13 @@
 
 				//メルマガ＆アナウンスタブのコンテンツ
 				//過去のメルマガを検索するための領域を作る
-				creator.outputTag('meilMagaSearchArea', 'meilMagaSearchArea', '#mailMagaAndAnnounce');
+				creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
 				//メルマガテーブルの外側を作る
 				creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
 				//メルマガテーブルを作る
-				// creator.outputTag('adminCalendar', 'adminCalendar', '#mailMagaAndAnnounce');
+				//creator.outputTagTable('mailMagaTable', 'mailMagaTable', '.mailMagaTableArea');
 				//メルマガ・アナウンス入力領域を作る
 				creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
 				// ボタンの見た目をjqueryuiのものにする
@@ -196,6 +198,8 @@
 				insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
 				//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 				setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+
+				tablePaging('finishedLessonTable', 15, 6);
 			});
 			</script>
 		</div>

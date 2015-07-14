@@ -350,6 +350,7 @@
 .searchList li span {
 	display: inline-block;	/* インラインブロック要素として扱う */
 	width: 15%;				/* 幅を15%にする */
+	font-size: 14px;		/* フォントサイズを14pxにする */
 }
 
 /* 
