@@ -78,7 +78,7 @@
             },
             "banner6":{
                 "class":"banner inlineBlock",
-                "href":"#myGallery.html",
+                "href":"#memberMyGallery.html",
                 "bannerImage":{
                     "src": "image/icon(myGallery).png"
                 }

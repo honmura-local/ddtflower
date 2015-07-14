@@ -335,7 +335,7 @@
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
     "userListInfoTable":{
-        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf",
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id FROM user_inf",
         "config": {
             "columns": {
                 "user_name": {
@@ -349,6 +349,10 @@
                 },
                 "update_date": {
                     "columnName": "最終予約日"
+                },
+                "id":{
+                    "style":"display:none",
+                    "className":"id"
                 }
             }
         }

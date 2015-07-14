@@ -199,7 +199,10 @@
 				//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 				setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 
-				tablePaging('finishedLessonTable', 15, 6);
+				// tablePaging('finishedLessonTable', 15, 6);
+				//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
+				loginInsteadOfMember('#userList', '.userListInfoTable tr');
+				
 			});
 			</script>
 		</div>

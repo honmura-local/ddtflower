@@ -1995,24 +1995,6 @@ function insertBlogArticleListText(elems, articleNode){
 }
 
 /*
- * 関数名 :createAccordion
- * 引数  　:element targetClick:クリックするとアコーディオンを表示するボタン
- * 戻り値　:なし
- * 概要  　:アコーディオンパネルを実装する
- * 作成日　:2015.06.09
- * 作成者　:T.Yamamoto
- */
-function createAccordion(targetClick) {
-	// 第一引数がクリックされた時のイベント
-	$(targetClick).on("click", function() {
-		// クリックされた番号を取得する
-		var accordNumber = $(".detailButton").index(this);
-		// 番号に対応したアコーディオン部分を表示する
-		var y = $('.accordion').eq(accordNumber).toggle();
-	});
-}
-
-/*
  * 関数名 :insertArticleListText
  * 引数  　:element elems:記事リストのDOM
  * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
@@ -3053,4 +3035,34 @@ function checkInputPhone (checkString) {
 	}
 	//電話番号に適していたかどうかの結果を返す
 	return resultbool;
+}
+
+/* 
+ * 関数名:loginInsteadOfMember
+ * 概要  :管理者ページから会員になり替わって会員ページにログインする
+ * 引数  :clickParentSelector クリックしてなり代わりを行う親要素のセレクター
+ 		:clickSelector クリックしてなり代わりを行うセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function loginInsteadOfMember (clickParentSelector, clickSelector) {
+	$(clickParentSelector).on(CLICK, clickSelector , function(){
+		//クリックした人でログインするために会員番号を取得する
+		var memberNumber = $(this).children('.id').text();
+		//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
+		creator.json.memberHeader.user_key.value = memberNumber;
+		//会員の告知連想配列に会員番号を入れてログインの準備をする
+		creator.json.advertise.user_key.value = memberNumber;
+		//会員の予約中授業テーブル連想配列に会員番号を入れてログインの準備をする
+		creator.json.reservedLessonTable.user_key.value = memberNumber;
+		//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
+		creator.json.finishedLessonTable.user_key.value = memberNumber;
+		//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
+		memberInfo = {
+			id:memberNumber
+		};
+		//会員ページを呼び出す
+		callPage('memberPage.html')
+	});
 }
