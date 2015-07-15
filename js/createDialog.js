@@ -974,7 +974,7 @@ dialogOption[LOGIN_DIALOG] = {
 			$(this).next().css('font-size', '0.5em');
 			creator.getJsonFile('source/memberPage.json');
 			//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
-			enterKeyButtonClick('.userName, .password', 'ログイン');
+			enterKeyButtonClick('.userName, .password', '.loginButton');
 		},
 		//ダイアログを閉じるときのイベント
 		close:function(){
@@ -1006,6 +1006,8 @@ dialogOption[LOGIN_DIALOG] = {
 			         {
 			        	 // OKボタンのテキスト。
 			        	 text:'ログイン',
+			        	 //テキストボックスでエンターキーに対応するためにクラスを付ける
+			        	 class:'loginButton',
 			        	 // ボタン押下時の処理を記述する。
 			        	 click:function(event, ui){
 			        		 var $dialog = $(this);		//ダイアログ自身の要素を変数に格納しておく

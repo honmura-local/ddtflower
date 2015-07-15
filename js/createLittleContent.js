@@ -730,21 +730,18 @@ function createUnmovableGallery(selector){
  * 作成者:T.Yamamoto
  */
 function allCheckbox(checkboxTarget, allCheckTarget) {
-	// jqueryの記述の始まり
- 	$(function() {
- 		// 第一引数の要素がクリックされたときの処理
-		$('body').on('click', checkboxTarget, function() {
-			// 第一引数のチェックボックスにチェックが入った時の処理
-			if($(checkboxTarget + ':checked').val() == 'on') {
-				// 第二引数のチェックボックスにチェックする
-				$(allCheckTarget).prop('checked', true);
-			// 第一引数のチェックボックスのチェックが外れた時の処理
-			} else if ($(checkboxTarget + ':checked').val() == undefined) {
-				// 第二引数のチェックボックスのチェックを外す
-				$(allCheckTarget).prop('checked', false);
-			};
-		});
- 	});
+	// 第一引数の要素がクリックされたときの処理
+	$(STR_BODY).on(CLICK, checkboxTarget, function() {
+		// 第一引数のチェックボックスにチェックが入った時の処理
+		if($(checkboxTarget + ':checked').val() == 'on') {
+			// 第二引数のチェックボックスにチェックする
+			$(allCheckTarget).prop('checked', true);
+		// 第一引数のチェックボックスのチェックが外れた時の処理
+		} else if ($(checkboxTarget + ':checked').val() == undefined) {
+			// 第二引数のチェックボックスのチェックを外す
+			$(allCheckTarget).prop('checked', false);
+		};
+	});
 }
 
 /*
@@ -2975,13 +2972,13 @@ function accordionSetting(clickSelector, accordionDomSelector) {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.10
  */
-function enterKeyButtonClick(enterTarget, buttonText) {
+function enterKeyButtonClick(enterTarget, buttonSelector) {
 	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
 	$(enterTarget).keypress(function (e) {
 		//エンターボタンが押された時の処理
 		if (e.which == 13) {
-			//第二引数のボタンをクリックする
-			$('button:contains("' + buttonText + '"), input[value="' + buttonText + '"]').click();
+			//ボタン
+			$(buttonSelector).click();
 		}
 	});
 }

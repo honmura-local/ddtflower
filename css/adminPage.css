@@ -374,8 +374,9 @@
  * 作成日 :2015.06.30
  */
 .fromArea, .toArea {
-	display: block;			/* ブロック要素にする */
+	/*display: block;*/		/* ブロック要素にする */
 	margin-top: 5px;		/* 上から5pxの余白をとる */
+	width: 35%;				/* 幅を35%で設定する */
 }
 
 /* 
@@ -385,8 +386,9 @@
  * 作成日 :2015.06.30
  */
 .permitListSearch label span {
-	width: 12%;				/* 幅を12%にする */
+	width: 31%;				/* 幅を12%にする */
 }
+
 /* 受講者一覧の検索領域終わり */
 
 /* メルマガ・アナウンス画面領域 */
@@ -534,6 +536,17 @@
 	 */
 	.dateBelt a {
 		padding: 5px .5em ;			/* 要素の幅を5px広げる */
+	}
+
+	/* 受講者一覧の検索領域 */
+	/* 
+	 * セレクタ :.fromArea, .toArea
+	 * 概要   :受講者一覧のfromとtoの領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
+	.fromArea, .toArea {
+		width: 70%;				/* 幅を70%で設定する */
 	}
 
 	/* 
