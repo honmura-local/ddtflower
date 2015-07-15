@@ -32,6 +32,7 @@
             "logoutArea":{
                 "class":"logoutArea inlineBlock",
                 "logoutLink":{
+                    "href":"#",
                     "logoutImage":{
                         "src":"image/icon(logout22-50).png"
                     }

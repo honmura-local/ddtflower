@@ -1055,6 +1055,8 @@ dialogOption[LOGIN_DIALOG] = {
 											memberInfo = json;
 											callPage('memberPage.html');
 										}
+										//ログアウト設定関数を呼び出し、ログアウトしたときの処理を決める
+			        					logoutMemberPage();
 			        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
 			        					$dialog.dialog(CLOSE);	//ダイアログを閉じる
 			        					//@mod 2015.0627 T.Masuda ログイン後にログインダイアログを消すコードを追加

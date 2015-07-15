@@ -3115,3 +3115,30 @@ function searchPermitListInfoTable () {
 		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	});
 }
+
+/* 
+ * 関数名:logoutMemberPage
+ * 概要  :ログアウトボタンを押したときに会員ページからログアウトして通常ページに遷移する
+ 		:管理者ページからログインした時は管理者のtopページに遷移する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function logoutMemberPage() {
+	//ログアウトボタンがクリックされた時に処理を行うイベントを登録する
+	$(STR_BODY).on(CLICK, '.logoutLink', function(){
+		//管理者としてログインしていたなら管理者ページに遷移する
+		if (creator.json.adminHeader) {
+			//管理者ページを呼び出し、続けて管理者としての処理をできるようにする
+			callPage('adminPage.html');
+		//管理者としてログインしていなければ通常ページのトップページに戻る
+		} else {
+			//通常ページを使いやすくするためにヘッダーを表示するようにする
+			$('header').css('display', 'block');
+			//通常ページに遷移する(creatorがリセットされる問題があるかも？)
+			callPage('index.php');
+		}
+	});
+}
