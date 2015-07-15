@@ -2159,24 +2159,6 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 }
 
 /* 
- * 関数名:setDBdataTriggerClick
- * 概要  :第一引数のボタンが押された時にDBのデータを挿入または更新または削除する
- * 引数  :string selector: トリガーとなるボタンのセレクター
- 		:object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
- 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.06.27
- */
-function setDBdataTriggerClick(selector, sendQueryJsonArray, queryReplaceData){
-	//第一引数の要素がクリックされた時にイベントを開始する
-	$('.' + selector).click(function(){
-		//dbの値をデータを挿入または編集する
-		setDBdata(sendQueryJsonArray, queryReplaceData);
-	});
-}
-
-/* 
  * 関数名:clickCalendar
  * 概要  :クリックしたときにカレンダーを表示し、日付を指定できるようにする
  * 引数  :string selector:カレンダーをクリックしたときにだしたいセレクター名

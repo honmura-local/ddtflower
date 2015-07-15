@@ -24,7 +24,18 @@
 				creator.getDomFile('template/common.html');			
 				creator.getDomFile('template/gallery.html');			
 				
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				// 会員共通のパーツのJSONを取得する。
+				creator.getDomFile('template/memberCommon.html');
+				// 会員ページのjsonを読み込む
+				creator.getDomFile('template/memberPage.html');
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				// 会員ページヘッダーを作る
+				creator.outputTag('memberHeader');
+				// バナー領域を作る
+				creator.outputTag('userBanner');
+
+				// creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。
 				//ギャラリーのちょっとした説明を付け足す。
@@ -34,13 +45,13 @@
 				creator.outputTag('numberingOuter');
 				//ギャラリーの内容を追加する。
 				creator.outputNumberingTag('myPhoto', 1, 4, 1, 8, '.myGallery');	// ブログの記事を作る。
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				//creator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				//creator.outputTag('footer');						// フッターを作る
 			
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-				fixXCoordinateOnScroll('header')
+				//fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。
 				useZoomImage('myPhoto');
 				//jQuery UIのリッチなボタンを配置する。
@@ -48,7 +59,7 @@
 				//新規ボタンをクリックしたらアップロードするボタンを押すイベントを登録する。
 				bindClickTarget('.myGalleryEditButtons .createButton', '.myGalleryEditButtons .uploader');
 				//画像アップローダーの値が変わったときのイベントを定義する。
-				setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');				
+				setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
 				</script>
 		</div>
 	</div>

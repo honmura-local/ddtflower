@@ -14,6 +14,17 @@
 			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
 			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
+							// 会員共通のパーツのJSONを取得する。
+				creator.getDomFile('template/memberCommon.html');
+				// 会員ページのjsonを読み込む
+				creator.getDomFile('template/memberPage.html');
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				// 会員ページヘッダーを作る
+				creator.outputTag('memberHeader');
+				// バナー領域を作る
+				creator.outputTag('userBanner');
+				
 				creator.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
 				creator.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
 				// ファイルのhtmlデータをdomを用いて持ってくる
@@ -22,6 +33,7 @@
 				creator.getDomFile('template/table.html');
 
 				creator.getJsonFile('source/mypagebloglist.json');	// マイページのブログ一覧のJSONを取得する。
+
 				// ブログ管理領域を作る。
 				creator.outputTag('myPageBlog');
 				creator.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る

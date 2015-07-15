@@ -919,7 +919,7 @@ function toggleHeader(targetObject){
 //会員ページでのみヘッダーを表示するようにイベントを登録する
 //注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
 //短絡的な判断基準ですので、後々詰めるべきであると思います。
-inspectAfterLoad(toggleHeader, {evaluation:CLASS_HEADERS,target:CLASS_HEADER})
+//inspectAfterLoad(toggleHeader, {evaluation:CLASS_HEADERS,target:CLASS_HEADER})
 
 /* 関数名　:afterLogin
  * 概要　　:ログイン後の処理の関数
