@@ -149,67 +149,46 @@
 	</div>
 
 	<!-- 受講承認、アコーディオン概要領域 -->
-	<tr class="accordionSummary">
+	<div class="accordionSummary">
 		<!-- 備品名領域 -->
-		<td class="equipmentNameSummary"></td>
+		<div class="contentSummary" colspan=""></div>
 		<!-- 個数領域 -->
-		<td class="equipmentCountSummary"></td>
+		<div class="sellNumberSummary"></div>
 		<!-- 備品代領域 -->
-		<td class="equipmentPriceSummary"></td>
-		<!-- 所持pt領域 -->
-		<td class="get_pointSummary"></td>
-		<!-- 使用pt領域 -->
-		<td class="use_pointSummary"></td>
-		<!-- 遅刻領域 -->
-		<td class="beLateSummary"></td>
+		<div class="sellingPriceSummary"></div>
 		<!-- 会計領域 -->
-		<td class="sumPriceSummary"></td>
-		<!-- ステータス領域 -->
-		<td class="lessonStatusSummary"></td>
-	</tr>
+		<div class="payCashSummary" colspan=""></div>
+		<!-- 使用pt領域 -->
+		<div class="usePointSummary"></div>
+	</div>
 	<!-- 受講承認　アコーディオン内容領域 -->
-	<tr class="accordion">
+	<div class="accordionContent">
 		<!-- 備品名 -->
-		<td class="equipmentName">
+		<div class="contentCell" colspan="">
 			<!-- 備品名セレクトボックス -->
-			<select class="equipmentSelect">
+			<select class="contentSelect" name="">
 				<!-- 備品名、セレクトボックスの中身 -->
-				<option value="" class="equipmentOption"></option>
+				<option class="contentOption" value=""></option>
 			</select>
-		</td>
+		</div>
 		<!-- 備品個数 -->
-		<td class="equipmentCount">
+		<div class="sellNumber">
 			<!-- 備品個数テキストボックス -->
-			<input class="equipmentCountTextbox" type="" name="" value="">
-		</td>
+			<input class="sellNumberTextbox" type="" name="">
+		</div>
 		<!-- 備品代 -->
-		<td class="equipmentPrice">
+		<div class="sellingPrice">
 			<!-- 備品代テキストボックス -->
-			<input class="equipmentPriceTextbox" type="" name="" value="">
-		</td>
-		<!-- 所持pt -->
-		<td class="get_point"></td>
-		<!-- 使用ポイント -->
-		<td class="use_point">
-			<!-- 使用ポイントテキストボックス -->
-			<input class="usePointTextbox" type="" name="" value="">
-		</td>
-		<!-- 遅刻 -->
-		<td class="beLate">
-			<!-- 遅刻テキストボックス -->
-			<input class="beLateTextbox" type="" name="" value="">
-		</td>
+			<input class="sellingPriceTextbox" type="" name="" value="">
+		</div>
 		<!-- 会計 -->
-		<td class="sumPrice"></td>
-		<!-- ステータス -->
-		<td class="lessonStatus">
-			<!-- ステータスセレクトボックス -->
-			<select class="lessonStatusSelect">
-				<!-- ステータス、セレクトボックスの中身 -->
-				<option value="" class="lessonStatusOption"></option>
-			</select>
-		</td>
-	</tr>
+		<div class="payCash" name="" colspan=""></div>
+		<!-- 使用ポイント -->
+		<div class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="" name="">
+		</div>
+	</div>
 
 	<!-- 管理者のカレンダー領域 -->
 	<div class="adminCalendar"></div>

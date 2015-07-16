@@ -162,7 +162,8 @@
                     "columnName":"受講料"
                 },
                 "id": {
-                    "columnName":"会計"
+                    "columnName":"遅刻",
+                    "className":"replaceTextboxLateTimeCell replaceTextboxTypeNumber"
                 },
                 "stage_no": {
                     "style":"display:none;"
@@ -182,6 +183,22 @@
             }
         }
     },
+    "selectCommodityInf":{
+        "db_getQuery": "SELECT commodity_name,selling_price,id AS commodity_key FROM commodity_inf;",
+        "config": {
+            "columns": {
+                "commodity_name": {
+                    "style":"display:none;"
+                },
+                "selling_price": {
+                    "style":"display:none;"
+                },
+                "commodity_key": {
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
     "updateLecturePermit":{
         "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
         "user_classwork_cost":{
@@ -196,6 +213,10 @@
         "user_key":{
             "value":""
         }
+    },
+    "replaceTextboxLateTime":{
+        "type":"number",
+        "name":"late_time"
     },
     "doLecturePermitButton":{ "type":"button", "value":"承認"},
     "lecturePermitListInfoTable":{
@@ -237,6 +258,57 @@
                 "content":{
                     "style":"display:none;"
                 }
+            }
+        }
+    },
+    "accordionSummary":{
+        "contentSummary":{
+            "colspan":"3",
+            "text":"備品名"
+        },
+        "sellNumberSummary":{
+            "text":"個数"
+        },
+        "sellingPriceSummary":{
+            "text":"備品代"
+        },
+        "payCashSummary":{
+            "colspan":"2",
+            "text":"会計"
+        },
+        "usePointSummary":{
+            "text":"使用pt"
+        }
+    },
+    "accordionContent":{
+        "contentCell":{
+            "colspan":"3",
+            "contentSelect":{
+                "name":"content",
+                "contentOption":[]
+            }
+        },
+        "sellNumber":{
+            "sellNumberTextbox":{
+                "type":"text",
+                "name":"sell_number"
+            }
+        },
+        "sellingPrice":{
+            "sellingPriceTextbox":{
+                "type":"text",
+                "name":"selling_price"
+            }
+        },
+        "payCash":{
+            "colspan":"2",
+            "text":"",
+            "name":"pay_cash"
+        },
+        "usePoint":{
+            "usePointTextbox":{
+                "type":"text",
+                "name":"use_point"
             }
         }
     },
@@ -631,7 +703,7 @@
                 "id": {
                     "columnName": "id"
                 },
-                "message_type": {
+                "magazine_type": {
                     "columnName": "種別"
                 },
                 "send_date": {

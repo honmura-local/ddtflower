@@ -2945,7 +2945,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 
 /* 
  * 関数名:accordionSetting
- * 概要  :テーブルページング機能を実装する
+ * 概要  :アコーディオン機能を実装する
  * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
  *       accordionDomSelector:アコーディオンの中身のdomセレクター名
  * 返却値  :なし
@@ -2960,6 +2960,27 @@ function accordionSetting(clickSelector, accordionDomSelector) {
 	});
 }
 
+/* 
+ * 関数名:accordionSettingToTable
+ * 概要  :テーブルの行用にアコーディオン機能を実装する
+ * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
+ *       accordionDomSelector:アコーディオンの中身のdomセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function accordionSettingToTable(clickSelector, accordionDomSelector) {
+	//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
+	$(STR_BODY).on(CLICK, clickSelector + ' td', function(){
+		//どのレコードを開くのか判別するためにレコードの番号を取得する
+		var rowNumber = $(this).parent().index(clickSelector);
+		//チェックボックスをクリックしてもアコーディオンが反応しないようにする
+		if($(this).attr('class') != 'permitCheckboxArea') {
+			//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
+			$(accordionDomSelector).eq(rowNumber).toggle();
+		}
+	});
+}
 
 /* 
  * 関数名:enterKeyButtonClick
@@ -3123,7 +3144,7 @@ function searchPermitListInfoTable () {
  		:なし
  * 返却値  :なし
  * 作成者:T.Yamamoto
- * 作成日:2015.07.14
+ * 作成日:2015.07.15
  */
 function logoutMemberPage() {
 	//ログアウトボタンがクリックされた時に処理を行うイベントを登録する
@@ -3142,6 +3163,47 @@ function logoutMemberPage() {
 	});
 }
 
-function insertTableRecord() {
-	$('.doLecturePermitInfoTable tr').after('<tr><td colspan="2">備品名</td><td>個数</td><td>備品代</td><td>使用pt</td><td>遅刻</td><td>会計</td></tr><tr><td colspan="2"><select name="commodity"><option value="0">お野菜</option><option value="1">箱(大)</option><option value="2">箱(中)</option><option value="3">箱(小)</option><option value="5">フローラルテープグリーン</option></select></td><td><input type="text" name="commodity_count"></td><td><input type="text" name="commodity_price"></td><td><input type="text" name="use_point"></td><td><input type="text" name="late_time"></td><td>20000</td></tr>');
+/* 
+ * 関数名:setTableRecordClass
+ * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
+ 		これによってアコーディオン機能を実装するための行がどの行なのかを
+ 		識別できるようになる
+ * 引数  :tableClassName: 行にクラス属性を付けたいテーブル名
+ 		:tableRecordClasssName: 行に新しくつけるクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function setTableRecordClass(tableClassName, tableRecordClasssName) {
+	//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
+	$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
 }
+
+/* 
+ * 関数名:insertTableRecord
+ * 概要  :テーブルに行を追加する。
+ 		受講承認のアコーディオン機能実装のために新しく行を挿入するために使う。
+ 		挿入するdom要素は最初はtdの代わりにdivで構成されていないといけない
+ * 引数  :tableRecordClasssName:行に新しくつけるクラス名
+ 		:addDomClassName:挿入するdom要素のクラス属性名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function insertTableRecord(tableRecordClasssName, addDomClassName) {
+	//追加するDOMをとりあえずbodyに作る
+	creator.outputTag(addDomClassName, addDomClassName, STR_BODY);
+	//後でテーブルの中にdomを移動させるために追加するDOMの子要素を全て取得する
+	var addDomChild = $(DOT + addDomClassName).html();
+	//取得したDOMのうち、テーブルのセルに適応させるため「div」を「td」に置換する
+	addDomChild = addDomChild.replace(/div/g, 'td');
+	//とりあえず作っておいたdomをテーブルのtrの後に移動させる。
+	$(DOT + tableRecordClasssName).after($(DOT + addDomClassName));
+	//追加したDOMのタグをテーブルに適応させるためtrタグに変換する
+	$(DOT + addDomClassName).replaceWith('<tr class="' + addDomClassName + '"></tr>');
+	//移動させたdomに対して取得していたセルを入れていき、アコーディオン用のテーブル行を完成させる
+	$(DOT + addDomClassName).html(addDomChild);
+}
+
+
+

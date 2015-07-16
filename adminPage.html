@@ -107,6 +107,8 @@
 				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+				//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
 
 				//受講承認一覧の検索領域を作る
 				creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
@@ -194,6 +196,8 @@
 				creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
 				//受講済み授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+
+				//creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
 				//メルマガテーブルを作る
 				//creator.outputTagTable('mailMagaTable', 'mailMagaTable', '.mailMagaTableArea');
 				//メルマガ・アナウンス入力領域を作る
@@ -215,7 +219,19 @@
 				loginInsteadOfMember('#userList', '.userListInfoTable tr');
 				//受講承認一覧テーブルの検索機能を実装する
 				searchPermitListInfoTable();
-				// insertTableRecord();
+
+				//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+				setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+				//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+				setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+				//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+				insertTableRecord('lecturePermitAccordion', 'accordionContent');
+				//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+				insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+				//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+				accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+				accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+				insertTextboxToTable('doLecturePermitInfoTable', 'replaceTextboxLateTime', 'replaceTextboxLateTimeCell');
 
 			});
 			</script>
