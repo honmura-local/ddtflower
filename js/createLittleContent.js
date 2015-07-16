@@ -2463,13 +2463,13 @@ replaceTableOption['userListInfoTable'] = {
 //メルマガテーブル
 replaceTableOption['mailMagaTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
-	replaceFlag:'replace',
+//	replaceFlag:'replace',
 	//テーブルのafterでの追加先
 	addDomPlace:'.mailMagaSearchArea',
 	//置換のvalueが入ったdom名
-	replaceValueDom:'#finishedLesson .selectThemebox',
+//	replaceValueDom:'#finishedLesson .selectThemebox',
 	//置換するkey名
-	replaceQueryKey:'lesson_name',
+//	replaceQueryKey:'lesson_name',
 	//テーブルの値を置換する関数名
 	//replaceTableValuefunction:'',
 	//ページングの追加先
@@ -2977,7 +2977,7 @@ function enterKeyButtonClick(enterTarget, buttonSelector) {
 	$(enterTarget).keypress(function (e) {
 		//エンターボタンが押された時の処理
 		if (e.which == 13) {
-			//ボタン
+			//ボタンを自動でクリックし、クリックイベントを起こす
 			$(buttonSelector).click();
 		}
 	});
@@ -3078,6 +3078,10 @@ function setPermitListFromToDate() {
 	creator.json.lecturePermitListInfoTable.FromDate.value = monthStartday;
 	//受講承認一覧に今月の末日を入れて一覧テーブルを検索するようにする
 	creator.json.lecturePermitListInfoTable.toDate.value = monthEndday;
+	//デフォルトの検索値を分かりやすくするためにfromテキストボックスに月の初日の値を入れる
+	$('[name=fromSearach]').val(monthStartday);
+	//デフォルトの検索値を分かりやすくするためにtoテキストボックスに月の末日の値を入れる
+	$('[name=toSearach]').val(monthEndday);
 }
 
 /* 
@@ -3138,4 +3142,8 @@ function logoutMemberPage() {
 			callPage('index.php');
 		}
 	});
+}
+
+function insertTableRecord() {
+	$('.doLecturePermitInfoTable tr').after('<tr><td colspan="2">備品名</td><td>個数</td><td>備品代</td><td>使用pt</td><td>遅刻</td><td>会計</td></tr><tr><td colspan="2"><select name="commodity"><option value="0">お野菜</option><option value="1">箱(大)</option><option value="2">箱(中)</option><option value="3">箱(小)</option><option value="5">フローラルテープグリーン</option></select></td><td><input type="text" name="commodity_count"></td><td><input type="text" name="commodity_price"></td><td><input type="text" name="use_point"></td><td><input type="text" name="late_time"></td><td>20000</td></tr>');
 }

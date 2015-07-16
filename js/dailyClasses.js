@@ -726,3 +726,25 @@ function insertNo (rowData, tableName, columnNumber) {
 		counter++;
 	});
 }
+
+/* 
+ * 関数名:callLecturePermitValue
+ * 概要  :受講承認テーブルに値入れるための関数
+ * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
+ 		 counter:カウンタ変数
+ 		 rowNumber:行番号
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.15
+ */
+var callLecturePermitValue = function(tableName, loopData, counter, rowNumber) {
+	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+	recordData = loopData[counter];
+	// 開始日時と終了時刻を組み合わせた値を入れる
+	allDay = allDateTime(recordData);
+	//連番を入れる
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(1).text(rowNumber);
+	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(allDay);
+};

@@ -133,7 +133,7 @@
 	    "id": "lecturePermitList"
 	},
     "doLecturePermitInfoTable":{
-        "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.id AS id, lesson_name ,user_classwork_cost ,user_inf.get_point AS get_point,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name , lesson_name ,user_inf.get_point AS get_point,user_classwork_cost ,user_inf.id AS id,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
         "date":{
             "value":"2015-03-13"
         },
@@ -159,10 +159,10 @@
                     "columnName": "内容"
                 },
                 "user_classwork_cost": {
-                    "style":"display:none;"
+                    "columnName":"受講料"
                 },
                 "id": {
-                    "style":"display:none;"
+                    "columnName":"会計"
                 },
                 "stage_no": {
                     "style":"display:none;"
@@ -183,7 +183,7 @@
         }
     },
     "updateLecturePermit":{
-        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
         "user_classwork_cost":{
             "value":""
         },
@@ -268,7 +268,7 @@
         }
     },
     "updateUserClassWork":{
-        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';",
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';",
         "user_classwork_cost":{
             "value":""
         },
@@ -277,7 +277,7 @@
         }
     },
     "updateCommoditySell":{
-        "db_getQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';",
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';",
         "pay_cash":{
             "value":""
         },
@@ -625,26 +625,17 @@
         "class":"tableOutsideArea mailMagaTableArea"
     },
     "mailMagaTable":{
-        "db_getQuery":"SELECT * FROM message_inf WHERE message_type = 0",
+        "db_getQuery": "SELECT * FROM mail_magazine",
         "config": {
             "columns": {
                 "id": {
-                    "columnName": "No."
+                    "columnName": "id"
                 },
-                "school_key": {
-                    "columnName": "店舗"
-                },
-                "magazine_type": {
+                "message_type": {
                     "columnName": "種別"
                 },
-                "magazine_title": {
-                    "columnName": "タイトル"
-                },
-                "magazine_content": {
-                    "columnName": "内容"
-                },
-                "send_datetime":{
-                    "columnName":"送信日時"
+                "send_date": {
+                    "columnName": "送信日付"
                 }
             }
         }
