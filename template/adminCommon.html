@@ -150,6 +150,10 @@
 
 	<!-- 受講承認、アコーディオン概要領域 -->
 	<div class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<div class="lateTimeSummary"></div>
+		<!-- 使用pt領域 -->
+		<div class="usePointSummary"></div>
 		<!-- 備品名領域 -->
 		<div class="contentSummary" colspan=""></div>
 		<!-- 個数領域 -->
@@ -157,12 +161,20 @@
 		<!-- 備品代領域 -->
 		<div class="sellingPriceSummary"></div>
 		<!-- 会計領域 -->
-		<div class="payCashSummary" colspan=""></div>
-		<!-- 使用pt領域 -->
-		<div class="usePointSummary"></div>
+		<div class="payCashSummary"></div>
 	</div>
 	<!-- 受講承認　アコーディオン内容領域 -->
 	<div class="accordionContent">
+		<!-- 遅刻 -->
+		<div class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="" name="">
+		</div>
+		<!-- 使用ポイント -->
+		<div class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="" name="">
+		</div>
 		<!-- 備品名 -->
 		<div class="contentCell" colspan="">
 			<!-- 備品名セレクトボックス -->
@@ -174,7 +186,7 @@
 		<!-- 備品個数 -->
 		<div class="sellNumber">
 			<!-- 備品個数テキストボックス -->
-			<input class="sellNumberTextbox" type="" name="">
+			<input class="sellNumberTextbox" type="" name="" value="">
 		</div>
 		<!-- 備品代 -->
 		<div class="sellingPrice">
@@ -182,11 +194,9 @@
 			<input class="sellingPriceTextbox" type="" name="" value="">
 		</div>
 		<!-- 会計 -->
-		<div class="payCash" name="" colspan=""></div>
-		<!-- 使用ポイント -->
-		<div class="usePoint">
+		<div class="payCash" colspan="">
 			<!-- 使用ポイントテキストボックス -->
-			<input class="usePointTextbox" type="" name="">
+			<input class="payCashTextbox" type="" name="" value="">
 		</div>
 	</div>
 

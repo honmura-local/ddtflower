@@ -3205,5 +3205,113 @@ function insertTableRecord(tableRecordClasssName, addDomClassName) {
 	$(DOT + addDomClassName).html(addDomChild);
 }
 
+/* 
+ * 関数名:getCommodityCostPrice
+ * 概要  :受講承認テーブルで個数テキストボックスと備品代テキストボックスの値を掛け合わせた合計を返す
+ 		:会計テキストボックスの値を自動で変更するために値を取得するための関数
+ * 引数  :rowNumber:行の何番目にあるテキストボックスが対象なのかを示す番号
+ * 返却値  :commodityCostPrice:備品代の会計テキストボックスに入る値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function getCommodityCostPrice(rowNumber) {
+	//備品代の合計を求めるために購入した備品の価格を取得する
+	var sellingPrice = $('.sellingPriceTextbox').eq(rowNumber).val();
+	//備品代の合計を求めるために購入した個数を取得する
+	var sellNumber = $('.sellNumberTextbox').eq(rowNumber).val();
+	//取得した値から備品の合計金額を求める
+	var commodityCostPrice = sellingPrice * sellNumber;
+	//求めた金額を他でも使えるようにするため、返り値として返す
+	return commodityCostPrice;
+}
 
+/* 
+ * 関数名:setDefaultCommodityCostPrice
+ * 概要  :ページの初期読み込み時に会計のデフォルト値を設定する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setDefaultCommodityCostPrice() {
+	//会計のデフォルト値を設定するために会計の値を取得する
+	var commodityCostPrice = getCommodityCostPrice(0);
+	//会計の連想配列にデフォルト値を設定する
+	$('.payCashTextbox').val(commodityCostPrice);
+}
 
+/* 
+ * 関数名:setCommodityCostPrice
+ * 概要  :受講承認テーブル会計の値を設定する
+ * 引数  :changeSelector:changeイベントを当てるセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setCommodityCostPrice(changeSelector) {
+	//備品名、または個数が変化した時に会計の値をセットするイベントを登録する
+	$(STR_BODY).on('change', changeSelector, function(){
+		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
+		var contentSelectNumber = $(changeSelector).index(this);
+		//会計のデフォルト値を設定するために会計の値を取得する
+		var commodityCostPrice = getCommodityCostPrice(contentSelectNumber);
+		//会計のテキストボックスの値を設定する
+		$('.payCashTextbox').eq(contentSelectNumber).val(commodityCostPrice);
+	});
+}
+
+/* 
+ * 関数名:setSellingPrice
+ * 概要  :受講承認テーブルの備品代を自動でセットする。
+ 		備品によって値段が異なるので備品名のセレクトボックスの値が変わったときに
+ 		備品名に対応した値段をテキストボックスに入れる
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setSellingPrice() {
+	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
+	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
+	$(STR_BODY).on('change', '.contentSelect', function(){
+		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
+		var contentSelectNumber = $('.contentSelect').index(this);
+		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
+		var contentName = $('.contentSelect').eq(contentSelectNumber).val();
+		//備品代の値を取得するための変数を作る
+		var sellingPrice;
+		//取り出した行のデータを数えるためにカウンターを変数を作る
+		var counter = 0;
+		//行データを変数に入れる
+		var rowData = creator.json.selectCommodityInf.table
+		//取り出したデータの数だけループし、価格を取り出す
+		$.each(rowData, function(){
+			//取得した備品名と比較するためにループしている備品名を取得する
+			var commodityName = rowData[counter].commodity_name;
+			//取得した備品名とセレクトボックスの中にあるタグの名前が同じときにその番号を取得する
+			if (contentName == commodityName) {
+				//備品代をテキストボックスに入れるための番号を取得する
+				sellingPrice = creator.json.selectCommodityInf.table[counter].selling_price;
+				//ループを終わらせるためにリターンでループを終える
+			}
+			counter++;
+		});
+		//備品代テキストボックスに備品名に対応した値段を入れる
+		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
+	});
+}
+
+/* 
+ * 関数名:setDefaultSellingPrice
+ * 概要  :受講承認テーブルの備品代をページ読み込み時に自動でセットする。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setDefaultSellingPrice() {
+	//備品代のデフォルト値を設定するために備品代の最初値を取得する
+	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
+	//備品代の連想配列にデフォルト値を設定する
+	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
+}

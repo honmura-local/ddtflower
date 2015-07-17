@@ -222,6 +222,8 @@
 
 				//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 				setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+				//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+				setDefaultSellingPrice();
 				//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
 				setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
 				//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
@@ -237,6 +239,14 @@
 				allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 				//受講承認の備品名セレクトボックスにvalueを入れる
 				setSelectboxValue('.contentSelect');
+				//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+				setSellingPrice();
+				//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+				setDefaultCommodityCostPrice();
+				//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+				setCommodityCostPrice('.contentSelect');
+				//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+				setCommodityCostPrice('.sellNumberTextbox');
 			});
 			</script>
 		</div>

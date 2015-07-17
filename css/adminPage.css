@@ -183,7 +183,28 @@
  * 作成日 :2015.07.16
  */
 .accordionContent input {
-	width: 32px;			/* 幅を4桁の数字が入るぐらいの幅にする */
+	width: 90%;			/* 幅を90%にする */
+}
+
+/* 
+ * セレクタ :.accordionContent .lateTimeTextbox
+ * 概要   :受講承認、アコーディオンの遅刻領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.17
+ */
+.accordionContent .lateTimeTextbox {
+	width: 20px;			/* 幅を数字が3文字入るぐらいの幅にする */
+}
+
+
+/* 
+ * セレクタ :.accordionContent .contentSelect
+ * 概要   :受講承認、アコーディオンの備品名領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.17
+ */
+.accordionContent .contentSelect {
+	width: 100%;			/* 幅を100%にして備品名が入るところまでを入れる */
 }
 
 /* 
@@ -593,6 +614,18 @@
 
 /* スマホ用微調整 */
 @media(max-width:400px){
+
+	/* 受講承認領域 */
+	/* 
+	 * セレクタ :.accordionContent input
+	 * 概要   :受講承認、アコーディオンの入力エリア領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.16
+	 */
+	.accordionContent input {
+		width: 32px;			/* 幅を4桁の数字が入るぐらいの幅にする */
+	}
+	/* 受講承認領域 */
 
 	/* 会員一覧の検索領域 */
 	/* 
