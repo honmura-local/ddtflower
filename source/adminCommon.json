@@ -347,22 +347,10 @@
         }
     },
     "updateUserClassWork":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';",
-        "user_classwork_cost":{
-            "value":""
-        },
-        "classwork_key":{
-            "value":""
-        }
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';"
     },
     "updateCommoditySell":{
-        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';",
-        "pay_cash":{
-            "value":""
-        },
-        "commodity_sell_key":{
-            "value":""
-        }
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';"
     },
     "searchUser":{
         "searchList":{
@@ -659,7 +647,7 @@
     },
     "replaceTextboxCost":{
         "type":"number",
-        "name":"cost"
+        "name":"user_classwork_cost"
     },
     "replaceTextboxUsePoint":{
         "type":"number",

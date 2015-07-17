@@ -2140,12 +2140,16 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 			//更新成功であれば
 			//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
 			//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
-			//更新した内容が1件以上の時更新成功メッセージを出す
-			if(resultJsonArray.message >= 1) {
-				alert(successMessage);	//更新成功のメッセージを出す
-			//更新失敗であれば
-			} else {
-				alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
+			//変更者:T.Yamamoto 日付2015.07.17 内容: ループで更新に対応するために第三引数が空白ならアラートを出さない設定をしました
+			//第三引数が空白であるならループで更新を行うということなのでアラートを出さない
+			if(successMessage != '') {
+				//更新した内容が1件以上の時更新成功メッセージを出す
+				if(resultJsonArray.message >= 1) {
+					alert(successMessage);	//更新成功のメッセージを出す
+				//更新失敗であれば
+				} else {
+					alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
+				}
 			}
 		},
 		error:function(xhr, status, error){	//通信失敗時の処理
@@ -2275,7 +2279,7 @@ function setInputValueToLecturePermitListInfoTable() {
 		//DBから取得した使用ptの値を取得する
 		resultValueUsePoint = recordData['use_point'];
 		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=cost]').eq(counter).attr('value', resultValueCost);
+		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
 		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
 		$('[name=' + 'use_point' + ']').eq(counter).attr('value', resultValueUsePoint);
 }
@@ -3314,4 +3318,145 @@ function setDefaultSellingPrice() {
 	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
 	//備品代の連想配列にデフォルト値を設定する
 	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
+}
+
+/* 
+ * 関数名:getSendReplaceArray
+ * 概要  :可変テーブルで取得した連想配列とユーザがテキストボックスで入力した値の連想配列を結合する。
+ 		:これによってdb_setQueryで値を置換するときの連想配列が取得できる
+ * 引数  :tableClassName:可変テーブルクラス名
+ 		rowNumber:可変テーブルで取り出す行番号
+ 		inputDataSelector:ユーザが入力した値を取得するためにinputタグなどの親のセレクター名
+ * 返却値  :sendReplaceArray:テーブルと入力データを結合した結果の連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
+	//可変テーブルから連想配列を取得する
+	var resultTableArray = crator.json[tableClassName].table[rowNumber]
+	//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
+	var inputDataArray = getInputData(inputDataSelector);
+	//取得した連想配列を結合する
+	var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+	//結合した結果の連想配列を返す
+	return sendReplaceArray;
+}
+
+/* 
+ * 関数名:choiceSendQuery
+ * 概要  :JSONDBManagerに送信するためのjsonを分岐する
+ 		:受講一覧の承認ボタンで使うクエリが受講情報のクエリか備品情報のクエリかを振り分けるときに使う
+ * 引数  :boolRule:分岐させるための値が入った変数
+ 		trueQuery:条件がtrueのときに取得するクエリ
+ 		falseQuery:条件がfalseのときに取得するクエリ
+ * 返却値  :resultSendQuery:選択した結果のクエリが入った連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray) {
+	//送信するクエリを入れるための変数を作る
+	var resultSendQueryArray = {};
+	//条件分岐を設定するための値があるかどうかでクエリを決める
+	if (boolRule) {
+		//trueだった時のクエリを取得する
+		resultSendQueryArray = crator.json[trueQuery];
+	//条件が合わなかったときに別のクエリを入れる
+	} else {
+		//falseのときのクエリを取得する
+		resultSendQueryArray = crator.json[falseQuery];
+	}
+	//取得したクエリの結果を返す
+	return resultSendQueryArray;
+}
+
+/* 
+ * 関数名:addUsePointQuery
+ * 概要  :既にあるクエリに対して、クエリを付け足す。
+ 		受講承認でユーザがポイントを使用したときにポイントしようクエリを付け足す
+ * 引数  :sendQueryArray:jsondbManagerに渡すためのクエリが入った連想配列
+ 		sendReplaceArray:DBに更新で渡す値が入った連想配列
+ * 返却値  :resultSendQueryArray
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function addUsePointQuery(sendQueryArray, sendReplaceArray) {
+	//置換するクエリに使用ポイントの値が1以上のとき、ポイントを使うということなのでクエリにポイントしようクエリを付け足す
+	if (sendReplaceArray.use_point >= 1) {
+		//現状のクエリに使用ポイントのクエリを付け足す
+		sendQueryArray.db_setQuery += creator.json.updateUsePoint;
+	}
+	//クエリの結果を返す
+	return sendQueryArray;
+}
+
+/* 
+ * 関数名:executeDBUpdate
+ * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
+ * 引数  :
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, trueQueryArray, falseQueryArray) {
+	//jsonDBManagerに送信する置換の値が入った連想配列を作る(対象のテーブルの連想配列とテキストボックスなどの入力された連想配列を結合して取得する)
+	var sendReplaceArray = getSendReplaceArray(tableClassName, counter, inputDataSelector);
+	//jsonDBManagerに送信するクエリの入った連想配列を作る(受講料の値があるかどうかで受講料のクエリと備品のクエリのどちらを実行するか分岐する)
+	var sendQueryArray = choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray);
+	//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+	sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+	//クエリを実行してテーブルの値1行ずつ更新していく
+	setDBdata(sendQueryArray, sendReplaceArray, '');
+	//ループで実行するので置換データ連想配列を初期化する
+	sendReplaceArray = {};
+	//ループで実行するので置換データ連想配列を初期化する
+	sendQueryArray = {};
+}
+
+/* 
+ * 関数名:loopUpdatePermitLesson
+ * 概要  :受講承認テーブルの承認ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新してする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function loopUpdatePermitLesson() {
+	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
+	$(STR_BODY).(CLCIK, '.doLecturePermit normalButton', function(){
+		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
+		var counter = 0;
+		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+		$('.lecturePermitAccordion').each(function() {
+			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
+			if($('.permitCheckbox').eq(counter).prop('checked')) {
+				//受講承認テーブルからチェックが入っているレコードのデータだけを更新する
+				executeDBUpdate('doLecturePermitInfoTable', counter, '.lecturePermitAccordion:eq(' + counter + ')', boolRule, 'insertPermitLesson', 'updatePermitLesson');
+			}
+			//カウンターをインクリメントする
+			counter++;
+		});
+	});
+}
+
+/* 
+ * 関数名:loopUpdatePermitLessonList
+ * 概要  :受講承認一覧テーブルの更新ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function loopUpdatePermitLessonList() {
+	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
+	$(STR_BODY).(CLCIK, '.lecturePermitList normalButton', function(){
+		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
+		var counter = 0;
+		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+		$('.lecturePermitListRecord').each(function() {
+			//受講承認一覧のテーブルから1行ずつ値を取り出してデータを更新していく
+			executeDBUpdate('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')', sendReplaceArray.user_classwork_cost, 'updateUserClassWork', 'updateCommoditySell');
+			//カウンターをインクリメントする
+			counter++;
+		});
+	});
 }

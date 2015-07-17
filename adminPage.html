@@ -233,8 +233,6 @@
 				//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
 				accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
 				accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
-				//受講承認テーブルの遅刻列にをテキストボックスにする
-				insertTextboxToTable('doLecturePermitInfoTable', 'replaceTextboxLateTime', 'replaceTextboxLateTimeCell');
 				//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
 				allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 				//受講承認の備品名セレクトボックスにvalueを入れる
@@ -247,6 +245,10 @@
 				setCommodityCostPrice('.contentSelect');
 				//受講承認テーブルの会計列を個数が変化した時に自動でセットする
 				setCommodityCostPrice('.sellNumberTextbox');
+
+				//受講承認一覧テーブルの取り出した行にクラス名を付ける
+				setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+
 			});
 			</script>
 		</div>
