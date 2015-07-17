@@ -2047,15 +2047,15 @@ function setSelectboxText(rowData, selectboxArray, selectboxTextTarget) {
 
 /* 
  * 関数名:setSelectboxValue
- * 引数  :なし
+ * 引数  :selector セレクトボックスのセレクター
  * 戻り値:なし
  * 概要  :optionタグのvalue属性に値を入れる
  * 作成日 :2015.06.24
  * 作成者:T.Yamamoto
 　*/
-function setSelectboxValue() {
+function setSelectboxValue(selector) {
 	// optionタグをループで全て操作する
-	$("select option").each(function(i){
+	$(selector + ' option').each(function(i){
 		// optionタグの文字列を変数に入れる
 		var selectValue = $(this).text();
 		// 取得した文字列をvalue属性に入れる
