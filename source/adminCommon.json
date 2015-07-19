@@ -692,17 +692,32 @@
         "class":"tableOutsideArea mailMagaTableArea"
     },
     "mailMagaTable":{
-        "db_getQuery": "SELECT * FROM mail_magazine",
+        "db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine;",
         "config": {
             "columns": {
                 "id": {
-                    "columnName": "id"
+                    "columnName":"No.",
+                    "style":"display:none"
                 },
-                "magazine_type": {
-                    "columnName": "種別"
+                "school_key":{
+                    "columnName":"店舗名",
+                    "style":"display:none"
                 },
-                "send_date": {
-                    "columnName": "送信日付"
+                "send_datetime":{
+                    "columnName":"送信日時",
+                    "style":"display:none"
+                },
+                "magazine_type":{
+                    "columnName":"種別",
+                    "style":"display:none"
+                },
+                "magazine_title":{
+                    "columnName":"タイトル",
+                    "style":"display:none"
+                },
+                "magazine_content":{
+                    "columnName":"内容",
+                    "style":"display:none"
                 }
             }
         }

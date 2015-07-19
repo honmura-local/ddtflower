@@ -93,6 +93,9 @@
 					lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
 				}
 				
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+
 				//受講承認タブのコンテンツ
 				//タブ
 				creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
@@ -194,8 +197,6 @@
 				creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
 				//メルマガテーブルの外側を作る
 				creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
-				//受講済み授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
 
 				//creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
 				//メルマガテーブルを作る

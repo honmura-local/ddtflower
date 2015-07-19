@@ -3422,7 +3422,7 @@ function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, t
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).(CLCIK, '.doLecturePermit normalButton', function(){
+	$(STR_BODY).on(CLCIK, '.doLecturePermit normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -3448,7 +3448,7 @@ function loopUpdatePermitLesson() {
  */
 function loopUpdatePermitLessonList() {
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).(CLCIK, '.lecturePermitList normalButton', function(){
+	$(STR_BODY).on(CLCIK, '.lecturePermitList normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
