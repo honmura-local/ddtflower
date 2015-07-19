@@ -3460,3 +3460,26 @@ function loopUpdatePermitLessonList() {
 		});
 	});
 }
+
+/* 
+ * 関数名:createMemberPageHeader()
+ * 概要  :会員ページからブログページやギャラリーページに遷移するときに通常ページのヘッダーでなく会員ページのヘッダーを表示する。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function createMemberPageHeader() {
+	//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
+	if(creator.json.memberHeader) {
+		// パーツのテンプレートのDOMを取得する。
+		creator.getDomFile('template/memberCommon.html');
+		//ユーザ情報のテキストをDBから取得する
+		creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+		// 会員ページヘッダーを作る
+		creator.outputTag('memberHeader');
+		// バナー領域を作る
+		creator.outputTag('userBanner');
+	}
+}
+
