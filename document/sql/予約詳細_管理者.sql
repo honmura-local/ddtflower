@@ -19,6 +19,7 @@ SELECT
 	,classroom
     ,school_inf.id AS school_key
     ,school_name
+	,time_table_day.id AS time_table_day_key
 FROM 
 	time_table_day
 INNER JOIN

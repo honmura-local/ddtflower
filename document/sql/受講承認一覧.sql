@@ -8,6 +8,8 @@
 	,user_classwork.use_point AS use_point
 	,1 AS sell_number
 	,'' AS content
+	,user_inf.id AS user_key
+	,lesson_inf.scholl_key AS school_key
 FROM
 	user_classwork
 INNER JOIN
@@ -50,6 +52,8 @@ UNION ALL
 	,commodity_sell.use_point AS use_point
 	,sell_number
 	,content
+	,user_inf.id AS user_key
+	,commodity_inf.scholl_key AS school_key
 FROM
 	commodity_sell
 INNER JOIN
@@ -60,4 +64,8 @@ AND
 	sell_datetime <= {{toDate}}
 AND
 	sell_datetime >= {{FromDate}}
+INNER JOIN
+	commodity_inf 
+ON
+	commodity_inf.id = commodity_sell.commodity_key
 ORDER BY sell_datetime DESC)
