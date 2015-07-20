@@ -1030,6 +1030,8 @@ dialogOption[LOGIN_DIALOG] = {
 			        				alert(MESSAGE_LOGIN_ERROR);
 			        			//ログインidとパスワードが正しいときにログイン処理を開始する
 			        	 		} else {
+			        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+		        					$(this).dialog(CLOSE);	//ダイアログを閉じる
 									// 会員共通のパーツのJSONを取得する。
 									creator.getJsonFile('source/eachDayLesson.json');
 									//管理者ページのcssを読み込む
@@ -1054,8 +1056,6 @@ dialogOption[LOGIN_DIALOG] = {
 				        	 		//セキュリティ対策としてログインパスワードを空白に初期化する
 				        	 		userLoginPassword = '';
 				        	 		creator.json.login.password.value = '';
-		        					//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-		        					$(this).dialog(CLOSE);	//ダイアログを閉じる
 			        	 		}
 			        	 	} else {
 								alert(errorMessages[3]);

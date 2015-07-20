@@ -2544,12 +2544,16 @@ function replaceTableQuery(queryArrayKey) {
 		creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
 		//クエリをテーマ検索用のものと入れ替える
 		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
+	//絞込ボタンで「全て」が選択されたときに全ての値を検索するためのクエリを入れる
+	} else {
+		//全ての値を検索するためのクエリをセットする
+		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].allSearch_query;
 	}
 }
 
 
 /* 
- * 関数名:setExtractionCondition
+ * 関数名:replaceTableTriggerClick
  * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
    ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
  * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
@@ -2577,10 +2581,10 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
 				$(DOT + PAGING).parent().off(CLICK);
 				//テーブルページング領域を消す
 				$(DOT + PAGING_AREA).remove();
-				//テーブルページングを実装する
-				var addQuery = tablePaging(queryArrayKey, 15, 6);
-				//クエリを更新する
-				creator.json[queryArrayKey].db_getQuery += addQuery;
+				//テーブルページングを実装する(1ページに15行表示し、5ページが最大表示)
+				tablePaging(queryArrayKey, 15, 6);
+				//処理を終わらせるためにreturnで終える
+				return;
 			}
 		}
 		//テーブルをリロードする
@@ -2915,11 +2919,8 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	var minRecord = 1;
 	//追加するクエリ
 	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
-	//タブリンクがクリックされたときにテーブルを読み込む
-	$(replaceTableOption[pagingTargetTable].addPagingPlace).click(function(){
-		//クエリを実行してテーブルを作る
-		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
-	});
+	//クエリを実行してテーブルを作る
+	setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
 	//ページングがクリックされた時の処理
 	$(DOT + PAGING).parent().on('click', DOT + PAGING, function(){
 		//全てのページングからnowPageクラスを取り除く
@@ -3422,7 +3423,7 @@ function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, t
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLCIK, '.doLecturePermit normalButton', function(){
+	$(STR_BODY).on(CLICK, '.doLecturePermit normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -3448,7 +3449,7 @@ function loopUpdatePermitLesson() {
  */
 function loopUpdatePermitLessonList() {
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLCIK, '.lecturePermitList normalButton', function(){
+	$(STR_BODY).on(CLICK, '.lecturePermitList normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -3483,3 +3484,246 @@ function createMemberPageHeader() {
 	}
 }
 
+/* 
+ * 関数名:createMemberFinishedLessonContent
+ * 概要  :会員ページの受講済み授業タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createMemberFinishedLessonContent() {
+	//受講済み授業テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
+	//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+	setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
+	//受講済み授業の絞り込み領域を作る
+	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
+	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
+	tablePaging('finishedLessonTable', 15, 6);
+	//注釈を作る
+	creator.outputTag('anotion', 'anotion', '#finishedLesson');
+	// 絞り込みボタンをjqueryのボタンにする
+	$('.selectThemeButton').button();
+	//セレクトボックスのvalueを画面に表示されている値にする
+	setSelectboxValue('.selectThemebox');
+	// 絞り込みボタンをjqueryのボタンにする
+	$('.selectThemeButton').button();
+	//絞り込みボタン機能を実装する
+	replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
+}
+
+/* 
+ * 関数名:createAdminPermitLessonContent
+ * 概要  :管理者ページの受講承認タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminPermitLessonContent() {
+	//受講済み授業テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+
+	//受講承認タブのコンテンツ
+	//タブ
+	creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
+	//受講承認タブ
+	creator.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
+	//受講承認一覧タブ
+	creator.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
+
+	// 受講承認テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+	//受講承認タブのリストテーブル
+	creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+	//受講承認のボタン
+	creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+	//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
+	//タブを作る
+	createTab('.lecturePermitTab');
+
+	//受講承認のテーブルにチェックボックスを追加する
+	addCheckbox('permitCheckboxArea', 'permitCheckbox');
+	//受講承認に連番を入れる
+	lessonTableValueInput('.doLecturePermitInfoTable', creator.json.doLecturePermitInfoTable.table, 'callLecturePermitValue');
+
+	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+	setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+	setDefaultSellingPrice();
+	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+	setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+	insertTableRecord('lecturePermitAccordion', 'accordionContent');
+	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+	insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+	accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+	accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
+	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	//受講承認の備品名セレクトボックスにvalueを入れる
+	setSelectboxValue('.contentSelect');
+	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+	setSellingPrice();
+	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+	setDefaultCommodityCostPrice();
+	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+	setCommodityCostPrice('.contentSelect');
+	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+	setCommodityCostPrice('.sellNumberTextbox');
+	//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
+	createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
+}
+
+/* 
+ * 関数名:createAdminPermitLessonListContent
+ * 概要  :管理者ページの受講承認一覧タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminPermitLessonListContent() {
+	//受講承認一覧の検索領域を作る
+	creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+	setPermitListFromToDate();
+	// 受講承認一覧テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+	//受講承認一覧テーブルのDBから取り出した値がなければテーブルを出力しないようにする
+	if (creator.json.lecturePermitListInfoTable.table[0]) {
+		//受講承認一覧タブのリスト
+		creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
+	}
+	//受講承認一覧のリスト更新ボタン
+	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+	//クリックでテキストボックスにカレンダーを表示する
+	clickCalendar('fromSearach');
+	//クリックでテキストボックスにカレンダーを表示する
+	clickCalendar('toSearach');
+	//受講承認一覧の検索機能を実装する
+	searchPermitListInfoTable();
+	//受講承認一覧に連番を入れる
+	insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+
+	//受講承認一覧テーブルの料金列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	//受講承認一覧テーブルの使用pt列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+
+	//受講承認一覧テーブルの検索機能を実装する
+	searchPermitListInfoTable();
+
+	//受講承認一覧テーブルの取り出した行にクラス名を付ける
+	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+}
+
+/* 
+ * 関数名:createAdminUserListContent
+ * 概要  :管理者ページのユーザ一覧タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminUserListContent() {
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	// ユーザ検索テキストボックス
+	creator.outputTag('searchUser', 'searchUser', '#userList');
+	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
+	tablePaging('userListInfoTable', 15, 10);
+
+	// 日ごと予約者一覧テーブル用のJSON配列を取得する
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	// 会員一覧タブのリスト
+	// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
+	//会員一覧タブのボタン群れ
+	creator.outputTag('userListButtons', 'userListButtons', '#userList');
+	//会員一覧タブのユーザ検索機能を実装する
+	replaceTableTriggerClick('searchList', 'userListInfoTable');
+	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
+	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
+	loginInsteadOfMember('#userList', '.userListInfoTable tr');
+}
+
+/* 
+ * 関数名:createAdminLessonDetailContent
+ * 概要  :管理者ページの授業詳細タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminLessonDetailContent() {
+	//授業詳細タブ内にカレンダ-作る
+	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
+	//予約一覧ダイアログを作る
+	var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
+		// 日ごとダイアログ領域を作る
+		creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
+	});
+	
+	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
+	var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
+	lessonCalendar.create();	//カレンダーを実際に作成する
+	
+	//授業詳細ダイアログを作る
+	var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
+		// 授業詳細ダイアログ領域を作る
+		creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+	});
+}
+
+/* 
+ * 関数名:createAdminMailMagaAnnounceContent
+ * 概要  :管理者ページの授業詳細タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminMailMagaAnnounceContent() {
+	//メルマガ＆アナウンスタブのコンテンツ
+	//過去のメルマガを検索するための領域を作る
+	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
+	//メルマガテーブルの外側を作る
+	creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+
+	//creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+	//メルマガテーブルを作る
+	//creator.outputTagTable('mailMagaTable', 'mailMagaTable', '.mailMagaTableArea');
+	//メルマガ・アナウンス入力領域を作る
+	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+}
+
+/* 
+ * 関数名:createContentTriggerClick
+ * 概要  :管理者ページでタブがクリックされたときにコンテンツを呼び出すための関数。
+ * 引数  :clickSelector:クリックされたときにイベントを開始する対象のセレクター名
+ 		callContentFunc:タブがクリックされたときにcreateTagによって要素を作るための関数をコールするための関数名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createContentTriggerClick(clickSelector, callContentFunc) {
+	//イベントを重複して登録しないためにイベントフラグ属性を作る
+	$(clickSelector).attr('data-eventFlag', 0);
+	//対象の要素がクリックされたらcreateTagによって要素を作る関数をコールする
+	$(clickSelector).on(CLICK, function(){
+		//イベントフラグが初期状態のときのみ関数を実行するようにして重複した実行を行わないようにする
+		if ($(clickSelector).attr('data-eventFlag') == 0) {
+			//関数をコールしてdom要素を作る
+			callContentFunc();
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, .searchButton, input[type="button"]').button();
+			//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
+			$(clickSelector).attr('data-eventFlag', 1);
+		}
+	});
+}
