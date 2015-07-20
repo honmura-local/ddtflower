@@ -95,7 +95,7 @@ class JSONDBManager {
 	* 概要  :クエリを実行してDBから結果セットを取得する。
 	* 引数  :Map<String, Object> json:カレントのJSON連想配列
 	*		 String queryKey:実行するクエリのベースとなる文字列
-	* 戻り値:ResultSet rs:DBから取得した結果セットを返す。
+	* 返却値:Array retRs:DBから取得した結果セットを返す。
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
@@ -108,6 +108,7 @@ class JSONDBManager {
 			//ハッシュ化する
 			$json['password']['value'] = sha1($json['password']['value']);
 		}
+		
 		// $queryKeyが$jsonに存在していれば$queryに値を入れる
 		if (array_key_exists($queryKey, $json)) {
 			// カレントjsonから"queryKey"を持つキーを取得する
@@ -150,14 +151,14 @@ class JSONDBManager {
 	* 関数名：getDBColumn
 	* 概要  :指定したkey(列)の値を結果セットから取得して返す。
 	* 引数  :String key:JSONのオブジェクトのキー
-	* 		  DBResultTree dbrTree:DBから取得した結果をツリー構造にするクラスのインスタンス
-	* 戻り値:String column:取得した列の値を返す
+	* 		DBResultTree dbrTree:DBから取得した結果をツリー構造にするクラスのインスタンス
+	* 返却値:String column:取得した列の値を返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
 	*/
 	function getDBColumn($key, $dbrTree) {
-		// 戻り値を格納する変数を初期化する
+		// 返却値を格納する変数を初期化する
 		$column = null;
 		
 		$columnNumber = 0;		//取得対象が列の何行目かをセットする
@@ -192,7 +193,7 @@ class JSONDBManager {
 	* 関数名：getListJSON
 	* 概要  :リスト形式のJSONを作成して返す
 	* 引数  :Map<String, Object> json:JSONのオブジェクト。
-	* 戻り値 :String strAll:JSONの文字列配列を文字列で返す
+	* 返却値 :String strAll:JSONの文字列配列を文字列で返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
@@ -219,8 +220,13 @@ class JSONDBManager {
 					// 行の文字列をカンマで区切る
 					$strLine .= ",";
 				}
-				//1列分のデータを文字列に追加する
-				$strLine .= '"' . $sColName  . '":"' . $value . '"' ;
+				
+				//改行文字、円マークをエスケープ文字に置き換える。
+				$value =  str_replace("\\", "\\\¥", $value);
+ 				$value =  str_replace(array("\r\n", "\r", "\n"), "\\n", $value);
+								
+				//1列分のデータを文字列に追加する。改行文字はエスケープする。
+				$strLine .= '"' . $sColName  . '":"' .  $value . '"' ;
 			}
 			//行に文字列が入っていたら、カンマで区切る
 			$strBlock .= $strBlock != "" ? "," : "";
@@ -234,12 +240,12 @@ class JSONDBManager {
 	}
 
 	/*
-	 * Fig4
+	* Fig4
 	* 関数名：outputJSON
 	* 概要  :DBから取得したレコードでJSONを作る。
 	* 引数  :String jsonString:クライアントから受け取ったJSON文字列
-	:String key:JSONのトップのノードのキー。2015.0521時点では空文字が渡されている
-	* 戻り値:なし
+	:String key:JSONのトップのノードのキー。
+	* 返却値:なし
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
@@ -272,7 +278,7 @@ class JSONDBManager {
 	* 関数名：getJSONMap
 	* 概要  :JSON文字列から連想配列を生成する。
 	* 引数  :String jsonString:変換するJSON文字列
-	* 戻り値:なし
+	* 返却値:なし
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
@@ -290,7 +296,7 @@ class JSONDBManager {
 	* 概要  :結果セットに指定した列名を持つ列があるかをチェックする
 	* 引数  :ResultSet rs:指定した列があるかをチェックする対象の結果セット
 	String columnName:チェック対象の列名
-	* 戻り値:boolean:列の存在を判定して返す
+	* 返却値:boolean:列の存在を判定して返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
@@ -318,7 +324,7 @@ class JSONDBManager {
 	* 関数名：is_hash
 	* 概要  :引数を配列であるか連想配列であるか判定する
 	* 引数  :array:判定する配列
-	* 戻り値:boolean:列の型を判定して返す。trueが連想配列、falseが配列
+	* 返却値:boolean:列の型を判定して返す。trueが連想配列、falseが配列
 	* 設計者:http://kihon-no-ki.com/is-hash-or-associative-array
 	* 作成者:T.Yamamoto
 	* 作成日:2015.
