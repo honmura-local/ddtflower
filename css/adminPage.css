@@ -166,6 +166,48 @@
 }
 
 /* 
+ * セレクタ :.accordionSummary, .accordionContent
+ * 概要   :受講承認、アコーディオン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.16
+ */
+.accordionSummary, .accordionContent {
+	background-color: whitesmoke;	/* 背景を薄い灰色にする */
+	display: none;					/* 最初は非表示にする */
+}
+
+/* 
+ * セレクタ :.accordionContent input
+ * 概要   :受講承認、アコーディオンの入力エリア領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.16
+ */
+.accordionContent input {
+	width: 90%;			/* 幅を90%にする */
+}
+
+/* 
+ * セレクタ :.accordionContent .lateTimeTextbox
+ * 概要   :受講承認、アコーディオンの遅刻領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.17
+ */
+.accordionContent .lateTimeTextbox {
+	width: 20px;			/* 幅を数字が3文字入るぐらいの幅にする */
+}
+
+
+/* 
+ * セレクタ :.accordionContent .contentSelect
+ * 概要   :受講承認、アコーディオンの備品名領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.17
+ */
+.accordionContent .contentSelect {
+	width: 100%;			/* 幅を100%にして備品名が入るところまでを入れる */
+}
+
+/* 
  * セレクタ :.firstRow
  * 概要   :ユーザ一覧　ページング領域
  * 作成者 :T.Yamamoto
@@ -350,6 +392,7 @@
 .searchList li span {
 	display: inline-block;	/* インラインブロック要素として扱う */
 	width: 15%;				/* 幅を15%にする */
+	font-size: 13px;		/* フォントサイズを13pxにする */
 }
 
 /* 
@@ -373,8 +416,9 @@
  * 作成日 :2015.06.30
  */
 .fromArea, .toArea {
-	display: block;			/* ブロック要素にする */
+	/*display: block;*/		/* ブロック要素にする */
 	margin-top: 5px;		/* 上から5pxの余白をとる */
+	width: 35%;				/* 幅を35%で設定する */
 }
 
 /* 
@@ -384,8 +428,9 @@
  * 作成日 :2015.06.30
  */
 .permitListSearch label span {
-	width: 12%;				/* 幅を12%にする */
+	width: 31%;				/* 幅を12%にする */
 }
+
 /* 受講者一覧の検索領域終わり */
 
 /* メルマガ・アナウンス画面領域 */
@@ -535,6 +580,17 @@
 		padding: 5px .5em ;			/* 要素の幅を5px広げる */
 	}
 
+	/* 受講者一覧の検索領域 */
+	/* 
+	 * セレクタ :.fromArea, .toArea
+	 * 概要   :受講者一覧のfromとtoの領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.06.30
+	 */
+	.fromArea, .toArea {
+		width: 70%;				/* 幅を70%で設定する */
+	}
+
 	/* 
 	 * セレクタ :.mailMagaContentSearchLabel
 	 * 概要   :検索領域のラベルとテキストボックス領域
@@ -558,6 +614,18 @@
 
 /* スマホ用微調整 */
 @media(max-width:400px){
+
+	/* 受講承認領域 */
+	/* 
+	 * セレクタ :.accordionContent input
+	 * 概要   :受講承認、アコーディオンの入力エリア領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.16
+	 */
+	.accordionContent input {
+		width: 32px;			/* 幅を4桁の数字が入るぐらいの幅にする */
+	}
+	/* 受講承認領域 */
 
 	/* 会員一覧の検索領域 */
 	/* 

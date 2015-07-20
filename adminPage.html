@@ -77,10 +77,10 @@
 				//日ごと予約者一覧タブのコンテンツ
 				//選択された日付を表示する領域
 				creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
-				//日付ページングを実装する
-				nowDatePaging('dateBelt');
 				//日付選択パーツのセット
 				creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
+				//日付ページングを実装する
+				nowDatePaging('dateBelt');
 				// 日ごと予約者一覧テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 				//日ごと予約者の情報がないときにテーブルを作らない
@@ -93,6 +93,9 @@
 					lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
 				}
 				
+				//受講済み授業テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+
 				//受講承認タブのコンテンツ
 				//タブ
 				creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
@@ -107,14 +110,27 @@
 				creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//受講承認のボタン
 				creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-				// 受講承認一覧テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
-				//受講承認一覧タブのリスト
-				creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
-				//受講承認一覧のリスト更新ボタン
-				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+				//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
+
 				//受講承認一覧の検索領域を作る
 				creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+				//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+				setPermitListFromToDate();
+				// 受講承認一覧テーブル用のJSON配列を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+				if (creator.json.lecturePermitListInfoTable.table[0]) {
+					//受講承認一覧タブのリスト
+					creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
+				}
+				//受講承認一覧のリスト更新ボタン
+				creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+				//クリックでテキストボックスにカレンダーを表示する
+				clickCalendar('fromSearach');
+				//クリックでテキストボックスにカレンダーを表示する
+				clickCalendar('toSearach');
+				//受講承認一覧の検索機能を実装する
+				searchPermitListInfoTable();
 				//会員一覧タブのコンテンツ
 				// ユーザ検索テキストボックス
 				creator.outputTag('searchUser', 'searchUser', '#userList');
@@ -148,7 +164,7 @@
 				//受講一覧のテーブルにチェックボックスを追加する
 				addCheckbox('permitCheckboxArea', 'permitCheckbox');
 				//受講承認に連番を入れる
-				insertNo (creator.json.doLecturePermitInfoTable.table, '.doLecturePermitInfoTable', 1);
+				lessonTableValueInput('.doLecturePermitInfoTable', creator.json.doLecturePermitInfoTable.table, 'callLecturePermitValue');
 				//受講承認一覧に連番を入れる
 				insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
 				//クリックでテキストボックスにカレンダーを表示する
@@ -178,17 +194,61 @@
 
 				//メルマガ＆アナウンスタブのコンテンツ
 				//過去のメルマガを検索するための領域を作る
-				creator.outputTag('meilMagaSearchArea', 'meilMagaSearchArea', '#mailMagaAndAnnounce');
+				creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
 				//メルマガテーブルの外側を作る
 				creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+
+				//creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
 				//メルマガテーブルを作る
-				// creator.outputTag('adminCalendar', 'adminCalendar', '#mailMagaAndAnnounce');
+				//creator.outputTagTable('mailMagaTable', 'mailMagaTable', '.mailMagaTableArea');
 				//メルマガ・アナウンス入力領域を作る
 				creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
 				// ボタンの見た目をjqueryuiのものにする
 				$('button, .searchButton, input[type="button"]').button();
 				//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-				enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '検索');
+				enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+				
+				//受講承認一覧テーブルの料金列をテキストボックスにする
+				insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+				//受講承認一覧テーブルの使用pt列をテキストボックスにする
+				insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+				//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+				setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+
+				// tablePaging('finishedLessonTable', 15, 6);
+				//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
+				loginInsteadOfMember('#userList', '.userListInfoTable tr');
+				//受講承認一覧テーブルの検索機能を実装する
+				searchPermitListInfoTable();
+
+				//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+				setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+				//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+				setDefaultSellingPrice();
+				//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+				setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+				//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+				insertTableRecord('lecturePermitAccordion', 'accordionContent');
+				//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+				insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+				//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+				accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+				accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+				//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
+				allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+				//受講承認の備品名セレクトボックスにvalueを入れる
+				setSelectboxValue('.contentSelect');
+				//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+				setSellingPrice();
+				//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+				setDefaultCommodityCostPrice();
+				//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+				setCommodityCostPrice('.contentSelect');
+				//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+				setCommodityCostPrice('.sellNumberTextbox');
+
+				//受講承認一覧テーブルの取り出した行にクラス名を付ける
+				setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 			});
 			</script>
 		</div>

@@ -26,28 +26,6 @@
             }
         }
     },
-    "memberHeader": {
-        "memberStatus": {
-            "memberNumber": {
-                "noArea": {
-                    "text": "No."
-                },
-                "numberArea": {
-                    "text": ""
-                }
-            },
-            "memberName": {
-                "nameArea": {
-                    "text": ""
-                }
-            }
-        },
-        "topLink":{
-            "class":"topLink textCenter",
-            "href":"",
-            "text":"トップページ"
-	    }
-    },
     "returnTopPosition":{
     	"text":"トップ",
     	"href":"#top"

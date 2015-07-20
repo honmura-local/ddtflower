@@ -24,5 +24,17 @@
         "toEntryAfter":{
         	"text":"へ"
         }
+    },
+    "login":{
+        "db_getQuery":"SELECT id, login_id FROM user_inf WHERE login_id='userName' AND password='password';",
+        "userName":{
+            "value":""
+        },
+        "password":{
+            "value":""
+        },
+        "id":{
+            "text":""
+        }
     }
 }

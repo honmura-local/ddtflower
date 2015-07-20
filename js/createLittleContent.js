@@ -730,21 +730,18 @@ function createUnmovableGallery(selector){
  * 作成者:T.Yamamoto
  */
 function allCheckbox(checkboxTarget, allCheckTarget) {
-	// jqueryの記述の始まり
- 	$(function() {
- 		// 第一引数の要素がクリックされたときの処理
-		$('body').on('click', checkboxTarget, function() {
-			// 第一引数のチェックボックスにチェックが入った時の処理
-			if($(checkboxTarget + ':checked').val() == 'on') {
-				// 第二引数のチェックボックスにチェックする
-				$(allCheckTarget).prop('checked', true);
-			// 第一引数のチェックボックスのチェックが外れた時の処理
-			} else if ($(checkboxTarget + ':checked').val() == undefined) {
-				// 第二引数のチェックボックスのチェックを外す
-				$(allCheckTarget).prop('checked', false);
-			};
-		});
- 	});
+	// 第一引数の要素がクリックされたときの処理
+	$(STR_BODY).on(CLICK, checkboxTarget, function() {
+		// 第一引数のチェックボックスにチェックが入った時の処理
+		if($(checkboxTarget + ':checked').val() == 'on') {
+			// 第二引数のチェックボックスにチェックする
+			$(allCheckTarget).prop('checked', true);
+		// 第一引数のチェックボックスのチェックが外れた時の処理
+		} else if ($(checkboxTarget + ':checked').val() == undefined) {
+			// 第二引数のチェックボックスのチェックを外す
+			$(allCheckTarget).prop('checked', false);
+		};
+	});
 }
 
 /*
@@ -1995,24 +1992,6 @@ function insertBlogArticleListText(elems, articleNode){
 }
 
 /*
- * 関数名 :createAccordion
- * 引数  　:element targetClick:クリックするとアコーディオンを表示するボタン
- * 戻り値　:なし
- * 概要  　:アコーディオンパネルを実装する
- * 作成日　:2015.06.09
- * 作成者　:T.Yamamoto
- */
-function createAccordion(targetClick) {
-	// 第一引数がクリックされた時のイベント
-	$(targetClick).on("click", function() {
-		// クリックされた番号を取得する
-		var accordNumber = $(".detailButton").index(this);
-		// 番号に対応したアコーディオン部分を表示する
-		var y = $('.accordion').eq(accordNumber).toggle();
-	});
-}
-
-/*
  * 関数名 :insertArticleListText
  * 引数  　:element elems:記事リストのDOM
  * 　　　　:element articleNodes:最新記事のタイトル、日付、ユーザー名の連想配列を格納した配列
@@ -2037,16 +2016,46 @@ function insertArticleListText(elems, articleNodes){
 }
 
 /* 
- * 関数名:setOptionValue
- * 引数  :なし
+ * 関数名:setSelectboxText
+ * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う
+ 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名
+ 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名
+ * 戻り値:なし
+ * 概要  :selectタグのoptionタグに入るテキスト要素をoutput前にDBから取り出した値を連想配列に入れて実装する
+ * 作成日 :2015.07.14
+ * 作成者:T.Yamamoto
+　*/
+function setSelectboxText(rowData, selectboxArray, selectboxTextTarget) {
+	//テーブルに値がないときはなにもしないようにする
+	if(rowData[0]) {
+		//ループで行の番号をとるようにするためにカウンターを初期値0で作る
+		var counter = 0;
+		//テーブルの行の回数だけループし、テーマを取り出す
+		$.each(rowData, function(){
+			//取り出したテーマを変数に入れ、セレクトボックスに入れるかどうか判定に使う
+			var selectboxText = rowData[counter][selectboxTextTarget];
+			//セレクトボックスにテーマを全て抜き出すために同じ値はテーマに追加しないようにする
+			if(selectboxArray.indexOf(selectboxText) == -1) {
+				//jsonの連想配列にテーマのを追加する
+				selectboxArray.push(selectboxText);
+			}
+			//カウンター変数をインクリメントする
+			counter++;
+		});
+	}
+}
+
+/* 
+ * 関数名:setSelectboxValue
+ * 引数  :selector セレクトボックスのセレクター
  * 戻り値:なし
  * 概要  :optionタグのvalue属性に値を入れる
  * 作成日 :2015.06.24
  * 作成者:T.Yamamoto
-*/
-function setOptionValue() {
+　*/
+function setSelectboxValue(selector) {
 	// optionタグをループで全て操作する
-	$("select option").each(function(i){
+	$(selector + ' option').each(function(i){
 		// optionタグの文字列を変数に入れる
 		var selectValue = $(this).text();
 		// 取得した文字列をvalue属性に入れる
@@ -2131,36 +2140,22 @@ function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 			//更新成功であれば
 			//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
 			//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
-			//更新した内容が1件以上の時更新成功メッセージを出す
-			if(resultJsonArray.message >= 1) {
-				alert(successMessage);	//更新成功のメッセージを出す
-			//更新失敗であれば
-			} else {
-				alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
+			//変更者:T.Yamamoto 日付2015.07.17 内容: ループで更新に対応するために第三引数が空白ならアラートを出さない設定をしました
+			//第三引数が空白であるならループで更新を行うということなのでアラートを出さない
+			if(successMessage != '') {
+				//更新した内容が1件以上の時更新成功メッセージを出す
+				if(resultJsonArray.message >= 1) {
+					alert(successMessage);	//更新成功のメッセージを出す
+				//更新失敗であれば
+				} else {
+					alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
+				}
 			}
 		},
 		error:function(xhr, status, error){	//通信失敗時の処理
 			//通信失敗のアラートを出す
 			alert(MESSAGE_FAILED_CONNECT);
 		}
-	});
-}
-
-/* 
- * 関数名:setDBdataTriggerClick
- * 概要  :第一引数のボタンが押された時にDBのデータを挿入または更新または削除する
- * 引数  :string selector: トリガーとなるボタンのセレクター
- 		:object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
- 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.06.27
- */
-function setDBdataTriggerClick(selector, sendQueryJsonArray, queryReplaceData){
-	//第一引数の要素がクリックされた時にイベントを開始する
-	$('.' + selector).click(function(){
-		//dbの値をデータを挿入または編集する
-		setDBdata(sendQueryJsonArray, queryReplaceData);
 	});
 }
 
@@ -2203,8 +2198,19 @@ function getInputData(selector) {
 		var name = $(this).attr('name');
 		//入力データの値を取得する
 		var valueData = $(this).val();
-		//入力データを結果の変数に、key名をクラス名にして保存する
-		resultArray[name] = valueData;
+		//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+		var typeAttr = $(this).attr('type');
+		//ラジオボタンに対応する
+		if (typeAttr == 'radio') {
+			//ラジオボタンの値がチェックされているものだけ送信する
+			if($(this).prop('checked')) {
+				//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+				resultArray[name] = valueData;
+			}
+		} else {
+			//入力データを結果の変数に、key名をクラス名にして保存する
+			resultArray[name] = valueData;
+		}
 	});
 	//結果を返す
 	return resultArray;
@@ -2212,31 +2218,97 @@ function getInputData(selector) {
 
 /* 
  * 関数名:setValueDBdata()
- * 概要  :連想配列から値を読み込んで、value属性に値を入れる。
+ * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
  		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
  		テキストボックスのname属性値がDBの列名と対応している。
- * 引数  :object outsideArray:値を走査したい親のセレクター名
- 		 object insideArray:値を走査する連想配列名
+ * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.02
  */
-function setValueDBdata(outsideArray, insideArray) {
-	//走査対象となる連想配列を変数に入れる
-	var roopArray = creator.json[outsideArray][insideArray];
+function setValueDBdata(setArray) {
 	//ループで連想配列を全てループする
-	for (var key in roopArray) {
+	for (var key in setArray) {
 		//値を挿入する結果のvalueを変数に入れる
-		var resultValue = roopArray[key]['text'];
+		var resultValue = setArray[key]['text'];
 		//対象の要素がテキストエリアのときにtextで値を入れる
-		if ($('[name="' + key + '"]')[0].tagName == 'TEXTAREA') {
+		if ($('[name="' + key + '"]').attr('class') == 'textArea') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
 			$('[name=' + key + ']').text(resultValue);
+		} else if($('[name=' + key + ']').attr('type') == 'radio') {
+			$('[name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
 		} else {
 			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
 			$('[name=' + key + ']').attr('value', resultValue);
 		}
 	}
+}
+
+/* 
+ * 関数名:insertTextboxToTable
+ * 概要  :テーブルにテキストボックスを挿入する。
+		受講承認テーブルなどでセルの内容をテキストボックスにする時に使う
+ * 引数  :string tableClassName 対象テーブルのクラス名
+ 		string appendDom 追加するdom名
+ 		string appendTo 追加先セレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function insertTextboxToTable (tableClassName, appendDom, appendTo) {
+	//テキストボックスを挿入するために表示しているセルのテキストを削除する
+	$(DOT + tableClassName + ' tr:eq(0) td').removeClass(appendTo);
+	//テキストボックス追加先のdomに表示している文字列を空白で初期化する
+	$(DOT + appendTo).text('');
+	//テキストボックスを追加する
+	creator.outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
+}
+
+/* 
+ * 関数名:setInputValueToLecturePermitListInfoTable
+ * 概要  :受講者一覧テーブルのテキストボックスにデフォルトで値を入れる。
+ 		使い方はsetTableTextboxValuefromDB関数で引数として呼ばれるときのみ使う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function setInputValueToLecturePermitListInfoTable() {
+		//DBから取得した料金の値を取得する
+		resultValueCost = recordData['cost'];
+		//DBから取得した使用ptの値を取得する
+		resultValueUsePoint = recordData['use_point'];
+		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
+		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
+		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
+		$('[name=' + 'use_point' + ']').eq(counter).attr('value', resultValueUsePoint);
+}
+
+/* 
+ * 関数名:setTableTextboxValuefromDB
+ * 概要 :テーブルのテキストボックスにDBから読込んだ値をデフォルトでセットする
+ * 引数 :tableArray:DBから読込んだテーブルのデータが入っている連想配列:例(受講者一覧テーブル) creator.json.LecturePermitListInfoTable.table
+		:setTablefunc:テーブルのテキストボックスに値をセットするための関数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.11
+ */
+function setTableTextboxValuefromDB(tableArray, setTablefunc) {
+	//DBから読込んだ値を取り出すためにカウンターを初期値0で作る
+	counter = 0;
+	//テーブルに値をセットするために行番号を初期値1で作る(0は見出しであるため、1から数え始める)
+	rowNumber = 1;
+	//DBから取り出したテーブルの行数分ループしてテキストボックスにデフォルト値をセットする
+	$.each(tableArray, function(){
+		//DBから読込んだ値を取り出すためにループのカウンターに対応した行の値を指定する
+		recordData = tableArray[counter];
+		//テキストボックスにDBから読込んだ値を入れる
+		setTablefunc();
+		//行番号をインクリメントする
+		rowNumber++;
+		//カウンタ変数をインクリメントする
+		counter++;
+	});
 }
 
 /* 
@@ -2392,6 +2464,32 @@ replaceTableOption['userListInfoTable'] = {
 	addPagingPlace:'.tabLink[href="#userList"]'
 }
 
+//メルマガテーブル
+replaceTableOption['mailMagaTable'] = {
+	//クエリを置換する置換フラグ、クエリを置換する
+//	replaceFlag:'replace',
+	//テーブルのafterでの追加先
+	addDomPlace:'.mailMagaSearchArea',
+	//置換のvalueが入ったdom名
+//	replaceValueDom:'#finishedLesson .selectThemebox',
+	//置換するkey名
+//	replaceQueryKey:'lesson_name',
+	//テーブルの値を置換する関数名
+	//replaceTableValuefunction:'',
+	//ページングの追加先
+	addPagingPlace:'.tabLink[href="#mailMagaAndAnnounce"]',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'メルマガが見つかりませんでした。'
+}
+
+//受講承認一覧テーブル
+replaceTableOption['lecturePermitListInfoTable']  = {
+	//テーブルのafterでの追加先
+	addDomPlace:'.permitListSearch',
+	//検索結果がなかった時のエラーメッセージ
+	errorMessage:'受講承認一覧が見つかりませんでした。'
+}
+
 /*
  * 関数名 :addQueryExtractionCondition
  * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する
@@ -2525,8 +2623,11 @@ function tableReload(reloadTableClassName) {
 			// 予約中テーブルのテーブルの値をしかるべき値にする
 			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 		}
+	//DBから検索結果が見つからなかった時の処理
 	} else {
+		//見つからなかったことを表示するためのdivを作る
 		$(STR_BODY).append('<div class="' + reloadTableClassName + '"><div>');
+		//作ったdivに検索結果が見つからなかったメッセージを表示する
 		$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
 	}
 	//作ったテーブルをしかるべき場所に移動する
@@ -2603,6 +2704,15 @@ function nowDatePaging(clickSelectorParent) {
 		tableReload('eachDayReservedInfoTable');
 		//日付をタイトルに入れる
 		$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	});
+	//検索ボタンがクリックされた時の処理
+	$(DOT + 'dateSelect .searchButton').click(function(){
+		//表示されている日付を更新するために検索する日付のデータを取得する。
+		var changeDate = $('.dateInput').val();
+		//現在表示されている日付を入力された日付で更新する
+		$(DOT + clickSelectorParent + ' p').text(changeDate)
+		//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
+		nowDateObject = new Date(changeDate);
 	});
 }
 
@@ -2839,7 +2949,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 
 /* 
  * 関数名:accordionSetting
- * 概要  :テーブルページング機能を実装する
+ * 概要  :アコーディオン機能を実装する
  * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
  *       accordionDomSelector:アコーディオンの中身のdomセレクター名
  * 返却値  :なし
@@ -2854,6 +2964,27 @@ function accordionSetting(clickSelector, accordionDomSelector) {
 	});
 }
 
+/* 
+ * 関数名:accordionSettingToTable
+ * 概要  :テーブルの行用にアコーディオン機能を実装する
+ * 引数  :clickSelector:クリックされたときにアコーディオンを表示するためのきっかけとなるdom要素のセレクター名
+ *       accordionDomSelector:アコーディオンの中身のdomセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function accordionSettingToTable(clickSelector, accordionDomSelector) {
+	//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
+	$(STR_BODY).on(CLICK, clickSelector + ' td', function(){
+		//どのレコードを開くのか判別するためにレコードの番号を取得する
+		var rowNumber = $(this).parent().index(clickSelector);
+		//チェックボックスをクリックしてもアコーディオンが反応しないようにする
+		if($(this).attr('class') != 'permitCheckboxArea') {
+			//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
+			$(accordionDomSelector).eq(rowNumber).toggle();
+		}
+	});
+}
 
 /* 
  * 関数名:enterKeyButtonClick
@@ -2866,13 +2997,13 @@ function accordionSetting(clickSelector, accordionDomSelector) {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.10
  */
-function enterKeyButtonClick(enterTarget, buttonText) {
+function enterKeyButtonClick(enterTarget, buttonSelector) {
 	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
 	$(enterTarget).keypress(function (e) {
 		//エンターボタンが押された時の処理
 		if (e.which == 13) {
-			//第二引数のボタンをクリックする
-			$('button:contains("' + buttonText + '"), input[value="' + buttonText + '"]').click();
+			//ボタンを自動でクリックし、クリックイベントを起こす
+			$(buttonSelector).click();
 		}
 	});
 }
@@ -2917,3 +3048,438 @@ function checkInputPhone (checkString) {
 	//電話番号に適していたかどうかの結果を返す
 	return resultbool;
 }
+
+/* 
+ * 関数名:loginInsteadOfMember
+ * 概要  :管理者ページから会員になり替わって会員ページにログインする
+ * 引数  :clickParentSelector クリックしてなり代わりを行う親要素のセレクター
+ 		:clickSelector クリックしてなり代わりを行うセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function loginInsteadOfMember (clickParentSelector, clickSelector) {
+	$(clickParentSelector).on(CLICK, clickSelector , function(){
+		//クリックした人でログインするために会員番号を取得する
+		var memberNumber = $(this).children('.id').text();
+		//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
+		creator.json.memberHeader.user_key.value = memberNumber;
+		//会員の告知連想配列に会員番号を入れてログインの準備をする
+		creator.json.advertise.user_key.value = memberNumber;
+		//会員の予約中授業テーブル連想配列に会員番号を入れてログインの準備をする
+		creator.json.reservedLessonTable.user_key.value = memberNumber;
+		//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
+		creator.json.finishedLessonTable.user_key.value = memberNumber;
+		//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
+		memberInfo = memberNumber;
+		//会員ページを呼び出す
+		callPage('memberPage.html')
+	});
+}
+
+/* 
+ * 関数名:setPermitListFromToDate
+ * 概要  :受講承認一覧の検索する日付の範囲をデフォルトでは月の初日から末日に設定する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function setPermitListFromToDate() {
+	//今日の日付を取得する
+	var today = new Date();
+	//今月の初日オブジェクトを取得する
+	var monthStartday = new Date(today.getFullYear(), today.getMonth(), 1);
+	//今月の初日の日付を取得して、受講承認一覧のfromの部分で使う
+	monthStartday = getDateFormatDB(monthStartday);
+	//今月の末日オブジェクトを取得する
+	var monthEndday = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+	//今月の末日の日付を取得して、受講承認一覧のtoの部分で使う
+	monthEndday = getDateFormatDB(monthEndday);
+	//受講承認一覧に今月の初日を入れて一覧テーブルを検索するようにする
+	creator.json.lecturePermitListInfoTable.FromDate.value = monthStartday;
+	//受講承認一覧に今月の末日を入れて一覧テーブルを検索するようにする
+	creator.json.lecturePermitListInfoTable.toDate.value = monthEndday;
+	//デフォルトの検索値を分かりやすくするためにfromテキストボックスに月の初日の値を入れる
+	$('[name=fromSearach]').val(monthStartday);
+	//デフォルトの検索値を分かりやすくするためにtoテキストボックスに月の末日の値を入れる
+	$('[name=toSearach]').val(monthEndday);
+}
+
+/* 
+ * 関数名:searchPermitListInfoTable
+ * 概要  :受講承認一覧の検索機能を実装する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function searchPermitListInfoTable () {
+	//受講承認の検索ボタンをクリックした時のイベント
+	$('.permitListSearch .searchButton').click(function(){
+		//検索初めの値を取得する
+		var fromDate = $('[name=fromSearach]').val();
+		//検索終わりの値を取得する
+		var toDate = $('[name=toSearach]').val();
+		//受講承認一覧の連想配列に検索初めの値を入れる
+		creator.json.lecturePermitListInfoTable.FromDate.value = fromDate;
+		//受講承認一覧の連想配列に検索終わりの値を入れる
+		creator.json.lecturePermitListInfoTable.toDate.value = toDate;
+		//テーブルを更新する
+		tableReload('lecturePermitListInfoTable');
+		//受講承認一覧に連番を入れる
+		insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+		//受講承認一覧テーブルの料金列をテキストボックスにする
+		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+		//受講承認一覧テーブルの使用pt列をテキストボックスにする
+		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+	});
+}
+
+/* 
+ * 関数名:logoutMemberPage
+ * 概要  :ログアウトボタンを押したときに会員ページからログアウトして通常ページに遷移する
+ 		:管理者ページからログインした時は管理者のtopページに遷移する
+ * 引数  :なし
+ 		:なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.15
+ */
+function logoutMemberPage() {
+	//ログアウトボタンがクリックされた時に処理を行うイベントを登録する
+	$(STR_BODY).on(CLICK, '.logoutLink', function(){
+		//管理者としてログインしていたなら管理者ページに遷移する
+		if (creator.json.adminHeader) {
+			//管理者ページを呼び出し、続けて管理者としての処理をできるようにする
+			callPage('adminPage.html');
+		//管理者としてログインしていなければ通常ページのトップページに戻る
+		} else {
+			//通常ページを使いやすくするためにヘッダーを表示するようにする
+			$('header').css('display', 'block');
+			//通常ページに遷移する(creatorがリセットされる問題があるかも？)
+			callPage('index.php');
+		}
+	});
+}
+
+/* 
+ * 関数名:setTableRecordClass
+ * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
+ 		これによってアコーディオン機能を実装するための行がどの行なのかを
+ 		識別できるようになる
+ * 引数  :tableClassName: 行にクラス属性を付けたいテーブル名
+ 		:tableRecordClasssName: 行に新しくつけるクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function setTableRecordClass(tableClassName, tableRecordClasssName) {
+	//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
+	$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
+}
+
+/* 
+ * 関数名:insertTableRecord
+ * 概要  :テーブルに行を追加する。
+ 		受講承認のアコーディオン機能実装のために新しく行を挿入するために使う。
+ 		挿入するdom要素は最初はtdの代わりにdivで構成されていないといけない
+ * 引数  :tableRecordClasssName:行に新しくつけるクラス名
+ 		:addDomClassName:挿入するdom要素のクラス属性名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function insertTableRecord(tableRecordClasssName, addDomClassName) {
+	//追加するDOMをとりあえずbodyに作る
+	creator.outputTag(addDomClassName, addDomClassName, STR_BODY);
+	//後でテーブルの中にdomを移動させるために追加するDOMの子要素を全て取得する
+	var addDomChild = $(DOT + addDomClassName).html();
+	//取得したDOMのうち、テーブルのセルに適応させるため「div」を「td」に置換する
+	addDomChild = addDomChild.replace(/div/g, 'td');
+	//とりあえず作っておいたdomをテーブルのtrの後に移動させる。
+	$(DOT + tableRecordClasssName).after($(DOT + addDomClassName));
+	//追加したDOMのタグをテーブルに適応させるためtrタグに変換する
+	$(DOT + addDomClassName).replaceWith('<tr class="' + addDomClassName + '"></tr>');
+	//移動させたdomに対して取得していたセルを入れていき、アコーディオン用のテーブル行を完成させる
+	$(DOT + addDomClassName).html(addDomChild);
+}
+
+/* 
+ * 関数名:getCommodityCostPrice
+ * 概要  :受講承認テーブルで個数テキストボックスと備品代テキストボックスの値を掛け合わせた合計を返す
+ 		:会計テキストボックスの値を自動で変更するために値を取得するための関数
+ * 引数  :rowNumber:行の何番目にあるテキストボックスが対象なのかを示す番号
+ * 返却値  :commodityCostPrice:備品代の会計テキストボックスに入る値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function getCommodityCostPrice(rowNumber) {
+	//備品代の合計を求めるために購入した備品の価格を取得する
+	var sellingPrice = $('.sellingPriceTextbox').eq(rowNumber).val();
+	//備品代の合計を求めるために購入した個数を取得する
+	var sellNumber = $('.sellNumberTextbox').eq(rowNumber).val();
+	//取得した値から備品の合計金額を求める
+	var commodityCostPrice = sellingPrice * sellNumber;
+	//求めた金額を他でも使えるようにするため、返り値として返す
+	return commodityCostPrice;
+}
+
+/* 
+ * 関数名:setDefaultCommodityCostPrice
+ * 概要  :ページの初期読み込み時に会計のデフォルト値を設定する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setDefaultCommodityCostPrice() {
+	//会計のデフォルト値を設定するために会計の値を取得する
+	var commodityCostPrice = getCommodityCostPrice(0);
+	//会計の連想配列にデフォルト値を設定する
+	$('.payCashTextbox').val(commodityCostPrice);
+}
+
+/* 
+ * 関数名:setCommodityCostPrice
+ * 概要  :受講承認テーブル会計の値を設定する
+ * 引数  :changeSelector:changeイベントを当てるセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setCommodityCostPrice(changeSelector) {
+	//備品名、または個数が変化した時に会計の値をセットするイベントを登録する
+	$(STR_BODY).on('change', changeSelector, function(){
+		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
+		var contentSelectNumber = $(changeSelector).index(this);
+		//会計のデフォルト値を設定するために会計の値を取得する
+		var commodityCostPrice = getCommodityCostPrice(contentSelectNumber);
+		//会計のテキストボックスの値を設定する
+		$('.payCashTextbox').eq(contentSelectNumber).val(commodityCostPrice);
+	});
+}
+
+/* 
+ * 関数名:setSellingPrice
+ * 概要  :受講承認テーブルの備品代を自動でセットする。
+ 		備品によって値段が異なるので備品名のセレクトボックスの値が変わったときに
+ 		備品名に対応した値段をテキストボックスに入れる
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setSellingPrice() {
+	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
+	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
+	$(STR_BODY).on('change', '.contentSelect', function(){
+		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
+		var contentSelectNumber = $('.contentSelect').index(this);
+		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
+		var contentName = $('.contentSelect').eq(contentSelectNumber).val();
+		//備品代の値を取得するための変数を作る
+		var sellingPrice;
+		//取り出した行のデータを数えるためにカウンターを変数を作る
+		var counter = 0;
+		//行データを変数に入れる
+		var rowData = creator.json.selectCommodityInf.table
+		//取り出したデータの数だけループし、価格を取り出す
+		$.each(rowData, function(){
+			//取得した備品名と比較するためにループしている備品名を取得する
+			var commodityName = rowData[counter].commodity_name;
+			//取得した備品名とセレクトボックスの中にあるタグの名前が同じときにその番号を取得する
+			if (contentName == commodityName) {
+				//備品代をテキストボックスに入れるための番号を取得する
+				sellingPrice = creator.json.selectCommodityInf.table[counter].selling_price;
+				//ループを終わらせるためにリターンでループを終える
+			}
+			counter++;
+		});
+		//備品代テキストボックスに備品名に対応した値段を入れる
+		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
+	});
+}
+
+/* 
+ * 関数名:setDefaultSellingPrice
+ * 概要  :受講承認テーブルの備品代をページ読み込み時に自動でセットする。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function setDefaultSellingPrice() {
+	//備品代のデフォルト値を設定するために備品代の最初値を取得する
+	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
+	//備品代の連想配列にデフォルト値を設定する
+	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
+}
+
+/* 
+ * 関数名:getSendReplaceArray
+ * 概要  :可変テーブルで取得した連想配列とユーザがテキストボックスで入力した値の連想配列を結合する。
+ 		:これによってdb_setQueryで値を置換するときの連想配列が取得できる
+ * 引数  :tableClassName:可変テーブルクラス名
+ 		rowNumber:可変テーブルで取り出す行番号
+ 		inputDataSelector:ユーザが入力した値を取得するためにinputタグなどの親のセレクター名
+ * 返却値  :sendReplaceArray:テーブルと入力データを結合した結果の連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
+	//可変テーブルから連想配列を取得する
+	var resultTableArray = crator.json[tableClassName].table[rowNumber]
+	//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
+	var inputDataArray = getInputData(inputDataSelector);
+	//取得した連想配列を結合する
+	var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+	//結合した結果の連想配列を返す
+	return sendReplaceArray;
+}
+
+/* 
+ * 関数名:choiceSendQuery
+ * 概要  :JSONDBManagerに送信するためのjsonを分岐する
+ 		:受講一覧の承認ボタンで使うクエリが受講情報のクエリか備品情報のクエリかを振り分けるときに使う
+ * 引数  :boolRule:分岐させるための値が入った変数
+ 		trueQuery:条件がtrueのときに取得するクエリ
+ 		falseQuery:条件がfalseのときに取得するクエリ
+ * 返却値  :resultSendQuery:選択した結果のクエリが入った連想配列
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray) {
+	//送信するクエリを入れるための変数を作る
+	var resultSendQueryArray = {};
+	//条件分岐を設定するための値があるかどうかでクエリを決める
+	if (boolRule) {
+		//trueだった時のクエリを取得する
+		resultSendQueryArray = crator.json[trueQuery];
+	//条件が合わなかったときに別のクエリを入れる
+	} else {
+		//falseのときのクエリを取得する
+		resultSendQueryArray = crator.json[falseQuery];
+	}
+	//取得したクエリの結果を返す
+	return resultSendQueryArray;
+}
+
+/* 
+ * 関数名:addUsePointQuery
+ * 概要  :既にあるクエリに対して、クエリを付け足す。
+ 		受講承認でユーザがポイントを使用したときにポイントしようクエリを付け足す
+ * 引数  :sendQueryArray:jsondbManagerに渡すためのクエリが入った連想配列
+ 		sendReplaceArray:DBに更新で渡す値が入った連想配列
+ * 返却値  :resultSendQueryArray
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function addUsePointQuery(sendQueryArray, sendReplaceArray) {
+	//置換するクエリに使用ポイントの値が1以上のとき、ポイントを使うということなのでクエリにポイントしようクエリを付け足す
+	if (sendReplaceArray.use_point >= 1) {
+		//現状のクエリに使用ポイントのクエリを付け足す
+		sendQueryArray.db_setQuery += creator.json.updateUsePoint;
+	}
+	//クエリの結果を返す
+	return sendQueryArray;
+}
+
+/* 
+ * 関数名:executeDBUpdate
+ * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
+ * 引数  :
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, trueQueryArray, falseQueryArray) {
+	//jsonDBManagerに送信する置換の値が入った連想配列を作る(対象のテーブルの連想配列とテキストボックスなどの入力された連想配列を結合して取得する)
+	var sendReplaceArray = getSendReplaceArray(tableClassName, counter, inputDataSelector);
+	//jsonDBManagerに送信するクエリの入った連想配列を作る(受講料の値があるかどうかで受講料のクエリと備品のクエリのどちらを実行するか分岐する)
+	var sendQueryArray = choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray);
+	//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+	sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+	//クエリを実行してテーブルの値1行ずつ更新していく
+	setDBdata(sendQueryArray, sendReplaceArray, '');
+	//ループで実行するので置換データ連想配列を初期化する
+	sendReplaceArray = {};
+	//ループで実行するので置換データ連想配列を初期化する
+	sendQueryArray = {};
+}
+
+/* 
+ * 関数名:loopUpdatePermitLesson
+ * 概要  :受講承認テーブルの承認ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新してする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function loopUpdatePermitLesson() {
+	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
+	$(STR_BODY).on(CLCIK, '.doLecturePermit normalButton', function(){
+		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
+		var counter = 0;
+		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+		$('.lecturePermitAccordion').each(function() {
+			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
+			if($('.permitCheckbox').eq(counter).prop('checked')) {
+				//受講承認テーブルからチェックが入っているレコードのデータだけを更新する
+				executeDBUpdate('doLecturePermitInfoTable', counter, '.lecturePermitAccordion:eq(' + counter + ')', boolRule, 'insertPermitLesson', 'updatePermitLesson');
+			}
+			//カウンターをインクリメントする
+			counter++;
+		});
+	});
+}
+
+/* 
+ * 関数名:loopUpdatePermitLessonList
+ * 概要  :受講承認一覧テーブルの更新ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function loopUpdatePermitLessonList() {
+	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
+	$(STR_BODY).on(CLCIK, '.lecturePermitList normalButton', function(){
+		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
+		var counter = 0;
+		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+		$('.lecturePermitListRecord').each(function() {
+			//受講承認一覧のテーブルから1行ずつ値を取り出してデータを更新していく
+			executeDBUpdate('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')', sendReplaceArray.user_classwork_cost, 'updateUserClassWork', 'updateCommoditySell');
+			//カウンターをインクリメントする
+			counter++;
+		});
+	});
+}
+
+/* 
+ * 関数名:createMemberPageHeader()
+ * 概要  :会員ページからブログページやギャラリーページに遷移するときに通常ページのヘッダーでなく会員ページのヘッダーを表示する。
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function createMemberPageHeader() {
+	//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
+	if(creator.json.memberHeader) {
+		// パーツのテンプレートのDOMを取得する。
+		creator.getDomFile('template/memberCommon.html');
+		//ユーザ情報のテキストをDBから取得する
+		creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+		// 会員ページヘッダーを作る
+		creator.outputTag('memberHeader');
+		// バナー領域を作る
+		creator.outputTag('userBanner');
+	}
+}
+

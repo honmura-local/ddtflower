@@ -62,7 +62,7 @@
     },
     "dateSelect":{
     	"dateHeadLabel":{"text":"日付指定:"},
-    	"dateInput":{"type":"text", "name":"lesson_date", "value":""},
+    	"dateInput":{"type":"date", "name":"lesson_date", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
     "eachDayReservedInfoTable":{
@@ -133,7 +133,7 @@
 	    "id": "lecturePermitList"
 	},
     "doLecturePermitInfoTable":{
-        "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.id AS id, lesson_name ,user_classwork_cost ,user_inf.get_point AS get_point,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name , lesson_name ,user_inf.get_point AS get_point,user_classwork_cost ,user_inf.id AS id,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
         "date":{
             "value":"2015-03-13"
         },
@@ -159,7 +159,7 @@
                     "columnName": "内容"
                 },
                 "user_classwork_cost": {
-                    "style":"display:none;"
+                    "columnName":"受講料"
                 },
                 "id": {
                     "style":"display:none;"
@@ -182,8 +182,24 @@
             }
         }
     },
+    "selectCommodityInf":{
+        "db_getQuery": "SELECT commodity_name,selling_price,id AS commodity_key FROM commodity_inf;",
+        "config": {
+            "columns": {
+                "commodity_name": {
+                    "style":"display:none;"
+                },
+                "selling_price": {
+                    "style":"display:none;"
+                },
+                "commodity_key": {
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
     "updateLecturePermit":{
-        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
         "user_classwork_cost":{
             "value":""
         },
@@ -201,10 +217,10 @@
     "lecturePermitListInfoTable":{
         "db_getQuery": "(SELECT user_inf.id AS id ,user_name ,lesson_name ,user_classwork.user_classwork_cost AS cost ,user_classwork.use_point AS use_point ,user_classwork.level_no AS level_no ,user_classwork.stage_no AS stage_no ,1 AS sell_number ,'' AS content FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date <= 'toDate' AND time_table_day.lesson_date >= 'FromDate' INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key ORDER BY time_table_day.lesson_date DESC) UNION ALL (SELECT user_inf.id AS id ,user_name ,'' AS lesson_name ,pay_cash AS cost ,commodity_sell.use_point AS use_point ,1 AS level_no ,1 AS stage_no ,sell_number ,content FROM commodity_sell INNER JOIN user_inf ON user_inf.id = commodity_sell.user_key AND sell_datetime <= 'toDate' AND sell_datetime >= 'FromDate' ORDER BY sell_datetime DESC);",
         "FromDate":{
-            "value":"2015-03-01"
+            "value":""
         },
         "toDate":{
-            "value":"2015-03-31"
+            "value":""
         },
         "config": {
             "columns": {
@@ -219,11 +235,11 @@
                 },
                 "cost": {
                     "columnName": "入金(円)",
-                    "className":"replaceTextboxCostCell"
+                    "className":"replaceTextboxCostCell replaceTextboxTypeNumber"
                 },
                 "use_point": {
                     "columnName": "使用pt",
-                    "className":"replaceTextboxUsePointCell"
+                    "className":"replaceTextboxUsePointCell replaceTextboxTypeNumber"
                 },
                 "stage_no":{
                     "style":"display:none;"
@@ -240,6 +256,69 @@
             }
         }
     },
+    "accordionSummary":{
+        "lateTimeSummary":{
+            "text":"遅刻"
+        },
+        "usePointSummary":{
+            "text":"使用pt"
+        },
+        "contentSummary":{
+            "colspan":"2",
+            "text":"備品名"
+        },
+        "sellNumberSummary":{
+            "text":"個数"
+        },
+        "sellingPriceSummary":{
+            "text":"備品代"
+        },
+        "payCashSummary":{
+            "text":"会計"
+        }
+    },
+    "accordionContent":{
+        "lateTime":{
+            "lateTimeTextbox":{
+                "type":"text",
+                "name":"late_time"
+            }
+        },
+        "usePoint":{
+            "usePointTextbox":{
+                "type":"text",
+                "name":"use_point"
+            }
+        },
+        "contentCell":{
+            "colspan":"2",
+            "contentSelect":{
+                "name":"content",
+                "contentOption":[]
+            }
+        },
+        "sellNumber":{
+            "sellNumberTextbox":{
+                "type":"number",
+                "name":"sell_number",
+                "value":"1"
+            }
+        },
+        "sellingPrice":{
+            "sellingPriceTextbox":{
+                "type":"text",
+                "name":"selling_price",
+                "value":""
+            }
+        },
+        "payCash":{
+            "payCashTextbox":{
+                "type":"text",
+                "name":"pay_cash",
+                "value":""
+            }
+        }
+    },
     "permitListSearch":{
         "fromArea":{
             "fromLabel":{
@@ -247,7 +326,7 @@
                 "text":"検索 From"
             },
             "fromTextbox":{
-                "type":"text",
+                "type":"date",
                 "name":"fromSearach"
             }
         },
@@ -257,7 +336,7 @@
                 "text":"検索 To"
             },
             "toTextbox":{
-                "type":"text",
+                "type":"date",
                 "name":"toSearach"
             }
         },
@@ -267,23 +346,11 @@
             "value":"検索"
         }
     },
-    "updateClassworkInfo":{
-        "db_getQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'classwork_key';",
-        "user_classwork_cost":{
-            "value":""
-        },
-        "classwork_key":{
-            "value":""
-        }
+    "updateUserClassWork":{
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';"
     },
     "updateCommoditySell":{
-        "db_getQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';",
-        "pay_cash":{
-            "value":""
-        },
-        "commodity_sell_key":{
-            "value":""
-        }
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';"
     },
     "searchUser":{
         "searchList":{
@@ -335,7 +402,7 @@
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
     "userListInfoTable":{
-        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date FROM user_inf",
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id FROM user_inf",
         "config": {
             "columns": {
                 "user_name": {
@@ -349,6 +416,10 @@
                 },
                 "update_date": {
                     "columnName": "最終予約日"
+                },
+                "id":{
+                    "style":"display:none",
+                    "className":"id"
                 }
             }
         }
@@ -576,7 +647,7 @@
     },
     "replaceTextboxCost":{
         "type":"number",
-        "name":"cost"
+        "name":"user_classwork_cost"
     },
     "replaceTextboxUsePoint":{
         "type":"number",
@@ -586,7 +657,7 @@
         "class": "mailMagaAndAnnounce tabPanel",
         "id": "mailMagaAndAnnounce"
     },
-    "meilMagaSearchArea":{
+    "mailMagaSearchArea":{
         "schoolNameLabel":{
             "text":"店舗"
         },
@@ -621,62 +692,32 @@
         "class":"tableOutsideArea mailMagaTableArea"
     },
     "mailMagaTable":{
-        "db_getQuery":"",
+        "db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine;",
         "config": {
             "columns": {
-                "start_time": {
-                    "columnName": "時間割"
-                },
-                "school_name": {
-                    "columnName": "店舗"
-                },
-                "lesson_name": {
-                    "columnName": "テーマ"
-                },
-                "classwork_note": {
-                    "columnName": "残席"
-                },
-                "end_time": {
-                    "columnName": "状況"
-                },
-                "lesson_key": {
-                    "style":"display:none;"
-                },
-                "lesson_date": {
-                    "style":"display:none;"
-                },
-                "order_students":{
-                    "style":"display:none;"
-                },
-                "max_students":{
-                    "style":"display:none;"
-                },
-                "min_students":{
-                    "style":"display:none;"
-                },
-                "default_min_students": {
-                    "style":"display:none;"
-                },
-                "max_num": {
-                    "style":"display:none;"
-                },
-                "min_num": {
-                    "style":"display:none;"
-                },
-                "classwork_status": {
-                    "style":"display:none;"
-                },
-                "today":{
-                    "style":"display:none;"
-                },
-                "classwork_key":{
-                    "style":"display:none;"
-                },
-                "classroom":{
-                    "style":"display:none;"
+                "id": {
+                    "columnName":"No.",
+                    "style":"display:none"
                 },
                 "school_key":{
-                    "style":"display:none;"
+                    "columnName":"店舗名",
+                    "style":"display:none"
+                },
+                "send_datetime":{
+                    "columnName":"送信日時",
+                    "style":"display:none"
+                },
+                "magazine_type":{
+                    "columnName":"種別",
+                    "style":"display:none"
+                },
+                "magazine_title":{
+                    "columnName":"タイトル",
+                    "style":"display:none"
+                },
+                "magazine_content":{
+                    "columnName":"内容",
+                    "style":"display:none"
                 }
             }
         }

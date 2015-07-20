@@ -24,7 +24,10 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				//テンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				creator.getDomFile('template/gallery.html');
-				
+
+				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
+				createMemberPageHeader();
+
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。

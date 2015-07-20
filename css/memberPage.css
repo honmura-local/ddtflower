@@ -340,7 +340,6 @@ label,
 	background: #F0F3F5;	/* 行の背景を水色っぽくする */
 }
 
-
 /* 
  * セレクタ :.lessonTable th, .lessonTable td
  * 概要   :授業についてのテーブルのカラム領域
@@ -370,6 +369,16 @@ label,
 }
 
 /* 
+ * セレクタ :.doLecturePermitInfoTable tr td:nth-of-type(3)
+ * 概要   :受講承認一覧テーブルの日付列領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.15
+ */
+.doLecturePermitInfoTable tr td:nth-of-type(3) {
+	width: 76px;			/* 幅を日付と時間で2列になるような幅にする */
+}
+
+/* 
  * セレクタ :.reservedLessonTable td:nth-of-type(1),
 		.finishedLessonTable td:nth-of-type(1)
  * 概要   :予約中と受講済みのテーブルのカラム領域
@@ -379,6 +388,26 @@ label,
 .reservedLessonTable td:nth-of-type(1),
 .finishedLessonTable td:nth-of-type(1) {
 	width: 77px;				/* 幅を77pxで固定する */
+}
+
+/* 
+ * セレクタ :.replaceTextboxTypeNumber
+ * 概要   :テーブルの数字を入力するテキストボックス
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.11
+ */
+.replaceTextboxTypeNumber {
+	width: 70px;		/*7桁の数字が入るぐらいの幅にする*/
+}
+
+/* 
+ * セレクタ :.replaceTextbox
+ * 概要   :テーブルの中にあるテキストボックス領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.11
+ */
+.replaceTextbox {
+	width: 95%;		/*幅を95%にする*/
 }
 
 /* DBから読込んだテーブル領域終わり */
@@ -869,9 +898,9 @@ label,
 /* テーブルページング領域終わり */
 
 /* メルマガ受信設定は未完成なので文字色をグレーにする */
-.mailMaga ,.mailMagaSetting span {
+/*.mailMaga ,.mailMagaSetting span {
 	color: #aaa;
-}
+}*/
 
 /* 目安箱領域 */
 
@@ -1084,6 +1113,16 @@ label,
 	 */
 	.passTextbox {
 		width: 90%;			/* 幅を90%にする */
+	}
+
+	/* 
+	 * セレクタ :.searchButton
+	 * 概要   :更新ボタン
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.11
+	 */
+	.searchButton {
+		margin-top: 5px;	/* 上から5px余白を空ける */
 	}
 
 	/* 
