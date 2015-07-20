@@ -9,7 +9,9 @@ SELECT
 	,user_classwork.level_no AS level_no
 	,user_classwork_cost
 	,user_inf.get_point AS get_point
-	,user_classwork.id = user_classwork_key
+	,user_classwork.id AS user_classwork_key
+	,user_inf.id AS user_key
+	,lesson_inf.scholl_key AS school_key
 FROM
 	time_table_day
 INNER JOIN
