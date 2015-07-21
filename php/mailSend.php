@@ -23,19 +23,19 @@ define('ESCAPE_NEXTROW', "\r\n");						//アディショナルヘッダー用改
 
 
 /*
- * 関数名：sendMail
+ * 関数名：mailToMember
  * 概要  :引数に指定された設定でメールを送信する。
  * 引数  :Array $memberInfo:会員情報の連想配列を格納した配列。構成は以下の通り
  * 			{"id":"会員番号", name":"名前","email":"メールアドレス"}
+ * 		 String $memberInfo:dbから取り出す会員情報が入った連想配列
  * 		 String $subject:メール件名
  * 		 string $message:メール本文
  * 		 String $from:メッセージの送信元のアドレス
- * 		 String $bcc:メールのBCCリスト
  * 戻り値:Array:送信に失敗したメールの会員IDをリストで返す。。
  * 作成者:T.Masuda
  * 作成日:2015.0720
  */
-function sendMail($memberInfo, $subject, $message, $from) {
+function mailToMember($memberInfo, $subject, $message, $from) {
 	//日本語設定を行う
 	mb_language( 'Japanese' );
 	mb_internal_encoding( 'UTF-8' );
