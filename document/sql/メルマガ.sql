@@ -3,19 +3,19 @@
 SELECT 
 	*
 FROM
-	message_inf
+	mail_magazine
 WHERE
-	message_type = {{メール(固定)}}
+	magazine_type = {{メール(固定)}}
 	
 ######### ↓もそうだけどmessage_typeは何番がメールなのかはソース見ないとなので調べてください(本番のDBみるだけでもいいかも) #########
 
 # メルマガ追加
 INSERT INTO
-	message_inf (
-		message_type
-		,send_date
-		,message_title
-		,message_content
+	mail_magazine (
+		magazine_type
+		,send_datetime
+		,magazine_title
+		,magazine_content
 		,create_datetime
 	)
 	VALUES (
