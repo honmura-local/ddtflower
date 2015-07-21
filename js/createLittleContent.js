@@ -2235,8 +2235,11 @@ function setValueDBdata(setArray) {
 		if ($('[name="' + key + '"]').attr('class') == 'textArea') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
 			$('[name=' + key + ']').text(resultValue);
+		//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
 		} else if($('[name=' + key + ']').attr('type') == 'radio') {
+			//値が当てはまるチェックボックスに対してチェックを入れる
 			$('[name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+		//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
 		} else {
 			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
 			$('[name=' + key + ']').attr('value', resultValue);
@@ -3393,7 +3396,12 @@ function addUsePointQuery(sendQueryArray, sendReplaceArray) {
 /* 
  * 関数名:executeDBUpdate
  * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
- * 引数  :
+ * 引数  :counter:カウンタ変数
+ 		tableClassName:テーブルのクラス名
+ 		inputDataSelector:テキストボックスなど値の親のセレクター名
+ 		boolRule:条件分岐するための正否判定
+ 		trueQueryArray:条件が正の時に代入するクエリが入った連想配列
+ 		falseQueryArray:条件が否の時に代入するクエリが入った連想配列
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17

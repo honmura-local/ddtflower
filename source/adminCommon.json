@@ -133,9 +133,9 @@
 	    "id": "lecturePermitList"
 	},
     "doLecturePermitInfoTable":{
-        "db_getQuery": "SELECT '' AS columnCheckbox,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name , lesson_name ,user_inf.get_point AS get_point,user_classwork_cost ,user_inf.id AS id,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "db_getQuery": "SELECT '' AS columnCheckbox ,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.get_point AS get_point ,lesson_name ,user_classwork_cost ,user_inf.id AS user_key ,lesson_inf.school_key AS school_key ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
         "date":{
-            "value":"2015-03-13"
+            "value":"2015-03-12"
         },
         "config": {
             "columns": {
@@ -161,7 +161,10 @@
                 "user_classwork_cost": {
                     "columnName":"受講料"
                 },
-                "id": {
+                "user_key": {
+                    "style":"display:none;"
+                },
+                "school_key": {
                     "style":"display:none;"
                 },
                 "stage_no": {
@@ -301,21 +304,24 @@
             "sellNumberTextbox":{
                 "type":"number",
                 "name":"sell_number",
-                "value":"1"
+                "value":"0",
+                "min":"0"
             }
         },
         "sellingPrice":{
             "sellingPriceTextbox":{
                 "type":"text",
                 "name":"selling_price",
-                "value":""
+                "value":"",
+                "min":"0"
             }
         },
         "payCash":{
             "payCashTextbox":{
                 "type":"text",
                 "name":"pay_cash",
-                "value":""
+                "value":"",
+                "min":"0"
             }
         }
     },
