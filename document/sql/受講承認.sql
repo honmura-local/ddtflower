@@ -11,7 +11,7 @@ SELECT
 	,user_inf.get_point AS get_point
 	,user_classwork.id AS user_classwork_key
 	,user_inf.id AS user_key
-	,lesson_inf.scholl_key AS school_key
+	,time_table_day.scholl_key AS school_key
 FROM
 	time_table_day
 INNER JOIN
@@ -19,7 +19,7 @@ INNER JOIN
 ON
 	time_table_day.id = classwork.time_table_day_key
 AND
-	time_table_day.lesson_date = '{{date}}'
+	time_table_day.lesson_date = NOW()
 INNER JOIN
 	user_classwork
 ON
@@ -35,7 +35,9 @@ ON
 INNER JOIN
 	timetable_inf
 ON
-	timetable_inf.id = time_table_day.timetable_key;
+	timetable_inf.id = time_table_day.timetable_key
+AND
+	user_classwork.user_work_status = 2;
 	
 # 備品名リスト用クエリ
 # selling_priceは個数入力時の代金自動計算に使う
