@@ -11,7 +11,7 @@ SELECT
 	,user_inf.get_point AS get_point
 	,user_classwork.id AS user_classwork_key
 	,user_inf.id AS user_key
-	,time_table_day.scholl_key AS school_key
+	,lesson_inf.school_key AS school_key
 FROM
 	time_table_day
 INNER JOIN

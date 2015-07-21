@@ -9,7 +9,7 @@
 	,1 AS sell_number
 	,'' AS content
 	,user_inf.id AS user_key
-	,lesson_inf.scholl_key AS school_key
+	,lesson_inf.school_key AS school_key
 FROM
 	user_classwork
 INNER JOIN
@@ -21,9 +21,9 @@ INNER JOIN
 ON
 	time_table_day.id = classwork.time_table_day_key
 AND
-	time_table_day.lesson_date <= {{toDate}}
+	time_table_day.lesson_date <= 'toDate'
 AND
-	time_table_day.lesson_date >= {{FromDate}}
+	time_table_day.lesson_date >= 'fromDate'
 INNER JOIN
 	user_inf
 ON
@@ -43,8 +43,8 @@ ON
 ORDER BY time_table_day.lesson_date DESC)
 UNION ALL
 (SELECT
-	,commodity_sell.id AS id
-	user_name
+	commodity_sell.id AS id
+	,user_name
 	,'' AS lesson_name
 	,1 AS level_no
 	,1 AS stage_no
@@ -53,7 +53,7 @@ UNION ALL
 	,sell_number
 	,content
 	,user_inf.id AS user_key
-	,commodity_inf.scholl_key AS school_key
+	,commodity_sell.school_key AS school_key
 FROM
 	commodity_sell
 INNER JOIN
@@ -61,9 +61,9 @@ INNER JOIN
 ON
 	user_inf.id = commodity_sell.user_key
 AND
-	sell_datetime <= {{toDate}}
+	sell_datetime <= 'toDate'
 AND
-	sell_datetime >= {{FromDate}}
+	sell_datetime >= 'fromDate'
 INNER JOIN
 	commodity_inf 
 ON
