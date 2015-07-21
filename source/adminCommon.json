@@ -132,6 +132,15 @@
 	    "class": "lecturePermitList tabPanel",
 	    "id": "lecturePermitList"
 	},
+    "updateUsePoint":{
+        "db_setQuery":"UPDATE user_inf SET use_point = use_point + 'use_point',get_point = get_point - 'use_point',update_datetime = NOW() WHERE id = 'user_key';"
+    },
+    "permitLessonContainCommodity":{
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = use_point ,late_time = 'late_time' ,update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (  NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW() );"
+    },
+    "permitLessonUpdate":{
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = use_point ,late_time = 'late_time' ,update_datetime = NOW() WHERE user_key = 'user_key';"
+    },
     "doLecturePermitInfoTable":{
         "db_getQuery": "SELECT '' AS columnCheckbox ,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.get_point AS get_point ,lesson_name ,user_classwork_cost ,user_inf.id AS user_key ,lesson_inf.school_key AS school_key ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
         "date":{
@@ -201,6 +210,79 @@
             }
         }
     },
+    "accordionSummary":{
+        "lateTimeSummary":{
+            "text":"遅刻"
+        },
+        "usePointSummary":{
+            "text":"使用pt"
+        },
+        "contentSummary":{
+            "colspan":"2",
+            "text":"備品名"
+        },
+        "sellNumberSummary":{
+            "text":"個数"
+        },
+        "sellingPriceSummary":{
+            "text":"備品代"
+        },
+        "payCashSummary":{
+            "text":"会計"
+        }
+    },
+    "accordionContent":{
+        "lateTime":{
+            "lateTimeTextbox":{
+                "type":"text",
+                "name":"late_time",
+                "value":"0"
+            }
+        },
+        "usePoint":{
+            "usePointTextbox":{
+                "type":"text",
+                "name":"use_point",
+                "value":"0"
+            }
+        },
+        "contentCell":{
+            "colspan":"2",
+            "contentSelect":{
+                "name":"content",
+                "contentOption":[]
+            }
+        },
+        "sellNumber":{
+            "sellNumberTextbox":{
+                "type":"number",
+                "name":"sell_number",
+                "value":"0",
+                "min":"0"
+            }
+        },
+        "sellingPrice":{
+            "sellingPriceTextbox":{
+                "type":"text",
+                "name":"selling_price",
+                "value":"",
+                "min":"0"
+            }
+        },
+        "payCash":{
+            "payCashTextbox":{
+                "type":"text",
+                "name":"pay_cash",
+                "value":"",
+                "min":"0"
+            }
+        }
+    },
+    "commodityKeyBox":{
+        "type":"hidden",
+        "name":"commodity_key",
+        "value":""
+    },
     "updateLecturePermit":{
         "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
         "user_classwork_cost":{
@@ -259,71 +341,9 @@
             }
         }
     },
-    "accordionSummary":{
-        "lateTimeSummary":{
-            "text":"遅刻"
-        },
-        "usePointSummary":{
-            "text":"使用pt"
-        },
-        "contentSummary":{
-            "colspan":"2",
-            "text":"備品名"
-        },
-        "sellNumberSummary":{
-            "text":"個数"
-        },
-        "sellingPriceSummary":{
-            "text":"備品代"
-        },
-        "payCashSummary":{
-            "text":"会計"
-        }
-    },
-    "accordionContent":{
-        "lateTime":{
-            "lateTimeTextbox":{
-                "type":"text",
-                "name":"late_time"
-            }
-        },
-        "usePoint":{
-            "usePointTextbox":{
-                "type":"text",
-                "name":"use_point"
-            }
-        },
-        "contentCell":{
-            "colspan":"2",
-            "contentSelect":{
-                "name":"content",
-                "contentOption":[]
-            }
-        },
-        "sellNumber":{
-            "sellNumberTextbox":{
-                "type":"number",
-                "name":"sell_number",
-                "value":"0",
-                "min":"0"
-            }
-        },
-        "sellingPrice":{
-            "sellingPriceTextbox":{
-                "type":"text",
-                "name":"selling_price",
-                "value":"",
-                "min":"0"
-            }
-        },
-        "payCash":{
-            "payCashTextbox":{
-                "type":"text",
-                "name":"pay_cash",
-                "value":"",
-                "min":"0"
-            }
-        }
+    "contentSelectList":{
+        "name":"content",
+        "contentOption":[]
     },
     "permitListSearch":{
         "fromArea":{

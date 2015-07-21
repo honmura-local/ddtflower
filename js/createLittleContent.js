@@ -2117,8 +2117,13 @@ function saveCustomizeTabJsonFile(creator){
 function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 	//DBに送信するための連想配列
 	var send = {};
+	//置換済みであるかどうか判定するためにkey名を一つだけ取り出す
+	for(var arrayKey in queryReplaceData) {
+		//key名を取り出したらループを回さずに終わらせる
+		break;
+	}
 	//置換済みでなければ置換する
-	if(!queryReplaceData.userId.value) {
+	if(!queryReplaceData[arrayKey].value) {
 		send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
 	//置換済みであれば値をそのまま結合する	
 	} else {
@@ -3134,7 +3139,7 @@ function searchPermitListInfoTable () {
 		//テーブルを更新する
 		tableReload('lecturePermitListInfoTable');
 		//受講承認一覧に連番を入れる
-		insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+		lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
 		//受講承認一覧テーブルの料金列をテキストボックスにする
 		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 		//受講承認一覧テーブルの使用pt列をテキストボックスにする
@@ -3288,6 +3293,8 @@ function setSellingPrice() {
 		var contentName = $('.contentSelect').eq(contentSelectNumber).val();
 		//備品代の値を取得するための変数を作る
 		var sellingPrice;
+		//備品idを取り出すための変数を作る
+		var commodityKey;
 		//取り出した行のデータを数えるためにカウンターを変数を作る
 		var counter = 0;
 		//行データを変数に入れる
@@ -3300,12 +3307,15 @@ function setSellingPrice() {
 			if (contentName == commodityName) {
 				//備品代をテキストボックスに入れるための番号を取得する
 				sellingPrice = creator.json.selectCommodityInf.table[counter].selling_price;
-				//ループを終わらせるためにリターンでループを終える
+				//備品idをテキストボックスに入れるための番号を取得する
+				commodityKey = creator.json.selectCommodityInf.table[counter].commodity_key;
 			}
 			counter++;
 		});
 		//備品代テキストボックスに備品名に対応した値段を入れる
 		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
+		//備品idテキストボックスに備品名に対応した値段を入れる
+		$('.commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
 	});
 }
 
@@ -3322,6 +3332,10 @@ function setDefaultSellingPrice() {
 	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
 	//備品代の連想配列にデフォルト値を設定する
 	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
+	//備品代のid値を設定するために備品代idの最初値を取得する
+	var commodityKey = creator.json.selectCommodityInf.table[0].commodity_key;
+	//備品idの連想配列にデフォルト値を設定する
+	creator.json.commodityKeyBox.value = commodityKey;
 }
 
 /* 
@@ -3337,17 +3351,36 @@ function setDefaultSellingPrice() {
  */
 function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
 	//可変テーブルから連想配列を取得する
-	var resultTableArray = crator.json[tableClassName].table[rowNumber]
+	var resultTableArray = creator.json[tableClassName].table[rowNumber]
 	//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 	var inputDataArray = getInputData(inputDataSelector);
 	//取得した連想配列を結合する
 	var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+	console.log(sendReplaceArray);
 	//結合した結果の連想配列を返す
 	return sendReplaceArray;
 }
 
 /* 
- * 関数名:choiceSendQuery
+ * 関数名:isBuyCommodity
+ * 概要  :受講承認の承認ボタンがクリックされた時に備品を購入したかどうかを判定する
+ * 引数  :sendReplaceArray
+ * 返却値  :resultBool:判定結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.21
+ */
+function isBuyCommodity(sendReplaceArray) {
+	//備品を購入していたらtrueにする
+	var resultBool = true;
+	//備品を購入していないときにfalseにする
+	if(sendReplaceArray.pay_cash <= 1) {
+		resultBool = false;
+	}
+	return resultBool
+}
+
+/* 
+ * 関数名:choiceSendQueryArray
  * 概要  :JSONDBManagerに送信するためのjsonを分岐する
  		:受講一覧の承認ボタンで使うクエリが受講情報のクエリか備品情報のクエリかを振り分けるときに使う
  * 引数  :boolRule:分岐させるための値が入った変数
@@ -3363,11 +3396,11 @@ function choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray) {
 	//条件分岐を設定するための値があるかどうかでクエリを決める
 	if (boolRule) {
 		//trueだった時のクエリを取得する
-		resultSendQueryArray = crator.json[trueQuery];
+		resultSendQueryArray = creator.json[trueQueryArray];
 	//条件が合わなかったときに別のクエリを入れる
 	} else {
 		//falseのときのクエリを取得する
-		resultSendQueryArray = crator.json[falseQuery];
+		resultSendQueryArray = creator.json[falseQueryArray];
 	}
 	//取得したクエリの結果を返す
 	return resultSendQueryArray;
@@ -3387,7 +3420,7 @@ function addUsePointQuery(sendQueryArray, sendReplaceArray) {
 	//置換するクエリに使用ポイントの値が1以上のとき、ポイントを使うということなのでクエリにポイントしようクエリを付け足す
 	if (sendReplaceArray.use_point >= 1) {
 		//現状のクエリに使用ポイントのクエリを付け足す
-		sendQueryArray.db_setQuery += creator.json.updateUsePoint;
+		sendQueryArray.db_setQuery += creator.json.updateUsePoint.db_setQuery;
 	}
 	//クエリの結果を返す
 	return sendQueryArray;
@@ -3431,15 +3464,26 @@ function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, t
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.doLecturePermit normalButton', function(){
+	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitAccordion').each(function() {
 			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-			if($('.permitCheckbox').eq(counter).prop('checked')) {
-				//受講承認テーブルからチェックが入っているレコードのデータだけを更新する
-				executeDBUpdate('doLecturePermitInfoTable', counter, '.lecturePermitAccordion:eq(' + counter + ')', boolRule, 'insertPermitLesson', 'updatePermitLesson');
+			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
+				//DBを更新するための値を取得するために置換する連想配列を取得する
+				var sendReplaceArray = getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+				//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
+				var sendQueryArray = choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+				sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+				//クエリを実行してテーブルの値1行ずつ更新していく
+				setDBdata(sendQueryArray, sendReplaceArray, '');
+				//ループで実行するので置換データ連想配列を初期化する
+				sendReplaceArray = {};
+				//ループで実行するので置換データ連想配列を初期化する
+				sendQueryArray = {};
+			} else {
 			}
 			//カウンターをインクリメントする
 			counter++;
@@ -3565,6 +3609,8 @@ function createAdminPermitLessonContent() {
 	setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
 	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
 	insertTableRecord('lecturePermitAccordion', 'accordionContent');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	creator.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
 	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
 	insertTableRecord('lecturePermitAccordion', 'accordionSummary');
 	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
@@ -3584,6 +3630,8 @@ function createAdminPermitLessonContent() {
 	setCommodityCostPrice('.sellNumberTextbox');
 	//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
 	createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
+	//承認ボタンクリックでデータを更新する
+	loopUpdatePermitLesson();
 }
 
 /* 
@@ -3605,6 +3653,10 @@ function createAdminPermitLessonListContent() {
 	if (creator.json.lecturePermitListInfoTable.table[0]) {
 		//受講承認一覧タブのリスト
 		creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
+		//受講承認一覧テーブルの取り出した行にクラス名を付ける
+		setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+		creator.outputTag('commodityKeyBox','commodityKeyBox', '.lecturePermitListRecord');
 	}
 	//受講承認一覧のリスト更新ボタン
 	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
@@ -3615,7 +3667,15 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧の検索機能を実装する
 	searchPermitListInfoTable();
 	//受講承認一覧に連番を入れる
-	insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
+	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+
+	//セレクトボックスにする列があった時に列にセレクトボックスを入れる
+	if($('.lecturePermitListRecord td').hasClass('appendSelectbox')) {
+		//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+		setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelectList.contentOption, 'commodity_name');
+		//セレクトボックスを列にアウトプットする
+		creator.outputTag('contentSelectList', 'contentSelectList', '.appendSelectbox');
+	}
 
 	//受講承認一覧テーブルの料金列をテキストボックスにする
 	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
@@ -3626,9 +3686,6 @@ function createAdminPermitLessonListContent() {
 
 	//受講承認一覧テーブルの検索機能を実装する
 	searchPermitListInfoTable();
-
-	//受講承認一覧テーブルの取り出した行にクラス名を付ける
-	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 }
 
 /* 
