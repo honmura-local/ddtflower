@@ -31,7 +31,7 @@ define('DB_PASSWORD', 'bnp2525');						// データベースパスワード
 * 概要  :DBの結果セットのツリーのノードクラス
 * 設計者:H.Kaneko
 * 作成者:T.Masuda
-* 作成日:2015.
+* 作成日:2015.05.29
 */
 class DB_ResultTree {
 	public $parent = null;			//このノード(インスタンス)の親
@@ -59,7 +59,7 @@ class JSONDBManager {
 	* 戻り値:なし
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.02
 	*/
 	function createJSON(&$json, $key, $dbrt_parent) {
 		// DBの結果から構築したツリーを構成するクラスのインスタンスを生成する
@@ -98,7 +98,7 @@ class JSONDBManager {
 	* 返却値:Array retRs:DBから取得した結果セットを返す。
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.01
 	*/
 	function executeQuery($json, $queryKey) {
 		// 返却する結果セットの変数を作成する
@@ -155,7 +155,7 @@ class JSONDBManager {
 	* 返却値:String column:取得した列の値を返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.01
 	*/
 	function getDBColumn($key, $dbrTree) {
 		// 返却値を格納する変数を初期化する
@@ -196,7 +196,7 @@ class JSONDBManager {
 	* 返却値 :String strAll:JSONの文字列配列を文字列で返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.02
 	*/
 	function getListJSON($json) {
 		// 返却する文字列を作成するための変数を3つ宣言、初期化する
@@ -248,7 +248,7 @@ class JSONDBManager {
 	* 返却値:なし
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.02
 	*/
 	function outputJSON($jsonString, $key) {
 		// fig5 引数のJSON文字列を変換して、JSONの連想配列を取得してクラスのオブジェクトのメンバに格納する
@@ -281,7 +281,7 @@ class JSONDBManager {
 	* 返却値:なし
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.05.29
 	*/
 	function getJSONMap($jsonString) {
 		// JSON文字列を連想配列に変換する
@@ -299,7 +299,7 @@ class JSONDBManager {
 	* 返却値:boolean:列の存在を判定して返す
 	* 設計者:H.Kaneko
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.01
 	*/
 	function checkColumn($rs, $columnName) {
 		// 返却用の真理値の変数を宣言、falseで初期化する
@@ -327,7 +327,7 @@ class JSONDBManager {
 	* 返却値:boolean:列の型を判定して返す。trueが連想配列、falseが配列
 	* 設計者:http://kihon-no-ki.com/is-hash-or-associative-array
 	* 作成者:T.Yamamoto
-	* 作成日:2015.
+	* 作成日:2015.06.01
 	*/
 	function is_hash(&$array) {
 		// カウンター変数を0で初期化する
