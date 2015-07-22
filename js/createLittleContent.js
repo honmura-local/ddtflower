@@ -3138,12 +3138,22 @@ function searchPermitListInfoTable () {
 		creator.json.lecturePermitListInfoTable.toDate.value = toDate;
 		//テーブルを更新する
 		tableReload('lecturePermitListInfoTable');
+		
+		//受講承認一覧テーブルの取り出した行にクラス名を付ける
+		setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+
 		//受講承認一覧に連番を入れる
 		lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
 		//受講承認一覧テーブルの料金列をテキストボックスにする
 		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 		//受講承認一覧テーブルの使用pt列をテキストボックスにする
 		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+		//セレクトボックスを列にアウトプットする
+		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+		//セレクトボックスのvalueを画面に表示されている値にする
+		setSelectboxValue('.contentSelect');
+		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	});
@@ -3316,6 +3326,7 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
 		//備品idテキストボックスに備品名に対応した値段を入れる
 		$(textboxParentSelector + ' .commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
+						console.log(contentSelectNumber);
 	});
 }
 
@@ -3655,8 +3666,6 @@ function createAdminPermitLessonListContent() {
 		creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
 		//受講承認一覧テーブルの取り出した行にクラス名を付ける
 		setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
-		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		creator.outputTag('commodityKeyBox','commodityKeyBox', '.lecturePermitListRecord');
 	}
 	//受講承認一覧のリスト更新ボタン
 	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
@@ -3676,9 +3685,11 @@ function createAdminPermitLessonListContent() {
 		//セレクトボックスを列にアウトプットする
 		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 		//セレクトボックスのvalueを画面に表示されている値にする
-	setSelectboxValue('.contentSelect');
+		setSelectboxValue('.contentSelect');
+		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 		//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-		setSellingPrice('.appendSelectbox', '.lecturePermitListRecord');
+		setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 	}
 
 	//受講承認一覧テーブルの料金列をテキストボックスにする
@@ -3688,8 +3699,6 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 
-	//受講承認一覧テーブルの検索機能を実装する
-	searchPermitListInfoTable();
 }
 
 /* 
