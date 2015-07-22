@@ -134,6 +134,7 @@ label,
  */
 .userBanner {
 	border-bottom: 3px solid #ddd;	/* 下に太さ3pxの灰色の実線を引く */
+	margin-bottom: 5px;				/* 下に5pxの余白をとる */
 }
 
 /* 
@@ -913,14 +914,48 @@ label,
  * セレクタ :.suggestion
  * 概要   :目安箱お問い合わせ内容のテキストエリア領域
  * 作成者 :T.Yamamoto
- * 作成日 :2015.07.010
+ * 作成日 :2015.07.10
  */
 .suggestion {
 	width: 100%;		/* 幅を100%にする */
 	height: 300px;		/* 高さ300pxにする */
 }
 
+/* 
+ * セレクタ :.schoolNameSelectArea
+ * 概要   :目安箱店舗名セレクト領域の外側
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.22
+ */
+.schoolNameSelectArea {
+	margin-right: 3em;	/* 右に3文字分余白を空ける */
+}
+
+/* 
+ * セレクタ :.labelTextboxArea
+ * 概要   :目安箱タイトル入力領域の外側
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.22
+ */
+.labelTextboxArea {
+	margin-top: 5px;	/* 上から5px余白を空ける*/
+	width: 100%;		/* 幅を100%にする */
+}
+
+/* 
+ * セレクタ :.labelTextbox
+ * 概要   :目安箱タイトル入力領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.07.22
+ */
+.labelTextbox {
+	width: 70%;			/* 幅を70％にする */
+}
+
+
+
 /* 目安箱領域 */
+
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){

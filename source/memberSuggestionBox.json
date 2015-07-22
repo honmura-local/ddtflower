@@ -2,13 +2,60 @@
     "suggestionArea":{
         "class":"suggestionArea outsideArea"
     },
+    "schoolNameSelectArea":{
+        "class":"schoolNameSelectArea inlineBlock",
+        "selectboxLabel":{
+            "text":"店舗名"
+        },
+        "schoolNameSelect":{
+            "name":"school_key",
+            "schoolNameOption1":{
+                "value":"1",
+                "text":"新宿店"
+            },
+            "schoolNameOption2":{
+                "value":"3",
+                "text":"横浜店"
+            }
+        }
+    },
+    "suggestionTypeSelectArea":{
+        "class":"suggestionTypeSelectArea inlineBlock",
+        "selectboxLabel":{
+            "text":"種別"
+        },
+        "suggestionTypeSelect":{
+            "name":"suggest_type",
+            "suggestionTypeOption1":{
+                "value":"0",
+                "text":"意見・要望"
+            },
+            "suggestionTypeOption2":{
+                "value":"1",
+                "text":"お問い合わせ"
+            },
+            "suggestionTypeOption3":{
+                "value":"2",
+                "text":"クレーム"
+            }
+        }
+    },
+    "labelTextboxArea":{
+        "labelArea":{
+            "text":"タイトル"
+        },
+        "labelTextbox":{
+            "type":"text",
+            "name":"suggest_title"
+        }
+    },
     "textareaLabel":{
         "textareaText":{
             "text":"お問い合わせ内容"
         },
         "textarea":{
             "class":"suggestion",
-            "name":"suggestion"
+            "name":"suggest_content"
         }
     },
     "radioArea":{
@@ -17,7 +64,7 @@
             "radioButton":{
                 "type":"radio",
                 "name":"suggestionRadio",
-                "value":""
+                "value":"0"
             },
             "radioText":{
                 "text":"目安箱"
@@ -27,7 +74,7 @@
             "radioButton":{
                 "type":"radio",
                 "name":"suggestionRadio",
-                "value":""
+                "value":"1"
             },
             "radioText":{
                 "text":"通常"
@@ -44,5 +91,8 @@
             "type":"reset",
             "value":"リセット"
         }
+    },
+    "insertSuggestionBox":{
+        "db_setQuery":"INSERT INTO suggestion_box( user_key ,school_key ,suggest_type ,suggest_title ,suggest_content ,send_datetime,magazine_type,create_datetime,update_user,update_datetime) VALUES ('user_key','school_key','suggest_type','suggest_title','suggest_content',NOW(),NOW(),'user_key',NOW());"
     }
 }
