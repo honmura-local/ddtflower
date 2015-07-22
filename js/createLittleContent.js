@@ -2227,27 +2227,36 @@ function getInputData(selector) {
  		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
  		テキストボックスのname属性値がDBの列名と対応している。
  * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
+ 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
+ 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.02
  */
-function setValueDBdata(setArray) {
+function setValueDBdata(setArray, setDomParent, targetArrayType) {
 	//ループで連想配列を全てループする
 	for (var key in setArray) {
-		//値を挿入する結果のvalueを変数に入れる
-		var resultValue = setArray[key]['text'];
+		//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
+		if (targetArrayType == 'keyTable') {
+			//テーブルから取り出した値をキーにして値を取得する
+			var resultValue = setArray[key]
+		//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
+		} else {
+			//値を挿入する結果のvalueを変数に入れる
+			var resultValue = setArray[key]['text'];
+		}
 		//対象の要素がテキストエリアのときにtextで値を入れる
-		if ($('[name="' + key + '"]').attr('class') == 'textArea') {
+		if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
-			$('[name=' + key + ']').text(resultValue);
+			$(setDomParent + ' [name=' + key + ']').text(resultValue);
 		//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
-		} else if($('[name=' + key + ']').attr('type') == 'radio') {
+		} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
 			//値が当てはまるチェックボックスに対してチェックを入れる
-			$('[name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+			$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
 		//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
 		} else {
 			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
-			$('[name=' + key + ']').attr('value', resultValue);
+			$(setDomParent + ' [name=' + key + ']').val(resultValue);
 		}
 	}
 }
@@ -2474,10 +2483,12 @@ replaceTableOption['userListInfoTable'] = {
 
 //メルマガテーブル
 replaceTableOption['mailMagaTable'] = {
-	//クエリを置換する置換フラグ、クエリを置換する
-//	replaceFlag:'replace',
+	//クエリを置換する置換フラグ、クエリを追加する(検索機能で使う)
+	replaceFlag:'add',
 	//テーブルのafterでの追加先
 	addDomPlace:'.mailMagaSearchArea',
+	//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
+	afterReloadFunc:afterReloadMailMagaTable,
 	//置換のvalueが入ったdom名
 //	replaceValueDom:'#finishedLesson .selectThemebox',
 	//置換するkey名
@@ -2520,10 +2531,10 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 			//カウンターが0でなければ
 			if(counter != 0){
 				//追加する変数を作る
-				var addString = ' AND ' + attrName + " LIKE '" + inputData + "%'";
+				var addString = ' AND ' + attrName + " LIKE '%" + inputData + "%'";
 			} else {
 				//追加する変数を作る
-				var addString = ' WHERE ' + attrName + " LIKE '" + inputData + "%'";
+				var addString = ' WHERE ' + attrName + " LIKE '%" + inputData + "%'";
 				counter++;
 			}
 			//クエリに文字を付け加える
@@ -2634,6 +2645,11 @@ function tableReload(reloadTableClassName) {
 			var targetTableArray = creator.json[reloadTableClassName][TAG_TABLE];
 			// 予約中テーブルのテーブルの値をしかるべき値にする
 			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
+		}
+		//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
+		if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
+			//リロード後に処理をする関数をコールする
+			replaceTableOption[reloadTableClassName].afterReloadFunc()
 		}
 	//DBから検索結果が見つからなかった時の処理
 	} else {
@@ -3781,13 +3797,80 @@ function createAdminMailMagaAnnounceContent() {
 	//過去のメルマガを検索するための領域を作る
 	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
 	//メルマガテーブルの外側を作る
-	creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+	// creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+	//ページング機能付きでメルマガテーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
+	tablePaging('mailMagaTable', 15, 10);
 
-	//creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
-	//メルマガテーブルを作る
-	//creator.outputTagTable('mailMagaTable', 'mailMagaTable', '.mailMagaTableArea');
+
+	//メルマガテーブルに検索機能を対応させる
+	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
+
+	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
+	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
+		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
+		var targetNumber = $('.targetMailMagazine').index(this);
+		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
+		var targetInf = creator.json.mailMagaTable.table[targetNumber];
+		//取得した連想配列をテキストボックスにセットする
+		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
+	});
+
+	// //メルマガの情報テーブルを取得するためのjsonをDBから取得する
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+	// //メルマガテーブルを作る
+	// creator.outputTagTable('mailMagaTable', 'mailMagaTable', '#mailMagaAndAnnounce');
 	//メルマガ・アナウンス入力領域を作る
 	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+}
+
+/* 
+ * 関数名:cutString
+ * 概要  :すでに画面に表示されている文字を指定文字数で切り取る。
+ * 引数  :cutTargetSelector:文字を切り取る対象となる文字列を持ったセレクター名
+ 		cutCount:何文字以上であるなら文字に対して切り取りを行うかの設定の数字
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function cutString(cutTargetSelector, cutCount) {
+	//文字数カット対象となるセレクター、メルマガの内容列
+	var $setElm = $(cutTargetSelector);
+	// カットする文字数
+	var cutFigure = cutCount;
+	// 文字カット後に表示するテキスト
+	var afterTxt = ' …';
+
+	//ループですべてのメルマガ内容列について処理をする
+	$setElm.each(function(){
+		//対象の列の文字数を取得してカットする文字数と比較するのに使う
+		var textLength = $(this).text().length;
+		//カットした後の文字列を取得する
+		var textTrim = $(this).text().substr(0,(cutFigure))
+		//対象の列の文字数がカットする文字数より多い時に文字をカットする
+		if(cutFigure < textLength) {
+			//対象の列に対して文字をカットして表示する
+			$(this).html(textTrim + afterTxt).css({visibility:'visible'});
+		//対象の列がカットする文字数より少なかった場合、カットはせずにそのまま表示する
+		} else if(cutFigure >= textLength) {
+			//そのまま表示するように設定する
+			$(this).css({visibility:'visible'});
+		}
+	});
+}
+
+/* 
+ * 関数名:afterReloadMailMagaTable
+ * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function afterReloadMailMagaTable() {
+	//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
+	cutString('.mailMagaContent', '150');
+	//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+	setTableRecordClass('mailMagaTable', 'targetMailMagazine');
 }
 
 /* 

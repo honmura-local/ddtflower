@@ -129,7 +129,7 @@
 				$('.updateButton').button();
 
 				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
-				setValueDBdata(creator.json['getUserInf']['memberInfoValue']);
+				setValueDBdata(creator.json['getUserInf']['memberInfoValue'], '.userInf');
 
 				//入力したデータでDBを更新する
 				setProfileUpdate();

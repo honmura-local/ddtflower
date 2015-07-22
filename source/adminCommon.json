@@ -706,7 +706,7 @@
             },
             "mailMagaContentSearchTextbox":{
                 "type":"text",
-                "name":"mailMageSearch"
+                "name":"magazine_content"
             }
         },
         "mailMagaSearchButton":{
@@ -718,32 +718,29 @@
         "class":"tableOutsideArea mailMagaTableArea"
     },
     "mailMagaTable":{
-        "db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine;",
+        "db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine ",
         "config": {
             "columns": {
                 "id": {
-                    "columnName":"No.",
-                    "style":"display:none"
+                    "columnName":"No."
                 },
                 "school_key":{
                     "columnName":"店舗名",
                     "style":"display:none"
                 },
                 "send_datetime":{
-                    "columnName":"送信日時",
-                    "style":"display:none"
+                    "columnName":"送信日時"
                 },
                 "magazine_type":{
                     "columnName":"種別",
                     "style":"display:none"
                 },
                 "magazine_title":{
-                    "columnName":"タイトル",
-                    "style":"display:none"
+                    "columnName":"タイトル"
                 },
                 "magazine_content":{
-                    "columnName":"内容",
-                    "style":"display:none"
+                    "className":"mailMagaContent",
+                    "columnName":"内容"
                 }
             }
         }
@@ -757,12 +754,13 @@
             "numberTextox":{
                 "class":"numberTextox readonly",
                 "type":"text",
-                "name":"messageNumber"
+                "name":"id"
             },
             "schoolNameLabel":{
                 "text":"店舗"
             },
             "schoolNameSelectBox":{
+                "name":"school_key",
                 "schoolNameSelect":{
                     "value":"",
                     "text":"全て"
@@ -772,6 +770,7 @@
                 "text":"種別"
             },
             "typeSelectBox":{
+                "name":"magazine_type",
                 "typeSelect":{
                     "value":"",
                     "text":"全て"
@@ -786,7 +785,7 @@
             "sendmessageDateTextbox":{
                 "class":"sendmessageDateTextbox readonly",
                 "type":"text",
-                "name":"sendmessageDate",
+                "name":"send_datetime",
                 "value":""
             }
         },
@@ -798,7 +797,7 @@
             "class":"messageTitleTextboxArea inlineBlock fLeft",
             "messageTitleTextbox":{
                 "type":"text",
-                "name":"messageTitle",
+                "name":"magazine_title",
                 "value":""
             }
         },
@@ -807,7 +806,7 @@
         },
         "messageContentArea":{
             "messageTextarea":{
-                "name":"messageContent"
+                "name":"magazine_content"
             }
         },
         "messageOptionArea":{
