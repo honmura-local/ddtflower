@@ -78,4 +78,18 @@ function mailToMember($memberInfo, $subject, $message, $from) {
 //メール送信テスト
 //sendMail($memberInfo, "テストメール送信", "テストメールです。", MAIL_DDT_FLOWERS);
 
+// //メールを送信するためのデータ連想配列を受け取る
+// $memberInfo = $_POST['memberInfo'];
+// //メールのタイトルを受け取る
+// $subject = $_POST['subject'];
+// //メールの内容を受けとる
+// $message = $_POST['message'];
+
+// //メールを送信する関数を実行してメールを送信する
+// $failList = mailToMember($memberInfo, $subject, $message, 'ここに送信元メールアドレスをせっとする');
+// //結果を返すために送信結果変数を文字列に変換する
+// $failList = json_encode($failList, JSON_UNESCAPED_UNICODE);
+
+// //結果を出力する
+// print $failList;
 ?>

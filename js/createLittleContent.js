@@ -3821,6 +3821,27 @@ function createAdminMailMagaAnnounceContent() {
 	// creator.outputTagTable('mailMagaTable', 'mailMagaTable', '#mailMagaAndAnnounce');
 	//メルマガ・アナウンス入力領域を作る
 	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+
+	//送信ボタンがクリックされたときにメール送信イベントを開始する
+	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
+		//メルマガ送信にチェックが入っていたらメルマガを送信する
+		if($('[name="messegeType"]').val() == "0") {
+			//メルマガを送信するための値をテキストボックスから取得する
+			var sendData = getInputData('mailMagaAndAnnounceArea');
+			//メルマガをDBに新規登録する
+			setDBdata(creator.json.insertMailMagazine, sendData, '');
+			//DBからメルマガを送信する会員情報を取得する
+			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
+			// メルマガ送信処理
+		}
+	});
+
+	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
+	$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
+		//メッセージ内容テキストエリアの中身を空にする
+		$('.mailMagaAndAnnounceArea textarea').text('');
+	});
+
 }
 
 /* 
@@ -3859,6 +3880,50 @@ function cutString(cutTargetSelector, cutCount) {
 }
 
 /* 
+ * 関数名:sendMail
+ * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
+ * 引数  :object mailInfoArray:送信先アドレスなどの情報が入った連想配列
+ 		string mailSubject:送信メールのタイトル文字列
+ 		string mailContent:送信メール内容
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function sendMail(mailInfoArray, mailSubject, mailContent) {
+		//Ajax通信を行う
+	$.ajax({
+		url: 'php/mailSend.php',		//メールを送信するためのphpをコールして処理を開始する
+		//メール情報を送信する
+		data:{memberInfo:mailInfoArray,	//送信先アドレス、名前などの連想配列
+				subject:mailSubject,	//メールタイトル
+				message:mailContent},	//メール内容
+		dataType: STR_TEXT,				//テキストデータを返してもらう
+		type: STR_POST,					//POSTメソッドで通信する
+		success:function(resultText){	//通信成功時の処理
+			//受け取った結果文字列を連想配列にする
+			var resultArray = JSON.parse(resultText);
+			//エラー件数を取得する
+			var errorCount = resultArray.length;
+			//受け取った配列の要素数が0であるなら送信成功のメッセージを出す。
+			if (errorCount == 0) {
+				//送信成功メッセージを出す
+				alert('送信に成功しました。')
+			//送信に失敗していたらエラーメッセージを出す
+			} else {
+				//エラーメッセージを出す。
+				alert(errorCount + '件のエラーがありました。');
+				//どの人でメッセージ送信に失敗したかをコンソールで表示する
+				console.log(resultArray);
+			}
+		},
+		error:function(xhr, status, error){	//通信失敗時の処理
+			//通信失敗のアラートを出す
+			alert(MESSAGE_FAILED_CONNECT);
+		}
+	});
+}
+
+/* 
  * 関数名:afterReloadMailMagaTable
  * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
  * 引数  :なし
@@ -3892,7 +3957,7 @@ function createContentTriggerClick(clickSelector, callContentFunc) {
 			//関数をコールしてdom要素を作る
 			callContentFunc();
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"]').button();
+			$('button, .searchButton, input[type="button"],[type="reset"]').button();
 			//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
 			$(clickSelector).attr('data-eventFlag', 1);
 		}

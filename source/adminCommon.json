@@ -762,7 +762,7 @@
             "schoolNameSelectBox":{
                 "name":"school_key",
                 "schoolNameSelect":{
-                    "value":"",
+                    "value":"0",
                     "text":"全て"
                 }
             },
@@ -772,7 +772,7 @@
             "typeSelectBox":{
                 "name":"magazine_type",
                 "typeSelect":{
-                    "value":"",
+                    "value":"0",
                     "text":"全て"
                 }
             }
@@ -811,21 +811,25 @@
         },
         "messageOptionArea":{
             "class":"messageOptionArea fLeft",
-            "mailMagaRadio":{
-                "type":"radio",
-                "name":"messegeType",
-                "value":""
-            },
             "mailMagaLabel":{
-                "text":"メルマガ"
-            },
-            "announceRadio":{
-                "type":"radio",
-                "name":"messegeType",
-                "value":""
+                "mailMagaRadio":{
+                    "type":"radio",
+                    "name":"messegeType",
+                    "value":"0"
+                },
+                "mailMagaLabelText":{
+                    "text":"メルマガ"
+                }
             },
             "announceLabel":{
-                "text":"アナウンス"
+                "announceRadio":{
+                    "type":"radio",
+                    "name":"messegeType",
+                    "value":""
+                },
+                "announceLabelText":{
+                    "text":"アナウンス"
+                }
             }
         },
         "messageButtonArea":{
@@ -835,8 +839,27 @@
                 "value":"送信"
             },
             "deleteButton":{
-                "type":"button",
+                "type":"reset",
                 "value":"削除"
+            }
+        }
+    },
+    "insertMailMagazine":{
+        "db_setQuery":"INSERT INTO mail_magazine ( school_key,magazine_type,send_datetime,magazine_title,magazine_content,create_datetime) VALUES ('school_key','magazine_type',NOW(),'magazine_title','magazine_content',NOW());"
+    },
+    "getMailMagaMemberList":{
+        "db_getQuery":"SELECT id, user_name AS name, mail_address AS email FROM user_inf WHERE mail_deny = 0;",
+        "config": {
+            "columns": {
+                "id": {
+                    "style":"display:none"
+                },
+                "name":{
+                    "style":"display:none"
+                },
+                "email":{
+                    "style":"display:none"
+                }
             }
         }
     }
