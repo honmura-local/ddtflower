@@ -341,7 +341,7 @@
             }
         }
     },
-    "contentSelectList":{
+    "contentSelect":{
         "name":"content",
         "contentOption":[]
     },

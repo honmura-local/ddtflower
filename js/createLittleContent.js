@@ -3283,14 +3283,14 @@ function setCommodityCostPrice(changeSelector) {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17
  */
-function setSellingPrice() {
+function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
 	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
-	$(STR_BODY).on('change', '.contentSelect', function(){
+	$(STR_BODY).on('change', selectboxParentSelector + ' .contentSelect', function(){
 		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
-		var contentSelectNumber = $('.contentSelect').index(this);
+		var contentSelectNumber = $(selectboxParentSelector + ' .contentSelect').index(this);
 		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
-		var contentName = $('.contentSelect').eq(contentSelectNumber).val();
+		var contentName = $(selectboxParentSelector + ' .contentSelect').eq(contentSelectNumber).val();
 		//備品代の値を取得するための変数を作る
 		var sellingPrice;
 		//備品idを取り出すための変数を作る
@@ -3315,7 +3315,7 @@ function setSellingPrice() {
 		//備品代テキストボックスに備品名に対応した値段を入れる
 		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
 		//備品idテキストボックスに備品名に対応した値段を入れる
-		$('.commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
+		$(textboxParentSelector + ' .commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
 	});
 }
 
@@ -3621,7 +3621,7 @@ function createAdminPermitLessonContent() {
 	//受講承認の備品名セレクトボックスにvalueを入れる
 	setSelectboxValue('.contentSelect');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	setSellingPrice();
+	setSellingPrice('.contentCell', '.accordionContent');
 	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
 	setDefaultCommodityCostPrice();
 	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
@@ -3672,9 +3672,13 @@ function createAdminPermitLessonListContent() {
 	//セレクトボックスにする列があった時に列にセレクトボックスを入れる
 	if($('.lecturePermitListRecord td').hasClass('appendSelectbox')) {
 		//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-		setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelectList.contentOption, 'commodity_name');
+		setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
 		//セレクトボックスを列にアウトプットする
-		creator.outputTag('contentSelectList', 'contentSelectList', '.appendSelectbox');
+		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+		//セレクトボックスのvalueを画面に表示されている値にする
+	setSelectboxValue('.contentSelect');
+		//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+		setSellingPrice('.appendSelectbox', '.lecturePermitListRecord');
 	}
 
 	//受講承認一覧テーブルの料金列をテキストボックスにする
