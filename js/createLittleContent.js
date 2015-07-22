@@ -3326,7 +3326,6 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
 		//備品idテキストボックスに備品名に対応した値段を入れる
 		$(textboxParentSelector + ' .commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
-						console.log(contentSelectNumber);
 	});
 }
 
@@ -3367,7 +3366,6 @@ function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
 	var inputDataArray = getInputData(inputDataSelector);
 	//取得した連想配列を結合する
 	var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
-	console.log(sendReplaceArray);
 	//結合した結果の連想配列を返す
 	return sendReplaceArray;
 }
@@ -3512,13 +3510,23 @@ function loopUpdatePermitLesson() {
  */
 function loopUpdatePermitLessonList() {
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.lecturePermitList normalButton', function(){
+	$(STR_BODY).on(CLICK, '.lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitListRecord').each(function() {
-			//受講承認一覧のテーブルから1行ずつ値を取り出してデータを更新していく
-			executeDBUpdate('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')', sendReplaceArray.user_classwork_cost, 'updateUserClassWork', 'updateCommoditySell');
+				//DBを更新するための値を取得するために置換する連想配列を取得する
+				var sendReplaceArray = getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+				//DBを更新するためのクエリを設定する。行の情報にセレクトボックスがあるなら備品情報更新クエリ、ないなら授業情報更新クエリを設定する
+				var sendQueryArray = choiceSendQueryArray(sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
+				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+				sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+				//クエリを実行してテーブルの値1行ずつ更新していく
+				setDBdata(sendQueryArray, sendReplaceArray, '');
+				//ループで実行するので置換データ連想配列を初期化する
+				sendReplaceArray = {};
+				//ループで実行するので置換データ連想配列を初期化する
+				sendQueryArray = {};
 			//カウンターをインクリメントする
 			counter++;
 		});
@@ -3698,6 +3706,8 @@ function createAdminPermitLessonListContent() {
 	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
+	loopUpdatePermitLessonList();
 
 }
 

@@ -372,11 +372,11 @@
             "value":"検索"
         }
     },
-    "updateUserClassWork":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,update_datetime = NOW() WHERE id = 'classwork_key';"
+    "updatePermitListLesson":{
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"
     },
-    "updateCommoditySell":{
-        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'pay_cash', update_datetime = NOW() WHERE id = 'commodity_sell_key';"
+    "updatePermitListCommoditySell":{
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"
     },
     "searchUser":{
         "searchList":{
