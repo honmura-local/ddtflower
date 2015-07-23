@@ -2291,14 +2291,21 @@ function insertTextboxToTable (tableClassName, appendDom, appendTo) {
  * 作成日:2015.07.11
  */
 function setInputValueToLecturePermitListInfoTable() {
-		//DBから取得した料金の値を取得する
-		resultValueCost = recordData['cost'];
-		//DBから取得した使用ptの値を取得する
-		resultValueUsePoint = recordData['use_point'];
-		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
-		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=' + 'use_point' + ']').eq(counter).attr('value', resultValueUsePoint);
+	//DBから取得した料金の値を取得する
+	resultValueCost = recordData['cost'];
+	//DBから取得した使用ptの値を取得する
+	resultValueUsePoint = recordData['use_point'];
+	//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
+	$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
+	//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
+	$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr('value', resultValueUsePoint);
+	//データが授業でーたでなく備品データのとき備品データをデフォルトでセットする
+	if(recordData['lesson_name'] == "" && recordData['content'] != "") {
+		//DBから取得した日備品の値を取得する
+		resultValueCommodityName = recordData['content'];
+		//備品名セレクトボックスにデフォルト値をDBから読込んだ値で設定する。
+		$('.lecturePermitListInfoTable tr:eq(' + rowNumber + ') [name="content"]').val(resultValueCommodityName);
+	}
 }
 
 /* 
@@ -2329,7 +2336,7 @@ function setTableTextboxValuefromDB(tableArray, setTablefunc) {
 }
 
 /* 
- * 関数名:updateProfile
+ * 関数名:setProfileUpdate
  * 概要  :プロフィール画面で更新ボタンを押されたときにテキストボックスに
  		 入っている値をDBに送信してデータを更新する
  * 引数  :なし
@@ -2505,6 +2512,8 @@ replaceTableOption['mailMagaTable'] = {
 replaceTableOption['lecturePermitListInfoTable']  = {
 	//テーブルのafterでの追加先
 	addDomPlace:'.permitListSearch',
+	//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
+	afterReloadFunc:afterReloadPermitListInfoTable,
 	//検索結果がなかった時のエラーメッセージ
 	errorMessage:'受講承認一覧が見つかりませんでした。'
 }
@@ -2624,7 +2633,7 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
  */
 function tableReload(reloadTableClassName) {
 	//テーブルのjsonの値が既にあれば
-	if(creator.json[reloadTableClassName].table[0]){
+	if(creator.json[reloadTableClassName].table){
 		//テーブルのjsonを初期化する
 		creator.json[reloadTableClassName].table = {};
 	}
@@ -3154,24 +3163,6 @@ function searchPermitListInfoTable () {
 		creator.json.lecturePermitListInfoTable.toDate.value = toDate;
 		//テーブルを更新する
 		tableReload('lecturePermitListInfoTable');
-		
-		//受講承認一覧テーブルの取り出した行にクラス名を付ける
-		setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
-
-		//受講承認一覧に連番を入れる
-		lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
-		//受講承認一覧テーブルの料金列をテキストボックスにする
-		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
-		//受講承認一覧テーブルの使用pt列をテキストボックスにする
-		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
-		//セレクトボックスを列にアウトプットする
-		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
-		//セレクトボックスのvalueを画面に表示されている値にする
-		setSelectboxValue('.contentSelect');
-		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
-		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	});
 }
 
@@ -3682,15 +3673,8 @@ function createAdminPermitLessonListContent() {
 	creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
 	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
 	setPermitListFromToDate();
-	// 受講承認一覧テーブル用のJSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
-	//受講承認一覧テーブルのDBから取り出した値がなければテーブルを出力しないようにする
-	if (creator.json.lecturePermitListInfoTable.table[0]) {
-		//受講承認一覧タブのリスト
-		creator.outputTagTable('lecturePermitListInfoTable', 'lecturePermitListInfoTable', '#lecturePermitList');
-		//受講承認一覧テーブルの取り出した行にクラス名を付ける
-		setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
-	}
+	//受講承認一覧テーブルを作る
+	tableReload('lecturePermitListInfoTable')
 	//受講承認一覧のリスト更新ボタン
 	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
 	//クリックでテキストボックスにカレンダーを表示する
@@ -3699,32 +3683,12 @@ function createAdminPermitLessonListContent() {
 	clickCalendar('toSearach');
 	//受講承認一覧の検索機能を実装する
 	searchPermitListInfoTable();
-	//受講承認一覧に連番を入れる
-	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
-
-	//セレクトボックスにする列があった時に列にセレクトボックスを入れる
-	if($('.lecturePermitListRecord td').hasClass('appendSelectbox')) {
-		//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-		setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
-		//セレクトボックスを列にアウトプットする
-		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
-		//セレクトボックスのvalueを画面に表示されている値にする
-		setSelectboxValue('.contentSelect');
-		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
-		//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-		setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
-	}
-
-	//受講承認一覧テーブルの料金列をテキストボックスにする
-	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
-	//受講承認一覧テーブルの使用pt列をテキストボックスにする
-	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
-	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+	setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
+	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
 	loopUpdatePermitLessonList();
-
 }
 
 /* 
@@ -3863,7 +3827,6 @@ function createAdminMailMagaAnnounceContent() {
 
 	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
 	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
-
 }
 
 /* 
@@ -3946,6 +3909,34 @@ function sendMail(mailInfoArray, mailSubject, mailContent) {
 }
 
 /* 
+ * 関数名:afterReloadPermitListInfoTable
+ * 概要  :受講承認一覧がリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadPermitListInfoTable() {
+	//受講承認一覧テーブルの取り出した行にクラス名を付ける
+	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+
+	//受講承認一覧テーブルの列内を編集する
+	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+	//受講承認一覧テーブルの料金列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	//受講承認一覧テーブルの使用pt列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	//セレクトボックスを列にアウトプットする
+	creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+	//セレクトボックスのvalueを画面に表示されている値にする
+	setSelectboxValue('.contentSelect');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+}
+
+/* 
  * 関数名:afterReloadMailMagaTable
  * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
  * 引数  :なし
@@ -3985,3 +3976,5 @@ function createContentTriggerClick(clickSelector, callContentFunc) {
 		}
 	});
 }
+
+
