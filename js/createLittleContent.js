@@ -2531,10 +2531,10 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 			//カウンターが0でなければ
 			if(counter != 0){
 				//追加する変数を作る
-				var addString = ' AND ' + attrName + " LIKE '%" + inputData + "%'";
+				var addString = ' AND ' + attrName + " LIKE '%" + inputData + "%' ";
 			} else {
 				//追加する変数を作る
-				var addString = ' WHERE ' + attrName + " LIKE '%" + inputData + "%'";
+				var addString = ' WHERE ' + attrName + " LIKE '%" + inputData + "%' ";
 				counter++;
 			}
 			//クエリに文字を付け加える
@@ -3803,7 +3803,26 @@ function createAdminMailMagaAnnounceContent() {
 
 
 	//メルマガテーブルに検索機能を対応させる
-	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
+//	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
+	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
+	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
+		var queryDefault = creator.json.mailMagaTable.db_getQuery;
+		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
+		var queryStringLength = creator.json.mailMagaTable.db_getQuery.length;
+		//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
+		var cutString = creator.json.mailMagaTable.db_getQuery.substring(creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
+		//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
+		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"));
+		//検索の条件をクエリに入れる
+		addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
+		//クエリに切り取ったORDER BYを付け足す
+		creator.json.mailMagaTable.db_getQuery += cutString;
+		//テーブルをリロードする
+		tableReload('mailMagaTable');
+		//クエリをデフォルトに戻す
+		creator.json.mailMagaTable.db_getQuery = queryDefault;
+	});
 
 	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
 	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
@@ -3841,6 +3860,9 @@ function createAdminMailMagaAnnounceContent() {
 		//メッセージ内容テキストエリアの中身を空にする
 		$('.mailMagaAndAnnounceArea textarea').text('');
 	});
+
+	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
+	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
 
 }
 
