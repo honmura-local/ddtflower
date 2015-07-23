@@ -1454,13 +1454,12 @@ dialogOption[ADMIN_LESSON_LIST_DIALOG] = $.extend(true, {}, dialogOption[STR_RES
 			$(document).on(STR_CLICK, ADMIN_LESSON_LIST_DIALOG_TD, function(){
 				//クリックしたセルの親の行番号を取得する
 				var rowNum = $(ADMIN_LESSON_LIST_DIALOG_TR).index($(this).parent()) - 1;
-				
 				//管理者の日ごと列すンダイアログのクラスインスタンスを取得する
 				var $nextDialog = $(CHAR_DOT + LESSON_DETAIL_DIALOG)[0].dialogClass;
 				//レッスン詳細ダイアログのクラスインスタンスを取得する
 				var $prevDialog = $(CHAR_DOT + ADMIN_LESSON_LIST_DIALOG)[0].dialogClass;
 				//次のダイアログに渡すオブジェクトを作る
-				var sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
+				sendObject = creator.replaceData(PATTERN_ADD, $.extend(true, {}, $prevDialog.queryReplaceData), 
 						creator.json[ADMIN_LESSON_INFORMATION].table[rowNum]);
 				//日付を置換前のスラッシュ区切りにする
 				var date = sendObject.lesson_date.replace(/-/g,"/");
@@ -1479,6 +1478,8 @@ dialogOption[ADMIN_LESSON_LIST_DIALOG] = $.extend(true, {}, dialogOption[STR_RES
 						},
 						titleDate
 				);
+				//授業詳細テーブルにDBから読込んだ値をデフォルトに設定する
+				setValueDBdata(sendObject, '.lessonData', 'keyValue')
 			});
 		}
 });

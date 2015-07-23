@@ -2240,6 +2240,10 @@ function setValueDBdata(setArray, setDomParent, targetArrayType) {
 		if (targetArrayType == 'keyTable') {
 			//テーブルから取り出した値をキーにして値を取得する
 			var resultValue = setArray[key]
+		//テーブルの置換済みの値からデータを読み込む場合の処理
+		} else if (targetArrayType == 'keyValue') {
+			//テーブルの置換済みの値を読み込む
+			var resultValue = setArray[key].value;
 		//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
 		} else {
 			//値を挿入する結果のvalueを変数に入れる
@@ -3745,6 +3749,16 @@ function createAdminLessonDetailContent() {
 	var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
 		// 授業詳細ダイアログ領域を作る
 		creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+	});
+	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
+	$(STR_BODY).on(CLICK, '.lessonDetailDialog input[value="更新"]', function() {
+		//入力した値を取得し、データの更新に用いる
+		var updateData = getInputData('lessonData');
+		//授業idを取得する
+		updateData['classwork_key'] = sendObject['classwork_key'].value;
+		console.log(updateData);
+		//授業詳細テーブルを更新する
+		setDBdata(creator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
 	});
 }
 

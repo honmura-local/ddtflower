@@ -563,7 +563,7 @@
             },
             "minStudentsTextbox":{
                 "type":"number",
-                "name":"minStudentsTextbox"
+                "name":"min_students"
             },
             "minStudentsUnit":{
                 "text":"人"
@@ -575,7 +575,7 @@
             },
             "maxStudentsTextbox":{
                 "type":"number",
-                "name":"maxStudentsTextbox"
+                "name":"max_students"
             },
             "maxStudentsUnit":{
                 "text":"人"
@@ -611,7 +611,7 @@
             },
             "classRoomTextbox":{
                 "type":"text",
-                "name":"classRoomTextbox"
+                "name":"classroom"
             }
         },
         "memoArea":{
@@ -619,7 +619,7 @@
                 "text":"メモ"
             },
             "memoTextarea":{
-                "name":"memoTextarea"
+                "name":"classwork_note"
             }
         }
     },
@@ -656,25 +656,25 @@
             "value":""
         }
     },
-    "updateClasswork":{
+    "lessonDetailUpdate":{
         "db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';",
         "max_students":{
-            "value":""
+            "style":"display:none"
         },
         "min_students":{
-            "value":""
+            "style":"display:none"
         },
         "classwork_status":{
-            "value":""
+            "style":"display:none"
         },
         "classroom":{
-            "value":""
+            "style":"display:none"
         },
         "classwork_note":{
-            "value":""
+            "style":"display:none"
         },
         "classwork_key":{
-            "value":""
+            "style":"display:none"
         }
     },
     "replaceTextboxCost":{
