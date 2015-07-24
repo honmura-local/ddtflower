@@ -1,17 +1,20 @@
 <?php
 
+//送信されたファイルのname属性の値を定数に入れる
+define('SEND_IMAGE_NAME', 'imageFile')
+
 // ファイルが送信されていない時の処理
-if (!isset($_FILES['imageFile']['tmp_name'])) {
+if (!isset($_FILES[SEND_IMAGE_NAME]['tmp_name'])) {
 	// 登録画面までページ遷移する
 	//header("Location: imageUp.html");
 	echo 'ファイルがありません';
 	exit;					// プログラムを終了する
 }
 // アップロードされたファイルの情報を変数に入れる
-$file_temp = $_FILES['imageFile']['tmp_name'];	// アップロードされたファイルが一時的に保存されたファイルパス
-$file_name = mb_convert_encoding($_FILES['imageFile']['name'], "SJIS", "AUTO");		// アップロードファイル名
-$file_type = $_FILES['imageFile']['type'];		// MIMEタイプ
-$file_size = $_FILES['imageFile']['size'];		// ファイルのサイズ(大きさ)
+$file_temp = $_FILES[SEND_IMAGE_NAME]['tmp_name'];	// アップロードされたファイルが一時的に保存されたファイルパス
+$file_name = mb_convert_encoding($_FILES[SEND_IMAGE_NAME]['name'], "SJIS", "AUTO");		// アップロードファイル名
+$file_type = $_FILES[SEND_IMAGE_NAME]['type'];		// MIMEタイプ
+$file_size = $_FILES[SEND_IMAGE_NAME]['size'];		// ファイルのサイズ(大きさ)
 
 
 // アップロードされたのが画像でなかったら画像をアップロードしない
@@ -35,7 +38,6 @@ if ($file_type == 'image/jpeg' || $file_type == 'image/png' ||$file_type == 'ima
 		} else {
 			// アップロードできなかったときのエラー処理を表示する
 			echo "ファイルをアップロードできませんでした<br>";
-
 		}
 	}
 } else {
