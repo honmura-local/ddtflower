@@ -21,8 +21,12 @@
 				}
 				//ブログ編集ページ用のDOMを取得する
 				creator.getDomFile('template/createblogarticle.html');
+				// 会員ページヘッダーを作る
+				creator.outputTag('memberHeader');
+				// バナー領域を作る
+				creator.outputTag('userBanner');
 			
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				// creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				
 				creator.outputTag('blogEditImageUploader');			//画像アップロードのボタンを配置する。
@@ -37,13 +41,13 @@
 				creator.outputTag('blogPublication', 'blogPublication','.blogEdit');				//ブログの公開設定のパーツを作る。
 				creator.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');				//編集確定か否かを選択するボタン群を作る。
 				
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				// creator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				// creator.outputTag('footer');						// フッターを作る
 				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
-				fixXCoordinateOnScroll('header');
+				// fixXCoordinateOnScroll('header');
 				
 				//ボタンをjQueryUIのリッチなボタンにする。
 				$('.main button, .main input:submit').button();

@@ -3682,9 +3682,9 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧のリスト更新ボタン
 	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
 	//クリックでテキストボックスにカレンダーを表示する
-	clickCalendar('fromSearach');
+	//clickCalendar('fromSearach');
 	//クリックでテキストボックスにカレンダーを表示する
-	clickCalendar('toSearach');
+	//clickCalendar('toSearach');
 	//受講承認一覧の検索機能を実装する
 	searchPermitListInfoTable();
 	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
@@ -3988,6 +3988,28 @@ function createContentTriggerClick(clickSelector, callContentFunc) {
 			//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
 			$(clickSelector).attr('data-eventFlag', 1);
 		}
+	});
+}
+
+/* 
+ * 関数名:myBlogUpdate
+ * 概要  :マイブログのボタンがクリックされた時にDBにデータを登録する処理を行う
+ * 引数  :buttonSelector:クリックされたときに処理を開始するボタンのセレクター名
+ 		:queryArray:クエリを発行してDBを更新するため、クエリが入った連想配列名
+ 		:inputDataParent:テキストボックスの親のセレクター。クエリを置換するために使う
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function myBlogUpdate(buttonSelector, queryArray, inputDataParent) {
+	//ボタンがクリックされたときにDBを更新する処理を開始する
+	$(STR_BODY).on(CLICK, buttonSelector, function() {
+		//テキストボックスなどに入力された値を取得する
+		var sendData = getInput(inputDataParent);
+		//送信するデータに会員番号を付け足す
+		sendData['user_key'] = creator.json.memberHeader.user_key.value;
+		//取得したデータからDBのデータを更新する
+		setDBdata(creator.json[queryArray], sendData, '');
 	});
 }
 
