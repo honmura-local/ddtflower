@@ -343,6 +343,7 @@ function afterSubmitForm(form, event){
  * 内容　:通信メソッドをフォームから取得して設定する様にしました。
  */
 function postForm(form){
+						// console.log(command);
 	$form = $(form);	//高速化のため、フォームの要素をjQueryオブジェクトにして変数に格納する。
 	//フォームのaction属性から送信URLを取得する。
 	var url = $form.attr('action').split(',');
@@ -374,6 +375,16 @@ function postForm(form){
 			
 			//URLが二つあれば
 			if(url.length > 1){
+				//追記者 T.Yamamoto 追記日 2015.07.24 内容:マイブログページの更新の場合、入力したデータを取得してDBを更新する処理を入れる
+				if(url[1] == 'memberMyBlog.html') {
+					//inputタグなどに入力したデータを取得しDB更新のために用いる
+					var sendData = getInputData('blogEdit');
+					//送信するデータに会員番号を加え、DBに更新するデータが誰のデータなのかを明確にする
+					sendData['user_key'] = creator.json.memberHeader.user_key.value;;
+					//ブログデータを更新しデータをDBにセットする
+					//setDBdata(creator.json.insertMyBlog, sendData, '');
+					// console.log('data:' + data);
+				}
 				alert('更新に成功しました。');	//返ってきたデータをダイアログに出す。
 //				alert(data);	//返ってきたデータをダイアログに出す。
 				//タブがあれば

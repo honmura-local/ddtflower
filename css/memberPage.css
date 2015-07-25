@@ -281,7 +281,8 @@ label,
 .doLecturePermitInfoTable,
 .lecturePermitListInfoTable,
 .userListInfoTable,
-.mailMagaTable {
+.mailMagaTable,
+.myBlogListTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin: 5px 0;				/* 上下5pxの余白をとる */
@@ -302,7 +303,8 @@ label,
 .doLecturePermitInfoTable tr:hover,
 .lecturePermitListInfoTable tr:hover,
 .userListInfoTable tr:hover,
-.mailMagaTable tr:hover {
+.mailMagaTable tr:hover,
+.myBlogListTable tr:hover {
 	background: #E0F5E6;	/* 行の背景を水色っぽくする */
 }
 
@@ -320,7 +322,8 @@ label,
 .doLecturePermitInfoTable tr:nth-of-type(1),
 .lecturePermitListInfoTable tr:nth-of-type(1),
 .userListInfoTable tr:nth-of-type(1),
-.mailMagaTable tr:nth-of-type(1) {
+.mailMagaTable tr:nth-of-type(1),
+.myBlogListTable tr:nth-of-type(1) {
 	background: #F0F3F5;	/* 行の背景を水色っぽくする */
 }
 
@@ -338,7 +341,8 @@ label,
 .doLecturePermitInfoTable td,
 .lecturePermitListInfoTable td,
 .userListInfoTable td,
-.mailMagaTable td {
+.mailMagaTable td,
+.myBlogListTable td{
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }

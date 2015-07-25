@@ -1488,7 +1488,7 @@ var errorJpNames = {name:'氏名',
 					startDate:'開始日',
 					endDate:'終了日',
 					maxEntry:'上限人数',
-					blogText:'本文',
+					blogContent:'本文',
 					blogTitle:'ブログタイトル',
 					imagePath:'画像',
 					campaignTitle:'キャンペーン名',
@@ -1595,29 +1595,42 @@ var articleSubmitHandler = {
 							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
 						},
 						success:function(json){	//通信が成功したら
-							//実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
-							//ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
-							json = json[number];
-							//jsonを走査する。
-							for(key in json){
-								var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
-								//domが画像タグならば
-								if(dom[0].tagName == 'IMG'){
-									//キーに対応したクラスの要素にテキストを追加していく。
-									dom.attr('src',json[key]);
-								//ラジオボタンなら
-								} else if(dom.attr('type') == 'radio'){
-									//対象となるラジオボタンにチェックを入れる。
-									dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
-								//日付テキストボックスなら
-								} else if(dom.attr('type') == 'date'){
-									//日付のフォーマットを整えてテキストボックスに値を入れる。
-									dom.val(json[key].replace(/\//g, "-"));
-									//単にテキストを入れるだけであれば
-								} else {
-									dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
-								}
-							}
+
+							console.log(creator.json.myBlogContent);
+							//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
+							creator.json.myBlogContent.user_key.value = creator.json.memberHeader.user_key.value;
+							//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
+							creator.json.myBlogContent.id.value = number;
+							//DBからブログ記事を読み込む
+							creator.getJsonFile('php/GetJSONString.php', creator.json['myBlogContent'], 'myBlogContent');
+							//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+							$('[name=blogTitle]').val(creator.json.myBlogContent.title.text);
+							//ブログ内容テキストエリアにDBから読込んだデータを入れる
+							$('[name="blogContent"]').text(creator.json.myBlogContent.content.text);
+
+							// //実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
+							// //ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
+							// json = json[number];
+							// //jsonを走査する。
+							// for(key in json){
+							// 	var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
+							// 	//domが画像タグならば
+							// 	if(dom[0].tagName == 'IMG'){
+							// 		//キーに対応したクラスの要素にテキストを追加していく。
+							// 		dom.attr('src',json[key]);
+							// 	//ラジオボタンなら
+							// 	} else if(dom.attr('type') == 'radio'){
+							// 		//対象となるラジオボタンにチェックを入れる。
+							// 		dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
+							// 	//日付テキストボックスなら
+							// 	} else if(dom.attr('type') == 'date'){
+							// 		//日付のフォーマットを整えてテキストボックスに値を入れる。
+							// 		dom.val(json[key].replace(/\//g, "-"));
+							// 		//単にテキストを入れるだけであれば
+							// 	} else {
+							// 		dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
+							// 	}
+							// }
 						}
 					})
 				}
@@ -2427,7 +2440,7 @@ function setPasswordUpdate() {
  * 作成日:2015.07.02
  */
 function addCheckbox(selector, attrName) {
-	$('.' + selector).append('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
+	$('.' + selector).html('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
 }
 
 //リプレイステーブル連想配列
@@ -3756,7 +3769,6 @@ function createAdminLessonDetailContent() {
 		var updateData = getInputData('lessonData');
 		//授業idを取得する
 		updateData['classwork_key'] = sendObject['classwork_key'].value;
-		console.log(updateData);
 		//授業詳細テーブルを更新する
 		setDBdata(creator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
 	});

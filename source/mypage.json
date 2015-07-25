@@ -103,5 +103,29 @@
             "text": "個人設定",
             "href": "#myoption.html"
         }
+    },
+    "myBlogListTable":{
+        "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC ",
+        "user_key":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "checkbox":{
+                    "className":"checkWrap"
+                },
+                "id":{
+                    "style":"display:none",
+                    "className":"number"
+                },
+                "date": {
+                    "columnName": "日付"
+                },
+                "title": {
+                    "columnName": "タイトル"
+                }
+            }
+        }
     }
+
 }

@@ -1,7 +1,7 @@
 <?php
 
 //送信されたファイルのname属性の値を定数に入れる
-define('SEND_IMAGE_NAME', 'imageFile')
+define('SEND_IMAGE_NAME', 'imageFile');
 
 // ファイルが送信されていない時の処理
 if (!isset($_FILES[SEND_IMAGE_NAME]['tmp_name'])) {
