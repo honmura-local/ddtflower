@@ -53,7 +53,7 @@ class ModelMysql {
 
 
 		//文字コードをセット
-		mysql_query(SET_NAMES_ENCODE);
+		//mysql_query(SET_NAMES_ENCODE);
 
 		// DB選択
 		$result = mysql_select_db(self::$db, self::$connect);

@@ -107,6 +107,7 @@ class ModelMail {
 			// 失敗を返却
 			return false;
 		}
+		var_dump($mail_to);
 		// 成功を返却
 		return true;
 	}
