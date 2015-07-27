@@ -15,16 +15,11 @@ class ModelMail {
     const mailNotDenied = 0;    // メール送信拒否してない
     
     /**
-     
-     *メルマガ送信対象者取得
-     
-     *@return メルマガ送信対象者の配列(連想配列)
-     
+     * メルマガ送信対象者取得
+     * @return メルマガ送信対象者の配列(連想配列)
      **/
     public static function getMailMagazineTarget() {
-        
         return ModelMysql::select_all2(array('id'), 'user_inf', 'mail_deny=' . self::mailNotDenied);
-        
     }
 	
 	//
