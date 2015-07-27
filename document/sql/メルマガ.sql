@@ -25,3 +25,13 @@ INSERT INTO
 		,{{本文}}
 		NOW()
 	)
+    
+# メルマガ受信ユーザ一覧取得
+SELECT 
+    id
+    ,user_name
+    ,mail_address 
+FROM 
+    user_inf
+WHERE 
+    mail_deny = 0
