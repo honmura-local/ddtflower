@@ -1596,17 +1596,8 @@ var articleSubmitHandler = {
 							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
 						},
 						success:function(json){	//通信が成功したら
-
-							//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
-							creator.json.myBlogContent.user_key.value = creator.json.memberHeader.user_key.value;
-							//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
-							creator.json.myBlogContent.id.value = number;
-							//DBからブログ記事を読み込む
-							creator.getJsonFile('php/GetJSONString.php', creator.json['myBlogContent'], 'myBlogContent');
-							//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-							$('[name=blogTitle]').val(creator.json.myBlogContent.title.text);
-							//ブログ内容テキストエリアにDBから読込んだデータを入れる
-							$('[name="blogContent"]').text(creator.json.myBlogContent.content.text);
+							//マイブログの記事更新のクエリを使うための準備をする
+							setBlogUpdateQueryReplace('myBlogContent', 'memberHeader', 'updateMyBlog', number);
 
 							// //実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
 							// //ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
@@ -1712,7 +1703,7 @@ var optionSubmitHandler = { submitHandler:function(form){
  * 作成日:2015.04.16
  * 作成者:T.Masuda
  */
-function deleteRowData(form){
+function deleteRowData(form, deleteQueryKey){
 	//削除ボタンが押されたら
 	$('.deleteRecord').on('click', function(){
 		var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
@@ -1734,6 +1725,8 @@ function deleteRowData(form){
 		
 		//確認ダイアログを出して、OKならば
 		if(window.confirm('選択した行を削除しますか?')){
+			//DBからチェックが入った記事を削除する
+			deleteBlogArticle(deleteQueryKey, numberArray);
 			//先ほど選択した行を削除する。
 			$checkedRecord.remove();
 			//削除完了の旨を伝える。
@@ -4022,25 +4015,52 @@ function createContentTriggerClick(clickSelector, callContentFunc) {
 }
 
 /* 
- * 関数名:myBlogUpdate
- * 概要  :マイブログのボタンがクリックされた時にDBにデータを登録する処理を行う
- * 引数  :buttonSelector:クリックされたときに処理を開始するボタンのセレクター名
- 		:queryArray:クエリを発行してDBを更新するため、クエリが入った連想配列名
- 		:inputDataParent:テキストボックスの親のセレクター。クエリを置換するために使う
+ * 関数名:setBlogUpdateQueryReplace
+ * 概要  :ブログを更新するための置換の値をjsonに入れる
+ * 引数  :getContentKey:ブログのデータを取得するための連想配列key名
+ 		:userKeyParrentKey:会員番号が入っている親のkey名
+ 		:updateQueryKey:テキストボックスの親のセレクター。クエリを置換するために使う
+ 		:number:更新記事対象のidの値
  * 返却値  :なし
  * 作成者:T.Yamamoto
- * 作成日:2015.07.23
+ * 作成日:2015.07.27
  */
-function myBlogUpdate(buttonSelector, queryArray, inputDataParent) {
-	//ボタンがクリックされたときにDBを更新する処理を開始する
-	$(STR_BODY).on(CLICK, buttonSelector, function() {
-		//テキストボックスなどに入力された値を取得する
-		var sendData = getInput(inputDataParent);
-		//送信するデータに会員番号を付け足す
-		sendData['user_key'] = creator.json.memberHeader.user_key.value;
-		//取得したデータからDBのデータを更新する
-		setDBdata(creator.json[queryArray], sendData, '');
-	});
+function setBlogUpdateQueryReplace(getContentKey, userKeyParrentKey, updateQueryKey, number) {
+	//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
+	creator.json[getContentKey].user_key.value = creator.json[userKeyParrentKey].user_key.value;
+	//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
+	creator.json[getContentKey].id.value = number;
+	//DBからブログ記事を読み込む
+	creator.getJsonFile('php/GetJSONString.php', creator.json[getContentKey], getContentKey);
+	//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+	$('[name=blogTitle]').val(creator.json[getContentKey].title.text);
+	//ブログ内容テキストエリアにDBから読込んだデータを入れる
+	$('[name="blogContent"]').text(creator.json[getContentKey].content.text);
+	//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
+	creator.json[updateQueryKey].id.value = number;
 }
 
-
+/* 
+ * 関数名:deleteBlogArticle
+ * 概要  :ブログの記事を削除する
+ * 引数  :deleteQueryKey:ブログのデータを削除するためのクエリが入った連想配列key名
+ 		:deleteArticleNumberArray:ブログデータ記事削除のための番号が入った配列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.27
+ */
+function deleteBlogArticle(deleteQueryKey, deleteArticleNumberArray) {
+	//記事を削除する個数をカウントし、ループさせる回数として使う
+	var deleteRoopCount = deleteArticleNumberArray.length;
+	//ループで記事削除処理を行う
+	for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
+		//削除するid番号を取得して削除するレコードを識別する
+		var deleteRowId = deleteArticleNumberArray[roopStartCount];
+		console.log(deleteRowId);
+		//削除クエリを実行するために削除対象記事の連想配列を作る
+		var sendReplaceArray = {id:{value:deleteRowId}};
+		console.log(sendReplaceArray);
+		//記事を削除しDBを更新する
+		setDBdata(creator.json[deleteQueryKey], sendReplaceArray, '');
+	}
+}

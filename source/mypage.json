@@ -126,6 +126,11 @@
                 }
             }
         }
+    },
+    "deleteMyBlog":{
+        "db_setQuery":"DELETE FROM user_blog WHERE id = 'id';",
+        "id":{
+            "value":""
+        }
     }
-
 }

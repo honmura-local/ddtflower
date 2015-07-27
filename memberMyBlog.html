@@ -56,19 +56,19 @@
 				}
 
 
-				//表形式のブログリストの外枠を作る。
-				creator.outputTag('managementList', 'managementList', '.myPageBlog');
-				//表の見出しを作る。
-				creator.outputTag('blogListHeadWrap', 'blogListHeadWrap', '.managementList .table');
-				//DOM配置の都合上付いてしまった親のtableタグを消す。
-				unwrapTable('.blogListHead');
-				//表の内容を作る。
-		 		outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
+				// //表形式のブログリストの外枠を作る。
+				// creator.outputTag('managementList', 'managementList', '.myPageBlog');
+				// //表の見出しを作る。
+				// creator.outputTag('blogListHeadWrap', 'blogListHeadWrap', '.managementList .table');
+				// //DOM配置の都合上付いてしまった親のtableタグを消す。
+				// unwrapTable('.blogListHead');
+				// //表の内容を作る。
+		 	// 	outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。
 				$('form').validate(articleSubmitHandler);
-				deleteRowData('form');	//行の削除イベントを登録する。
+				deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
 			</script>
 		</div>
 	</div>

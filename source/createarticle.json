@@ -109,10 +109,10 @@
         "db_setQuery":"INSERT INTO user_blog(user_key, title, content, post_timestamp) VALUES ('user_key', 'blogTitle', 'blogContent', NOW())"
     },
     "updateMyBlog":{
-        "db_setQuery":"UPDATE user_blog SET blog_title='blog_title', blog_content='blog_content' WHERE user_key='user_key';"
-    },
-    "deleteMyBlog":{
-        "db_setQuery":"UPDATE user_blog SET rec_status=1;"
+        "db_setQuery":"UPDATE user_blog SET title='blogTitle', content='blogContent' WHERE id='id';",
+        "id":{
+            "value":""
+        }
     },
     "myBlogListTable":{
         "db_getQuery":"SELECT id, DATE(post_timestamp) AS date,blog_title FROM user_blog WHERE user_key='user_key' ",
@@ -143,6 +143,7 @@
         },
         "content":{
             "text":""
-        }
+        },
+        "updateFlag":""
     }
 }
