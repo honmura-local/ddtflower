@@ -2986,6 +2986,8 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 			//前のページの値を取得する
 			nowPaging = getPagingMin(DOT + PAGING, maxPaging, pagingDisplayCount);
 		} else {
+			//クリックされたのが数字であるならば1を引いて正しいページングを行うようにする
+			nowPaging = Number($(this).text())-1;
 			//クリックされた要素にnowPageクラスを追加する
 			$(this).addClass(NOW_PAGE);
 		}
