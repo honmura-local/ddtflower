@@ -12,6 +12,15 @@ require_once "ModelMysql.php";
 class ModelMail {
 	
 	const aSManager = 80; // 管理者権限
+    const mailNotDenied = 0;    // メール送信拒否してない
+    
+    /**
+     * メルマガ送信対象者取得
+     * @return メルマガ送信対象者の配列(連想配列)
+     **/
+    public static function getMailMagazineTarget() {
+        return ModelMysql::select_all2(array('id'), 'user_inf', 'mail_deny=' . self::mailNotDenied);
+    }
 	
 	//
 	// メソッド名   ：send_mail
@@ -23,13 +32,15 @@ class ModelMail {
 	//                タイトル
 	// 引数         ：$content
 	//                内容
+    // 引数         ：$from
+    //                送信元
 	// 引数         ：$cc=''
 	//                送信先(cc)(登録者番号の配列も可能)
 	// 引数         ：$bcc=''
 	//                送信先(bcc)(登録者番号の配列も可能)
 	// 履歴         ：2010/02/19      林　直貴          新規作成
 	//
-	public static function send_mail($to, $subject, $content, $cc='', $bcc='') {
+	public static function send_mail($to, $subject, $content, $from='', $cc='', $bcc='') {
 		// to設定
         $mail_to = '';
         $mail_cc = '';
@@ -82,9 +93,11 @@ class ModelMail {
 			$mail_bcc = $bcc;
 		}
 
-		// FROM 取得
-		$from = ModelMysql::select_col_by_id('common_parameter', 'from_mail_address', 1);
-
+		// FROMが未指定なら取得
+		if(!$from) {
+			$from = ModelMysql::select_col_by_id('common_parameter', 'from_mail_address', 1);
+		}
+		
 		// 追加ヘッダ作成
 		$addhed = 'From:' . $from . "\n";
 		if($mail_cc != '') $addhed .= 'Cc:' . $mail_cc . "\n";
@@ -107,7 +120,6 @@ class ModelMail {
 			// 失敗を返却
 			return false;
 		}
-		var_dump($mail_to);
 		// 成功を返却
 		return true;
 	}
@@ -216,6 +228,8 @@ class ModelMail {
 		$lesson_start_time = ''; // 開始時間
 		$lesson_end_time = ''; // 終了時間
 		$commodity_name = ''; // 商品名
+		$suggest_content = '';
+		$suggest_title = '';
 
 		// レコード取得
 		if($temp_type) {
@@ -240,6 +254,11 @@ class ModelMail {
 			$user_rec = ModelMysql::select_one2('*', 'user_inf', 'id=' . $user_key);
 			$user_name = $user_rec['user_name']; // 名前取得
 			$user_mail_address = $user_rec['mail_address']; // メールアドレス取得
+			$suggest_rec = ModelMysql::select_one2('*', 'suggestion_box', 'user_key=' . $user_key, '', 'create_datetime DESC');
+			if(strpos($template,'[[suggest_title]]')) {
+				$suggest_content = $suggest_rec['suggest_content'];
+				$suggest_title = $suggest_rec['suggest_title'];
+			}
 		}
 		if($lesson_key) {
 			// レッスンキー指定の場合、テーマ情報取得
@@ -296,6 +315,12 @@ class ModelMail {
 			$replace[] = $user_name;
 			$search[] = '[[user_mail_address]]'; // メールアドレス
 			$replace[] = $user_mail_address;
+			if($suggest_title) {
+				$search[] = '[[suggest_content]]';	// 目安箱本文
+				$replace[] = $suggest_content;
+				$search[] = '[[suggest_title]]';	// 目安箱タイトル
+				$replace[] = $suggest_title;
+			}
 		}
 		if($classwork_key) {
 			// 授業キー指定の場合
@@ -353,6 +378,8 @@ class ModelMail {
 	// 戻り値       ：送信数、失敗数、メールアドレス無し数の配列
 	// 引数         ：$to
 	//                (配列もしくはカンマで区切られたIDリスト)
+	// 引数         ：$from
+	//				  (送信元のユーザid➡0やnull️の場合は管理者になる)
 	// 引数         ：$subject
 	//                タイトル
 	// 引数         ：$template
@@ -366,7 +393,7 @@ class ModelMail {
 	// 履歴         ：2010/02/19      林　直貴          新規作成
 	//				：2011/09/10	本村	引数追加
 	//
-	public static function send_mail_each($to, $subject, $template, $cc='', $bcc='', $admin_flag=false, $school_key=0, &$paramList = null) {
+	public static function send_mail_each($to, $from=0, $subject, $template, $cc='', $bcc='', $admin_flag=false, $school_key=0, &$paramList = null) {
 		$none_num = 0; // メールアドレス無し数
 		$send_num = 0; // 送信成功数
 		$fail_num = 0; // 送信失敗数
@@ -393,11 +420,16 @@ class ModelMail {
 				continue;
 			}
 			// メール雛形で、送信者情報のみ置き換え
-			// 2011/09/10_honmura_mod
-			//list($dummy, $content) = self::create_mail_content(0, $template, 0, intval($id), 0, 0, 0);
-			list($dummy, $content) = self::create_mail_content(0, $template, 0, intval($id), 0, 0, 0, '', $paramList[$cnt]);
+			// 送信元が指定されている場合はユーザのキーは送信元を使う。
+			$user_key = $id;
+			$from_str = '';
+			if($from) {
+				$user_key = $from;
+				$from_str = ModelMysql::select_col_by_id('user_inf', 'mail_address', $from);
+			}
+			list($dummy, $content) = self::create_mail_content(0, $template, 0, $user_key, 0, 0, 0, '', $paramList[$cnt]);
 			// メール送信
-			if(self::send_mail($user_rec['mail_address'], $subject, $content, $cc, $bcc) == false) {
+			if(self::send_mail($user_rec['mail_address'], $subject, $content, $from_str, $cc, $bcc) == false) {
 				// 失敗の場合
 				$admin_content .= sprintf("送信失敗[%s]\n", $user_rec['mail_address']);
 				++ $fail_num;
@@ -444,7 +476,7 @@ class ModelMail {
 	//				　パラーメタリスト、指定されていたらDBアクセス無しでこの値を使用
 	// 履歴         ：2011/09/12      本村          新規作成
 	//
-	public static function send_mail_each_test($to, $subject, $template, $cc='', $bcc='', $admin_flag=false, $school_key=0, &$paramList = null) {
+	public static function send_mail_each_test($to, $from=0, $subject, $template, $cc='', $bcc='', $admin_flag=false, $school_key=0, &$paramList = null) {
 		$none_num = 0; // メールアドレス無し数
 		$send_num = 0; // 送信成功数
 		$fail_num = 0; // 送信失敗数
@@ -471,11 +503,8 @@ class ModelMail {
 				continue;
 			}
 			// メール雛形で、送信者情報のみ置き換え
-			// 2011/09/10_honmura_mod
-			//list($dummy, $content) = self::create_mail_content(0, $template, 0, intval($id), 0, 0, 0);
-			list($dummy, $content) = self::create_mail_content(0, $template, 0, intval($id), 0, 0, 0, '', $paramList[$cnt]);
-			echo '<br>会員向け'.($cnt+1).'<BR>';
-			echo $content;
+			list($dummy, $content) = self::create_mail_content(0, $template, 0, $user_key, 0, 0, 0, '', $paramList[$cnt]);
+			
 			// メール送信
 			if(self::send_mail($user_rec['mail_address'], $subject, $content, $cc, $bcc) == false) {
 				// 失敗の場合
@@ -500,8 +529,6 @@ class ModelMail {
 			$send_num, $fail_num, $none_num, $admin_content, $subject, $template);
 			// 送信
 			self::send_mail($admin_to, '送信通知', $admin_content);
-			echo '<br>管理者向け内容<br>';
-			echo $admin_content;
 		}
 
 		// 結果数返却
