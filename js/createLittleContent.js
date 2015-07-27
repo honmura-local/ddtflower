@@ -2784,8 +2784,8 @@ function nowDatePaging(clickSelectorParent) {
  * 関数名:getPagingCount
  * 概要  :ページングの個数を取得する
  * 引数  :pagingTargetTable:ページング対象となるテーブル名
- *       displayNumber:ページングで表示する行数の件数
- *       pagingDisplayCount:ページング領域で表示するページングの件数
+ *       displayNumber:１つのページングで表示するレコードの件数
+ *       pagingDisplayCount:ページングを最大何ページまで表示するのかの件数
  * 返却値  :pagingCounter:ページングの最大値
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
@@ -3004,9 +3004,40 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 		var pagingAddQuery = ' LIMIT ' + (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
 		//クエリを実行してテーブルを作る
 		setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
+		//今何件目まで表示しているしているかを取得する
+		// var nowDisplayRecordCount = getPagingRecordCount(recordCount, nowPaging, maxRecord, minRecord);
+		// console.log(nowDisplayRecordCount);
 	});
+
 	//加える文字列を返す
-	return addQuery;
+	// return nowDisplayRecordCount;
+}
+
+/* 
+ * 関数名:getPagingRecordCount
+ * 概要  :取得したテーブルの件数と今何件目まで表示しているかの値を求めて返す
+ * 引数  :maxResultRecord	:テーブルの最大の表示件数
+ 		:nowPaging 			:ページングが今何ページ目にいるかの値
+ 		:nowMaxRecord	:現在表示している最大の表示件数
+ 		:nowMinRecord	:現在表示している最少の表示件数
+ * 返却値  :resultDisplayRecord:現在表示している結果の値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.27
+ */
+function getPagingRecordCount(maxResultRecord, nowPaging, nowMaxRecord, nowMinRecord) {
+	//現在表示している結果の値を入れる変数を作る
+	var resultDisplayRecord;
+	//現在表示している最少の値を求め、今何件目から表示しているかを表すのに使う
+	displayMinRecord = nowMinRecord + nowMaxRecord * nowPaging;
+	//現在表示している最大の値を求め、今何件目まで表示しているかを表すのに使う
+	displayMaxRecord = nowMinRecord + nowMaxRecord * (nowPaging + 1) - 1;
+	if(displayMaxRecord > maxResultRecord) {
+		displayMaxRecord = maxResultRecord;
+	}
+	//今何件目から何件目まで表示しているのかを返す
+	resultDisplayRecord = displayMinRecord + '~' + displayMaxRecord + '/' + maxResultRecord;
+	//今何件目まで表示しているかを返す
+	return resultDisplayRecord;
 }
 
 /* 
@@ -3607,14 +3638,8 @@ function createMemberFinishedLessonContent() {
 	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
 	tablePaging('finishedLessonTable', 15, 6);
-	//注釈を作る
-	creator.outputTag('anotion', 'anotion', '#finishedLesson');
-	// 絞り込みボタンをjqueryのボタンにする
-	$('.selectThemeButton').button();
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
-	//絞り込みボタンをjqueryのボタンにする
-	$('.selectThemeButton').button();
 	//絞り込みボタン機能を実装する
 	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
 }
@@ -3628,9 +3653,6 @@ function createMemberFinishedLessonContent() {
  * 作成日:2015.07.20
  */
 function createAdminPermitLessonContent() {
-	//受講済み授業テーブル用のJSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
-
 	//受講承認タブのコンテンツ
 	//タブ
 	creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
