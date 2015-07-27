@@ -1214,10 +1214,11 @@ function setMyGalleryChangeEvent(selector){
 			alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
 			return;	//処理を終える。
 		}
-		
-		//保存先を指定して画像のアップロードを行う。
-	    $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
-	//    	$(this).upload('uploadImage',{"dir":init['photoDirectory']}, function(xml) {
+
+		//保存先を指定して画像のアップロードを行う。input type="file"のname属性と会員IDを添えて送信する。
+		//  $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
+		//	$(this).upload('uploadImage',{"dir":init['photoDirectory'], postedName:$(this).attr('name')}, function(xml) {
+		$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:creator.json.memberHeader.user_key.value}, function(xml) {
 	    	//返ってきたデータから成否判定の値を取り出す。
 	    	//var issuccess = parseInt($(xml).find('issuccess').text());
 	    	//ローカルでのテスト用のxmlデータを作る。
