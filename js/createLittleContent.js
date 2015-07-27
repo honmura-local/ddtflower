@@ -27,6 +27,7 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
+CHANGE　							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -1596,7 +1597,6 @@ var articleSubmitHandler = {
 						},
 						success:function(json){	//通信が成功したら
 
-							console.log(creator.json.myBlogContent);
 							//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
 							creator.json.myBlogContent.user_key.value = creator.json.memberHeader.user_key.value;
 							//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
@@ -2598,46 +2598,62 @@ function replaceTableQuery(queryArrayKey) {
 
 
 /* 
- * 関数名:replaceTableTriggerClick
+ * 関数名:reloadTableTriggerEvent
  * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
    ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
+ * 引数  :eventSelector 			: イベントが始まる検索ボタンの親要素
+         eventName 				: どのイベントを行うかの名前
+         reloadTableClassName 	: リロードするテーブルクラス名
+         inputDataParent 		: クエリがaddのときクエリにデータを加えるためのテキストボックスの親要素のセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.03
+ */
+function reloadTableTriggerEvent(eventSelector, eventName, reloadTableClassName, inputDataParent) {
+		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
+		$(STR_BODY).on(eventName, eventSelector, function(){
+			//テーブルをリロードして最新のデータを表示する
+			eventTableReload(reloadTableClassName, inputDataParent);
+		});
+}
+
+/* 
+ * 関数名:eventTableReload
+ * 概要  :クリックやチェンジイベントで発生するテーブル再読み込み処理をまとめたもの。
+		reloadTableTriggerEvent関数内で使い、用途に合わせてテーブルを更新する
  * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
          queryArrayKey : クエリが入っている連想配列のkey
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.03
  */
-function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
-	//対象のボタンがクリックされた時の処理
-	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"]').click(function(){
-		//クエリ初期状態を保存する
-		var queryDefault = creator.json[queryArrayKey].db_getQuery;
-		//クエリの置換フラグが追記のとき
-		if (replaceTableOption[queryArrayKey].replaceFlag == 'add') {
-			//クエリに追記を行う関数を実行する
-			addQueryExtractionCondition(inputDataParent, queryArrayKey);
-		//置換フラグが置換のとき
-		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
-			//クエリの置換を行う関数を実行する
-			replaceTableQuery(queryArrayKey);
-			//ページング機能が実装されているのであればページング処理を行う
-			if(replaceTableOption[queryArrayKey].addPagingPlace) {
-				//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
-				$(DOT + PAGING).parent().off(CLICK);
-				//テーブルページング領域を消す
-				$(DOT + PAGING_AREA).remove();
-				//テーブルページングを実装する(1ページに15行表示し、5ページが最大表示)
-				tablePaging(queryArrayKey, 15, 6);
-				//処理を終わらせるためにreturnで終える
-				return;
-			}
+function eventTableReload(reloadTableClassName, inputDataParent) {
+	//クエリ初期状態を保存する
+	var queryDefault = creator.json[reloadTableClassName].db_getQuery;
+	//クエリの置換フラグが追記のとき
+	if (replaceTableOption[reloadTableClassName].replaceFlag == 'add') {
+		//クエリに追記を行う関数を実行する
+		addQueryExtractionCondition(inputDataParent, reloadTableClassName);
+	//置換フラグが置換のとき
+	} else if (replaceTableOption[reloadTableClassName].replaceFlag == 'replace') {
+		//クエリの置換を行う関数を実行する
+		replaceTableQuery(reloadTableClassName);
+		//ページング機能が実装されているのであればページング処理を行う
+		if(replaceTableOption[reloadTableClassName].addPagingPlace) {
+			//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
+			$(DOT + PAGING).parent().off(CLICK);
+			//テーブルページング領域を消す
+			$(DOT + PAGING_AREA).remove();
+			//テーブルページングを実装する(1ページに15行表示し、5ページが最大表示)
+			tablePaging(reloadTableClassName, 15, 6);
+			//処理を終わらせるためにreturnで終える
+			return;
 		}
-		//テーブルをリロードする
-		tableReload(queryArrayKey);
-		// クエリを最初の状態に戻す
-		creator.json[queryArrayKey].db_getQuery = queryDefault;
-	});
-
+	}
+	//テーブルをリロードする
+	tableReload(reloadTableClassName);
+	// クエリを最初の状態に戻す
+	creator.json[reloadTableClassName].db_getQuery = queryDefault;
 }
 
 /* 
@@ -3592,7 +3608,7 @@ function createMemberPageHeader() {
 function createMemberFinishedLessonContent() {
 	//受講済み授業テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-	//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+	//受講済み授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
 	setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
 	//受講済み授業の絞り込み領域を作る
 	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
@@ -3604,10 +3620,10 @@ function createMemberFinishedLessonContent() {
 	$('.selectThemeButton').button();
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
-	// 絞り込みボタンをjqueryのボタンにする
+	//絞り込みボタンをjqueryのボタンにする
 	$('.selectThemeButton').button();
 	//絞り込みボタン機能を実装する
-	replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
+	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
 }
 
 /* 
@@ -3732,7 +3748,7 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	replaceTableTriggerClick('searchList', 'userListInfoTable');
+	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする

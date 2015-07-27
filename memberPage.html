@@ -126,8 +126,6 @@
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
 				
-				// 絞り込みボタンをjqueryのボタンにする
-				$('.selectThemeButton').button();
 				//セレクトボックスのvalueを画面に表示されている値にする
 				setSelectboxValue('.selectThemebox');
 
@@ -145,8 +143,8 @@
 				});
 				//キャンセルダイアログを予約中授業テーブルから開く処理
 				cancelDialogOpen(cancelLesson, memberInfo);
-				//絞り込みボタン機能を実装する
-				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
+				//予約中授業テーブル絞り込みボタン機能を実装する
+				reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 			});
 			</script>
 		</div>

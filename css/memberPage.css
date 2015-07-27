@@ -910,7 +910,7 @@ label,
  * 作成日 :2015.07.010
  */
 .textareaLabel {
-	width: 95%;			/* 幅を95%にする */
+	width: 99%;			/* 幅を99%にする */
 	margin-top: 10px;	/* 上から10px余白をとる */
 }
 

@@ -14,8 +14,8 @@ var classworkStatuses = {
 };
 
 var userClassworkStatuses = {
-	0:"予約"
-	,1:"予約"
+	0:"予約済み"
+	,1:"予約済み"
 	,2:"受付"
 	,3:"受講済み"
 	,10:"キャンセル(本人)"
