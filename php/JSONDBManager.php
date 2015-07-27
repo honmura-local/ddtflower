@@ -25,6 +25,8 @@ define('COLUMN_NAME_USER_KEY', 'user_key');
 define('DSN', 'mysql:host=localhost;dbname=ddthink-com00006');		// データソースネーム(ホスト名、DB名)
 define('DB_USER', 'root');								// データベースユーザ
 define('DB_PASSWORD', 'bnp2525');						// データベースパスワード
+define('DB_HOST', 'localhost');                         // データベースホスト
+define('DB_DATABASE', 'ddthink-com00006');              // データベース
 
 /*
  * クラス名:DB_ResultTree
