@@ -7,7 +7,7 @@ SET
 	,late_time = {{遅刻時間}}
 	,update_datetime = NOW()
 WHERE
-	user_key = {{ユーザID}}
+	id = {{user_classwork_key}}
 
 # 備品代情報の更新
 INSERT INTO
