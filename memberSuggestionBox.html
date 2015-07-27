@@ -58,6 +58,14 @@
 				creator.outputTag('userBanner');
 				// お問い合わせ内容領域外側領域を作る
 				creator.outputTag('suggestionArea', 'insertForm');
+
+				//目安箱の店舗セレクトボックスを作る
+				creator.outputTag('schoolNameSelectArea', 'schoolNameSelectArea', '.suggestionArea');
+				//目安箱の種別セレクトボックスを作る
+				creator.outputTag('suggestionTypeSelectArea', 'suggestionTypeSelectArea', '.suggestionArea');
+				//目安箱のタイトル領域を作る
+				creator.outputTag('labelTextboxArea', 'labelTextboxArea', '.suggestionArea');
+
 				// お問い合わせ内容を入力する領域を作る
 				creator.outputTag('textareaLabel', 'textareaLabel', '.suggestionArea');
 				//目安箱か通常のメールかを決めるラジオボタンを作る
@@ -66,8 +74,23 @@
 				creator.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
 				//ボタンをjqueryのボタンにする
 				$('input[type="button"], input[type="reset"]').button();
-				//更新ボタンが押された時パスワードを更新する
-				// setPasswordUpdate();
+				//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
+				$(STR_BODY).on(CLICK, '.button1', function() {
+					//入力されているデータを取得しクエリを挿入するための値として扱う
+					var sendData = getInputData('suggestionArea');
+					//クエリに送信するデータに会員番号を加える
+					sendData['user_key'] = creator.json.memberHeader.user_key.value;
+					//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
+					if($('[name="suggestionRadio"]').val() == "0") {
+						//目安箱テーブルに新たにデータを挿入する
+						setDBdata(creator.json.insertSuggestionBox, sendData, '');
+						//目安箱としてメールを送信する
+						//メール送信処理
+					//目安箱でないなら
+					} else {
+						//通常メールとして送信する
+					}
+				});
 			});
 			</script>
 		</div>

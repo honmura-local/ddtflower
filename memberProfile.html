@@ -124,12 +124,12 @@
 				// パスワード変更リンクを作る
 				creator.outputTag('passLinkArea', 'passLinkArea', '.memberInfo');
 				// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
-				clickCalendar('birthday_date');
+				//clickCalendar('birthday_date');
 				// ボタンの見た目をjqueryuiのものにする
 				$('.updateButton').button();
 
 				//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
-				setValueDBdata(creator.json['getUserInf']['memberInfoValue']);
+				setValueDBdata(creator.json['getUserInf']['memberInfoValue'], '.userInf');
 
 				//入力したデータでDBを更新する
 				setProfileUpdate();

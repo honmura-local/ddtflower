@@ -168,12 +168,12 @@
 		<!-- 遅刻 -->
 		<div class="lateTime">
 			<!-- 遅刻ポイントテキストボックス -->
-			<input class="lateTimeTextbox" type="" name="">
+			<input class="lateTimeTextbox" type="" name="" value="">
 		</div>
 		<!-- 使用ポイント -->
 		<div class="usePoint">
 			<!-- 使用ポイントテキストボックス -->
-			<input class="usePointTextbox" type="" name="">
+			<input class="usePointTextbox" type="" name="" value="">
 		</div>
 		<!-- 備品名 -->
 		<div class="contentCell" colspan="">
@@ -186,19 +186,28 @@
 		<!-- 備品個数 -->
 		<div class="sellNumber">
 			<!-- 備品個数テキストボックス -->
-			<input class="sellNumberTextbox" type="" name="" value="">
+			<input class="sellNumberTextbox" type="" name="" value="" min="">
 		</div>
 		<!-- 備品代 -->
 		<div class="sellingPrice">
 			<!-- 備品代テキストボックス -->
-			<input class="sellingPriceTextbox" type="" name="" value="">
+			<input class="sellingPriceTextbox" type="" name="" value="" min="">
 		</div>
 		<!-- 会計 -->
 		<div class="payCash" colspan="">
 			<!-- 使用ポイントテキストボックス -->
-			<input class="payCashTextbox" type="" name="" value="">
+			<input class="payCashTextbox" type="" name="" value="" min="">
 		</div>
 	</div>
+
+	<!-- 備品id領域 -->
+	<input class="commodityKeyBox" type="" name="" value="">
+
+	<!-- 備品名セレクトボックス -->
+	<select class="contentSelect" name="">
+		<!-- 備品名、セレクトボックスの中身 -->
+		<option class="contentOption" value=""></option>
+	</select>
 
 	<!-- 管理者のカレンダー領域 -->
 	<div class="adminCalendar"></div>
@@ -292,14 +301,14 @@
 		<!-- 「店舗」ラベル -->
 		<label class="schoolNameLabel"></label>
 		<!-- 店舗セレクトボックス -->
-		<select class="schoolNameSelectBox">
+		<select class="schoolNameSelectBox" name="">
 			<!-- セレクトボックスボックスの値 -->
 			<option class="schoolNameSelect" value=""></option>
 		</select>
 		<!-- 「種別」ラベル -->
 		<label class="typeLabel"></label>
 		<!-- 種別セレクトボックス -->
-		<select class="typeSelectBox">
+		<select class="typeSelectBox" name="">
 			<!-- セレクトボックスボックスの値 -->
 			<option class="typeSelect" value=""></option>
 		</select>
@@ -325,9 +334,9 @@
 	</table>
 
 	<!-- メルマガ・アナウンス送信領域 -->
-	<ul class="mailMagaAndAnnounceArea">
+	<form class="mailMagaAndAnnounceArea">
 		<!-- 送信内容の情報領域 -->
-		<li class="messageInfo">
+		<div class="messageInfo">
 			<!-- 「No.」領域 -->
 			<label class="NoLabel"></label>
 			<!-- No.テキストボックス -->
@@ -335,58 +344,64 @@
 			<!-- 「店舗」ラベル -->
 			<label class="schoolNameLabel"></label>
 			<!-- 店舗セレクトボックス -->
-			<select class="schoolNameSelectBox">
+			<select class="schoolNameSelectBox" name="">
 				<!-- セレクトボックスボックスの値 -->
 				<option class="schoolNameSelect" value=""></option>
 			</select>
 			<!-- 「種別」ラベル -->
 			<label class="typeLabel"></label>
 			<!-- 種別セレクトボックス -->
-			<select class="typeSelectBox">
+			<select class="typeSelectBox" name="">
 				<!-- セレクトボックスボックスの値 -->
 				<option class="typeSelect" value=""></option>
 			</select>
-		</li>
+		</div>
 		<!-- 送信日領域 -->
-		<li class="sendmessageDate">
+		<div class="sendmessageDate">
 			<!-- 「送信日」ラベル -->
 			<label class="sendmessageDateLabel"></label>
 			<!-- 「送信日」テキストボックス -->
 			<input class="sendmessageDateTextbox" type="" name="" value="" readonly>
-		</li>
+		</div>
 		<!-- メッセージタイトルラベル領域 -->
-		<li class="messageTitleLabel"></li>
+		<div class="messageTitleLabel"></div>
 		<!-- メッセージタイトルのテキストボックス領域 -->
-		<li class="messageTitleTextboxArea">
+		<div class="messageTitleTextboxArea">
 			<!-- メッセージタイトルテキストボックス -->
 			<input class="messageTitleTextbox" type="" name="" value="">
-		</li>
+		</div>
 		<!-- メッセージ内容ラベル領域 -->
-		<li class="messageContentLabel"></li>
+		<div class="messageContentLabel"></div>
 		<!-- メッセージ内容領域 -->
-		<li class="messageContentArea">
+		<div class="messageContentArea">
 			<!-- メッセージ内容テキストエリア -->
 			<textarea class="messageTextarea" name=""></textarea>
-		</li>
+		</div>
 		<!-- メッセージ設定ラジオボタン領域 -->
-		<li class="messageOptionArea">
-			<!-- 「メルマガ」ラジオボタン -->
-			<input class="mailMagaRadio" type="" name="" value="">
+		<div class="messageOptionArea">
 			<!-- 「メルマガ」ラベル -->
-			<label class="mailMagaLabel"></label>
-			<!-- 「アナウンス」ラジオボタン -->
-			<input class="announceRadio" type="" name="" value="">
+			<label class="mailMagaLabel">
+				<!-- 「メルマガ」ラジオボタン -->
+				<input class="mailMagaRadio" type="" name="" value="">
+				<!-- メルマガラベルのテキスト領域 -->
+				<span class="mailMagaLabelText"></span>
+			</label>
 			<!-- 「アナウンス」ラベル -->
-			<label class="announceLabel"></label>
-		</li>
+			<label class="announceLabel">
+				<!-- 「アナウンス」ラジオボタン -->
+				<input class="announceRadio" type="" name="" value="">
+				<!-- アナウンスラベルのテキスト領域 -->
+				<span class="announceLabelText"></span>
+			</label>
+		</div>
 		<!-- メッセージボタン領域 -->
-		<li class="messageButtonArea">
+		<div class="messageButtonArea">
 			<!-- 送信ボタン -->
 			<input class="sendButton" type="" value="">
 			<!-- 削除ボタン -->
 			<input class="deleteButton" type="" value="">
-		</li>
-	</ul>
+		</div>
+	</form>
 
 </div>
 </body>

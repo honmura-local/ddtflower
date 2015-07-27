@@ -14,8 +14,8 @@ var classworkStatuses = {
 };
 
 var userClassworkStatuses = {
-	0:"予約"
-	,1:"予約"
+	0:"予約済み"
+	,1:"予約済み"
 	,2:"受付"
 	,3:"受講済み"
 	,10:"キャンセル(本人)"
@@ -748,3 +748,27 @@ var callLecturePermitValue = function(tableName, loopData, counter, rowNumber) {
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(allDay);
 };
+
+/* 
+ * 関数名:callPermitLessonListValue
+ * 概要  :受講承認一覧テーブルに表示されている値を変換する
+ * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+ 		 loopData:ループ対象となるテーブルの行全体の連想配列
+ 		 counter:カウンタ変数
+ 		 rowNumber:行番号
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+var callPermitLessonListValue = function(tableName, loopData, counter, rowNumber) {
+	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+	recordData = loopData[counter];
+	//連番を入れる
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
+	//テーマの値が空白のとき、その列に後にセレクトボックスをアペンドするために対してクラスをつける。
+	if(recordData.lesson_name == "") {
+		//クラスappendSelectboxをつけてアペンド対象であることを分かりやすくする
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).addClass('appendSelectbox');
+	}
+};
+

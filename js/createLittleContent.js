@@ -27,6 +27,7 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
+CHANGE　							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -1488,7 +1489,7 @@ var errorJpNames = {name:'氏名',
 					startDate:'開始日',
 					endDate:'終了日',
 					maxEntry:'上限人数',
-					blogText:'本文',
+					blogContent:'本文',
 					blogTitle:'ブログタイトル',
 					imagePath:'画像',
 					campaignTitle:'キャンペーン名',
@@ -1595,29 +1596,41 @@ var articleSubmitHandler = {
 							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
 						},
 						success:function(json){	//通信が成功したら
-							//実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
-							//ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
-							json = json[number];
-							//jsonを走査する。
-							for(key in json){
-								var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
-								//domが画像タグならば
-								if(dom[0].tagName == 'IMG'){
-									//キーに対応したクラスの要素にテキストを追加していく。
-									dom.attr('src',json[key]);
-								//ラジオボタンなら
-								} else if(dom.attr('type') == 'radio'){
-									//対象となるラジオボタンにチェックを入れる。
-									dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
-								//日付テキストボックスなら
-								} else if(dom.attr('type') == 'date'){
-									//日付のフォーマットを整えてテキストボックスに値を入れる。
-									dom.val(json[key].replace(/\//g, "-"));
-									//単にテキストを入れるだけであれば
-								} else {
-									dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
-								}
-							}
+
+							//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
+							creator.json.myBlogContent.user_key.value = creator.json.memberHeader.user_key.value;
+							//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
+							creator.json.myBlogContent.id.value = number;
+							//DBからブログ記事を読み込む
+							creator.getJsonFile('php/GetJSONString.php', creator.json['myBlogContent'], 'myBlogContent');
+							//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+							$('[name=blogTitle]').val(creator.json.myBlogContent.title.text);
+							//ブログ内容テキストエリアにDBから読込んだデータを入れる
+							$('[name="blogContent"]').text(creator.json.myBlogContent.content.text);
+
+							// //実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
+							// //ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
+							// json = json[number];
+							// //jsonを走査する。
+							// for(key in json){
+							// 	var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
+							// 	//domが画像タグならば
+							// 	if(dom[0].tagName == 'IMG'){
+							// 		//キーに対応したクラスの要素にテキストを追加していく。
+							// 		dom.attr('src',json[key]);
+							// 	//ラジオボタンなら
+							// 	} else if(dom.attr('type') == 'radio'){
+							// 		//対象となるラジオボタンにチェックを入れる。
+							// 		dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
+							// 	//日付テキストボックスなら
+							// 	} else if(dom.attr('type') == 'date'){
+							// 		//日付のフォーマットを整えてテキストボックスに値を入れる。
+							// 		dom.val(json[key].replace(/\//g, "-"));
+							// 		//単にテキストを入れるだけであれば
+							// 	} else {
+							// 		dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
+							// 	}
+							// }
 						}
 					})
 				}
@@ -2117,8 +2130,13 @@ function saveCustomizeTabJsonFile(creator){
 function setDBdata(sendQueryJsonArray, queryReplaceData, successMessage) {
 	//DBに送信するための連想配列
 	var send = {};
+	//置換済みであるかどうか判定するためにkey名を一つだけ取り出す
+	for(var arrayKey in queryReplaceData) {
+		//key名を取り出したらループを回さずに終わらせる
+		break;
+	}
 	//置換済みでなければ置換する
-	if(!queryReplaceData.userId.value) {
+	if(!queryReplaceData[arrayKey].value) {
 		send = $.extend(true, {}, sendQueryJsonArray, creator.replaceValueNode(queryReplaceData))
 	//置換済みであれば値をそのまま結合する	
 	} else {
@@ -2222,24 +2240,40 @@ function getInputData(selector) {
  		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
  		テキストボックスのname属性値がDBの列名と対応している。
  * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
+ 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
+ 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.02
  */
-function setValueDBdata(setArray) {
+function setValueDBdata(setArray, setDomParent, targetArrayType) {
 	//ループで連想配列を全てループする
 	for (var key in setArray) {
-		//値を挿入する結果のvalueを変数に入れる
-		var resultValue = setArray[key]['text'];
+		//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
+		if (targetArrayType == 'keyTable') {
+			//テーブルから取り出した値をキーにして値を取得する
+			var resultValue = setArray[key]
+		//テーブルの置換済みの値からデータを読み込む場合の処理
+		} else if (targetArrayType == 'keyValue') {
+			//テーブルの置換済みの値を読み込む
+			var resultValue = setArray[key].value;
+		//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
+		} else {
+			//値を挿入する結果のvalueを変数に入れる
+			var resultValue = setArray[key]['text'];
+		}
 		//対象の要素がテキストエリアのときにtextで値を入れる
-		if ($('[name="' + key + '"]').attr('class') == 'textArea') {
+		if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
 			//name属性がkeyのものに対して属性をDBから読み出した値にする
-			$('[name=' + key + ']').text(resultValue);
-		} else if($('[name=' + key + ']').attr('type') == 'radio') {
-			$('[name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+			$(setDomParent + ' [name=' + key + ']').text(resultValue);
+		//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
+		} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
+			//値が当てはまるチェックボックスに対してチェックを入れる
+			$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+		//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
 		} else {
 			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
-			$('[name=' + key + ']').attr('value', resultValue);
+			$(setDomParent + ' [name=' + key + ']').val(resultValue);
 		}
 	}
 }
@@ -2274,14 +2308,21 @@ function insertTextboxToTable (tableClassName, appendDom, appendTo) {
  * 作成日:2015.07.11
  */
 function setInputValueToLecturePermitListInfoTable() {
-		//DBから取得した料金の値を取得する
-		resultValueCost = recordData['cost'];
-		//DBから取得した使用ptの値を取得する
-		resultValueUsePoint = recordData['use_point'];
-		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
-		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=' + 'use_point' + ']').eq(counter).attr('value', resultValueUsePoint);
+	//DBから取得した料金の値を取得する
+	resultValueCost = recordData['cost'];
+	//DBから取得した使用ptの値を取得する
+	resultValueUsePoint = recordData['use_point'];
+	//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
+	$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
+	//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
+	$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr('value', resultValueUsePoint);
+	//データが授業でーたでなく備品データのとき備品データをデフォルトでセットする
+	if(recordData['lesson_name'] == "" && recordData['content'] != "") {
+		//DBから取得した日備品の値を取得する
+		resultValueCommodityName = recordData['content'];
+		//備品名セレクトボックスにデフォルト値をDBから読込んだ値で設定する。
+		$('.lecturePermitListInfoTable tr:eq(' + rowNumber + ') [name="content"]').val(resultValueCommodityName);
+	}
 }
 
 /* 
@@ -2312,7 +2353,7 @@ function setTableTextboxValuefromDB(tableArray, setTablefunc) {
 }
 
 /* 
- * 関数名:updateProfile
+ * 関数名:setProfileUpdate
  * 概要  :プロフィール画面で更新ボタンを押されたときにテキストボックスに
  		 入っている値をDBに送信してデータを更新する
  * 引数  :なし
@@ -2399,7 +2440,7 @@ function setPasswordUpdate() {
  * 作成日:2015.07.02
  */
 function addCheckbox(selector, attrName) {
-	$('.' + selector).append('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
+	$('.' + selector).html('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
 }
 
 //リプレイステーブル連想配列
@@ -2466,10 +2507,12 @@ replaceTableOption['userListInfoTable'] = {
 
 //メルマガテーブル
 replaceTableOption['mailMagaTable'] = {
-	//クエリを置換する置換フラグ、クエリを置換する
-//	replaceFlag:'replace',
+	//クエリを置換する置換フラグ、クエリを追加する(検索機能で使う)
+	replaceFlag:'add',
 	//テーブルのafterでの追加先
 	addDomPlace:'.mailMagaSearchArea',
+	//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
+	afterReloadFunc:afterReloadMailMagaTable,
 	//置換のvalueが入ったdom名
 //	replaceValueDom:'#finishedLesson .selectThemebox',
 	//置換するkey名
@@ -2486,6 +2529,8 @@ replaceTableOption['mailMagaTable'] = {
 replaceTableOption['lecturePermitListInfoTable']  = {
 	//テーブルのafterでの追加先
 	addDomPlace:'.permitListSearch',
+	//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
+	afterReloadFunc:afterReloadPermitListInfoTable,
 	//検索結果がなかった時のエラーメッセージ
 	errorMessage:'受講承認一覧が見つかりませんでした。'
 }
@@ -2512,10 +2557,10 @@ function addQueryExtractionCondition(inputDataParent, queryArrayKey) {
 			//カウンターが0でなければ
 			if(counter != 0){
 				//追加する変数を作る
-				var addString = ' AND ' + attrName + " LIKE '" + inputData + "%'";
+				var addString = ' AND ' + attrName + " LIKE '%" + inputData + "%' ";
 			} else {
 				//追加する変数を作る
-				var addString = ' WHERE ' + attrName + " LIKE '" + inputData + "%'";
+				var addString = ' WHERE ' + attrName + " LIKE '%" + inputData + "%' ";
 				counter++;
 			}
 			//クエリに文字を付け加える
@@ -2544,51 +2589,71 @@ function replaceTableQuery(queryArrayKey) {
 		creator.json[queryArrayKey][replaceKey]['value'] = replaceValue;
 		//クエリをテーマ検索用のものと入れ替える
 		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].replace_query;
+	//絞込ボタンで「全て」が選択されたときに全ての値を検索するためのクエリを入れる
+	} else {
+		//全ての値を検索するためのクエリをセットする
+		creator.json[queryArrayKey].db_getQuery = creator.json[queryArrayKey].allSearch_query;
 	}
 }
 
 
 /* 
- * 関数名:setExtractionCondition
+ * 関数名:reloadTableTriggerEvent
  * 概要  :クエリにテキストボックスから受け取った値を抽出条件に加える
    ユーザが入力した内容でDBからデータを検索したいときにクエリをセットするために使う関数
+ * 引数  :eventSelector 			: イベントが始まる検索ボタンの親要素
+         eventName 				: どのイベントを行うかの名前
+         reloadTableClassName 	: リロードするテーブルクラス名
+         inputDataParent 		: クエリがaddのときクエリにデータを加えるためのテキストボックスの親要素のセレクター名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.03
+ */
+function reloadTableTriggerEvent(eventSelector, eventName, reloadTableClassName, inputDataParent) {
+		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
+		$(STR_BODY).on(eventName, eventSelector, function(){
+			//テーブルをリロードして最新のデータを表示する
+			eventTableReload(reloadTableClassName, inputDataParent);
+		});
+}
+
+/* 
+ * 関数名:eventTableReload
+ * 概要  :クリックやチェンジイベントで発生するテーブル再読み込み処理をまとめたもの。
+		reloadTableTriggerEvent関数内で使い、用途に合わせてテーブルを更新する
  * 引数  :eventButtonParent: イベントが始まる検索ボタンの親要素
          queryArrayKey : クエリが入っている連想配列のkey
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.03
  */
-function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
-	//対象のボタンがクリックされた時の処理
-	$('.' + inputDataParent + ' button, .' + inputDataParent + ' input[type="button"]').click(function(){
-		//クエリ初期状態を保存する
-		var queryDefault = creator.json[queryArrayKey].db_getQuery;
-		//クエリの置換フラグが追記のとき
-		if (replaceTableOption[queryArrayKey].replaceFlag == 'add') {
-			//クエリに追記を行う関数を実行する
-			addQueryExtractionCondition(inputDataParent, queryArrayKey);
-		//置換フラグが置換のとき
-		} else if (replaceTableOption[queryArrayKey].replaceFlag == 'replace') {
-			//クエリの置換を行う関数を実行する
-			replaceTableQuery(queryArrayKey);
-			//ページング機能が実装されているのであればページング処理を行う
-			if(replaceTableOption[queryArrayKey].addPagingPlace) {
-				//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
-				$(DOT + PAGING).parent().off(CLICK);
-				//テーブルページング領域を消す
-				$(DOT + PAGING_AREA).remove();
-				//テーブルページングを実装する
-				var addQuery = tablePaging(queryArrayKey, 15, 6);
-				//クエリを更新する
-				creator.json[queryArrayKey].db_getQuery += addQuery;
-			}
+function eventTableReload(reloadTableClassName, inputDataParent) {
+	//クエリ初期状態を保存する
+	var queryDefault = creator.json[reloadTableClassName].db_getQuery;
+	//クエリの置換フラグが追記のとき
+	if (replaceTableOption[reloadTableClassName].replaceFlag == 'add') {
+		//クエリに追記を行う関数を実行する
+		addQueryExtractionCondition(inputDataParent, reloadTableClassName);
+	//置換フラグが置換のとき
+	} else if (replaceTableOption[reloadTableClassName].replaceFlag == 'replace') {
+		//クエリの置換を行う関数を実行する
+		replaceTableQuery(reloadTableClassName);
+		//ページング機能が実装されているのであればページング処理を行う
+		if(replaceTableOption[reloadTableClassName].addPagingPlace) {
+			//重複してクリックイベントを登録しないためにテーブルのクリックした時のイベントを削除する
+			$(DOT + PAGING).parent().off(CLICK);
+			//テーブルページング領域を消す
+			$(DOT + PAGING_AREA).remove();
+			//テーブルページングを実装する(1ページに15行表示し、5ページが最大表示)
+			tablePaging(reloadTableClassName, 15, 6);
+			//処理を終わらせるためにreturnで終える
+			return;
 		}
-		//テーブルをリロードする
-		tableReload(queryArrayKey);
-		// クエリを最初の状態に戻す
-		creator.json[queryArrayKey].db_getQuery = queryDefault;
-	});
-
+	}
+	//テーブルをリロードする
+	tableReload(reloadTableClassName);
+	// クエリを最初の状態に戻す
+	creator.json[reloadTableClassName].db_getQuery = queryDefault;
 }
 
 /* 
@@ -2601,7 +2666,7 @@ function replaceTableTriggerClick(inputDataParent, queryArrayKey) {
  */
 function tableReload(reloadTableClassName) {
 	//テーブルのjsonの値が既にあれば
-	if(creator.json[reloadTableClassName].table[0]){
+	if(creator.json[reloadTableClassName].table){
 		//テーブルのjsonを初期化する
 		creator.json[reloadTableClassName].table = {};
 	}
@@ -2622,6 +2687,11 @@ function tableReload(reloadTableClassName) {
 			var targetTableArray = creator.json[reloadTableClassName][TAG_TABLE];
 			// 予約中テーブルのテーブルの値をしかるべき値にする
 			lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
+		}
+		//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
+		if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
+			//リロード後に処理をする関数をコールする
+			replaceTableOption[reloadTableClassName].afterReloadFunc()
 		}
 	//DBから検索結果が見つからなかった時の処理
 	} else {
@@ -2915,11 +2985,8 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	var minRecord = 1;
 	//追加するクエリ
 	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
-	//タブリンクがクリックされたときにテーブルを読み込む
-	$(replaceTableOption[pagingTargetTable].addPagingPlace).click(function(){
-		//クエリを実行してテーブルを作る
-		setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
-	});
+	//クエリを実行してテーブルを作る
+	setTableReloadExecute(pagingTargetTable, addQuery, defaultQuery);
 	//ページングがクリックされた時の処理
 	$(DOT + PAGING).parent().on('click', DOT + PAGING, function(){
 		//全てのページングからnowPageクラスを取り除く
@@ -2935,6 +3002,8 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 			//前のページの値を取得する
 			nowPaging = getPagingMin(DOT + PAGING, maxPaging, pagingDisplayCount);
 		} else {
+			//クリックされたのが数字であるならば1を引いて正しいページングを行うようにする
+			nowPaging = Number($(this).text())-1;
 			//クリックされた要素にnowPageクラスを追加する
 			$(this).addClass(NOW_PAGE);
 		}
@@ -3129,14 +3198,6 @@ function searchPermitListInfoTable () {
 		creator.json.lecturePermitListInfoTable.toDate.value = toDate;
 		//テーブルを更新する
 		tableReload('lecturePermitListInfoTable');
-		//受講承認一覧に連番を入れる
-		insertNo (creator.json.lecturePermitListInfoTable.table, '.lecturePermitListInfoTable', 0);
-		//受講承認一覧テーブルの料金列をテキストボックスにする
-		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
-		//受講承認一覧テーブルの使用pt列をテキストボックスにする
-		insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
-		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-		setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	});
 }
 
@@ -3274,16 +3335,18 @@ function setCommodityCostPrice(changeSelector) {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17
  */
-function setSellingPrice() {
+function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
 	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
-	$(STR_BODY).on('change', '.contentSelect', function(){
+	$(STR_BODY).on('change', selectboxParentSelector + ' .contentSelect', function(){
 		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
-		var contentSelectNumber = $('.contentSelect').index(this);
+		var contentSelectNumber = $(selectboxParentSelector + ' .contentSelect').index(this);
 		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
-		var contentName = $('.contentSelect').eq(contentSelectNumber).val();
+		var contentName = $(selectboxParentSelector + ' .contentSelect').eq(contentSelectNumber).val();
 		//備品代の値を取得するための変数を作る
 		var sellingPrice;
+		//備品idを取り出すための変数を作る
+		var commodityKey;
 		//取り出した行のデータを数えるためにカウンターを変数を作る
 		var counter = 0;
 		//行データを変数に入れる
@@ -3296,12 +3359,15 @@ function setSellingPrice() {
 			if (contentName == commodityName) {
 				//備品代をテキストボックスに入れるための番号を取得する
 				sellingPrice = creator.json.selectCommodityInf.table[counter].selling_price;
-				//ループを終わらせるためにリターンでループを終える
+				//備品idをテキストボックスに入れるための番号を取得する
+				commodityKey = creator.json.selectCommodityInf.table[counter].commodity_key;
 			}
 			counter++;
 		});
 		//備品代テキストボックスに備品名に対応した値段を入れる
 		$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
+		//備品idテキストボックスに備品名に対応した値段を入れる
+		$(textboxParentSelector + ' .commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
 	});
 }
 
@@ -3318,6 +3384,10 @@ function setDefaultSellingPrice() {
 	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
 	//備品代の連想配列にデフォルト値を設定する
 	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
+	//備品代のid値を設定するために備品代idの最初値を取得する
+	var commodityKey = creator.json.selectCommodityInf.table[0].commodity_key;
+	//備品idの連想配列にデフォルト値を設定する
+	creator.json.commodityKeyBox.value = commodityKey;
 }
 
 /* 
@@ -3333,7 +3403,7 @@ function setDefaultSellingPrice() {
  */
 function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
 	//可変テーブルから連想配列を取得する
-	var resultTableArray = crator.json[tableClassName].table[rowNumber]
+	var resultTableArray = creator.json[tableClassName].table[rowNumber]
 	//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 	var inputDataArray = getInputData(inputDataSelector);
 	//取得した連想配列を結合する
@@ -3343,7 +3413,25 @@ function getSendReplaceArray(tableClassName, rowNumber, inputDataSelector) {
 }
 
 /* 
- * 関数名:choiceSendQuery
+ * 関数名:isBuyCommodity
+ * 概要  :受講承認の承認ボタンがクリックされた時に備品を購入したかどうかを判定する
+ * 引数  :sendReplaceArray
+ * 返却値  :resultBool:判定結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.21
+ */
+function isBuyCommodity(sendReplaceArray) {
+	//備品を購入していたらtrueにする
+	var resultBool = true;
+	//備品を購入していないときにfalseにする
+	if(sendReplaceArray.pay_cash <= 1) {
+		resultBool = false;
+	}
+	return resultBool
+}
+
+/* 
+ * 関数名:choiceSendQueryArray
  * 概要  :JSONDBManagerに送信するためのjsonを分岐する
  		:受講一覧の承認ボタンで使うクエリが受講情報のクエリか備品情報のクエリかを振り分けるときに使う
  * 引数  :boolRule:分岐させるための値が入った変数
@@ -3359,11 +3447,11 @@ function choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray) {
 	//条件分岐を設定するための値があるかどうかでクエリを決める
 	if (boolRule) {
 		//trueだった時のクエリを取得する
-		resultSendQueryArray = crator.json[trueQuery];
+		resultSendQueryArray = creator.json[trueQueryArray];
 	//条件が合わなかったときに別のクエリを入れる
 	} else {
 		//falseのときのクエリを取得する
-		resultSendQueryArray = crator.json[falseQuery];
+		resultSendQueryArray = creator.json[falseQueryArray];
 	}
 	//取得したクエリの結果を返す
 	return resultSendQueryArray;
@@ -3383,7 +3471,7 @@ function addUsePointQuery(sendQueryArray, sendReplaceArray) {
 	//置換するクエリに使用ポイントの値が1以上のとき、ポイントを使うということなのでクエリにポイントしようクエリを付け足す
 	if (sendReplaceArray.use_point >= 1) {
 		//現状のクエリに使用ポイントのクエリを付け足す
-		sendQueryArray.db_setQuery += creator.json.updateUsePoint;
+		sendQueryArray.db_setQuery += creator.json.updateUsePoint.db_setQuery;
 	}
 	//クエリの結果を返す
 	return sendQueryArray;
@@ -3392,7 +3480,12 @@ function addUsePointQuery(sendQueryArray, sendReplaceArray) {
 /* 
  * 関数名:executeDBUpdate
  * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
- * 引数  :
+ * 引数  :counter:カウンタ変数
+ 		tableClassName:テーブルのクラス名
+ 		inputDataSelector:テキストボックスなど値の親のセレクター名
+ 		boolRule:条件分岐するための正否判定
+ 		trueQueryArray:条件が正の時に代入するクエリが入った連想配列
+ 		falseQueryArray:条件が否の時に代入するクエリが入った連想配列
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17
@@ -3422,15 +3515,26 @@ function executeDBUpdate(counter, tableClassName, inputDataSelector, boolRule, t
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLCIK, '.doLecturePermit normalButton', function(){
+	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitAccordion').each(function() {
 			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-			if($('.permitCheckbox').eq(counter).prop('checked')) {
-				//受講承認テーブルからチェックが入っているレコードのデータだけを更新する
-				executeDBUpdate('doLecturePermitInfoTable', counter, '.lecturePermitAccordion:eq(' + counter + ')', boolRule, 'insertPermitLesson', 'updatePermitLesson');
+			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
+				//DBを更新するための値を取得するために置換する連想配列を取得する
+				var sendReplaceArray = getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+				//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
+				var sendQueryArray = choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+				sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+				//クエリを実行してテーブルの値1行ずつ更新していく
+				setDBdata(sendQueryArray, sendReplaceArray, '');
+				//ループで実行するので置換データ連想配列を初期化する
+				sendReplaceArray = {};
+				//ループで実行するので置換データ連想配列を初期化する
+				sendQueryArray = {};
+			} else {
 			}
 			//カウンターをインクリメントする
 			counter++;
@@ -3448,13 +3552,23 @@ function loopUpdatePermitLesson() {
  */
 function loopUpdatePermitLessonList() {
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLCIK, '.lecturePermitList normalButton', function(){
+	$(STR_BODY).on(CLICK, '.lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitListRecord').each(function() {
-			//受講承認一覧のテーブルから1行ずつ値を取り出してデータを更新していく
-			executeDBUpdate('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')', sendReplaceArray.user_classwork_cost, 'updateUserClassWork', 'updateCommoditySell');
+				//DBを更新するための値を取得するために置換する連想配列を取得する
+				var sendReplaceArray = getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+				//DBを更新するためのクエリを設定する。行の情報にセレクトボックスがあるなら備品情報更新クエリ、ないなら授業情報更新クエリを設定する
+				var sendQueryArray = choiceSendQueryArray(sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
+				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+				sendQueryArray = addUsePointQuery(sendQueryArray, sendReplaceArray);
+				//クエリを実行してテーブルの値1行ずつ更新していく
+				setDBdata(sendQueryArray, sendReplaceArray, '');
+				//ループで実行するので置換データ連想配列を初期化する
+				sendReplaceArray = {};
+				//ループで実行するので置換データ連想配列を初期化する
+				sendQueryArray = {};
 			//カウンターをインクリメントする
 			counter++;
 		});
@@ -3482,4 +3596,451 @@ function createMemberPageHeader() {
 		creator.outputTag('userBanner');
 	}
 }
+
+/* 
+ * 関数名:createMemberFinishedLessonContent
+ * 概要  :会員ページの受講済み授業タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createMemberFinishedLessonContent() {
+	//受講済み授業テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
+	//受講済み授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+	setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
+	//受講済み授業の絞り込み領域を作る
+	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
+	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
+	tablePaging('finishedLessonTable', 15, 6);
+	//注釈を作る
+	creator.outputTag('anotion', 'anotion', '#finishedLesson');
+	// 絞り込みボタンをjqueryのボタンにする
+	$('.selectThemeButton').button();
+	//セレクトボックスのvalueを画面に表示されている値にする
+	setSelectboxValue('.selectThemebox');
+	//絞り込みボタンをjqueryのボタンにする
+	$('.selectThemeButton').button();
+	//絞り込みボタン機能を実装する
+	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
+}
+
+/* 
+ * 関数名:createAdminPermitLessonContent
+ * 概要  :管理者ページの受講承認タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminPermitLessonContent() {
+	//受講済み授業テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+
+	//受講承認タブのコンテンツ
+	//タブ
+	creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
+	//受講承認タブ
+	creator.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
+	//受講承認一覧タブ
+	creator.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
+
+	// 受講承認テーブル用のJSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+	//受講承認タブのリストテーブル
+	creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+	//受講承認のボタン
+	creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+	//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
+	//タブを作る
+	createTab('.lecturePermitTab');
+
+	//受講承認のテーブルにチェックボックスを追加する
+	addCheckbox('permitCheckboxArea', 'permitCheckbox');
+	//受講承認に連番を入れる
+	lessonTableValueInput('.doLecturePermitInfoTable', creator.json.doLecturePermitInfoTable.table, 'callLecturePermitValue');
+
+	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+	setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+	setDefaultSellingPrice();
+	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+	setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+	insertTableRecord('lecturePermitAccordion', 'accordionContent');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	creator.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
+	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+	insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+	accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+	accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
+	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	//受講承認の備品名セレクトボックスにvalueを入れる
+	setSelectboxValue('.contentSelect');
+	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+	setSellingPrice('.contentCell', '.accordionContent');
+	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+	setDefaultCommodityCostPrice();
+	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+	setCommodityCostPrice('.contentSelect');
+	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+	setCommodityCostPrice('.sellNumberTextbox');
+	//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
+	createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
+	//承認ボタンクリックでデータを更新する
+	loopUpdatePermitLesson();
+}
+
+/* 
+ * 関数名:createAdminPermitLessonListContent
+ * 概要  :管理者ページの受講承認一覧タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminPermitLessonListContent() {
+	//受講承認一覧の検索領域を作る
+	creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+	setPermitListFromToDate();
+	//受講承認一覧テーブルを作る
+	tableReload('lecturePermitListInfoTable')
+	//受講承認一覧のリスト更新ボタン
+	creator.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+	//クリックでテキストボックスにカレンダーを表示する
+	//clickCalendar('fromSearach');
+	//クリックでテキストボックスにカレンダーを表示する
+	//clickCalendar('toSearach');
+	//受講承認一覧の検索機能を実装する
+	searchPermitListInfoTable();
+	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+	setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
+	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
+	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
+	loopUpdatePermitLessonList();
+}
+
+/* 
+ * 関数名:createAdminUserListContent
+ * 概要  :管理者ページのユーザ一覧タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminUserListContent() {
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	// ユーザ検索テキストボックス
+	creator.outputTag('searchUser', 'searchUser', '#userList');
+	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
+	tablePaging('userListInfoTable', 15, 10);
+
+	// 日ごと予約者一覧テーブル用のJSON配列を取得する
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	// 会員一覧タブのリスト
+	// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
+	//会員一覧タブのボタン群れ
+	creator.outputTag('userListButtons', 'userListButtons', '#userList');
+	//会員一覧タブのユーザ検索機能を実装する
+	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchList');
+	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
+	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
+	loginInsteadOfMember('#userList', '.userListInfoTable tr');
+}
+
+/* 
+ * 関数名:createAdminLessonDetailContent
+ * 概要  :管理者ページの授業詳細タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminLessonDetailContent() {
+	//授業詳細タブ内にカレンダ-作る
+	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
+	//予約一覧ダイアログを作る
+	var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
+		// 日ごとダイアログ領域を作る
+		creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
+	});
+	
+	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
+	var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
+	lessonCalendar.create();	//カレンダーを実際に作成する
+	
+	//授業詳細ダイアログを作る
+	var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
+		// 授業詳細ダイアログ領域を作る
+		creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+	});
+	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
+	$(STR_BODY).on(CLICK, '.lessonDetailDialog input[value="更新"]', function() {
+		//入力した値を取得し、データの更新に用いる
+		var updateData = getInputData('lessonData');
+		//授業idを取得する
+		updateData['classwork_key'] = sendObject['classwork_key'].value;
+		//授業詳細テーブルを更新する
+		setDBdata(creator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+	});
+}
+
+/* 
+ * 関数名:createAdminMailMagaAnnounceContent
+ * 概要  :管理者ページの授業詳細タブの内容を作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createAdminMailMagaAnnounceContent() {
+	//メルマガ＆アナウンスタブのコンテンツ
+	//過去のメルマガを検索するための領域を作る
+	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
+	//メルマガテーブルの外側を作る
+	// creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
+	//ページング機能付きでメルマガテーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
+	tablePaging('mailMagaTable', 15, 10);
+
+
+	//メルマガテーブルに検索機能を対応させる
+//	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
+	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
+	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
+		var queryDefault = creator.json.mailMagaTable.db_getQuery;
+		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
+		var queryStringLength = creator.json.mailMagaTable.db_getQuery.length;
+		//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
+		var cutString = creator.json.mailMagaTable.db_getQuery.substring(creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
+		//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
+		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"));
+		//検索の条件をクエリに入れる
+		addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
+		//クエリに切り取ったORDER BYを付け足す
+		creator.json.mailMagaTable.db_getQuery += cutString;
+		//テーブルをリロードする
+		tableReload('mailMagaTable');
+		//クエリをデフォルトに戻す
+		creator.json.mailMagaTable.db_getQuery = queryDefault;
+	});
+
+	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
+	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
+		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
+		var targetNumber = $('.targetMailMagazine').index(this);
+		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
+		var targetInf = creator.json.mailMagaTable.table[targetNumber];
+		//取得した連想配列をテキストボックスにセットする
+		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
+	});
+
+	// //メルマガの情報テーブルを取得するためのjsonをDBから取得する
+	// creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
+	// //メルマガテーブルを作る
+	// creator.outputTagTable('mailMagaTable', 'mailMagaTable', '#mailMagaAndAnnounce');
+	//メルマガ・アナウンス入力領域を作る
+	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+
+	//送信ボタンがクリックされたときにメール送信イベントを開始する
+	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
+		//メルマガ送信にチェックが入っていたらメルマガを送信する
+		if($('[name="messegeType"]').val() == "0") {
+			//メルマガを送信するための値をテキストボックスから取得する
+			var sendData = getInputData('mailMagaAndAnnounceArea');
+			//メルマガをDBに新規登録する
+			setDBdata(creator.json.insertMailMagazine, sendData, '');
+			//DBからメルマガを送信する会員情報を取得する
+			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
+			// メルマガ送信処理
+		}
+	});
+
+	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
+	$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
+		//メッセージ内容テキストエリアの中身を空にする
+		$('.mailMagaAndAnnounceArea textarea').text('');
+	});
+
+	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
+	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
+}
+
+/* 
+ * 関数名:cutString
+ * 概要  :すでに画面に表示されている文字を指定文字数で切り取る。
+ * 引数  :cutTargetSelector:文字を切り取る対象となる文字列を持ったセレクター名
+ 		cutCount:何文字以上であるなら文字に対して切り取りを行うかの設定の数字
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function cutString(cutTargetSelector, cutCount) {
+	//文字数カット対象となるセレクター、メルマガの内容列
+	var $setElm = $(cutTargetSelector);
+	// カットする文字数
+	var cutFigure = cutCount;
+	// 文字カット後に表示するテキスト
+	var afterTxt = ' …';
+
+	//ループですべてのメルマガ内容列について処理をする
+	$setElm.each(function(){
+		//対象の列の文字数を取得してカットする文字数と比較するのに使う
+		var textLength = $(this).text().length;
+		//カットした後の文字列を取得する
+		var textTrim = $(this).text().substr(0,(cutFigure))
+		//対象の列の文字数がカットする文字数より多い時に文字をカットする
+		if(cutFigure < textLength) {
+			//対象の列に対して文字をカットして表示する
+			$(this).html(textTrim + afterTxt).css({visibility:'visible'});
+		//対象の列がカットする文字数より少なかった場合、カットはせずにそのまま表示する
+		} else if(cutFigure >= textLength) {
+			//そのまま表示するように設定する
+			$(this).css({visibility:'visible'});
+		}
+	});
+}
+
+/* 
+ * 関数名:sendMail
+ * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
+ * 引数  :object mailInfoArray:送信先アドレスなどの情報が入った連想配列
+ 		string mailSubject:送信メールのタイトル文字列
+ 		string mailContent:送信メール内容
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function sendMail(mailInfoArray, mailSubject, mailContent) {
+		//Ajax通信を行う
+	$.ajax({
+		url: 'php/mailSend.php',		//メールを送信するためのphpをコールして処理を開始する
+		//メール情報を送信する
+		data:{memberInfo:mailInfoArray,	//送信先アドレス、名前などの連想配列
+				subject:mailSubject,	//メールタイトル
+				message:mailContent},	//メール内容
+		dataType: STR_TEXT,				//テキストデータを返してもらう
+		type: STR_POST,					//POSTメソッドで通信する
+		success:function(resultText){	//通信成功時の処理
+			//受け取った結果文字列を連想配列にする
+			var resultArray = JSON.parse(resultText);
+			//エラー件数を取得する
+			var errorCount = resultArray.length;
+			//受け取った配列の要素数が0であるなら送信成功のメッセージを出す。
+			if (errorCount == 0) {
+				//送信成功メッセージを出す
+				alert('送信に成功しました。')
+			//送信に失敗していたらエラーメッセージを出す
+			} else {
+				//エラーメッセージを出す。
+				alert(errorCount + '件のエラーがありました。');
+				//どの人でメッセージ送信に失敗したかをコンソールで表示する
+				console.log(resultArray);
+			}
+		},
+		error:function(xhr, status, error){	//通信失敗時の処理
+			//通信失敗のアラートを出す
+			alert(MESSAGE_FAILED_CONNECT);
+		}
+	});
+}
+
+/* 
+ * 関数名:afterReloadPermitListInfoTable
+ * 概要  :受講承認一覧がリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadPermitListInfoTable() {
+	//受講承認一覧テーブルの取り出した行にクラス名を付ける
+	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+
+	//受講承認一覧テーブルの列内を編集する
+	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+	//受講承認一覧テーブルの料金列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	//受講承認一覧テーブルの使用pt列をテキストボックスにする
+	insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	//セレクトボックスを列にアウトプットする
+	creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+	//セレクトボックスのvalueを画面に表示されている値にする
+	setSelectboxValue('.contentSelect');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+	setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+}
+
+/* 
+ * 関数名:afterReloadMailMagaTable
+ * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function afterReloadMailMagaTable() {
+	//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
+	cutString('.mailMagaContent', '150');
+	//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+	setTableRecordClass('mailMagaTable', 'targetMailMagazine');
+}
+
+/* 
+ * 関数名:createContentTriggerClick
+ * 概要  :管理者ページでタブがクリックされたときにコンテンツを呼び出すための関数。
+ * 引数  :clickSelector:クリックされたときにイベントを開始する対象のセレクター名
+ 		callContentFunc:タブがクリックされたときにcreateTagによって要素を作るための関数をコールするための関数名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.20
+ */
+function createContentTriggerClick(clickSelector, callContentFunc) {
+	//イベントを重複して登録しないためにイベントフラグ属性を作る
+	$(clickSelector).attr('data-eventFlag', 0);
+	//対象の要素がクリックされたらcreateTagによって要素を作る関数をコールする
+	$(clickSelector).on(CLICK, function(){
+		//イベントフラグが初期状態のときのみ関数を実行するようにして重複した実行を行わないようにする
+		if ($(clickSelector).attr('data-eventFlag') == 0) {
+			//関数をコールしてdom要素を作る
+			callContentFunc();
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, .searchButton, input[type="button"],[type="reset"]').button();
+			//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
+			$(clickSelector).attr('data-eventFlag', 1);
+		}
+	});
+}
+
+/* 
+ * 関数名:myBlogUpdate
+ * 概要  :マイブログのボタンがクリックされた時にDBにデータを登録する処理を行う
+ * 引数  :buttonSelector:クリックされたときに処理を開始するボタンのセレクター名
+ 		:queryArray:クエリを発行してDBを更新するため、クエリが入った連想配列名
+ 		:inputDataParent:テキストボックスの親のセレクター。クエリを置換するために使う
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function myBlogUpdate(buttonSelector, queryArray, inputDataParent) {
+	//ボタンがクリックされたときにDBを更新する処理を開始する
+	$(STR_BODY).on(CLICK, buttonSelector, function() {
+		//テキストボックスなどに入力された値を取得する
+		var sendData = getInput(inputDataParent);
+		//送信するデータに会員番号を付け足す
+		sendData['user_key'] = creator.json.memberHeader.user_key.value;
+		//取得したデータからDBのデータを更新する
+		setDBdata(creator.json[queryArray], sendData, '');
+	});
+}
+
 

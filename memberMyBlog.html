@@ -38,6 +38,24 @@
 				creator.outputTag('myPageBlog');
 				creator.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
 
+				//ボタンを作る
+				creator.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
+
+				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
+				creator.json.myBlogListTable.user_key.value = creator.json.memberHeader.user_key.value;
+				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogListTable'], 'myBlogListTable');
+				//ブログの投稿したことがある人のみブログリストテーブルを作る
+				if(creator.json.myBlogListTable.table.length != 0) {
+					//ブログリストのテーブルを作る
+					creator.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
+					//テーブルの1列目をチェックボックスにする
+					addCheckbox('checkWrap', 'check');
+					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
+					allCheckbox('.check:eq(0)', '.check');
+				}
+
+
 				//表形式のブログリストの外枠を作る。
 				creator.outputTag('managementList', 'managementList', '.myPageBlog');
 				//表の見出しを作る。
@@ -46,8 +64,6 @@
 				unwrapTable('.blogListHead');
 				//表の内容を作る。
 		 		outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
-				//ボタンを作る
-				creator.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

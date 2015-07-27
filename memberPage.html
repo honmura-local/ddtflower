@@ -105,11 +105,8 @@
 				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
 				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-				setSelectboxText(creator.json.reservedLessonTable.table, creator.json.alreadyReserved.selectThemebox.themeValue, 'lesson_name');
-				//受講済み授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-				setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLesson.selectThemebox.themeValue, 'lesson_name');
+				setSelectboxText(creator.json.reservedLessonTable.table, creator.json.reservedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
+
 				// 予約済み授業のタブ内コンテンツを作る
 				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 				// 受講済み授業のタブ内コンテンツを作る
@@ -117,18 +114,18 @@
 
 				// 予約済み授業と受講済み授業についてタブを作る
 				createTab('#tab-container');
+				//受講済み授業タブをクリックしたときに受講済み授業の内容を表示する
+				createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
+
+
+				//予約済み授業の絞り込み領域を作る
+				creator.outputTag('reservedLessonSelectTheme', 'selectTheme', '#alreadyReserved');
 				//予約中の授業があった時のテーブルを作る
 				if(creator.json['reservedLessonTable']['table'][0]) {
 					// 予約中授業のテーブルを作る
 					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
 				}
-				//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
-				tablePaging('finishedLessonTable', 15, 6);
-				//注釈を作る
-				creator.outputTag('anotion', 'anotion', '.tabPanel');
 				
-				// 絞り込みボタンをjqueryのボタンにする
-				$('.selectThemeButton').button();
 				//セレクトボックスのvalueを画面に表示されている値にする
 				setSelectboxValue('.selectThemebox');
 
@@ -146,10 +143,8 @@
 				});
 				//キャンセルダイアログを予約中授業テーブルから開く処理
 				cancelDialogOpen(cancelLesson, memberInfo);
-				//絞り込みボタン機能を実装する
-				replaceTableTriggerClick('alreadyReserved', 'reservedLessonTable');
-				//絞り込みボタン機能を実装する
-				replaceTableTriggerClick('finishedLesson', 'finishedLessonTable');
+				//予約中授業テーブル絞り込みボタン機能を実装する
+				reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 			});
 			</script>
 		</div>

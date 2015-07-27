@@ -18,7 +18,7 @@
     "blogEdit":{
     	"name":"blogEdit",
     	"method":"post",
-    	"action":",mypage.html",
+    	"action":",memberMyBlog.html",
     	"title":"ブログ記事編集",
     	"value":"ブログ記事の編集を確定します。"
     },
@@ -103,6 +103,46 @@
         	"href":"adminblogmanagement.html",
         	"onclick":"",
         	"type":"button"
+        }
+    },
+    "insertMyBlog":{
+        "db_setQuery":"INSERT INTO user_blog(user_key, title, content, post_timestamp) VALUES ('user_key', 'blogTitle', 'blogContent', NOW())"
+    },
+    "updateMyBlog":{
+        "db_setQuery":"UPDATE user_blog SET blog_title='blog_title', blog_content='blog_content' WHERE user_key='user_key';"
+    },
+    "deleteMyBlog":{
+        "db_setQuery":"UPDATE user_blog SET rec_status=1;"
+    },
+    "myBlogListTable":{
+        "db_getQuery":"SELECT id, DATE(post_timestamp) AS date,blog_title FROM user_blog WHERE user_key='user_key' ",
+        "config": {
+            "columns": {
+                "id":{
+                    "style":"display:none;"
+                },
+                "date": {
+                    "columnName": "日付"
+                },
+                "blog_title": {
+                    "columnName": "タイトル"
+                }
+            }
+        }
+    },
+    "myBlogContent":{
+        "db_getQuery":"SELECT title, content FROM user_blog WHERE user_key='user_key' AND id='id' ",
+        "user_key":{
+            "value":""
+        },
+        "id":{
+            "value":""
+        },
+        "title":{
+            "text":""
+        },
+        "content":{
+            "text":""
         }
     }
 }
