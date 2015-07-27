@@ -53,6 +53,8 @@ INSERT INTO
 		,classwork_note
 		,teacher_key
         ,school_key
+        ,lesson_key
+        ,time_table_day_key
 		,create_datetime
 		,update_datetime
 	)
@@ -64,6 +66,8 @@ INSERT INTO
 		,'{{classwork_note}}'
 		,(select id from user_inf where authority = 10 limit 1)
         ,{{school_key}}
+        ,{{lesson_key}}
+        ,{{time_table_day_key}}
 		,NOW()
 		,NOW()
 	)
