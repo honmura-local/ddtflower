@@ -1,13 +1,18 @@
 INSERT INTO 
 	suggestion_box(
-		magazine_title
-		,magazine_content
+		suggest_title
+		,suggest_content
 		,send_datetime
-		,magazine_type
+		,suggest_type
 	)
 	VALUES (
-		{{magazine_title}}
-		,{{magazine_content}}
+		{{suggest_title}}
+		,{{suggest_content}}
 		,{{send_datetime}}
-		,{{magazine_type}}
+		,{{suggest_type}}
 	)
+
+# suggest_type のコードと日本語の対応
+# 0:意見・要望
+# 1:問い合わせ
+# 2:クレーム
