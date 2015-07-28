@@ -11,7 +11,7 @@
  */
 
 //親クラスのファイルを読み込む
-include ('procedureBase.php');
+require_once ('procedureBase.php');
 
 /*
  * クラス名:procedureSet
@@ -48,21 +48,42 @@ class procedureSet extends procedureBase{
 	 */
 	function job($jsonString){
 		parent::job($jsonString);	//親クラスのjobを実行し、メンバにJSONの連想配列を格納する。
+		
 		//JSONをDBに反映させる。
+		//SQLによる例外の対処のためtryブロックで囲む
+		try {
+			//INSERT、またはUPDATE命令を実行する
+			$this->executeQuery($this->json, DB_SETQUERY);
+			//SQL例外のcatchブロック
+		} catch (PDOException $e) {
+			// エラーメッセージを表示する
+			error_log($e->getMessage());
+			// プログラムをそこで止める
+		    echo 'データの更新に失敗しました';
+			exit;
+		}
+		//最後に行う処理
+		$this->dbh = null;
+		
+		//クライアントへ返すメッセージを作成する。
+		$returnMessage = '{"message":"' . $this->processedRecords . '"}';
+		
+		// 作成したJson文字列を出力する
+		print($returnMessage);
 	}
 	
 	/*
 	 * 関数名：run
 	 * 概要  :クラスのinit、job関数をまとめて実行する。
-	 * 引数  :なし
+	 * 引数  :String $jsonString:JSON文字列。
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.0728
 	 */
-	function run(){
+	function run($jsonString){
 		//初期化処理とクラス独自の処理をまとめて実行する。
-		init();	//初期化関数
-		job();	//クラス特有の処理を行う
+		$this->init();	//初期化関数
+		$this->job($jsonString);	//クラス特有の処理を行う
 	}
 }

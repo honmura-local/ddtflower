@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ファイル名:login.php
+ * ファイル名:account.php
  * 概要	:ログインのための関数を持ったクラスのファイル。
  * 設計者:H.Kaneko
  * 作成者:T.Masuda
@@ -9,21 +9,22 @@
  * パス	:/php/login.php
  */
 
+
 //loginの親クラスのファイルを読み込む
 include ('JSONDBManager.php');
 
 /*
- * クラス名:login
+ * クラス名:account
  * 概要  :ログインのための関数を持ったクラス。JSONDBManagerクラスを継承する。
  * 設計者:H.Kaneko
  * 作成者:T.Masuda
  * 作成日:2015.0728
  */
-class login extends JSONDBManager{
+class account extends JSONDBManager{
 	
 	/*
 	 * 関数名：init
-	 * 概要  :初期化処理を行う。
+	 * 概要  :初期化処理を行う。初期化としてセッションの開始とDBへの接続を行う。
 	 * 引数  :なし
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
@@ -37,26 +38,26 @@ class login extends JSONDBManager{
 		//DBへの接続を開始する。
 		$this->connect();
 	}
-	
+
 	/*
 	 * 関数名：login
 	 * 概要  :ログイン処理を行う。
-	 * 引数  :なし
+	 * 引数  :String $jsonString: JSON文字列。ログイン情報が入っている必要がある。
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.0728
 	 */
-	function login(){
+	function login($jsonString){
 
 		//クライアントから送信されたJSONのキーとJSON文字列を取得する。
-		$key = $_POST["key"];
-		$json = $_POST["json"];
+		$key = $_POST['key'];
+		$this->getJSONMap($jsonString);
 		
 		//SQLによる例外の対処のためtryブロックで囲む
 		try {
 			// jsonを出力する
-			$this->outputJSON($json, $key);
+			$this->createJSON($this->json, $key, null);
 			//SQL例外のcatchブロック
 		} catch (PDOException $e) {
 			// エラーメッセージを表示する
@@ -70,7 +71,7 @@ class login extends JSONDBManager{
 		session_regenerate_id();
 		
 		//会員番号(ユーザID)をセッションに入れる
-		$_SESSION['userId'] = $result['id'];
+		$_SESSION['userId'] = $this->json['id']['text'];
 		
 		// 作成したJSON文字列を出力する。
 		print($jsonOut);
@@ -125,7 +126,7 @@ class login extends JSONDBManager{
 		} catch (LoginCheckException $e){
 			//未定義
 		}
-		
+
 		//真理値を返す
 		return $retBoo;
 	}

@@ -10,7 +10,7 @@
  */
 
 //親クラスのファイルを読み込む
-include ('procedureBase.php');
+require_once ('procedureBase.php');
 
 /*
  * クラス名:procedureLogout
@@ -23,7 +23,7 @@ class procedureLogout extends procedureBase{
 
 	/*
 	 * 関数名：init
-	 * 概要  :クラスの初期化関数
+	 * 概要  :クラスの初期化関数。親クラスの初期化関数をコールする。
 	 * 引数  :なし
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
@@ -37,7 +37,7 @@ class procedureLogout extends procedureBase{
 
 	/*
 	 * 関数名：job
-	 * 概要  :クラス特有の処理を行う関数
+	 * 概要  :クラス特有の処理を行う関数。ログアウト処理を行う。
 	 * 引数  :String $jsonString:JSON文字列
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
@@ -45,7 +45,7 @@ class procedureLogout extends procedureBase{
 	 * 作成日:2015.0728
 	 */
 	function job($jsonString){
-		logout();	//ログアウト処理を行う。
+		$this->logout();	//ログアウト処理を行う。
 	}
 	
 	/*
@@ -59,7 +59,7 @@ class procedureLogout extends procedureBase{
 	 */
 	function run(){
 		//初期化処理とクラス独自の処理をまとめて実行する。
-		init();	//初期化関数
-		job();	//クラス特有の処理を行う
+		$this->init();	//初期化関数
+		$this->job();	//クラス特有の処理を行う
 	}
 }

@@ -10,7 +10,7 @@
  */
 
 //JSONDBManagerの親クラスのファイルを読み込む
-include ('dbConnect.php');
+require_once ('dbConnect.php');
 
 //JSONのdb_getQueryキーの文字列を定数にセットする
 define('DB_GETQUERY', 'db_getQuery');

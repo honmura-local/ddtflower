@@ -1,39 +1,22 @@
 <?php
-// データベースに接続するための値を定数として宣言する
 
-// JSONDBManagerクラスファイルを読み込む
-require_once("JSONDBManager.php");
+/*
+ * ファイル名:SaveJSONRecord.php
+ * 概要	:JSONの内容をもとにクエリを実行し、DBのレコードを追加、更新、削除する。
+ * 設計者:H.Kaneko
+ * 作成者:T.Masuda
+ * 作成日:2015.0728
+ * パス	:/php/dbConnect.php
+ */
 
-//クライアントから送信されたJSON文字列を取得する。
+//送信されたJSONの値と、JSONに含まれるクエリを基にしてDBのレコードの更新、追加、削除を行うクラスを別ファイルから取り込む。
+include ('procedureSet.php');
+
+// クライアントから送信されたJSONのキーとJSON文字列を取得する。
 $json = $_POST["json"];
 
-//JSONDBManagerのインスタンスを生成する
-$jdbm = new JSONDBManager();
+//DBのレコードの更新、追加、削除のいずれかを行うためのクラスのインスタンスを生成する。
+$jsonDbSetter = new procedureSet();
 
-//SQLによる例外の対処のためtryブロックで囲む
-try {
-	// データベースに接続する
-	$jdbm->dbh = new PDO(DSN, DB_USER, DB_PASSWORD);
-	// データベースをUTF8で設定する
-	$jdbm->dbh->query('SET NAMES utf8');
-	//クライアントから送信されたJSON文字列を連想配列に変換する
-	$jdbm->getJSONMap($json);
-	//INSERT、またはUPDATE命令を実行する
-	$jdbm->executeQuery($jdbm->json, DB_SETQUERY);
-	//SQL例外のcatchブロック
-} catch (PDOException $e) {
-	// エラーメッセージを表示する
-	error_log($e->getMessage());
-	// プログラムをそこで止める
-    echo 'データの更新に失敗しました';
-	exit;
-}
-//最後に行う処理
-$jdbm->dbh = null;
-
-//クライアントへ返すメッセージを作成する。
-$returnMessage = '{"message":"' . $jdbm->processedRecords . '"}';
-
-// 作成したJson文字列を出力する
-print($returnMessage);
-
+//生成したインスタンスの処理関数を実行する。
+$jsonDbSetter->run($json);

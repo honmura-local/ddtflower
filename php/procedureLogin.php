@@ -10,7 +10,7 @@
  */
 
 //親クラスのファイルを読み込む
-include ('procedureBase.php');
+require_once ('procedureBase.php');
 
 /*
  * クラス名:procedureLogin
@@ -23,7 +23,7 @@ class procedureLogin extends procedureBase{
 
 	/*
 	 * 関数名：init
-	 * 概要  :クラスの初期化関数
+	 * 概要  :クラスの初期化関数。ログイン用のクラスの初期化関数をコールする。
 	 * 引数  :なし
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
@@ -31,13 +31,13 @@ class procedureLogin extends procedureBase{
 	 * 作成日:2015.0728
 	 */
 	function init(){
-		//loginクラスのinit関数をコールする。
-		login::init();
+		//accountクラスのinit関数をコールする。
+		account::init();
 	}
 
 	/*
 	 * 関数名：job
-	 * 概要  :クラス特有の処理を行う関数
+	 * 概要  :クラス特有の処理を行う関数。ログイン処理を行う。
 	 * 引数  :String $jsonString:JSON文字列
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
@@ -45,7 +45,7 @@ class procedureLogin extends procedureBase{
 	 * 作成日:2015.0728
 	 */
 	function job($jsonString){
-		login();	//ログインを実行する。
+		$this->login($jsonString);	//ログインを実行する。
 	}
 	
 	/*
@@ -57,9 +57,9 @@ class procedureLogin extends procedureBase{
 	 * 作成者:T.Masuda
 	 * 作成日:2015.0728
 	 */
-	function run(){
+	function run($jsonString){
 		//初期化処理とクラス独自の処理をまとめて実行する。
-		init();	//初期化関数
-		job();	//クラス特有の処理を行う
+		$this->init();	//初期化関数
+		$this->job($jsonString);	//クラス特有の処理を行う
 	}
 }
