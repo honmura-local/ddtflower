@@ -2685,7 +2685,7 @@ function tableReload(reloadTableClassName) {
 		//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 		if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 			//リロード後に処理をする関数をコールする
-			replaceTableOption[reloadTableClassName].afterReloadFunc()
+			replaceTableOption[reloadTableClassName].afterReloadFunc();
 		}
 	//DBから検索結果が見つからなかった時の処理
 	} else {
@@ -3032,7 +3032,9 @@ function getPagingRecordCount(maxResultRecord, nowPaging, nowMaxRecord, nowMinRe
 	displayMinRecord = nowMinRecord + nowMaxRecord * nowPaging;
 	//現在表示している最大の値を求め、今何件目まで表示しているかを表すのに使う
 	displayMaxRecord = nowMinRecord + nowMaxRecord * (nowPaging + 1) - 1;
+	//表示している件数が最大件数よりも大きい時は
 	if(displayMaxRecord > maxResultRecord) {
+		//最大件数を表示最大件数とする
 		displayMaxRecord = maxResultRecord;
 	}
 	//今何件目から何件目まで表示しているのかを返す
@@ -4084,10 +4086,8 @@ function deleteBlogArticle(deleteQueryKey, deleteArticleNumberArray) {
 	for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
 		//削除するid番号を取得して削除するレコードを識別する
 		var deleteRowId = deleteArticleNumberArray[roopStartCount];
-		console.log(deleteRowId);
 		//削除クエリを実行するために削除対象記事の連想配列を作る
 		var sendReplaceArray = {id:{value:deleteRowId}};
-		console.log(sendReplaceArray);
 		//記事を削除しDBを更新する
 		setDBdata(creator.json[deleteQueryKey], sendReplaceArray, '');
 	}
