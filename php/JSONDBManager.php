@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * ファイル名:JSONDBManager.php
+ * 概要	:JSONにDBから取得した値を与える、またはJSONのデータをDBに保存する役割のクラスのファイル。
+ * 設計者:H.Kaneko
+ * 作成者:T.Masuda
+ * 作成日:2015.0728
+ * パス	:/php/JSONDBManager.php
+ */
+
+//JSONDBManagerの親クラスのファイルを読み込む
+require_once ('dbConnect.php');
+
 //JSONのdb_getQueryキーの文字列を定数にセットする
 define('DB_GETQUERY', 'db_getQuery');
 //JSONのdb_setQueryキーの文字列を定数にセットする
@@ -21,19 +33,12 @@ $KEY_LIST = array('text', 'html', 'src');
 //会員番号列を定数に入れる
 define('COLUMN_NAME_USER_KEY', 'user_key');
 
-// データベースに接続するための値を定数として宣言する
-define('DSN', 'mysql:host=localhost;dbname=ddthink-com00006');		// データソースネーム(ホスト名、DB名)
-define('DB_USER', 'ddt42625');								// データベースユーザ
-define('DB_PASSWORD', 'nR6Cf84S');						// データベースパスワード
-define('DB_HOST', 'localhost');                         // データベースホスト
-define('DB_DATABASE', 'ddthink-com00006');              // データベース
-
 /*
  * クラス名:DB_ResultTree
 * 概要  :DBの結果セットのツリーのノードクラス
 * 設計者:H.Kaneko
 * 作成者:T.Masuda
-* 作成日:2015.05.29
+* 作成日:2015.07.28
 */
 class DB_ResultTree {
 	public $parent = null;			//このノード(インスタンス)の親
@@ -43,9 +48,15 @@ class DB_ResultTree {
 	
 }
 
-class JSONDBManager {
-	// データベースハンドラ-(DB接続に使う)
-	public $dbh = "";
+/*
+ * クラス名:JSONDBManager
+* 概要  :JSONにDBから取得した値を与える、またはJSONのデータをDBに保存する役割のクラス。
+* 		dbConnectクラスを継承する。
+* 設計者:H.Kaneko
+* 作成者:T.Masuda
+* 作成日:2015.07.28
+*/
+class JSONDBManager extends dbConnect{
 	//DBへの追加、更新処理を行ったときに帰ってくる処理レコード数の数値を格納するメンバ
 	public $processedRecords = 0;
 	//JSONを変換した連想配列を格納する
