@@ -490,12 +490,12 @@
     	"secondRow":{
     		"createMail":{
 	    		"type":"button",
-	    		"value":"メール・メッセージ"
+	    		"value":"メール"
     		},
     		"register":{
-                "class":"register fRight",
+                "class":"detail fRight",
 	    		"type":"button",
-	    		"value":"新規登録"
+	    		"value":"詳細設定"
     		}
     	}
     },
