@@ -7,6 +7,7 @@ SELECT
 	,user_name
 	,stage_inf.stage_no
 	,lesson_sub.level_no
+    ,user_classwork.user_work_status AS user_work_status
 FROM
 	time_table_day
 INNER JOIN
