@@ -37,18 +37,6 @@ INSERT INTO
 		,NOW()
 	)
 
-UPDATE
-	commodity_sell
-SET
-	sell_datetime = NOW()
-	,sell_number = {{個数}}
-	,pay_cash = {{備品代}}
-	,use_point = {{受講情報の更新時のポイントのあまり}
-    ,get_point = {{point_rate * 備品代}}
-	,update_datetime = NOW()
-WHERE
-	id = {{commodity_key※セレクトで指定した値}}
-
 # 取得ポイントがある場合
 UPDATE
 	user_inf
