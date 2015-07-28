@@ -3549,6 +3549,12 @@ function loopUpdatePermitLesson() {
 			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 				//DBを更新するための値を取得するために置換する連想配列を取得する
 				var sendReplaceArray = getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+				//加算ポイントレートを取得する
+				var lessonPlusPointRate = getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+				//受講料から加算ポイントを求める
+				sendReplaceArray['lessonPlusPoint'] = getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+				//備品代から加算ポイントを求める
+				sendReplaceArray['commodityPlusPoint'] = getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
 				//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
 				var sendQueryArray = choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
 				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
@@ -3559,7 +3565,6 @@ function loopUpdatePermitLesson() {
 				sendReplaceArray = {};
 				//ループで実行するので置換データ連想配列を初期化する
 				sendQueryArray = {};
-			} else {
 			}
 			//カウンターをインクリメントする
 			counter++;
@@ -4086,4 +4091,79 @@ function deleteBlogArticle(deleteQueryKey, deleteArticleNumberArray) {
 		//記事を削除しDBを更新する
 		setDBdata(creator.json[deleteQueryKey], sendReplaceArray, '');
 	}
+}
+
+/* 
+ * 関数名:getUserPlusPointRate
+ * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getUserPlusPointRate(plusPointQueryKey, lessonStudents, lessonKey) {
+	//レッスンの加算ポイントを取得するために加算ポイント取得クエリの置換する値となるlesson_keyの値を入れる
+	creator.json[plusPointQueryKey].lesson_key.value = lessonKey;
+	//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[plusPointQueryKey], plusPointQueryKey);
+	//加算ポイントについてループして値を走査するためにループの値を取得する
+	var loopMaxCount = creator.json[plusPointQueryKey].table.length;
+	//加算ポイントのレートを返すための変数を作る
+	var userPlusPointRate;
+	//ループでポイントのレートを求める
+	for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
+		//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
+		var studentsCount = creator.json[plusPointQueryKey].table[loopCount].students;
+		//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
+		if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
+			//加算ポイントのレートを決定しループを終わらせる
+			userPlusPointRate = creator.json[plusPointQueryKey].table[loopCount].point_rate;
+			break;
+		//条件に当てはまらなければ加算ポイントのレートでないので次のループに行く
+		} else {
+			continue;
+		}
+	}
+	return userPlusPointRate;
+}
+
+/* 
+ * 関数名:getUserPlusPoint
+ * 概要  :ユーザが加算するポイントを求める
+ * 引数  :cost 		:加算ポイントを指定するための授業料や備品代の値
+ 		:pointRate 	: 加算ポイントのレート
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getUserPlusPoint(cost, pointRate) {
+	//加算ポイントを計算式で求める(授業料×レート÷100を小数点切り捨て)
+	var userPlusPoint = Math.ceil(Number(cost) * pointRate / 100);
+	//加算ポイントを返す
+	return userPlusPoint;
+}
+
+/* 
+ * 関数名:getCommodityPlusPoint
+ * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getCommodityPlusPoint(plusPointQueryKey, sendReplaceArray) {
+	//DBからデータを取得するために備品のidを連想配列に入れてデータ取得のための準備をする
+	creator.json[plusPointQueryKey].commodity_key.value = sendReplaceArray['commodity_key'];
+	//備品の加算ポイントレートを取得するためにDBからデータを取得する
+	creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json[plusPointQueryKey], plusPointQueryKey);
+	//備品の加算ポイントレートを変数に入れる
+	var commodityPlusPointRate = creator.json[plusPointQueryKey].get_point.text;
+	//加算ポイントを求める
+	var plusPoint = getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
+	//加算ポイントを返す
+	return plusPoint;
 }
