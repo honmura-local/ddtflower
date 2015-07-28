@@ -17,9 +17,9 @@ define('PASSWORD', 'password');
 define('ID', 'id');
 
 //JSONにDBから取得したデータを追加するクラスをファイルから取り込む
-include ('procedureGet.php');
+require_once ('procedureGet.php');
 //ログイン用のクラスのファイルを読み込む
-include ('procedureLogin.php');
+require_once ('procedureLogin.php');
 
 // クライアントから送信されたJSONのキーとJSON文字列を取得する。
 $json = $_POST["json"];

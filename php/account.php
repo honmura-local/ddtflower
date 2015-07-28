@@ -11,7 +11,7 @@
 
 
 //loginの親クラスのファイルを読み込む
-include ('JSONDBManager.php');
+require_once ('JSONDBManager.php');
 
 /*
  * クラス名:account

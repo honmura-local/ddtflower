@@ -10,7 +10,7 @@
  */
 
 //ログアウトを行うためのクラスを読み込む
-include ('procedureLogout.php');
+require_once ('procedureLogout.php');
 
 //ログアウト用のクラスのインスタンスを生成する
 $logout = new procedureLogout();

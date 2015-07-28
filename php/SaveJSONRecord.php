@@ -10,7 +10,7 @@
  */
 
 //送信されたJSONの値と、JSONに含まれるクエリを基にしてDBのレコードの更新、追加、削除を行うクラスを別ファイルから取り込む。
-include ('procedureSet.php');
+require_once ('procedureSet.php');
 
 // クライアントから送信されたJSONのキーとJSON文字列を取得する。
 $json = $_POST["json"];
