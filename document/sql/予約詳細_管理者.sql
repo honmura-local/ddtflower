@@ -85,3 +85,15 @@ SET
 	,update_datetime = NOW()
 WHERE
 	id = {{classwork_key}}
+    
+#-------------------------------------------
+# 時間割ごとの最大、最小人数更新
+UPDATE
+    time_table_day
+SET 
+    max_num = {{max_num}}
+    ,min_num = {{min_num}}
+    ,update_datetime = NOW()
+WHERE
+    id = {{time_table_day_key}}
+
