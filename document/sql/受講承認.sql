@@ -1,6 +1,8 @@
 SELECT
 	time_table_day.id AS time_table_key
 	,time_table_day.lesson_date AS lesson_date
+    ,classwork.order_students AS order_students
+    ,classwork.lesson_key AS lesson_key
 	,start_time
 	,end_time
 	,lesson_name
@@ -38,11 +40,48 @@ ON
 	timetable_inf.id = time_table_day.timetable_key
 AND
 	user_classwork.user_work_status = 2;
+
+# ポイントレート算出方法①
+SELECT
+    point_rate
+FROM
+    lesson_point_rate
+WHERE
+    lesson_point_rate.lesson_key = {{lesson_key}}
+AND
+    lesson_point_rate.students <= {{order_students}}
+ORDER BY
+    lesson_point_rate.students DESC
+LIMIT 1
+#⬆️の結果がかえってこなかったら
+SELECT
+    point_rate
+FROM
+    lesson_point_rate
+WHERE
+    lesson_point_rate.lesson_key = {{lesson_key}}
+ORDER BY 
+    lesson_point_rate.students ASC
+LIMIT 1;
+
+#ポイントレート算出方法②
+SELECT
+    point_rate
+    ,students
+FROM
+    lesson_point_rate
+WHERE
+    lesson_point_rate.lesson_key = {{lesson_key}}
+#これでとれた全件のうち、studentsがclassworkのorder_students以下なレコードのうちで最大のstudentsを持つレコードのpoint_rate
+#上記に該当するものがないときは全件のうちで最小のstudentsをもつレコードのpoint_rate
+
 	
 # 備品名リスト用クエリ
 # selling_priceは個数入力時の代金自動計算に使う
+# point_rateは取得ポイントの計算に使う
 SELECT 
 	commodity_name
+    ,point_rate
 	,selling_price
 	,id AS commodity_key
 FROM
