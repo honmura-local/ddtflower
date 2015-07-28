@@ -97,3 +97,12 @@ SET
 WHERE
     id = {{time_table_day_key}}
 
+#-------------------------------------------
+# 授業のコマ追加時のテーマ選択セレクト用クエリ
+SELECT 
+    id AS lesson_key
+    ,lesson_name
+FROM
+    lesson_inf
+WHERE
+    rec_status = 0;
