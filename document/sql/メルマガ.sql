@@ -5,9 +5,10 @@ SELECT
 FROM
 	mail_magazine
 WHERE
-	magazine_type = {{メール(固定)}}
-	
-######### ↓もそうだけどmessage_typeは何番がメールなのかはソース見ないとなので調べてください(本番のDBみるだけでもいいかも) #########
+	magazine_type = 0
+AND
+    school_key = 1
+
 
 # メルマガ追加
 INSERT INTO
@@ -19,7 +20,7 @@ INSERT INTO
 		,create_datetime
 	)
 	VALUES (
-		{{メール(固定)}}
+		0
 		,{{送信日時}}
 		,{{タイトル}}
 		,{{本文}}
