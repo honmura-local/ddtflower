@@ -14,7 +14,7 @@ var QuerySupplier = function(queryBase, targetStr) {
 // 第一引数と第二引数を第三引数でつなげるだけconditionが空ならqueryをそのままリターン
 function connectConditions(query, condition, conjunction) {
 	if(condition) {
-		return query + " " + conjunction + " " condition;
+		return query + " " + conjunction + " " + condition;
 	}
 	return query;
 }
@@ -122,8 +122,8 @@ var adminUserSearcher = function() {
 			,name_kana : new QuerySupplier(nameKanaQuery, nameKanaReplaceTarget).replaceThenGetQuery
 			,telephone : new QuerySupplier(telephoneQuery, telephoneReplaceTarget).replaceThenGetQuery
 			,mail_address : new QuerySupplier(mailAddressQuery, mailAddressReplaceTarget).replaceThenGetQuery
-			,lesson_date_from : lessonDateFromQueryGetter;
-			,lesson_date_to : lessonDateToQueryGetter;
+			,lesson_date_from : lessonDateFromQueryGetter
+			,lesson_date_to : lessonDateToQueryGetter
 			,lesson_key : new QuerySupplier(lessonQuery, lessonReplaceTarget).replaceThenGetQuery
 	};
 
@@ -138,13 +138,15 @@ var adminUserSearcher = function() {
 	var result = baseQuery;
 	// 検索用テキスト全体をぶん回して「data-col_name」属性の値が
 	// adminUserSearchConditionsに対応していればクエリ生成メソッドが呼ばれる。
-	$(".adminUserSearch").each(function(){
-		var col_name = $(this).data("col_name");
-		var value = $(this).val();
-		if(col_name in adminUserSearchConditions) {
-			result = connectEach(result, adminUserSearchConditions[col_name](value));
-		}
-	});	
+	var execute = function() {
+		$(".adminUserSearch").each(function(){
+			var col_name = $(this).data("col_name");
+			var value = $(this).val();
+			if(col_name in adminUserSearchConditions) {
+				result = connectEach(result, adminUserSearchConditions[col_name](value));
+			}
+		});
+	};	
 	
 	if(baseQuery == result) {
 		throw new Error("no condition was specified");
