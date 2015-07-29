@@ -414,52 +414,98 @@
     "updatePermitListCommoditySell":{
         "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"
     },
-    "searchUser":{
-        "searchList":{
-            "searchNameColumn":{
-                "searchName":{
-                    "searchNameLabel":{
-                        "text":"氏名"
-                    },
-                    "searchNameTextbox":{
-                        "type":"text",
-                        "name":"user_name"
-                    }
-                },
-                "searchNameKana":{
-                    "searchNameKanaLabel":{
-                        "text":"氏名(カナ)"
-                    },
-                    "searchNameKanaTextbox":{
-                        "type":"text",
-                        "name":"name_kana"
-                    }
-                }
+    "searchUserList":{
+        "searchName":{
+            "class":"searchName searchUserArea",
+            "searchNameLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"氏名"
             },
-            "searchInfoColumn":{
-                "searchPhoneNumber":{
-                    "searchPhoneLabel":{
-                        "text":"電話番号"
-                    },
-                    "searchPhoneTextbox":{
-                        "type":"text",
-                        "name":"telephone"
-                    }
-                },
-                "searchMailAddress":{
-                    "searchMailAddressLabel":{
-                        "text":"メールアドレス"
-                    },
-                    "searchMailAddressTextbox":{
-                        "type":"text",
-                        "name":"mail_address"
-                    }
-                },
-                "searchButton":{
-                    "type":"button",
-                    "value":"検索"
-                }
+            "searchNameTextbox":{
+                "type":"text",
+                "name":"user_name"
             }
+        },
+        "searchNameKana":{
+            "class":"searchNameKana searchUserArea",
+            "searchNameKanaLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"氏名(カナ)"
+            },
+            "searchNameKanaTextbox":{
+                "type":"text",
+                "name":"name_kana"
+            }
+        },
+        "searchTheme":{
+            "class":"searchTheme searchUserArea",
+            "searchThemeLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"テーマ"
+            },
+            "searchThemeTextbox":{
+                "type":"text",
+                "name":"lesson_name"
+            }
+        },
+        "searchPhoneNumber":{
+            "class":"searchPhoneNumber searchUserArea",
+            "searchPhoneLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"電話番号"
+            },
+            "searchPhoneTextbox":{
+                "type":"text",
+                "name":"telephone"
+            }
+        },
+        "searchUserId":{
+            "class":"searchUserId searchUserArea",
+            "searchUserIdLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"ID"
+            },
+            "searchUserIdTextbox":{
+                "type":"text",
+                "name":"id"
+            }
+        },
+        "searchMailAddress":{
+            "class":"searchMailAddress searchUserArea",
+            "searchMailAddressLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"メール"
+            },
+            "searchMailAddressTextbox":{
+                "type":"text",
+                "name":"mail_address"
+            }
+        },
+        "searchLessonPeriodFrom":{
+            "class":"searchLessonPeriodFrom searchUserArea",
+            "searchLessonPeriodFromLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"期間"
+            },
+            "searchLessonPeriodFromTextbox":{
+                "type":"text",
+                "name":"fromPeriod"
+            }
+        },
+        "searchLessonPeriodTo":{
+            "class":"searchLessonPeriodTo searchUserArea",
+            "searchLessonPeriodToLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"~"
+            },
+            "searchLessonPeriodToTextbox":{
+                "type":"text",
+                "name":"toPeriod"
+            }
+        },
+        "searchUserButton":{
+            "type":"button",
+            "value":"検索"
         }
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
@@ -492,8 +538,8 @@
 	    		"type":"button",
 	    		"value":"メール"
     		},
-    		"register":{
-                "class":"detail fRight",
+    		"userDetail":{
+                "class":"userDetail fRight",
 	    		"type":"button",
 	    		"value":"詳細設定"
     		}

@@ -359,52 +359,50 @@
 /* 管理者　受講承認領域終わり */
 
 /* 会員一覧の検索領域 */
+
 /* 
- * セレクタ :.searchNameColumn,.searchInfoColumn,.searchButton,.searchList li,.searchList li label
- * 概要   :会員一覧検索の外側の領域
+ * セレクタ :.searchUserArea
+ * 概要   :会員一覧検索の検索テキストボックス、ラベルを囲む領域
  * 作成者 :T.Yamamoto
- * 作成日 :2015.06.22
+ * 作成日 :2015.07.29
  */
-.searchNameColumn,
-.searchInfoColumn,
-.searchButton,
-.searchList li,
-.searchList li label {
-	margin-bottom: 5px;		/* 下に5pxの余白をとる */
+.searchUserArea {
+	width: 32%;			/* PCでは3つのラベルテキストボックスを入れたいので32%にする */
+	text-align: center;	/* テキストを中央揃えにする */
+	margin-bottom: 5px;	/* 下に5pxの余白をとる */
 }
 
 /* 
- * セレクタ :.searchList li label
- * 概要   :会員一覧検索の領域
+ * セレクタ :.searchLabel
+ * 概要   :会員一覧検索のラベル領域
  * 作成者 :T.Yamamoto
- * 作成日 :2015.06.22
+ * 作成日 :2015.07.29
  */
-.searchList li label {
-	display: inline;		/* インライン要素として扱う */
+.searchLabel {
+	width: 32%;			/* テキストボックスのスペースを広めにとるためにラベルを32%(最小値)に設定する */
 }
 
 /* 
- * セレクタ :.searchList li span
- * 概要   :検索のテキストボックスのラベル領域
+ * セレクタ :.searchUserArea input[type="text"]
+ * 概要   :会員一覧検索のテキストボックス領域
  * 作成者 :T.Yamamoto
- * 作成日 :2015.06.22
+ * 作成日 :2015.07.29
  */
-.searchList li span {
-	display: inline-block;	/* インラインブロック要素として扱う */
-	width: 15%;				/* 幅を15%にする */
-	font-size: 13px;		/* フォントサイズを13pxにする */
+.searchUserArea input[type="text"] {
+	width: 64%;			/* テキストボックスのスペースを広めにとるため64%(最大値)に設定する */
 }
 
 /* 
- * セレクタ :.searchList li input[type="text"]
- * 概要   :検索のテキストボックス領域
+ * セレクタ :.searchUserButton
+ * 概要   :会員一覧検索ボタン
  * 作成者 :T.Yamamoto
- * 作成日 :2015.06.22
+ * 作成日 :2015.07.29
  */
-.searchList li input[type="text"] {
-	width: 28%;				/* 幅を28%にする */
-	margin-right: 10px;		/* 右に10pxの余白をとる */
+.searchUserButton {
+	margin-bottom: 5px;	/* 底に5pxの余白を空ける */
 }
+
+
 /* 会員一覧の検索領域終わり */
 
 
@@ -416,7 +414,6 @@
  * 作成日 :2015.06.30
  */
 .fromArea, .toArea {
-	/*display: block;*/		/* ブロック要素にする */
 	margin-top: 5px;		/* 上から5pxの余白をとる */
 	width: 35%;				/* 幅を35%で設定する */
 }
@@ -628,50 +625,8 @@
 	/* 受講承認領域 */
 
 	/* 会員一覧の検索領域 */
-	/* 
-	 * セレクタ :.searchNameColumn,
-			.searchInfoColumn
-	 * 概要   :会員一覧検索の外側の領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.22
-	 */
-	.searchNameColumn,
-	.searchInfoColumn {
-		margin-bottom: 0;		/*余白をなくす*/
-	}
 
-	/* 会員一覧の検索領域 */
-	/* 
-	 * セレクタ :.searchList li label
-	 * 概要   :会員一覧検索のラベル領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.22
-	 */
-	.searchList li label {
-		display: block;			/* ブロック要素としてあつかう */
-	}
-
-	/* 
-	 * セレクタ :.searchList li span
-	 * 概要   :会員一覧検索のラベルテキスト領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.22
-	 */
-	.searchList li span {
-		width: 30%;				/* 幅を30%にする */
-	}
-
-	/* 
-	 * セレクタ :.searchList li input[type="text"]
-	 * 概要   :会員一覧検索のテキストボックス領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.22
-	 */
-	.searchList li input[type="text"] {
-		margin-right: 0; 		/* 右の余白をなくす */
-		width: 67%;				/* 幅を67%にする */
-	}
-/* 会員一覧の検索領域終わり */
+	/* 会員一覧の検索領域終わり */
 
 	/* メルマガ・アナウンス画面領域 */
 	/* 

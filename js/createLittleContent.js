@@ -2492,7 +2492,7 @@ replaceTableOption['userListInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'add',
 	//テーブルのafterでの追加先
-	addDomPlace:'.searchUser',
+	addDomPlace:'.searchUserList',
 	//検索結果がなかった時のエラーメッセージ
 	errorMessage:'検索結果が見つかりませんでした。',
 	//ページングの追加先
@@ -3760,7 +3760,7 @@ function createAdminPermitLessonListContent() {
 function createAdminUserListContent() {
 	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 	// ユーザ検索テキストボックス
-	creator.outputTag('searchUser', 'searchUser', '#userList');
+	creator.outputTag('searchUserList', 'searchUserList', '#userList');
 	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
 	tablePaging('userListInfoTable', 15, 10);
 
@@ -3771,7 +3771,7 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchList');
+	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
