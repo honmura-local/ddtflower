@@ -66,8 +66,8 @@
     	"searchButton":{"type":"button", "value":"検索"}
     },
     "eachDayReservedInfoTable":{
-        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
-        "replace_query":"SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no ,user_classwork.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.user_work_status AS user_work_status, stage_inf.stage_no ,lesson_sub.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key;",
+        "replace_query":"SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.user_work_status AS user_work_status, stage_inf.stage_no ,lesson_sub.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key;",
         "lesson_date": {
             "value": ""
         },
@@ -90,6 +90,9 @@
                 },
                 "user_name": {
                     "columnName": "名前"
+                },
+                "user_work_status": {
+                    "columnName": "ステータス"
                 },
                 "stage_no": {
                     "columnName": "Stg-Lv",
@@ -136,13 +139,13 @@
         "db_setQuery":"UPDATE user_inf SET use_point = use_point + 'use_point',get_point = get_point - 'use_point',update_datetime = NOW() WHERE id = 'user_key';"
     },
     "permitLessonContainCommodity":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = use_point ,late_time = 'late_time' ,update_datetime = NOW() WHERE id = 'user_classwork_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (  NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW() );"
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point' ,late_time = 'late_time' ,update_datetime = NOW() WHERE id = 'user_classwork_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (  NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW() ); UPDATE user_inf SET ,get_point = get_point + 'lessonPlusPoint' ,update_datetime = NOW() WHERE id = 'user_key'; UPDATE user_inf SET ,get_point = get_point + 'commodityPlusPoint' ,update_datetime = NOW() WHERE id = 'user_key'; "
     },
     "permitLessonUpdate":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = use_point ,late_time = 'late_time' ,update_datetime = NOW() WHERE id = 'user_classwork_key';"
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point' ,late_time = 'late_time' ,update_datetime = NOW() WHERE id = 'user_classwork_key'; UPDATE user_inf SET ,get_point = get_point + 'lessonPlusPoint' ,update_datetime = NOW() WHERE id = 'user_key'; "
     },
     "doLecturePermitInfoTable":{
-        "db_getQuery": "SELECT '' AS columnCheckbox ,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.get_point AS get_point ,lesson_name ,user_classwork_cost ,user_inf.id AS user_key ,lesson_inf.school_key AS school_key ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key;",
+        "db_getQuery": "SELECT '' AS columnCheckbox ,time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,user_name ,user_inf.get_point AS get_point ,lesson_name ,user_classwork_cost ,user_inf.id AS user_key ,lesson_inf.school_key AS school_key ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,start_time ,end_time ,user_classwork.id AS user_classwork_key ,classwork.order_students AS order_students ,classwork.lesson_key AS lesson_key FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key",
         "date":{
             "value":"2015-03-12"
         },
@@ -190,8 +193,23 @@
                 },
                 "user_classwork_key": {
                     "style":"display:none;"
+                },
+                "order_students": {
+                    "style":"display:none;"
+                },
+                "lesson_key": {
+                    "style":"display:none;"
                 }
             }
+        }
+    },
+    "commodityPlusPoint":{
+        "db_getQuery":"SELECT get_point FROM commodity_inf WHERE id = 'commodity_key'",
+        "commodity_key":{
+            "value":""
+        },
+        "get_point":{
+            "text":""
         }
     },
     "selectCommodityInf":{
@@ -207,6 +225,18 @@
                 "commodity_key": {
                     "style":"display:none;"
                 }
+            }
+        }
+    },
+    "lecturePermitPlusPointRate":{
+        "db_getQuery":"SELECT point_rate ,students FROM lesson_point_rate WHERE lesson_point_rate.lesson_key = 'lesson_key'",
+        "lesson_key":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "point_rate":{},
+                "students":{}
             }
         }
     },
@@ -384,52 +414,115 @@
     "updatePermitListCommoditySell":{
         "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"
     },
-    "searchUser":{
-        "searchList":{
-            "searchNameColumn":{
-                "searchName":{
-                    "searchNameLabel":{
-                        "text":"氏名"
-                    },
-                    "searchNameTextbox":{
-                        "type":"text",
-                        "name":"user_name"
-                    }
-                },
-                "searchNameKana":{
-                    "searchNameKanaLabel":{
-                        "text":"氏名(カナ)"
-                    },
-                    "searchNameKanaTextbox":{
-                        "type":"text",
-                        "name":"name_kana"
-                    }
-                }
+    "searchUserList":{
+        "searchName":{
+            "class":"searchName searchUserArea",
+            "searchNameLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"氏名"
             },
-            "searchInfoColumn":{
-                "searchPhoneNumber":{
-                    "searchPhoneLabel":{
-                        "text":"電話番号"
-                    },
-                    "searchPhoneTextbox":{
-                        "type":"text",
-                        "name":"telephone"
-                    }
-                },
-                "searchMailAddress":{
-                    "searchMailAddressLabel":{
-                        "text":"メールアドレス"
-                    },
-                    "searchMailAddressTextbox":{
-                        "type":"text",
-                        "name":"mail_address"
-                    }
-                },
-                "searchButton":{
-                    "type":"button",
-                    "value":"検索"
-                }
+            "searchNameTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_name ",
+                "type":"text",
+                "name":"user_name"
             }
+        },
+        "searchNameKana":{
+            "class":"searchNameKana searchUserArea",
+            "searchNameKanaLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"氏名(カナ)"
+            },
+            "searchNameKanaTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"name_kana ",
+                "type":"text",
+                "name":"name_kana"
+            }
+        },
+        "searchTheme":{
+            "class":"searchTheme searchUserArea",
+            "searchThemeLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"テーマ"
+            },
+            "searchThemeTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_key ",
+                "type":"text",
+                "name":"lesson_name"
+            }
+        },
+        "searchPhoneNumber":{
+            "class":"searchPhoneNumber searchUserArea",
+            "searchPhoneLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"電話番号"
+            },
+            "searchPhoneTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"telephone ",
+                "type":"text",
+                "name":"telephone"
+            }
+        },
+        "searchUserId":{
+            "class":"searchUserId searchUserArea",
+            "searchUserIdLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"ID"
+            },
+            "searchUserIdTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_key",
+                "type":"text",
+                "name":"id"
+            }
+        },
+        "searchMailAddress":{
+            "class":"searchMailAddress searchUserArea",
+            "searchMailAddressLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"メール"
+            },
+            "searchMailAddressTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"mail_address ",
+                "type":"text",
+                "name":"mail_address"
+            }
+        },
+        "searchLessonPeriodFrom":{
+            "class":"searchLessonPeriodFrom searchUserArea",
+            "searchLessonPeriodFromLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"期間"
+            },
+            "searchLessonPeriodFromTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_from ",
+                "type":"text",
+                "name":"fromPeriod"
+            }
+        },
+        "searchLessonPeriodTo":{
+            "class":"searchLessonPeriodTo searchUserArea",
+            "searchLessonPeriodToLabel":{
+                "class":"searchLabel inlineBlock",
+                "text":"~"
+            },
+            "searchLessonPeriodToTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_to ",
+                "type":"text",
+                "name":"toPeriod"
+            }
+        },
+        "searchUserButton":{
+            "class":"searchUserButton fRight",
+            "type":"button",
+            "value":"検索"
         }
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
@@ -460,12 +553,12 @@
     	"secondRow":{
     		"createMail":{
 	    		"type":"button",
-	    		"value":"メール・メッセージ"
+	    		"value":"メール"
     		},
-    		"register":{
-                "class":"register fRight",
+    		"userDetail":{
+                "class":"userDetail fRight",
 	    		"type":"button",
-	    		"value":"新規登録"
+	    		"value":"詳細設定"
     		}
     	}
     },
@@ -478,7 +571,7 @@
     "adminLessonInformation":{
 	    "class": "adminLessonInformation",
         "replaceTable":{
-        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key;"
+        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;"
         },
          "config": {
             "columns": {
@@ -535,6 +628,9 @@
                 },
                 "school_key":{
                     "style":"display:none;"
+                },
+                "time_table_day_key":{
+                    "style":"display:none;"
                 }
             }
         },
@@ -547,7 +643,6 @@
                 "✕=満席"
             ]
         }
-        
     },
     "lessonDetail":{
         "class": "lessonDetail tabPanel",
@@ -696,6 +791,14 @@
         "schoolNameSelectBox":{
             "schoolNameSelect":{
                 "text":"全て"
+            },
+            "shinjukuSchool":{
+                "text":"新宿店",
+                "value":"1"
+            },
+            "yokohamaSchool":{
+                "text":"横浜店",
+                "value":"3"
             }
         },
         "typeLabel":{
@@ -704,6 +807,10 @@
         "typeSelectBox":{
             "typeSelect":{
                 "text":"全て"
+            },
+            "selectInfo":{
+                "text":"情報",
+                "value":"0"
             }
         },
         "mailMagaContentSearchLabel":{
@@ -768,8 +875,15 @@
             "schoolNameSelectBox":{
                 "name":"school_key",
                 "schoolNameSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "shinjukuSchool":{
+                    "text":"新宿店",
+                    "value":"1"
+                },
+                "yokohamaSchool":{
+                    "text":"横浜店",
+                    "value":"3"
                 }
             },
             "typeLabel":{
@@ -778,8 +892,11 @@
             "typeSelectBox":{
                 "name":"magazine_type",
                 "typeSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "selectInfo":{
+                    "text":"情報",
+                    "value":"0"
                 }
             }
         },

@@ -1830,3 +1830,135 @@ function cancelDialogOpen (dialogObject, memberNumber) {
 		);
 	});
 }
+
+/* クラス名:dialogEx
+ * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
+ * 引数　　:String url:ダイアログのクラス名
+ * 		　:Object returnObject:jQuery UI Dialogの設定用オブジェクト
+ * 設計者　:H.Kaneko
+ * 作成日　:2015.0729
+ * 作成者　:T.Masuda
+ */
+function dialogEx(url, returnObject){
+	//ダイアログのHTMLのURLを格納するメンバ
+	this.url = url;
+	//ダイアログのDOMを格納するメンバ
+	this.formDom = '';
+	//設定用オブジェクトを格納するメンバ
+	this.returnObject = returnObject;
+	//デフォルト設定のオブジェクト
+	this.defaultObj = {};
+	
+	/* 関数名:load
+	 * 概要　:URLからダイアログのHTMLファイルを取得してメンバに保存する。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.load = function(){
+		//クラスインスタンスへの参照を変数に格納しておく。
+		var tmpThis = this;
+		
+		//Ajax通信でURLからHTMLを取得する。
+		$.ajax({
+			url:this.url,			//URLを設定する
+			dataType:'HTML',		//HTMLデータを取得する
+			async: false,			//同期通信を行う
+			cache: true,			//通信結果をキャッシュする
+			success:function(html){	//通信成功時
+				//取得したhtmlデータをメンバに格納する。
+				tmpThis.formDom = html;
+			},
+			error:function(xhr, status, e){	//通信失敗時
+				throw e;			//例外を投げる。エラーオブジェクトを渡す。
+			}
+		});
+		
+	}
+
+	/* 関数名:run
+	 * 概要　:ダイアログを生成して表示する。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.run = function(){
+		//ロード失敗時の例外処理を行うため、try-catch節を使う。
+		try{
+			//メンバのURLからHTMLデータを読み込む
+			this.load();
+			//returnObjがオブジェクトでなければ、デフォルト用に用意したオブジェクトをセットする
+			this.returnObj = this.returnObj instanceof Object? this.returnObj: this.defaultObj;
+			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。
+			//※this.formDomへはjQueryオブジェクトとしてformDomへの参照が代入される。
+			//*formDom内のHTMLにscriptタグが記述されていた場合、このコード実行時にscriptタグのコードが動き出す。
+			this.formDom = $(this.formDom).dialog(this.returnObj);
+			//ダイアログのDOMに当該クラスインスタンスへの参照を持たせる。
+			//formDomはjQueryオブジェクトとなっているため、このステップでは[0]を指定する必要がある。
+			this.formDom[0].instance = this;
+		//例外をキャッチしたら
+		} catch(e){
+			console.log(e.message);	//投げられたエラーオブジェクトをコンソールログに出す。
+		}
+	}
+
+	/* 関数名:setCallbackClose
+	 * 概要　:ダイアログのcloseイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.setCallbackClose = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function? this.formDom.dialog('option', 'close', func): console.log('setCallBackClose recieved enythingeles function');
+	}
+
+	/* 関数名:setCallbackOpen
+	 * 概要　:ダイアログのopenイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.setCallbackOpen = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function? this.formDom.dialog('option', 'open', func): console.log('setCallBackClose recieved enythingeles function');
+	}
+	
+	/* 関数名:setCallbackCreate
+	 * 概要　:ダイアログのcreateイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.setCallbackCreate = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function? this.formDom.dialog('option', 'create', func): console.log('setCallBackClose recieved enythingeles function');
+	}
+
+	/* 関数名:destroy
+	 * 概要　:ダイアログのを破棄する。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.destroy = function(){
+		//jQuery UIのダイアログを破棄する
+		this.formDom.dialog('destroy');
+		//画面上に展開されているダイアログのDOMを破棄する。
+		this.formDom.remove();
+		//ダイアログのクラスのインスタンスを破棄する。
+		$(this).remove();
+	}
+}

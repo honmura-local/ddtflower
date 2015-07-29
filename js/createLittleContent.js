@@ -27,7 +27,7 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
-CHANGE　							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -781,45 +781,6 @@ $(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPane
 	});
 });
 
-
-/*
- * 関数名:outputKeyNumberObject(json, domkey, target)
- * 概要  :整数値でナンバリングされた連想配列のキーを持つオブジェクトからパーツを作り追加する。
- * 引数  :Object json:走査対象のJSONの連想配列
- * 		 String domkey:DOMのキー
- * 		 String target:作成したDOMのappend先
- * 		 int showNum:生成するパーツの数。
- * 		 int page:ブログ等、ページャを使っているコンテンツのページ数。
- * 戻り値:なし
- * 作成日:2015.03.20
- * 作成者:T.Masuda
- * 変更日:2015.04.08
- * 変更者:T.Masuda
- * 内容　:ブログ記事に対応しました。
- */
-function outputKeyNumberObject(json, domkey, target, showNum, page){
-	//showNum、pageが未入力であれば初期化する。
-	showNum = showNum === void(0)? 100: showNum;
-	page = page === void(0)? 1: page;
-	//表示開始のインデックスの数値を作る。
-	var startIndex = showNum * (page - 1); 
-	
-	//取得したJSONを走査する。引数に入力された数だけループする。
-	for(var i = 1; ((i + startIndex).toString() in json) && i <= showNum; i++){
-			//キーを一時保存して利用する。
-			var key = i + startIndex;
-			//パーツを生成し、指定先に追加する。
-			creator.outputTag(key, domkey, target);
-	}
-	
-	//trタグを追加したなら
-	if($('.recordWrapper').length > 0){
-		//trタグを取得する
-		var records = $('.recordWrapper tr');
-		//tableタグを外す
-		unwrapTable('.'+records.attr('class'));
-	}
-}
 
 /*
  * 関数名:unwrapTable(row)
@@ -1603,17 +1564,8 @@ var articleSubmitHandler = {
 							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
 						},
 						success:function(json){	//通信が成功したら
-
-							//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
-							creator.json.myBlogContent.user_key.value = creator.json.memberHeader.user_key.value;
-							//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
-							creator.json.myBlogContent.id.value = number;
-							//DBからブログ記事を読み込む
-							creator.getJsonFile('php/GetJSONString.php', creator.json['myBlogContent'], 'myBlogContent');
-							//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-							$('[name=blogTitle]').val(creator.json.myBlogContent.title.text);
-							//ブログ内容テキストエリアにDBから読込んだデータを入れる
-							$('[name="blogContent"]').text(creator.json.myBlogContent.content.text);
+							//マイブログの記事更新のクエリを使うための準備をする
+							setBlogUpdateQueryReplace('myBlogContent', 'memberHeader', 'updateMyBlog', number);
 
 							// //実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
 							// //ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
@@ -1719,7 +1671,7 @@ var optionSubmitHandler = { submitHandler:function(form){
  * 作成日:2015.04.16
  * 作成者:T.Masuda
  */
-function deleteRowData(form){
+function deleteRowData(form, deleteQueryKey){
 	//削除ボタンが押されたら
 	$('.deleteRecord').on('click', function(){
 		var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
@@ -1741,6 +1693,8 @@ function deleteRowData(form){
 		
 		//確認ダイアログを出して、OKならば
 		if(window.confirm('選択した行を削除しますか?')){
+			//DBからチェックが入った記事を削除する
+			deleteBlogArticle(deleteQueryKey, numberArray);
 			//先ほど選択した行を削除する。
 			$checkedRecord.remove();
 			//削除完了の旨を伝える。
@@ -2037,9 +1991,9 @@ function insertArticleListText(elems, articleNodes){
 
 /* 
  * 関数名:setSelectboxText
- * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う
- 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名
- 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名
+ * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う(値の取得元)
+ 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名(値の挿入先)
+ 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名(値の取得key名)
  * 戻り値:なし
  * 概要  :selectタグのoptionタグに入るテキスト要素をoutput前にDBから取り出した値を連想配列に入れて実装する
  * 作成日 :2015.07.14
@@ -2505,7 +2459,7 @@ replaceTableOption['userListInfoTable'] = {
 	//クエリを置換する置換フラグ、クエリを置換する
 	replaceFlag:'add',
 	//テーブルのafterでの追加先
-	addDomPlace:'.searchUser',
+	addDomPlace:'.searchUserList',
 	//検索結果がなかった時のエラーメッセージ
 	errorMessage:'検索結果が見つかりませんでした。',
 	//ページングの追加先
@@ -2698,7 +2652,7 @@ function tableReload(reloadTableClassName) {
 		//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 		if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 			//リロード後に処理をする関数をコールする
-			replaceTableOption[reloadTableClassName].afterReloadFunc()
+			replaceTableOption[reloadTableClassName].afterReloadFunc();
 		}
 	//DBから検索結果が見つからなかった時の処理
 	} else {
@@ -2798,8 +2752,8 @@ function nowDatePaging(clickSelectorParent) {
  * 関数名:getPagingCount
  * 概要  :ページングの個数を取得する
  * 引数  :pagingTargetTable:ページング対象となるテーブル名
- *       displayNumber:ページングで表示する行数の件数
- *       pagingDisplayCount:ページング領域で表示するページングの件数
+ *       displayNumber:１つのページングで表示するレコードの件数
+ *       pagingDisplayCount:ページングを最大何ページまで表示するのかの件数
  * 返却値  :pagingCounter:ページングの最大値
  * 作成者:T.Yamamoto
  * 作成日:2015.07.07
@@ -3018,9 +2972,42 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 		var pagingAddQuery = ' LIMIT ' + (minRecord + maxRecord * nowPaging ) + ',' + maxRecord;
 		//クエリを実行してテーブルを作る
 		setTableReloadExecute(pagingTargetTable, pagingAddQuery, defaultQuery);
+		//今何件目まで表示しているしているかを取得する
+		// var nowDisplayRecordCount = getPagingRecordCount(recordCount, nowPaging, maxRecord, minRecord);
+		// console.log(nowDisplayRecordCount);
 	});
+
 	//加える文字列を返す
-	return addQuery;
+	// return nowDisplayRecordCount;
+}
+
+/* 
+ * 関数名:getPagingRecordCount
+ * 概要  :取得したテーブルの件数と今何件目まで表示しているかの値を求めて返す
+ * 引数  :maxResultRecord	:テーブルの最大の表示件数
+ 		:nowPaging 			:ページングが今何ページ目にいるかの値
+ 		:nowMaxRecord	:現在表示している最大の表示件数
+ 		:nowMinRecord	:現在表示している最少の表示件数
+ * 返却値  :resultDisplayRecord:現在表示している結果の値
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.27
+ */
+function getPagingRecordCount(maxResultRecord, nowPaging, nowMaxRecord, nowMinRecord) {
+	//現在表示している結果の値を入れる変数を作る
+	var resultDisplayRecord;
+	//現在表示している最少の値を求め、今何件目から表示しているかを表すのに使う
+	displayMinRecord = nowMinRecord + nowMaxRecord * nowPaging;
+	//現在表示している最大の値を求め、今何件目まで表示しているかを表すのに使う
+	displayMaxRecord = nowMinRecord + nowMaxRecord * (nowPaging + 1) - 1;
+	//表示している件数が最大件数よりも大きい時は
+	if(displayMaxRecord > maxResultRecord) {
+		//最大件数を表示最大件数とする
+		displayMaxRecord = maxResultRecord;
+	}
+	//今何件目から何件目まで表示しているのかを返す
+	resultDisplayRecord = displayMinRecord + '~' + displayMaxRecord + '/' + maxResultRecord;
+	//今何件目まで表示しているかを返す
+	return resultDisplayRecord;
 }
 
 /* 
@@ -3127,30 +3114,26 @@ function checkInputPhone (checkString) {
 
 /* 
  * 関数名:loginInsteadOfMember
- * 概要  :管理者ページから会員になり替わって会員ページにログインする
- * 引数  :clickParentSelector クリックしてなり代わりを行う親要素のセレクター
+ * 概要  :管理者ページから会員に為り変わって会員ページにログインする
+ * 引数  :memberId: なり代わりを行うための会員番号
  		:clickSelector クリックしてなり代わりを行うセレクター
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.14
  */
-function loginInsteadOfMember (clickParentSelector, clickSelector) {
-	$(clickParentSelector).on(CLICK, clickSelector , function(){
-		//クリックした人でログインするために会員番号を取得する
-		var memberNumber = $(this).children('.id').text();
+function loginInsteadOfMember (memberId) {
 		//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
-		creator.json.memberHeader.user_key.value = memberNumber;
+		creator.json.memberHeader.user_key.value = memberId;
 		//会員の告知連想配列に会員番号を入れてログインの準備をする
-		creator.json.advertise.user_key.value = memberNumber;
+		creator.json.advertise.user_key.value = memberId;
 		//会員の予約中授業テーブル連想配列に会員番号を入れてログインの準備をする
-		creator.json.reservedLessonTable.user_key.value = memberNumber;
+		creator.json.reservedLessonTable.user_key.value = memberId;
 		//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
-		creator.json.finishedLessonTable.user_key.value = memberNumber;
+		creator.json.finishedLessonTable.user_key.value = memberId;
 		//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
-		memberInfo = memberNumber;
+		memberInfo = memberId;
 		//会員ページを呼び出す
 		callPage('memberPage.html')
-	});
 }
 
 /* 
@@ -3531,6 +3514,12 @@ function loopUpdatePermitLesson() {
 			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 				//DBを更新するための値を取得するために置換する連想配列を取得する
 				var sendReplaceArray = getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+				//加算ポイントレートを取得する
+				var lessonPlusPointRate = getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+				//受講料から加算ポイントを求める
+				sendReplaceArray['lessonPlusPoint'] = getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+				//備品代から加算ポイントを求める
+				sendReplaceArray['commodityPlusPoint'] = getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
 				//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
 				var sendQueryArray = choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
 				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
@@ -3541,7 +3530,6 @@ function loopUpdatePermitLesson() {
 				sendReplaceArray = {};
 				//ループで実行するので置換データ連想配列を初期化する
 				sendQueryArray = {};
-			} else {
 			}
 			//カウンターをインクリメントする
 			counter++;
@@ -3615,20 +3603,12 @@ function createMemberPageHeader() {
 function createMemberFinishedLessonContent() {
 	//受講済み授業テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-	//受講済み授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-	setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
 	//受講済み授業の絞り込み領域を作る
-	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
+	creator.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
 	tablePaging('finishedLessonTable', 15, 6);
-	//注釈を作る
-	creator.outputTag('anotion', 'anotion', '#finishedLesson');
-	// 絞り込みボタンをjqueryのボタンにする
-	$('.selectThemeButton').button();
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
-	//絞り込みボタンをjqueryのボタンにする
-	$('.selectThemeButton').button();
 	//絞り込みボタン機能を実装する
 	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
 }
@@ -3642,9 +3622,6 @@ function createMemberFinishedLessonContent() {
  * 作成日:2015.07.20
  */
 function createAdminPermitLessonContent() {
-	//受講済み授業テーブル用のJSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['mailMagaTable'], 'mailMagaTable');
-
 	//受講承認タブのコンテンツ
 	//タブ
 	creator.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
@@ -3744,22 +3721,38 @@ function createAdminPermitLessonListContent() {
 function createAdminUserListContent() {
 	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 	// ユーザ検索テキストボックス
-	creator.outputTag('searchUser', 'searchUser', '#userList');
+	creator.outputTag('searchUserList', 'searchUserList', '#userList');
 	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
 	tablePaging('userListInfoTable', 15, 10);
-
-	// 日ごと予約者一覧テーブル用のJSON配列を取得する
-	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
-	// 会員一覧タブのリスト
-	// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchList');
+	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
-	loginInsteadOfMember('#userList', '.userListInfoTable tr');
+	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
+	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
+		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
+		$(this).toggleClass('select');
+	});
+
+	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
+	$(STR_BODY).on(CLICK, '.userDetail', function(){
+		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
+		var selected = $('.select').length;
+		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
+		if(selected == 0 || selected > 1) {
+			//選択している
+			alert('ユーザを1人だけ選択してください');
+		} else {
+			//クリックした人でログインするために会員番号を取得する
+			var memberId = $('.select').children('.id').text();
+			//クリックした人でなり代わりログインを行う
+			loginInsteadOfMember(memberId);
+		}
+	});
 }
 
 /* 
@@ -3867,6 +3860,7 @@ function createAdminMailMagaAnnounceContent() {
 			//DBからメルマガを送信する会員情報を取得する
 			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 			// メルマガ送信処理
+			// ここにメルマガを実際に送信するためのコードが入ります
 		}
 	});
 
@@ -4029,25 +4023,122 @@ function createContentTriggerClick(clickSelector, callContentFunc) {
 }
 
 /* 
- * 関数名:myBlogUpdate
- * 概要  :マイブログのボタンがクリックされた時にDBにデータを登録する処理を行う
- * 引数  :buttonSelector:クリックされたときに処理を開始するボタンのセレクター名
- 		:queryArray:クエリを発行してDBを更新するため、クエリが入った連想配列名
- 		:inputDataParent:テキストボックスの親のセレクター。クエリを置換するために使う
+ * 関数名:setBlogUpdateQueryReplace
+ * 概要  :ブログを更新するための置換の値をjsonに入れる
+ * 引数  :getContentKey:ブログのデータを取得するための連想配列key名
+ 		:userKeyParrentKey:会員番号が入っている親のkey名
+ 		:updateQueryKey:テキストボックスの親のセレクター。クエリを置換するために使う
+ 		:number:更新記事対象のidの値
  * 返却値  :なし
  * 作成者:T.Yamamoto
- * 作成日:2015.07.23
+ * 作成日:2015.07.27
  */
-function myBlogUpdate(buttonSelector, queryArray, inputDataParent) {
-	//ボタンがクリックされたときにDBを更新する処理を開始する
-	$(STR_BODY).on(CLICK, buttonSelector, function() {
-		//テキストボックスなどに入力された値を取得する
-		var sendData = getInput(inputDataParent);
-		//送信するデータに会員番号を付け足す
-		sendData['user_key'] = creator.json.memberHeader.user_key.value;
-		//取得したデータからDBのデータを更新する
-		setDBdata(creator.json[queryArray], sendData, '');
-	});
+function setBlogUpdateQueryReplace(getContentKey, userKeyParrentKey, updateQueryKey, number) {
+	//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
+	creator.json[getContentKey].user_key.value = creator.json[userKeyParrentKey].user_key.value;
+	//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
+	creator.json[getContentKey].id.value = number;
+	//DBからブログ記事を読み込む
+	creator.getJsonFile('php/GetJSONString.php', creator.json[getContentKey], getContentKey);
+	//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+	$('[name=blogTitle]').val(creator.json[getContentKey].title.text);
+	//ブログ内容テキストエリアにDBから読込んだデータを入れる
+	$('[name="blogContent"]').text(creator.json[getContentKey].content.text);
+	//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
+	creator.json[updateQueryKey].id.value = number;
 }
 
+/* 
+ * 関数名:deleteBlogArticle
+ * 概要  :ブログの記事を削除する
+ * 引数  :deleteQueryKey:ブログのデータを削除するためのクエリが入った連想配列key名
+ 		:deleteArticleNumberArray:ブログデータ記事削除のための番号が入った配列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.27
+ */
+function deleteBlogArticle(deleteQueryKey, deleteArticleNumberArray) {
+	//記事を削除する個数をカウントし、ループさせる回数として使う
+	var deleteRoopCount = deleteArticleNumberArray.length;
+	//ループで記事削除処理を行う
+	for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
+		//削除するid番号を取得して削除するレコードを識別する
+		var deleteRowId = deleteArticleNumberArray[roopStartCount];
+		//削除クエリを実行するために削除対象記事の連想配列を作る
+		var sendReplaceArray = {id:{value:deleteRowId}};
+		//記事を削除しDBを更新する
+		setDBdata(creator.json[deleteQueryKey], sendReplaceArray, '');
+	}
+}
 
+/* 
+ * 関数名:getUserPlusPointRate
+ * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getUserPlusPointRate(plusPointQueryKey, lessonStudents, lessonKey) {
+	//レッスンの加算ポイントを取得するために加算ポイント取得クエリの置換する値となるlesson_keyの値を入れる
+	creator.json[plusPointQueryKey].lesson_key.value = lessonKey;
+	//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json[plusPointQueryKey], plusPointQueryKey);
+	//加算ポイントについてループして値を走査するためにループの値を取得する
+	var loopMaxCount = creator.json[plusPointQueryKey].table.length;
+	//加算ポイントのレートを返すための変数を作る
+	var userPlusPointRate;
+	//ループでポイントのレートを求める
+	for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
+		//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
+		var studentsCount = creator.json[plusPointQueryKey].table[loopCount].students;
+		//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
+		if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
+			//加算ポイントのレートを決定しループを終わらせる
+			userPlusPointRate = creator.json[plusPointQueryKey].table[loopCount].point_rate;
+			break;
+		}
+	}
+	return userPlusPointRate;
+}
+
+/* 
+ * 関数名:getUserPlusPoint
+ * 概要  :ユーザが加算するポイントを求める
+ * 引数  :cost 		:加算ポイントを指定するための授業料や備品代の値
+ 		:pointRate 	: 加算ポイントのレート
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getUserPlusPoint(cost, pointRate) {
+	//加算ポイントを計算式で求める(授業料×レート÷100を小数点切り捨て)
+	var userPlusPoint = Math.ceil(Number(cost) * pointRate / 100);
+	//加算ポイントを返す
+	return userPlusPoint;
+}
+
+/* 
+ * 関数名:getCommodityPlusPoint
+ * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function getCommodityPlusPoint(plusPointQueryKey, sendReplaceArray) {
+	//DBからデータを取得するために備品のidを連想配列に入れてデータ取得のための準備をする
+	creator.json[plusPointQueryKey].commodity_key.value = sendReplaceArray['commodity_key'];
+	//備品の加算ポイントレートを取得するためにDBからデータを取得する
+	creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json[plusPointQueryKey], plusPointQueryKey);
+	//備品の加算ポイントレートを変数に入れる
+	var commodityPlusPointRate = creator.json[plusPointQueryKey].get_point.text;
+	//加算ポイントを求める
+	var plusPoint = getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
+	//加算ポイントを返す
+	return plusPoint;
+}

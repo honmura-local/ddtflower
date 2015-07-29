@@ -381,9 +381,16 @@ function postForm(form){
 					var sendData = getInputData('blogEdit');
 					//送信するデータに会員番号を加え、DBに更新するデータが誰のデータなのかを明確にする
 					sendData['user_key'] = creator.json.memberHeader.user_key.value;;
-					//ブログデータを更新しデータをDBにセットする
-					//setDBdata(creator.json.insertMyBlog, sendData, '');
-					// console.log('data:' + data);
+					//データ更新クエリのidに値が入っていれば記事更新のクエリを使う
+					if (creator.json.updateMyBlog.id.value != "") {
+						//ブログデータを更新しデータをDBにセットする
+						setDBdata(creator.json.updateMyBlog, sendData, '');
+					//データ更新クエリのidに値が入っていなければ新規記事作成クエリを使う
+					} else {
+						//ブログデータを新規作成しデータをDBにセットする
+						setDBdata(creator.json.insertMyBlog, sendData, '');
+					}
+				
 				}
 				alert('更新に成功しました。');	//返ってきたデータをダイアログに出す。
 //				alert(data);	//返ってきたデータをダイアログに出す。

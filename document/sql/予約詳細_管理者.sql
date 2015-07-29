@@ -85,3 +85,24 @@ SET
 	,update_datetime = NOW()
 WHERE
 	id = {{classwork_key}}
+    
+#-------------------------------------------
+# 時間割ごとの最大、最小人数更新
+UPDATE
+    time_table_day
+SET 
+    max_num = {{max_num}}
+    ,min_num = {{min_num}}
+    ,update_datetime = NOW()
+WHERE
+    id = {{time_table_day_key}}
+
+#-------------------------------------------
+# 授業のコマ追加時のテーマ選択セレクト用クエリ
+SELECT 
+    id AS lesson_key
+    ,lesson_name
+FROM
+    lesson_inf
+WHERE
+    rec_status = 0;

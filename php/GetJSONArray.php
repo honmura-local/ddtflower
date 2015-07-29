@@ -1,38 +1,22 @@
 <?php
-// JSONのvalueキーの文字列を定数にセットする
-define('STR_TABLE', 'table');
 
-// JSONDBManagerクラスファイルを読み込む
-require_once("JSONDBManager.php");
+/*
+ * ファイル名:GetJSONArray.php
+ * 概要	:テーブルのタグ作成用のJSON配列を作成して返す。
+ * 設計者:H.Kaneko
+ * 作成者:T.Masuda
+ * 作成日:2015.0728
+ * パス	:/php/GetJSONArray.php
+ */
+
+//リスト形式のJSONを作るクラスをファイルから取り込む
+require_once ('procedureGetList.php');
+
 // クライアントから送信されたJSONのキーとJSON文字列を取得する。
 $json = $_POST["json"];
-// 返却するJSON配列の文字列を格納する変数を用意する
-$retArrayString = "";
 
-//JSONDBManagerのインスタンスを生成する
-$jdbm = new JSONDBManager();
+//リスト形式のJSONを作るクラスのインスタンスを生成する。
+$listJsonDbGetter = new procedureGetList();
 
-//SQLによる例外の対処のためtryブロックで囲む
-try {
-	//DBに接続する
-	$jdbm->dbh = new PDO(DSN, DB_USER, DB_PASSWORD);
-	// データベースをUTF8で設定する
-	$jdbm->dbh->query('SET NAMES utf8');
-	//JSON文字列を解析して、jdbmのメンバに格納する
-	$jdbm->getJSONMap($json);
-	//取得したJSON連想配列を走査する
-	if(is_array($jdbm->json) && $jdbm->is_hash($jdbm->json)){
-		//レコードのJSONを作る
-		$retArrayString = $jdbm->getListJSONPlusKey($jdbm->json, STR_TABLE);
-	}
-	//SQL例外のcatchブロック
-} catch (PDOException $e) {
-	// エラーメッセージを表示する
-	echo $e->getMessage();
-	// プログラムを終了する
-	exit;
-}
-
-//作成したJSON文字列を出力する。
-print($retArrayString);
-
+//生成したインスタンスの処理関数を実行する。
+$listJsonDbGetter->run($json);

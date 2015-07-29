@@ -616,12 +616,18 @@ var callEachDayReservedValue = function(tableName, loopData, counter, rowNumber)
 	start_time = backThreeStringDelete(recordData, COLUMN_NAME_START_TIME);
 	// 時間割の終わりの時間を求める
 	end_time = backThreeStringDelete(recordData, COLUMN_NAME_END_TIME);
+	//ユーザステータスの番号を取得する
+	userStatusNumber = recordData[COLUMN_NAME_USER_WORK_STATUS]
+	//ユーザのステータスを取得する
+	userStatus = userClassworkStatuses[userStatusNumber];
 	// No.を入力する
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
 	// 開始時間を表示する
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(start_time);
 	// 終了時間を表示する
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(end_time);
+	//ユーザステータスを表示する
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(6).text(userStatus);
 };
 
 /* 
