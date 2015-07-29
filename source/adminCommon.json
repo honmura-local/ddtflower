@@ -422,6 +422,8 @@
                 "text":"氏名"
             },
             "searchNameTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_name ",
                 "type":"text",
                 "name":"user_name"
             }
@@ -433,6 +435,8 @@
                 "text":"氏名(カナ)"
             },
             "searchNameKanaTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"name_kana ",
                 "type":"text",
                 "name":"name_kana"
             }
@@ -444,6 +448,8 @@
                 "text":"テーマ"
             },
             "searchThemeTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_key ",
                 "type":"text",
                 "name":"lesson_name"
             }
@@ -455,6 +461,8 @@
                 "text":"電話番号"
             },
             "searchPhoneTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"telephone ",
                 "type":"text",
                 "name":"telephone"
             }
@@ -466,6 +474,8 @@
                 "text":"ID"
             },
             "searchUserIdTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_key",
                 "type":"text",
                 "name":"id"
             }
@@ -477,6 +487,8 @@
                 "text":"メール"
             },
             "searchMailAddressTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"mail_address ",
                 "type":"text",
                 "name":"mail_address"
             }
@@ -488,6 +500,8 @@
                 "text":"期間"
             },
             "searchLessonPeriodFromTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_from ",
                 "type":"text",
                 "name":"fromPeriod"
             }
@@ -499,6 +513,8 @@
                 "text":"~"
             },
             "searchLessonPeriodToTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_to ",
                 "type":"text",
                 "name":"toPeriod"
             }
@@ -555,7 +571,7 @@
     "adminLessonInformation":{
 	    "class": "adminLessonInformation",
         "replaceTable":{
-        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key;"
+        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;"
         },
          "config": {
             "columns": {
@@ -612,6 +628,9 @@
                 },
                 "school_key":{
                     "style":"display:none;"
+                },
+                "time_table_day_key":{
+                    "style":"display:none;"
                 }
             }
         },
@@ -624,7 +643,6 @@
                 "✕=満席"
             ]
         }
-        
     },
     "lessonDetail":{
         "class": "lessonDetail tabPanel",
@@ -773,6 +791,14 @@
         "schoolNameSelectBox":{
             "schoolNameSelect":{
                 "text":"全て"
+            },
+            "shinjukuSchool":{
+                "text":"新宿店",
+                "value":"1"
+            },
+            "yokohamaSchool":{
+                "text":"横浜店",
+                "value":"3"
             }
         },
         "typeLabel":{
@@ -781,6 +807,10 @@
         "typeSelectBox":{
             "typeSelect":{
                 "text":"全て"
+            },
+            "selectInfo":{
+                "text":"情報",
+                "value":"0"
             }
         },
         "mailMagaContentSearchLabel":{
@@ -845,8 +875,15 @@
             "schoolNameSelectBox":{
                 "name":"school_key",
                 "schoolNameSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "shinjukuSchool":{
+                    "text":"新宿店",
+                    "value":"1"
+                },
+                "yokohamaSchool":{
+                    "text":"横浜店",
+                    "value":"3"
                 }
             },
             "typeLabel":{
@@ -855,8 +892,11 @@
             "typeSelectBox":{
                 "name":"magazine_type",
                 "typeSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "selectInfo":{
+                    "text":"情報",
+                    "value":"0"
                 }
             }
         },

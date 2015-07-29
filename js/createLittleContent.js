@@ -3108,7 +3108,7 @@ function checkInputPhone (checkString) {
 
 /* 
  * 関数名:loginInsteadOfMember
- * 概要  :管理者ページから会員になり替わって会員ページにログインする
+ * 概要  :管理者ページから会員に為り変わって会員ページにログインする
  * 引数  :memberId: なり代わりを行うための会員番号
  		:clickSelector クリックしてなり代わりを行うセレクター
  * 返却値  :なし
@@ -3721,9 +3721,9 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchUserList');
+	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
 	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
@@ -3854,6 +3854,7 @@ function createAdminMailMagaAnnounceContent() {
 			//DBからメルマガを送信する会員情報を取得する
 			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 			// メルマガ送信処理
+			// ここにメルマガを実際に送信するためのコードが入ります
 		}
 	});
 

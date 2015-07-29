@@ -44,6 +44,9 @@
     },
     "memberCanReserveLesson":{
         "db_getQuery":"SELECT lesson_name,id AS lesson_key FROM lesson_inf WHERE id in( SELECT lesson_key FROM user_lesson WHERE user_key = 'user_key' AND rec_status = 0) AND rec_status = 0",
+        "user_key":{
+            "value":""
+        },
         "config": {
             "columns": {
                 "lesson_name": {},
