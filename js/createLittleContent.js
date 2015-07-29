@@ -3108,7 +3108,7 @@ function checkInputPhone (checkString) {
 
 /* 
  * 関数名:loginInsteadOfMember
- * 概要  :管理者ページから会員になり替わって会員ページにログインする
+ * 概要  :管理者ページから会員に為り変わって会員ページにログインする
  * 引数  :memberId: なり代わりを行うための会員番号
  		:clickSelector クリックしてなり代わりを行うセレクター
  * 返却値  :なし
