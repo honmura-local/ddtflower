@@ -3,11 +3,11 @@
     "jsonDirectory": "source/",
     "jsonIdentifier": "json",
     "cookieLimitTime":"3600000",
-    "photoDirectory":"",
+    "photoDirectory":"flowerImage/",
     "saveJSON":"",
     "postJSON":"",
     "getSelectedBlog":"",
-    "photoPost":"",
+    "photoPost":"./uploadImage/imageUpload.php",
     "experienceLesson":"source/experiencelesson.json",
     "usuallyLesson":"source/usuallylesson.json",
     "listSetting":{

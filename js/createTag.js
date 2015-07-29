@@ -80,6 +80,8 @@ SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
 //処理の分岐のフラグの数値
 PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
+//outputNumberingTagで用いる記事のオブジェクトの親のキー。
+ARTICLE_OBJECT_KEY								= 'table';
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -246,7 +248,7 @@ function createTag(){
 			//appendToが空であれば	
 			} else {
 				//appendで作成したタグをmainに追加する。
-				$('.main').append(tag);
+				$(SELECTOR_MAIN).append(tag);
 			}
 			//@mod 2015.03.10 T.Masuda ここまで変更しました。(指示者:H.Kaneko)
 		// パーツの作成に失敗したならば
@@ -589,19 +591,30 @@ function createTag(){
 	}
 
 	/* 
-	 * 関数名:this.getJsonObjectNum = function(jsonName)
-	 * 概要  :jsonの指定キー直下ののキーの数を返す。
-	 * 引数  :String jsonName:処理対象のJSONのキー名。
-	 * 返却値  :int
+	 * 関数名:getJsonObjectNum
+	 * 概要  :メンバjsonの指定キー内の整数値のキーの数を返す。
+	 * 引数  :String jsonName:メンバJSONルートの処理対象のJSONのキー名。
+	 * 返却値  :int:整数値のキーの数を返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
+	 * 返却値  :int
+	 * 変更者:T.Masuda
+	 * 変更日:2015.007.29
+	 * 内容　:jsonNameと定数「ARTICLE_OBJECT_KEY」で走査対象のオブジェクトを指定するようにしました。
 	 */
 	this.getJsonObjectNum = function(jsonName){
 		//返却する値を格納するための変数を宣言、0で初期化する。
 		var retNum = 0;
 
-		//jsonのキー走査する。
-		for(key in this.json){
+		//@mod 2015.0729 T.Masuda 走査対象のオブジェクトを変えました。
+		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
+		//tableキーの文字列は定数で定義してあるので任意で変更可。
+		$searchObject = this.json[jsonName][ARTICLE_OBJECT_KEY];
+		
+		//該当するオブジェクトを走査する。
+		for(key in $searchObject){
+		//for(key in this.json){
+		//2015.0729 ここまで変更しました。
 			//キーが数字であれば
 			if(!(isNaN(key))){
 				//retNumに1を足す
