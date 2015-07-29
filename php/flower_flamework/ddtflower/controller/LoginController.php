@@ -15,10 +15,10 @@ class LoginController extends UserControllerBase {
 	const PASSWORD_KEY = 'password';
     
     // @TODO権限の対応がわからないので一旦適当に書いてます
-    protected $destsDipendsAuth = array() {
-        0 => 'http://localhost/memberPage.html',
-        1 => 'http://localhost/memberAdminPage.html'
-    }
+    protected $destsDipendsAuth = array(
+ 	       0 => 'http://localhost/memberPage.html',
+    	   1 => 'http://localhost/memberAdminPage.html',
+    );
 
 	static public function executeLogin() {
 		
