@@ -3108,7 +3108,7 @@ function checkInputPhone (checkString) {
 
 /* 
  * 関数名:loginInsteadOfMember
- * 概要  :管理者ページから会員になり替わって会員ページにログインする
+ * 概要  :管理者ページから会員に為り変わって会員ページにログインする
  * 引数  :memberId: なり代わりを行うための会員番号
  		:clickSelector クリックしてなり代わりを行うセレクター
  * 返却値  :なし
@@ -3854,6 +3854,7 @@ function createAdminMailMagaAnnounceContent() {
 			//DBからメルマガを送信する会員情報を取得する
 			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 			// メルマガ送信処理
+			// ここにメルマガを実際に送信するためのコードが入ります
 		}
 	});
 

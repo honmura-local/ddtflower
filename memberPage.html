@@ -104,9 +104,12 @@
 				creator.outputTag('lessonTab');
 				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
+				//会員が予約できる授業を取得するために会員番号をクエリの置換する場所に入れる
+				creator.json.memberCanReserveLesson.user_key.value = creator.json.memberHeader.user_key.value;
+				//予約できる授業のテーマにをDBから取り出す
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberCanReserveLesson'], 'memberCanReserveLesson');
 				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-				setSelectboxText(creator.json.reservedLessonTable.table, creator.json.reservedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
-
+				setSelectboxText(creator.json.memberCanReserveLesson.table, creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
 				// 予約済み授業のタブ内コンテンツを作る
 				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 				// 受講済み授業のタブ内コンテンツを作る
@@ -119,7 +122,7 @@
 
 
 				//予約済み授業の絞り込み領域を作る
-				creator.outputTag('reservedLessonSelectTheme', 'selectTheme', '#alreadyReserved');
+				creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
 				//予約中の授業があった時のテーブルを作る
 				if(creator.json['reservedLessonTable']['table'][0]) {
 					// 予約中授業のテーブルを作る
