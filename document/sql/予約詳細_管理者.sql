@@ -113,7 +113,7 @@ INSERT INTO
 		,(select id from user_inf where authority = 10 limit 1)
         ,{{school_key}}
         ,{{lesson_key}}
-        ,(SELECT id FROM time_table_day order by create_datetime DESC LIMIT 1)
+        ,(SELECT id FROM time_table_day WHERE timetable_key = {{timetable_key}} order by create_datetime DESC LIMIT 1)
 		,NOW()
 		,NOW()
 	)
