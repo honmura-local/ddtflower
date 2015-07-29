@@ -1219,7 +1219,13 @@ function setMyGalleryChangeEvent(selector){
 		//  $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
 		//	$(this).upload('uploadImage',{"dir":init['photoDirectory'], postedName:$(this).attr('name')}, function(xml) {
 		$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:creator.json.memberHeader.user_key.value}, function(xml) {
-	    	//返ってきたデータから成否判定の値を取り出す。
+	    	
+			//jQueryセレクターで取得して出力
+			console.log('filename(selector search): ' + $('filename', xml).text());
+			//find関数で取得して出力
+			console.log('filename(find function): ' + $(xml).find('filename').text());
+			
+			//返ってきたデータから成否判定の値を取り出す。
 	    	//var issuccess = parseInt($(xml).find('issuccess').text());
 	    	//ローカルでのテスト用のxmlデータを作る。
 	    	var issuccess = 1;

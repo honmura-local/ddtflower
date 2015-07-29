@@ -7,7 +7,7 @@
     "saveJSON":"",
     "postJSON":"",
     "getSelectedBlog":"",
-    "photoPost":"",
+    "photoPost":"uploadImage/imageUpload.php",
     "experienceLesson":"source/experiencelesson.json",
     "usuallyLesson":"source/usuallylesson.json",
     "listSetting":{
