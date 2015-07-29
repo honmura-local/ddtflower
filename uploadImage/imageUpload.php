@@ -66,8 +66,8 @@ if ($fileArray[2] == 'image/jpeg' || $fileArray[2] == 'image/png' ||$fileArray[2
 	if (is_uploaded_file($fileArray[0])) {
 		// ファイルがアップロードできるかを調べ、可能ならアップロードする
 		if (move_uploaded_file($fileArray[0], $dir . $fileArray[1])) {
-			//保存した画像のパスとメッセージ、成功フラグのXMLを返す
-			echo "<root><src>".$path.$fileArray[1]."</src><message>".SUCCESS_UPLOAD_MESSAGE."</message><issuccess>1</issuccess></root>";
+			//保存した画像のパスと画像名、メッセージ、成功フラグのXMLを返す
+			echo "<root><src>".$path.$fileArray[1]."</src><filename>".$fileArray[1]."</filename><message>".SUCCESS_UPLOAD_MESSAGE."</message><issuccess>1</issuccess></root>";
 		} else {
 			//保存した画像のパスとメッセージ、成功フラグのXMLを返す
 			echo "<root><src></src><message>".FAILED_UPLOAD_MESSAGE."</message><issuccess>0</issuccess></root>";
