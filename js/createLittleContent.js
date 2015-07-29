@@ -1985,9 +1985,9 @@ function insertArticleListText(elems, articleNodes){
 
 /* 
  * 関数名:setSelectboxText
- * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う
- 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名
- 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名
+ * 引数  :rowData:テーブルの連想配列、DBから取り出した値を使う(値の取得元)
+ 		 selectboxArray:セレクトボックスの配列構造になっているjsonkey名(値の挿入先)
+ 		 selectboxTextTarget:抜き出す対象となるテーブルのkey名(値の取得key名)
  * 戻り値:なし
  * 概要  :selectタグのoptionタグに入るテキスト要素をoutput前にDBから取り出した値を連想配列に入れて実装する
  * 作成日 :2015.07.14
@@ -3116,7 +3116,6 @@ function checkInputPhone (checkString) {
  * 作成日:2015.07.14
  */
 function loginInsteadOfMember (memberId) {
-	console.log(memberId);
 		//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
 		creator.json.memberHeader.user_key.value = memberId;
 		//会員の告知連想配列に会員番号を入れてログインの準備をする
@@ -3598,10 +3597,8 @@ function createMemberPageHeader() {
 function createMemberFinishedLessonContent() {
 	//受講済み授業テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
-	//受講済み授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-	setSelectboxText(creator.json.finishedLessonTable.table, creator.json.finishedLessonSelectTheme.selectThemebox.themeValue, 'lesson_name');
 	//受講済み授業の絞り込み領域を作る
-	creator.outputTag('finishedLessonSelectTheme', 'selectTheme', '#finishedLesson');
+	creator.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
 	tablePaging('finishedLessonTable', 15, 6);
 	//セレクトボックスのvalueを画面に表示されている値にする
@@ -4095,9 +4092,6 @@ function getUserPlusPointRate(plusPointQueryKey, lessonStudents, lessonKey) {
 			//加算ポイントのレートを決定しループを終わらせる
 			userPlusPointRate = creator.json[plusPointQueryKey].table[loopCount].point_rate;
 			break;
-		//条件に当てはまらなければ加算ポイントのレートでないので次のループに行く
-		} else {
-			continue;
 		}
 	}
 	return userPlusPointRate;
