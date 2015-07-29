@@ -3109,29 +3109,26 @@ function checkInputPhone (checkString) {
 /* 
  * 関数名:loginInsteadOfMember
  * 概要  :管理者ページから会員になり替わって会員ページにログインする
- * 引数  :clickParentSelector クリックしてなり代わりを行う親要素のセレクター
+ * 引数  :memberId: なり代わりを行うための会員番号
  		:clickSelector クリックしてなり代わりを行うセレクター
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.14
  */
-function loginInsteadOfMember (clickParentSelector, clickSelector) {
-	$(clickParentSelector).on(CLICK, clickSelector , function(){
-		//クリックした人でログインするために会員番号を取得する
-		var memberNumber = $(this).children('.id').text();
+function loginInsteadOfMember (memberId) {
+	console.log(memberId);
 		//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
-		creator.json.memberHeader.user_key.value = memberNumber;
+		creator.json.memberHeader.user_key.value = memberId;
 		//会員の告知連想配列に会員番号を入れてログインの準備をする
-		creator.json.advertise.user_key.value = memberNumber;
+		creator.json.advertise.user_key.value = memberId;
 		//会員の予約中授業テーブル連想配列に会員番号を入れてログインの準備をする
-		creator.json.reservedLessonTable.user_key.value = memberNumber;
+		creator.json.reservedLessonTable.user_key.value = memberId;
 		//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
-		creator.json.finishedLessonTable.user_key.value = memberNumber;
+		creator.json.finishedLessonTable.user_key.value = memberId;
 		//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
-		memberInfo = memberNumber;
+		memberInfo = memberId;
 		//会員ページを呼び出す
 		callPage('memberPage.html')
-	});
 }
 
 /* 
@@ -3724,11 +3721,6 @@ function createAdminUserListContent() {
 	creator.outputTag('searchUserList', 'searchUserList', '#userList');
 	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
 	tablePaging('userListInfoTable', 15, 10);
-
-	// 日ごと予約者一覧テーブル用のJSON配列を取得する
-	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
-	// 会員一覧タブのリスト
-	// creator.outputTagTable('userListInfoTable', 'userListInfoTable', '#userList');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
@@ -3736,7 +3728,28 @@ function createAdminUserListContent() {
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
-	loginInsteadOfMember('#userList', '.userListInfoTable tr');
+	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
+	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
+		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
+		$(this).toggleClass('select');
+	});
+
+	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
+	$(STR_BODY).on(CLICK, '.userDetail', function(){
+		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
+		var selected = $('.select').length;
+		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
+		if(selected == 0 || selected > 1) {
+			//選択している
+			alert('ユーザを1人だけ選択してください');
+		} else {
+			//クリックした人でログインするために会員番号を取得する
+			var memberId = $('.select').children('.id').text();
+			//クリックした人でなり代わりログインを行う
+			loginInsteadOfMember(memberId);
+		}
+	});
 }
 
 /* 

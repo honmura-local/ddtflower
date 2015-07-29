@@ -504,6 +504,7 @@
             }
         },
         "searchUserButton":{
+            "class":"searchUserButton fRight",
             "type":"button",
             "value":"検索"
         }
