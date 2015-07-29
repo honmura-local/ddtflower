@@ -27,7 +27,7 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
-CHANGE　							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -781,45 +781,6 @@ $(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPane
 	});
 });
 
-
-/*
- * 関数名:outputKeyNumberObject(json, domkey, target)
- * 概要  :整数値でナンバリングされた連想配列のキーを持つオブジェクトからパーツを作り追加する。
- * 引数  :Object json:走査対象のJSONの連想配列
- * 		 String domkey:DOMのキー
- * 		 String target:作成したDOMのappend先
- * 		 int showNum:生成するパーツの数。
- * 		 int page:ブログ等、ページャを使っているコンテンツのページ数。
- * 戻り値:なし
- * 作成日:2015.03.20
- * 作成者:T.Masuda
- * 変更日:2015.04.08
- * 変更者:T.Masuda
- * 内容　:ブログ記事に対応しました。
- */
-function outputKeyNumberObject(json, domkey, target, showNum, page){
-	//showNum、pageが未入力であれば初期化する。
-	showNum = showNum === void(0)? 100: showNum;
-	page = page === void(0)? 1: page;
-	//表示開始のインデックスの数値を作る。
-	var startIndex = showNum * (page - 1); 
-	
-	//取得したJSONを走査する。引数に入力された数だけループする。
-	for(var i = 1; ((i + startIndex).toString() in json) && i <= showNum; i++){
-			//キーを一時保存して利用する。
-			var key = i + startIndex;
-			//パーツを生成し、指定先に追加する。
-			creator.outputTag(key, domkey, target);
-	}
-	
-	//trタグを追加したなら
-	if($('.recordWrapper').length > 0){
-		//trタグを取得する
-		var records = $('.recordWrapper tr');
-		//tableタグを外す
-		unwrapTable('.'+records.attr('class'));
-	}
-}
 
 /*
  * 関数名:unwrapTable(row)

@@ -80,6 +80,8 @@ SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
 //処理の分岐のフラグの数値
 PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
+//outputNumberingTagで用いる記事のオブジェクトの親のキー。
+ARTICLE_OBJECT_KEY								= 'table';
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -246,7 +248,7 @@ function createTag(){
 			//appendToが空であれば	
 			} else {
 				//appendで作成したタグをmainに追加する。
-				$('.main').append(tag);
+				$(SELECTOR_MAIN).append(tag);
 			}
 			//@mod 2015.03.10 T.Masuda ここまで変更しました。(指示者:H.Kaneko)
 		// パーツの作成に失敗したならば
@@ -447,6 +449,9 @@ function createTag(){
 	 * 変更者:T.Masuda
 	 * 変更日:2015.04.09
 	 * 内容　:引数に作成した記事の追加先を追加しました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.07.29
+	 * 内容　:新しい記事の形式に対応しました。
 	 */
 	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		
@@ -459,7 +464,7 @@ function createTag(){
 		//記事を消す
 		$(targetArea).empty();
 		//コンテンツ表示
-		outputKeyNumberObject(this.json, jsonName, targetArea, pageNum, displayPage)
+		this.outputKeyNumberObject(jsonName, targetArea, pageNum, displayPage)
 		
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
@@ -589,19 +594,30 @@ function createTag(){
 	}
 
 	/* 
-	 * 関数名:this.getJsonObjectNum = function(jsonName)
-	 * 概要  :jsonの指定キー直下ののキーの数を返す。
-	 * 引数  :String jsonName:処理対象のJSONのキー名。
-	 * 返却値  :int
+	 * 関数名:getJsonObjectNum
+	 * 概要  :メンバjsonの指定キー内の整数値のキーの数を返す。
+	 * 引数  :String jsonName:メンバJSONルートの処理対象のJSONのキー名。
+	 * 返却値  :int:整数値のキーの数を返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
+	 * 返却値  :int
+	 * 変更者:T.Masuda
+	 * 変更日:2015.007.29
+	 * 内容　:jsonNameと定数「ARTICLE_OBJECT_KEY」で走査対象のオブジェクトを指定するようにしました。
 	 */
 	this.getJsonObjectNum = function(jsonName){
 		//返却する値を格納するための変数を宣言、0で初期化する。
 		var retNum = 0;
 
-		//jsonのキー走査する。
-		for(key in this.json){
+		//@mod 2015.0729 T.Masuda 走査対象のオブジェクトを変えました。
+		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
+		//tableキーの文字列は定数で定義してあるので任意で変更可。
+		$searchObject = this.json[jsonName][ARTICLE_OBJECT_KEY];
+		
+		//該当するオブジェクトを走査する。
+		for(key in $searchObject){
+		//for(key in this.json){
+		//2015.0729 ここまで変更しました。
 			//キーが数字であれば
 			if(!(isNaN(key))){
 				//retNumに1を足す
@@ -1208,5 +1224,79 @@ function createTag(){
 		}
 		
 		return object;	//処理を終えたobjectを返す
-	}	
+	}
+	
+	/*
+	 * 関数名:appendTag
+	 * 概要  :タグをセレクタで指定した場所に挿入する。
+	 * 引数  :Element tag:指定したDOMに挿入する要素
+	 * 		 String target:tagの挿入先のセレクタ
+	 * 戻り値:なし
+	 * 作成日:2015.07.29
+	 * 作成者:T.Masuda
+	 */
+	this.appendTag = function(tag, target){
+		// 引数の要素が入力されているかを判定する。
+		if(tag !== void(0) && tag != null){
+			//targetが入力されていれば
+			if(target !== void(0) && target != null){
+				//appendを使って、引数の要素をtargetに追加する。
+				$(target).append(tag);
+			//targetが空であれば	
+			} else {
+				//appendを使って、引数の要素をmainに追加する。
+				$(SELECTOR_MAIN).append(tag);
+			}
+			//@mod 2015.03.10 T.Masuda ここまで変更しました。(指示者:H.Kaneko)
+		// 引数の要素が空ならば
+		} else{
+			//失敗のメッセージダイアログを出す。
+			console.log(i + 'の作成に失敗しました。');
+		}
+	}
+
+	/*
+	 * 関数名:outputKeyNumberObject(json, domkey, target)
+	 * 概要  :整数値でナンバリングされた連想配列のキーを持つオブジェクトからパーツを作り追加する。
+	 * 引数  :String domkey:DOMのキー
+	 * 		 String target:作成したDOMのappend先
+	 * 		 int showNum:生成するパーツの数。
+	 * 		 int page:ブログ等、ページャを使っているコンテンツのページ数。
+	 * 戻り値:なし
+	 * 作成日:2015.03.20
+	 * 作成者:T.Masuda
+	 * 変更日:2015.04.08
+	 * 変更者:T.Masuda
+	 * 内容　:ブログ記事に対応しました。
+	 * 変更日:2015.07.29
+	 * 変更者:T.Masuda
+	 * 内容　:createLittleContent.jsから移植しました。また、不要になった引数(json)を削除しました。
+	 */
+	this.outputKeyNumberObject = function(domkey, target, showNum, page){
+		//showNum、pageが未入力であれば初期化する。
+		showNum = showNum === void(0)? 100: showNum;	//showNumの初期化判定と処理をする
+		page = page === void(0)? 1: page;				//pageの初期化判定と処理をする
+		//表示開始のインデックスの数値を作る。
+		var startIndex = showNum * (page - 1); 
+		//@mod 2015.0729 T.Masuda 新たな記事JSONの形に対応しました。
+		//記事用のナンバリングがキーとなっているJSONを格納したオブジェクトを引数のJSONから取り出す
+		var jsonNumbering = this.json[domkey][ARTICLE_OBJECT_KEY];
+		
+		//取得したJSONを走査する。引数に入力された数だけループする。
+		for(var i = startIndex; (i.toString() in jsonNumbering) && i - startIndex < showNum; i++){
+				// 記事の要素を作成し、変数tagに格納する。
+				var tag = this.createTag(jsonNumbering[i.toString()], this.getDomNode(domkey));
+				//targetで指定した場所に作成した要素を挿入する。
+				this.appendTag(tag, target);
+		}
+		//ここまで変更しました。2015.0729
+		
+		//trタグを追加したなら
+		if($('.recordWrapper').length > 0){
+			//trタグを取得する
+			var records = $('.recordWrapper tr');
+			//tableタグを外す
+			unwrapTable('.'+records.attr('class'));
+		}
+	}
 }	
