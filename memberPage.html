@@ -105,7 +105,7 @@
 				//予約中授業テーブル用のJSON配列を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
 				//会員が予約できる授業を取得するために会員番号をクエリの置換する場所に入れる
-				creator.json.memberCanReserveLesson.use_key.value = creator.json.memberHeader.use_key.value;
+				creator.json.memberCanReserveLesson.user_key.value = creator.json.memberHeader.user_key.value;
 				//予約できる授業のテーマにをDBから取り出す
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberCanReserveLesson'], 'memberCanReserveLesson');
 				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
