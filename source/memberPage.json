@@ -42,18 +42,16 @@
         "class": "finishedLesson tabPanel",
         "id": "finishedLesson"
     },
-    "reservedLessonSelectTheme": {
-        "themeText": {
-            "class":"themeText inlineBlock",
-            "text": "テーマ"
-        },
-        "selectThemebox": {
-            "themeValue": [
-                "全て"
-            ]
+    "memberCanReserveLesson":{
+        "db_getQuery":"SELECT lesson_name,id AS lesson_key FROM lesson_inf WHERE id in( SELECT lesson_key FROM user_lesson WHERE user_key = 'user_key' AND rec_status = 0) AND rec_status = 0",
+        "config": {
+            "columns": {
+                "lesson_name": {},
+                "id": {}
+            }
         }
     },
-    "finishedLessonSelectTheme": {
+    "selectTheme": {
         "themeText": {
             "class":"themeText inlineBlock",
             "text": "テーマ"
@@ -62,9 +60,6 @@
             "themeValue": [
                 "全て"
             ]
-        },
-        "selectThemeButton": {
-            "text": "絞込"
         }
     },
     "reservedLessonTable": {
