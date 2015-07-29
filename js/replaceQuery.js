@@ -23,6 +23,10 @@ function connectConditions(query, condition, conjunction) {
 // 管理者側、ユーザ一覧での検索クエリ生成
 var adminUserSearcher = function() {
 
+	// ユーザIDのクエリと置き換え対象
+	var userKeyReplaceTarget = "{{user_key}}";
+	var userKeyQuery = "id = " + userKeyReplaceTarget;
+
 	// 氏名のクエリと置き換え対象
 	var userNameReplaceTarget = "{{user_name}}";
 	var userNameQuery = "user_name LIKE '%" + userNameReplaceTarget + "%'";
@@ -113,7 +117,8 @@ var adminUserSearcher = function() {
 
 	// クエリ取得用メソッドを検索対象名がキーの連想配列に格納していく(基本は単純にQuerySupplierで処理)
 	var adminUserSearchConditions = {
-			user_name : new QuerySupplier(userNameQuery, userNameReplaceTarget).replaceThenGetQuery
+			user_key : new QuerySupplier(userKeyQuery, userKeyReplaceTarget).replaceThenGetQuery
+			,user_name : new QuerySupplier(userNameQuery, userNameReplaceTarget).replaceThenGetQuery
 			,name_kana : new QuerySupplier(nameKanaQuery, nameKanaReplaceTarget).replaceThenGetQuery
 			,telephone : new QuerySupplier(telephoneQuery, telephoneReplaceTarget).replaceThenGetQuery
 			,mail_address : new QuerySupplier(mailAddressQuery, mailAddressReplaceTarget).replaceThenGetQuery
