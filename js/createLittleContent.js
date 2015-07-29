@@ -3721,9 +3721,9 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchMailAddress .searchButton', CLICK, 'userListInfoTable', 'searchUserList');
+	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchButton');
+	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
 	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
