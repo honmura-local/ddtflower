@@ -3854,6 +3854,7 @@ function createAdminMailMagaAnnounceContent() {
 			//DBからメルマガを送信する会員情報を取得する
 			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 			// メルマガ送信処理
+			// ここにメルマガを実際に送信するためのコードが入ります
 		}
 	});
 

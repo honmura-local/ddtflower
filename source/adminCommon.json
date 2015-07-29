@@ -773,6 +773,14 @@
         "schoolNameSelectBox":{
             "schoolNameSelect":{
                 "text":"全て"
+            },
+            "shinjukuSchool":{
+                "text":"新宿店",
+                "value":"1"
+            },
+            "yokohamaSchool":{
+                "text":"横浜店",
+                "value":"3"
             }
         },
         "typeLabel":{
@@ -781,6 +789,10 @@
         "typeSelectBox":{
             "typeSelect":{
                 "text":"全て"
+            },
+            "selectInfo":{
+                "text":"情報",
+                "value":"0"
             }
         },
         "mailMagaContentSearchLabel":{
@@ -845,8 +857,15 @@
             "schoolNameSelectBox":{
                 "name":"school_key",
                 "schoolNameSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "shinjukuSchool":{
+                    "text":"新宿店",
+                    "value":"1"
+                },
+                "yokohamaSchool":{
+                    "text":"横浜店",
+                    "value":"3"
                 }
             },
             "typeLabel":{
@@ -855,8 +874,11 @@
             "typeSelectBox":{
                 "name":"magazine_type",
                 "typeSelect":{
-                    "value":"0",
                     "text":"全て"
+                },
+                "selectInfo":{
+                    "text":"情報",
+                    "value":"0"
                 }
             }
         },
