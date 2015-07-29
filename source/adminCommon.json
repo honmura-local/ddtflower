@@ -422,6 +422,8 @@
                 "text":"氏名"
             },
             "searchNameTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_name ",
                 "type":"text",
                 "name":"user_name"
             }
@@ -433,6 +435,8 @@
                 "text":"氏名(カナ)"
             },
             "searchNameKanaTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"name_kana ",
                 "type":"text",
                 "name":"name_kana"
             }
@@ -444,6 +448,8 @@
                 "text":"テーマ"
             },
             "searchThemeTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_key ",
                 "type":"text",
                 "name":"lesson_name"
             }
@@ -455,6 +461,8 @@
                 "text":"電話番号"
             },
             "searchPhoneTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"telephone ",
                 "type":"text",
                 "name":"telephone"
             }
@@ -466,6 +474,8 @@
                 "text":"ID"
             },
             "searchUserIdTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"user_key",
                 "type":"text",
                 "name":"id"
             }
@@ -477,6 +487,8 @@
                 "text":"メール"
             },
             "searchMailAddressTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"mail_address ",
                 "type":"text",
                 "name":"mail_address"
             }
@@ -488,6 +500,8 @@
                 "text":"期間"
             },
             "searchLessonPeriodFromTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_from ",
                 "type":"text",
                 "name":"fromPeriod"
             }
@@ -499,6 +513,8 @@
                 "text":"~"
             },
             "searchLessonPeriodToTextbox":{
+                "class":"adminUserSearch",
+                "data-col_name":"lesson_date_to ",
                 "type":"text",
                 "name":"toPeriod"
             }
