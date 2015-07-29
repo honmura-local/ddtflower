@@ -1214,6 +1214,11 @@ function setMyGalleryChangeEvent(selector){
 		    				//画像サムネイルに使う要素の画像を設定する。
 		    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
 		    				$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+		    				//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
+		    				//会員番号を更新情報のクエリに入れる
+		    				sendReplaceQuery['user_key'] = creator.json.memberHeader.user_key.value;
+		    				//画像情報をDBに新規登録する
+		    				//setDBdata(creator.json.insertMyGallery, sendReplaceQuery, '');
 		    			}
 		    		});
 		    	//IE6~9なら
@@ -2937,7 +2942,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	//最大の表示数
 	var maxRecord = displayNumber;
 	//最初の表示数
-	var minRecord = 1;
+	var minRecord = 0;
 	//追加するクエリ
 	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
 	//クエリを実行してテーブルを作る
@@ -3723,26 +3728,26 @@ function createAdminUserListContent() {
 	//会員一覧タブのユーザ検索機能を実装する
 	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchUserButton');
+	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
 	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
-		$(this).toggleClass('select');
+		$(this).toggleClass('selectRecord');
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
 	$(STR_BODY).on(CLICK, '.userDetail', function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.select').length;
+		var selected = $('.selectRecord').length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
 		if(selected == 0 || selected > 1) {
 			//選択している
 			alert('ユーザを1人だけ選択してください');
 		} else {
 			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.select').children('.id').text();
+			var memberId = $('.selectRecord').children('.id').text();
 			//クリックした人でなり代わりログインを行う
 			loginInsteadOfMember(memberId);
 		}
