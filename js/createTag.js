@@ -433,6 +433,7 @@ function createTag(){
 	/* 
 	 * 関数名:this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea)
 	 * 概要  :ナンバリングと、それに応じたブログのページを作る。
+	 * 使い方の補足:この関数をコールする前に、記事挿入先のタグとnumberingOuterクラスを持つタグを作成してください。
 	 * 引数  :String jsonName:処理対象となるJSONのキー名。
 	 * 		 int startPage:表示する1つ目のナンバリングの数
 	 * 		 int displayPageMax:表示するナンバリングの最大数
@@ -451,7 +452,7 @@ function createTag(){
 	 * 内容　:引数に作成した記事の追加先を追加しました。
 	 * 変更者:T.Masuda
 	 * 変更日:2015.07.29
-	 * 内容　:新しい記事の形式に対応しました。
+	 * 内容　:新しい記事の形式に対応しました。配列にも対応します。
 	 */
 	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea){
 		
@@ -463,8 +464,16 @@ function createTag(){
 		
 		//記事を消す
 		$(targetArea).empty();
-		//コンテンツ表示
-		this.outputKeyNumberObject(jsonName, targetArea, pageNum, displayPage)
+
+		//JSONが配列形式であれば
+		if($.isArray(this.json[jsonName].table)){
+			//コンテンツ表示
+			$(targetArea).append(this.createTagTable(this.getMapNode(jsonName), this.getDomNode(jsonName) , pageNum, displayPage));
+		//JSONが連想配列形式であれば
+		} else {
+			//コンテンツ表示
+			this.outputKeyNumberObject(jsonName, targetArea, pageNum, displayPage)
+		}
 		
 		//ナンバリングを消す。
 		$('.numberingOuter').empty();
@@ -614,14 +623,20 @@ function createTag(){
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		$searchObject = this.json[jsonName][ARTICLE_OBJECT_KEY];
 		
-		//該当するオブジェクトを走査する。
-		for(key in $searchObject){
-		//for(key in this.json){
-		//2015.0729 ここまで変更しました。
-			//キーが数字であれば
-			if(!(isNaN(key))){
-				//retNumに1を足す
-				retNum++;
+		//配列であれば
+		if($.isArray($searchObject)){
+			retNum = $searchObject.length;	//要素数を取り出す
+		//連想配列であれば
+		} else {
+			//該当するオブジェクトを走査する。
+			for(key in $searchObject){
+				//for(key in this.json){
+				//2015.0729 ここまで変更しました。
+				//キーが数字であれば
+				if(!(isNaN(key))){
+					//retNumに1を足す
+					retNum++;
+				}
 			}
 		}
 		
@@ -951,7 +966,7 @@ function createTag(){
 	}
 	
 	/* 
-	 * 関数名:this.outputTagTable = function(key, appendTo)
+	 * 関数名:this.outputTagTable = function(key, domNodeName, appendTo)
 	 * 概要  :JSON配列からテーブルを作り、画面に追加する
 	 * 引数  :String key:JSON配列を格納しているキー
 	 * 	　　 :String domNodeName:テーブルのクラス名
@@ -990,12 +1005,14 @@ function createTag(){
 	 * 概要  :配列と、その配列に格納された行に相当するオブジェクト群からレコード数可変のテーブルを作る
 	 * 引数  :Array mapNode:テーブルのデータを格納した配列
 	 * 　　  :Element domNode:テーブルのHTML
+	 * 　　  :int pageNum:表示する記事数
+	 * 　　  :int displayPage:表示するページ数
 	 * 返却値 :Element:作成したテーブルのDOMを返す
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.06.09
 	 */
-	this.createTagTable = function(mapNode, domNode){
+	this.createTagTable = function(mapNode, domNode , pageNum, displayPage){
 		//mapNodeからテーブル用のデータを取り出す
 		var mapNodeArray = mapNode.table;
 		//見出し行用のDOMを格納する変数を宣言する
@@ -1006,7 +1023,28 @@ function createTag(){
 		var mapNodeArrayLength = mapNodeArray.length;
 		//レコードの列数を取得する
 		var mapObjectLength = Object.keys(mapNodeArray[0]).length;
-		//設定データを格納するための変数を用意する
+		
+		startIndex = 0;		//記事の表示開始インデックスを算出する
+		endCount = mapNodeArrayLength; 	//記事の表示終了インデックスを算出する。
+		
+		//デバッグ用
+		//pageNum = 10;
+		//displayPage = 3;
+		
+		//ページ番号、表示記事数が引数にあったら
+		if(pageNum !== void(0) && displayPage !== void(0)){
+			//表示する記事と記事数を指定するための値を算出する
+			startIndex = pageNum * (displayPage - 1);		//記事の表示開始インデックスを算出する
+			//記事の表示終了インデックスを算出する。記事配列の最大数を超えていたら、元の数値に戻す。
+			endCount = pageNum * displayPage > mapNodeArrayLength? mapNodeArrayLength: pageNum * displayPage;
+			pageNum = startIndex >= endCount? 0: endCount - startIndex;
+		//ページ番号、表示記事数が入力されていなければ
+		} else {
+			//記事数 = 配列の要素数にする
+			pageNum = mapNodeArrayLength;
+		}
+		 
+		 //設定データを格納するための変数を用意する
 		var config = null;
 		
 		//設定データが存在すれば
@@ -1024,34 +1062,40 @@ function createTag(){
 			$firstRow.append($firstRow.children().eq(0).clone(false));
 		}
 
-		var objectCounter = 0;	//行のオブジェクトを操作するためのカウンター変数を用意する
-		//複製したdomNodeに属性の値を指定していくループ
-		for(column in mapNodeArray[0]){
-			//各domNodeに属性の値を指定していく
-			$firstRow.children().eq(objectCounter++)
+		//設定データを取得できていたら
+		if(config != null){
+			var objectCounter = 0;	//行のオブジェクトを走査するためのカウンター変数を用意する
+			//複製したdomNodeに属性の値を指定していくループ
+			for(column in mapNodeArray[0]){
+				//各domNodeに属性の値を指定していく
+				$firstRow.children().eq(objectCounter++)
 				.addClass(this.getClassName(config, column))
 				.attr(STR_STYLE, this.getStyle(config, column))
 				.attr(STR_COLSPAN, this.getColspan(config, column));
+			}
 		}
 		
 		//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
-		for(var i = 1; i < mapNodeArrayLength; i++){
+		//@mod 2015.0730 T.Masuda 表示指定した記事数分だけ複製するように変更しました。
+		for(var i = 1; i < pageNum; i++){
 			//テーブルに必要なだけの行を追加する
 			$table.append($firstRow.clone(false));
 		}
 
 		//見出し行にセルを追加する
 		colNameNode = $firstRow.clone(false);
-		//mapNodeの要素数分ループする
-		for(var i = 0; i < mapNodeArrayLength; i++){
+		rowCounter = 0;	//行を指すカウンター変数を用意する
+		
+		//表示する記事数分ループする
+		for(var i = startIndex; i < endCount; i++){
 			//i番目の行を取得してjQueryオブジェクトに変換し、変数に格納する
-			var $row = $table.children().eq(0).children().eq(i);
+			var $row = $table.children().eq(0).children().eq(rowCounter++);
 			var j = 0;	//オブジェクト用ループ内でのカウンターを用意する
 			//テーブルの行に相当するオブジェクトを、テーブルに相当する配列から取得する
 			var mapObject = mapNodeArray[i];
 			//テーブルの行に相当するオブジェクトの要素分ループする
 			for(key in mapObject){
-				if(i == 0){
+				if(i == startIndex){
 					//見出し行のセルに値を入れる
 					$(colNameNode).children().eq(j).text(this.getColumnName(config, key));
 				}
@@ -1145,10 +1189,16 @@ function createTag(){
 	 */
 	this.getConfigColumn = function(configNode, key){
 		var ret = {};	//返却する値を持つオブジェクトを格納する変数を準備する
-		//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
-		var oneColumn = configNode.columns[key];
+		var oneColumn = void(0);	//取得した列のオブジェクトを格納する変数を用意する。undefinedで初期化
+		
+		//configNode、configNodeのcolumnsが空でないなら
+		if(configNode!== void(0) && configNode != null && configNode.columns !== void(0)){
+			//keyに該当する列のオブジェクトを引数のオブジェクトから取得する
+			var oneColumn = configNode.columns[key];
+		}
+		
 		//取得に成功した
-		if(oneColumn !== void(0)){
+		if(oneColumn !== void(0) && oneColumn != null){
 			ret = oneColumn;	//列のオブジェクトを返却用の変数に格納する
 		}
 		
