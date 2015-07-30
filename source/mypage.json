@@ -104,21 +104,6 @@
             "href": "#myoption.html"
         }
     },
-    "getMyGalleryPhoto":{
-        "db_getQuery":"SELECT id, name, user_key, summary, DATE(update_timestamp) FROM user_image WHERE user_key = 'user_key';",
-        "user_key":{
-            "value":""
-        }
-    },
-    "insertMyGalleryPhoto":{
-        "db_setQuery":"INSERT INTO user_image( user_key, name, update_timestamp) VALUES ('user_key', 'name', NOW());"
-    },
-    "updateMyGalleryPhoto":{
-        "db_setQuery":"UPDATE user_image SET summary = 'summary' WHERE id='id';"
-    },
-    "deleteMyGalleryPhoto":{
-        "db_setQuery":"DELETE FROM user_image summary = 'summary' WHERE id='id';"
-    },
     "myBlogListTable":{
         "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC; ",
         "user_key":{

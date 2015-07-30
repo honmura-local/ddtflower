@@ -1111,13 +1111,13 @@ function beforeConfirmButtonPush(func, message, arg){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
-	//チェックが入っている写真があれば
-	if($('.myPhotoCheck:checked').length){
-		//確認ダイアログを出して同意を得てから画像を消す。
-		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
-	}
-});
+// $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
+// 	//チェックが入っている写真があれば
+// 	if($('.myPhotoCheck:checked').length){
+// 		//確認ダイアログを出して同意を得てから画像を消す。
+// 		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
+// 	}
+// });
 
 /*
  * イベント名:$(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication')
@@ -4152,4 +4152,108 @@ function getCommodityPlusPoint(plusPointQueryKey, sendReplaceArray) {
 	var plusPoint = getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
 	//加算ポイントを返す
 	return plusPoint;
+}
+
+/* 
+ * 関数名:deleteMyGalleryPhoto
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツを削除する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function deleteMyGalleryPhoto() {
+	$(STR_BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
+		//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
+		var checkContentCount = $('.myPhotoCheck:checked').length;
+		//チェックが入っている値が0であるならアラートを出して削除処理を行わない
+		if(checkContentCount == 0) {
+			//アラートでメッセージをだす
+			alert('画像を1つ以上選択してください');
+		} else {
+			if(confirm('選択した写真を削除しますか')) {
+				//ループで画像を削除する処理を開始する
+				for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+					//削除するのがどのコンテンツなのかの番号を取得する
+					var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+					//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
+					//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+					//クエリに渡すために取得した値を連想配列に入れる
+					//var sendReplaceArray = {id:{value:deleteId}};
+					//dbを更新する関数を走らせてDBデータを更新する
+					//setDBdata(creator.json[ここにクエリのkey名],sendReplaceArray, '');
+					//削除対象のコンテンツをクライアントから削除する
+					$('.myPhoto').eq(deleteContentNumber).remove();
+					// console.log(deleteContentNumber);
+				}
+			}
+		}
+	});
+}
+
+/* 
+ * 関数名:updateMyGalleryPhotoData
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツのデータを更新する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function updateMyGalleryPhotoData() {
+	$(STR_BODY).on(CLICK, '.myGalleryEditButtons .updateButton', function() {
+		//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
+		var checkContentCount = $('.myPhotoCheck:checked').length;
+		//チェックが入っている値が0であるならアラートを出して削除処理を行わない
+		if(checkContentCount == 0) {
+			//アラートでメッセージをだす
+			alert('画像を1つ以上選択してください');
+		} else {
+			if(confirm('選択した写真を削除しますか')) {
+				//ループで画像を削除する処理を開始する
+				for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+					//更新するのがどのコンテンツなのかの番号を取得する
+					var updateContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+					//更新対象要素のid列の値を取得し、DBの値を更新できるようにする
+					//var updateId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+					//データを更新するための値が入った連想配列を作っておく
+					// var sendReplaceArray = {};
+					// //写真についてのコメントを取得する
+					// sendReplaceArray['photo_summary'] = $('.myPhotoComment').eq(updateId).text();
+					//クエリに渡すために取得した値を連想配列に入れる
+					//var sendReplaceArray['id'] = deleteId;
+					//dbを更新する関数を走らせてDBデータを更新する
+					//setDBdata(creator.json[ここにクエリのkey名],sendReplaceArray, '');
+				}
+			}
+		}
+	});
+}
+/* 
+ * 関数名:myGalleryDbUpdate
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツについてdbデータを更新する(updateまたはdeleteを行う)
+ * 引数  :sendQueryKey		:DBを更新するときに使うクエリが入ったkey名
+ 		 checkContentCount	:舞マイギャラリ画面のチェックボックスにチェックが入っている数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.30
+ */
+function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
+	//ループで画像を削除する処理を開始する
+	for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+		//削除するのがどのコンテンツなのかの番号を取得する
+		var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+		//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
+		//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+		//クエリに渡すために取得した値を連想配列に入れる
+		//var sendReplaceArray = {id:{value:deleteId}};
+		//dbを更新する関数を走らせてDBデータを更新する
+		//setDBdata(creator.json[sendQueryKey],sendReplaceArray, '');
+		//削除対象のコンテンツをクライアントから削除する
+		$('.myPhoto').eq(deleteContentNumber).remove();
+		// console.log(deleteContentNumber);
+	}
 }
