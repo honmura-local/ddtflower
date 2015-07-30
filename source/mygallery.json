@@ -60,5 +60,20 @@
         "myPhotoCheck": {
             "type": "checkbox"
         }
+    },
+    "getMyGalleryPhoto":{
+        "db_getQuery":"SELECT id, photo_title, user_key, summary, DATE(update_timestamp) FROM user_image WHERE user_key = 'user_key';",
+        "user_key":{
+            "value":""
+        }
+    },
+    "insertMyGalleryPhoto":{
+        "db_setQuery":"INSERT INTO user_image( user_key, photo_title, update_timestamp) VALUES ('user_key', 'photo_title', NOW());"
+    },
+    "updateMyGalleryPhoto":{
+        "db_setQuery":"UPDATE user_image SET summary = 'summary' WHERE id='id';"
+    },
+    "deleteMyGalleryPhoto":{
+        "db_setQuery":"DELETE FROM user_image summary = 'summary' WHERE id='id';"
     }
 }

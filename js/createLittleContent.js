@@ -1185,6 +1185,17 @@ function setMyGalleryChangeEvent(selector){
 			console.log('filename(selector search): ' + $('filename', xml).text());
 			//find関数で取得して出力
 			console.log('filename(find function): ' + $(xml).find('filename').text());
+			//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
+			//アップロード画像の情報をDBに入れて送るための連想配列を作る
+			var sendReplaceArray = {};
+			//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
+			sendReplaceArray['photo_title'] = $('filename', xml).text();
+			//会員番号を更新情報のクエリに入れる
+			sendReplaceArray['user_key'] = creator.json.memberHeader.user_key.value;
+			//画像情報をDBに新規登録する
+			setDBdata(creator.json.insertMyGalleryPhoto, sendReplaceArray, '');
+			console.log(sendReplaceArray);
+			console.log(creator.json.insertMyGalleryPhoto);
 			
 			//返ってきたデータから成否判定の値を取り出す。
 	    	//var issuccess = parseInt($(xml).find('issuccess').text());
@@ -1220,11 +1231,6 @@ function setMyGalleryChangeEvent(selector){
 		    				//画像サムネイルに使う要素の画像を設定する。
 		    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
 		    				$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-		    				//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
-		    				//会員番号を更新情報のクエリに入れる
-		    				sendReplaceQuery['user_key'] = creator.json.memberHeader.user_key.value;
-		    				//画像情報をDBに新規登録する
-		    				//setDBdata(creator.json.insertMyGallery, sendReplaceQuery, '');
 		    			}
 		    		});
 		    	//IE6~9なら
