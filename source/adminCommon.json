@@ -526,6 +526,12 @@
         }
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
+    "userListPagingArea":{
+        "class":"userListPagingArea"
+    },
+    "userListTableOutside":{
+        "class":"userListTableOutside"
+    },
     "userListInfoTable":{
         "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id FROM user_inf",
         "config": {
@@ -827,8 +833,11 @@
             "value":"検索"
         }
     },
-    "mailMagaTableArea":{
-        "class":"tableOutsideArea mailMagaTableArea"
+    "mailMagaPagingArea":{
+        "class":"mailMagaPagingArea"
+    },
+    "mailMagaTableOutside":{
+        "class":"mailMagaTableOutside"
     },
     "mailMagaTable":{
         "db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine ORDER BY send_datetime DESC ",

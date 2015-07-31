@@ -114,22 +114,6 @@
             "value":""
         }
     },
-    "myBlogListTable":{
-        "db_getQuery":"SELECT id, DATE(post_timestamp) AS date,blog_title FROM user_blog WHERE user_key='user_key' ",
-        "config": {
-            "columns": {
-                "id":{
-                    "style":"display:none;"
-                },
-                "date": {
-                    "columnName": "日付"
-                },
-                "blog_title": {
-                    "columnName": "タイトル"
-                }
-            }
-        }
-    },
     "myBlogContent":{
         "db_getQuery":"SELECT title, content FROM user_blog WHERE user_key='user_key' AND id='id' ",
         "user_key":{

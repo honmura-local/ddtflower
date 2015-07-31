@@ -1111,13 +1111,13 @@ function beforeConfirmButtonPush(func, message, arg){
  * 作成日　　:2015.03.27
  * 作成者　　:T.Masuda
  */
-$(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
-	//チェックが入っている写真があれば
-	if($('.myPhotoCheck:checked').length){
-		//確認ダイアログを出して同意を得てから画像を消す。
-		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
-	}
-});
+// $(document).on('click', '.myGalleryEditButtons .deleteButton', function(){
+// 	//チェックが入っている写真があれば
+// 	if($('.myPhotoCheck:checked').length){
+// 		//確認ダイアログを出して同意を得てから画像を消す。
+// 		beforeConfirmButtonPush(deletePhoto, '選択した写真を削除しますか?', '');
+// 	}
+// });
 
 /*
  * イベント名:$(document).on('dblclick', '.myPhotoTitle,.myPhotoComment,.myPhotoPublication')
@@ -1185,6 +1185,17 @@ function setMyGalleryChangeEvent(selector){
 			console.log('filename(selector search): ' + $('filename', xml).text());
 			//find関数で取得して出力
 			console.log('filename(find function): ' + $(xml).find('filename').text());
+			//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
+			//アップロード画像の情報をDBに入れて送るための連想配列を作る
+			var sendReplaceArray = {};
+			//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
+			sendReplaceArray['photo_title'] = $('filename', xml).text();
+			//会員番号を更新情報のクエリに入れる
+			sendReplaceArray['user_key'] = creator.json.memberHeader.user_key.value;
+			//画像情報をDBに新規登録する
+			setDBdata(creator.json.insertMyGalleryPhoto, sendReplaceArray, '');
+			console.log(sendReplaceArray);
+			console.log(creator.json.insertMyGalleryPhoto);
 			
 			//返ってきたデータから成否判定の値を取り出す。
 	    	//var issuccess = parseInt($(xml).find('issuccess').text());
@@ -2943,7 +2954,7 @@ function tablePaging(pagingTargetTable, displayNumber, pagingDisplayCount) {
 	//最大の表示数
 	var maxRecord = displayNumber;
 	//最初の表示数
-	var minRecord = 1;
+	var minRecord = 0;
 	//追加するクエリ
 	var addQuery = ' LIMIT ' + minRecord + ',' + maxRecord;
 	//クエリを実行してテーブルを作る
@@ -3601,12 +3612,26 @@ function createMemberPageHeader() {
  * 作成日:2015.07.20
  */
 function createMemberFinishedLessonContent() {
-	//受講済み授業テーブル用のJSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//受講済み授業の絞り込み領域を作る
 	creator.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
+
+	//受講済みテーブルページングの一番外側となる領域を作る
+	creator.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.finishedLessonPagingArea');
+	//メルマガのデータを取り出す
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
+	//ページング機能付きでメルマガテーブルを作る
+	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+	// console.log(creator.json.finishedLessonTable);
+	//予約中テーブルのテーブルの値をしかるべき値にする
+	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
+	console.log(creator.json.finishedLessonTable);
+
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
-	tablePaging('finishedLessonTable', 15, 6);
+	// tablePaging('finishedLessonTable', 15, 6);
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
 	//絞り込みボタン機能を実装する
@@ -3722,33 +3747,41 @@ function createAdminUserListContent() {
 	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 	// ユーザ検索テキストボックス
 	creator.outputTag('searchUserList', 'searchUserList', '#userList');
-	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
-	tablePaging('userListInfoTable', 15, 10);
+	//ユーザ一覧ページングの一番外側となる領域を作る
+	creator.outputTag('userListPagingArea', 'divArea', '#userList');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.userListPagingArea');
+	//会員一覧のデータを取り出す
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	//ページング機能付きでユーザ情報一覧テーブルを作る
+	creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
 	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	enterKeyButtonClick('.searchNameTextbox, .searchNameKanaTextbox, .searchPhoneTextbox, .searchMailAddressTextbox', '.searchMailAddress .searchUserButton');
+	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
 	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
-		$(this).toggleClass('select');
+		$(this).toggleClass('selectRecord');
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
 	$(STR_BODY).on(CLICK, '.userDetail', function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.select').length;
+		var selected = $('.selectRecord').length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
 		if(selected == 0 || selected > 1) {
 			//選択している
 			alert('ユーザを1人だけ選択してください');
 		} else {
 			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.select').children('.id').text();
+			var memberId = $('.selectRecord').children('.id').text();
 			//クリックした人でなり代わりログインを行う
 			loginInsteadOfMember(memberId);
 		}
@@ -3804,10 +3837,16 @@ function createAdminMailMagaAnnounceContent() {
 	//メルマガ＆アナウンスタブのコンテンツ
 	//過去のメルマガを検索するための領域を作る
 	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
-	//メルマガテーブルの外側を作る
-	// creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
-	//ページング機能付きでメルマガテーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
-	tablePaging('mailMagaTable', 15, 10);
+	//メルマガページングの一番外側となる領域を作る
+	creator.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
+	//メルマガのデータを取り出す
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+	//ページング機能付きでメルマガテーブルを作る
+	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside');
 
 
 	//メルマガテーブルに検索機能を対応させる
@@ -4141,4 +4180,108 @@ function getCommodityPlusPoint(plusPointQueryKey, sendReplaceArray) {
 	var plusPoint = getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
 	//加算ポイントを返す
 	return plusPoint;
+}
+
+/* 
+ * 関数名:deleteMyGalleryPhoto
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツを削除する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function deleteMyGalleryPhoto() {
+	$(STR_BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
+		//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
+		var checkContentCount = $('.myPhotoCheck:checked').length;
+		//チェックが入っている値が0であるならアラートを出して削除処理を行わない
+		if(checkContentCount == 0) {
+			//アラートでメッセージをだす
+			alert('画像を1つ以上選択してください');
+		} else {
+			if(confirm('選択した写真を削除しますか')) {
+				//ループで画像を削除する処理を開始する
+				for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+					//削除するのがどのコンテンツなのかの番号を取得する
+					var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+					//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
+					//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+					//クエリに渡すために取得した値を連想配列に入れる
+					//var sendReplaceArray = {id:{value:deleteId}};
+					//dbを更新する関数を走らせてDBデータを更新する
+					//setDBdata(creator.json[ここにクエリのkey名],sendReplaceArray, '');
+					//削除対象のコンテンツをクライアントから削除する
+					$('.myPhoto').eq(deleteContentNumber).remove();
+					// console.log(deleteContentNumber);
+				}
+			}
+		}
+	});
+}
+
+/* 
+ * 関数名:updateMyGalleryPhotoData
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツのデータを更新する
+ * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
+ 		:lessonStudents		:授業に出席した生徒様の人数
+ 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
+ * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.28
+ */
+function updateMyGalleryPhotoData() {
+	$(STR_BODY).on(CLICK, '.myGalleryEditButtons .updateButton', function() {
+		//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
+		var checkContentCount = $('.myPhotoCheck:checked').length;
+		//チェックが入っている値が0であるならアラートを出して削除処理を行わない
+		if(checkContentCount == 0) {
+			//アラートでメッセージをだす
+			alert('画像を1つ以上選択してください');
+		} else {
+			if(confirm('選択した写真を削除しますか')) {
+				//ループで画像を削除する処理を開始する
+				for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+					//更新するのがどのコンテンツなのかの番号を取得する
+					var updateContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+					//更新対象要素のid列の値を取得し、DBの値を更新できるようにする
+					//var updateId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+					//データを更新するための値が入った連想配列を作っておく
+					// var sendReplaceArray = {};
+					// //写真についてのコメントを取得する
+					// sendReplaceArray['photo_summary'] = $('.myPhotoComment').eq(updateId).text();
+					//クエリに渡すために取得した値を連想配列に入れる
+					//var sendReplaceArray['id'] = deleteId;
+					//dbを更新する関数を走らせてDBデータを更新する
+					//setDBdata(creator.json[ここにクエリのkey名],sendReplaceArray, '');
+				}
+			}
+		}
+	});
+}
+/* 
+ * 関数名:myGalleryDbUpdate
+ * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツについてdbデータを更新する(updateまたはdeleteを行う)
+ * 引数  :sendQueryKey		:DBを更新するときに使うクエリが入ったkey名
+ 		 checkContentCount	:舞マイギャラリ画面のチェックボックスにチェックが入っている数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.30
+ */
+function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
+	//ループで画像を削除する処理を開始する
+	for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
+		//削除するのがどのコンテンツなのかの番号を取得する
+		var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
+		//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
+		//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
+		//クエリに渡すために取得した値を連想配列に入れる
+		//var sendReplaceArray = {id:{value:deleteId}};
+		//dbを更新する関数を走らせてDBデータを更新する
+		//setDBdata(creator.json[sendQueryKey],sendReplaceArray, '');
+		//削除対象のコンテンツをクライアントから削除する
+		$('.myPhoto').eq(deleteContentNumber).remove();
+		// console.log(deleteContentNumber);
+	}
 }

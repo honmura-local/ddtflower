@@ -385,6 +385,8 @@ function postForm(form){
 					if (creator.json.updateMyBlog.id.value != "") {
 						//ブログデータを更新しデータをDBにセットする
 						setDBdata(creator.json.updateMyBlog, sendData, '');
+						//画面を更新せずに記事の新規作成ができるように判定に使っているjsonを空白で初期化する
+						creator.json.updateMyBlog.id.value = "";
 					//データ更新クエリのidに値が入っていなければ新規記事作成クエリを使う
 					} else {
 						//ブログデータを新規作成しデータをDBにセットする

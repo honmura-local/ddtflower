@@ -105,7 +105,7 @@
         }
     },
     "myBlogListTable":{
-        "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC ",
+        "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC; ",
         "user_key":{
             "value":""
         },
