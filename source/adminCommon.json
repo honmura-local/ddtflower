@@ -423,7 +423,7 @@
             },
             "searchNameTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"user_name ",
+                "data-col_name":"user_name",
                 "type":"text",
                 "name":"user_name"
             }
@@ -436,7 +436,7 @@
             },
             "searchNameKanaTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"name_kana ",
+                "data-col_name":"name_kana",
                 "type":"text",
                 "name":"name_kana"
             }
@@ -449,7 +449,7 @@
             },
             "searchThemeTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_key ",
+                "data-col_name":"lesson_key",
                 "type":"text",
                 "name":"lesson_name"
             }
@@ -462,7 +462,7 @@
             },
             "searchPhoneTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"telephone ",
+                "data-col_name":"telephone",
                 "type":"text",
                 "name":"telephone"
             }
@@ -488,7 +488,7 @@
             },
             "searchMailAddressTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"mail_address ",
+                "data-col_name":"mail_address",
                 "type":"text",
                 "name":"mail_address"
             }
@@ -501,7 +501,7 @@
             },
             "searchLessonPeriodFromTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_date_from ",
+                "data-col_name":"lesson_date_from",
                 "type":"text",
                 "name":"fromPeriod"
             }
@@ -514,7 +514,7 @@
             },
             "searchLessonPeriodToTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_date_to ",
+                "data-col_name":"lesson_date_to",
                 "type":"text",
                 "name":"toPeriod"
             }
