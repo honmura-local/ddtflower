@@ -47,11 +47,11 @@ var adminUserSearcher = function() {
 
 	// 期間FROMのクエリと置き換え対象
 	var lessonDateFromReplaceTarget = "{{lesson_date_from}}";
-	var lessonDateFromQuery = "lesson_date <= '" + lessonDateFromReplaceTarget + "'";
+	var lessonDateFromQuery = "lesson_date >= '" + lessonDateFromReplaceTarget + "'";
 
 	// 期間TOのクエリと置き換え対象
 	var lessonDateToReplaceTarget = "{{lesson_date_to}}";
-	var lessonDateToQuery = "lesson_date >= '" + lessonDateToReplaceTarget + "'";
+	var lessonDateToQuery = "lesson_date <= '" + lessonDateToReplaceTarget + "'";
 
 	// レッスンのクエリと置き換え対象
 	var lessonReplaceTarget = "{{lesson_key}}";
