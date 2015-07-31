@@ -1908,7 +1908,7 @@ function dialogEx(url, argumentObj, returnObj){
 			//メンバのURLからHTMLデータを読み込む
 			this.load();
 			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
-			this.returnObj = returnObj !== {}? this.returnObj: this.defaultObj;
+			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultObj;
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。
