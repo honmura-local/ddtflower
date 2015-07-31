@@ -56,7 +56,7 @@ var specialReservedDialogOption = {
 				        // 予約希望確認ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
 				        var confirmDialog = new dialogEx(SPECIAL_RESERVED_CONFIRM_DIALOG_URL, {}, specialReservedConfirmDialogOption);
 				    	//閉じたら完全にダイアログを破棄させる
-				        confirmDialog.setCallbackClose(reservedDialog.destroy());
+				        confirmDialog.setCallbackClose(confirmDialog.destroy);
 				        confirmDialog.run();	//予約希望確認ダイアログを開く
 				        			 
 					    //入力確認のものは送信すべきではないので、送信前に前持って無効化する

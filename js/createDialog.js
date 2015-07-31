@@ -334,7 +334,7 @@ function createSpecialDate(year, month, day){
 	$('.specialReservedDialog').attr('title', date);
 //	//日付のinputタグにも日付を追加する。
 	$('.specialReservedDialog').dialog('option', 'title', date);
-//	$('.reservedDate').val(date);
+	$('.reservedDate').val(date);
 }
 
 /* 
@@ -1971,11 +1971,11 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.destroy = function(){
+		//ダイアログのDOMを取得する。
+		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this); 
 		//jQuery UIのダイアログを破棄する
-		this.formDom.dialog('destroy');
+		$dialog.dialog('destroy');
 		//画面上に展開されているダイアログのDOMを破棄する。
-		this.formDom.remove();
-		//ダイアログのクラスのインスタンスを破棄する。
-		$(this).remove();
+		$dialog.remove();
 	}
 }
