@@ -596,6 +596,8 @@ function callReservedDialog(dateText, calendar){
 	var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
 	//予約ダイアログが開いたときのコールバック関数を登録する
 	reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
+	//閉じたら完全にダイアログを破棄させる
+	reservedDialog.setCallbackClose(reservedDialog.destroy());
 	reservedDialog.run();	//ダイアログを開く
 }
 

@@ -16,7 +16,7 @@ function beforeLoginProcedure(){
 //体験レッスン予約ダイアログ関連関数
 //予約ダイアログの準備関数
 function beforeOpenSpecialReservedDialog(){
-	var spr = $('.specialReservedDialog');
+	console.log(this);
 	//予約ダイアログのインスタンスを取得する。
 	var specialReservedDialogClass = $('.specialReservedDialog')[0].instance;
 	
@@ -40,50 +40,49 @@ var specialReservedDialogOption = {
 		buttons:[
 			{
 				// OKボタンのテキスト。
-			    text:'OK',
-			    // ボタン押下時の処理を記述する。
-			    click:function(event, ui){
-			        //必須入力チェックを行う。
-			        var emptyList = checkEmptyInput(checkNames);
-		        	//アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
-			        var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]');
-			        //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
-			        var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
-			        //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。
-			        var numberList = numberCheck('.count');
-			        // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-			        if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
-			        	// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-			        	var confirmDialog = new dialogEx(SPECIAL_RESERVED_CONFIRM_DIALOG_URL, {}, specialReservedConfirmDialogOption);
-			        	//予約ダイアログが開いたときのコールバック関数を登録する
-			        	confirmDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
-			        	confirmDialog.run();	//ダイアログを開く
-			        			 
-				        //入力確認のものは送信すべきではないので、送信前に前持って無効化する
-				        $('.personEmailCheck input').attr('disabled', 'disabled');
-				        //ダイアログ内のフォームをsubmitする。
-				        $('form.specialReservedDialog').submit();				        		 
-				        // このダイアログの入力要素を一時的に無効化する。
-				        disableInputs($(this));
-			        } else {
-			        	//警告のテキストを作る。
-			        	 var alerts = makeFailedAlertString({'emptyList':emptyList,'onlyAlphabetList':onlyAlphabetList,'emailCheck':emailCheck,'numberList':numberList},checkNamesJp, messages);
-			        	//アラートを出す。
-			        alert(alerts);
-			        	}
-			        	 }
-			         },
-			         {
-			        	 // キャンセルボタンのテキスト。
-			        	 text:'Cancel',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 // ダイアログと、入力された予約データを消去する。
-			        		 removeInputDialog($(this), reservedData);
-			        	 }
-			         }
+				text:'OK',
+				// ボタン押下時の処理を記述する。
+				click:function(event, ui){
+				    //必須入力チェックを行う。
+				    var emptyList = checkEmptyInput(checkNames);
+			        //アルファベット入力だけ行わせるテキストボックス名のリストを格納する配列を宣言する。
+				    var onlyAlphabetList = checkAllAlphabet('input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]');
+				    //メールアドレスの再入力が行われているかをチェックする。失敗なら配列に空文字を入れる。
+				    var emailCheck = $('.personEmail input').val() !== $('.personEmailCheck input').val()? [""]: null;
+				    //カウントクラスのテキストボックス(人数)が0以下でないかをチェックする。
+				    var numberList = numberCheck('.count');
+				    // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
+				    if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
+				        // 予約希望確認ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
+				        var confirmDialog = new dialogEx(SPECIAL_RESERVED_CONFIRM_DIALOG_URL, {}, specialReservedConfirmDialogOption);
+				    	//閉じたら完全にダイアログを破棄させる
+				        confirmDialog.setCallbackClose(reservedDialog.destroy());
+				        confirmDialog.run();	//予約希望確認ダイアログを開く
+				        			 
+					    //入力確認のものは送信すべきではないので、送信前に前持って無効化する
+					    $('.personEmailCheck input').attr('disabled', 'disabled');
+					    //ダイアログ内のフォームをsubmitする。
+					    $('form.specialReservedDialog').submit();				        		 
+					    // このダイアログの入力要素を一時的に無効化する。
+					    disableInputs($(this));
+				    } else {
+				        //警告のテキストを作る。
+				        var alerts = makeFailedAlertString({'emptyList':emptyList,'onlyAlphabetList':onlyAlphabetList,'emailCheck':emailCheck,'numberList':numberList},checkNamesJp, messages);
+				        //アラートを出す。
+				    	 alert(alerts);
+				    }
+			 	 }
+			},
+			{
+			// キャンセルボタンのテキスト。
+			text:'Cancel',
+			// ボタン押下時の処理を記述する。
+			click:function(event, ui){
+				$(this).dialog('close');//ダイアログを閉じる
+				reservedData = null;	//予約データを消す
+		    }
+		}
 	],
-		
 		// 幅を設定する。
 	width			: '300',
 	// 予約ダイアログのクラスを追加する。
@@ -118,7 +117,7 @@ var specialReservedDialogOption = {
 //体験レッスン予約確認ダイアログ関連関数
 
 //体験レッスン予約確認ダイアログの設定オブジェクト
-var specialReservedDialogOption = {
+var specialReservedConfirmDialogOption = {
 	// 幅を設定する。
 	width			: '300',
 	// 予約ダイアログのクラスを追加する。
