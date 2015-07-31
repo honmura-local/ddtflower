@@ -1,13 +1,11 @@
 // クエリのテンプレと置き換え対象文字列を渡して初期化する。
 // replaceThenGetQueryに置き換え後の文字列を渡すとテンプレ中の置き換え対象文字列を置き換えてくれる。
 var QuerySupplier = function(queryBase, targetStr) {
-	this.queryBase = queryBase;
-	this.replaceTarget = targetStr;
 	this.replaceThenGetQuery = function(col_value){
 		if(!col_value) {
 			return "";
 		}
-		return this.queryBase.replace(/this.queryBase/g, col_value);
+		return queryBase.replace(new RegExp(targetStr,"g"), col_value);
 	};
 };
 
@@ -22,6 +20,10 @@ function connectConditions(query, condition, conjunction) {
 
 // 管理者側、ユーザ一覧での検索クエリ生成
 var adminUserSearcher = function() {
+
+	// クエリ固定部分
+	var baseQuery = "SELECT * FROM user_inf";
+	var result = baseQuery;	// 結果
 
 	// ユーザIDのクエリと置き換え対象
 	var userKeyReplaceTarget = "{{user_key}}";
@@ -49,34 +51,32 @@ var adminUserSearcher = function() {
 
 	// 期間TOのクエリと置き換え対象
 	var lessonDateToReplaceTarget = "{{lesson_date_to}}";
-	var lessonDateToQuery = "lesson_date >= '" + lessonDateFromReplaceTarget + "'";
+	var lessonDateToQuery = "lesson_date >= '" + lessonDateToReplaceTarget + "'";
 
 	// レッスンのクエリと置き換え対象
 	var lessonReplaceTarget = "{{lesson_key}}";
 	var lessonQuery = "id IN(SELECT user_key FROM user_lesson WHERE lesson_key = " + lessonReplaceTarget + ")";
 
-	// クエリ固定部分
-	var baseQuery = "SELECT * FROM user_inf";
 	// 期間のクエリ用ワーク領域
 	var workTurmQuery = "";
 	
 	// 期間のクエリ固定部分
 	var turmQueryBase = 
 		"id IN(" +
-			"SELECT" +
-				"user_key" +
-			"FROM" +
-				"user_classwork" +
-			"INNER JOIN" +
-				"classwork" +
-			"ON" +
-				"user_work_status = 3" +
-			"AND" +
-				"classwork.id = user_classwork.classwork_key" +
-			"INNER JOIN" +
-				"time_table_day" +
-			"ON" +
-				"time_table_day.id = classwork.time_table_day_key";
+			"SELECT " +
+				"user_key " +
+			"FROM " +
+				"user_classwork " +
+			"INNER JOIN " +
+				"classwork " +
+			"ON " +
+				"user_work_status = 3 " +
+			"AND " +
+				"classwork.id = user_classwork.classwork_key " +
+			"INNER JOIN " +
+				"time_table_day " +
+			"ON " +
+				"time_table_day.id = classwork.time_table_day_key ";
 	
 	// 期間Fromのクエリ取得関数
 	var lessonDateFromQueryGetter = function(from) {
@@ -89,11 +89,12 @@ var adminUserSearcher = function() {
 		}
 		// もう期間全体のクエリが出来てるなら普通につなげればいいのでそのまま返却
 		if(workTurmQuery) {
-			return fromQuery;
+			result = result.slice(0,-1);
+			return fromQuery + ")";
 		}
 		// まだ期間全体のクエリが無い場合は全体クエリを作ってから返却
 		workTurmQuery = connectConditions(turmQueryBase, fromQuery, "AND");
-		return workTurmQuery;
+		return workTurmQuery+ ")";
 	}
 	
 	// 期間Toのクエリ取得関数
@@ -102,16 +103,17 @@ var adminUserSearcher = function() {
 		var toQuery = new QuerySupplier(
 			lessonDateToQuery, lessonDateToReplaceTarget).replaceThenGetQuery(to);
 		// 結果が空文字なら処理は中断(特にエラーじゃあない)
-		if(!fromQuery) {
+		if(!toQuery) {
 			return "";
 		}
 		// もう期間全体のクエリが出来てるなら普通につなげればいいのでそのまま返却
 		if(workTurmQuery) {
-			return toQuery;
+			result = result.slice(0,-1);
+			return toQuery + ")";
 		}
 		// まだ期間全体のクエリが無い場合は全体クエリを作ってから返却
 		workTurmQuery = connectConditions(turmQueryBase, toQuery, "AND");
-		return workTurmQuery;
+		return workTurmQuery + ")";
 	}
 
 
@@ -135,22 +137,21 @@ var adminUserSearcher = function() {
 		return connectConditions(query, condition, "AND");
 	};
 	
-	var result = baseQuery;
 	// 検索用テキスト全体をぶん回して「data-col_name」属性の値が
 	// adminUserSearchConditionsに対応していればクエリ生成メソッドが呼ばれる。
-	var execute = function() {
+	this.execute = function() {
 		$(".adminUserSearch").each(function(){
 			var col_name = $(this).data("col_name");
 			var value = $(this).val();
 			if(col_name in adminUserSearchConditions) {
-				result = connectEach(result, adminUserSearchConditions[col_name](value));
+				var partQuery = adminUserSearchConditions[col_name](value);
+				result = connectEach(result, partQuery);
 			}
 		});
+		if(baseQuery == result) {
+			throw new Error("no condition was specified");
+		}
+		return result;
 	};	
-	
-	if(baseQuery == result) {
-		throw new Error("no condition was specified");
-	}
-	return result;
 }
 
