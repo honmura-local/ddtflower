@@ -18,7 +18,7 @@
 			<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 			<script>
 				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
-				creator.getJsonFile('source/mygallerycontent.json');	// Myギャラリー生成用のJSONデータを取得する。
+				creator.getJsonFile('php/getJSONArray.php', 'myGallery', 'myGallery');	// Myギャラリー生成用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// HTMLのテンプレートデータをを取得する。
 				creator.getDomFile('template/common.html');			

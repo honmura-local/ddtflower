@@ -11,7 +11,9 @@
             "text": ""
         }
     },
-    "myGallery": {},
+    "myGallery": {
+    	"db_getQuery":"SELECT  FROM"
+    },
     "myGalleryEditButtons": {
         "createButton": {
             "text": "新規"
