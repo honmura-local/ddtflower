@@ -164,11 +164,28 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		onSelect: function(dateText, inst){
 			//ダイアログのタイトルの日付を設定する
 			var titleDate = changeJapaneseDate(dateText);
+			//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
+			var dialogDataObj = {
+				//会員番号をセットしてどのユーザが予約するのかを識別する
+				userId:creator.json.memberHeader.user_key.value,
+				//予約日付をセットし、どの日に予約するのかを識別する
+				lessonDate:dateText
+			};
+			//ダイアログのタイトルをセットして予約日を分かりやすくする
+			dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]['title'] = titleDate;
+			//予約授業一覧ダイアログを作る
+			var reservedLessonListDialog = new dialogEx('dialog/reserveLessonListDialog.html', dialogDataObj, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			//ダイアログを開くときのテーブルの値を編集して表示する
+			reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+			reservedLessonListDialog.run();	//主処理を走らせる。
+
+
 			//講座一覧ダイアログを開く
-			this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
-					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
-					titleDate
-			);
+			// this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
+			// 		{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
+			// 		titleDate
+			// );
 		}
 //
 //		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
@@ -3760,7 +3777,7 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
+	// reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
@@ -3769,6 +3786,9 @@ function createAdminUserListContent() {
 	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
 		$(this).toggleClass('selectRecord');
+	});
+	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+		console.log(new adminUserSearcher().execute());
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
