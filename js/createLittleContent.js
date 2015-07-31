@@ -27,7 +27,7 @@ ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごと
 NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
-CHANGE　							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';

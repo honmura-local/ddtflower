@@ -28,8 +28,8 @@
 		$('#testDialogButton').on('click', function(){
 			//dialogExクラスのインスタンスを生成する
 			var testDialog = new dialogEx('dialog/testdialog.html');
+			testDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 			testDialog.run();	//主処理を走らせる。
-			testDialog.setCallbackClose(disappear);
 		});
 	});
 </script>
