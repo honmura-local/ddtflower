@@ -1834,20 +1834,34 @@ function cancelDialogOpen (dialogObject, memberNumber) {
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
+ * 		　:Object argumentObj:イアログ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
  * 		　:Object returnObject:jQuery UI Dialogの設定用オブジェクト
  * 設計者　:H.Kaneko
  * 作成日　:2015.0729
  * 作成者　:T.Masuda
+ * 変更日　:2015.0731
+ * 変更者　:T.Masuda
+ * 内容　　:引数「argumentObj」を追加しました
  */
-function dialogEx(url, returnObject){
+function dialogEx(url, argumentObj, returnObj){
 	//ダイアログのHTMLのURLを格納するメンバ
 	this.url = url;
 	//ダイアログのDOMを格納するメンバ
 	this.formDom = '';
+	//ダイアログ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
+	this.argumentObj = argumentObj;
 	//設定用オブジェクトを格納するメンバ
-	this.returnObject = returnObject;
+	this.returnObj = returnObj !== void(0)? returnObj : {};
 	//デフォルト設定のオブジェクト
-	this.defaultObj = {};
+	this.defaultObj = {
+			width: 'auto',		//幅を自動調整する
+			autoOpen : true,	//作成時の自動オープンを無効にする
+			modal : true,		//モーダル表示
+			resizable : false,	//ドラッグでのリサイズ可否
+			//表示位置の指定。
+			position :{my:'center center',at:'center center', of:window},
+			closeOnEscape : false	//escキーを押して閉じるか
+	};
 	
 	/* 関数名:load
 	 * 概要　:URLからダイアログのHTMLファイルを取得してメンバに保存する。
@@ -1891,15 +1905,14 @@ function dialogEx(url, returnObject){
 		try{
 			//メンバのURLからHTMLデータを読み込む
 			this.load();
-			//returnObjがオブジェクトでなければ、デフォルト用に用意したオブジェクトをセットする
-			this.returnObj = this.returnObj instanceof Object? this.returnObj: this.defaultObj;
+			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
+			this.returnObj = returnObj !== {}? this.returnObj: this.defaultObj;
+			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
+			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。
 			//※this.formDomへはjQueryオブジェクトとしてformDomへの参照が代入される。
 			//*formDom内のHTMLにscriptタグが記述されていた場合、このコード実行時にscriptタグのコードが動き出す。
-			this.formDom = $(this.formDom).dialog(this.returnObj);
-			//ダイアログのDOMに当該クラスインスタンスへの参照を持たせる。
-			//formDomはjQueryオブジェクトとなっているため、このステップでは[0]を指定する必要がある。
-			this.formDom[0].instance = this;
+			this.formDom = $(form).dialog(this.returnObj);
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.message);	//投げられたエラーオブジェクトをコンソールログに出す。
@@ -1916,7 +1929,7 @@ function dialogEx(url, returnObject){
 	 */
 	this.setCallbackClose = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.formDom.dialog('option', 'close', func): console.log('setCallBackClose recieved enythingeles function');
+		func instanceof Function? this.returnObj['close'] = func: console.log('setCallBackClose recieved enythingeles function');
 	}
 
 	/* 関数名:setCallbackOpen
@@ -1929,7 +1942,7 @@ function dialogEx(url, returnObject){
 	 */
 	this.setCallbackOpen = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.formDom.dialog('option', 'open', func): console.log('setCallBackClose recieved enythingeles function');
+		func instanceof Function?  this.returnObj['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
 	}
 	
 	/* 関数名:setCallbackCreate
@@ -1942,7 +1955,7 @@ function dialogEx(url, returnObject){
 	 */
 	this.setCallbackCreate = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.formDom.dialog('option', 'create', func): console.log('setCallBackClose recieved enythingeles function');
+		func instanceof Function?  this.returnObj['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
 
 	/* 関数名:destroy
