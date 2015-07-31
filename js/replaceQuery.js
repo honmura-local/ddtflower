@@ -89,7 +89,7 @@ var adminUserSearcher = function() {
 		}
 		// もう期間全体のクエリが出来てるなら普通につなげればいいのでそのまま返却
 		if(workTurmQuery) {
-			result = result.slice(0,-1);
+			result = result.slice(0,-1);	// 「)」で閉じてるはずなんで削っておく
 			return fromQuery + ")";
 		}
 		// まだ期間全体のクエリが無い場合は全体クエリを作ってから返却
@@ -108,7 +108,7 @@ var adminUserSearcher = function() {
 		}
 		// もう期間全体のクエリが出来てるなら普通につなげればいいのでそのまま返却
 		if(workTurmQuery) {
-			result = result.slice(0,-1);
+			result = result.slice(0,-1);	// 「)」で閉じてるはずなんで削っておく
 			return toQuery + ")";
 		}
 		// まだ期間全体のクエリが無い場合は全体クエリを作ってから返却
@@ -140,6 +140,7 @@ var adminUserSearcher = function() {
 	// 検索用テキスト全体をぶん回して「data-col_name」属性の値が
 	// adminUserSearchConditionsに対応していればクエリ生成メソッドが呼ばれる。
 	this.execute = function() {
+		result = baseQuery;	// 呼ばれるたびに結果は初期化
 		$(".adminUserSearch").each(function(){
 			var col_name = $(this).data("col_name");
 			var value = $(this).val();
