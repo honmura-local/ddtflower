@@ -26,6 +26,7 @@ TABLE							= 'table';							//テーブル
 
 LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+PATH_LOGIN_DIALOG			= 'dialog/loginDialog.html';					//ログインダイアログのクラスのセレクタ
 CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
 CLICK						= 'click';							//クリックイベントの文字列
 EMPTY						= '';								//空文字
@@ -331,8 +332,9 @@ function createSpecialDate(year, month, day){
 	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
 	var date = year + '年' + month + '月' + day + '日' + '(' + weekChars[new Date(year, month - 1, day).getDay()] + ')';
 	$('.specialReservedDialog').attr('title', date);
-	//日付のinputタグにも日付を追加する。
-	$('.reservedDate').val(date);
+//	//日付のinputタグにも日付を追加する。
+	$('.specialReservedDialog').dialog('option', 'title', date);
+//	$('.reservedDate').val(date);
 }
 
 /* 
@@ -1706,9 +1708,9 @@ function checkLoginState(){
 	if(!(checkLogin())){
 		//ログインボタンのイベントを設定する。
 		$(CLASS_LOGIN).on(CLICK, function(){
-			// ログインダイアログを作る
-			var login = new loginDialog(LOGIN_DIALOG, null, {autoOpen:true});
-			login.open();	//ログインダイアログを開く
+			// dialogExクラスでログインダイアログを作る
+			var loginDialog = new dialogEx(PATH_LOGIN_DIALOG, {}, dialogOption[LOGIN_DIALOG]);
+			loginDialog.run();	//ログインダイアログを開く
 		});
 	}
 }
@@ -1908,7 +1910,7 @@ function dialogEx(url, argumentObj, returnObj){
 			//メンバのURLからHTMLデータを読み込む
 			this.load();
 			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
-			this.returnObj = returnObj !== {}? this.returnObj: this.defaultObj;
+			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultObj;
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。

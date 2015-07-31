@@ -23,12 +23,13 @@ var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
 //定数定義
-ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
-NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
-PAGING 							= 'paging';							//ページングのクラス名
-PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
-CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
-
+ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';				//管理者日ごとダイアログの内容
+NOW_PAGE						= 'nowPage';							//ページングの現在のページのクラス名
+PAGING 							= 'paging';								//ページングのクラス名
+PAGING_AREA						= 'pagingArea';							//ページングを囲むdivクラス名
+CHANGE							= 'change';								//イベント名がchangeのときにchangeイベントを登録するための定数
+SPECIAL_RESERVED_DIALOG_URL		= 'dialog/specialReservedDialog.html';	//体験レッスン予約ダイアログのHMTLファイルURL
+	
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
   if (appVersion.indexOf('msie 6.') != -1) {
@@ -591,9 +592,11 @@ function callReservedDialog(dateText, calendar){
 	// 日付配列を取得する。
 	var date = createDateArray(dateText)
 	
-	// 予約希望ダイアログを作成する
-	 var reservedDialog = new specialReservedDialog(null, null, {autoOpen:true}, contentName, date);
-	reservedDialog.open();	//ダイアログを開く
+	// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
+	var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
+	//予約ダイアログが開いたときのコールバック関数を登録する
+	reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
+	reservedDialog.run();	//ダイアログを開く
 }
 
 /*

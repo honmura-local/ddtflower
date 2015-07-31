@@ -99,6 +99,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/createLittleContent.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
+<!-- dialogExクラス置換作業中の一時JSファイル -->
+<script type="text/javascript" src="js/dialogFunctionMasuda.js"></script>
 
 </head>
 
