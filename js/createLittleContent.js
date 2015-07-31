@@ -3612,12 +3612,26 @@ function createMemberPageHeader() {
  * 作成日:2015.07.20
  */
 function createMemberFinishedLessonContent() {
-	//受講済み授業テーブル用のJSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//受講済み授業の絞り込み領域を作る
 	creator.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
+
+	//受講済みテーブルページングの一番外側となる領域を作る
+	creator.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.finishedLessonPagingArea');
+	//メルマガのデータを取り出す
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
+	//ページング機能付きでメルマガテーブルを作る
+	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+	// console.log(creator.json.finishedLessonTable);
+	//予約中テーブルのテーブルの値をしかるべき値にする
+	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
+	console.log(creator.json.finishedLessonTable);
+
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
-	tablePaging('finishedLessonTable', 15, 6);
+	// tablePaging('finishedLessonTable', 15, 6);
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
 	//絞り込みボタン機能を実装する
@@ -3733,8 +3747,16 @@ function createAdminUserListContent() {
 	// creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 	// ユーザ検索テキストボックス
 	creator.outputTag('searchUserList', 'searchUserList', '#userList');
-	//ページング機能付きでユーザ情報一覧テーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
-	tablePaging('userListInfoTable', 15, 10);
+	//ユーザ一覧ページングの一番外側となる領域を作る
+	creator.outputTag('userListPagingArea', 'divArea', '#userList');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.userListPagingArea');
+	//会員一覧のデータを取り出す
+	creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+	//ページング機能付きでユーザ情報一覧テーブルを作る
+	creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
@@ -3815,10 +3837,16 @@ function createAdminMailMagaAnnounceContent() {
 	//メルマガ＆アナウンスタブのコンテンツ
 	//過去のメルマガを検索するための領域を作る
 	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
-	//メルマガテーブルの外側を作る
-	// creator.outputTag('mailMagaTableArea', 'tableOutsideArea', '#mailMagaAndAnnounce');
-	//ページング機能付きでメルマガテーブルを作る(1ページに表示する行数が15、ページングの最大値が9)
-	tablePaging('mailMagaTable', 15, 10);
+	//メルマガページングの一番外側となる領域を作る
+	creator.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
+	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+	creator.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
+	// ナンバリング領域を作る
+	creator.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
+	//メルマガのデータを取り出す
+	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+	//ページング機能付きでメルマガテーブルを作る
+	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside');
 
 
 	//メルマガテーブルに検索機能を対応させる
