@@ -1831,6 +1831,8 @@ function cancelDialogOpen (dialogObject, memberNumber) {
 	});
 }
 
+
+
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -1859,7 +1861,7 @@ function dialogEx(url, argumentObj, returnObj){
 			modal : true,		//モーダル表示
 			resizable : false,	//ドラッグでのリサイズ可否
 			//表示位置の指定。
-			position :{my:'center center',at:'center center', of:window},
+			position :{my:'center top',at:'center top', of:window},
 			closeOnEscape : false	//escキーを押して閉じるか
 	};
 	
