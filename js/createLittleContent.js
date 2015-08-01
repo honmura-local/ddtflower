@@ -202,11 +202,25 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	onSelect: function(dateText, inst){
 		//ダイアログのタイトルの日付を設定する
 		var titleDate = changeJapaneseDate(dateText);
-		//講座一覧ダイアログを開く
-		this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-				{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
-				titleDate
-		);
+		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
+		var dialogDataObj = {
+			//予約日付をセットし、どの日に予約するのかを識別する
+			lessonDate:dateText
+		};
+		//ダイアログのタイトルをセットして予約日を分かりやすくする
+		dialogExOption[ADMIN_LESSONLIST_DIALOG]['title'] = titleDate;
+		//予約授業一覧ダイアログを作る
+		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		//ダイアログを開くときのテーブルの値を編集して表示する
+		adminLessonListDialog.setCallbackOpen(adminLessonListDialogOpenFunc);
+		adminLessonListDialog.setCallbackClose(adminLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+		adminLessonListDialog.run();	//主処理を走らせる。
+
+		// //講座一覧ダイアログを開く
+		// this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
+		// 		{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
+		// 		titleDate
+		// );
 	}
 }
 
@@ -3821,30 +3835,22 @@ function createAdminUserListContent() {
 function createAdminLessonDetailContent() {
 	//授業詳細タブ内にカレンダ-作る
 	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-	//予約一覧ダイアログを作る
-	var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
-		// 日ごとダイアログ領域を作る
-		creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
-	});
+	// //予約一覧ダイアログを作る
+	// var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
+	// 	// 日ごとダイアログ領域を作る
+	// 	creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
+	// });
 	
 	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
-	var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
+	var lessonCalendar = new adminCalendar('.adminCalendar');
 	lessonCalendar.create();	//カレンダーを実際に作成する
 	
 	//授業詳細ダイアログを作る
-	var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
-		// 授業詳細ダイアログ領域を作る
-		creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-	});
-	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
-	$(STR_BODY).on(CLICK, '.lessonDetailDialog input[value="更新"]', function() {
-		//入力した値を取得し、データの更新に用いる
-		var updateData = getInputData('lessonData');
-		//授業idを取得する
-		updateData['classwork_key'] = sendObject['classwork_key'].value;
-		//授業詳細テーブルを更新する
-		setDBdata(creator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
-	});
+	// var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
+	// 	// 授業詳細ダイアログ領域を作る
+	// 	creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+	// });
+
 }
 
 /* 
