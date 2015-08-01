@@ -3803,8 +3803,29 @@ function createAdminUserListContent() {
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
 		$(this).toggleClass('selectRecord');
 	});
+	//検索ボタンをクリックしたときにテーブルの内容を更新する
 	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-		console.log(new adminUserSearcher().execute());
+		//ユーザ一覧テーブルを削除する
+		$('.userListInfoTable').remove();
+		//会員一覧テーブルをリセットして検索に備える
+		creator.json.userListInfoTable.table = {};
+		//ナンバリングのdomを初期化する
+		$('.numbering').remove();
+		//新しくページングを作り直すためにページングの番号一覧をリセットする
+		creator.json.numbering = {};
+		//クエリを変数に入れてクエリ発行の準備をする
+		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
+		//クエリのデフォルトを取得する
+		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
+		//会員一覧のデータを取り出す
+		creator.getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
+		//クエリをデフォルトに戻す
+		creator.json.userListInfoTable.db_getQuery = defaultQuery;
+		//取得した値が0の時のテーブルを作らない
+		if(creator.json.userListInfoTable.table.length != 0) {
+			//ページング機能付きでユーザ情報一覧テーブルを作る
+			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
+		}
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する

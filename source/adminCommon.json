@@ -533,7 +533,7 @@
         "class":"userListTableOutside"
     },
     "userListInfoTable":{
-        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id FROM user_inf",
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id, mail_address FROM user_inf",
         "config": {
             "columns": {
                 "user_name": {
@@ -551,6 +551,9 @@
                 "id":{
                     "style":"display:none",
                     "className":"id"
+                },
+                "mail_address":{
+                    "style":"display:none"
                 }
             }
         }
