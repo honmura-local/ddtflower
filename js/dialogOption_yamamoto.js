@@ -12,6 +12,8 @@ dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 	closeOnEscape	: false,
 	//モーダル化する
 	modal:true,
+	//リサイズ不可にする
+	resizable:false,
 	//画面上部にダイアログを表示する
 	position :{my:'center top',at:'center top', of:window}
 };
@@ -24,6 +26,8 @@ dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG] = {
 	autoOpen		: true,
 	// Escキーを押してもダイアログが閉じないようにする。
 	closeOnEscape	: false,
+	//リサイズ不可にする
+	resizable:false,
 	//モーダル化する
 	modal:true
 };
@@ -34,6 +38,8 @@ dialogExOption[CANCEL_LESSON_DIALOG] = {
 	width			: STR_AUTO,
 	// ダイアログを生成と同時に開く。
 	autoOpen		: true,
+	//リサイズ不可にする
+	resizable:false,
 	// Escキーを押してもダイアログが閉じないようにする。
 	closeOnEscape	: false
 };
@@ -44,6 +50,8 @@ dialogExOption[ADMIN_LESSONLIST_DIALOG] = {
 	width			: STR_AUTO,
 	//ダイアログを生成と同時に開く。
 	autoOpen		: true,
+	//リサイズ不可にする
+	resizable:false,
 	//Escキーを押してもダイアログが閉じないようにする。
 	closeOnEscape	: false,
 	//モーダル化する
@@ -58,6 +66,24 @@ dialogExOption[LESSON_DETAIL_DIALOG] = {
 	width			: STR_AUTO,
 	//ダイアログを生成と同時に開く。
 	autoOpen		: true,
+	//リサイズ不可にする
+	resizable:false,
+	//Escキーを押してもダイアログが閉じないようにする。
+	closeOnEscape	: false,
+	//モーダル化する
+	modal:true,
+	//画面上部にダイアログを表示する
+	position :{my:'center top',at:'center top', of:window}
+}
+
+//管理者、授業追加ダイアログ
+dialogExOption[ADMIN_NEW_LESSON_CREATE] = {
+	//幅を自動設定する。
+	width			: STR_AUTO,
+	//ダイアログを生成と同時に開く。
+	autoOpen		: true,
+	//リサイズ不可にする
+	resizable:false,
 	//Escキーを押してもダイアログが閉じないようにする。
 	closeOnEscape	: false,
 	//モーダル化する

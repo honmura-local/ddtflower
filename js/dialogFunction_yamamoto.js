@@ -1,9 +1,10 @@
-//会員top予約授業一覧テーブル
-LESSON_TABLE 						= 'lessonTable';
-MEMBER_RESERVED_CONFIRM_DIALOG		= 'memberReservedConfirmDialog';
-CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';
-ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';
-LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';
+LESSON_TABLE 						= 'lessonTable';					//会員画面予約授業一覧テーブル
+MEMBER_RESERVED_CONFIRM_DIALOG		= 'memberReservedConfirmDialog';	//会員画面予約確認ダイアログ
+CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';				//会員画面予約キャンセルダイアログ
+ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';			//管理者画面授業設定一覧ダイアログ
+LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';				//管理者画面授業詳細設定ダイアログ
+ADMIN_NEW_LESSON_CREATE 			= 'adminNewLessonCreateDialog';		//管理者画面新規授業作成ダイアログ
+
 
 //ダイアログのクローズするときにダイアログのdomを消去してリセットする
 function disappear(){
@@ -69,8 +70,10 @@ function adminLessonListDialogOpenFunc() {
 		lessonReservedTableValueInput(DOT + 'adminLessonDetailTable', lessonTable, 'callAdminReservedLessonValue', timeStudentsCount);
 		//管理者授業詳細一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 		setTableRecordClass('adminLessonDetailTable', 'targetAdminLessonRecord');
-		//予約一覧テーブルを表示する
+		//テーブルの行がクリックされたときに授業詳細ダイアログを開く
 		openAdminLessonDetailDialog();
+		//新規作成ボタンがクリックされたら授業新規作成ダイアログを開く
+		openAdminNewLessonCreateDialog();
 		//値の変換が終わればテーブルを表示する
 		$('.adminLessonDetailTable').show();
 	},1);
@@ -173,7 +176,7 @@ function openMemberReservedConfirmDialog() {
 }
 
 /* 関数名:openAdminLessonDetailDialog
- * 概要　:管理者需要詳細ダイアログを開く
+ * 概要　:管理者授業詳細ダイアログを開く
  * 引数　:なし
  * 返却値:なし
  * 作成日　:2015.07.31
@@ -187,6 +190,10 @@ function openAdminLessonDetailDialog() {
 		var rowNum = $('.targetAdminLessonRecord').index(this);
 		//次のダイアログに渡すデータを変数に入れる
 		var sendObject = adminLessonListCreator.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
+		//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
+		var timeSchedule = $('.targetAdminLessonRecord:eq(' + rowNum + ') td').eq(0).text();
+		//時間割を次のダイアログに入れるためのデータに入れる
+		sendObject['time_schedule'] = timeSchedule;
 		//日付のハイフンを置換前のスラッシュ区切りにする
 		var date = sendObject.lesson_date.replace(/-/g,"/");
 		// 日付を日本語表示にする
@@ -199,6 +206,43 @@ function openAdminLessonDetailDialog() {
 		// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
 		lessonDetailDialog.setCallbackClose(adminLessonDetailDialogCloseFunc);	//閉じるときのイベントを登録
 		lessonDetailDialog.run();	//主処理を走らせる。
+	});
+}
+
+/* 関数名:adminNewLessonCreateDialogCloseFunc
+ * 概要　:管理者新規授業作成ダイアログが閉じた時のイベント登録関数
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.08.01
+ * 作成者　:T.Yamamoto
+ */
+function adminNewLessonCreateDialogCloseFunc() {
+	//ダイアログのdomを削除して初期化し次に開くときに備える
+	$('.adminNewLessonCreateContent')[0].instance.destroy();
+}
+
+/* 関数名:openAdminNewLessonCreateDialog
+ * 概要　:管理者新規授業作成ダイアログを開く
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.08.01
+ * 作成者　:T.Yamamoto
+ */
+function openAdminNewLessonCreateDialog() {
+	//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
+	$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
+		//新規授業追加ダイアログに渡す変数を宣言しておく
+		var sendObject = {};
+		//日本語名の日付を渡すデータを入れる
+		sendObject['lessonDate'] = $('.adminLessonListContent')[0].instance.argumentObj.lessonDate;
+		//ダイアログのタイトルをセットして予約日を分かりやすくする
+		dialogExOption[ADMIN_NEW_LESSON_CREATE]['title'] = dialogExOption[ADMIN_LESSONLIST_DIALOG]['title'];
+		//新規授業追加ダイアログを作る
+		var newLessonCreateDialog = new dialogEx('dialog/adminNewLessonCreateDialog.html', sendObject, dialogExOption[ADMIN_NEW_LESSON_CREATE]);
+		//ダイアログを開くときのテーブルの値を編集して表示する
+		// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+		newLessonCreateDialog.setCallbackClose(adminNewLessonCreateDialogCloseFunc);	//閉じるときのイベントを登録
+		newLessonCreateDialog.run();	//主処理を走らせる。
 	});
 }
 
