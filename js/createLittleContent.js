@@ -3822,6 +3822,19 @@ function createAdminUserListContent() {
 			loginInsteadOfMember(memberId);
 		}
 	});
+	
+	// メール送信ボタンのクリック
+	var doSendMail = function(){
+		// TODO 個々にメール送信処理をたす
+		alert("送信したつもり");
+	};
+	$(".createMail").click(function(e) {
+		var sd = new SimpleConfirmDialog(
+				doSendMail
+				,"メールを送信します。よろしいですか?"
+		);
+		sd._showDialog();
+	});
 }
 
 /* 
@@ -3918,17 +3931,24 @@ function createAdminMailMagaAnnounceContent() {
 
 	//送信ボタンがクリックされたときにメール送信イベントを開始する
 	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
-		//メルマガ送信にチェックが入っていたらメルマガを送信する
-		if($('[name="messegeType"]').val() == "0") {
-			//メルマガを送信するための値をテキストボックスから取得する
-			var sendData = getInputData('mailMagaAndAnnounceArea');
-			//メルマガをDBに新規登録する
-			setDBdata(creator.json.insertMailMagazine, sendData, '');
-			//DBからメルマガを送信する会員情報を取得する
-			creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
-			// メルマガ送信処理
-			// ここにメルマガを実際に送信するためのコードが入ります
-		}
+		var doSend = function() {
+			//メルマガ送信にチェックが入っていたらメルマガを送信する
+			if($('[name="messegeType"]').val() == "0") {
+				//メルマガを送信するための値をテキストボックスから取得する
+				var sendData = getInputData('mailMagaAndAnnounceArea');
+				//メルマガをDBに新規登録する
+				setDBdata(creator.json.insertMailMagazine, sendData, '');
+				//DBからメルマガを送信する会員情報を取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
+				// メルマガ送信処理
+				// ここにメルマガを実際に送信するためのコードが入ります
+			}
+		};
+		var sd = new SimpleConfirmDialog(
+				doSend,
+				"メルマガの送信を行います。よろしいですか?"
+		);
+		sd._showDialog();
 	});
 
 	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする

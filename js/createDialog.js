@@ -1908,7 +1908,7 @@ function dialogEx(url, argumentObj, returnObj){
 			//メンバのURLからHTMLデータを読み込む
 			this.load();
 			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
-			this.returnObj = returnObj !== {}? this.returnObj: this.defaultObj;
+			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultObj;
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。
@@ -1969,11 +1969,11 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.destroy = function(){
+		//ダイアログのDOMを取得する。
+		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this); 
 		//jQuery UIのダイアログを破棄する
-		this.formDom.dialog('destroy');
+		$dialog.dialog('destroy');
 		//画面上に展開されているダイアログのDOMを破棄する。
-		this.formDom.remove();
-		//ダイアログのクラスのインスタンスを破棄する。
-		$(this).remove();
+		$dialog.remove();
 	}
 }
