@@ -17,6 +17,7 @@
 			<!-- fancyboxのCSSを読み込む。 -->
 			<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 			<script>
+				hideNormalHeader();	//通常ページのヘッダーを隠す
 				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
 				creator.getJsonFile('source/mygallerycontent.json');	// Myギャラリー生成用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
@@ -62,6 +63,7 @@
 				setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
 				//削除ボタンがクリックされた時にギャラリーコンテンツを削除するイベントを登録する
 				deleteMyGalleryPhoto();
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				</script>
 		</div>
 	</div>

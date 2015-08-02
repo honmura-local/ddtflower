@@ -14,7 +14,8 @@
 			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
 			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
-							// 会員共通のパーツのJSONを取得する。
+				hideNormalHeader();	//通常ページのヘッダーを隠す
+				// 会員共通のパーツのJSONを取得する。
 				creator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberPage.html');
@@ -70,6 +71,7 @@
 				//submitイベントを登録する。
 				$('form').validate(articleSubmitHandler);
 				deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 			</script>
 		</div>
 	</div>

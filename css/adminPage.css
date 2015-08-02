@@ -12,6 +12,16 @@
 }
 
 /* 
+ * セレクタ :.adminHeader .nameTitleArea,.adminHeader .memberPoint
+ * 概要   :管理者ページヘッダーの「様」とポイント領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.06.04
+ */
+.adminHeader .nameTitleArea,.adminHeader .memberPoint{
+	display: none;	/* 管理者ページでは見せるべものではないので、隠しておく */
+}
+
+/* 
  * セレクタ :#adminTab .tab
  * 概要   :管理者画面、タブ領域
  * 作成者 :T.Yamamoto

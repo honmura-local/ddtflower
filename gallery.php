@@ -18,7 +18,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<!-- ギャラリーページのCSSファイルを読み込む。 -->
 			<link href="css/gallery.css" rel="stylesheet" type="text/css">
 			<script>
-				creator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
+			console.log(creator);
+creator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
 				creator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				//テンプレートのDOMを取得する。
@@ -26,7 +27,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				creator.getDomFile('template/gallery.html');
 
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader();
+				createMemberPageHeader(creator);
 
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る

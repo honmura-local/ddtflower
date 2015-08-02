@@ -28,6 +28,17 @@ NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラ�
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
 CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+MARGIN_TOP = 'margin-top';											//上margin
+PX_5 = '5px';														//5PX
+PX_115 = '115px';													//115PX
+
+//セレクターの文字列定数
+NORMAL_HEADER = 'header.header';									//通常のヘッダー
+HEADER_VISIBLE = 'header.header:visible';							//隠してないヘッダー
+HEADER_HIDDEN = 'header.header:hidden';								//隠してあるヘッダー
+MAIN_TAG = '.main';													//メインのタグのセレクタ
+GUIDES = 'guides';													//ガイド領域
+TOP_MENU = 'topMenu';												//トップメニュー
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -3584,22 +3595,29 @@ function loopUpdatePermitLessonList() {
 /* 
  * 関数名:createMemberPageHeader()
  * 概要  :会員ページからブログページやギャラリーページに遷移するときに通常ページのヘッダーでなく会員ページのヘッダーを表示する。
- * 引数  :なし
+ * 引数  :createTag createtag:createTagクラスのインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17
+ * 変更者:T.Masuda
+ * 変更日:2015.08.02
+ * 内容　:createTagクラスインスタンスを引数にして使うようにしました。
  */
-function createMemberPageHeader() {
+function createMemberPageHeader(createtag) {
 	//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
-	if(creator.json.memberHeader) {
+	//@mod 2015.0802 T.Masuda ページ内で生成したcreatetagクラスインスタンスを参照するようにしました。
+	//会員番号が入っていなく、通常ヘッダーが見えていなければ
+	if(!isNaN(createtag.json.accountHeader.user_key.value) && $('.header:hidden').length) {
 		// パーツのテンプレートのDOMを取得する。
-		creator.getDomFile('template/memberCommon.html');
+		createtag.getDomFile('template/memberCommon.html');
+		// バナー領域のJSONを取得する。
+		createtag.getJsonFile('source/memberCommon.json');
 		//ユーザ情報のテキストをDBから取得する
-		creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+		createtag.getJsonFile('php/GetJSONString.php', createtag.json['accountHeader'], 'accountHeader');
 		// 会員ページヘッダーを作る
-		creator.outputTag('memberHeader');
+		createtag.outputTag('accountHeader', 'memberHeader');
 		// バナー領域を作る
-		creator.outputTag('userBanner');
+		createtag.outputTag('userBanner');
 	}
 }
 
@@ -4303,5 +4321,55 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 		//削除対象のコンテンツをクライアントから削除する
 		$('.myPhoto').eq(deleteContentNumber).remove();
 		// console.log(deleteContentNumber);
+	}
+}
+
+/* 
+ * 関数名:showNormalHeader
+ * 概要  :通常ページのヘッダーを隠す
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.0802
+ */
+function hideNormalHeader(){
+	//通常ページのヘッダータグがあれば、隠す。
+	if($(NORMAL_HEADER).length){
+		$(NORMAL_HEADER).hide();			//通常ページのヘッダーを隠す。
+		$(MAIN_TAG).css(MARGIN_TOP, PX_5);	//通常ページのヘッダーの被さり対策のmarginをなくす。
+	}
+}
+
+/* 
+ * 関数名:showNormalHeader
+ * 概要  :通常ページのヘッダーを表示する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.0802
+ */
+function showNormalHeader(){
+	//通常ページのヘッダータグがあれば、表示する。
+	if($(NORMAL_HEADER).length){
+		$(NORMAL_HEADER).show();				//通常ページのヘッダーを表示する。
+		$(MAIN_TAG).css(MARGIN_TOP, PX_115);	//ヘッダーがかぶさる分、コンテンツ領域の位置を下げる。
+	}
+}
+
+/* 
+ * 関数名:showNormalHeader
+ * 概要  :通常ページのヘッダーを表示する
+ * 引数  :creatTag createtagクラスのインスタンス
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.0802
+ */
+function createNormalHeaderContent(createtag){
+	//ヘッダー内のタグが作成済みでなければ
+	if($(NORMAL_HEADER).children().length <= 0){
+		createtag.outputTag(GUIDES , GUIDES, NORMAL_HEADER);		// ガイド領域を作る
+		createtag.outputTag(TOP_MENU, TOP_MENU, NORMAL_HEADER);		// トップメニューを作る
+		// ログイン状態をチェックする。
+		checkLoginState();
 	}
 }

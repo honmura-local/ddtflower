@@ -10,24 +10,43 @@
 <body>
 <!-- テンプレート領域 -->
 <div>
-	<!-- 会員サイトヘッダー領域 -->
+	<!-- 管理者サイトヘッダー領域 -->
 	<div class="adminHeader">
 		<!-- 会員番号と会員名、所持ポイントを表示する領域 -->
 		<div class="memberStatus">
-			<!-- 会員番号 -->
+			<!-- トップページロゴ領域 -->
+			<span class="topLogoArea">
+				<!-- トップページリンク領域 -->
+				<a class="topLink" href="">
+					<!-- トップページ画像領域 -->
+					<img class="topLogoImage" src="">
+				</a>
+			</span>
 			<span class="memberNumber">
-				<!-- No.表示領域 -->
 				<span class="noArea"></span>
-				<!-- 番号表示領域 -->
-				<span class="id"></span>
+				<span class="numberArea"></span>
 			</span>
 			<!-- 会員名 -->
 			<span class="memberName">
 				<!-- 名前表示領域 -->
 				<span class="user_name"></span>
+				<!-- 敬称「様」表示領域 -->
+				<span class="nameTitleArea"></span>
 			</span>
-			<!-- クリックするとトップページにリンクを飛ばす領域 -->
-			<a href="" class="topLink"></a>
+			<!-- 所持ポイント -->
+			<span class="memberPoint">
+				<!-- ポイント数字表示領域 -->
+				<span class="get_point"></span>
+				<!-- pt表示領域 -->
+				<span class="ptArea"></span>
+			</span>
+			<!-- ログアウト領域 -->
+			<span class="logoutArea">
+				<!-- ログアウトリンクエリア -->
+				<a class="logoutLink" href="">
+					<img class="logoutImage" src="">
+				</a>
+			</span>
 		</div>
 	</div>
 

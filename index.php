@@ -37,6 +37,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <link href="css/style.css" rel="stylesheet" type="text/css">
 <!-- トップページのCSSファイルを読み込む。 -->
 <link href="css/index.css" rel="stylesheet" type="text/css">
+<!-- 会員ページのCSSファイルを読み込む。 -->
+<link href="css/memberPage.css" rel="stylesheet" type="text/css">
 <!-- jqueryUIのcssを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.custom.min.css" media="screen" />
 <!-- SmoothDivScrollのCSSを読み込む。 -->
@@ -99,6 +101,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/createLittleContent.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlAction.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/dailyClasses.js"></script>
 
 </head>
 
@@ -124,13 +128,10 @@ $(document).ready(function(){
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('template/common.html');		// 共通パーツのDOMを取得する。
 	creator.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
-	//ヘッダー内のタグが作成済みでなければ
-	if($('header').children().length <= 0){
-		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る
-		creator.outputTag('topMenu', 'topMenu', '.header');		// トップメニューを作る
-		// ログイン状態をチェックする。
-		checkLoginState();
-	}
+
+	createNormalHeaderContent(creator);	//ヘッダー内のタグが作成済みでなければ作る。
+	showNormalHeader();				//ヘッダーが隠れていたら表示する。
+	
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	//ブログのお知らせを作る。
 	creator.outputTag('topicGallery','topic', '.flowerBackground');
@@ -152,7 +153,7 @@ $(document).ready(function(){
 	//テーブルの全レコード選択の処理をオンにする。
 	checkAllRecord();
 	//JSONデータを格納する変数を初期化する。
-	creator.json = null;
+	//creator.json = null;
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
 	
@@ -200,9 +201,10 @@ $(document).ready(function(){
 <!-- msl指定のタイトル -->
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 
-<a href="#article/list.php/1197/1984" style="display:block;font-size:10px;">MSL list.php</a>
+<!-- 編集の邪魔になるので一旦コメントアウトしました。 -->
+<!-- <a href="#article/list.php/1197/1984" style="display:block;font-size:10px;">MSL list.php</a>
 <a href="#article/detail.php/1197/190747" style="display:block;font-size:10px;">MSL detail.php</a>
 <a href="#mypage.html" style="display:block;font-size:10px;">mypage</a>
-<a href="#admin.html" style="display:block;font-size:10px;">admin</a>
+<a href="#admin.html" style="display:block;font-size:10px;">admin</a> -->
 </body>
 </html>

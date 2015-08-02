@@ -25,7 +25,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				creator.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
 			
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader();
+				createMemberPageHeader(creator);
 
 				creator.outputTag('headImage', 'createImage');				// 天の画像を作る
 				creator.outputTag('pageTitle');								// タイトル領域を作る

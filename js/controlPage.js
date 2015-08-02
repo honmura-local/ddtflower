@@ -42,6 +42,7 @@ function isSupportPushState(){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
+		
 	});
 
 	/*
@@ -153,14 +154,14 @@ function callPage(url, state){
 			//ひな形のHTMLのDOMを格納する変数を初期化する。
 			creator.dom = '';
 			//list.phpかdetail.phpであれば
-			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
-				//MSLのコンテンツで既存のコンテンツを上書きする
-				overwriteMSLContent('.main', html);
-			//それ以外であれば
-			} else {
+//			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
+//				//MSLのコンテンツで既存のコンテンツを上書きする
+//				overwriteMSLContent('.main', html);
+//			//それ以外であれば
+//			} else {
 				//既存のコンテンツを上書きする。
 				overwrightContent('.main', html);
-			}
+//			}
 			//カレントのURLを更新する。
 			currentLocation = url;
 
@@ -856,3 +857,33 @@ $(document).on('click', '.specialReservedConfirmDialog .confBackButton', functio
 $(document).on('click', '.back:not(.tabPanel button)', function(){
 		history.back();	//ブラウザバックを行う。
 });
+
+/*
+ * 関数名:addlogoutEvent
+ * 引数  :String selector:セレクタ文字列
+ * 戻り値:なし
+ * 概要  :ログアウトを行うイベントを登録する。
+ * 作成日:2015.08.01
+ * 作成者:T.M
+ */
+function addlogoutEvent(selector){
+	//指定した要素に対し、ログアウト処理のイベントを登録する。
+	$(selector).on('click', function(event){
+		
+		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
+		
+		//Ajax通信を行い、ログアウト処理を行う。
+		$.ajax({
+			//ログアウト用PHPをコールする
+			url:'php/LogoutSession.php',
+			async:false,	//同期通信を行う
+			success:function(){	//通信成功時の処理
+				callPage('index.php');	//トップページへ遷移する
+			},
+			error:function(xhr,status,error){	//通信エラー時
+				//エラーメッセージを出す
+				alert('通信エラーです。時間をおいて試してください。');
+			}
+		});
+	});
+}

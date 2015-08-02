@@ -1,93 +1,52 @@
 {
-    "memberHeader": {
-        "db_getQuery": "SELECT id AS numberArea, user_name, get_point FROM user_inf WHERE id = 'user_key'",
-        "user_key": {
-            "value": ""
-        },
-        "memberStatus": {
-            "topLogoArea":{
-                "topLink":{
-                    "topLogoImage":{
-                        "src":"image/top(logo).png"
-                    }
-                }
-            },
-            "memberName": {
-                "user_name": {
-                    "text": ""
-                },
-                "nameTitleArea": {
-                    "text": "様"
-                }
-            },
-            "memberPoint": {
-                "get_point": {
-                    "text": ""
-                },
-                "ptArea": {
-                    "class":"ptArea unitSpace",
-                    "text": "pt"
-                }
-            },
-            "logoutArea":{
-                "class":"logoutArea inlineBlock",
-                "logoutLink":{
-                    "href":"#",
-                    "logoutImage":{
-                        "src":"image/icon(logout22-50).png"
-                    }
-                }
-            }
-        }
-    },
     "userBanner": {
         "bannerArea": {
-            "banner1":{
-                "class":"banner inlineBlock",
-                "href":"#memberPage.html",
-                "bannerImage":{
-                    "src":"image/icon(myPage).png"
+            "banner1": {
+                "class": "banner inlineBlock",
+                "href": "#memberPage.html",
+                "bannerImage": {
+                    "src": "image/icon(myPage).png"
                 }
             },
-            "banner2":{
-                "class":"banner inlineBlock",
-                "href":"#memberProfile.html",
-                "bannerImage":{
+            "banner2": {
+                "class": "banner inlineBlock",
+                "href": "#memberProfile.html",
+                "bannerImage": {
                     "src": "image/icon(profile).png"
                 }
             },
-            "banner3":{
-                "class":"banner inlineBlock",
-                "href":"#memberSuggestionBox.html",
-                "bannerImage":{
+            "banner3": {
+                "class": "banner inlineBlock",
+                "href": "#memberSuggestionBox.html",
+                "bannerImage": {
                     "src": "image/icon(mail).png"
                 }
             },
-            "banner4":{
-                "class":"banner inlineBlock",
-                "href":"#gallery.php",
-                "bannerImage":{
+            "banner4": {
+                "class": "banner inlineBlock",
+                "href": "#gallery.php",
+                "bannerImage": {
                     "src": "image/icon(gallery).png"
                 }
             },
-            "banner5":{
-                "class":"banner inlineBlock",
-                "href":"#blog.php",
-                "bannerImage":{
-                    "src":"image/icon(blog).png"
+            "banner5": {
+                "class": "banner inlineBlock",
+                "href": "#blog.php",
+                "bannerImage": {
+                    "src": "image/icon(blog).png"
                 }
             },
-            "banner6":{
-                "class":"banner inlineBlock",
-                "href":"#memberMyGallery.html",
-                "bannerImage":{
+            "banner6": {
+                "class": "banner inlineBlock",
+                "href": "#memberMyGallery.html",
+                "bannerImage": {
                     "src": "image/icon(myGallery).png"
                 }
             },
-            "banner7":{
-                "class":"banner inlineBlock",
-                "href":"#memberMyBlog.html",
-                "bannerImage":{
+            "banner7": {
+                "class": "banner inlineBlock",
+                "href": "#memberMyBlog.html",
+                "bannerImage": {
                     "src": "image/icon(myBlog).png"
                 }
             }

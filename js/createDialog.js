@@ -62,6 +62,8 @@ LESSON_DETAIL_DIALOG		= 'lessonDetailDialog';				//管理者ページ授業詳�
 ADMIN_LESSON_LIST_DIALOG_TR = '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
 ADMIN_LESSON_LIST_DIALOG_TD = '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
 LESSON_DATA					= 'lessonData';						//管理者の授業詳細ダイアログのコンテンツ部分
+ADMIN_PAGE_URL = 'adminPage.html';								//管理者ページURL
+MEMBER_PAGE_URL = 'memberPage.html';							//会員ページURL
 
 //定数
 EXPERIENCE	= 'experience';
@@ -955,124 +957,6 @@ function afterLogin(id, creator){
 }
 
 var dialogOption = {};	//ダイアログ生成時にセットするオプションを格納した連想配列を作る
-dialogOption[LOGIN_DIALOG] = {
-		// 幅を設定する。
-		width			: '300',
-		// 幅を設定する。
-		title			: 'ログイン',
-		// ダイアログを生成と同時に開く。
-		autoOpen		: true,
-		// Escキーを押してもダイアログが閉じないようにする。
-		closeOnEscape	: false,
-		// モーダルダイアログとして生成する。
-		modal			: true,
-		// リサイズしない。
-		resizable		: false, 
-		// 作成完了時のコールバック関数。
-		create:function(event, ui){
-			//文字サイズを小さめにする。
-			$(this).next().css('font-size', '0.5em');
-			creator.getJsonFile('source/memberPage.json');
-			//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
-			enterKeyButtonClick('.userName, .password', '.loginButton');
-		},
-		//ダイアログを閉じるときのイベント
-		close:function(){
-			//createTagクラスからDOMとJSONを削除する
-			//ログインダイアログのDOMが存在していたら
-			if(!$(CLASS_LOGIN_DIALOG ,creator.dom).length){
-				//ログインダイアログのテンプレートのDOMを消す
-				$(CLASS_LOGIN_DIALOG ,creator.dom).remove();
-			}
-			//ログインダイアログのJSONが存在していたら
-			if(LOGIN_DIALOG in creator.json){
-				//ログインダイアログのJSONを消す
-				delete creator.json[LOGIN_DIALOG];
-			}
-			//画面に展開されている、このダイアログのDOMを削除する
-			$(CLASS_LOGIN_DIALOG).remove();
-		},
-		// 位置を指定する。
-		position:{
-			// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-			my:'center center',
-			// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-			at:'center center',
-			// ウィンドウをダイアログを配置する位置の基準に指定する。
-			of:window
-		},
-		// ボタンの生成と設定を行う。
-		buttons:[
-			         {
-			        	 // OKボタンのテキスト。
-			        	 text:'ログイン',
-			        	 //テキストボックスでエンターキーに対応するためにクラスを付ける
-			        	 class:'loginButton',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        	 	//ログイン処理に使うために入力されたログインidを取得する
-			        	 	var userLoginId = $('.userName').val();
-			        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
-			        	 	var userLoginPassword = $('.password').val();
-			        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
-			        	 	if(userLoginId != '' || userLoginPassword != '') {
-			        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
-			        	 		creator.json.login.userName.value = userLoginId;
-			        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
-			        	 		creator.json.login.password.value = userLoginPassword;
-			        	 		//ログイン処理を行うため、jsondmManagerから会員番号を取り出す
-			        	 		creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json.login, 'login');
-			        	 		//取り出した会員番号をグローバル変数に入れて使いやすくし会員ページで予約処理などで使う
-			        	 		memberInfo = creator.json.login.id.text;
-			        	 		//取り出したidが空のときユーザが入力したログインidとパスワードが間違っているメッセージを出す
-			        	 		if(memberInfo == '') {
-			        	 			//エラーメッセージを表示する
-			        				alert(MESSAGE_LOGIN_ERROR);
-			        			//ログインidとパスワードが正しいときにログイン処理を開始する
-			        	 		} else {
-			        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-		        					$(this).dialog(CLOSE);	//ダイアログを閉じる
-									// 会員共通のパーツのJSONを取得する。
-									creator.getJsonFile('source/eachDayLesson.json');
-									//管理者ページのcssを読み込む
-		        					$(SELECTOR_HEAD_LAST).after(PATH_ADMINPAGE_CSS);
-		        					//お問い合わせのcssを読み込む
-		        					$(SELECTOR_HEAD_LAST).after(PATH_CONTACT_CSS);
-		        					//@mod 2015.0627 T.Masuda 処理内容を使い回せるように、サブ関数にコードを移動しました。
-		        					afterLogin(memberInfo, creator);	//ログイン後の処理をまとめて実行する。
-									//管理者の会員番号であったら
-									if(memberInfo == 1) {
-										//管理者ページを読み込む
-										callPage('adminPage.html');
-									} else {
-										//会員ページを読み込む
-										callPage('memberPage.html');
-									}
-									//ログアウト設定関数を呼び出し、ログアウトしたときの処理を決める
-		        					logoutMemberPage();
-									//セキュリティ対策としてログインidを空白に初期化する
-									userLoginId = '';
-				        	 		creator.json.login.userName.value = '';
-				        	 		//セキュリティ対策としてログインパスワードを空白に初期化する
-				        	 		userLoginPassword = '';
-				        	 		creator.json.login.password.value = '';
-			        	 		}
-			        	 	} else {
-								alert(errorMessages[3]);
-			        	 	}
-			        	 }
-			         },
-			         {
-			        	 // キャンセルボタンのテキスト。
-			        	 text:'Cancel',
-			        	 // ボタン押下時の処理を記述する。
-			        	 click:function(event, ui){
-			        		 // ダイアログを消去する。
-			        		 $(this).dialog('close').dialog('destroy').remove();
-			        	 }
-			         }
-		         ]
-	};
 
 //予約希望ダイアログ
 dialogOption['specialReservedDialog'] = {
@@ -1630,6 +1514,7 @@ function makeUsuallyReservedDialogDom(creator){
  * 修正日:2015.03.10
  * 変更　:ユーザー名が複数表示されてしまうバグへ対応しました。
  */
+//※現状ではこの関数は必ずfalseを返します。
 function checkLogin(){
 	// ログインしているか否かの結果を返すための変数を用意する。
 	var result = false;
@@ -1700,19 +1585,25 @@ function getUserId(){
  * 変更者:T.Masuda
  * 変更日:2015.06.10
  * 内容　:ダイアログを呼ぶ関数を共通化したものにしました
+ * 変更者:T.Masuda
+ * 変更日:2015.08.02
+ * 内容　:ログイン済み状態での会員ページ、管理者ページへの転送振り分け処理を追加しました。
  */
 function checkLoginState(){
 	// ログイン状態をチェックする。
+	//※現状ではこのcheckLogin関数は必ずfalseを返します。
 	if(!(checkLogin())){
 		//ログインボタンのイベントを設定する。
 		$(CLASS_LOGIN).on(CLICK, function(){
-			// ログインダイアログを作る
-			var login = new loginDialog(LOGIN_DIALOG, null, {autoOpen:true});
-			login.open();	//ログインダイアログを開く
+			//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
+			//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
+			var loginUrl = creator !== void(0) && creator.json.accountHeader !== void(0)
+							&& creator.json.accountHeader.user_key.value == '1'? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+			// 会員ページ、または管理者ページへリンクする。
+			callPage(loginUrl);
 		});
 	}
 }
-
 
 //クッキーの削除。http://javascript.eweb-design.com/1404_dc.htmlより。
 function deleteCookie(cookieName) {

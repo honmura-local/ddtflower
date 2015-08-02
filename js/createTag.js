@@ -82,6 +82,18 @@ PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
 ARTICLE_OBJECT_KEY								= 'table';
+USER_ID = 'userId';
+
+//ログインエラー時の状態の整数値定数
+TITLE = 'title';		//タイトルの文字列
+STATE_NOT_LOGIN	= 0;	//非ログイン時
+STATE_TIMEOUT	= 1;	//タイムアウト時
+LOGIN = 'ログイン';		//ログインダイアログのタイトル「ログイン」
+RE_LOGIN = '再ログイン';	//再ログインダイアログのタイトル「再ログイン」
+LOGIN_MESSAGE = '';		//ログインダイアログのメッセージ
+RE_LOGIN_MESSAGE = '';	//再ログインダイアログのメッセージ
+URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHTMLファイルのURL
+URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -129,8 +141,15 @@ function createTag(){
 			cache:false,
 			//通信完了時の処理を記述する。
 			success: function(json){
-				//クラスのメンバjsonに取得したjsonの連想配列を格納する。
-				tmp = json;
+				//通常通りJSONが取得できていれば(JSONにcreateTagStateのキーがない)
+				if(!('createTagState' in json)){
+					//クラスのメンバjsonに取得したjsonの連想配列を格納する。
+					tmp = json;
+				//返ってきたJSONにログイン状態のキーがあれば
+				} else{
+					//ログイン状態の例外を投げる。
+					throw new loginStateError(parseInt(json.createTagState));	
+				}
 			},
 			//通信失敗時の処理。
 			error:function(){
@@ -1349,4 +1368,188 @@ function createTag(){
 			unwrapTable('.'+records.attr('class'));
 		}
 	}
-}	
+	
+	//コンストラクタ部分
+	//会員番号がcookie内にあれば取得する。
+	//cookieを取得して連想配列形式に変換する。
+	var cookie = GetCookies();
+	//ユーザ情報のJSONを取得する
+	this.getJsonFile('source/account.json');
+	//cookie内に会員番号があれば
+	if('userId' in cookie){
+		//会員IDのcookieを取得する。
+		this.json.accountHeader.user_key.value =cookie['userId'];
+	}
+}
+
+/*
+ * クラス名:loginStateError
+ * 概要  :非ログイン状態を検知したときの例外
+ * 引数  :int createTagState:ログインエラー状態の整数値
+ * 作成日:2015.08.01
+ * 作成者:T.Masuda
+ */
+	function loginStateError(createTagState){
+		//ログインダイアログが既に出ていなければ
+		if(!($(CLASS_LOGIN_DIALOG).length)){
+				
+			//エラー内容の値をメンバに格納する
+			this.createTagState = createTagState;
+			//タイトルの文字列
+			this.title = '';
+			//ダイアログのメッセージ
+			this.message = '';
+	
+			//エラー内容でダイアログの内容をを分岐させる
+			switch(this.createTagState){
+			//初回ログイン時
+			case STATE_NOT_LOGIN:
+				this.title = LOGIN;				//タイトルを「ログイン」にする
+				this.message = LOGIN_MESSAGE;	//初回ログインダイアログ用のメッセージを表示するようにする
+				break;				//switch文を抜ける
+			//タイムアウト時
+			case STATE_TIMEOUT:
+				this.title = RE_LOGIN;				//タイトルを「再ログイン」にする
+				this.message = RE_LOGIN_MESSAGE;	//再ログインダイアログ用のメッセージを表示するようにする
+				break;				//switch文を抜ける
+			}
+			
+			//ログインダイアログで利用するパラメータのオブジェクトを作る
+			this.argumentObj = {
+					//ログイン状態
+					createTagState: this.createTagState
+			};
+			
+			//ログインダイアログを出す。
+			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, loginDialogOption);
+			loginDialog.returnObj[TITLE] = this.title;							//ダイアログのタイトルを変更する
+			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
+			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
+			loginDialog.run();	//ログインダイアログを開く
+			$('.loginDialogMessage', loginDialog.formDom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
+		}
+	};
+	
+	//ログインダイアログの設定オブジェクト
+	var loginDialogOption = {
+			// 幅を設定する。
+			width			: '300',
+			// ダイアログを生成と同時に開く。
+			autoOpen		: true,
+			// Escキーを押してもダイアログが閉じないようにする。
+			closeOnEscape	: false,
+			// モーダルダイアログとして生成する。
+			modal			: true,
+			// リサイズしない。
+			resizable		: false, 
+			// 位置を指定する。
+			position:{
+				// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
+				my:'center center',
+				// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
+				at:'center center',
+				// ウィンドウをダイアログを配置する位置の基準に指定する。
+				of:window
+			},
+			// ボタンの生成と設定を行う。
+			buttons:[
+				         {
+				        	 // OKボタンのテキスト。
+				        	 text:'ログイン',
+				        	 //テキストボックスでエンターキーに対応するためにクラスを付ける
+				        	 class:'loginButton',
+				        	 // ボタン押下時の処理を記述する。
+				        	 click:function(event, ui){
+				        	 	//ログイン処理に使うために入力されたログインidを取得する
+				        	 	var userLoginId = $('.userName').val();
+				        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
+				        	 	var userLoginPassword = $('.password').val();
+				        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
+				        	 	if(userLoginId != '' || userLoginPassword != '') {
+				        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
+				        	 		loginCreator.json.login.userName.value = userLoginId;
+				        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
+				        	 		loginCreator.json.login.password.value = userLoginPassword;
+				        	 		//JSONDBManagerによるログイン処理を行う
+				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
+				        	 		//会員IDをJSONから取得する
+				        	 		memberInfo = loginCreator.json.login.id.text;
+				        	 		
+				        	 		//ログイン成否チェックの分岐
+				        	 		//会員IDが取得できていなかった場合
+				        	 		if(memberInfo == '') {
+				        	 			//エラーメッセージを表示して処理をそのまま終了する
+				        				alert(MESSAGE_LOGIN_ERROR);
+				        			//会員IDが取得できていれば
+				        	 		} else {
+				        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
+			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
+			        					
+			        					//通常ログインかつ、管理者のIDならば
+			        					if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && memberInfo == '1'){
+			        						//pushStateをサポートしているブラウザなら
+			        						if(isSupportPushState()){
+			        							//画面遷移の履歴を追加する。
+			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
+			        						//URLハッシュを利用する
+			        						} else {
+			        							//管理者ページへ移動する
+			        							location.href = URL_ADMIN_PAGE; 
+			        						}
+			        						//現在のページの履歴を書き換え、リロード後に会員ページが表示されるようにする
+			        					}
+										
+										//画面をリロードする。
+										location.reload();
+				        	 		}
+				        	 	//ログイン情報の入力を求めるアラートを出す
+				        	 	} else {
+									alert(errorMessages[3]);
+				        	 	}
+				        	 }
+				         },
+				         {
+				        	 // キャンセルボタンのテキスト。
+				        	 text:'キャンセル',
+				        	 // ボタン押下時の処理を記述する。
+				        	 click:function(event, ui){
+				        		 //トップページに戻る
+				        		 callPage('index.php');
+				        		 // ダイアログを消去する。
+				        		 $(this).dialog('close');
+				        	 }
+				         }
+			         ]
+		};
+	
+	/*
+	 * 関数名:whenLoginDialogCreate
+	 * 概要  :ログインダイアログが作られたときのコールバック関数
+	 * 引数  :なし
+	 * 戻り値:なし
+	 * 作成日:2015.08.01
+	 * 作成者:T.Masuda
+	 */
+	function whenLoginDialogCreate(){
+		//文字サイズを小さめにする。
+		$(this).next().css('font-size', '0.5em');
+		loginCreator = new createTag();	//ログインダイアログ用のcreateTagクラスインスタンスを生成する
+		loginCreator.getJsonFile(PATH_LOGIN_DIALOG_JSON);	//ログインダイアログのJSONを開く
+		loginCreator.getJsonFile('source/memberPage.json');	//会員ページのJSONを取得する
+		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
+		enterKeyButtonClick('.userName, .password', '.loginButton');
+		$('.loading').hide();	//例外で消えなかったローディング画面を消す。
+	}
+	
+	/*
+	 * 関数名:whenLoginDialogClose
+	 * 概要  :ログインダイアログが閉じられるときのコールバック関数
+	 * 引数  :なし
+	 * 戻り値:なし
+	 * 作成日:2015.08.01
+	 * 作成者:T.Masuda
+	 */
+	function whenLoginDialogClose(){
+		loginCreator = null;	//createTagインスタンスを削除する
+		this.instance.destroy();			//ダイアログを完全に破棄する
+	}
