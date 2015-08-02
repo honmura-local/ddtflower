@@ -1,0 +1,90 @@
+
+.blogArticles {
+font-size: 0px;
+width: 700px;
+}
+.myBlogTable tr {
+width: 100%;
+margin: 0 auto 20px;
+background: #FFCC99;
+border-radius: 10px;
+padding: 10px 2%;
+box-sizing: border-box;
+display: block;
+}
+.myBlogTable td {
+	vertical-align: top;
+}
+.blogImage{
+width: 25%;
+display: block;
+margin-right: 5px;
+height: auto;
+float:left;
+}
+
+/* 2、3個目の画像列 */
+.blogImage+.blogImage{
+	display:none;	
+}
+
+/* IDの列 */
+table.myBlogTable tr td:first-child {
+display: none;
+}
+
+.blogImage img{
+width: 100%;
+display: inline-block;
+margin-right: 5px;
+height: auto;
+border-radius: 10px;
+}
+
+.blogTitle{
+display: inline-block;
+font-size: 20px;
+}
+
+.blogDate{
+display: inline-block;
+font-size: 12px;
+}
+
+.userName{
+display: inline-block;
+font-size: 14px;
+}
+
+.blogContent{
+	font-size: 20px;
+	text-indent: 1em;
+	display:block;
+}
+
+.blogContent:before{
+	display: block;
+	content:" ";
+	width: 100%;
+}
+
+.myBlogTable{
+	width: 100%;
+}
+
+/* clearfix */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+/* ここまでclearfix */

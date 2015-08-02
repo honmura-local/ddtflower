@@ -63,8 +63,8 @@
             "type": "checkbox"
         }
     },
-    "getMyGalleryPhoto":{
-        "db_getQuery":"SELECT id, photo_title, user_key, summary, DATE(update_timestamp) FROM user_image WHERE user_key = 'user_key';",
+    "myGalleryTable":{
+        "db_getQuery":"SELECT ug.id, ui.photo_title AS myPhotoImage,ug.date AS myPhotoDate, ug.title AS myPhotoTitle, uin.user_name AS myPhotoUser, ug.content_text AS myPhotoComment, ug.publication AS myPhotoPublication FROM user_gallery AS ug,user_image AS ui,user_inf AS uin WHERE ug.user_key='user_key' AND ug.user_key=uin.id AND ug.image_id=ui.id;",
         "user_key":{
             "value":""
         }
