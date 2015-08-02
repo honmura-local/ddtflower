@@ -802,8 +802,8 @@ $(document).on('submit', '.specialReservedConfirmDialog form', function(event){
 		// 成功時の処理を記述する。
 		function(){
 			//ダイアログを消す。
-			$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
-			$('.specialReservedDialog').dialog('close').dialog('destroy').remove();
+			$('.specialReservedConfirmDialog').dialog('close');
+			$('.specialReservedDialog').dialog('close');
 			//送信完了のダイアログを出す。
 			alert('以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。');
 	});
@@ -841,7 +841,7 @@ $(document).on('click', '.main .confBackButton', function(){
  */
 $(document).on('click', '.specialReservedConfirmDialog .confBackButton', function(){
 	//ダイアログを消す。
-	$('.specialReservedConfirmDialog').dialog('close').dialog('destroy').remove();
+	$('.specialReservedConfirmDialog').dialog('close');
 });
 
 /*
