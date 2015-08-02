@@ -1,0 +1,51 @@
+{
+    "myPageBlog": {
+        "class":"myPageBlog myPageContent",
+        "action": "createarticle.html",
+        "method": "get",
+        "data-role": "4"
+    },
+    "myBlogTitle":{
+        "class":"myBlogTitle myPageTitle",
+        "text":"ブログ"
+    },
+    "myBlogButtonArea":{
+        "createArticleButton":{
+            "type":"button",
+            "value":"記事作成"
+        },
+        "editArticleButton":{
+            "type":"button",
+            "value":"記事編集"
+        },
+        "deleteArticleButton":{
+            "type":"button",
+            "value":"記事削除"
+        }
+    },
+    "myBlogListTable":{
+        "db_getQuery":"SELECT id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC ",
+        "user_key":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "id":{
+                    "className":"replaceCheckbox"
+                },
+                "date": {
+                    "columnName": "日付"
+                },
+                "title": {
+                    "columnName": "タイトル"
+                }
+            }
+        }
+    },
+    "deleteMyBlog":{
+        "db_setQuery":"DELETE FROM user_blog WHERE id = 'id';",
+        "id":{
+            "value":""
+        }
+    }
+}

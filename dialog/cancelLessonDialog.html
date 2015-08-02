@@ -1,0 +1,31 @@
+<div class="cancelLessonDialogContent">
+<script>
+	//イベントをリセットする
+	$('.cancelLessonDialogContent').off();
+	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
+	var cancelLessonCreator = new createTag();
+	//会員、予約キャンセルダイアログのjsonを取得する
+	cancelLessonCreator.getJsonFile('source/memberPage.json');
+	//会員、予約キャンセルダイアログのテンプレートを取得する
+	cancelLessonCreator.getDomFile('template/memberPage.html');
+	//予約キャンセルダイアログに必要な値を受け取った値で入れる
+	insertConfirmReserveJsonDialogValueEx('cancelLessonContent', 'cancelLessonDialogContent', cancelLessonCreator);
+	//アコーディオンの中身をDBから取り出す
+	cancelLessonCreator.getJsonFile(URL_GET_JSON_STRING_PHP, cancelLessonCreator.json.cancelLessonContent, 'cancelLessonContent');
+	//ダイアログの中身のコンテンツを作る
+	cancelLessonCreator.outputTag('cancelLessonContent', 'cancelLessonContent', '.cancelLessonDialogContent');
+	// ボタンタグをjqueryuiの見た目にする
+	$('button').button();
+	//送信ボタンがクリックされたときにDBに予約情報を登録する
+	$('.cancelLessonDialogContent').on(CLICK, '.cancelYesButton', function() {
+		//DBに予約キャンセル処理を行う
+		cancelLssonDialogDialogOkButton($('.cancelLessonDialogContent')[0].instance.argumentObj);
+	});
+	$('.cancelLessonDialogContent').on(CLICK, '.cancelNoButton', function() {
+		//ダイアログを閉じる
+		$('.cancelLessonDialogContent').dialog(CLOSE);
+	});
+	
+
+</script>
+</div>

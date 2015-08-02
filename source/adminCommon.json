@@ -423,7 +423,7 @@
             },
             "searchNameTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"user_name ",
+                "data-col_name":"user_name",
                 "type":"text",
                 "name":"user_name"
             }
@@ -436,7 +436,7 @@
             },
             "searchNameKanaTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"name_kana ",
+                "data-col_name":"name_kana",
                 "type":"text",
                 "name":"name_kana"
             }
@@ -449,7 +449,7 @@
             },
             "searchThemeTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_key ",
+                "data-col_name":"lesson_key",
                 "type":"text",
                 "name":"lesson_name"
             }
@@ -462,7 +462,7 @@
             },
             "searchPhoneTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"telephone ",
+                "data-col_name":"telephone",
                 "type":"text",
                 "name":"telephone"
             }
@@ -488,7 +488,7 @@
             },
             "searchMailAddressTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"mail_address ",
+                "data-col_name":"mail_address",
                 "type":"text",
                 "name":"mail_address"
             }
@@ -501,7 +501,7 @@
             },
             "searchLessonPeriodFromTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_date_from ",
+                "data-col_name":"lesson_date_from",
                 "type":"text",
                 "name":"fromPeriod"
             }
@@ -514,7 +514,7 @@
             },
             "searchLessonPeriodToTextbox":{
                 "class":"adminUserSearch",
-                "data-col_name":"lesson_date_to ",
+                "data-col_name":"lesson_date_to",
                 "type":"text",
                 "name":"toPeriod"
             }
@@ -533,7 +533,7 @@
         "class":"userListTableOutside"
     },
     "userListInfoTable":{
-        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id FROM user_inf",
+        "db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id, mail_address FROM user_inf",
         "config": {
             "columns": {
                 "user_name": {
@@ -551,33 +551,39 @@
                 "id":{
                     "style":"display:none",
                     "className":"id"
+                },
+                "mail_address":{
+                    "style":"display:none"
                 }
             }
         }
     },
     "userListButtons":{
-    	"secondRow":{
     		"createMail":{
 	    		"type":"button",
-	    		"value":"メール"
+	    		"value":"通常メール"
     		},
+            "maiMagaAnnounceButton":{
+                "type":"button",
+                "value":"メルマガ、お知らせ"
+            },
     		"userDetail":{
                 "class":"userDetail fRight",
 	    		"type":"button",
 	    		"value":"詳細設定"
     		}
-    	}
     },
     "adminCalendar":{
         "class":"adminCalendar calendar"
     },
-    "adminLessonListDialog":{
-    	"class":"adminLessonListDialog"
+    "adminLessonListDialog":{},
+    "adminLessonListDialogContent":{
+        "replaceTable":{}
     },
-    "adminLessonInformation":{
-	    "class": "adminLessonInformation",
-        "replaceTable":{
-        	"replace_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;"
+    "adminLessonDetailTable":{
+        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;",
+        "lessonDate":{
+            "value":""
         },
          "config": {
             "columns": {
@@ -639,16 +645,16 @@
                     "style":"display:none;"
                 }
             }
-        },
-        "lessonStatus": {
-            "lessonStatusText": [
-                "※残席:",
-                "◎=余裕あり",
-                "◯=4席以上の空席",
-                "△=残りわずか",
-                "✕=満席"
-            ]
         }
+    },
+    "adminLessonDetailStatus": {
+        "lessonStatusText": [
+            "※残席:",
+            "◎=余裕あり",
+            "◯=4席以上の空席",
+            "△=残りわずか",
+            "✕=満席"
+        ]
     },
     "lessonDetail":{
         "class": "lessonDetail tabPanel",
@@ -657,7 +663,171 @@
     "lessonDetailDialog":{
     	"class":"lessonDetailDialog"
     },
+    "lessonAddButton":{
+        "class":"lessonAddButton",
+        "type":"button",
+        "value":"新規作成"
+    },
+    "newLessonData":{
+        "class":"lessonData",
+        "themeArea":{
+            "themeLabelText":{
+                "text":"テーマ"
+            },
+            "lessonThemeSelect":{
+                "lessonThemeSelectList1":{
+                    "text":"プリザ",
+                    "value":"14"
+                },
+                "lessonThemeSelectList2":{
+                    "text":"生花",
+                    "value":"15"
+                },
+                "lessonThemeSelectList3":{
+                    "text":"17",
+                    "value":"NFD"
+                },
+                "lessonThemeSelectList4":{
+                    "text":"体験",
+                    "value":"29"
+                },
+                "lessonThemeSelectList5":{
+                    "text":"キャンペーン",
+                    "value":"41"
+                },
+                "lessonThemeSelectList6":{
+                    "text":"ブライダル",
+                    "value":"47"
+                },
+                "lessonThemeSelectList7":{
+                    "text":"初級",
+                    "value":"50"
+                }
+            }
+        },
+        "timeTableArea":{
+            "timeTableLabelText":{
+                "text":"時間割"
+            },
+            "timeTableSelect":{
+                "timeTableSelectList1":{
+                    "text":"11:00-13:00",
+                    "value":"1"
+                },
+                "timeTableSelectList2":{
+                    "text":"14:00-16:00",
+                    "value":"2"
+                },
+                "timeTableSelectList3":{
+                    "text":"16:30-18:30",
+                    "value":"3"
+                },
+                "timeTableSelectList4":{
+                    "text":"19:00-21:00",
+                    "value":"4"
+                },
+                "timeTableSelectList5":{
+                    "text":"19:30-21:30",
+                    "value":"11"
+                }
+            }
+        },
+        "minStudentsArea":{
+            "minStudentsText":{
+                "text":"最少人数"
+            },
+            "minStudentsTextbox":{
+                "type":"number",
+                "name":"min_students"
+            },
+            "minStudentsUnit":{
+                "text":"人"
+            }
+        },
+        "maxStudentsArea":{
+            "maxStudentsText":{
+                "text":"最大人数"
+            },
+            "maxStudentsTextbox":{
+                "type":"number",
+                "name":"max_students"
+            },
+            "maxStudentsUnit":{
+                "text":"人"
+            }
+        },
+        "statusArea":{
+            "lessonStatusLabel":{
+                "text":"ステータス"
+            },
+            "lessonStatusSelect":{
+                "name":"classwork_status",
+                "lessonState1":{
+                    "value":"0",
+                    "text":"予約可能"
+                },
+                "lessonState2":{
+                    "value":"1",
+                    "text":"開催済み"
+                },
+                "lessonState3":{
+                    "value":"2",
+                    "text":"定員未達による中止"
+                },
+                "lessonState4":{
+                    "value":"3",
+                    "text":"中止"
+                }
+            }
+        },
+        "classRoomArea":{
+            "classRoomLabel":{
+                "text":"教室"
+            },
+            "classRoomTextbox":{
+                "type":"text",
+                "name":"classroom"
+            }
+        },
+        "memoArea":{
+            "memoLabel":{
+                "text":"メモ"
+            },
+            "memoTextarea":{
+                "name":"classwork_note"
+            }
+        }
+    },
+    "newLessonCreateButton":{
+        "class":"newLessonCreateButton",
+        "type":"button",
+        "value":"授業作成"
+    },
+    "newButtonArea":{
+        "class":"buttonArea cf",
+        "updateButton":{
+            "class":"fLeft",
+            "type":"button",
+            "value":"新規登録"
+        }
+    },
     "lessonData":{
+        "themeArea":{
+            "themeLabelText":{
+                "text":"テーマ"
+            },
+            "themeDetailText":{
+                "text":""
+            }
+        },
+        "timeTableArea":{
+            "timeTableLabelText":{
+                "text":"時間割"
+            },
+            "timeTableText":{
+                "text":""
+            }
+        },
         "minStudentsArea":{
             "minStudentsText":{
                 "text":"最少人数"
