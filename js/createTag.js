@@ -83,7 +83,6 @@ PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
 ARTICLE_OBJECT_KEY								= 'table';
 USER_ID = 'userId';
-IMAGE_PATH										= '';		//画像フォルダの定数
 
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列

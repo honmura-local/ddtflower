@@ -208,9 +208,9 @@ function disappear(){
  */
 function reservedLessonListDialogCloseFunc() {
 	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	creator.json[LESSON_TABLE].table = {};
+	this.instance.argumentObj.createtag.json[LESSON_TABLE].table = {};
 	//予約中授業一覧ダイアログをリロードして最新の状態にする
-	tableReload(RESERVED_LESSON_TABLE);
+	tableReload(RESERVED_LESSON_TABLE, this.instance.argumentObj.createtag);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.reserveLessonListContent')[0].instance.destroy();
 }

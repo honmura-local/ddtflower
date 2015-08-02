@@ -81,9 +81,9 @@
 					memberPageCreator.getDomFile('template/eachDayLesson.html');
 	
 					//予約一覧ダイアログを作る
-					var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
+					//var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
 						// 日ごとダイアログ領域を作る
-						memberPageCreator.outputTag('reserveLessonListDialog', 'dialog', 'body');
+					//	memberPageCreator.outputTag('reserveLessonListDialog', 'dialog', 'body');
 					//予約キャンセルダイアログを作る
 					// var cancelLessonLesson = new TagDialog('cancelLessonDialog', '', dialogOption['canselLessonDialog'], function() {
 						//予約キャンセルダイアログのdomを作る
@@ -93,7 +93,7 @@
 					// memberPageCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
 					// 予約一覧テーブルの値を置換する
 					// lessonTableValueInput('.lessonTable', eachDayLessonTable, "callReservedLessonValue");
-					});
+				//	});
 	
 					//予約確定ダイアログを作る
 				//	var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
@@ -101,7 +101,7 @@
 				//		memberPageCreator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
 				//	});
 					// カレンダーを作り、クリックでダイアログ作成を作る
-					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, lessonList);
+					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, memberPageCreator);
 					memCalendar.create();	//カレンダーを実際に作成する
 	
 					// タブ機能を作る
@@ -147,7 +147,7 @@
 					//	memberPageCreator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
 						//キャンセルダイアログの注意の部分をアコーディオンにしてその機能を実装する
 					//	accordionSetting('.lessonAccordion', '.attention');
-					});
+				//	});
 					//キャンセルダイアログを予約中授業テーブルから開く処理
 			//		cancelDialogOpen(cancelLesson, memberInfo);
 					//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
