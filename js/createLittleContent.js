@@ -165,11 +165,28 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		onSelect: function(dateText, inst){
 			//ダイアログのタイトルの日付を設定する
 			var titleDate = changeJapaneseDate(dateText);
+			//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
+			var dialogDataObj = {
+				//会員番号をセットしてどのユーザが予約するのかを識別する
+				userId:creator.json.memberHeader.user_key.value,
+				//予約日付をセットし、どの日に予約するのかを識別する
+				lessonDate:dateText
+			};
+			//ダイアログのタイトルをセットして予約日を分かりやすくする
+			dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]['title'] = titleDate;
+			//予約授業一覧ダイアログを作る
+			var reservedLessonListDialog = new dialogEx('dialog/reserveLessonListDialog.html', dialogDataObj, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			//ダイアログを開くときのテーブルの値を編集して表示する
+			reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+			reservedLessonListDialog.run();	//主処理を走らせる。
+
+
 			//講座一覧ダイアログを開く
-			this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
-					{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
-					titleDate
-			);
+			// this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
+			// 		{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
+			// 		titleDate
+			// );
 		}
 //
 //		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
@@ -186,11 +203,25 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	onSelect: function(dateText, inst){
 		//ダイアログのタイトルの日付を設定する
 		var titleDate = changeJapaneseDate(dateText);
-		//講座一覧ダイアログを開く
-		this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-				{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
-				titleDate
-		);
+		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
+		var dialogDataObj = {
+			//予約日付をセットし、どの日に予約するのかを識別する
+			lessonDate:dateText
+		};
+		//ダイアログのタイトルをセットして予約日を分かりやすくする
+		dialogExOption[ADMIN_LESSONLIST_DIALOG]['title'] = titleDate;
+		//予約授業一覧ダイアログを作る
+		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		//ダイアログを開くときのテーブルの値を編集して表示する
+		adminLessonListDialog.setCallbackOpen(adminLessonListDialogOpenFunc);
+		adminLessonListDialog.setCallbackClose(adminLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+		adminLessonListDialog.run();	//主処理を走らせる。
+
+		// //講座一覧ダイアログを開く
+		// this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
+		// 		{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
+		// 		titleDate
+		// );
 	}
 }
 
@@ -2428,6 +2459,8 @@ replaceTableOption['reservedLessonTable'] = {
 	replaceFlag:'replace',
 	//テーブルのafterでの追加先
 	addDomPlace:'#alreadyReserved .selectTheme',
+	//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
+	afterReloadFunc:afterReloadReservedLessonTable,
 	//置換のvalueが入ったdom名
 	replaceValueDom:'#alreadyReserved .selectThemebox',
 	//置換するkey名
@@ -3630,10 +3663,8 @@ function createMemberFinishedLessonContent() {
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
-	// console.log(creator.json.finishedLessonTable);
 	//予約中テーブルのテーブルの値をしかるべき値にする
 	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
-	console.log(creator.json.finishedLessonTable);
 
 	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
 	// tablePaging('finishedLessonTable', 15, 6);
@@ -3641,6 +3672,8 @@ function createMemberFinishedLessonContent() {
 	setSelectboxValue('.selectThemebox');
 	//絞り込みボタン機能を実装する
 	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
+	//ページング後の処理を登録する
+	finshedLessonTableAfterPaging()
 }
 
 /* 
@@ -3765,7 +3798,7 @@ function createAdminUserListContent() {
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧タブのユーザ検索機能を実装する
-	reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
+	// reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
@@ -3774,6 +3807,30 @@ function createAdminUserListContent() {
 	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
 		$(this).toggleClass('selectRecord');
+	});
+	//検索ボタンをクリックしたときにテーブルの内容を更新する
+	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+		//ユーザ一覧テーブルを削除する
+		$('.userListInfoTable').remove();
+		//会員一覧テーブルをリセットして検索に備える
+		creator.json.userListInfoTable.table = {};
+		//ナンバリングのdomを初期化する
+		$('.numbering').remove();
+		//新しくページングを作り直すためにページングの番号一覧をリセットする
+		creator.json.numbering = {};
+		//クエリを変数に入れてクエリ発行の準備をする
+		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
+		//クエリのデフォルトを取得する
+		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
+		//会員一覧のデータを取り出す
+		creator.getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
+		//クエリをデフォルトに戻す
+		creator.json.userListInfoTable.db_getQuery = defaultQuery;
+		//取得した値が0の時のテーブルを作らない
+		if(creator.json.userListInfoTable.table.length != 0) {
+			//ページング機能付きでユーザ情報一覧テーブルを作る
+			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
+		}
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
@@ -3817,30 +3874,22 @@ function createAdminUserListContent() {
 function createAdminLessonDetailContent() {
 	//授業詳細タブ内にカレンダ-作る
 	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-	//予約一覧ダイアログを作る
-	var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
-		// 日ごとダイアログ領域を作る
-		creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
-	});
+	// //予約一覧ダイアログを作る
+	// var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
+	// 	// 日ごとダイアログ領域を作る
+	// 	creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
+	// });
 	
 	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
-	var lessonCalendar = new adminCalendar('.adminCalendar', lessonList);
+	var lessonCalendar = new adminCalendar('.adminCalendar');
 	lessonCalendar.create();	//カレンダーを実際に作成する
 	
 	//授業詳細ダイアログを作る
-	var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
-		// 授業詳細ダイアログ領域を作る
-		creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-	});
-	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
-	$(STR_BODY).on(CLICK, '.lessonDetailDialog input[value="更新"]', function() {
-		//入力した値を取得し、データの更新に用いる
-		var updateData = getInputData('lessonData');
-		//授業idを取得する
-		updateData['classwork_key'] = sendObject['classwork_key'].value;
-		//授業詳細テーブルを更新する
-		setDBdata(creator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
-	});
+	// var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
+	// 	// 授業詳細ダイアログ領域を作る
+	// 	creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
+	// });
+
 }
 
 /* 
@@ -3984,7 +4033,7 @@ function cutString(cutTargetSelector, cutCount) {
  * 作成日:2015.07.22
  */
 function sendMail(mailInfoArray, mailSubject, mailContent) {
-		//Ajax通信を行う
+	//Ajax通信を行う
 	$.ajax({
 		url: 'php/mailSend.php',		//メールを送信するためのphpをコールして処理を開始する
 		//メール情報を送信する
@@ -4015,6 +4064,19 @@ function sendMail(mailInfoArray, mailSubject, mailContent) {
 			alert(MESSAGE_FAILED_CONNECT);
 		}
 	});
+}
+
+/* 
+ * 関数名:afterReloadReservedLessonTable
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadReservedLessonTable() {
+	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 }
 
 /* 
@@ -4285,6 +4347,7 @@ function updateMyGalleryPhotoData() {
 		}
 	});
 }
+
 /* 
  * 関数名:myGalleryDbUpdate
  * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツについてdbデータを更新する(updateまたはdeleteを行う)
@@ -4309,4 +4372,38 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 		$('.myPhoto').eq(deleteContentNumber).remove();
 		// console.log(deleteContentNumber);
 	}
+}
+
+/* 
+ * 関数名:finshedLessonTableAfterPaging
+ * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.30
+ */
+function finshedLessonTableAfterPaging() {
+	//ページングがクリックされた時のイベントを登録する
+	$(STR_BODY).on(CLICK, '.finishedLessonPagingArea .numbering li', function() {
+		//受講済みテーブルを編集が終わるまで表示しなくする
+		$('.finishedLessonTable').hide();
+		//時間差で表現するためにsetTimeOutを使う
+		setTimeout(function(){
+			//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
+			var nowPageNumber = NUMBER($('.select').text());
+			//テーブルの値を編集するループを開始する値を取得する
+			var loopStartCount = nowPageNumber * 10;
+			//テーブルの値を編集するループを終了する値を取得する
+			var loopEndCount = nowPageNumber * 10 + 9;
+			//テーブルのデータを取得する
+			var tableRow = creator.json.finshedLessonTable.table;
+			//ループで受講済みテーブルを編集する
+			for(loopStartCount; loopStartCount<=loopEndCount; loopStartCount++) {
+				//テーブルの値を置換する
+				callMemberLessonValue('.finishedLessonTable', tableRow, loopStartCount, loopStartCount);
+			}
+			//受講済みテーブルを表示する
+			$('.finishedLessonTable').show();
+		},1);
+	});
 }

@@ -1,0 +1,30 @@
+<div class="reserveLessonListContent">
+<script>
+	$('.reserveLessonListContent').off();
+	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
+	var reserveLessonListCreator = new createTag();
+	//会員、予約授業一覧のjsonを取得する
+	reserveLessonListCreator.getJsonFile('source/eachDayLesson.json');
+	//会員、予約授業一覧のテンプレートを取得する
+	reserveLessonListCreator.getDomFile('template/eachDayLesson.html');
+	
+
+	//ダイアログの中身の外枠を作る
+	reserveLessonListCreator.outputTag('memberInfomation', 'memberInfomation', '.reserveLessonListContent');
+
+	//dbに接続する前に日付をクエリの置換連想配列に挿入する
+	reserveLessonListCreator.json.lessonTable.lessonDate.value = $('.reserveLessonListContent')[0].instance.argumentObj.lessonDate;
+	//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
+	reserveLessonListCreator.json.lessonTable.user_key.value = $('.reserveLessonListContent')[0].instance.argumentObj.userId;
+	//予約中授業のデータをDBから取得してテーブルを作る準備をする
+	reserveLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, reserveLessonListCreator.json['lessonTable'], 'lessonTable');
+	//予約授業一覧テーブルを作る
+	reserveLessonListCreator.outputTagTable('lessonTable', 'lessonTable', '.memberInfomation');
+	//レッスンのステータス領域を作る
+	reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+	//イベントが重複して起こらないようにイベントを先にオフにする
+	$('.reserveLessonListContent').off();
+	//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
+	openMemberReservedConfirmDialog();
+</script>
+</div>

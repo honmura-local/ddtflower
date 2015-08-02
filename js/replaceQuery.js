@@ -22,7 +22,9 @@ function connectConditions(query, condition, conjunction) {
 var adminUserSearcher = function() {
 
 	// クエリ固定部分
-	var baseQuery = "SELECT * FROM user_inf";
+	// var baseQuery = "SELECT * FROM user_inf";
+	//クエリをjsonから取り出したものにする
+	var baseQuery = creator.json.userListInfoTable.db_getQuery;
 	var result = baseQuery;	// 結果
 
 	// ユーザIDのクエリと置き換え対象

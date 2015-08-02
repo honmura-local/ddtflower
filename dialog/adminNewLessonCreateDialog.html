@@ -1,0 +1,31 @@
+<div class="adminNewLessonCreateContent">
+<script>
+	//クリックなどのイベントをリセットする
+	$('.adminNewLessonCreateContent').off();
+	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
+	var adminNewLessonCreator = new createTag();
+	//管理者授業詳細一覧のjsonを取得する
+	adminNewLessonCreator.getJsonFile('source/adminCommon.json');
+	//管理者授業詳細のテンプレートを取得する
+	adminNewLessonCreator.getDomFile('template/adminCommon.html');
+
+	//受け取った値を	変数に入れて扱いやすくする
+	var receivedObject = $('.adminNewLessonCreateContent')[0].instance.argumentObj;
+	//授業データ入力領域を作る
+	adminNewLessonCreator.outputTag('newLessonData', 'newLessonData', '.adminNewLessonCreateContent');
+	//ボタン領域を作る
+	adminNewLessonCreator.outputTag('newLessonCreateButton', 'addButton', '.adminNewLessonCreateContent');
+
+	//ボタンをjqueryuiのものにしてレイアウトを整える
+	$('input[type="button"]').button();
+	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
+	// $(STR_BODY).on(CLICK, '.adminLessonDetailContent input[value="更新"]', function() {
+	// 	//入力した値を取得し、データの更新に用いる
+	// 	var updateData = getInputData('lessonData');
+	// 	//授業idを取得する
+	// 	updateData['classwork_key'] = receivedObject['classwork_key'];
+	// 	//授業詳細テーブルを更新する
+	// 	setDBdata(adminLessonDetailCreator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+	// });
+</script>
+</div>

@@ -20,26 +20,27 @@ SELECT
     ,school_inf.id AS school_key
     ,school_name
 	,time_table_day.id AS time_table_day_key
+    ,timetable_inf.id AS timetable_key
 FROM 
 	time_table_day
-INNER JOIN
+LEFT JOIN
 	classwork
 ON
 	time_table_day.id = classwork.time_table_day_key
 AND
 	time_table_day.lesson_date = '{{日付}}'
-INNER JOIN 
+LEFT JOIN
 	lesson_inf
 ON
 	lesson_inf.id = classwork.lesson_key
-INNER JOIN
-	timetable_inf
-ON
-	timetable_inf.id = time_table_day.timetable_key
-INNER JOIN
+LEFT JOIN
     school_inf 
 ON
     school_inf.id = lesson_inf.school_key
+RIGHT JOIN
+	timetable_inf
+ON
+	timetable_inf.id = time_table_day.timetable_key
 #-------------------------------------------
 
 #-------------------------------------------
@@ -71,7 +72,51 @@ INSERT INTO
 		,NOW()
 		,NOW()
 	)
+    
+#-------------------------------------------
+# 新規登録(time_table_dayも一緒にVersion)
+# 同じ更新を連続でやると危険
+INSERT INTO
+	time_table_day(
+		timetable_key
+		,lesson_date
+		,create_datetime
+		,update_datetime
+	)
+	VALUES(
+		{{timetable_key}}
+		,{{lesson_date}}
+		,NOW()
+		,NOW()
+	);
 
+INSERT INTO
+	classwork(
+		max_students
+		,min_students
+		,classwork_status
+		,classroom
+		,classwork_note
+		,teacher_key
+        ,school_key
+        ,lesson_key
+        ,time_table_day_key
+		,create_datetime
+		,update_datetime
+	)
+	VALUES(
+		{{max_students}}
+		,{{min_students}}
+		,{{classwork_status}}
+		,'{{classroom}}'
+		,'{{classwork_note}}'
+		,(select id from user_inf where authority = 10 limit 1)
+        ,{{school_key}}
+        ,{{lesson_key}}
+        ,(SELECT id FROM time_table_day WHERE timetable_key = {{timetable_key}} order by create_datetime DESC LIMIT 1)
+		,NOW()
+		,NOW()
+	)
 #-------------------------------------------
 # 更新
 UPDATE
