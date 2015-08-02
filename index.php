@@ -44,6 +44,11 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 
+<!-- マイページのブログのCSSを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/myPageBlog.css" media="screen" />
+<!-- マイページのギャラリーのCSSを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/myPageGallery.css" media="screen" />
+
 <!-- Googleアナリティクスのトラッキングコード -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -23,13 +23,17 @@ var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
 //定数定義
-ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';				//管理者日ごとダイアログの内容
-NOW_PAGE						= 'nowPage';							//ページングの現在のページのクラス名
-PAGING 							= 'paging';								//ページングのクラス名
-PAGING_AREA						= 'pagingArea';							//ページングを囲むdivクラス名
-CHANGE							= 'change';								//イベント名がchangeのときにchangeイベントを登録するための定数
+ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
+NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
+PAGING 							= 'paging';							//ページングのクラス名
+PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
+CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+LOCATION	= 'flower_clone/';								//サイトルート前
+SITE_ROOT	= 'http://localhost/' + LOCATION;				//サイトルート
+IMAGE_PATH	= 'uploadImage/flowerImage/';					//アップロード画像フォルダ
+UPLOAD_LOCATION = SITE_ROOT + SITE_ROOT;					//アップロードURL
 SPECIAL_RESERVED_DIALOG_URL		= 'dialog/specialReservedDialog.html';	//体験レッスン予約ダイアログのHMTLファイルURL
-	
+
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
   if (appVersion.indexOf('msie 6.') != -1) {
@@ -4428,6 +4432,52 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 }
 
 /* 
+ * 関数名:createMyBlogImages
+ * 概要  :マイブログの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyBlogImages(){
+	//ブログの各行を走査する
+	$('.myBlogTable tr:not(:first)').each(function(){
+		console.log($('.myBlogTable tbody tr'));
+		var $row = $(this);	//行そのものへの参照を変数に入れておく
+		//画像の列を走査する
+		$('.blogImage', $row).each(function(){
+			console.log($(this));
+			//テキストを画像パスにして、新たに生成する画像のパスにする
+			$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+		});
+	});
+}
+
+/* 
+ * 関数名:createMyGalleryImages
+ * 概要  :マイギャラリーの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyGalleryImages(){
+	//各記事を処理する
+	$('.myGalleryTable tr').each(function(){
+		//画像列にaタグに入ったspanタグを用意する
+		$('.myPhotoImage', this).append($('<a></a>')
+				.attr({
+						href: IMAGE_PATH + $('.myPhotoImage', this).text(),
+						rel: "gallery"		
+				})	//aのhref属性をセット
+				.append($('<span></span>')
+							//背景画像をセット
+							.attr('style','background-image:url("'+IMAGE_PATH + $('.myPhotoImage', this).text() + '")')
+							)
+				);
+	});
+}
+
  * 関数名:finshedLessonTableAfterPaging
  * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
  * 引数  :なし
