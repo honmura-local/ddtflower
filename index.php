@@ -46,6 +46,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 <!-- マイページのブログのCSSを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/myPageBlog.css" media="screen" />
+<!-- マイページのギャラリーのCSSを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/myPageGallery.css" media="screen" />
 
 <!-- Googleアナリティクスのトラッキングコード -->
 <script>

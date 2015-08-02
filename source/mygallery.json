@@ -11,8 +11,7 @@
             "text": ""
         }
     },
-    "myGallery": {
-    	"db_getQuery":"SELECT  FROM"
+    "memberMyGallery": {
     },
     "myGalleryEditButtons": {
         "createButton": {
@@ -64,9 +63,35 @@
         }
     },
     "myGalleryTable":{
-        "db_getQuery":"SELECT ug.id, ui.photo_title AS myPhotoImage,ug.date AS myPhotoDate, ug.title AS myPhotoTitle, uin.user_name AS myPhotoUser, ug.content_text AS myPhotoComment, ug.publication AS myPhotoPublication FROM user_gallery AS ug,user_image AS ui,user_inf AS uin WHERE ug.user_key='user_key' AND ug.user_key=uin.id AND ug.image_id=ui.id;",
+        "db_getQuery":"SELECT ug.id, ui.photo_title AS myPhotoImage,Date(ug.date) AS myPhotoDate, ug.title AS myPhotoTitle, uin.user_name AS myPhotoUser, ug.content_text AS myPhotoComment, ug.publication AS myPhotoPublication FROM user_gallery AS ug,user_image AS ui,user_inf AS uin WHERE ug.user_key='user_key' AND ug.user_key=uin.id AND ug.image_id=ui.id;",
         "user_key":{
             "value":""
+        },
+        "config": {
+            "columns": {
+                "id":{
+                    "style":"display:none"
+                },
+                "myPhotoImage":{
+                    "className":"myPhotoImage"
+                },
+                "myPhotoDate":{
+                    "className":"myPhotoDate"
+                },
+                "myPhotoTitle":{
+                    "className":"myPhotoTitle"
+                },
+                "myPhotoUser": {
+                    "className":"myPhotoUser"
+                },
+                "myPhotoComment": {
+                    "className":"myPhotoComment"
+                },
+                "myPhotoPublication": {
+                      "style":"display:none",
+                    "className":"myPhotoPublication"
+                }
+            }
         }
     },
     "insertMyGalleryPhoto":{

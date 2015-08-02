@@ -75,7 +75,7 @@
 				creator.json.myBlogTable.user_key.value = creator.json.memberHeader.user_key.value;
 				//ユーザ情報のテキストをDBから取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
-				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyGalleryImages');	// ブログの記事を作る。
+				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

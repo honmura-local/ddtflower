@@ -498,7 +498,7 @@ function createTag(){
 		}
 		
 		//コールバック関数が入力されていれば
-		if(callBack !== void(0) || callBack != 'undefined'){
+		if(callBack !== void(0) && callBack != 'undefined'){
 			eval(callBack + '()');	//コールバック関数を実行する
 		}
 	}

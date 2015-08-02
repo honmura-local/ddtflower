@@ -28,6 +28,11 @@ NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラ�
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
 CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+LOCATION	= 'flower_clone/';								//サイトルート前
+SITE_ROOT	= 'http://localhost/' + LOCATION;				//サイトルート
+IMAGE_PATH	= 'uploadImage/flowerImage/';					//アップロード画像フォルダ
+UPLOAD_LOCATION = SITE_ROOT + SITE_ROOT;					//アップロードURL
+
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -4288,14 +4293,14 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 }
 
 /* 
- * 関数名:createMyGalleryImages
+ * 関数名:createMyBlogImages
  * 概要  :マイブログの記事の画像列セルから画像タグを作る
  * 引数  :なし
  * 返却値  :なし
  * 作成者:T.Masuda
  * 作成日:2015.08.03
  */
-function createMyGalleryImages(){
+function createMyBlogImages(){
 	//ブログの各行を走査する
 	$('.myBlogTable tr:not(:first)').each(function(){
 		console.log($('.myBlogTable tbody tr'));
@@ -4306,5 +4311,30 @@ function createMyGalleryImages(){
 			//テキストを画像パスにして、新たに生成する画像のパスにする
 			$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
 		});
+	});
+}
+
+/* 
+ * 関数名:createMyGalleryImages
+ * 概要  :マイギャラリーの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyGalleryImages(){
+	//各記事を処理する
+	$('.myGalleryTable tr').each(function(){
+		//画像列にaタグに入ったspanタグを用意する
+		$('.myPhotoImage', this).append($('<a></a>')
+				.attr({
+						href: IMAGE_PATH + $('.myPhotoImage', this).text(),
+						rel: "gallery"		
+				})	//aのhref属性をセット
+				.append($('<span></span>')
+							//背景画像をセット
+							.attr('style','background-image:url("'+IMAGE_PATH + $('.myPhotoImage', this).text() + '")')
+							)
+				);
 	});
 }

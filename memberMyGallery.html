@@ -18,7 +18,6 @@
 			<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 			<script>
 				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
-				creator.getJsonFile('php/getJSONArray.php', creator.json['myGallery'], 'myGallery');	// Myギャラリー生成用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// HTMLのテンプレートデータをを取得する。
 				creator.getDomFile('template/common.html');			
@@ -40,7 +39,7 @@
 				creator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。
 				//ギャラリーのちょっとした説明を付け足す。
 				creator.outputTag('myGalleryNotice','myGalleryNotice','.myGalleryEditButtons');	
-				creator.outputTag('myGallery');						// ギャラリーページ用のギャラリーを作る。
+				creator.outputTag('memberMyGallery');						// ギャラリーページ用のギャラリーを作る。
 				// ナンバリング領域を作る
 				creator.outputTag('numberingOuter');
 				
@@ -49,10 +48,10 @@
 				//ユーザのギャラリー情報を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myGalleryTable'], 'myGalleryTable');
 				//ギャラリーの内容を追加する。
-				creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 8, '.myGallery');	// ブログの記事を作る。
+				creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'createMyGalleryImages');	// ブログの記事を作る。
 
 				//ギャラリーの画像を拡大できるようにする。
-				useZoomImage('myPhoto');
+				useZoomImage('myGalleryTable tr a');
 				//jQuery UIのリッチなボタンを配置する。
 				$('.myGalleryEditButtons button').button();
 				//新規ボタンをクリックしたらアップロードするボタンを押すイベントを登録する。
