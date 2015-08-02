@@ -26,6 +26,7 @@
 				// バナー領域を作る
 				creator.outputTag('userBanner');
 				
+				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				creator.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
 				creator.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
 				// ファイルのhtmlデータをdomを用いて持ってくる
@@ -44,6 +45,10 @@
 
 				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
 				creator.json.myBlogListTable.user_key.value = creator.json.memberHeader.user_key.value;
+
+				creator.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
+				creator.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
+				
 				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogListTable'], 'myBlogListTable');
 				//ブログの投稿したことがある人のみブログリストテーブルを作る
@@ -65,7 +70,13 @@
 				// //DOM配置の都合上付いてしまった親のtableタグを消す。
 				// unwrapTable('.blogListHead');
 				// //表の内容を作る。
-		 	// 	outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
+			 	// 	outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
+				
+				//ユーザのブログ領域用のJSONに会員IDをセットする。
+				creator.json.myBlogTable.user_key.value = creator.json.memberHeader.user_key.value;
+				//ユーザ情報のテキストをDBから取得する
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
+				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

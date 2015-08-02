@@ -27,6 +27,7 @@ label,
 .lessonTable,
 .reservedLessonTable,
 .finishedLessonTable,
+.adminLessonDetailTable,
 .tab,
 .textCenter {
 	text-align: center;
@@ -285,7 +286,8 @@ label,
 .lecturePermitListInfoTable,
 .userListInfoTable,
 .mailMagaTable,
-.myBlogListTable {
+.myBlogListTable,
+.adminLessonDetailTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
 	margin: 5px 0;				/* 上下5pxの余白をとる */
@@ -307,7 +309,8 @@ label,
 .lecturePermitListInfoTable tr:hover,
 .userListInfoTable tr:hover,
 .mailMagaTable tr:hover,
-.myBlogListTable tr:hover {
+.myBlogListTable tr:hover,
+.adminLessonDetailTable tr:hover {
 	background: #E0F5E6;	/* 行の背景を水色っぽくする */
 }
 
@@ -326,7 +329,8 @@ label,
 .lecturePermitListInfoTable tr:nth-of-type(1),
 .userListInfoTable tr:nth-of-type(1),
 .mailMagaTable tr:nth-of-type(1),
-.myBlogListTable tr:nth-of-type(1) {
+.myBlogListTable tr:nth-of-type(1),
+.adminLessonDetailTable tr:nth-of-type(1) {
 	background: #F0F3F5;	/* 行の背景を水色っぽくする */
 }
 
@@ -345,7 +349,8 @@ label,
 .lecturePermitListInfoTable td,
 .userListInfoTable td,
 .mailMagaTable td,
-.myBlogListTable td{
+.myBlogListTable td,
+.adminLessonDetailTable td {
 	border: 1px solid #ccc;		/* 少しグレー目の線で囲む */
 	padding: 2px;				/* 要素の幅を2px広げる */
 }
@@ -356,7 +361,8 @@ label,
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.17
  */
-.lessonTable td:nth-of-type(1) {
+.lessonTable td:nth-of-type(1),
+.adminLessonDetailTable td:nth-of-type(1) {
 	width: 50px;			/* 幅を50pxに固定する */
 }
 
@@ -545,7 +551,8 @@ label,
 .attention,
 .confirmText,
 .memberInfomation,
-.lessonStatus {
+.lessonStatus,
+.adminLessonDetailStatus {
 	width: 430px;		/* ダイアログの幅を430pxにする */
 }
 
@@ -861,7 +868,7 @@ label,
 	display: block;			/* ブロック要素として扱う */
 	height: 27px;			/* 高さを27pxにする */
 	line-height: 27px;		/* 行間を27pxにする */
-	width: 10%;				/* 幅を20%にする */
+	/*width: 10%;				/* 幅を20%にする */*/
 }
 
 /* 
@@ -1069,7 +1076,8 @@ label,
 	.attention,
 	.confirmText,
 	.memberInfomation,
-	.lessonStatus {
+	.lessonStatus,
+	.adminLessonDetailStatus {
 		width: 280px;		/* ダイアログの幅を430pxにする */
 	}
 
