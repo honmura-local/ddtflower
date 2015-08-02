@@ -4260,6 +4260,7 @@ function updateMyGalleryPhotoData() {
 		}
 	});
 }
+
 /* 
  * 関数名:myGalleryDbUpdate
  * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツについてdbデータを更新する(updateまたはdeleteを行う)
@@ -4284,4 +4285,26 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 		$('.myPhoto').eq(deleteContentNumber).remove();
 		// console.log(deleteContentNumber);
 	}
+}
+
+/* 
+ * 関数名:createMyGalleryImages
+ * 概要  :マイブログの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyGalleryImages(){
+	//ブログの各行を走査する
+	$('.myBlogTable tr:not(:first)').each(function(){
+		console.log($('.myBlogTable tbody tr'));
+		var $row = $(this);	//行そのものへの参照を変数に入れておく
+		//画像の列を走査する
+		$('.blogImage', $row).each(function(){
+			console.log($(this));
+			//テキストを画像パスにして、新たに生成する画像のパスにする
+			$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+		});
+	});
 }
