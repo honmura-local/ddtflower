@@ -86,15 +86,25 @@
 							//目安箱テーブルに新たにデータを挿入する
 							setDBdata(creator.json.insertSuggestionBox, sendData, '');
 							//目安箱としてメールを送信する
-							//メール送信処理
+							sendSuggest(
+									sendData['user_key']
+									,sendData['suggest_type']
+									,sendData['suggest_content']
+									,sendData['suggest_title']
+							);
 						//目安箱でないなら
 						} else {
 							//通常メールとして送信する
+							sendMemberMail(
+									sendData['user_key']
+									,sendData['suggest_content']
+									,sendData['suggest_title']
+							);
 						}
 					};
 					var sd = new SimpleConfirmDialog(
 							function(){
-									doIt;
+									doIt();
 							},
 							"送信します。よろしいですか?");
 					sd._showDialog();

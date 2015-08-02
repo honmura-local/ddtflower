@@ -1,5 +1,6 @@
 <?php
 require_once "ModelMysql.php";
+require_once "mailSendFailException.php";
     
 //
 //      ファイル名      :       ModelMail.php
@@ -230,7 +231,6 @@ class ModelMail {
 		$commodity_name = ''; // 商品名
 		$suggest_content = '';
 		$suggest_title = '';
-
 		// レコード取得
 		if($temp_type) {
 			// 雛形種別が指定されている場合、雛形取得
@@ -363,13 +363,10 @@ class ModelMail {
 			$replace[] = $user_name;		//置換ワード
 		}
 		//2011/01/13　shou end
-
-
 		// 雛形の一括置き換え実施
 		$mail_content = str_replace($search, $replace, $mail_content);
-
 		// タイトルと雛形返却
-		return array($mail_title, $mail_content);
+		return array($mail_title, $mail_content);error_log('__now__'.$mail_content);
 	}
 
 	//
@@ -397,7 +394,6 @@ class ModelMail {
 		$none_num = 0; // メールアドレス無し数
 		$send_num = 0; // 送信成功数
 		$fail_num = 0; // 送信失敗数
-
 		// toが配列で無い場合、配列に変換
 		if(! is_array($to)) $to = explode(',', $to);
 
@@ -458,81 +454,57 @@ class ModelMail {
 		return array($send_num, $fail_num, $none_num);
 	}
 
-	//
-	// メソッド名   ：send_mail_each_test
-	// 概要         ：メール送信(リスト個別送信)テスト用
-	// 戻り値       ：送信数、失敗数、メールアドレス無し数の配列
-	// 引数         ：$to
-	//                (配列もしくはカンマで区切られたIDリスト)
-	// 引数         ：$subject
-	//                タイトル
-	// 引数         ：$template
-	//                内容
-	// 引数         ：$admin_flag=false
-	//                管理者送信フラグ(管理者に送信メール情報を送る場合true)
-	// 引数         ：$school_key=0
-	//                店舗管理者用店舗キー(店舗管理者にも送る場合)
-	// 引数			：$paramList
-	//				　パラーメタリスト、指定されていたらDBアクセス無しでこの値を使用
-	// 履歴         ：2011/09/12      本村          新規作成
-	//
-	public static function send_mail_each_test($to, $from=0, $subject, $template, $cc='', $bcc='', $admin_flag=false, $school_key=0, &$paramList = null) {
-		$none_num = 0; // メールアドレス無し数
-		$send_num = 0; // 送信成功数
-		$fail_num = 0; // 送信失敗数
-
-		// toが配列で無い場合、配列に変換
-		if(! is_array($to)) $to = explode(',', $to);
-
-		// 管理者送信内容初期化
-		$admin_content = '';
-
-		// 2011/09/10_honmura_add
-		$cnt = 0;
-
-		// toのIDをループ
-		foreach($to as $id) {
-			// 登録者情報取得
-			$user_rec = ModelMysql::select_one2('user_name,mail_address', 'user_inf', 'id=' . $id);
-			// 管理者送信用の送信者リスト追加
-			$admin_content .= sprintf("%010d %s", intval($id), $user_rec['user_name']);
-			// メールアドレス無し判定
-			if($user_rec['mail_address'] == '') {
-				$admin_content .= "メールアドレス無し\n";
-				++ $none_num;
-				continue;
-			}
-			// メール雛形で、送信者情報のみ置き換え
-			list($dummy, $content) = self::create_mail_content(0, $template, 0, $user_key, 0, 0, 0, '', $paramList[$cnt]);
-			
-			// メール送信
-			if(self::send_mail($user_rec['mail_address'], $subject, $content, $cc, $bcc) == false) {
-				// 失敗の場合
-				$admin_content .= sprintf("送信失敗[%s]\n", $user_rec['mail_address']);
-				++ $fail_num;
-			} else {
-				// 成功の場合
-				$admin_content .= "送信成功\n";
-				++ $send_num;
-			}
-
-			// 2011/09/10_honmura_add
-			$cnt++;
+	const SUGGEST_TMP_NAME = '___suggestion_box___';
+	const ADMIN_ID = '1';
+	
+	public static function sendSuggestion($type, $from, $title, $content){
+		if(!self::saveSuggestion($from, $type, $title, $content)) {
+			throw new MailSendFailException('failed to insert suggestion.');
 		}
-
-		// 管理者メール送信
-		if($admin_flag) {
-			// 管理者アドレス取得
-			$admin_to = self::get_admin_mail($school_key);
-			// 内容作成
-			$admin_content = sprintf("送信成功数 %d, 失敗数 %d メールアドレス無し数 %d\n[送信者リスト]\n%s[送信タイトル]%s\n[送信内容]\n%s",
-			$send_num, $fail_num, $none_num, $admin_content, $subject, $template);
-			// 送信
-			self::send_mail($admin_to, '送信通知', $admin_content);
+		
+		$tmpName = self::SUGGEST_TMP_NAME;
+		
+		$sql =<<<EOF
+			SELECT
+				mail_title
+				,mail_content
+			FROM
+				mail_template
+			WHERE
+				template_name = '{$tmpName}' 
+			LIMIT 1
+EOF;
+		
+		$ret = ModelMysql::query($sql);
+		$template = mysql_fetch_array($ret, MYSQL_ASSOC);
+		mysql_free_result($ret);
+		if(!$template) {
+			throw new MailSendFailException('failed to insert suggestion.');
 		}
-
-		// 結果数返却
-		return array($send_num, $fail_num, $none_num);
+		
+		return self::send_mail_each(array(self::ADMIN_ID), $from, $template['mail_title'], $template['mail_content']);
+	}
+	
+	const SUGGEST_TABLE = 'suggestion_box';
+	
+	private static function saveSuggestion($userId, $type, $title, $content) {
+		$mysql = new ModelMysql();
+		// insert項目作成
+		$items = array(
+			'user_key',
+			'suggest_title',
+			'suggest_content',
+			'send_datetime',
+			'suggest_type',	
+		);
+		$values = array(
+				array($userId, false),
+				array($title, true),
+				array($content, true),
+				array(Date('Y-m-d H:i:s'), true),
+				array($type, false),
+		);
+		
+		return $mysql->insert(self::SUGGEST_TABLE, $items, $values);
 	}
 }
-?>

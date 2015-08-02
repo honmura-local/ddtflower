@@ -3964,10 +3964,8 @@ function createAdminMailMagaAnnounceContent() {
 				var sendData = getInputData('mailMagaAndAnnounceArea');
 				//メルマガをDBに新規登録する
 				setDBdata(creator.json.insertMailMagazine, sendData, '');
-				//DBからメルマガを送信する会員情報を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 				// メルマガ送信処理
-				// ここにメルマガを実際に送信するためのコードが入ります
+				sendMailmagazine(sendData['magazine_title'],sendData['magazine_content']);
 			}
 		};
 		var sd = new SimpleConfirmDialog(
@@ -4033,37 +4031,92 @@ function cutString(cutTargetSelector, cutCount) {
  * 作成日:2015.07.22
  */
 function sendMail(mailInfoArray, mailSubject, mailContent) {
-	//Ajax通信を行う
+		//Ajax通信を行う
+
+function sendSuggest(from, type, mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
 	$.ajax({
-		url: 'php/mailSend.php',		//メールを送信するためのphpをコールして処理を開始する
-		//メール情報を送信する
-		data:{memberInfo:mailInfoArray,	//送信先アドレス、名前などの連想配列
-				subject:mailSubject,	//メールタイトル
-				message:mailContent},	//メール内容
-		dataType: STR_TEXT,				//テキストデータを返してもらう
-		type: STR_POST,					//POSTメソッドで通信する
-		success:function(resultText){	//通信成功時の処理
-			//受け取った結果文字列を連想配列にする
-			var resultArray = JSON.parse(resultText);
-			//エラー件数を取得する
-			var errorCount = resultArray.length;
-			//受け取った配列の要素数が0であるなら送信成功のメッセージを出す。
-			if (errorCount == 0) {
-				//送信成功メッセージを出す
-				alert('送信に成功しました。')
-			//送信に失敗していたらエラーメッセージを出す
-			} else {
-				//エラーメッセージを出す。
-				alert(errorCount + '件のエラーがありました。');
-				//どの人でメッセージ送信に失敗したかをコンソールで表示する
-				console.log(resultArray);
-			}
-		},
-		error:function(xhr, status, error){	//通信失敗時の処理
-			//通信失敗のアラートを出す
-			alert(MESSAGE_FAILED_CONNECT);
+		url:'php/mailSendEntrySuggest.php'
+		,data:{
+				from:from
+				,type:type
+				,subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new Error(status + ":" + MESSAGE_FAILED_CONNECT);
 		}
 	});
+	
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
+}
+
+function sendMemberMail(from, mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
+	$.ajax({
+		url:'php/mailSendEntryMemberMail.php'
+		,data:{
+				from:from
+				,subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+		}
+	});
+	
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
+}
+
+function sendMailmagazine(mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
+/* 
+ * 関数名:sendMail
+ * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
+ * 引数  :object mailInfoArray:送信先アドレスなどの情報が入った連想配列
+ 		string mailSubject:送信メールのタイトル文字列
+ 		string mailContent:送信メール内容
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function sendMail(mailInfoArray, mailSubject, mailContent) {
+	//Ajax通信を行う
+	$.ajax({
+		url:'php/mailSendEntryMagazine.php'
+		,data:{
+				subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+		}
+	});
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
 }
 
 /* 
