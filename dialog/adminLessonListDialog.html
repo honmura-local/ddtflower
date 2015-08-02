@@ -1,0 +1,30 @@
+<div class="adminLessonListContent">
+<script>
+	$('.adminLessonListContent').off();
+	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
+	var adminLessonListCreator = new createTag();
+	//管理者授業詳細一覧のjsonを取得する
+	adminLessonListCreator.getJsonFile('source/adminCommon.json');
+	//管理者授業詳細のテンプレートを取得する
+	adminLessonListCreator.getDomFile('template/adminCommon.html');
+	
+	//ダイアログの中身の外枠を作る
+	adminLessonListCreator.outputTag('adminLessonListDialogContent', 'adminLessonListDialogContent', '.adminLessonListContent');
+
+	//dbに接続する前に日付をクエリの置換連想配列に挿入する
+	adminLessonListCreator.json.adminLessonDetailTable.lessonDate.value = $('.adminLessonListContent')[0].instance.argumentObj.lessonDate;
+	//管理者授業詳細のデータをDBから取得してテーブルを作る準備をする
+	adminLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, adminLessonListCreator.json['adminLessonDetailTable'], 'adminLessonDetailTable');
+	//取り出した値が0でないときに授業一覧テーブルを表示する
+	if(adminLessonListCreator.json.adminLessonDetailTable.table.length != 0) {
+		//管理者授業詳細一覧テーブルを作る
+		adminLessonListCreator.outputTagTable('adminLessonDetailTable', 'adminLessonDetailTable', '.adminLessonListDialogContent');
+		//レッスンのステータス領域を作る
+		adminLessonListCreator.outputTag('adminLessonDetailStatus', 'adminLessonDetailStatus', '.adminLessonListDialogContent');
+	}
+	//新規追加ボタンを追加する
+	adminLessonListCreator.outputTag('lessonAddButton', 'addButton', '.adminLessonListContent');
+	//ボタンの見た目をjqueryuiのものにして整える
+	$('input[type=button]').button();
+</script>
+</div>
