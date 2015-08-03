@@ -3671,15 +3671,13 @@ function createMemberFinishedLessonContent() {
 	//メルマガのデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きで受講済み授業テーブルを作る
-	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	//予約中テーブルのテーブルの値をしかるべき値にする
 	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
 	//テーマ絞り込みボタンがクリックされたときに受講済みテーブルを作り直す
 	finshedLessonTableThemeSelect();
-	//ページング後の処理を登録する
-	finshedLessonTableAfterPaging();
 }
 
 /* 
@@ -4470,30 +4468,37 @@ function createMyGalleryImages(){
  * 作成日:2015.07.30
  */
 function finshedLessonTableAfterPaging() {
-	//ページングがクリックされた時のイベントを登録する
-	$(STR_BODY).on(CLICK, '.finishedLessonPagingArea .numbering li', function() {
-		console.log(1);
-		//受講済みテーブルを編集が終わるまで表示しなくする
-		$('.finishedLessonTable').hide();
-		//時間差で表現するためにsetTimeOutを使う
-		setTimeout(function(){
-			//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
-			var nowPageNumber = NUMBER($('.select').text());
-			//テーブルの値を編集するループを開始する値を取得する
-			var loopStartCount = nowPageNumber * 10;
-			//テーブルの値を編集するループを終了する値を取得する
-			var loopEndCount = nowPageNumber * 10 + 9;
-			//テーブルのデータを取得する
-			var tableRow = creator.json.finshedLessonTable.table;
-			//ループで受講済みテーブルを編集する
-			for(loopStartCount; loopStartCount<=loopEndCount; loopStartCount++) {
-				//テーブルの値を置換する
-				callMemberLessonValue('.finishedLessonTable', tableRow, loopStartCount, loopStartCount);
-			}
-			//受講済みテーブルを表示する
-			$('.finishedLessonTable').show();
-		},1);
-	});
+	//受講済みテーブルを編集が終わるまで表示しなくする
+	$('.finishedLessonTable').hide();
+	//時間差で表現するためにsetTimeOutを使う
+	setTimeout(function(){
+		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
+		var nowPageNumber = Number($('.select').text() - 1);
+		//テーブルのデータを取得する
+		var tableRow = creator.json.finishedLessonTable.table;
+		//テーブルの値を編集するループを開始する値を取得する
+		var loopStartCount = nowPageNumber * 10;
+		//テーブルのレコード数を取得する
+		var recordCount = Number(creator.json.finishedLessonTable.table.length);
+		//テーブルの値を編集するループを終了する値を取得する
+		var loopEndCount = nowPageNumber * 10 + 9;
+		//テーブルのレコード数よりループ最終数の方が大きければレコード数をループ最終数にする
+		if (loopEndCount >= recordCount) {
+			//ループの回数をテーブルの行数を超えないようにする
+			loopEndCount = recordCount-1;
+		}
+		//テーブルのループのための行番号を取得する
+		var rowNumber = 1;
+		//ループで受講済みテーブルを編集する
+		for(loopStartCount; loopStartCount<=loopEndCount; loopStartCount++) {
+			//テーブルの値を置換する
+			callMemberLessonValue('.finishedLessonTable', tableRow, loopStartCount, rowNumber);
+			//行番号をインクリメントして次の行についてのループに備える
+			rowNumber++;
+		}
+		//受講済みテーブルを表示する
+		$('.finishedLessonTable').show();
+	},1);
 }
 
 /*
@@ -4516,7 +4521,7 @@ function finshedLessonTableThemeSelect() {
 		//クエリを発行してDBから対象のデータの受講済み授業一覧のデータを取り出す
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
 		//ページング機能付きで受講済みテーブルを作り直す
-		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 		//予約中テーブルのテーブルの値をしかるべき値にする
 		lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
 	});
