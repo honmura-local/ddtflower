@@ -419,8 +419,10 @@ function openAdminNewLessonCreateDialog() {
 	$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
 		//新規授業追加ダイアログに渡す変数を宣言しておく
 		var sendObject = {};
-		//日本語名の日付を渡すデータを入れる
-		sendObject['lessonDate'] = $('.adminLessonListContent')[0].instance.argumentObj.lessonDate;
+		//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
+		sendObject['lessonDate'] = $('.adminLessonListContent')[0].instance.argumentObj.lessonDate.replace(/\//g,"-");
+		//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
+		sendObject['tableData'] = adminLessonListCreator.json.adminLessonDetailTable.table;
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
 		dialogExOption[ADMIN_NEW_LESSON_CREATE]['title'] = dialogExOption[ADMIN_LESSONLIST_DIALOG]['title'];
 		//新規授業追加ダイアログを作る
@@ -540,6 +542,55 @@ function cancelDialogExOpen (memberNumber) {
 	});
 }
 
+/* 
+ * 関数名:newLessonEntry
+ * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理
+ * 引数  :
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.03
+ */
+function newLessonEntry() {
+	//授業一覧のデータを長さを取得し、ループが終わる回数として使う
+	var loopEndCount =$('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData.length;
+	//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
+	var newLesoonData = getInputData('lessonData');
+	//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
+	var timeTableDayKey = "";
+	//受け取った授業一覧データから時限データを探す
+	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
+		//time_table_day_keyが空白のものはループを飛ばす
+		if($('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] == "") {
+			//次のループに行く
+			continue;
+		}
+		//新規授業作成データの時限データが見つかった時の処理
+		if(newLesoonData['timetable_key'] == $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]) {
+			//時限データを取得し、ループを終える
+			timeTableDayKey = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount];
+			//ループを終わらせる
+			break;
+		}
+	}
+	//新しく授業データを作るために授業日を連想配列に入れる
+	var lessonData = {lessonDate:$('.adminNewLessonCreateContent')[0].instance.argumentObj.lessonDate,
+					time_table_day_key:timeTableDayKey}
+	//新しく授業データを挿入するために日付データを含めて送信する
+	var sendReplaceQuery = $.extend(true, {}, newLesoonData, lessonData);
+	//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
+	if(timeTableDayKey == "") {
+		//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
+		var errorCount = setDBdata(adminNewLessonCreator.json.insertTimeTableDay, sendReplaceQuery, '');
+		//失敗件数が0でないなら授業データを新しく作るクエリを発行する
+		if (errorCount != 0) {
+			//新規に授業のデータをDBに登録する
+			setDBdata(adminNewLessonCreator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
+		}
+	//予約する時限があった時にそれを使って新規授業を作成する
+	} else {
+		setDBdata(adminNewLessonCreator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
+	}
+}
 
 // 以下、本村さん作成部分
 
