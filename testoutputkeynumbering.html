@@ -35,8 +35,10 @@
 				// ナンバリング領域を作る
 				creator.outputTag('numberingOuter','numberingOuter','.blogRightContent');
 				
-				//@mod 2015.03.13 T.Masuda blogコンテンツを作成する記述を追加しました。
-				creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog');	// ブログの記事を作る。
+				creator.getJsonFile('source/adminCommon.json');		// ファイルのデータをjsonを用いて持ってくる
+				creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
+				creator.getDomFile('template/adminCommon.html');			// ブログページ用のDOMを取得する
+				creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 5, '.blog');	// ブログの記事を作る。				
 			</script>
 	</div>
 </div>

@@ -44,6 +44,11 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 
+<!-- マイページのブログのCSSを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/myPageBlog.css" media="screen" />
+<!-- マイページのギャラリーのCSSを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/myPageGallery.css" media="screen" />
+
 <!-- Googleアナリティクスのトラッキングコード -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -101,11 +106,10 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/controlAction.js"></script>
 <!-- 会員検索クエリを検索ボタンクリックで生成する -->
 <script src="js/replaceQuery.js"></script>
-<!-- ダイアログを開くオプションを生成する -->
-<script src="js/dialogFunction_yamamoto.js"></script>
-<!-- ダイアログの設定関数を生成する -->
-<script src="js/dialogOption_yamamoto.js"></script>
-
+<!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
+<script type="text/javascript" src="js/dialogEx.js"></script>
+<!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->
+<script type="text/javascript" src="js/dialogExOptions.js"></script>
 
 </head>
 

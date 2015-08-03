@@ -28,6 +28,11 @@ NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラ�
 PAGING 							= 'paging';							//ページングのクラス名
 PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
 CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
+LOCATION	= 'flower_clone/';								//サイトルート前
+SITE_ROOT	= 'http://localhost/' + LOCATION;				//サイトルート
+IMAGE_PATH	= 'uploadImage/flowerImage/';					//アップロード画像フォルダ
+UPLOAD_LOCATION = SITE_ROOT + SITE_ROOT;					//アップロードURL
+SPECIAL_RESERVED_DIALOG_URL		= 'dialog/specialReservedDialog.html';	//体験レッスン予約ダイアログのHMTLファイルURL
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -623,9 +628,13 @@ function callReservedDialog(dateText, calendar){
 	// 日付配列を取得する。
 	var date = createDateArray(dateText)
 	
-	// 予約希望ダイアログを作成する
-	 var reservedDialog = new specialReservedDialog(null, null, {autoOpen:true}, contentName, date);
-	reservedDialog.open();	//ダイアログを開く
+	// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
+	var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
+	//予約ダイアログが開いたときのコールバック関数を登録する
+	reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
+	//閉じたら完全にダイアログを破棄させる
+	reservedDialog.setCallbackClose(reservedDialog.destroy);
+	reservedDialog.run();	//ダイアログを開く
 }
 
 /*
@@ -3964,10 +3973,8 @@ function createAdminMailMagaAnnounceContent() {
 				var sendData = getInputData('mailMagaAndAnnounceArea');
 				//メルマガをDBに新規登録する
 				setDBdata(creator.json.insertMailMagazine, sendData, '');
-				//DBからメルマガを送信する会員情報を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json.getMailMagaMemberList, 'getMailMagaMemberList');
 				// メルマガ送信処理
-				// ここにメルマガを実際に送信するためのコードが入ります
+				sendMailmagazine(sendData['magazine_title'],sendData['magazine_content']);
 			}
 		};
 		var sd = new SimpleConfirmDialog(
@@ -4033,37 +4040,92 @@ function cutString(cutTargetSelector, cutCount) {
  * 作成日:2015.07.22
  */
 function sendMail(mailInfoArray, mailSubject, mailContent) {
-	//Ajax通信を行う
+		//Ajax通信を行う
+
+function sendSuggest(from, type, mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
 	$.ajax({
-		url: 'php/mailSend.php',		//メールを送信するためのphpをコールして処理を開始する
-		//メール情報を送信する
-		data:{memberInfo:mailInfoArray,	//送信先アドレス、名前などの連想配列
-				subject:mailSubject,	//メールタイトル
-				message:mailContent},	//メール内容
-		dataType: STR_TEXT,				//テキストデータを返してもらう
-		type: STR_POST,					//POSTメソッドで通信する
-		success:function(resultText){	//通信成功時の処理
-			//受け取った結果文字列を連想配列にする
-			var resultArray = JSON.parse(resultText);
-			//エラー件数を取得する
-			var errorCount = resultArray.length;
-			//受け取った配列の要素数が0であるなら送信成功のメッセージを出す。
-			if (errorCount == 0) {
-				//送信成功メッセージを出す
-				alert('送信に成功しました。')
-			//送信に失敗していたらエラーメッセージを出す
-			} else {
-				//エラーメッセージを出す。
-				alert(errorCount + '件のエラーがありました。');
-				//どの人でメッセージ送信に失敗したかをコンソールで表示する
-				console.log(resultArray);
-			}
-		},
-		error:function(xhr, status, error){	//通信失敗時の処理
-			//通信失敗のアラートを出す
-			alert(MESSAGE_FAILED_CONNECT);
+		url:'php/mailSendEntrySuggest.php'
+		,data:{
+				from:from
+				,type:type
+				,subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new Error(status + ":" + MESSAGE_FAILED_CONNECT);
 		}
 	});
+	
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
+}
+
+function sendMemberMail(from, mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
+	$.ajax({
+		url:'php/mailSendEntryMemberMail.php'
+		,data:{
+				from:from
+				,subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+		}
+	});
+	
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
+}
+
+function sendMailmagazine(mailSubject, mailContent) {
+	
+	var resulwork = null;
+	
+/* 
+ * 関数名:sendMail
+ * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
+ * 引数  :object mailInfoArray:送信先アドレスなどの情報が入った連想配列
+ 		string mailSubject:送信メールのタイトル文字列
+ 		string mailContent:送信メール内容
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function sendMail(mailInfoArray, mailSubject, mailContent) {
+	//Ajax通信を行う
+	$.ajax({
+		url:'php/mailSendEntryMagazine.php'
+		,data:{
+				subject:mailSubject
+				,content:mailContent
+		}
+		,dataType:"json"
+		,type:"POST"
+		,success:function(result){
+			resulwork = result;
+		}
+		,error:function(xhr, status, error){
+			throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+		}
+	});
+	// @TODO 結果をどうしいのかはまだ未定
+	//return resulwork
 }
 
 /* 
@@ -4375,6 +4437,52 @@ function myGalleryDbUpdate(sendQueryKey, checkContentCount) {
 }
 
 /* 
+ * 関数名:createMyBlogImages
+ * 概要  :マイブログの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyBlogImages(){
+	//ブログの各行を走査する
+	$('.myBlogTable tr:not(:first)').each(function(){
+		console.log($('.myBlogTable tbody tr'));
+		var $row = $(this);	//行そのものへの参照を変数に入れておく
+		//画像の列を走査する
+		$('.blogImage', $row).each(function(){
+			console.log($(this));
+			//テキストを画像パスにして、新たに生成する画像のパスにする
+			$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+		});
+	});
+}
+
+/* 
+ * 関数名:createMyGalleryImages
+ * 概要  :マイギャラリーの記事の画像列セルから画像タグを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.08.03
+ */
+function createMyGalleryImages(){
+	//各記事を処理する
+	$('.myGalleryTable tr').each(function(){
+		//画像列にaタグに入ったspanタグを用意する
+		$('.myPhotoImage', this).append($('<a></a>')
+				.attr({
+						href: IMAGE_PATH + $('.myPhotoImage', this).text(),
+						rel: "gallery"		
+				})	//aのhref属性をセット
+				.append($('<span></span>')
+							//背景画像をセット
+							.attr('style','background-image:url("'+IMAGE_PATH + $('.myPhotoImage', this).text() + '")')
+							)
+				);
+	});
+}
+
  * 関数名:finshedLessonTableAfterPaging
  * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
  * 引数  :なし

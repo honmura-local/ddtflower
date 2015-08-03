@@ -132,5 +132,40 @@
         "id":{
             "value":""
         }
+    },
+    "blogArticles":{
+    },
+    "myBlogTable":{
+        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='user_key' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;",
+        "user_key":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "image1":{
+                    "className":"blogImage"
+                },
+                "image2":{
+                    "style":"display:none",
+                    "className":"blogImage"
+                },
+                "image3":{
+                    "style":"display:none",
+                    "className":"blogImage"
+                },
+                "text": {
+                    "className":"blogContent"
+                },
+                "date": {
+                    "className":"blogDate"
+                },
+                "userName": {
+                    "className":"userName"
+                },
+                "title": {
+                    "className":"blogTitle"
+                }
+            }
+        }
     }
 }
