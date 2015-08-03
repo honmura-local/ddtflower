@@ -3672,8 +3672,6 @@ function createMemberFinishedLessonContent() {
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きで受講済み授業テーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
-	//予約中テーブルのテーブルの値をしかるべき値にする
-	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
 	//テーマ絞り込みボタンがクリックされたときに受講済みテーブルを作り直す
@@ -3898,13 +3896,12 @@ function createAdminMailMagaAnnounceContent() {
 	//メルマガのデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside');
+	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 
-
-	//メルマガテーブルに検索機能を対応させる
-//	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
 	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
 	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		//ページングの設定を初期化し、作り直しに備える
+		pagingReset('mailMagaTable');
 		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
 		var queryDefault = creator.json.mailMagaTable.db_getQuery;
 		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
@@ -3917,8 +3914,10 @@ function createAdminMailMagaAnnounceContent() {
 		addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
 		//クエリに切り取ったORDER BYを付け足す
 		creator.json.mailMagaTable.db_getQuery += cutString;
-		//テーブルをリロードする
-		tableReload('mailMagaTable');
+		//メルマガのデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+		//ページング機能付きでメルマガテーブルを作る
+		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//クエリをデフォルトに戻す
 		creator.json.mailMagaTable.db_getQuery = queryDefault;
 	});
@@ -4522,8 +4521,6 @@ function finshedLessonTableThemeSelect() {
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
 		//ページング機能付きで受講済みテーブルを作り直す
 		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
-		//予約中テーブルのテーブルの値をしかるべき値にする
-		lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
 	});
 }
 
