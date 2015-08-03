@@ -264,7 +264,8 @@ label,
  * 作成者 :T.Yamamoto
  * 作成日 :2015.07.01
  */
-.lessonTable {
+.lessonTable,
+.displayNone {
 	display: none;			/* 最初は表示しない */
 }
 

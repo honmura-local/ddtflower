@@ -581,7 +581,7 @@
         "replaceTable":{}
     },
     "adminLessonDetailTable":{
-        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;",
+        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key ,timetable_inf.id AS timetable_key FROM  time_table_day LEFT JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key RIGHT JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
         "lessonDate":{
             "value":""
         },
@@ -643,6 +643,9 @@
                 },
                 "time_table_day_key":{
                     "style":"display:none;"
+                },
+                "timetable_key":{
+                    "style":"display:none;"
                 }
             }
         }
@@ -675,6 +678,7 @@
                 "text":"テーマ"
             },
             "lessonThemeSelect":{
+                "name":"lesson_key",
                 "lessonThemeSelectList1":{
                     "text":"プリザ",
                     "value":"14"
@@ -710,6 +714,7 @@
                 "text":"時間割"
             },
             "timeTableSelect":{
+                "name":"timetable_key",
                 "timeTableSelectList1":{
                     "text":"11:00-13:00",
                     "value":"1"
