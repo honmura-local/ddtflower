@@ -3,6 +3,8 @@
 currentLocation = '';	//現在選択中のページの変数
 //トップページのファイル名の定数
 TOPPAGE_NAME = 'index.php';
+USER_ID = 'userId';			//ユーザID
+PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
 
 /*
  * 関数名:isSupportPushState()
@@ -878,7 +880,9 @@ function addlogoutEvent(selector){
 			url:'php/LogoutSession.php',
 			async:false,	//同期通信を行う
 			success:function(){	//通信成功時の処理
-				callPage('index.php');	//トップページへ遷移する
+//				deleteCookie(USER_ID);		//ユーザIDのクッキーを削除する
+//				deleteCookie(PHP_SESSID);	//セッションIDのクッキーを削除する
+				callPage(TOPPAGE_NAME);	//トップページへ遷移する
 			},
 			error:function(xhr,status,error){	//通信エラー時
 				//エラーメッセージを出す

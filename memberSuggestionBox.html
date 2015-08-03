@@ -42,73 +42,75 @@
 			<script>
 			//ドキュメント配備後
 			$(document).ready(function(){
-				// パスワード変更画面のjsonを読み込む
-				creator.getJsonFile('source/memberSuggestionBox.json');
-
-				// パーツのテンプレートのDOMを取得する。
-				creator.getDomFile('template/common.html');
-				//目安箱のテンプレートはmemberCommon.htmlに記述
-				// パーツのテンプレートのDOMを取得する。
-				creator.getDomFile('template/memberCommon.html');
-				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
-				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
-				// バナー領域を作る
-				creator.outputTag('userBanner');
-				// お問い合わせ内容領域外側領域を作る
-				creator.outputTag('suggestionArea', 'insertForm');
-
-				//目安箱の店舗セレクトボックスを作る
-				creator.outputTag('schoolNameSelectArea', 'schoolNameSelectArea', '.suggestionArea');
-				//目安箱の種別セレクトボックスを作る
-				creator.outputTag('suggestionTypeSelectArea', 'suggestionTypeSelectArea', '.suggestionArea');
-				//目安箱のタイトル領域を作る
-				creator.outputTag('labelTextboxArea', 'labelTextboxArea', '.suggestionArea');
-
-				// お問い合わせ内容を入力する領域を作る
-				creator.outputTag('textareaLabel', 'textareaLabel', '.suggestionArea');
-				//目安箱か通常のメールかを決めるラジオボタンを作る
-				creator.outputTag('radioArea', 'radioArea', '.suggestionArea');
-				// 入力した内容を送信するボタンの領域を作る
-				creator.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
-				//ボタンをjqueryのボタンにする
-				$('input[type="button"], input[type="reset"]').button();
-				//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
-				$(STR_BODY).on(CLICK, '.button1', function() {
-					var doIt = function (){
-						//入力されているデータを取得しクエリを挿入するための値として扱う
-						var sendData = getInputData('suggestionArea');
-						//クエリに送信するデータに会員番号を加える
-						sendData['user_key'] = creator.json.memberHeader.user_key.value;
-						//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
-						if($('[name="suggestionRadio"]').val() == "0") {
-							//目安箱テーブルに新たにデータを挿入する
-							setDBdata(creator.json.insertSuggestionBox, sendData, '');
-							//目安箱としてメールを送信する
-							sendSuggest(
-									sendData['user_key']
-									,sendData['suggest_type']
-									,sendData['suggest_content']
-									,sendData['suggest_title']
-							);
-						//目安箱でないなら
-						} else {
-							//通常メールとして送信する
-							sendMemberMail(
-									sendData['user_key']
-									,sendData['suggest_content']
-									,sendData['suggest_title']
-							);
-						}
-					};
-					var sd = new SimpleConfirmDialog(
-							function(){
-									doIt();
-							},
-							"送信します。よろしいですか?");
-					sd._showDialog();
-				});
+				//ログインチェックして、NGであれば例外処理でログインダイアログを出すためのtry-catch
+				try{
+					hideNormalHeader();	//通常ページのヘッダーを隠す
+					// dom要素を作るクラスをインスタンス化する
+					var suggestionBoxCreator = new createTag();
+					
+					// 共通のパーツのJSONを取得する。
+					suggestionBoxCreator.getJsonFile('source/memberCommon.json');
+					// パスワード変更画面のjsonを読み込む
+					suggestionBoxCreator.getJsonFile('source/memberSuggestionBox.json');
+					//ユーザ情報のテキストをDBから取得する
+					suggestionBoxCreator.getJsonFile('php/GetJSONString.php', suggestionBoxCreator.json['accountHeader'], 'accountHeader');
+	
+					// パーツのテンプレートのDOMを取得する。
+					suggestionBoxCreator.getDomFile('template/common.html');
+					//目安箱のテンプレートはmemberCommon.htmlに記述
+					// パーツのテンプレートのDOMを取得する。
+					suggestionBoxCreator.getDomFile('template/memberCommon.html');
+					// 会員ページヘッダーを作る
+					suggestionBoxCreator.outputTag('accountHeader', 'memberHeader');
+					// バナー領域を作る
+					suggestionBoxCreator.outputTag('userBanner');
+					// お問い合わせ内容領域外側領域を作る
+					suggestionBoxCreator.outputTag('suggestionArea', 'insertForm');
+	
+					//目安箱の店舗セレクトボックスを作る
+					suggestionBoxCreator.outputTag('schoolNameSelectArea', 'schoolNameSelectArea', '.suggestionArea');
+					//目安箱の種別セレクトボックスを作る
+					suggestionBoxCreator.outputTag('suggestionTypeSelectArea', 'suggestionTypeSelectArea', '.suggestionArea');
+					//目安箱のタイトル領域を作る
+					suggestionBoxCreator.outputTag('labelTextboxArea', 'labelTextboxArea', '.suggestionArea');
+	
+					// お問い合わせ内容を入力する領域を作る
+					suggestionBoxCreator.outputTag('textareaLabel', 'textareaLabel', '.suggestionArea');
+					//目安箱か通常のメールかを決めるラジオボタンを作る
+					suggestionBoxCreator.outputTag('radioArea', 'radioArea', '.suggestionArea');
+					// 入力した内容を送信するボタンの領域を作る
+					suggestionBoxCreator.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
+					//ボタンをjqueryのボタンにする
+					$('input[type="button"], input[type="reset"]').button();
+					//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
+					$(STR_BODY).on(CLICK, '.button1', function() {
+						var doIt = function (){
+							//入力されているデータを取得しクエリを挿入するための値として扱う
+							var sendData = getInputData('suggestionArea');
+							//クエリに送信するデータに会員番号を加える
+							sendData['user_key'] = suggestionBoxCreator.json.memberHeader.user_key.value;
+							//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
+							if($('[name="suggestionRadio"]').val() == "0") {
+								//目安箱テーブルに新たにデータを挿入する
+								setDBdata(suggestionBoxCreator.json.insertSuggestionBox, sendData, '');
+								//目安箱としてメールを送信する
+								//メール送信処理
+							//目安箱でないなら
+							} else {
+								//通常メールとして送信する
+							}
+						};
+						var sd = new SimpleConfirmDialog(
+								function(){
+										doIt;
+								},
+								"送信します。よろしいですか?");
+						sd._showDialog();
+					});
+					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+				} catch(e) {
+					console.log(e)
+				}
 			});
 			</script>
 		</div>

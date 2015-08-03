@@ -83,6 +83,8 @@ PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
 ARTICLE_OBJECT_KEY								= 'table';
 USER_ID = 'userId';
+ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
+ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
 
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列
@@ -1384,9 +1386,10 @@ function createTag(){
 	//ユーザ情報のJSONを取得する
 	this.getJsonFile('source/account.json');
 	//cookie内に会員番号があれば
-	if('userId' in cookie){
+	if('userId' in cookie && cookie.userId != ""){
 		//会員IDのcookieを取得する。
-		this.json.accountHeader.user_key.value =cookie['userId'];
+		this.json.accountHeader.user_key.value = cookie.userId;
+		this.json.accountHeader.authority.value = cookie.authority;
 	}
 }
 
@@ -1482,7 +1485,8 @@ function createTag(){
 				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
 				        	 		//会員IDをJSONから取得する
 				        	 		memberInfo = loginCreator.json.login.id.text;
-				        	 		
+				        	 		//会員の権限の数値を取得する
+				        	 		authority =  loginCreator.json.login.authority.text;
 				        	 		//ログイン成否チェックの分岐
 				        	 		//会員IDが取得できていなかった場合
 				        	 		if(memberInfo == '') {
@@ -1494,7 +1498,7 @@ function createTag(){
 			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
 			        					
 			        					//通常ログインかつ、管理者のIDならば
-			        					if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && memberInfo == '1'){
+			        					if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
 			        							//画面遷移の履歴を追加する。
