@@ -181,7 +181,7 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//予約授業一覧ダイアログを作る
 			var reservedLessonListDialog = new dialogEx('dialog/reserveLessonListDialog.html', dialogDataObj, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
 			//ダイアログを開くときのテーブルの値を編集して表示する
-			// reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			// reservedLessonListDialog.setCallbackOpen(jreservedLessonListDialogOpenFunc);
 			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
 
@@ -3670,19 +3670,16 @@ function createMemberFinishedLessonContent() {
 	creator.outputTag('numberingOuter','numberingOuter','.finishedLessonPagingArea');
 	//メルマガのデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
-	//ページング機能付きでメルマガテーブルを作る
+	//ページング機能付きで受講済み授業テーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
 	//予約中テーブルのテーブルの値をしかるべき値にする
 	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
-
-	//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
-	// tablePaging('finishedLessonTable', 15, 6);
 	//セレクトボックスのvalueを画面に表示されている値にする
 	setSelectboxValue('.selectThemebox');
-	//絞り込みボタン機能を実装する
-	reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
+	//テーマ絞り込みボタンがクリックされたときに受講済みテーブルを作り直す
+	finshedLessonTableThemeSelect();
 	//ページング後の処理を登録する
-	finshedLessonTableAfterPaging()
+	finshedLessonTableAfterPaging();
 }
 
 /* 
@@ -3819,14 +3816,8 @@ function createAdminUserListContent() {
 	});
 	//検索ボタンをクリックしたときにテーブルの内容を更新する
 	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-		//ユーザ一覧テーブルを削除する
-		$('.userListInfoTable').remove();
-		//会員一覧テーブルをリセットして検索に備える
-		creator.json.userListInfoTable.table = {};
-		//ナンバリングのdomを初期化する
-		$('.numbering').remove();
-		//新しくページングを作り直すためにページングの番号一覧をリセットする
-		creator.json.numbering = {};
+		//ページングを作り直すためにページングの設定をリセットする
+		pagingReset('userListInfoTable');
 		//クエリを変数に入れてクエリ発行の準備をする
 		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
 		//クエリのデフォルトを取得する
@@ -3883,22 +3874,9 @@ function createAdminUserListContent() {
 function createAdminLessonDetailContent() {
 	//授業詳細タブ内にカレンダ-作る
 	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-	// //予約一覧ダイアログを作る
-	// var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
-	// 	// 日ごとダイアログ領域を作る
-	// 	creator.outputTag('adminLessonListDialog', 'dialogDiv', 'body');
-	// });
-	
 	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
 	var lessonCalendar = new adminCalendar('.adminCalendar');
 	lessonCalendar.create();	//カレンダーを実際に作成する
-	
-	//授業詳細ダイアログを作る
-	// var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
-	// 	// 授業詳細ダイアログ領域を作る
-	// 	creator.outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-	// });
-
 }
 
 /* 
@@ -4494,6 +4472,7 @@ function createMyGalleryImages(){
 function finshedLessonTableAfterPaging() {
 	//ページングがクリックされた時のイベントを登録する
 	$(STR_BODY).on(CLICK, '.finishedLessonPagingArea .numbering li', function() {
+		console.log(1);
 		//受講済みテーブルを編集が終わるまで表示しなくする
 		$('.finishedLessonTable').hide();
 		//時間差で表現するためにsetTimeOutを使う
@@ -4515,4 +4494,49 @@ function finshedLessonTableAfterPaging() {
 			$('.finishedLessonTable').show();
 		},1);
 	});
+}
+
+/*
+ * 関数名:finshedLessonTableThemeSelect
+ * 概要  :会員top、受講済み授業一覧のテーブルをテーマのセレクトボックスが変更されたときに変換するイベントを登録する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.30
+ */
+function finshedLessonTableThemeSelect() {
+	//ページングがクリックされた時のイベントを登録する
+	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
+		//デフォルトのクエリを保存して変化後のクエリを基に戻せるようにする
+		var defaultQuery = creator.json.finishedLessonTable.db_getQuery;
+		//テーブルの値を置換する
+		replaceTableQuery('finishedLessonTable');
+		//ページングに使うものを初期化し、ページングを作り直すために備える
+		pagingReset('finishedLessonTable');
+		//クエリを発行してDBから対象のデータの受講済み授業一覧のデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
+		//ページング機能付きで受講済みテーブルを作り直す
+		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+		//予約中テーブルのテーブルの値をしかるべき値にする
+		lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
+	});
+}
+
+/*
+ * 関数名:pagingReset
+ * 概要  :ページング機能をリセットし、再びページングを作り直す時に使う
+ * 引数  :targetPagingClassName:ページング対象となる領域のクラス名。
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.30
+ */
+function pagingReset(targetPagingClassName) {
+	//ユーザ一覧テーブルを削除する
+	$(DOT + targetPagingClassName).remove();
+	//会員一覧テーブルをリセットして検索に備える
+	creator.json[targetPagingClassName].table = {};
+	//ナンバリングのdomを初期化する
+	$('.numbering').remove();
+	//新しくページングを作り直すためにページングの番号一覧をリセットする
+	creator.json.numbering = {};
 }
