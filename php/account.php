@@ -103,11 +103,17 @@ class account extends JSONDBManager{
 		
 		//JSONから会員番号を取り出す。
 		$userId = $this->json['id']['text'];
+		$authority = $this->json['authority']['text'];
 		
 		//会員番号(ユーザID)をセッションに入れる
 		$_SESSION['userId'] = $userId;
+		//ユーザの権限をセッションに入れる
+		$_SESSION['authority'] = $authority;
+		
 		//cookieにユーザIDをセットする
 		setcookie("userId", $userId, time()+3600, '/');
+		//cookieにユーザの権限をセットする
+		setcookie("authority", $authority, time()+3600, '/');
 				
 		// 作成したJSON文字列を出力する。
 		print($jsonOut);

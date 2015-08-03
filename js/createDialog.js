@@ -1600,7 +1600,7 @@ function checkLoginState(){
 			//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
 			//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
 			var loginUrl = creator !== void(0) && creator.json.accountHeader !== void(0)
-							&& creator.json.accountHeader.user_key.value == '1'? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+							&& creator.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
 			// 会員ページ、または管理者ページへリンクする。
 			callPage(loginUrl);
 		});

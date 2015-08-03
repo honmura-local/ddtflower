@@ -26,7 +26,7 @@
         }
     },
     "login":{
-        "db_getQuery":"SELECT id, login_id FROM user_inf WHERE login_id='userName' AND password='password';",
+        "db_getQuery":"SELECT id, login_id, authority FROM user_inf WHERE login_id='userName' AND password='password';",
         "userName":{
             "value":""
         },
@@ -35,6 +35,9 @@
         },
         "id":{
             "text":""
+        },
+        "authority":{
+        	"text":""
         }
     }
 }
