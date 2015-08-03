@@ -18,22 +18,24 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<!-- ギャラリーページのCSSファイルを読み込む。 -->
 			<link href="css/gallery.css" rel="stylesheet" type="text/css">
 			<script>
-			console.log(creator);
-creator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
-				creator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
-				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				//createTagクラスのインスタンスを生成する
+				var galleryCreator = new createTag();
+
+				galleryCreator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
+				galleryCreator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
+				galleryCreator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				//テンプレートのDOMを取得する。
-				creator.getDomFile('template/common.html');
-				creator.getDomFile('template/gallery.html');
+				galleryCreator.getDomFile('template/common.html');
+				galleryCreator.getDomFile('template/gallery.html');
 
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader(creator);
+				createMemberPageHeader(galleryCreator);
 
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
-				creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				galleryCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				galleryCreator.outputTag('pageTitle');						// タイトル領域を作る
+				galleryCreator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
+				galleryCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				galleryCreator.outputTag('footer');						// フッターを作る
 			
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');

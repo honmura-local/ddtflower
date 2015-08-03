@@ -20,24 +20,27 @@
 			<!-- slickのCSSを読み込む。 -->
 			<link type="text/css" href="css/slick.css" rel="stylesheet">
 			<script>
-				creator.getJsonFile('source/experience.json');		// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
-				//テンプレートのDOMを取得する
-				creator.getDomFile('template/common.html');
-				creator.getDomFile('template/courseguide.html');
-				creator.getDomFile('template/experience.html');
+				//createTagクラスのインスタンスを生成する
+				var experienceLessonCreator = new createTag();
 				
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
-				creator.outputTag('reservedFlow', 'description');	// 予約の流れを作る
-				creator.outputTag('photoGallery');					// ギャラリー画像を作る
-				creator.outputTag('experienceGallery');				//体験レッスン用ギャラリーを作る
-				creator.outputTag('specialGuide');					//体験ガイドを作る
-				creator.outputTag('calendar');						//カレンダーを作る
-				creator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る
-				creator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				experienceLessonCreator.getJsonFile('source/experience.json');		// ファイルのデータをjsonを用いて持ってくる
+				experienceLessonCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
+				//テンプレートのDOMを取得する
+				experienceLessonCreator.getDomFile('template/common.html');
+				experienceLessonCreator.getDomFile('template/courseguide.html');
+				experienceLessonCreator.getDomFile('template/experience.html');
+				
+				experienceLessonCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				experienceLessonCreator.outputTag('pageTitle');						// タイトル領域を作る
+				experienceLessonCreator.outputTag('reservedFlow', 'description');	// 予約の流れを作る
+				experienceLessonCreator.outputTag('photoGallery');					// ギャラリー画像を作る
+				experienceLessonCreator.outputTag('experienceGallery');				//体験レッスン用ギャラリーを作る
+				experienceLessonCreator.outputTag('specialGuide');					//体験ガイドを作る
+				experienceLessonCreator.outputTag('calendar');						//カレンダーを作る
+				experienceLessonCreator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る
+				experienceLessonCreator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
+				experienceLessonCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				experienceLessonCreator.outputTag('footer');						// フッターを作る
 				createUnmovableGallery('experienceGallery');		//slickによる動かないギャラリーを作成する。
 				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。

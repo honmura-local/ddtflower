@@ -12,16 +12,18 @@
 		<!-- アクセスページのCSSファイルを読み込む。 -->
 		<link href="css/access.css" rel="stylesheet" type="text/css">
 		<script>
-			creator.getJsonFile('source/access.json');		// ファイルのデータをjsonを用いて持ってくる
-			creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-			creator.getDomFile('template/common.html');		// 共通パーツをdomを取得する
-			creator.getDomFile('template/access.html');		// アクセスページのパーツのdomを取得する
-			creator.outputTag('headImage', 'createImage');	// 天の画像を作る
-			creator.outputTag('pageTitle');					// タイトル領域を作る
-			creator.outputTag('accessInfo');				// アクセス情報のコンテンツを作る。
-			creator.outputTag('accessMap');					// アクセスのマップを作る。
-			creator.outputTag('footImage', 'createImage');					// 地の画像を作る
-			creator.outputTag('footer');					// フッターを作る
+			//createTagクラスインスタンスを生成する
+			var accessCreator = new createTag();
+			accessCreator.getJsonFile('source/access.json');		// ファイルのデータをjsonを用いて持ってくる
+			accessCreator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+			accessCreator.getDomFile('template/common.html');		// 共通パーツをdomを取得する
+			accessCreator.getDomFile('template/access.html');		// アクセスページのパーツのdomを取得する
+			accessCreator.outputTag('headImage', 'createImage');	// 天の画像を作る
+			accessCreator.outputTag('pageTitle');					// タイトル領域を作る
+			accessCreator.outputTag('accessInfo');				// アクセス情報のコンテンツを作る。
+			accessCreator.outputTag('accessMap');					// アクセスのマップを作る。
+			accessCreator.outputTag('footImage', 'createImage');					// 地の画像を作る
+			accessCreator.outputTag('footer');					// フッターを作る
 			// トップメニューにマウスオーバーのフィルターを配置する。
 			functionFilter('.topMenu li');
 			// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。

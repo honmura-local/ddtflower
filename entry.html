@@ -10,19 +10,22 @@
 			<!-- 管理者画面のCSSファイルを読み込む。 -->
 			<link href="css/admin.css" rel="stylesheet" type="text/css" />
 			<script>
-				creator.getJsonFile('source/studentmanagement.json');
-				creator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
-				creator.getJsonFile('source/commonJson.json');			// 共通のパーツのJSONを取得する。
+				//createTagクラスのインスタンスを生成する
+				var entryentryCreator = new crateTag();
+			
+				entryCreator.getJsonFile('source/studentmanagement.json');
+				entryCreator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
+				entryCreator.getJsonFile('source/commonJson.json');			// 共通のパーツのJSONを取得する。
 				// パーツのテンプレートのDOMを取得する。
-				creator.getDomFile('template/common.html');				
-				creator.getDomFile('template/student.html');
+				entryCreator.getDomFile('template/common.html');				
+				entryCreator.getDomFile('template/student.html');
 				
-				creator.outputTag('headImage', 'createImage');			// 天の画像を作る
-				creator.outputTag('entryTitle','pageTitle');							// タイトル領域を作る
+				entryCreator.outputTag('headImage', 'createImage');			// 天の画像を作る
+				entryCreator.outputTag('entryTitle','pageTitle');							// タイトル領域を作る
 				// 生徒さんの登録コンテンツを作る。
-				creator.outputTag('entryStudent', 'editStudent');
-		 		creator.outputTag('footImage', 'createImage');			// 地の画像を作る
-				creator.outputTag('footer');							// フッターを作る
+				entryCreator.outputTag('entryStudent', 'editStudent');
+		 		entryCreator.outputTag('footImage', 'createImage');			// 地の画像を作る
+				entryCreator.outputTag('footer');							// フッターを作る
 			
 				//フォームに入力チェックをかける。
 				$('form').validate(showAlert);

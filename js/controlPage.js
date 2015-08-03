@@ -151,10 +151,6 @@ function callPage(url, state){
 		//通信成功時の処理
 		success:function(html){
 			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
-			//JSONデータを格納する変数を初期化する。
-			// creator.json = null;
-			//ひな形のHTMLのDOMを格納する変数を初期化する。
-			creator.dom = '';
 			//list.phpかdetail.phpであれば
 //			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
 //				//MSLのコンテンツで既存のコンテンツを上書きする
@@ -354,7 +350,8 @@ function postForm(form){
 	//送信するデータを格納する連想配列を作成する。
 	var formData = createFormData($form);
 	//creatorのメンバにフォームデータを保存する。
-	creator.formData['formData'] = formData;
+//	creator.formData['formData'] = formData;
+	this.formData['formData'] = formData;
 	
 	//現在の日付を取得するために日付型のインスタンスを作る。
 	var time = new Date();

@@ -136,7 +136,7 @@ $(document).ready(function(){
 	
 try{
 	util = new utils();			//汎用関数のクラスのインスタンスを用意する
-	creator = new createTag();	//createTagクラスのインスタンスを生成する
+	var creator = new createTag();	//createTagクラスのインスタンスを生成する
 	
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
@@ -146,7 +146,7 @@ try{
 
 	createNormalHeaderContent(creator);	//ヘッダー内のタグが作成済みでなければ作る。
 	showNormalHeader();				//ヘッダーが隠れていたら表示する。
-		
+
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	//ブログのお知らせを作る。
 	creator.outputTag('topicGallery','topic', '.flowerBackground');

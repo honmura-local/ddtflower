@@ -8,22 +8,25 @@
 	<div id="container">
 		<div class="main">
 			<script>
-				creator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
-				creator.getJsonFile('source/campaignmanagement.json');
+				//createTagクラスのインスタンスを生成する
+				var campaignCreator = new crateTag();
+			
+				campaignCreator.getJsonFile('source/admin.json');				// 管理者画面のJSONを取得する。
+				campaignCreator.getJsonFile('source/campaignmanagement.json');
 				// キャンペーン作成画面のコンテンツを作る。
-				creator.outputTag('editCampaign', 'editCampaign', '#campaignManagement');
-				creator.outputTag('campaignTitle', 'campaignTitle', '.editCampaign');
-				creator.outputTag('campaignType', 'campaignType', '.editCampaign');
-				creator.outputTag('campaignContent', 'campaignContent', '.editCampaign');
-				creator.outputTag('campaignPrice', 'campaignPrice', '.editCampaign');
-				creator.outputTag('campaignCopy', 'campaignCopy', '.editCampaign');
-				creator.outputTag('campaignDates', 'campaignDates', '.editCampaign');
-				creator.outputTag('campaignMaxEntry', 'campaignMaxEntry', '.editCampaign');
-				creator.outputTag('confirmEditCampaign', 'confirmEditCampaign', '.editCampaign');
+				campaignCreator.outputTag('editCampaign', 'editCampaign', '#campaignManagement');
+				campaignCreator.outputTag('campaignTitle', 'campaignTitle', '.editCampaign');
+				campaignCreator.outputTag('campaignType', 'campaignType', '.editCampaign');
+				campaignCreator.outputTag('campaignContent', 'campaignContent', '.editCampaign');
+				campaignCreator.outputTag('campaignPrice', 'campaignPrice', '.editCampaign');
+				campaignCreator.outputTag('campaignCopy', 'campaignCopy', '.editCampaign');
+				campaignCreator.outputTag('campaignDates', 'campaignDates', '.editCampaign');
+				campaignCreator.outputTag('campaignMaxEntry', 'campaignMaxEntry', '.editCampaign');
+				campaignCreator.outputTag('confirmEditCampaign', 'confirmEditCampaign', '.editCampaign');
 				$('#campaignManagement button,#campaignManagement input:submit').button();	//ボタンをリッチなものにする。	
 				//フォームに入力チェックをかける。
 				$('form.editCampaign').validate(showAlert);
-				creator.json = '';
+				campaignCreator.json = '';
 			</script>
 		</div>
 	</div>

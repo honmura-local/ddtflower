@@ -18,33 +18,36 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<!-- ブログのCSSファイルを読み込む。 -->
 			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
-				creator.getJsonFile('source/blog.json');			// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/blogcontent.json');		// テスト用のブログJSONデータを取得する。
-				creator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する
-				creator.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
+				//createTagクラスインスタンスを生成する
+				var blogCreator = new createTag();
+				
+				blogCreator.getJsonFile('source/blog.json');			// ファイルのデータをjsonを用いて持ってくる
+				blogCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
+				blogCreator.getJsonFile('source/blogcontent.json');		// テスト用のブログJSONデータを取得する。
+				blogCreator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する
+				blogCreator.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
 			
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader(creator);
+				createMemberPageHeader(blogCreator);
 
-				creator.outputTag('headImage', 'createImage');				// 天の画像を作る
-				creator.outputTag('pageTitle');								// タイトル領域を作る
+				blogCreator.outputTag('headImage', 'createImage');				// 天の画像を作る
+				blogCreator.outputTag('pageTitle');								// タイトル領域を作る
 				
-				creator.outputTag('blogRightContent');						// 右側領域を作る
-				creator.outputTag('blog','blog','.blogRightContent');		// 右側領域にブログ領域を作る
+				blogCreator.outputTag('blogRightContent');						// 右側領域を作る
+				blogCreator.outputTag('blog','blog','.blogRightContent');		// 右側領域にブログ領域を作る
 				
-				creator.outputTag('blogLeftContent');						// 左側領域を作る
-				creator.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
+				blogCreator.outputTag('blogLeftContent');						// 左側領域を作る
+				blogCreator.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
 				
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				blogCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				blogCreator.outputTag('footer');						// フッターを作る
 				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				
-				var dateArray = extractDateArray(creator.json);	//日付の配列を作る。
+				var dateArray = extractDateArray(blogCreator.json);	//日付の配列を作る。
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', dateArray);
 				bCalendar.create();	//カレンダーを実際に作成する
