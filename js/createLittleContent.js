@@ -181,7 +181,7 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//予約授業一覧ダイアログを作る
 			var reservedLessonListDialog = new dialogEx('dialog/reserveLessonListDialog.html', dialogDataObj, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
 			//ダイアログを開くときのテーブルの値を編集して表示する
-			reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			// reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
 			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
 

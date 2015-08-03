@@ -225,12 +225,10 @@ function reservedLessonListDialogCloseFunc() {
 function reservedLessonListDialogOpenFunc() {
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
-		//変数に予約一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = reserveLessonListCreator.json[LESSON_TABLE].table;
 		// 時間割1限分の生徒の合計人数が入った連想配列を作る
-		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
+		var timeStudentsCount = getTotalStudentsOfTimeTable(reserveLessonListCreator.json[LESSON_TABLE].table);
 		//予約一覧テーブルの値を置換する
-		lessonReservedTableValueInput(DOT + LESSON_TABLE, lessonTable, "callReservedLessonValue", timeStudentsCount);
+		lessonReservedTableValueInput(DOT + LESSON_TABLE, reserveLessonListCreator.json[LESSON_TABLE].table, "callReservedLessonValue", timeStudentsCount);
 		//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 		setTableRecordClass(LESSON_TABLE, 'targetLessonTable');
 		//予約一覧テーブルを表示する
@@ -533,7 +531,6 @@ function cancelDialogExOpen (memberNumber) {
 
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
 		dialogExOption[CANCEL_LESSON_DIALOG]['title'] = titleDate;
-		console.log(sendObject);
 		//予約キャンセルダイアログを作る
 		var cancelLessonDialog = new dialogEx('dialog/cancelLessonDialog.html', sendObject, dialogExOption[CANCEL_LESSON_DIALOG]);
 		//ダイアログを開くときのテーブルの値を編集して表示する
