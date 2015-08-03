@@ -112,7 +112,7 @@
 					//クリックでテキストボックスにカレンダーを表示する
 					// clickCalendar('lesson_date');
 					//管理者日ごと授業の検索機能を実装する
-					reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable');
+					reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable', adminPageCreator);
 	
 					//受講承認タブをクリックしたときに受講承認の内容を表示する
 					createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
