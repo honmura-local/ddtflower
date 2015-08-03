@@ -136,7 +136,7 @@ $(document).ready(function(){
 	
 try{
 	util = new utils();			//汎用関数のクラスのインスタンスを用意する
-	var creator = new createTag();	//createTagクラスのインスタンスを生成する
+	var creator = new createLittleContents();	//createTagクラスのインスタンスを生成する
 	
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
@@ -144,8 +144,8 @@ try{
 	creator.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
 	//ヘッダー内のタグが作成済みでなければ
 
-	createNormalHeaderContent(creator);	//ヘッダー内のタグが作成済みでなければ作る。
-	showNormalHeader();				//ヘッダーが隠れていたら表示する。
+	creator.createNormalHeaderContent();	//ヘッダー内のタグが作成済みでなければ作る。
+	creator.showNormalHeader();				//ヘッダーが隠れていたら表示する。
 
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	//ブログのお知らせを作る。
@@ -199,7 +199,7 @@ try{
 			// ログインダイアログを作る
 			var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
 	}catch(e){
-		
+		console.log(e);
 	}
 });
 

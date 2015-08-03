@@ -245,8 +245,9 @@ function createLittleContents(){
 	 * 内容　:setTimeoutを利用してAjax通信でのページ読み込みに対応しました。
 	 */
 	this.createGallery = function (selector){
+		var thisElem = this;
 		//タッチ端末かどうかを判定する。
-		var touchDevice = isTouchDevice();
+		var touchDevice = this.isTouchDevice();
 		//要素を取得して変数に格納する。
 		$gallery = $('.'+selector);
 		//一旦ギャラリーを隠す。
@@ -270,7 +271,7 @@ function createLittleContents(){
 				mousewheelScrolling: false
 			});
 			//fancyboxで画像を拡大できるようにする。
-			this.useZoomImage(selector);
+			thisElem.useZoomImage(selector);
 		//1秒置いて実行する。
 		}, 1000);
 	}

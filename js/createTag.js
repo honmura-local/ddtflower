@@ -1549,7 +1549,7 @@ function createTag(){
 		loginCreator.getJsonFile(PATH_LOGIN_DIALOG_JSON);	//ログインダイアログのJSONを開く
 		loginCreator.getJsonFile('source/memberPage.json');	//会員ページのJSONを取得する
 		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
-		enterKeyButtonClick('.userName, .password', '.loginButton');
+		this.enterKeyButtonClick('.userName, .password', '.loginButton');
 		$('.loading').hide();	//例外で消えなかったローディング画面を消す。
 	}
 	

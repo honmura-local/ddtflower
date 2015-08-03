@@ -11,7 +11,7 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var preservedPageCreator = new createTag();
+				var preservedPageCreator = new createLittleContents();
 				
 				preservedPageCreator.getJsonFile('source/preserved.json');			// ファイルのデータをjsonを用いて持ってくる
 				preservedPageCreator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
@@ -31,7 +31,7 @@
 				preservedPageCreator.outputTag('footImage', 'createImage');			// 地の画像を作る
 				preservedPageCreator.outputTag('footer');							// フッターを作る
 				
-				createGallery('footGallery');							//slickによるカルーセルのギャラリーを作成する。
+				preservedPageCreator.createGallery('footGallery');							//slickによるカルーセルのギャラリーを作成する。
 				// トップメニューにマウスオーバーのフィルターを配置する。
 				functionFilter('.topMenu li');
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。

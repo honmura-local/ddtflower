@@ -41,10 +41,13 @@
 		<div class="main">
 			<script>
 				try{
-					hideNormalHeader();	//通常ページのヘッダーを隠す
-					
 					//変更者:T.Yamamoto 指示者H.Kaneko 内容:memberPageCreatorが重複するため、コメントにしました。
-					memberPageCreator = new createTag();
+//					memberPageCreator = new createTag();
+					//createTag継承クラスのインスタンスを生成する
+					memberPageCreator = new createLittleContents();
+					
+					memberPageCreator.hideNormalHeader();	//通常ページのヘッダーを隠す
+					
 					memberPageCreator.getJsonFile('source/memberPage.json');
 					//// 会員共通のパーツのJSONを取得する。
 					memberPageCreator.getJsonFile('source/memberCommon.json');
