@@ -4041,7 +4041,7 @@ function cutString(cutTargetSelector, cutCount) {
  */
 function sendMail(mailInfoArray, mailSubject, mailContent) {
 		//Ajax通信を行う
-
+}
 function sendSuggest(from, type, mailSubject, mailContent) {
 	
 	var resulwork = null;
@@ -4096,7 +4096,7 @@ function sendMemberMail(from, mailSubject, mailContent) {
 function sendMailmagazine(mailSubject, mailContent) {
 	
 	var resulwork = null;
-	
+}
 /* 
  * 関数名:sendMail
  * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
@@ -4483,6 +4483,7 @@ function createMyGalleryImages(){
 	});
 }
 
+/*
  * 関数名:finshedLessonTableAfterPaging
  * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
  * 引数  :なし
