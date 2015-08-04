@@ -21,7 +21,7 @@
 			<link type="text/css" href="css/slick.css" rel="stylesheet">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var experienceLessonCreator = new createTag();
+				var experienceLessonCreator = new createLittleContents();
 				
 				experienceLessonCreator.getJsonFile('source/experience.json');		// ファイルのデータをjsonを用いて持ってくる
 				experienceLessonCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
@@ -41,7 +41,7 @@
 				experienceLessonCreator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
 				experienceLessonCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
 				experienceLessonCreator.outputTag('footer');						// フッターを作る
-				createUnmovableGallery('experienceGallery');		//slickによる動かないギャラリーを作成する。
+				experienceLessonCreator.createUnmovableGallery('experienceGallery');		//slickによる動かないギャラリーを作成する。
 				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');

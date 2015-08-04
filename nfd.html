@@ -11,7 +11,7 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var nfdPageCreator = new createTag();
+				var nfdPageCreator = new createLittleContents();
 
 				nfdPageCreator.getJsonFile('source/nfd.json');			// ファイルのデータをjsonを用いて持ってくる
 				nfdPageCreator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
@@ -36,7 +36,7 @@
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header');
 				//slickによるカルーセルのギャラリーを作成する。
-				createGallery('footGallery');
+				nfdPageCreator.createGallery('footGallery');
 			</script>
 		</div>
 	</div>

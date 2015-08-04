@@ -12,7 +12,7 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var franchiseCreator = new createTag();
+				var franchiseCreator = new createLittleContents();
 			
 				franchiseCreator.getJsonFile('source/franchise.json');	// ファイルのデータをjsonを用いて持ってくる
 				franchiseCreator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
@@ -32,7 +32,7 @@
 				franchiseCreator.outputTag('memberRule', 'itemList');	// 会員規約のリストテーブルを作る
 				franchiseCreator.outputTag('footImage', 'createImage');	// 地の画像を作る
 				franchiseCreator.outputTag('footer');					// フッターを作る
-				createGallery('footGallery');					//slickによるカルーセルのギャラリーを作成する。
+				franchiseCreator.createGallery('footGallery');					//slickによるカルーセルのギャラリーを作成する。
 			
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');

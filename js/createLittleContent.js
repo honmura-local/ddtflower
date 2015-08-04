@@ -284,7 +284,7 @@ function createLittleContents(){
 	 * 作成日:2015.02.21
 	 * 作成者:T.M
 	 */
-	this.createUnmovableGallery = function createUnmovableGallery(selector){
+	this.createUnmovableGallery = function(selector){
 	// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
 		$('.' + selector).slick({
 	        //以下2ステップ、矢印を使わない設定。
@@ -2211,27 +2211,6 @@ function createLittleContents(){
 		});
 	}
 	
-	/* 
-	 * 関数名:enterKeyButtonClick
-	 * 概要  :エンターが押された時に第二引数のボタンをクリックしたイベントを発生させる
-			ログインダイアログのテキストボックスでエンターキーを押してログイン処理を開始するときや
-			ユーザ一覧の検索でテキストボックスからエンターキーで検索処理を開始するときなどに使う
-	 * 引数  :enterTarget:エンターキーを押したときに対象となるセレクター名
-	 *       buttonText:クリックイベントを起こすボタンに表示されているテキスト
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.10
-	 */
-	this.enterKeyButtonClick = function(enterTarget, buttonSelector) {
-		//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
-		$(enterTarget).keypress(function (e) {
-			//エンターボタンが押された時の処理
-			if (e.which == 13) {
-				//ボタンを自動でクリックし、クリックイベントを起こす
-				$(buttonSelector).click();
-			}
-		});
-	}
 	
 	/* 
 	 * 関数名:checkInputName
@@ -3683,116 +3662,116 @@ function createLittleContents(){
 		});
 	}
 	
-/*
- * 関数名:function deleteRowData(form)
- * 引数  :element form: フォームの要素。
- * 戻り値:なし
- * 概要  :レコードを消すイベントを定義する。
- * 作成日:2015.04.16
- * 作成者:T.Masuda
- */
-this.deleteRowData = function(form, deleteQueryKey){
-	var thisElem = this;
-	//削除ボタンが押されたら
-	$('.deleteRecord').on('click', function(){
-		var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
-		//記事番号か、会員番号かを判別する。
-		var numberString = $('table td.number' ,form).length > 0? 'number':'memberId';
-		//チェックが入っている行を取得する。
-		var $checkedRecord = $('table tr:has(input:checkbox:checked)', form);
-		//フォームのテーブルのチェックボックスが入っている行を走査する。
-		$checkedRecord.each(function(){
-			//記事番号、または会員番号を配列に追加していく。
-			numberArray.push($('.' + numberString,this).text());
+	/*
+	 * 関数名:function deleteRowData(form)
+	 * 引数  :element form: フォームの要素。
+	 * 戻り値:なし
+	 * 概要  :レコードを消すイベントを定義する。
+	 * 作成日:2015.04.16
+	 * 作成者:T.Masuda
+	 */
+	this.deleteRowData = function(form, deleteQueryKey){
+		var thisElem = this;
+		//削除ボタンが押されたら
+		$('.deleteRecord').on('click', function(){
+			var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
+			//記事番号か、会員番号かを判別する。
+			var numberString = $('table td.number' ,form).length > 0? 'number':'memberId';
+			//チェックが入っている行を取得する。
+			var $checkedRecord = $('table tr:has(input:checkbox:checked)', form);
+			//フォームのテーブルのチェックボックスが入っている行を走査する。
+			$checkedRecord.each(function(){
+				//記事番号、または会員番号を配列に追加していく。
+				numberArray.push($('.' + numberString,this).text());
+			});
+			
+			//チェックがなければ
+			if(numberArray.length <= 0){
+				alert('必ず1行以上選択してください。');
+				return;	//処理を終える。
+			}
+			
+			//確認ダイアログを出して、OKならば
+			if(window.confirm('選択した行を削除しますか?')){
+				//DBからチェックが入った記事を削除する
+				thisElem.deleteBlogArticle(deleteQueryKey, numberArray);
+				//先ほど選択した行を削除する。
+				$checkedRecord.remove();
+				//削除完了の旨を伝える。
+				alert('選択した行を削除しました。');
+			}
 		});
+	}
+
+	/*
+	 * 関数名:this.sendButtonRole(form)
+	 * 引数  :element form: フォームの要素。
+	 * 戻り値:String:エラーメッセージの文字列。
+	 * 概要  :ボタンに設定されたroleの値を隠しフォームにセットする。
+	 * 作成日:2015.04.15
+	 * 作成者:T.Masuda
+	 */
+	this.sendButtonRole = function(form){
+		//submitボタンのクリックイベントを設定する。
+		$('input:submit').on('click', function(){
+			//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
+			$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
+		});
+	}
+
+	/*
+	 * 関数名:function createErrorText
+	 * 引数  :jQuery errors: エラーがあった要素。
+	 * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
+	 * 戻り値:String:エラーメッセージの文字列。
+	 * 概要  :エラーメッセージを作成する。
+	 * 作成日:2015.04.15
+	 * 作成者:T.Masuda
+	 */
+	this.createErrorText = function(errors, jpNames){
+		//返却する文字列を格納する変数を用意する。
+		var retText = "";
+		//エラーメッセージの数を取得する。
+		var errorLength = errors.length;
+		//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
+		var errorMessages = [errors[0].message];
+
+		//エラーメッセージの数を取得する。
+		var messageLength;
 		
-		//チェックがなければ
-		if(numberArray.length <= 0){
-			alert('必ず1行以上選択してください。');
-			return;	//処理を終える。
-		}
-		
-		//確認ダイアログを出して、OKならば
-		if(window.confirm('選択した行を削除しますか?')){
-			//DBからチェックが入った記事を削除する
-			thisElem.deleteBlogArticle(deleteQueryKey, numberArray);
-			//先ほど選択した行を削除する。
-			$checkedRecord.remove();
-			//削除完了の旨を伝える。
-			alert('選択した行を削除しました。');
-		}
-	});
-}
-
-/*
- * 関数名:this.sendButtonRole(form)
- * 引数  :element form: フォームの要素。
- * 戻り値:String:エラーメッセージの文字列。
- * 概要  :ボタンに設定されたroleの値を隠しフォームにセットする。
- * 作成日:2015.04.15
- * 作成者:T.Masuda
- */
-this.sendButtonRole = function(form){
-	//submitボタンのクリックイベントを設定する。
-	$('input:submit').on('click', function(){
-		//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
-		$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
-	});
-}
-
-/*
- * 関数名:function createErrorText
- * 引数  :jQuery errors: エラーがあった要素。
- * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
- * 戻り値:String:エラーメッセージの文字列。
- * 概要  :エラーメッセージを作成する。
- * 作成日:2015.04.15
- * 作成者:T.Masuda
- */
-this.createErrorText = function(errors, jpNames){
-	//返却する文字列を格納する変数を用意する。
-	var retText = "";
-	//エラーメッセージの数を取得する。
-	var errorLength = errors.length;
-	//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
-	var errorMessages = [errors[0].message];
-
-	//エラーメッセージの数を取得する。
-	var messageLength;
-	
-	//エラーメッセージを取得する。
-	for(var i = 0; i < errorLength; i++){
-		messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
-		//エラーメッセージの重複をチェックする。
-		for(var j = 0; j < messageLength; j++){
-			//エラーメッセージが重複していれば
-			if(errorMessages[j] == errors[i].message){
-				break;	//追加せずに抜ける。
-			//エラーメッセージの重複がなかったら
-			} else if(errorMessages.length >= j){
-				//エラーメッセージを配列に追加する。
-				errorMessages.push(errors[i].message);	
+		//エラーメッセージを取得する。
+		for(var i = 0; i < errorLength; i++){
+			messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
+			//エラーメッセージの重複をチェックする。
+			for(var j = 0; j < messageLength; j++){
+				//エラーメッセージが重複していれば
+				if(errorMessages[j] == errors[i].message){
+					break;	//追加せずに抜ける。
+				//エラーメッセージの重複がなかったら
+				} else if(errorMessages.length >= j){
+					//エラーメッセージを配列に追加する。
+					errorMessages.push(errors[i].message);	
+				}
 			}
 		}
+		
+		//エラーメッセージを取得する。
+		for(var i = 0; i < messageLength; i++){
+			//エラー文を追加する。
+			retText += errorMessages[i] + '\n';
+			//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
+			$(errors).filter(function(){
+				return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
+			}).each(function(){	//each関数で対象を走査する。
+				//retTextに名前を箇条書きする。
+				retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
+			});
+			//項目ごとに改行する。
+			retText +='\n';
+		}
+		
+		return retText;	//作成したメッセージを返す。
 	}
-	
-	//エラーメッセージを取得する。
-	for(var i = 0; i < messageLength; i++){
-		//エラー文を追加する。
-		retText += errorMessages[i] + '\n';
-		//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
-		$(errors).filter(function(){
-			return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
-		}).each(function(){	//each関数で対象を走査する。
-			//retTextに名前を箇条書きする。
-			retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
-		});
-		//項目ごとに改行する。
-		retText +='\n';
-	}
-	
-	return retText;	//作成したメッセージを返す。
-}
 	
 }
 
@@ -4592,3 +4571,25 @@ var optionSubmitHandler = {
 	}
 }
 
+
+/* 
+ * 関数名:enterKeyButtonClick
+ * 概要  :エンターが押された時に第二引数のボタンをクリックしたイベントを発生させる
+		ログインダイアログのテキストボックスでエンターキーを押してログイン処理を開始するときや
+		ユーザ一覧の検索でテキストボックスからエンターキーで検索処理を開始するときなどに使う
+ * 引数  :enterTarget:エンターキーを押したときに対象となるセレクター名
+ *       buttonText:クリックイベントを起こすボタンに表示されているテキスト
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.10
+ */
+enterKeyButtonClick = function(enterTarget, buttonSelector) {
+	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
+	$(enterTarget).keypress(function (e) {
+		//エンターボタンが押された時の処理
+		if (e.which == 13) {
+			//ボタンを自動でクリックし、クリックイベントを起こす
+			$(buttonSelector).click();
+		}
+	});
+}

@@ -19,7 +19,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<link href="css/gallery.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var galleryCreator = new createTag();
+				var galleryCreator = new createLittleContents();
 
 				galleryCreator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
 				galleryCreator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
@@ -29,7 +29,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				galleryCreator.getDomFile('template/gallery.html');
 
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader(galleryCreator);
+				galleryCreator.createMemberPageHeader(galleryCreator);
 
 				galleryCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				galleryCreator.outputTag('pageTitle');						// タイトル領域を作る
@@ -42,7 +42,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。
-				useZoomImage('photo');
+				galleryCreator.useZoomImage('photo');
 
 				//@add 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを定義しました
 				//MSLの記事リストをギャラリーの前に配置する

@@ -11,7 +11,7 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var natinalPageCreator = new createTag();
+				var natinalPageCreator = new createLittleContents();
 			
 				natinalPageCreator.getJsonFile('source/national.json');		// ファイルのデータをjsonを用いて持ってくる
 				natinalPageCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
@@ -39,7 +39,7 @@
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header');
 				//slickによるカルーセルのギャラリーを作成する。
-				createGallery('footGallery');
+				natinalPageCreator.createGallery('footGallery');
 			
 			</script>
 		</div>

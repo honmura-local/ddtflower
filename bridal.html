@@ -14,7 +14,7 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				bridalCreator = new createTag();
+				bridalCreator = new createLittleContents();
 			
 				bridalCreator.getJsonFile('source/bridal.json');			// ファイルのデータをjsonを用いて持ってくる
 				bridalCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
@@ -26,7 +26,7 @@
 				bridalCreator.outputTag('handmadeFlow', 'description');	// 作成までの流れを作る
 				bridalCreator.outputTag('photoGallery');					// ギャラリー画像を作る
 				bridalCreator.outputTag('footGallery');					// ギャラリー画像を作る
-				createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
+				bridalCreator.createGallery('footGallery');						//slickによるカルーセルのギャラリーを作成する。
 				bridalCreator.outputTag('bridalItemTable');				// ブライダルページのアイテム一覧を作る
 				bridalCreator.outputTag('lessonSchedule');				//レッスンスケジュールテーブル
 				bridalCreator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る

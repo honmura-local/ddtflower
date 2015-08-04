@@ -191,13 +191,12 @@ try{
 					showRightOutOfDisplayButton('.topicShowBlog', 600, 3000);
 			});
 	});
-	
 	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。順番にコールして順を整える。
 			fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
 			fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);		
 			fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
 			// ログインダイアログを作る
-			var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
+			// var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
 	}catch(e){
 		console.log(e);
 	}

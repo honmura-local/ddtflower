@@ -19,7 +19,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスインスタンスを生成する
-				var blogCreator = new createTag();
+				var blogCreator = new createLittleContents();
 				
 				blogCreator.getJsonFile('source/blog.json');			// ファイルのデータをjsonを用いて持ってくる
 				blogCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
@@ -28,7 +28,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				blogCreator.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
 			
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				createMemberPageHeader(blogCreator);
+				blogCreator.createMemberPageHeader(blogCreator);
 
 				blogCreator.outputTag('headImage', 'createImage');				// 天の画像を作る
 				blogCreator.outputTag('pageTitle');								// タイトル領域を作る
@@ -47,7 +47,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				
-				var dateArray = extractDateArray(blogCreator.json);	//日付の配列を作る。
+				var dateArray = blogCreator.extractDateArray(blogCreator.json);	//日付の配列を作る。
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', dateArray);
 				bCalendar.create();	//カレンダーを実際に作成する
