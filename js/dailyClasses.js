@@ -44,6 +44,8 @@ COLUMN_NAME_USER_WORK_STATUS		= 'user_work_status';			// ユーザ授業ステ�
 COLUMN_NAME_CLASSWORK_STATUS		= 'classwork_status';			// 授業ステータス
 COLUMN_NAME_POINT_RATE				= 'point_rate';					// ポイントレート
 COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			// 授業締切日？
+COLUMN_NAME_SCHOOL_NAME				= 'school_name';				// 店舗名
+COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
 COLUMN_NAME_TODAY					= 'today';						// 今日の日付
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
@@ -644,20 +646,26 @@ var callEachDayReservedValue = function(tableName, loopData, counter, rowNumber)
 var callAdminReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
 	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
 	recordData = loopData[counter];
-	// 開始日時と終了時刻を組み合わせた値を入れる
-	timeSchedule = buildHourFromTo(recordData);
-	// var rest;			//残席
-	// var lessonStatus;	//状況
-	//状況を入れる
-	lessonStatus = getClassworkStatus(recordData, timeTableStudents);
-	//残席を記号にする
-	rest = getRestMark(recordData, timeTableStudents);
-	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
-	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
-	// 残席の表示を正規の表示にする
-	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(rest);
-	// 残席の表示を正規の表示にする
-	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
+	//レッスンテーマ名または店舗名が空であるならばその行を表示しなくする
+	if(recordData[COLUMN_NAME_LESSON_NAME] =="" || recordData[COLUMN_NAME_SCHOOL_NAME] == "") {
+		//授業情報があいまいなものは表示しないクラスを取得する
+		$(tableName + ' tr:eq(' + rowNumber + ')').addClass('displayNone');
+	//しっかりとした授業情報があれば表示する
+	} else {
+		// 開始日時と終了時刻を組み合わせた値を入れる
+		timeSchedule = buildHourFromTo(recordData);
+		//状況を入れる
+		lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+		//残席を記号にする
+		rest = getRestMark(recordData, timeTableStudents);
+		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
+		// 残席の表示を正規の表示にする
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(rest);
+		// 残席の表示を正規の表示にする
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
+	}
+
 };
 
 /* 
