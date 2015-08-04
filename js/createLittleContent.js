@@ -1678,69 +1678,10 @@ function createLittleContents(){
 		return nowDate;
 	}
 	
-	/* 
-	 * 関数名:nowDatePaging
-	 * 概要  :現在の日付からページング機能を実装する
-	 * 引数  :clickSelectorParent:クリックボタンのセレクター
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.06
-	 */
-	this.nowDatePaging = function(clickSelectorParent) {
-		//現在時刻のオブジェクトを作る
-		var nowDateObject = new Date();
-		//日付の文字列を取得する
-		var nowDateString = this.getDateFormatDB(nowDateObject);
-		//日付をタイトルに入れる
-		$(DOT + clickSelectorParent + ' p').text(nowDateString);
-		//jsonに日付の値を入れる
-		json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
-		//対象の要素がクリックされたときに日付を進退する
-		$(DOT + clickSelectorParent + ' a').click(function(){
-			//クリックされた番号を取得する
-			var className = $(this).attr('class');
-			//取得したクラスの名前によって処理を分ける
-			switch(className) {
-				//クリックされたのが2日前の時、日付を2日前にする
-				case 'twoDaysBefore':
-				nowDateObject.setDate(nowDateObject.getDate() - 2);
-				break;
-				//クリックされたのが1日前の時、日付を1日前にする
-				case 'oneDayBefore':
-				nowDateObject.setDate(nowDateObject.getDate() - 1);
-				break;
-				//クリックされたのが1日後の時、日付を1日後にする
-				case 'oneDayAfter':
-				nowDateObject.setDate(nowDateObject.getDate() + 1);
-				break;
-				//クリックされたのが2日後の時、日付を2日後にする
-				case 'twoDayAfter':
-				nowDateObject.setDate(nowDateObject.getDate() + 2);
-				break;
-			}
-			//日付を更新する
-			nowDateString = this.getDateFormatDB(nowDateObject);
-			//jsonに日付の値を入れる
-			json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
-			//テーブルをリロードする
-			tableReload('eachDayReservedInfoTable');
-			//日付をタイトルに入れる
-			$(DOT + clickSelectorParent + ' p').text(nowDateString);
-		});
-		//検索ボタンがクリックされた時の処理
-		$(DOT + 'dateSelect .searchButton').click(function(){
-			//表示されている日付を更新するために検索する日付のデータを取得する。
-			var changeDate = $('.dateInput').val();
-			//現在表示されている日付を入力された日付で更新する
-			$(DOT + clickSelectorParent + ' p').text(changeDate)
-			//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
-			nowDateObject = new Date(changeDate);
-		});
-	}
 
 	/* 
 	 * 関数名:setTableReloadExecute
-	 * 概要  :テーブルページング機能を実装する
+	 * 概要  :クエリをセットしてテーブルをリロードする
 	 * 引数  :tableClassName:テーブルのクラス名
 	 		:addQueryString:クエリに追加する文字列
 	 *       defaultQuery:デフォルトのクエリ
@@ -1861,63 +1802,7 @@ function createLittleContents(){
 			//会員ページを呼び出す
 			callPage('memberPage.html');
 	}
-	
-	/* 
-	 * 関数名:setPermitListFromToDate
-	 * 概要  :受講承認一覧の検索する日付の範囲をデフォルトでは月の初日から末日に設定する
-	 * 引数  :なし
-	 		:なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.14
-	 */
-	this.setPermitListFromToDate = function() {
-		//今日の日付を取得する
-		var today = new Date();
-		//今月の初日オブジェクトを取得する
-		var monthStartday = new Date(today.getFullYear(), today.getMonth(), 1);
-		//今月の初日の日付を取得して、受講承認一覧のfromの部分で使う
-		monthStartday = getDateFormatDB(monthStartday);
-		//今月の末日オブジェクトを取得する
-		var monthEndday = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-		//今月の末日の日付を取得して、受講承認一覧のtoの部分で使う
-		monthEndday = this.getDateFormatDB(monthEndday);
-		//受講承認一覧に今月の初日を入れて一覧テーブルを検索するようにする
-		json.lecturePermitListInfoTable.FromDate.value = monthStartday;
-		//受講承認一覧に今月の末日を入れて一覧テーブルを検索するようにする
-		json.lecturePermitListInfoTable.toDate.value = monthEndday;
-		//デフォルトの検索値を分かりやすくするためにfromテキストボックスに月の初日の値を入れる
-		$('[name=fromSearach]').val(monthStartday);
-		//デフォルトの検索値を分かりやすくするためにtoテキストボックスに月の末日の値を入れる
-		$('[name=toSearach]').val(monthEndday);
-	}
-	
-	/* 
-	 * 関数名:searchPermitListInfoTable
-	 * 概要  :受講承認一覧の検索機能を実装する
-	 * 引数  :なし
-	 		:なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.14
-	 */
-	this.searchPermitListInfoTable  = function() {
-		var thisElem = this;
-		//受講承認の検索ボタンをクリックした時のイベント
-		$('.permitListSearch .searchButton').click(function(){
-			//検索初めの値を取得する
-			var fromDate = $('[name=fromSearach]').val();
-			//検索終わりの値を取得する
-			var toDate = $('[name=toSearach]').val();
-			//受講承認一覧の連想配列に検索初めの値を入れる
-			json.lecturePermitListInfoTable.FromDate.value = fromDate;
-			//受講承認一覧の連想配列に検索終わりの値を入れる
-			json.lecturePermitListInfoTable.toDate.value = toDate;
-			//テーブルを更新する
-			thisElem.tableReload('lecturePermitListInfoTable');
-		});
-	}
-	
+
 	/* 
 	 * 関数名:logoutMemberPage
 	 * 概要  :ログアウトボタンを押したときに会員ページからログアウトして通常ページに遷移する
@@ -1958,7 +1843,7 @@ function createLittleContents(){
 	 */
 	this.insertTableRecord = function(tableRecordClasssName, addDomClassName) {
 		//追加するDOMをとりあえずbodyに作る
-		outputTag(addDomClassName, addDomClassName, STR_BODY);
+		creator.outputTag(addDomClassName, addDomClassName, STR_BODY);
 		//後でテーブルの中にdomを移動させるために追加するDOMの子要素を全て取得する
 		var addDomChild = $(DOT + addDomClassName).html();
 		//取得したDOMのうち、テーブルのセルに適応させるため「div」を「td」に置換する
@@ -1969,107 +1854,6 @@ function createLittleContents(){
 		$(DOT + addDomClassName).replaceWith('<tr class="' + addDomClassName + '"></tr>');
 		//移動させたdomに対して取得していたセルを入れていき、アコーディオン用のテーブル行を完成させる
 		$(DOT + addDomClassName).html(addDomChild);
-	}
-	
-	/* 
-	 * 関数名:getCommodityCostPrice
-	 * 概要  :受講承認テーブルで個数テキストボックスと備品代テキストボックスの値を掛け合わせた合計を返す
-	 		:会計テキストボックスの値を自動で変更するために値を取得するための関数
-	 * 引数  :rowNumber:行の何番目にあるテキストボックスが対象なのかを示す番号
-	 * 返却値  :commodityCostPrice:備品代の会計テキストボックスに入る値
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.getCommodityCostPrice = function(rowNumber) {
-		//備品代の合計を求めるために購入した備品の価格を取得する
-		var sellingPrice = $('.sellingPriceTextbox').eq(rowNumber).val();
-		//備品代の合計を求めるために購入した個数を取得する
-		var sellNumber = $('.sellNumberTextbox').eq(rowNumber).val();
-		//取得した値から備品の合計金額を求める
-		var commodityCostPrice = sellingPrice * sellNumber;
-		//求めた金額を他でも使えるようにするため、返り値として返す
-		return commodityCostPrice;
-	}
-	
-	/* 
-	 * 関数名:setDefaultCommodityCostPrice
-	 * 概要  :ページの初期読み込み時に会計のデフォルト値を設定する
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.setDefaultCommodityCostPrice = function() {
-		//会計のデフォルト値を設定するために会計の値を取得する
-		var commodityCostPrice = this.getCommodityCostPrice(0);
-		//会計の連想配列にデフォルト値を設定する
-		$('.payCashTextbox').val(commodityCostPrice);
-	}
-	
-	/* 
-	 * 関数名:setCommodityCostPrice
-	 * 概要  :受講承認テーブル会計の値を設定する
-	 * 引数  :changeSelector:changeイベントを当てるセレクター
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.setCommodityCostPrice = function(changeSelector) {
-		//備品名、または個数が変化した時に会計の値をセットするイベントを登録する
-		$(STR_BODY).on('change', changeSelector, function(){
-			//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
-			var contentSelectNumber = $(changeSelector).index(this);
-			//会計のデフォルト値を設定するために会計の値を取得する
-			var commodityCostPrice = this.getCommodityCostPrice(contentSelectNumber);
-			//会計のテキストボックスの値を設定する
-			$('.payCashTextbox').eq(contentSelectNumber).val(commodityCostPrice);
-		});
-	}
-	
-	/* 
-	 * 関数名:setSellingPrice
-	 * 概要  :受講承認テーブルの備品代を自動でセットする。
-	 		備品によって値段が異なるので備品名のセレクトボックスの値が変わったときに
-	 		備品名に対応した値段をテキストボックスに入れる
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.setSellingPrice = function(selectboxParentSelector, textboxParentSelector) {
-		//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
-		//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
-		$(STR_BODY).on('change', selectboxParentSelector + ' .contentSelect', function(){
-			//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
-			var contentSelectNumber = $(selectboxParentSelector + ' .contentSelect').index(this);
-			//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
-			var contentName = $(selectboxParentSelector + ' .contentSelect').eq(contentSelectNumber).val();
-			//備品代の値を取得するための変数を作る
-			var sellingPrice;
-			//備品idを取り出すための変数を作る
-			var commodityKey;
-			//取り出した行のデータを数えるためにカウンターを変数を作る
-			var counter = 0;
-			//行データを変数に入れる
-			var rowData = json.selectCommodityInf.table
-			//取り出したデータの数だけループし、価格を取り出す
-			$.each(rowData, function(){
-				//取得した備品名と比較するためにループしている備品名を取得する
-				var commodityName = rowData[counter].commodity_name;
-				//取得した備品名とセレクトボックスの中にあるタグの名前が同じときにその番号を取得する
-				if (contentName == commodityName) {
-					//備品代をテキストボックスに入れるための番号を取得する
-					sellingPrice = json.selectCommodityInf.table[counter].selling_price;
-					//備品idをテキストボックスに入れるための番号を取得する
-					commodityKey = json.selectCommodityInf.table[counter].commodity_key;
-				}
-				counter++;
-			});
-			//備品代テキストボックスに備品名に対応した値段を入れる
-			$('.sellingPriceTextbox').eq(contentSelectNumber).val(sellingPrice);
-			//備品idテキストボックスに備品名に対応した値段を入れる
-			$(textboxParentSelector + ' .commodityKeyBox').eq(contentSelectNumber).val(commodityKey);
-		});
 	}
 	
 	/*
@@ -2091,24 +1875,6 @@ function createLittleContents(){
 		creator.json.numbering = {};
 	}
 
-	/* 
-	 * 関数名:setDefaultSellingPrice
-	 * 概要  :受講承認テーブルの備品代をページ読み込み時に自動でセットする。
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.setDefaultSellingPrice = function() {
-		//備品代のデフォルト値を設定するために備品代の最初値を取得する
-		var sellingPrice = json.selectCommodityInf.table[0].selling_price;
-		//備品代の連想配列にデフォルト値を設定する
-		json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
-		//備品代のid値を設定するために備品代idの最初値を取得する
-		var commodityKey = json.selectCommodityInf.table[0].commodity_key;
-		//備品idの連想配列にデフォルト値を設定する
-		json.commodityKeyBox.value = commodityKey;
-	}
 	
 	/* 
 	 * 関数名:getSendReplaceArray
@@ -2123,33 +1889,15 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = json[tableClassName].table[rowNumber]
+		var resultTableArray = this.json[tableClassName].table[rowNumber]
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
-		var inputDataArray = this.getInputData(inputDataSelector);
+		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
 		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
 		//結合した結果の連想配列を返す
 		return sendReplaceArray;
 	}
-	
-	/* 
-	 * 関数名:isBuyCommodity
-	 * 概要  :受講承認の承認ボタンがクリックされた時に備品を購入したかどうかを判定する
-	 * 引数  :sendReplaceArray
-	 * 返却値  :resultBool:判定結果
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.21
-	 */
-	this.isBuyCommodity = function(sendReplaceArray) {
-		//備品を購入していたらtrueにする
-		var resultBool = true;
-		//備品を購入していないときにfalseにする
-		if(sendReplaceArray.pay_cash <= 1) {
-			resultBool = false;
-		}
-		return resultBool;
-	}
-	
+
 	/* 
 	 * 関数名:choiceSendQueryArray
 	 * 概要  :JSONDBManagerに送信するためのjsonを分岐する
@@ -2167,11 +1915,11 @@ function createLittleContents(){
 		//条件分岐を設定するための値があるかどうかでクエリを決める
 		if (boolRule) {
 			//trueだった時のクエリを取得する
-			resultSendQueryArray = json[trueQueryArray];
+			resultSendQueryArray = this.json[trueQueryArray];
 		//条件が合わなかったときに別のクエリを入れる
 		} else {
 			//falseのときのクエリを取得する
-			resultSendQueryArray = json[falseQueryArray];
+			resultSendQueryArray = this.json[falseQueryArray];
 		}
 		//取得したクエリの結果を返す
 		return resultSendQueryArray;
@@ -2226,83 +1974,6 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:loopUpdatePermitLesson
-	 * 概要  :受講承認テーブルの承認ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新してする
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.loopUpdatePermitLesson = function() {
-	var thisElem = this;
-		//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-		$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
-			//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
-			var counter = 0;
-			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.lecturePermitAccordion').each(function() {
-				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = thisElem.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-					//加算ポイントレートを取得する
-					var lessonPlusPointRate = thisElem.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
-					//受講料から加算ポイントを求める
-					sendReplaceArray['lessonPlusPoint'] = thisElem.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
-					//備品代から加算ポイントを求める
-					sendReplaceArray['commodityPlusPoint'] = thisElem.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
-					//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
-					var sendQueryArray = thisElem.choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
-					//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-					sendQueryArray = thisElem.addUsePointQuery(sendQueryArray, sendReplaceArray);
-					//クエリを実行してテーブルの値1行ずつ更新していく
-					setDBdata(sendQueryArray, sendReplaceArray, '');
-					//ループで実行するので置換データ連想配列を初期化する
-					sendReplaceArray = {};
-					//ループで実行するので置換データ連想配列を初期化する
-					sendQueryArray = {};
-				}
-				//カウンターをインクリメントする
-				counter++;
-			});
-		});
-	}
-	
-	/* 
-	 * 関数名:loopUpdatePermitLessonList
-	 * 概要  :受講承認一覧テーブルの更新ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新する
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.loopUpdatePermitLessonList = function() {
-		var thisElem = this;
-		//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-		$(STR_BODY).on(CLICK, '.lecturePermitList .normalButton', function(){
-			//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
-			var counter = 0;
-			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.lecturePermitListRecord').each(function() {
-					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = thisElem.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
-					//DBを更新するためのクエリを設定する。行の情報にセレクトボックスがあるなら備品情報更新クエリ、ないなら授業情報更新クエリを設定する
-					var sendQueryArray = thisElem.choiceSendQueryArray(sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
-					//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-					sendQueryArray = thisElem.addUsePointQuery(sendQueryArray, sendReplaceArray);
-					//クエリを実行してテーブルの値1行ずつ更新していく
-					thisElem.setDBdata(sendQueryArray, sendReplaceArray, '');
-					//ループで実行するので置換データ連想配列を初期化する
-					sendReplaceArray = {};
-					//ループで実行するので置換データ連想配列を初期化する
-					sendQueryArray = {};
-				//カウンターをインクリメントする
-				counter++;
-			});
-		});
-	}
-	
-	/* 
 	 * 関数名:createMemberPageHeader()
 	 * 概要  :会員ページからブログページやギャラリーページに遷移するときに通常ページのヘッダーでなく会員ページのヘッダーを表示する。
 	 * 引数  :createTag createtag:createTagクラスのインスタンス
@@ -2331,352 +2002,6 @@ function createLittleContents(){
 		}
 	}
 
-	/* 
-	 * 関数名:createAdminPermitLessonContent
-	 * 概要  :管理者ページの受講承認タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createAdminPermitLessonContent = function() {
-		//受講承認タブのコンテンツ
-		//タブ
-		outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
-		//受講承認タブ
-		outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
-		//受講承認一覧タブ
-		outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
-	
-		// 受講承認テーブル用のJSON配列を取得する
-		getJsonFile('php/GetJSONArray.php', json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
-		//受講承認タブのリストテーブル
-		outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
-		//受講承認のボタン
-		outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
-		getJsonFile('php/GetJSONArray.php', json['selectCommodityInf'], 'selectCommodityInf');
-		//タブを作る
-		this.createTab('.lecturePermitTab');
-	
-		//受講承認のテーブルにチェックボックスを追加する
-		this.addCheckbox('permitCheckboxArea', 'permitCheckbox');
-		//受講承認に連番を入れる
-		lessonTableValueInput('.doLecturePermitInfoTable', json.doLecturePermitInfoTable.table, 'callLecturePermitValue');
-	
-		//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-		this.setSelectboxText(json.selectCommodityInf.table, json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
-		//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
-		this.setDefaultSellingPrice();
-		//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
-		this.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
-		//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
-		this.insertTableRecord('lecturePermitAccordion', 'accordionContent');
-		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
-		//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
-		this.insertTableRecord('lecturePermitAccordion', 'accordionSummary');
-		//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
-		this.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
-		this.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
-		//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-		this.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
-		//受講承認の備品名セレクトボックスにvalueを入れる
-		this.setSelectboxValue('.contentSelect');
-		//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-		this.setSellingPrice('.contentCell', '.accordionContent');
-		//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
-		this.setDefaultCommodityCostPrice();
-		//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
-		this.setCommodityCostPrice('.contentSelect');
-		//受講承認テーブルの会計列を個数が変化した時に自動でセットする
-		this.setCommodityCostPrice('.sellNumberTextbox');
-		//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
-		this.createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
-		//承認ボタンクリックでデータを更新する
-		this.loopUpdatePermitLesson();
-	}
-	
-	/* 
-	 * 関数名:createAdminPermitLessonListContent
-	 * 概要  :管理者ページの受講承認一覧タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createAdminPermitLessonListContent = function() {
-		//受講承認一覧の検索領域を作る
-		outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
-		//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
-		this.setPermitListFromToDate();
-		//受講承認一覧テーブルを作る
-		this.tableReload('lecturePermitListInfoTable')
-		//受講承認一覧のリスト更新ボタン
-		outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
-		//クリックでテキストボックスにカレンダーを表示する
-		//clickCalendar('fromSearach');
-		//クリックでテキストボックスにカレンダーを表示する
-		//clickCalendar('toSearach');
-		//受講承認一覧の検索機能を実装する
-		this.searchPermitListInfoTable();
-		//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-		this.setSelectboxText(json.selectCommodityInf.table, json.contentSelect.contentOption, 'commodity_name');
-		//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-		this.setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
-		//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-		this.loopUpdatePermitLessonList();
-	}
-	
-	/* 
-	 * 関数名:createAdminUserListContent
-	 * 概要  :管理者ページのユーザ一覧タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createAdminUserListContent = function() {
-		var thisElem = this;
-		// getJsonFile('php/GetJSONArray.php', json['userListInfoTable'], 'userListInfoTable');
-		// ユーザ検索テキストボックス
-		outputTag('searchUserList', 'searchUserList', '#userList');
-		//ユーザ一覧ページングの一番外側となる領域を作る
-		outputTag('userListPagingArea', 'divArea', '#userList');
-		//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-		outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
-		// ナンバリング領域を作る
-		outputTag('numberingOuter','numberingOuter','.userListPagingArea');
-		//会員一覧のデータを取り出す
-		getJsonFile('php/GetJSONArray.php', json['userListInfoTable'], 'userListInfoTable');
-		//ページング機能付きでユーザ情報一覧テーブルを作る
-		outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
-		//会員一覧タブのボタン群れ
-		outputTag('userListButtons', 'userListButtons', '#userList');
-		//会員一覧タブのユーザ検索機能を実装する
-		// reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
-		//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-		this.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
-		//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
-		//loginInsteadOfMember('#userList', '.userListInfoTable tr');
-		//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-		$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
-			//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
-			$(this).toggleClass('selectRecord');
-		});
-		//検索ボタンをクリックしたときにテーブルの内容を更新する
-		$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-			//ユーザ一覧テーブルを削除する
-			$('.userListInfoTable').remove();
-			//会員一覧テーブルをリセットして検索に備える
-			json.userListInfoTable.table = {};
-			//ナンバリングのdomを初期化する
-			$('.numbering').remove();
-			//新しくページングを作り直すためにページングの番号一覧をリセットする
-			json.numbering = {};
-			//クエリを変数に入れてクエリ発行の準備をする
-			var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
-			//クエリのデフォルトを取得する
-			var defaultQuery = json.userListInfoTable.db_getQuery;
-			//会員一覧のデータを取り出す
-			getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
-			//クエリをデフォルトに戻す
-			json.userListInfoTable.db_getQuery = defaultQuery;
-			//取得した値が0の時のテーブルを作らない
-			if(json.userListInfoTable.table.length != 0) {
-				//ページング機能付きでユーザ情報一覧テーブルを作る
-				outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
-			}
-		});
-	
-		//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-		$(STR_BODY).on(CLICK, '.userDetail', function(){
-			//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-			var selected = $('.selectRecord').length;
-			//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
-			if(selected == 0 || selected > 1) {
-				//選択している
-				alert('ユーザを1人だけ選択してください');
-			} else {
-				//クリックした人でログインするために会員番号を取得する
-				var memberId = $('.selectRecord').children('.id').text();
-				//クリックした人でなり代わりログインを行う
-				thisElem.loginInsteadOfMember(memberId);
-			}
-		});
-		
-		// メール送信ボタンのクリック
-		var doSendMail = function(){
-			// TODO 個々にメール送信処理をたす
-			alert("送信したつもり");
-		};
-		$(".createMail").click(function(e) {
-			var sd = new SimpleConfirmDialog(
-					doSendMail
-					,"メールを送信します。よろしいですか?"
-			);
-			sd._showDialog();
-		});
-	}
-	
-	/* 
-	 * 関数名:createAdminLessonDetailContent
-	 * 概要  :管理者ページの授業詳細タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createAdminLessonDetailContent = function() {
-		//授業詳細タブ内にカレンダ-作る
-		outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-		// //予約一覧ダイアログを作る
-		// var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
-		// 	// 日ごとダイアログ領域を作る
-		// 	outputTag('adminLessonListDialog', 'dialogDiv', 'body');
-		// });
-		
-		// 講座のカレンダーを作り、クリックでダイアログ作成を作る
-		var lessonCalendar = new adminCalendar('.adminCalendar');
-		lessonCalendar.create();	//カレンダーを実際に作成する
-		
-		//授業詳細ダイアログを作る
-		// var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
-		// 	// 授業詳細ダイアログ領域を作る
-		// 	outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-		// });
-	
-	}
-	
-	/* 
-	 * 関数名:createAdminMailMagaAnnounceContent
-	 * 概要  :管理者ページの授業詳細タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createAdminMailMagaAnnounceContent = function() {
-		var thisElem = this;
-		//メルマガ＆アナウンスタブのコンテンツ
-		//過去のメルマガを検索するための領域を作る
-		outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
-		//メルマガページングの一番外側となる領域を作る
-		outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
-		//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-		outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
-		// ナンバリング領域を作る
-		outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
-		//メルマガのデータを取り出す
-		getJsonFile(URL_GET_JSON_ARRAY_PHP, json['mailMagaTable'], 'mailMagaTable');
-		//ページング機能付きでメルマガテーブルを作る
-		outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside');
-	
-	
-		//メルマガテーブルに検索機能を対応させる
-	//	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
-		//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
-		$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
-			//クエリのデフォルトを取得し、編集した後でも戻せるようにする
-			var queryDefault = json.mailMagaTable.db_getQuery;
-			//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
-			var queryStringLength = json.mailMagaTable.db_getQuery.length;
-			//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
-			var cutString = json.mailMagaTable.db_getQuery.substring(json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
-			//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
-			json.mailMagaTable.db_getQuery = json.mailMagaTable.db_getQuery.substring(0,json.mailMagaTable.db_getQuery.indexOf("ORDER"));
-			//検索の条件をクエリに入れる
-			thisElem.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
-			//クエリに切り取ったORDER BYを付け足す
-			json.mailMagaTable.db_getQuery += cutString;
-			//テーブルをリロードする
-			thisElem.tableReload('mailMagaTable');
-			//クエリをデフォルトに戻す
-			json.mailMagaTable.db_getQuery = queryDefault;
-		});
-	
-		//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
-		$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
-			//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
-			var targetNumber = $('.targetMailMagazine').index(this);
-			//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-			var targetInf = json.mailMagaTable.table[targetNumber];
-			//取得した連想配列をテキストボックスにセットする
-			thisElem.setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
-		});
-	
-		// //メルマガの情報テーブルを取得するためのjsonをDBから取得する
-		// getJsonFile('php/GetJSONArray.php', json['mailMagaTable'], 'mailMagaTable');
-		// //メルマガテーブルを作る
-		// outputTagTable('mailMagaTable', 'mailMagaTable', '#mailMagaAndAnnounce');
-		//メルマガ・アナウンス入力領域を作る
-		outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
-	
-		//送信ボタンがクリックされたときにメール送信イベントを開始する
-		$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
-			var doSend = function() {
-				//メルマガ送信にチェックが入っていたらメルマガを送信する
-				if($('[name="messegeType"]').val() == "0") {
-					//メルマガを送信するための値をテキストボックスから取得する
-					var sendData = thisElem.getInputData('mailMagaAndAnnounceArea');
-					//メルマガをDBに新規登録する
-					thisElem.setDBdata(json.insertMailMagazine, sendData, '');
-					// メルマガ送信処理
-					thisElem.sendMailmagazine(sendData['magazine_title'],sendData['magazine_content']);
-				}
-			};
-			var sd = new SimpleConfirmDialog(
-					doSend,
-					"メルマガの送信を行います。よろしいですか?"
-			);
-			sd._showDialog();
-		});
-	
-		//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
-		$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
-			//メッセージ内容テキストエリアの中身を空にする
-			$('.mailMagaAndAnnounceArea textarea').text('');
-		});
-	
-		//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
-		thisElem.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
-	}
-	
-	/* 
-	 * 関数名:cutString
-	 * 概要  :すでに画面に表示されている文字を指定文字数で切り取る。
-	 * 引数  :cutTargetSelector:文字を切り取る対象となる文字列を持ったセレクター名
-	 		cutCount:何文字以上であるなら文字に対して切り取りを行うかの設定の数字
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.22
-	 */
-	this.cutString = function(cutTargetSelector, cutCount) {
-		//文字数カット対象となるセレクター、メルマガの内容列
-		var $setElm = $(cutTargetSelector);
-		// カットする文字数
-		var cutFigure = cutCount;
-		// 文字カット後に表示するテキスト
-		var afterTxt = ' …';
-	
-		//ループですべてのメルマガ内容列について処理をする
-		$setElm.each(function(){
-			//対象の列の文字数を取得してカットする文字数と比較するのに使う
-			var textLength = $(this).text().length;
-			//カットした後の文字列を取得する
-			var textTrim = $(this).text().substr(0,(cutFigure))
-			//対象の列の文字数がカットする文字数より多い時に文字をカットする
-			if(cutFigure < textLength) {
-				//対象の列に対して文字をカットして表示する
-				$(this).html(textTrim + afterTxt).css({visibility:'visible'});
-			//対象の列がカットする文字数より少なかった場合、カットはせずにそのまま表示する
-			} else if(cutFigure >= textLength) {
-				//そのまま表示するように設定する
-				$(this).css({visibility:'visible'});
-			}
-		});
-	}
-	
 	/* 
 	 * 関数名:sendMail
 	 * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
@@ -2800,22 +2125,22 @@ function createLittleContents(){
 	 */
 	this.afterReloadPermitListInfoTable = function() {
 		//受講承認一覧テーブルの取り出した行にクラス名を付ける
-		this.setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+		creator.setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	
 		//受講承認一覧テーブルの列内を編集する
-		lessonTableValueInput('.lecturePermitListInfoTable', json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+		lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
 		//受講承認一覧テーブルの料金列をテキストボックスにする
-		this.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+		creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 		//受講承認一覧テーブルの使用pt列をテキストボックスにする
-		this.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+		creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
 		//セレクトボックスを列にアウトプットする
-		outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 		//セレクトボックスのvalueを画面に表示されている値にする
-		this.setSelectboxValue('.contentSelect');
+		creator.setSelectboxValue('.contentSelect');
 		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-		this.setTableTextboxValuefromDB(json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
+		creator.setTableTextboxValuefromDB(json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
 	}
 	
 	/* 
@@ -2844,7 +2169,6 @@ function createLittleContents(){
 	 */
 	this.createContentTriggerClick = function(clickSelector, callContentFunc) {
 		var thisElem = this;
-		console.log(thisElem);
 		//イベントを重複して登録しないためにイベントフラグ属性を作る
 		$(clickSelector).attr('data-eventFlag', 0);
 		//対象の要素がクリックされたらcreateTagによって要素を作る関数をコールする
@@ -2922,21 +2246,21 @@ function createLittleContents(){
 	 */
 	this.getUserPlusPointRate = function(plusPointQueryKey, lessonStudents, lessonKey) {
 		//レッスンの加算ポイントを取得するために加算ポイント取得クエリの置換する値となるlesson_keyの値を入れる
-		json[plusPointQueryKey].lesson_key.value = lessonKey;
+		this.json[plusPointQueryKey].lesson_key.value = lessonKey;
 		//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
-		getJsonFile(URL_GET_JSON_ARRAY_PHP, json[plusPointQueryKey], plusPointQueryKey);
+		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//加算ポイントについてループして値を走査するためにループの値を取得する
-		var loopMaxCount = json[plusPointQueryKey].table.length;
+		var loopMaxCount = this.json[plusPointQueryKey].table.length;
 		//加算ポイントのレートを返すための変数を作る
 		var userPlusPointRate;
 		//ループでポイントのレートを求める
 		for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
 			//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
-			var studentsCount = json[plusPointQueryKey].table[loopCount].students;
+			var studentsCount = this.json[plusPointQueryKey].table[loopCount].students;
 			//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
 			if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
 				//加算ポイントのレートを決定しループを終わらせる
-				userPlusPointRate = json[plusPointQueryKey].table[loopCount].point_rate;
+				userPlusPointRate = this.json[plusPointQueryKey].table[loopCount].point_rate;
 				break;
 			}
 		}
@@ -2971,13 +2295,13 @@ function createLittleContents(){
 	 */
 	this.getCommodityPlusPoint = function(plusPointQueryKey, sendReplaceArray) {
 		//DBからデータを取得するために備品のidを連想配列に入れてデータ取得のための準備をする
-		json[plusPointQueryKey].commodity_key.value = sendReplaceArray['commodity_key'];
+		this.json[plusPointQueryKey].commodity_key.value = sendReplaceArray['commodity_key'];
 		//備品の加算ポイントレートを取得するためにDBからデータを取得する
-		getJsonFile(URL_GET_JSON_STRING_PHP, json[plusPointQueryKey], plusPointQueryKey);
+		this.getJsonFile(URL_GET_JSON_STRING_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//備品の加算ポイントレートを変数に入れる
-		var commodityPlusPointRate = json[plusPointQueryKey].get_point.text;
+		var commodityPlusPointRate = this.json[plusPointQueryKey].get_point.text;
 		//加算ポイントを求める
-		var plusPoint = getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
+		var plusPoint = this.getUserPlusPoint(sendReplaceArray['pay_cash'], commodityPlusPointRate);
 		//加算ポイントを返す
 		return plusPoint;
 	}
@@ -4224,3 +3548,39 @@ function getInputData(selector) {
 	//結果を返す
 	return resultArray;
 }
+
+/* 
+ * 関数名:cutString
+ * 概要  :すでに画面に表示されている文字を指定文字数で切り取る。
+ * 引数  :cutTargetSelector:文字を切り取る対象となる文字列を持ったセレクター名
+ 		cutCount:何文字以上であるなら文字に対して切り取りを行うかの設定の数字
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function cutString(cutTargetSelector, cutCount) {
+	//文字数カット対象となるセレクター、メルマガの内容列
+	var $setElm = $(cutTargetSelector);
+	// カットする文字数
+	var cutFigure = cutCount;
+	// 文字カット後に表示するテキスト
+	var afterTxt = ' …';
+
+	//ループですべてのメルマガ内容列について処理をする
+	$setElm.each(function(){
+		//対象の列の文字数を取得してカットする文字数と比較するのに使う
+		var textLength = $(this).text().length;
+		//カットした後の文字列を取得する
+		var textTrim = $(this).text().substr(0,(cutFigure))
+		//対象の列の文字数がカットする文字数より多い時に文字をカットする
+		if(cutFigure < textLength) {
+			//対象の列に対して文字をカットして表示する
+			$(this).html(textTrim + afterTxt).css({visibility:'visible'});
+		//対象の列がカットする文字数より少なかった場合、カットはせずにそのまま表示する
+		} else if(cutFigure >= textLength) {
+			//そのまま表示するように設定する
+			$(this).css({visibility:'visible'});
+		}
+	});
+}
+
