@@ -1708,13 +1708,13 @@ function createLittleContents(){
 			//置換するためのkey名を取得する
 			var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
 			//取得した値をjsonの反映させる
-			json[queryArrayKey][replaceKey]['value'] = replaceValue;
+			this.json[queryArrayKey][replaceKey]['value'] = replaceValue;
 			//クエリをテーマ検索用のものと入れ替える
-			json[queryArrayKey].db_getQuery = json[queryArrayKey].replace_query;
+			this.json[queryArrayKey].db_getQuery = this.json[queryArrayKey].replace_query;
 		//絞込ボタンで「全て」が選択されたときに全ての値を検索するためのクエリを入れる
 		} else {
 			//全ての値を検索するためのクエリをセットする
-			json[queryArrayKey].db_getQuery = json[queryArrayKey].allSearch_query;
+			this.json[queryArrayKey].db_getQuery = this.json[queryArrayKey].allSearch_query;
 		}
 	}
 	
@@ -1736,7 +1736,7 @@ function createLittleContents(){
 			//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
 			$(STR_BODY).on(eventName, eventSelector, function(){
 				//テーブルをリロードして最新のデータを表示する
-				this.eventTableReload(reloadTableClassName, inputDataParent);
+				thisElem.eventTableReload(reloadTableClassName, inputDataParent);
 			});
 	}
 	
@@ -1752,7 +1752,7 @@ function createLittleContents(){
 	 */
 	this.eventTableReload = function(reloadTableClassName, inputDataParent) {
 		//クエリ初期状態を保存する
-		var queryDefault = createatag.json[reloadTableClassName].db_getQuery;
+		var queryDefault = this.json[reloadTableClassName].db_getQuery;
 		//クエリの置換フラグが追記のとき
 		if (replaceTableOption[reloadTableClassName].replaceFlag == 'add') {
 			//クエリに追記を行う関数を実行する
@@ -1774,9 +1774,9 @@ function createLittleContents(){
 			}
 		}
 		//テーブルをリロードする
-		tableReload(reloadTableClassName);
+		this.tableReload(reloadTableClassName);
 		// クエリを最初の状態に戻す
-		json[reloadTableClassName].db_getQuery = queryDefault;
+		this.json[reloadTableClassName].db_getQuery = queryDefault;
 	}
 	
 	/* 
@@ -1788,26 +1788,27 @@ function createLittleContents(){
 	 * 作成日:2015.07.06
 	 */
 	this.tableReload = function(reloadTableClassName) {
+				console.log(this);
 		//テーブルのjsonの値が既にあれば
-		if(json[reloadTableClassName].table){
+		if(this.json[reloadTableClassName].table){
 			//テーブルのjsonを初期化する
-			json[reloadTableClassName].table = {};
+			this.json[reloadTableClassName].table = {};
 		}
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		getJsonFile(URL_GET_JSON_ARRAY_PHP, json[reloadTableClassName], reloadTableClassName);
+		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
 		//すでにテーブルがあるならテーブルを消す
 		if ($(DOT + reloadTableClassName)) {
 			//テーブルを消す
 			$(DOT + reloadTableClassName).remove();
 		}
 		//DBから取得した値があった時の処理
-		if(json[reloadTableClassName].table[0]){
+		if(this.json[reloadTableClassName].table[0]){
 			//テーブルを作り直す
-			outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
+			this.outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
 			//テーブルの値の置換が必要な場合は置換を行う
 			if(replaceTableOption[reloadTableClassName].replaceTableValuefunction) {
 				//変更の必要があるテーブルの配列を変数に入れる
-				var targetTableArray = json[reloadTableClassName][TAG_TABLE];
+				var targetTableArray = this.json[reloadTableClassName][TAG_TABLE];
 				// 予約中テーブルのテーブルの値をしかるべき値にする
 				lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
 			}
@@ -2359,23 +2360,7 @@ function createLittleContents(){
 			}
 		});
 	}
-	
-	/* 
-	 * 関数名:setTableRecordClass
-	 * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
-	 		これによってアコーディオン機能を実装するための行がどの行なのかを
-	 		識別できるようになる
-	 * 引数  :tableClassName: 行にクラス属性を付けたいテーブル名
-	 		:tableRecordClasssName: 行に新しくつけるクラス名
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.16
-	 */
-	this.setTableRecordClass = function(tableClassName, tableRecordClasssName) {
-		//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
-		$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
-	}
-	
+
 	/* 
 	 * 関数名:insertTableRecord
 	 * 概要  :テーブルに行を追加する。
@@ -2742,42 +2727,7 @@ function createLittleContents(){
 			outputTag('userBanner');
 		}
 	}
-	
-	/* 
-	 * 関数名:createMemberFinishedLessonContent
-	 * 概要  :会員ページの受講済み授業タブの内容を作る
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
-	 */
-	this.createMemberFinishedLessonContent = function(createtag) {
-		//受講済み授業の絞り込み領域を作る
-		outputTag('selectTheme', 'selectTheme', '#finishedLesson');
-	
-		//受講済みテーブルページングの一番外側となる領域を作る
-		outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
-		//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-		outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
-		// ナンバリング領域を作る
-		outputTag('numberingOuter','numberingOuter','.finishedLessonPagingArea');
-		//メルマガのデータを取り出す
-		getJsonFile(URL_GET_JSON_ARRAY_PHP, json['finishedLessonTable'], 'finishedLessonTable');
-		//ページング機能付きでメルマガテーブルを作る
-		outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
-		//予約中テーブルのテーブルの値をしかるべき値にする
-		lessonTableValueInput('.finishedLessonTable', json.finishedLessonTable.table, 'callMemberLessonValue');
-	
-		//ページング機能付きで受講済みテーブルを表示する(レコードの表示数が15、ページングの最大値が5)
-		// tablePaging('finishedLessonTable', 15, 6);
-		//セレクトボックスのvalueを画面に表示されている値にする
-		thisElem.setSelectboxValue('.selectThemebox');
-		//絞り込みボタン機能を実装する
-		thisElem.reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
-		//ページング後の処理を登録する
-		thisElem.finshedLessonTableAfterPaging();
-	}
-	
+
 	/* 
 	 * 関数名:createAdminPermitLessonContent
 	 * 概要  :管理者ページの受講承認タブの内容を作る
@@ -3291,6 +3241,7 @@ function createLittleContents(){
 	 */
 	this.createContentTriggerClick = function(clickSelector, callContentFunc) {
 		var thisElem = this;
+		console.log(thisElem);
 		//イベントを重複して登録しないためにイベントフラグ属性を作る
 		$(clickSelector).attr('data-eventFlag', 0);
 		//対象の要素がクリックされたらcreateTagによって要素を作る関数をコールする
@@ -3298,7 +3249,7 @@ function createLittleContents(){
 			//イベントフラグが初期状態のときのみ関数を実行するようにして重複した実行を行わないようにする
 			if ($(clickSelector).attr('data-eventFlag') == 0) {
 				//関数をコールしてdom要素を作る
-				thisElem.callContentFunc();
+				callContentFunc();
 				// ボタンの見た目をjqueryuiのものにしてデザインを整える
 				$('button, .searchButton, input[type="button"],[type="reset"]').button();
 				//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
@@ -3849,10 +3800,9 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
 			var dialogDataObj = {
 				//会員番号をセットしてどのユーザが予約するのかを識別する
-				userId:$calendar.json.accountHeader.user_key.value,
+				userId:creator.json.accountHeader.user_key.value,
 				//予約日付をセットし、どの日に予約するのかを識別する
-				lessonDate:dateText,
-				createtag : $calendar.createtag
+				lessonDate:dateText
 			};
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]['title'] = titleDate;
@@ -3955,7 +3905,7 @@ function calendar(selector) {
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
 		// 日付配列を取得する。
-		var date = createDateArray(dateText)
+		var date = this.createDateArray(dateText);
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
 		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
@@ -3965,30 +3915,7 @@ function calendar(selector) {
 		reservedDialog.setCallbackClose(reservedDialog.destroy);
 		reservedDialog.run();	//ダイアログを開く
 	}
-	
-	/*
-	 * 関数名:createDateArray(dateText)
-	 * 引数  :String dateText
-	 * 戻り値:なし
-	 * 概要  :日付文字列を配列にして返す。
-	 * 作成日:2015.02.12
-	 * 作成者:T.M
-	 */
-	this.createDateArray = function (dateText){
-	
-		// 選択した日付を1つの文字列から配列に変換する。
-		var date = dateText.split('/');
-		//@mod 2015.02.19 T.M jQuery UIのバージョン変更により不要になりました。
-		// 配列内の日付の並びが年月日になっていないので、並びを修正した配列を整数に直した上でtrueDateに格納する。
-		//	var trueDate = [parseInt(date[2]), parseInt(date[0]), parseInt(date[1])];
-	
-		//@mod 2015.02.19 T.M jQuery UIのバージョン変更により、trueDateではなくdateを返すことになりました。
-		// trueDateを返す。
-		return date;
-		// trueDateを返す。
-	//	return trueDate;
-	}
-		
+
 	/*
 	 * 関数名:callMemberDialog
 	 * 引数  :String dateText:日付テキスト
@@ -4593,3 +4520,57 @@ enterKeyButtonClick = function(enterTarget, buttonSelector) {
 		}
 	});
 }
+
+/*
+ * scriptタグで外部ファイルjsを読み込む関数
+ * 引用元 http://so-zou.jp/web-app/tech/programming/javascript/sample/script.htm
+ */
+function loadScript(filename) {
+	var script = document.createElement( 'script' );
+
+	script.type = 'text/javascript';
+	script.src = filename;
+
+	var firstScript = document.getElementsByTagName( 'script' )[ 0 ];
+	firstScript.parentNode.insertBefore( script, firstScript );
+}
+
+/*
+ * 関数名:createDateArray(dateText)
+ * 引数  :String dateText
+ * 戻り値:なし
+ * 概要  :日付文字列を配列にして返す。
+ * 作成日:2015.02.12
+ * 作成者:T.M
+ */
+function createDateArray(dateText){
+
+	// 選択した日付を1つの文字列から配列に変換する。
+	var date = dateText.split('/');
+	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により不要になりました。
+	// 配列内の日付の並びが年月日になっていないので、並びを修正した配列を整数に直した上でtrueDateに格納する。
+	//	var trueDate = [parseInt(date[2]), parseInt(date[0]), parseInt(date[1])];
+
+	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により、trueDateではなくdateを返すことになりました。
+	// trueDateを返す。
+	return date;
+	// trueDateを返す。
+//	return trueDate;
+}
+
+/* 
+ * 関数名:setTableRecordClass
+ * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
+ 		これによってアコーディオン機能を実装するための行がどの行なのかを
+ 		識別できるようになる
+ * 引数  :tableClassName: 行にクラス属性を付けたいテーブル名
+ 		:tableRecordClasssName: 行に新しくつけるクラス名
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.16
+ */
+function setTableRecordClass (tableClassName, tableRecordClasssName) {
+	//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
+	$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
+}
+
