@@ -27,15 +27,13 @@ function createMemberFinishedLessonContent() {
 	//受講済み授業一覧のデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside');
+	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	//受講済みテーブルのテーブルの値をしかるべき値にする
 	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
 	//セレクトボックスのvalueを画面に表示されている値にする
 	creator.setSelectboxValue('.selectThemebox');
-	//絞り込みボタン機能を実装する
-	creator.reloadTableTriggerEvent('#finishedLesson .selectThemebox', CHANGE, 'finishedLessonTable');
-	//ページング後の処理を登録する
-	// creator.finshedLessonTableAfterPaging();
+	//絞り込み機能を実装する
+	finshedLessonTableThemeSelect();
 }
 
 /*
