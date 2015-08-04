@@ -126,12 +126,8 @@ function createAdminUserListContent() {
 	creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
-	//会員一覧タブのユーザ検索機能を実装する
-	// reloadTableTriggerEvent('.searchUserButton', CLICK, 'userListInfoTable', 'searchUserList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
-	//会員になり替わってログインするために、ユーザ一覧テーブルの会員の行をクリックしたときにクリックした会員で会員ページにログインする
-	//loginInsteadOfMember('#userList', '.userListInfoTable tr');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
@@ -140,23 +136,17 @@ function createAdminUserListContent() {
 	//検索ボタンをクリックしたときにテーブルの内容を更新する
 	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
 		//ユーザ一覧テーブルを削除する
-		$('.userListInfoTable').remove();
-		//会員一覧テーブルをリセットして検索に備える
-		creator.json.userListInfoTable.table = {};
-		//ナンバリングのdomを初期化する
-		$('.numbering').remove();
-		//新しくページングを作り直すためにページングの番号一覧をリセットする
-		creator.json.numbering = {};
+		creator.pagingReset('userListInfoTable');
 		//クエリを変数に入れてクエリ発行の準備をする
 		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
 		//クエリのデフォルトを取得する
-		var defaultQuery = json.userListInfoTable.db_getQuery;
+		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
 		//会員一覧のデータを取り出す
 		creator.getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
 		//クエリをデフォルトに戻す
 		creator.json.userListInfoTable.db_getQuery = defaultQuery;
 		//取得した値が0の時のテーブルを作らない
-		if(json.userListInfoTable.table.length != 0) {
+		if(creator.json.userListInfoTable.table.length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
 			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
 		}
@@ -230,7 +220,6 @@ function createAdminLessonDetailContent() {
  * 作成日:2015.07.20
  */
 function createAdminMailMagaAnnounceContent() {
-	var thisElem = this;
 	//メルマガ＆アナウンスタブのコンテンツ
 	//過去のメルマガを検索するための領域を作る
 	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
@@ -243,13 +232,12 @@ function createAdminMailMagaAnnounceContent() {
 	//メルマガのデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside');
+	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'creator.afterReloadMailMagaTable');
 
-
-	//メルマガテーブルに検索機能を対応させる
-//	replaceTableTriggerClick('mailMagaSearchArea', 'mailMagaTable');
 	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
 	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		//ページングの設定を初期化し、作り直しに備える
+		creator.pagingReset('mailMagaTable');
 		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
 		var queryDefault = creator.json.mailMagaTable.db_getQuery;
 		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
@@ -257,13 +245,15 @@ function createAdminMailMagaAnnounceContent() {
 		//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
 		var cutString = creator.json.mailMagaTable.db_getQuery.substring(creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
 		//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
-		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,json.mailMagaTable.db_getQuery.indexOf("ORDER"));
+		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"));
 		//検索の条件をクエリに入れる
 		creator.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
 		//クエリに切り取ったORDER BYを付け足す
 		creator.json.mailMagaTable.db_getQuery += cutString;
-		//テーブルをリロードする
-		creator.tableReload('mailMagaTable');
+		//メルマガのデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+		//ページング機能付きでメルマガテーブルを作る
+		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'creator.afterReloadMailMagaTable');
 		//クエリをデフォルトに戻す
 		creator.json.mailMagaTable.db_getQuery = queryDefault;
 	});
@@ -580,12 +570,10 @@ function isBuyCommodity (sendReplaceArray) {
  * 作成日:2015.07.17
  */
 function loopUpdatePermitLesson() {
-	console.log(1);
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
 	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		console.log(2);
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitAccordion').each(function() {
 			//チェックボックスにチェックが入っているものだけを更新するように条件設定する

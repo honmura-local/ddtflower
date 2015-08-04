@@ -1526,7 +1526,7 @@ function createLittleContents(){
 					counter++;
 				}
 				//クエリに文字を付け加える
-				json[queryArrayKey].db_getQuery += addString;
+				creator.json[queryArrayKey].db_getQuery += addString;
 			}
 		});
 	}
@@ -2129,9 +2129,9 @@ function createLittleContents(){
 	 */
 	this.afterReloadMailMagaTable = function() {
 		//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
-		this.cutString('.mailMagaContent', '150');
+		cutString('.mailMagaContent', '150');
 		//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		this.setTableRecordClass('mailMagaTable', 'targetMailMagazine');
+		setTableRecordClass('mailMagaTable', 'targetMailMagazine');
 	}
 	
 	/* 
