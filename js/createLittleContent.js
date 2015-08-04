@@ -1778,30 +1778,6 @@ function createLittleContents(){
 		//電話番号に適していたかどうかの結果を返す
 		return resultbool;
 	}
-	
-	/* 
-	 * 関数名:loginInsteadOfMember
-	 * 概要  :管理者ページから会員に為り変わって会員ページにログインする
-	 * 引数  :memberId: なり代わりを行うための会員番号
-	 		:clickSelector クリックしてなり代わりを行うセレクター
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.14
-	 */
-	this.loginInsteadOfMember = function (memberId) {
-			//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
-			json.accountHeader.user_key.value = memberId;
-			//会員の告知連想配列に会員番号を入れてログインの準備をする
-			json.advertise.user_key.value = memberId;
-			//会員の予約中授業テーブル連想配列に会員番号を入れてログインの準備をする
-			json.reservedLessonTable.user_key.value = memberId;
-			//会員の受講済み授業テーブル連想配列に会員番号を入れてログインの準備をする
-			json.finishedLessonTable.user_key.value = memberId;
-			//会員番号をグローバルな連想配列に入れ、日ごと授業予約やキャンセルで渡せるようにする
-			memberInfo = memberId;
-			//会員ページを呼び出す
-			callPage('memberPage.html');
-	}
 
 	/* 
 	 * 関数名:logoutMemberPage

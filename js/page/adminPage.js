@@ -174,7 +174,7 @@ function createAdminUserListContent() {
 			//クリックした人でログインするために会員番号を取得する
 			var memberId = $('.selectRecord').children('.id').text();
 			//クリックした人でなり代わりログインを行う
-			creator.loginInsteadOfMember(memberId);
+			loginInsteadOfMember(memberId);
 		}
 	});
 	
@@ -647,5 +647,21 @@ function loopUpdatePermitLessonList() {
 			counter++;
 		});
 	});
+}
+
+/* 
+ * 関数名:loginInsteadOfMember
+ * 概要  :管理者ページから会員に為り変わって会員ページにログインする
+ * 引数  :memberId: なり代わりを行うための会員番号
+ 		:clickSelector クリックしてなり代わりを行うセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.14
+ */
+function loginInsteadOfMember (memberId) {
+	//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
+	creator.json.accountHeader.user_key.value = memberId;
+	//会員ページを呼び出す
+	callPage('memberPage.html');
 }
 

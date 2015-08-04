@@ -46,88 +46,87 @@
 		<div class="main">
 			<!-- 管理者ページのcssを読み込む -->
 			<link rel="stylesheet" type="text/css" href="css/adminPage.css" media="screen" />
+			<!-- 管理者ページ用のjavascriptを読み込む -->
+			<script src="js/page/adminPage.js">
+			</script>
 			<script>
-			//ドキュメント配備後
-			$(document).ready(function(){
 				//ログインチェック用try-catch
 				try{
-					hideNormalHeader();	//通常ページのヘッダーを隠す
-					
-					var adminPageCreator = new createTag();	//管理者ページ用のcreateTagクラスインスタンスを生成する
-					
-					// adminPageCreator = new createTag();
+					var creator = new createLittleContents();	//管理者ページ用のcreateTagクラスインスタンスを生成する
+					creator.hideNormalHeader();	//通常ページのヘッダーを隠す
+
+					// creator = new createTag();
 					// ユーザーページのパーツのテンプレートのJSONを取得する。
-					adminPageCreator.getJsonFile('source/commonUser.json');
+					creator.getJsonFile('source/commonUser.json');
 					// 管理者ページ共通のパーツのJSONを取得する。
-					adminPageCreator.getJsonFile('source/adminCommon.json');
+					creator.getJsonFile('source/adminCommon.json');
 					//共通のjsonを取得する
-					adminPageCreator.getJsonFile('source/commonJson.json');
+					creator.getJsonFile('source/commonJson.json');
 	
 					// ユーザーページのパーツのテンプレートのDOMを取得する。
-					adminPageCreator.getDomFile('template/commonUser.html');
+					creator.getDomFile('template/commonUser.html');
 					// 管理者ページ共通のパーツのJSONを取得する。
-					adminPageCreator.getDomFile('template/adminCommon.html');
+					creator.getDomFile('template/adminCommon.html');
 					// 共通パーツのDOMを取得する
-					adminPageCreator.getDomFile('template/common.html');
+					creator.getDomFile('template/common.html');
 					
 					//パーツのHTMLを順次作成し、画面に追加していく
 					//ユーザ情報のテキストをDBから取得する
-					adminPageCreator.getJsonFile('php/GetJSONString.php', adminPageCreator.json['accountHeader'], 'accountHeader');
+					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
 					//ヘッダー
-					adminPageCreator.outputTag('accountHeader', 'adminHeader');
-					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+					creator.outputTag('accountHeader', 'adminHeader');
 					
 					//タブ領域
-					adminPageCreator.outputTag('adminTab', 'tabContainer');
+					creator.outputTag('adminTab', 'tabContainer');
 					//タブコンテンツ5個
-					adminPageCreator.outputTag('dayReserver','tabInContent', '.tabContentArea');
-					adminPageCreator.outputTag('lecturePermit','tabInContent', '.tabContentArea');
-					adminPageCreator.outputTag('userList','tabInContent', '.tabContentArea');
-					adminPageCreator.outputTag('lessonDetail','tabInContent', '.tabContentArea');
-					adminPageCreator.outputTag('mailMagaAndAnnounce','tabInContent', '.tabContentArea');
+					creator.outputTag('dayReserver','tabInContent', '.tabContentArea');
+					creator.outputTag('lecturePermit','tabInContent', '.tabContentArea');
+					creator.outputTag('userList','tabInContent', '.tabContentArea');
+					creator.outputTag('lessonDetail','tabInContent', '.tabContentArea');
+					creator.outputTag('mailMagaAndAnnounce','tabInContent', '.tabContentArea');
 					
 					//日ごと予約者一覧タブのコンテンツ
 					//選択された日付を表示する領域
-					adminPageCreator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
+					creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
 					//日付選択パーツのセット
-					adminPageCreator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
+					creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 					//日付ページングを実装する
-					nowDatePaging('dateBelt', adminPageCreator);
+					nowDatePaging('dateBelt', creator);
 					// 日ごと予約者一覧テーブル用のJSON配列を取得する
-					adminPageCreator.getJsonFile('php/GetJSONArray.php', adminPageCreator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
+					creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 					//日ごと予約者の情報がないときにテーブルを作らない
-					if(adminPageCreator.json.eachDayReservedInfoTable.table[0]) {
+					if(creator.json.eachDayReservedInfoTable.table[0]) {
 						//日ごと予約者一覧テーブルを作る
-						adminPageCreator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
+						creator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
 						// テーブルのデータが入った変数
-						var eachDayReserved = adminPageCreator.json['eachDayReservedInfoTable']['table'];
+						var eachDayReserved = creator.json['eachDayReservedInfoTable']['table'];
 						// 日ごと予約者一覧テーブルの値を置換する
 						lessonTableValueInput('.eachDayReservedInfoTable', eachDayReserved, "callEachDayReservedValue");
 					}
 					//画面の先頭にスクロールを戻すボタン
-					adminPageCreator.outputTag('returnTopPosition');
+					creator.outputTag('returnTopPosition');
 					
 					//タブを作る
-					createTab('.adminTab');
+					creator.createTab('.adminTab');
 					//クリックでテキストボックスにカレンダーを表示する
 					// clickCalendar('lesson_date');
 					//管理者日ごと授業の検索機能を実装する
-					reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable');
+					creator.reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable');
 	
 					//受講承認タブをクリックしたときに受講承認の内容を表示する
-					createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
+					creator.createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
 					//ユーザ一覧タブをクリックしたときにユーザ一覧の内容を表示する
-					createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent);
+					creator.createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent);
 					//授業詳細タブをクリックしたときに授業詳細の内容を表示する
-					createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent);
+					creator.createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent);
 					//メルマガタブをクリックしたときにメルマガの内容を表示する
-					createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent);
+					creator.createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent);
 					// ボタンの見た目をjqueryuiのものにしてデザインを整える
 					$('button, .searchButton, input[type="button"]').button();
+					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				}catch(e){
 					console.log(e);
 				}
-			});
 			</script>
 		</div>
 	</div>
