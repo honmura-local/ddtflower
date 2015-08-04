@@ -18,38 +18,40 @@
 			<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 			<script>
 				hideNormalHeader();	//通常ページのヘッダーを隠す
-				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
-				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				// dom要素を作るクラスをインスタンス化する
+				var myGalleryCreator = new createTag();
+				myGalleryCreator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
+				myGalleryCreator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// HTMLのテンプレートデータをを取得する。
-				creator.getDomFile('template/common.html');			
-				creator.getDomFile('template/gallery.html');			
+				myGalleryCreator.getDomFile('template/common.html');			
+				myGalleryCreator.getDomFile('template/gallery.html');			
 				
 				// 会員共通のパーツのJSONを取得する。
-				creator.getDomFile('template/memberCommon.html');
+				myGalleryCreator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
-				creator.getDomFile('template/memberPage.html');
+				myGalleryCreator.getDomFile('template/memberPage.html');
 				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				myGalleryCreator.getJsonFile('php/GetJSONString.php', myGalleryCreator.json['memberHeader'], 'memberHeader');
 				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
+				myGalleryCreator.outputTag('memberHeader');
 				// バナー領域を作る
-				creator.outputTag('userBanner');
+				myGalleryCreator.outputTag('userBanner');
 
 				// creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
-				creator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。
+				myGalleryCreator.outputTag('pageTitle');						// タイトル領域を作る
+				myGalleryCreator.outputTag('myGalleryEditButtons');			// ギャラリー編集用のボタンを作る。
 				//ギャラリーのちょっとした説明を付け足す。
-				creator.outputTag('myGalleryNotice','myGalleryNotice','.myGalleryEditButtons');	
-				creator.outputTag('memberMyGallery');						// ギャラリーページ用のギャラリーを作る。
+				myGalleryCreator.outputTag('myGalleryNotice','myGalleryNotice','.myGalleryEditButtons');	
+				myGalleryCreator.outputTag('memberMyGallery');						// ギャラリーページ用のギャラリーを作る。
 				// ナンバリング領域を作る
-				creator.outputTag('numberingOuter');
+				myGalleryCreator.outputTag('numberingOuter');
 				
 				//ユーザのギャラリーのJSONに会員IDをセットする。
-				creator.json.myGalleryTable.user_key.value = creator.json.memberHeader.user_key.value;
+				myGalleryCreator.json.myGalleryTable.user_key.value = myGalleryCreator.json.memberHeader.user_key.value;
 				//ユーザのギャラリー情報を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['myGalleryTable'], 'myGalleryTable');
+				myGalleryCreator.getJsonFile('php/GetJSONArray.php', myGalleryCreator.json['myGalleryTable'], 'myGalleryTable');
 				//ギャラリーの内容を追加する。
-				creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'createMyGalleryImages');	// ブログの記事を作る。
+				myGalleryCreator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'createMyGalleryImages');	// ブログの記事を作る。
 
 				//ギャラリーの画像を拡大できるようにする。
 				useZoomImage('myGalleryTable tr a');

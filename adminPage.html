@@ -115,13 +115,13 @@
 					reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable', adminPageCreator);
 	
 					//受講承認タブをクリックしたときに受講承認の内容を表示する
-					createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
+					createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent, adminPageCreator);
 					//ユーザ一覧タブをクリックしたときにユーザ一覧の内容を表示する
-					createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent);
+					createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent, adminPageCreator);
 					//授業詳細タブをクリックしたときに授業詳細の内容を表示する
-					createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent);
+					createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent, adminPageCreator);
 					//メルマガタブをクリックしたときにメルマガの内容を表示する
-					createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent);
+					createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent, adminPageCreator);
 					// ボタンの見た目をjqueryuiのものにしてデザインを整える
 					$('button, .searchButton, input[type="button"]').button();
 				}catch(e){

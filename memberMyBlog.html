@@ -15,46 +15,48 @@
 			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
 				hideNormalHeader();	//通常ページのヘッダーを隠す
+				// dom要素を作るクラスをインスタンス化する
+				var myBlogCreator = new createTag();
 				// 会員共通のパーツのJSONを取得する。
-				creator.getDomFile('template/memberCommon.html');
+				myBlogCreator.getDomFile('template/memberCommon.html');
 				// 会員ページのjsonを読み込む
-				creator.getDomFile('template/memberPage.html');
+				myBlogCreator.getDomFile('template/memberPage.html');
 				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				myBlogCreator.getJsonFile('php/GetJSONString.php', myBlogCreator.json['memberHeader'], 'memberHeader');
 				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
+				myBlogCreator.outputTag('memberHeader');
 				// バナー領域を作る
-				creator.outputTag('userBanner');
+				myBlogCreator.outputTag('userBanner');
 				
-				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
-				creator.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
-				creator.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
+				myBlogCreator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				myBlogCreator.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
+				myBlogCreator.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
 				// ファイルのhtmlデータをdomを用いて持ってくる
-				creator.getDomFile('template/common.html');
-				creator.getDomFile('template/mypage.html');
-				creator.getDomFile('template/table.html');
+				myBlogCreator.getDomFile('template/common.html');
+				myBlogCreator.getDomFile('template/mypage.html');
+				myBlogCreator.getDomFile('template/table.html');
 
-				creator.getJsonFile('source/mypagebloglist.json');	// マイページのブログ一覧のJSONを取得する。
+				myBlogCreator.getJsonFile('source/mypagebloglist.json');	// マイページのブログ一覧のJSONを取得する。
 
 				// ブログ管理領域を作る。
-				creator.outputTag('myPageBlog');
-				creator.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
+				myBlogCreator.outputTag('myPageBlog');
+				myBlogCreator.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
 
 				//ボタンを作る
-				creator.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
+				myBlogCreator.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
 
 				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
-				creator.json.myBlogListTable.user_key.value = creator.json.memberHeader.user_key.value;
+				myBlogCreator.json.myBlogListTable.user_key.value = myBlogCreator.json.memberHeader.user_key.value;
 
-				creator.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
-				creator.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
+				myBlogCreator.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
+				myBlogCreator.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
 				
 				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogListTable'], 'myBlogListTable');
+				myBlogCreator.getJsonFile('php/GetJSONArray.php', myBlogCreator.json['myBlogListTable'], 'myBlogListTable');
 				//ブログの投稿したことがある人のみブログリストテーブルを作る
-				if(creator.json.myBlogListTable.table.length != 0) {
+				if(myBlogCreator.json.myBlogListTable.table.length != 0) {
 					//ブログリストのテーブルを作る
-					creator.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
+					myBlogCreator.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
 					//テーブルの1列目をチェックボックスにする
 					addCheckbox('checkWrap', 'check');
 					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
@@ -73,15 +75,15 @@
 			 	// 	outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
 				
 				//ユーザのブログ領域用のJSONに会員IDをセットする。
-				creator.json.myBlogTable.user_key.value = creator.json.memberHeader.user_key.value;
+				myBlogCreator.json.myBlogTable.user_key.value = myBlogCreator.json.memberHeader.user_key.value;
 				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
-				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
+				myBlogCreator.getJsonFile('php/GetJSONArray.php', myBlogCreator.json['myBlogTable'], 'myBlogTable');
+				myBlogCreator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
 				
 				sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。
 				$('form').validate(articleSubmitHandler);
-				deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+				deleteRowData('form', 'deleteMyBlog', myBlogCreator);	//行の削除イベントを登録する。
 				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 			</script>
 		</div>

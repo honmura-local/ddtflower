@@ -1142,3 +1142,43 @@ function createAdminMailMagaAnnounceContent() {
 	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
 }
 
+
+/*
+ * 関数名:function deleteRowData(form)
+ * 引数  :element form: フォームの要素。
+ * 戻り値:なし
+ * 概要  :レコードを消すイベントを定義する。
+ * 作成日:2015.04.16
+ * 作成者:T.Masuda
+ */
+function deleteRowData(form, deleteQueryKey, createtag){
+	//削除ボタンが押されたら
+	$('.deleteRecord').on('click', function(){
+		var numberArray = [];	//記事番号、または会員番号を格納する配列を用意する。
+		//記事番号か、会員番号かを判別する。
+		var numberString = $('table td.number' ,form).length > 0? 'number':'memberId';
+		//チェックが入っている行を取得する。
+		var $checkedRecord = $('table tr:has(input:checkbox:checked)', form);
+		//フォームのテーブルのチェックボックスが入っている行を走査する。
+		$checkedRecord.each(function(){
+			//記事番号、または会員番号を配列に追加していく。
+			numberArray.push($('.' + numberString,this).text());
+		});
+		
+		//チェックがなければ
+		if(numberArray.length <= 0){
+			alert('必ず1行以上選択してください。');
+			return;	//処理を終える。
+		}
+		
+		//確認ダイアログを出して、OKならば
+		if(window.confirm('選択した行を削除しますか?')){
+			//DBからチェックが入った記事を削除する
+			deleteBlogArticle(deleteQueryKey, numberArray, createtag);
+			//先ほど選択した行を削除する。
+			$checkedRecord.remove();
+			//削除完了の旨を伝える。
+			alert('選択した行を削除しました。');
+		}
+	});
+}
