@@ -123,22 +123,22 @@
 
 					//予約済み授業の絞り込み領域を作る
 					creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
-					//予約中の授業があった時のテーブルを作る
+					//セレクトボックスのvalueを画面に表示されている値にする
+					creator.setSelectboxValue('.selectThemebox');
+					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 					if(creator.json['reservedLessonTable']['table'][0]) {
 						// 予約中授業のテーブルを作る
 						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
+						// 予約中テーブルのテーブルの値をしかるべき値にする
+						lessonTableValueInput('.reservedLessonTable', creator.json['reservedLessonTable']['table'], "callMemberLessonValue");
+						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
+						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						//キャンセルダイアログを予約中授業テーブルから開く処理
+						cancelDialogExOpen(memberInfo);
 					}
-					
-					//セレクトボックスのvalueを画面に表示されている値にする
-					creator.setSelectboxValue('.selectThemebox');
-	
-	 				// 予約中授業の連想配列を変数に入れる 
-					var reservedNow = creator.json['reservedLessonTable']['table'];
-					// 予約中テーブルのテーブルの値をしかるべき値にする
-					lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
-
-					//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-					setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+					//キャンセル料率のレートをアコーディオン形式で表示する
+					creator.accordionSetting('.lessonAccordion', '.attention');
 					//予約中授業テーブル絞り込みボタン機能を実装する
 					creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

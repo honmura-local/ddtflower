@@ -19,13 +19,10 @@
 	//ボタンをjqueryuiのものにしてレイアウトを整える
 	$('input[type="button"]').button();
 	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
-	// $(STR_BODY).on(CLICK, '.adminLessonDetailContent input[value="更新"]', function() {
-	// 	//入力した値を取得し、データの更新に用いる
-	// 	var updateData = getInputData('lessonData');
-	// 	//授業idを取得する
-	// 	updateData['classwork_key'] = receivedObject['classwork_key'];
-	// 	//授業詳細テーブルを更新する
-	// 	setDBdata(adminLessonDetailCreator.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+	$('.adminNewLessonCreateContent').on(CLICK, '.newLessonCreateButton', function() {
+		//新規授業を登録する処理を行う
+		newLessonEntry();
+	});
 	// });
 </script>
 </div>
