@@ -2682,13 +2682,6 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
 			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
-
-
-			//講座一覧ダイアログを開く
-			// this.dialog.openTagTable({userId:this.userId,lessonDate:dateText.replace(/\//g,'-')}, 
-			// 		{url:URL_GET_JSON_STRING_PHP, key:STR_MEMBER_INFORMATION, domName:STR_MEMBER_INFORMATION, appendTo:SELECTOR_RESERVE_LESSON_LIST_DIALOG},
-			// 		titleDate
-			// );
 		}
 //
 //		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。

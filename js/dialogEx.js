@@ -208,9 +208,9 @@ function disappear(){
  */
 function reservedLessonListDialogCloseFunc() {
 	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	this.instance.argumentObj.createtag.json[LESSON_TABLE].table = {};
+	reserveLessonListCreator.json[LESSON_TABLE].table = {};
 	//予約中授業一覧ダイアログをリロードして最新の状態にする
-	tableReload(RESERVED_LESSON_TABLE, this.instance.argumentObj.createtag);
+	creator.tableReload(RESERVED_LESSON_TABLE, this.instance.argumentObj.createtag);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.reserveLessonListContent')[0].instance.destroy();
 }
@@ -470,11 +470,11 @@ function adminLessonDetailDialogCloseFunc() {
 function memberReservedConfirmDialogOkButtonFunc(sendObject) {
 	if(!sendObject.user_work_status) {
 		//DBにデータを挿入して予約処理をする
-		setDBdata(memberReservedConfirmtCreator.json.sendReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
+		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.sendReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
 	//以前にキャンセルしたことがある授業の場合
 	} else {
 		//DBにデータの更新で予約処理をする
-		setDBdata(memberReservedConfirmtCreator.json.updateReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
+		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.updateReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
 	}
 
 	$('.memberReservedConfirmDialogContent').dialog(CLOSE);			//ダイアログを閉じる
@@ -489,7 +489,7 @@ function memberReservedConfirmDialogOkButtonFunc(sendObject) {
  */
 function cancelLssonDialogCloseFunc() {
 	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
-	tableReload(RESERVED_LESSON_TABLE);
+	creator.tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.cancelLessonDialogContent')[0].instance.destroy();
 }
@@ -504,7 +504,7 @@ function cancelLssonDialogCloseFunc() {
  */
 function cancelLssonDialogDialogOkButton(sendObject) {
 	//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
-	setDBdata(cancelLessonCreator.json.cancelReservedData, sendObject, MESSAGE_SUCCESS_CANCELED);
+	cancelLessonCreator.setDBdata(cancelLessonCreator.json.cancelReservedData, sendObject, MESSAGE_SUCCESS_CANCELED);
 	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
 	//tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログを閉じる

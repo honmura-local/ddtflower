@@ -2,16 +2,13 @@
 <script>
 	$('.reserveLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var reserveLessonListCreator = new createTag();
+	var reserveLessonListCreator = new createLittleContents();
 	//会員、予約授業一覧のjsonを取得する
 	reserveLessonListCreator.getJsonFile('source/eachDayLesson.json');
 	//会員、予約授業一覧のテンプレートを取得する
 	reserveLessonListCreator.getDomFile('template/eachDayLesson.html');
-	
-
 	//ダイアログの中身の外枠を作る
 	reserveLessonListCreator.outputTag('memberInfomation', 'memberInfomation', '.reserveLessonListContent');
-
 	//dbに接続する前に日付をクエリの置換連想配列に挿入する
 	reserveLessonListCreator.json.lessonTable.lessonDate.value = $('.reserveLessonListContent')[0].instance.argumentObj.lessonDate;
 	//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
