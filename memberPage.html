@@ -42,7 +42,8 @@
 		<div class="main">
 
 			<!-- 会員ページ用のjavascriptを読み込む -->
-			<script src="js/page/memberPage.js"></script>
+			<script src="js/page/memberPage.js">
+			</script>
 			<script>
 				try{
 					//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
@@ -118,7 +119,7 @@
 					creator.createTab('#tab-container');
 					//受講済み授業授業のデータをDBから取り出すために会員番号を置換値にセットする
 					creator.json.finishedLessonTable.user_key.value = memberInfo;					//受講済み授業タブをクリックしたときに受講済み授業の内容を表示する
-					// creator.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
+					creator.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
 
 					//予約済み授業の絞り込み領域を作る
 					creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
