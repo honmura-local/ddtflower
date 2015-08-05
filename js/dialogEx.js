@@ -210,7 +210,7 @@ function reservedLessonListDialogCloseFunc() {
 	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
 	reserveLessonListCreator.json[LESSON_TABLE].table = {};
 	//予約中授業一覧ダイアログをリロードして最新の状態にする
-	creator.tableReload(RESERVED_LESSON_TABLE, this.instance.argumentObj.createtag);
+	creator.tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.reserveLessonListContent')[0].instance.destroy();
 }
@@ -444,8 +444,6 @@ function openAdminNewLessonCreateDialog() {
  * 作成者　:T.Yamamoto
  */
 function memberReservedConfirmDialogCloseFunc() {
-	//予約授業一覧テーブルをリロードして最新の状態にする
-	//tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.memberReservedConfirmDialogContent')[0].instance.destroy();
 }
@@ -478,7 +476,8 @@ function memberReservedConfirmDialogOkButtonFunc(sendObject) {
 		//DBにデータの更新で予約処理をする
 		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.updateReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
 	}
-
+	//予約授業一覧テーブルをリロードして最新の状態にする
+	reserveLessonListCreator.tableReload(LESSON_TABLE);
 	$('.memberReservedConfirmDialogContent').dialog(CLOSE);			//ダイアログを閉じる
 }
 
@@ -507,8 +506,11 @@ function cancelLssonDialogCloseFunc() {
 function cancelLssonDialogDialogOkButton(sendObject) {
 	//変更者:T.Yamamoto 変更日:2015.06.27 内容:予約が完了する処理(DBのデータを更新する処理)を関数化しました。
 	cancelLessonCreator.setDBdata(cancelLessonCreator.json.cancelReservedData, sendObject, MESSAGE_SUCCESS_CANCELED);
-	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
-	//tableReload(RESERVED_LESSON_TABLE);
+	//予約可能授業一覧テーブルがあればテーブルをリロードする
+	if($(DOT + LESSON_TABLE)) {
+		//予約可能授業一覧テーブルをリロードする
+		reserveLessonListCreator.tableReload(LESSON_TABLE);
+	}
 	//ダイアログを閉じる
 	$('.cancelLessonDialogContent').dialog(CLOSE);
 }

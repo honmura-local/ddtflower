@@ -146,10 +146,12 @@ dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG] = {
 	autoOpen		: true,
 	// Escキーを押してもダイアログが閉じないようにする。
 	closeOnEscape	: false,
+	//モーダル化する
+	modal:true,
 	//リサイズ不可にする
 	resizable:false,
-	//モーダル化する
-	modal:true
+	//画面上部にダイアログを表示する
+	position :{my:'center top',at:'center top', of:window}
 };
 
 //会員ページTOP、予約キャンセルダイアログ用設定
@@ -158,10 +160,14 @@ dialogExOption[CANCEL_LESSON_DIALOG] = {
 	width			: STR_AUTO,
 	// ダイアログを生成と同時に開く。
 	autoOpen		: true,
+	//モーダル化する
+	modal:true,
 	//リサイズ不可にする
 	resizable:false,
 	// Escキーを押してもダイアログが閉じないようにする。
-	closeOnEscape	: false
+	closeOnEscape	: false,
+	//画面上部にダイアログを表示する
+	position :{my:'center top',at:'center top', of:window}
 };
 
 //管理者、授業詳細一覧用設定

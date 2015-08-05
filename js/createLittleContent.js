@@ -1405,6 +1405,15 @@ function createLittleContents(){
 
 	//テーブルを置き換えるときの設定オブジェクト
 	var replaceTableOption = {};
+	//会員、予約可能授業一覧テーブル
+	replaceTableOption['lessonTable']  = {
+		//テーブルのafterでの追加先
+		addDomPlace:'.lessonTableOutsideArea',
+		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
+		afterReloadFunc:'reservedLessonListDialogOpenFunc',
+		//検索結果がなかった時のエラーメッセージ
+		errorMessage:'受講承認一覧が見つかりませんでした。'
+	};
 	//予約中授業テーブル
 	replaceTableOption['reservedLessonTable'] = {
 		//クエリを置換する置換フラグ、クエリを置換する
