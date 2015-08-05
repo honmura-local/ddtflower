@@ -101,3 +101,18 @@ function finshedLessonTableThemeSelect() {
 		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	});
 }
+
+/* 
+ * 関数名:afterReloadReservedLessonTable
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadReservedLessonTable() {
+	//テーブルの値をクライント側で置換を行う
+	lessonTableValueInput(DOT + 'reservedLessonTable', creator.json.reservedLessonTable.table, 'callMemberLessonValue');
+	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+}

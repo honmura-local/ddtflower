@@ -681,7 +681,6 @@ function afterReloadPermitListInfoTable() {
 	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], creator.setInputValueToLecturePermitListInfoTable);
 }
 
-
 /* 
  * 関数名:afterReloadReservedLessonTable
  * 概要  :予約中授業がリロードした後に行う関数
@@ -695,7 +694,15 @@ function afterReloadReservedLessonTable() {
 	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 }
 
-
-
-
-
+/* 
+ * 関数名:afterReloadReservedLessonTable
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadEachDayReservedInfoTable() {
+	//テーブルの値をクライント側で置換を行う
+	lessonTableValueInput(DOT + 'eachDayReservedInfoTable', creator.json.eachDayReservedInfoTable.table, 'callEachDayReservedValue');
+}

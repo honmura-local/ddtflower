@@ -1417,8 +1417,6 @@ function createLittleContents(){
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
 		replaceQueryKey:'lesson_name',
-		//テーブルの値を置換する関数名
-		replaceTableValuefunction:'callMemberLessonValue',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'予約中の授業が見つかりませんでした。'
 	}
@@ -1441,8 +1439,8 @@ function createLittleContents(){
 		replaceValueDom:'.dateInput',
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
-		//テーブルの値を置換する関数名
-		replaceTableValuefunction:'callEachDayReservedValue',
+		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
+		afterReloadFunc:'afterReloadEachDayReservedInfoTable',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
@@ -1593,13 +1591,6 @@ function createLittleContents(){
 		if(this.json[reloadTableClassName].table[0]){
 			//テーブルを作り直す
 			this.outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
-			//テーブルの値の置換が必要な場合は置換を行う
-			if(replaceTableOption[reloadTableClassName].replaceTableValuefunction) {
-				//変更の必要があるテーブルの配列を変数に入れる
-				var targetTableArray = this.json[reloadTableClassName][TAG_TABLE];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput(DOT + reloadTableClassName, targetTableArray, replaceTableOption[reloadTableClassName].replaceTableValuefunction);
-			}
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 			if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 				//リロード後に処理をする関数をコールする
