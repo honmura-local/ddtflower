@@ -14,6 +14,7 @@
 			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
 			<link href="css/special.css" rel="stylesheet" type="text/css">
 			<script>
+			$(STR_BODY).off();
 				// dom要素を作るクラスをインスタンス化する
 				var creator = new createLittleContents();
 				creator.hideNormalHeader();	//通常ページのヘッダーを隠す
@@ -22,9 +23,11 @@
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberPage.html');
 				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
+				creator.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
+				creator.outputTag('accountHeader', 'memberHeader');
+
 				// バナー領域を作る
 				creator.outputTag('userBanner');
 				
@@ -46,8 +49,7 @@
 				creator.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
 
 				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
-				creator.json.myBlogListTable.user_key.value = creator.json.memberHeader.user_key.value;
-
+				creator.json.myBlogListTable.user_key.value = creator.json.accountHeader.user_key.value;
 				creator.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
 				creator.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
 				
@@ -62,7 +64,6 @@
 					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
 					creator.allCheckbox('.check:eq(0)', '.check');
 				}
-
 				//変更者 T.Yamamoto 日付:2015.07.22
 				//変更内容:以下のコメントアウトの内容はページング対応時に使うため、ページング対応ができるまでコメントアウトします。
 				// //表形式のブログリストの外枠を作る。
@@ -75,10 +76,13 @@
 			 	// 	outputKeyNumberObject(creator.json, 'blogListContentWrap', '.managementList .table');
 				
 				//ユーザのブログ領域用のJSONに会員IDをセットする。
-				creator.json.myBlogTable.user_key.value = creator.json.memberHeader.user_key.value;
+				creator.json.myBlogTable.user_key.value = creator.json.accountHeader.user_key.value;
 				//ユーザ情報のテキストをDBから取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
-				creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'createMyBlogImages');	// ブログの記事を作る。
+				//ブログデータがあればブログ一覧を作る
+				if(creator.json.myBlogTable.table[0]) {
+					creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'creator.createMyBlogImages');	// ブログの記事を作る。
+				}
 				
 				creator.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 				//submitイベントを登録する。

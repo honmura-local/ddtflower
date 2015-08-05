@@ -86,7 +86,7 @@
 							//入力されているデータを取得しクエリを挿入するための値として扱う
 							var sendData = getInputData('suggestionArea');
 							//クエリに送信するデータに会員番号を加える
-							sendData['user_key'] = creator.json.memberHeader.user_key.value;
+							sendData['user_key'] = creator.json.accountHeader.user_key.value;
 							//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
 							if($('[name="suggestionRadio"]').val() == "0") {
 								//目安箱テーブルに新たにデータを挿入する
@@ -95,7 +95,29 @@
 								//メール送信処理
 							//目安箱でないなら
 							} else {
-								//通常メールとして送信する
+							sendSuggest(
+									sendData['user_key']
+									,sendData['suggest_type']
+									,sendData['suggest_content']
+									,sendData['suggest_title']
+							);
+ 						//目安箱でないなら
+ 						} else {
+ 							//通常メールとして送信する
+							sendMemberMail(
+									sendData['user_key']
+									,sendData['suggest_content']
+									,sendData['suggest_title']
+							);
+ 						}
+ 					};
+ 					var sd = new SimpleConfirmDialog(
+ 							function(){
+
+									doIt();
+ 							},
+ 							"送信します。よろしいですか?");
+ 					sd._showDialog();
 							}
 						};
 						var sd = new SimpleConfirmDialog(

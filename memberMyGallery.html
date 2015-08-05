@@ -17,7 +17,9 @@
 			<!-- fancyboxのCSSを読み込む。 -->
 			<link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
 			<script>
-				hideNormalHeader();	//通常ページのヘッダーを隠す
+				// dom要素を作るクラスをインスタンス化する
+				var creator = new createLittleContents();
+				creator.hideNormalHeader();	//通常ページのヘッダーを隠す
 				creator.getJsonFile('source/mygallery.json');			// Myギャラリーページ用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// HTMLのテンプレートデータをを取得する。
@@ -29,9 +31,11 @@
 				// 会員ページのjsonを読み込む
 				creator.getDomFile('template/memberPage.html');
 				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
+				creator.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
+				creator.outputTag('accountHeader', 'memberHeader');
+
 				// バナー領域を作る
 				creator.outputTag('userBanner');
 
@@ -45,22 +49,25 @@
 				creator.outputTag('numberingOuter');
 				
 				//ユーザのギャラリーのJSONに会員IDをセットする。
-				creator.json.myGalleryTable.user_key.value = creator.json.memberHeader.user_key.value;
+				creator.json.myGalleryTable.user_key.value = creator.json.accountHeader.user_key.value;
 				//ユーザのギャラリー情報を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myGalleryTable'], 'myGalleryTable');
-				//ギャラリーの内容を追加する。
-				creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'createMyGalleryImages');	// ブログの記事を作る。
+				//ギャラリーデータがあればコンテンツを作る
+				if(creator.json.myGalleryTable.table[0]) {
+					//ギャラリーの内容を追加する。
+					creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'createMyGalleryImages');	// ブログの記事を作る。
+				}
 
 				//ギャラリーの画像を拡大できるようにする。
-				useZoomImage('myGalleryTable tr a');
+				creator.useZoomImage('myGalleryTable tr a');
 				//jQuery UIのリッチなボタンを配置する。
 				$('.myGalleryEditButtons button').button();
 				//新規ボタンをクリックしたらアップロードするボタンを押すイベントを登録する。
-				bindClickTarget('.myGalleryEditButtons .createButton', '.myGalleryEditButtons .uploader');
+				creator.bindClickTarget('.myGalleryEditButtons .createButton', '.myGalleryEditButtons .uploader');
 				//画像アップローダーの値が変わったときのイベントを定義する。
-				setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
+				creator.setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
 				//削除ボタンがクリックされた時にギャラリーコンテンツを削除するイベントを登録する
-				deleteMyGalleryPhoto();
+				creator.deleteMyGalleryPhoto();
 				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				</script>
 		</div>

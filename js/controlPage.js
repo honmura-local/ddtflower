@@ -350,8 +350,8 @@ function postForm(form){
 	//送信するデータを格納する連想配列を作成する。
 	var formData = createFormData($form);
 	//creatorのメンバにフォームデータを保存する。
-//	creator.formData['formData'] = formData;
-	this.formData['formData'] = formData;
+	creator.formData['formData'] = formData;
+	// this.formData['formData'] = formData;
 	
 	//現在の日付を取得するために日付型のインスタンスを作る。
 	var time = new Date();

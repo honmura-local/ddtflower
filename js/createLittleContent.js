@@ -1964,17 +1964,17 @@ function createLittleContents(){
 		//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
 		//@mod 2015.0802 T.Masuda ページ内で生成したcreatetagクラスインスタンスを参照するようにしました。
 		//会員番号が入っていなく、通常ヘッダーが見えていなければ
-		if(!isNaN(json.accountHeader.user_key.value) && $('.header:hidden').length) {
+		if(!isNaN(this.json.accountHeader.user_key.value) && $('.header:hidden').length) {
 			// パーツのテンプレートのDOMを取得する。
-			getDomFile('template/memberCommon.html');
+			this.getDomFile('template/memberCommon.html');
 			// バナー領域のJSONを取得する。
-			getJsonFile('source/memberCommon.json');
+			this.getJsonFile('source/memberCommon.json');
 			//ユーザ情報のテキストをDBから取得する
-			getJsonFile('php/GetJSONString.php', json['accountHeader'], 'accountHeader');
+			this.getJsonFile('php/GetJSONString.php', json['accountHeader'], 'accountHeader');
 			// 会員ページヘッダーを作る
-			outputTag('accountHeader', 'memberHeader');
+			this.outputTag('accountHeader', 'memberHeader');
 			// バナー領域を作る
-			outputTag('userBanner');
+			this.outputTag('userBanner');
 		}
 	}
 
