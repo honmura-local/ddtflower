@@ -125,10 +125,12 @@
 					creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
 					//セレクトボックスのvalueを画面に表示されている値にする
 					creator.setSelectboxValue('.selectThemebox');
+					//予約中授業の外枠領域を作る
+					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 					if(creator.json['reservedLessonTable']['table'][0]) {
 						// 予約中授業のテーブルを作る
-						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
+						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 						// 予約中テーブルのテーブルの値をしかるべき値にする
 						lessonTableValueInput('.reservedLessonTable', creator.json['reservedLessonTable']['table'], "callMemberLessonValue");
 						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと

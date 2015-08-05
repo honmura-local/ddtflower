@@ -92,6 +92,8 @@
 					creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 					//日付ページングを実装する
 					nowDatePaging('dateBelt', creator);
+					//日ごと授業テーブルの外枠領域を作る
+					creator.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
 					// 日ごと予約者一覧テーブル用のJSON配列を取得する
 					creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 					//日ごと予約者の情報がないときにテーブルを作らない

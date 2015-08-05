@@ -1409,8 +1409,8 @@ function createLittleContents(){
 	replaceTableOption['reservedLessonTable'] = {
 		//クエリを置換する置換フラグ、クエリを置換する
 		replaceFlag:'replace',
-		//テーブルのafterでの追加先
-		addDomPlace:'#alreadyReserved .selectTheme',
+		//テーブルの追加先dom名
+		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
 		afterReloadFunc:'afterReloadReservedLessonTable',
 		//置換のvalueが入ったdom名
@@ -1434,7 +1434,7 @@ function createLittleContents(){
 		//クエリを置換する置換フラグ、クエリを置換する
 		replaceFlag:'replace',
 		//テーブルのafterでの追加先
-		addDomPlace:'.dateSelect',
+		addDomPlace:'.eachDayReservedInfoTableOutsideArea',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'.dateInput',
 		//置換するkey名
@@ -1448,7 +1448,7 @@ function createLittleContents(){
 	//受講承認一覧テーブル
 	replaceTableOption['lecturePermitListInfoTable']  = {
 		//テーブルのafterでの追加先
-		addDomPlace:'.permitListSearch',
+		addDomPlace:'.lecturePermitListInfoTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
 		afterReloadFunc:'afterReloadPermitListInfoTable',
 		//検索結果がなかった時のエラーメッセージ
@@ -1585,12 +1585,12 @@ function createLittleContents(){
 		//すでにテーブルがあるならテーブルを消す
 		if ($(DOT + reloadTableClassName)) {
 			//テーブルを消す
-			$(DOT + reloadTableClassName).remove();
+			$(DOT + reloadTableClassName).parent().empty();
 		}
 		//DBから取得した値があった時の処理
 		if(this.json[reloadTableClassName].table[0]){
 			//テーブルを作り直す
-			this.outputTagTable(reloadTableClassName,reloadTableClassName,STR_BODY);
+			this.outputTagTable(reloadTableClassName,reloadTableClassName, replaceTableOption[reloadTableClassName].addDomPlace);
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 			if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 				//リロード後に処理をする関数をコールする
@@ -1599,12 +1599,10 @@ function createLittleContents(){
 		//DBから検索結果が見つからなかった時の処理
 		} else {
 			//見つからなかったことを表示するためのdivを作る
-			$(STR_BODY).append('<div class="' + reloadTableClassName + '"><div>');
+			$(replaceTableOption[reloadTableClassName].addDomPlace).append('<div class="' + reloadTableClassName + '"><div>');
 			//作ったdivに検索結果が見つからなかったメッセージを表示する
 			$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
 		}
-		//作ったテーブルをしかるべき場所に移動する
-		$(replaceTableOption[reloadTableClassName].addDomPlace).after($(DOT + reloadTableClassName));
 	}
 	
 	/* 

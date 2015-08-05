@@ -85,6 +85,8 @@ function createAdminPermitLessonListContent() {
 	creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
 	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
 	setPermitListFromToDate();
+	//受講承認一覧テーブル外枠を作る
+	creator.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
 	//受講承認一覧テーブルを作る
 	creator.tableReload('lecturePermitListInfoTable')
 	//受講承認一覧のリスト更新ボタン
@@ -193,22 +195,9 @@ function createAdminUserListContent() {
 function createAdminLessonDetailContent() {
 	//授業詳細タブ内にカレンダ-作る
 	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-	// //予約一覧ダイアログを作る
-	// var lessonList = new tagDialog('adminLessonListDialog', '', dialogOption['adminLessonListDialog'], function(){
-	// 	// 日ごとダイアログ領域を作る
-	// 	outputTag('adminLessonListDialog', 'dialogDiv', 'body');
-	// });
-	
 	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
 	var lessonCalendar = new adminCalendar('.adminCalendar');
 	lessonCalendar.create();	//カレンダーを実際に作成する
-	
-	//授業詳細ダイアログを作る
-	// var lessonDetailDialog = new tagDialog(LESSON_DETAIL_DIALOG, '', dialogOption[LESSON_DETAIL_DIALOG], function(){
-	// 	// 授業詳細ダイアログ領域を作る
-	// 	outputTag(LESSON_DETAIL_DIALOG, LESSON_DETAIL_DIALOG, 'body');
-	// });
-
 }
 
 /* 
@@ -268,10 +257,6 @@ function createAdminMailMagaAnnounceContent() {
 		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
 	});
 
-	// //メルマガの情報テーブルを取得するためのjsonをDBから取得する
-	// getJsonFile('php/GetJSONArray.php', json['mailMagaTable'], 'mailMagaTable');
-	// //メルマガテーブルを作る
-	// outputTagTable('mailMagaTable', 'mailMagaTable', '#mailMagaAndAnnounce');
 	//メルマガ・アナウンス入力領域を作る
 	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
 
