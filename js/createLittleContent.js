@@ -1333,7 +1333,7 @@ function createLittleContents(){
 		//テキストボックス追加先のdomに表示している文字列を空白で初期化する
 		$(DOT + appendTo).text('');
 		//テキストボックスを追加する
-		outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
+		this.outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
 	}
 	
 	/* 
@@ -1402,8 +1402,8 @@ function createLittleContents(){
 	this.addCheckbox = function(selector, attrName) {
 		$('.' + selector).html('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
 	}
-	
-	//リプレイステーブル連想配列
+
+	//テーブルを置き換えるときの設定オブジェクト
 	var replaceTableOption = {};
 	//予約中授業テーブル
 	replaceTableOption['reservedLessonTable'] = {
@@ -1412,7 +1412,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'#alreadyReserved .selectTheme',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:this.afterReloadReservedLessonTable,
+		afterReloadFunc:'afterReloadReservedLessonTable',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
@@ -1424,18 +1424,10 @@ function createLittleContents(){
 	}
 	//受講済み授業テーブル
 	replaceTableOption['finishedLessonTable'] = {
-		//クエリを置換する置換フラグ、クエリを置換する
-		replaceFlag:'replace',
-		//テーブルのafterでの追加先
-		addDomPlace:'#finishedLesson .selectTheme',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#finishedLesson .selectThemebox',
 		//置換するkey名
 		replaceQueryKey:'lesson_name',
-		//テーブルの値を置換する関数名
-		replaceTableValuefunction:'callMemberLessonValue',
-		//ページングの追加先
-		addPagingPlace:'.tabLink[href="#finishedLesson"]',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講済みの授業が見つかりませんでした。'
 	}
@@ -1454,49 +1446,17 @@ function createLittleContents(){
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
-	
-	//管理者画面、ユーザ一覧
-	replaceTableOption['userListInfoTable'] = {
-		//クエリを置換する置換フラグ、クエリを置換する
-		replaceFlag:'add',
-		//テーブルのafterでの追加先
-		addDomPlace:'.searchUserList',
-		//検索結果がなかった時のエラーメッセージ
-		errorMessage:'検索結果が見つかりませんでした。',
-		//ページングの追加先
-		addPagingPlace:'.tabLink[href="#userList"]'
-	}
-	
-	//メルマガテーブル
-	replaceTableOption['mailMagaTable'] = {
-		//クエリを置換する置換フラグ、クエリを追加する(検索機能で使う)
-		replaceFlag:'add',
-		//テーブルのafterでの追加先
-		addDomPlace:'.mailMagaSearchArea',
-		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:this.afterReloadMailMagaTable,
-		//置換のvalueが入ったdom名
-	//	replaceValueDom:'#finishedLesson .selectThemebox',
-		//置換するkey名
-	//	replaceQueryKey:'lesson_name',
-		//テーブルの値を置換する関数名
-		//replaceTableValuefunction:'',
-		//ページングの追加先
-		addPagingPlace:'.tabLink[href="#mailMagaAndAnnounce"]',
-		//検索結果がなかった時のエラーメッセージ
-		errorMessage:'メルマガが見つかりませんでした。'
-	}
-	
+
 	//受講承認一覧テーブル
 	replaceTableOption['lecturePermitListInfoTable']  = {
 		//テーブルのafterでの追加先
 		addDomPlace:'.permitListSearch',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:this.afterReloadPermitListInfoTable,
+		afterReloadFunc:'afterReloadPermitListInfoTable',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
-	}
-	
+	};
+
 	/*
 	 * 関数名 :addQueryExtractionCondition
 	 * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する
@@ -1643,7 +1603,7 @@ function createLittleContents(){
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 			if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 				//リロード後に処理をする関数をコールする
-				replaceTableOption[reloadTableClassName].afterReloadFunc();
+				eval(replaceTableOption[reloadTableClassName].afterReloadFunc)();
 			}
 		//DBから検索結果が見つからなかった時の処理
 		} else {
@@ -1691,11 +1651,11 @@ function createLittleContents(){
 	 */
 	this.setTableReloadExecute = function(tableClassName, addQueryString, defaultQuery) {
 		//クエリに文字列を追加する
-		json[tableClassName].db_getQuery += addQueryString;
+		this.json[tableClassName].db_getQuery += addQueryString;
 		//クエリからテーブルを作る
-		tableReload(tableClassName);
+		this.tableReload(tableClassName);
 		//クエリを追加前に戻す
-		json[tableClassName].db_getQuery = defaultQuery;
+		this.json[tableClassName].db_getQuery = defaultQuery;
 	}
 	
 	/* 
@@ -1793,7 +1753,7 @@ function createLittleContents(){
 		//ログアウトボタンがクリックされた時に処理を行うイベントを登録する
 		$(STR_BODY).on(CLICK, '.logoutLink', function(){
 			//管理者としてログインしていたなら管理者ページに遷移する
-			if (json.accountHeader.authority == '80') {
+			if (this.json.accountHeader.authority == '80') {
 				//管理者ページを呼び出し、続けて管理者としての処理をできるようにする
 				callPage('adminPage.html');
 			//管理者としてログインしていなければ通常ページのトップページに戻る
@@ -1915,7 +1875,7 @@ function createLittleContents(){
 		//置換するクエリに使用ポイントの値が1以上のとき、ポイントを使うということなのでクエリにポイントしようクエリを付け足す
 		if (sendReplaceArray.use_point >= 1) {
 			//現状のクエリに使用ポイントのクエリを付け足す
-			sendQueryArray.db_setQuery += json.updateUsePoint.db_setQuery;
+			sendQueryArray.db_setQuery += this.json.updateUsePoint.db_setQuery;
 		}
 		//クエリの結果を返す
 		return sendQueryArray;
@@ -2077,63 +2037,7 @@ function createLittleContents(){
 		// @TODO 結果をどうしいのかはまだ未定
 		//return resulwork
 	}
-	
-	/* 
-	 * 関数名:afterReloadReservedLessonTable
-	 * 概要  :予約中授業がリロードした後に行う関数
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.23
-	 */
-	this.afterReloadReservedLessonTable = function() {
-		//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-		this.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
-	}
-	
-	/* 
-	 * 関数名:afterReloadPermitListInfoTable
-	 * 概要  :受講承認一覧がリロードした際にテーブルに対して処理をする関数をコールするための関数
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.23
-	 */
-	this.afterReloadPermitListInfoTable = function() {
-		//受講承認一覧テーブルの取り出した行にクラス名を付ける
-		creator.setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
-	
-		//受講承認一覧テーブルの列内を編集する
-		lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
-		//受講承認一覧テーブルの料金列をテキストボックスにする
-		creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
-		//受講承認一覧テーブルの使用pt列をテキストボックスにする
-		creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
-		//セレクトボックスを列にアウトプットする
-		creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
-		//セレクトボックスのvalueを画面に表示されている値にする
-		creator.setSelectboxValue('.contentSelect');
-		//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-		creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
-		//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-		creator.setTableTextboxValuefromDB(json['lecturePermitListInfoTable']['table'], setInputValueToLecturePermitListInfoTable);
-	}
-	
-	/* 
-	 * 関数名:afterReloadMailMagaTable
-	 * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.22
-	 */
-	this.afterReloadMailMagaTable = function() {
-		//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
-		cutString('.mailMagaContent', '150');
-		//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		setTableRecordClass('mailMagaTable', 'targetMailMagazine');
-	}
-	
+
 	/* 
 	 * 関数名:createContentTriggerClick
 	 * 概要  :管理者ページでタブがクリックされたときにコンテンツを呼び出すための関数。

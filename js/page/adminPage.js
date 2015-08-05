@@ -84,7 +84,7 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧の検索領域を作る
 	creator.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
 	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
-	creator.setPermitListFromToDate();
+	setPermitListFromToDate();
 	//受講承認一覧テーブルを作る
 	creator.tableReload('lecturePermitListInfoTable')
 	//受講承認一覧のリスト更新ボタン
@@ -94,13 +94,13 @@ function createAdminPermitLessonListContent() {
 	//クリックでテキストボックスにカレンダーを表示する
 	//clickCalendar('toSearach');
 	//受講承認一覧の検索機能を実装する
-	creator.searchPermitListInfoTable();
+	searchPermitListInfoTable();
 	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-	creator.setSelectboxText(json.selectCommodityInf.table, json.contentSelect.contentOption, 'commodity_name');
+	creator.setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	creator.setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
+	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-	creator.loopUpdatePermitLessonList();
+	loopUpdatePermitLessonList();
 }
 
 /* 
@@ -614,7 +614,7 @@ function loopUpdatePermitLesson() {
 function loopUpdatePermitLessonList() {
 	var thisElem = this;
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.lecturePermitList .normalButton', function(){
+	$(STR_BODY).on(CLICK, '#lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -652,4 +652,50 @@ function loginInsteadOfMember (memberId) {
 	//会員ページを呼び出す
 	callPage('memberPage.html');
 }
+
+
+/* 
+ * 関数名:afterReloadPermitListInfoTable
+ * 概要  :受講承認一覧がリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadPermitListInfoTable() {
+	//受講承認一覧テーブルの取り出した行にクラス名を付ける
+	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
+	//受講承認一覧テーブルの列内を編集する
+	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+	//受講承認一覧テーブルの料金列をテキストボックスにする
+	creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	//受講承認一覧テーブルの使用pt列をテキストボックスにする
+	creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	//セレクトボックスを列にアウトプットする
+	creator.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+	//セレクトボックスのvalueを画面に表示されている値にする
+	creator.setSelectboxValue('.contentSelect');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], creator.setInputValueToLecturePermitListInfoTable);
+}
+
+
+/* 
+ * 関数名:afterReloadReservedLessonTable
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function afterReloadReservedLessonTable() {
+	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+}
+
+
+
+
 
