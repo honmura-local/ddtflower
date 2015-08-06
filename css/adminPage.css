@@ -432,6 +432,7 @@
 .mailTo, .mailToPerson {
 	overflow: auto;			/* 長すぎる領域はスクロールにする */
 	white-space: nowrap;	/* 改行をしない */
+	text-indent: 1em;		/* 1文字分のインデントをとる */
 }
 
 /* 

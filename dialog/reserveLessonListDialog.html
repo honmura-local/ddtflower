@@ -22,8 +22,7 @@
 		alert('申し訳ございません。この日は予約出来る授業がありません。');
 		//ダイアログを閉じる
 		// console.log($('.reserveLessonListContent')[0].dialog(CLOSE));
-		console.log($('.reserveLessonListContent').dialog(CLOSE));
-		$('.reserveLessonListContent')[0].dialog(CLOSE)
+		$('.reserveLessonListContent')[0].instance.destroy();
 	//予約する授業のデータがある時は予約できる授業の一覧を表示する
 	} else {
 		//予約できる授業のデータ一覧テーブルを作る

@@ -1273,6 +1273,8 @@ function createLittleContents(){
 			success:function(ret){				//通信成功時の処理
 				//受け取ったjson文字列を連想配列にする
 				var resultJsonArray = JSON.parse(ret);
+				//更新した結果が何件であったかを返すために、結果件数を変数に入れる
+				resultCount = Number(resultJsonArray.message);
 				//更新成功であれば
 				//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
 				//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
@@ -1280,7 +1282,7 @@ function createLittleContents(){
 				//第三引数が空白であるならループで更新を行うということなのでアラートを出さない
 				if(successMessage != '') {
 					//更新した内容が1件以上の時更新成功メッセージを出す
-					if(resultJsonArray.message >= 1) {
+					if(resultCount >= 1) {
 						alert(successMessage);	//更新成功のメッセージを出す
 					//更新失敗であれば
 					} else {
