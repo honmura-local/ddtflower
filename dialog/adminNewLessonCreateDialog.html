@@ -3,7 +3,7 @@
 	//クリックなどのイベントをリセットする
 	$('.adminNewLessonCreateContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var adminNewLessonCreator = new createTag();
+	var adminNewLessonCreator = new createLittleContents();
 	//管理者授業詳細一覧のjsonを取得する
 	adminNewLessonCreator.getJsonFile('source/adminCommon.json');
 	//管理者授業詳細のテンプレートを取得する
@@ -22,6 +22,10 @@
 	$('.adminNewLessonCreateContent').on(CLICK, '.newLessonCreateButton', function() {
 		//新規授業を登録する処理を行う
 		newLessonEntry();
+		//授業詳細一覧テーブルを更新する
+		adminLessonListCreator.tableReload('adminLessonDetailTable');
+		//授業追加ダイアログを閉じる
+		$('.adminNewLessonCreateContent').dialog('close');
 	});
 	// });
 </script>

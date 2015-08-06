@@ -1464,6 +1464,16 @@ function createLittleContents(){
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
 
+	//管理者画面、授業詳細一覧テーブル
+	replaceTableOption['adminLessonDetailTable'] = {
+		//テーブルの追加先
+		addDomPlace:'.adminLessonDetailTableOutsideArea',
+		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
+		afterReloadFunc:'adminLessonListDialogOpenFunc',
+		//検索結果がなかった時のエラーメッセージ
+		errorMessage:'この日の予約できる授業はありません'
+	}
+
 	/*
 	 * 関数名 :addQueryExtractionCondition
 	 * 概要  　:ボタンがクリックされた時にテーブルの中身を入れ替える時に発行するクエリに抽出条件を追加する

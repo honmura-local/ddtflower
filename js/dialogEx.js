@@ -563,15 +563,16 @@ function newLessonEntry() {
 	var timeTableDayKey = "";
 	//受け取った授業一覧データから時限データを探す
 	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
+		var test = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount];
 		//time_table_day_keyが空白のものはループを飛ばす
 		if($('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] == "") {
 			//次のループに行く
 			continue;
 		}
 		//新規授業作成データの時限データが見つかった時の処理
-		if(newLesoonData['timetable_key'] == $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]) {
+		if(newLesoonData['timetable_key'] == $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['timetable_key'] && $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] != "") {
 			//時限データを取得し、ループを終える
-			timeTableDayKey = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount];
+			timeTableDayKey = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'];
 			//ループを終わらせる
 			break;
 		}
@@ -584,15 +585,16 @@ function newLessonEntry() {
 	//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
 	if(timeTableDayKey == "") {
 		//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
-		var errorCount = setDBdata(adminNewLessonCreator.json.insertTimeTableDay, sendReplaceQuery, '');
+		var errorCount = adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.insertTimeTableDay, sendReplaceQuery, '');
 		//失敗件数が0でないなら授業データを新しく作るクエリを発行する
 		if (errorCount != 0) {
 			//新規に授業のデータをDBに登録する
-			setDBdata(adminNewLessonCreator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
+			adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
 		}
 	//予約する時限があった時にそれを使って新規授業を作成する
 	} else {
-		setDBdata(adminNewLessonCreator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
+		//すでにある時限データを使って授業データを作る
+		adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
 	}
 }
 

@@ -221,7 +221,7 @@ function createAdminMailMagaAnnounceContent() {
 	//メルマガのデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'creator.afterReloadMailMagaTable');
+	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 
 	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
 	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
@@ -242,7 +242,7 @@ function createAdminMailMagaAnnounceContent() {
 		//メルマガのデータを取り出す
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 		//ページング機能付きでメルマガテーブルを作る
-		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'creator.afterReloadMailMagaTable');
+		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//クエリをデフォルトに戻す
 		creator.json.mailMagaTable.db_getQuery = queryDefault;
 	});
@@ -691,3 +691,19 @@ function afterReloadEachDayReservedInfoTable() {
 	//テーブルの値をクライント側で置換を行う
 	lessonTableValueInput(DOT + 'eachDayReservedInfoTable', creator.json.eachDayReservedInfoTable.table, 'callEachDayReservedValue');
 }
+
+/* 
+ * 関数名:afterReloadMailMagaTable
+ * 概要  :メルマガテーブルがリロードした際にテーブルに対して処理をする関数をコールするための関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.22
+ */
+function afterReloadMailMagaTable() {
+	//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
+	cutString('.mailMagaContent', '150');
+	//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+	setTableRecordClass('mailMagaTable', 'targetMailMagazine');
+}
+

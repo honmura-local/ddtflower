@@ -2,7 +2,7 @@
 <script>
 	$('.adminLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var adminLessonListCreator = new createTag();
+	var adminLessonListCreator = new createLittleContents();
 	//管理者授業詳細一覧のjsonを取得する
 	adminLessonListCreator.getJsonFile('source/adminCommon.json');
 	//管理者授業詳細のテンプレートを取得する
@@ -17,8 +17,10 @@
 	adminLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, adminLessonListCreator.json['adminLessonDetailTable'], 'adminLessonDetailTable');
 	//取り出した値が0でないときに授業一覧テーブルを表示する
 	if(adminLessonListCreator.json.adminLessonDetailTable.table.length != 0) {
+		//管理者授業詳細一覧テーブルの外枠を作る
+		adminLessonListCreator.outputTag('adminLessonDetailTableOutsideArea', 'adminLessonDetailTableOutsideArea', '.adminLessonListDialogContent');
 		//管理者授業詳細一覧テーブルを作る
-		adminLessonListCreator.outputTagTable('adminLessonDetailTable', 'adminLessonDetailTable', '.adminLessonListDialogContent');
+		adminLessonListCreator.outputTagTable('adminLessonDetailTable', 'adminLessonDetailTable', '.adminLessonDetailTableOutsideArea');
 		//レッスンのステータス領域を作る
 		adminLessonListCreator.outputTag('adminLessonDetailStatus', 'adminLessonDetailStatus', '.adminLessonListDialogContent');
 	}
