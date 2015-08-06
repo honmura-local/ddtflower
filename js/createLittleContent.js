@@ -2541,13 +2541,21 @@ calendarOptions = {};
 calendarOptions['blog'] = {
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
+			this.instance.creator.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', dateText);	// ブログの記事を作る。
+			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', this.dateText);	// ブログの記事を作る。
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
-			//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
-			return putDisableDate(date, this.dateArray);
+			var retArray = [true];	//返却する配列を宣言、添字0の要素をtrueで初期化する
+			
+			if(this.instance !== void(0)){
+				//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
+				retArray = this.instance.putDisableDate(date, this.instance.dateArray);
+			}
+			
+			//結果の配列を返す
+			return retArray;
 		}
 	}
 
@@ -2937,17 +2945,22 @@ function adminCalendar(selector, dialog) {
 /*
  * クラス名:blogCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- *     :int dateRange:クリック可能な日付の期間
+ *     :createLittleContents creator:createLittleContentsクラスインスタンス
  * 戻り値:なし
  * 概要  :ブログページのカレンダーを作る
  * 作成日:2015.06.10
  * 作成者:T.Masuda
  */
-function blogCalendar(selector, dateArray) {
-	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
-	this.calendarName = 'blog';		//カレンダー名をセットする
-	$(selector)[0].dateArray = dateArray;		//有効な日付設定の文字列をカレンダーのタグにセットする
+function blogCalendar(selector, creator) {
+	this.calendarName = 'blog';				//カレンダー名をセットする
+	this.dom = $(selector)[0];				//クラスインスタンスにDOMへの参照を持たせる
+	this.dom.instance = this;				//クラスインスタンスへの参照をDOMに持たせる
+	this.creator = creator;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
+	
+	//creatorが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
+	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle.table);	
 	//オプションを設定する
+	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];
 }
 

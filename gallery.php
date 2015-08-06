@@ -19,34 +19,37 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<link href="css/gallery.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var galleryCreator = new createLittleContents();
+				var creator = new createLittleContents();
 
-				galleryCreator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
-				galleryCreator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
-				galleryCreator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				creator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
+				creator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
+				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				//テンプレートのDOMを取得する。
-				galleryCreator.getDomFile('template/common.html');
-				galleryCreator.getDomFile('template/gallery.html');
+				creator.getDomFile('template/common.html');
+				creator.getDomFile('template/gallery.html');
 
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				galleryCreator.createMemberPageHeader(galleryCreator);
+				creator.createMemberPageHeader(creator);
 
-				galleryCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				galleryCreator.outputTag('pageTitle');						// タイトル領域を作る
-				galleryCreator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
-				galleryCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				galleryCreator.outputTag('footer');						// フッターを作る
-			
+				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				creator.outputTag('pageTitle');						// タイトル領域を作る
+				creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
+				creator.outputTag('numberingOuter');				//ナンバリング領域を作る
+				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				creator.outputTag('footer');						// フッターを作る
+
+				creator.outputNumberingTag('photo', 1, 4, 1, 8, '.gallery');	// ギャラリーの記事を作る。
+				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。
-				galleryCreator.useZoomImage('photo');
+				creator.useZoomImage('photo');
 
 				//@add 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを定義しました
 				//MSLの記事リストをギャラリーの前に配置する
-				$('.gallery').append($('#mslongtail_1985').show());
+				//$('.gallery').append($('#mslongtail_1985').show());
 			</script>
 			<!-- MSLの記事を表示する -->
 			<?php echo $msl_infos2->get('html_article'); ?>
