@@ -125,7 +125,7 @@ function createAdminUserListContent() {
 	//会員一覧のデータを取り出す
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['userListInfoTable'], 'userListInfoTable');
 	//ページング機能付きでユーザ情報一覧テーブルを作る
-	creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
+	creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
 	//会員一覧タブのボタン群れ
 	creator.outputTag('userListButtons', 'userListButtons', '#userList');
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
@@ -150,7 +150,7 @@ function createAdminUserListContent() {
 		//取得した値が0の時のテーブルを作らない
 		if(creator.json.userListInfoTable.table.length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
-			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside');
+			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
 		}
 	});
 
@@ -169,19 +169,11 @@ function createAdminUserListContent() {
 			loginInsteadOfMember(memberId);
 		}
 	});
-	
-	// メール送信ボタンのクリック
-	var doSendMail = function(){
-		// TODO 個々にメール送信処理をたす
-		alert("送信したつもり");
-	};
-	$(".createMail").click(function(e) {
-		var sd = new SimpleConfirmDialog(
-				doSendMail
-				,"メールを送信します。よろしいですか?"
-		);
-		sd._showDialog();
-	});
+
+	//通常メールボタンをクリックしたときに通常メール作成のためのダイアログを開く
+	adminMessageCreate('.createMail', 'mail');
+	//お知らせボタンをクリックしたときにお知らせのためのダイアログを開く
+	adminMessageCreate('.announceButton', 'announce');
 }
 
 /* 
@@ -707,3 +699,66 @@ function afterReloadMailMagaTable() {
 	setTableRecordClass('mailMagaTable', 'targetMailMagazine');
 }
 
+/* 
+ * 関数名:afterReloadUserListInfoTable
+ * 概要  :管理者ユーザ一覧テーブルに対してdom作成後の処理を行う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ */
+function afterReloadUserListInfoTable() {
+	//会員一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+	setTableRecordClass('userListInfoTable', 'targetUser');
+}
+
+/* 
+ * 関数名:adminMessageCreate
+ * 概要  :管理者ユーザ一覧で通常メールボタン、またはお知らせボタンでメッセージを作るためのダイアログを表示する
+ * 引数  :selector:buttonSelector:クリックしたときにダイアログを開くためのボタンのセレクター
+		string:sendType:お知らせとして送信するか、メールとして送信するかを識別するための文字列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ */
+function adminMessageCreate(buttonSelector, sendType) {
+	//お知らせボタンをクリックでメール送信ダイアログを作る
+	$(STR_BODY).on(CLICK, buttonSelector, function() {
+		//選択されているユーザの数を変数に入れ、ユーザが選択されていればメール送信処理を開始する
+		var selected = $('.selectRecord').length;
+		//会員一覧から送信するメールの対象となる人が1人以上選択されているなら送信ダイアログを開く
+		if(selected <= 0) {
+			//アラートメッセージをだしてメール送信対象が1人以上選択することを警告する
+			alert('1人以上選択してください')
+		} else {
+			//送信先宛先一覧
+			 sendToList = [];
+			//送信先宛先人一覧
+			var sendToPersonList = [];
+			//選択されているレコードの数だけループする
+			$('.selectRecord').each(function() {
+				//選択されているレコードの会員名を取り出す
+				var userName = $(this).children('.user_name').text();
+				//送信先宛先人一覧にユーザ名を追加する
+				sendToPersonList.push(userName);
+				//選択されているレコードのメールアドレスを取り出す。
+				var userMailAddress = $(this).children('.mail_address').text();
+				//送信先宛先一覧にユーザ名を追加する
+				sendToList.push(userMailAddress);
+			});
+			//送信するデータを連想配列に入れる
+			var sendMailDailogData = {
+				//送信先宛先人一覧
+				name:sendToPersonList,
+				//送信先アドレス一覧
+				mail:sendToList,
+				//送信データの種類、メールかお知らせかの区別に使う
+				sendType:sendType
+			};
+			//メール送信ダイアログを作る
+			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', sendMailDailogData, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
+			mailSendDialog.setCallbackClose(mailSendDialogCloseFunc);	//閉じるときのイベントを登録
+			mailSendDialog.run();	//主処理を走らせる
+		}
+	});
+}

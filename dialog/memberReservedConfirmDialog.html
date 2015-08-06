@@ -23,6 +23,7 @@
 		//DBに予約処理を行う
 		memberReservedConfirmDialogOkButtonFunc($('.memberReservedConfirmDialogContent')[0].instance.argumentObj);
 	});
+	//いいえボタンがクリックされたときにダイアログを閉じる処理を行う
 	$('.memberReservedConfirmDialogContent').on(CLICK, '.reserveNoButton', function() {
 		//ダイアログを閉じる
 		$('.memberReservedConfirmDialogContent').dialog(CLOSE);

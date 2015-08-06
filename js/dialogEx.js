@@ -192,7 +192,8 @@ CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';				//会員画面予約キャ�
 ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';			//管理者画面授業設定一覧ダイアログ
 LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';				//管理者画面授業詳細設定ダイアログ
 ADMIN_NEW_LESSON_CREATE 			= 'adminNewLessonCreateDialog';		//管理者画面新規授業作成ダイアログ
-
+ADMIN_MAIL_SEND_DIALOG 				= 'adminMailSendDialog';			//管理者画面メール送信ダイアログ
+CONFIRM_DIALOG 						= 'confirmDialog';					//確認ダイアログ
 
 //ダイアログのクローズするときにダイアログのdomを消去してリセットする
 function disappear(){
@@ -598,8 +599,20 @@ function newLessonEntry() {
 	}
 }
 
-// 以下、本村さん作成部分
+/* 関数名:mailSendDialogCloseFunc
+ * 概要　:管理者画面、会員一覧のからメールを送信するダイアログが閉じる時の処理
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.08.06
+ * 作成者　:T.Yamamoto
+ */
+function mailSendDialogCloseFunc() {
+	//ダイアログのdomを削除して初期化し次に開くときに備える
+	$('.adminMailDialogContent')[0].instance.destroy();
+}
 
+
+// 以下、本村さん作成部分
 var SimpleConfirmDialog = function(yesFunc, message) {
 	this.message = message;									// 確認メッセージ
 	this.targetHtml = "dialog/simpleConfirmDialog.html";	// ダイアログ本体html
@@ -637,7 +650,7 @@ var SimpleConfirmDialog = function(yesFunc, message) {
 				,message:this.message
 		};
 		
-		dialogCreator = new dialogEx(this.targetHtml, params);
+		dialogCreator = new dialogEx(this.targetHtml, params, dialogExOption[CONFIRM_DIALOG]);
 		// 閉じる機能もいいえ機能もデフォルトは閉じるだけ
 		if(!this.closeFunc) {
 			this.closeFunc = function(){return rapDestroy();};

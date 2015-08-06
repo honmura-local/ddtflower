@@ -421,10 +421,38 @@
  .selectRecord {
  	background: #D3FFB5;	/* 背景色を変更し、選択中であることを明示的にする */
  }
-
-
 /* 会員一覧の検索領域終わり */
 
+/* 
+ * セレクタ :.mailTo, .mailToPerson
+ * 概要   :メール送信ダイアログの宛先人とアドレス表示領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.08.06
+ */
+.mailTo, .mailToPerson {
+	overflow: auto;			/* 長すぎる領域はスクロールにする */
+	white-space: nowrap;	/* 改行をしない */
+}
+
+/* 
+ * セレクタ :.mailTitleTextbox, .mailContentTextbox
+ * 概要   :メール送信タイトルと本文領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.08.06
+ */
+.mailTitleTextbox, .mailContentTextbox {
+	width: 97%;				/* 幅を97%にする */
+}
+
+/* 
+ * セレクタ :.mailContentTextbox
+ * 概要   :メール送信本文領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.08.06
+ */
+.mailContentTextbox {
+	height: 200px;			/* 高さを200pxにする */
+}
 
 /* 受講者一覧の検索領域 */
 /* 

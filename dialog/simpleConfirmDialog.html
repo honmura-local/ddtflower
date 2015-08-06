@@ -4,13 +4,13 @@
 <button id="yesButton"></button>
 <button id="noButton"></button>
 <script>
-$(function(){
+
 	var args = $(".simpleConfirm")[0].instance.argumentObj;
-	$("#message").text(args["message"]);
+	$("#message").html(args["message"]);
 	$("#yesButton").text(args["yesCaption"]);
 	$("#yesButton").click(args["yesFunc"]);
 	$("#noButton").text(args["noCaption"]);
 	$("#noButton").click(args["noFunc"]);
-});
+	$('button').button();
 </script>
 </div>
