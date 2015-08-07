@@ -28,8 +28,8 @@ function createMemberFinishedLessonContent() {
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
-	//受講済みテーブルのテーブルの値をしかるべき値にする
-	lessonTableValueInput('.finishedLessonTable', creator.json.finishedLessonTable.table, 'callMemberLessonValue');
+	//受講済みテーブルの値を置換する
+	dbDataTableValueReplace(FINISHED_LESSONTABLE, FINISHED_LESSONTABLE_REPLACE_FUNC, false, creator);
 	//セレクトボックスのvalueを画面に表示されている値にする
 	creator.setSelectboxValue('.selectThemebox');
 	//絞り込み機能を実装する
@@ -102,17 +102,3 @@ function finshedLessonTableThemeSelect() {
 	});
 }
 
-/* 
- * 関数名:afterReloadReservedLessonTable
- * 概要  :予約中授業がリロードした後に行う関数
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.23
- */
-function afterReloadReservedLessonTable() {
-	//テーブルの値をクライント側で置換を行う
-	lessonTableValueInput(DOT + 'reservedLessonTable', creator.json.reservedLessonTable.table, 'callMemberLessonValue');
-	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
-}

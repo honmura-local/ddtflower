@@ -131,8 +131,8 @@
 					if(creator.json['reservedLessonTable']['table'][0]) {
 						// 予約中授業のテーブルを作る
 						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
-						// 予約中テーブルのテーブルの値をしかるべき値にする
-						lessonTableValueInput('.reservedLessonTable', creator.json['reservedLessonTable']['table'], "callMemberLessonValue");
+						// 予約中テーブルのテーブルの値を置換する
+						dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
 						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 

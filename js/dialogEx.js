@@ -7,27 +7,34 @@
  */
 
 //定数を定義する
-SPECIAL_RESERVED_CONFIRM_DIALOG_URL = 'dialog/specialReservedConfirmDialog.html';	//体験レッスン予約確認ダイアログのHTMLファイルのURL
-DIALOG_DEFAULT_ALERT_CONTENTS 		= 'dialog/defaultAlertContents.html';			//アラートを出すdomがあるファイル名
-DIALOG_RESERVE_LESSON_LIST 			= 'dialog/reserveLessonListDialog.html';		//会員、予約可能授業一覧ダイアログファイルパス
-UI_DIALOG_CONTENT 					= 'ui-dialog-content';							//ダイアログコンテンツのクラス名
-UI_DIALOG 							= 'ui-dialog';									//ダイアログクラス名
-CLOSE 								= 'close';										//クローズ処理に使う
-DIALOG_CLOSE_BUTTON 				= 'dailogCloseButton';							//閉じるボタンクラス名
-DEFAULT_ALERT_CONTENTS 				= 'defaultAlertContents';						//アラートダイアログの外側divのクラス名
-TAG_P								= ' p'											//pタグ
-LESSON_TABLE 						= 'lessonTable';								//会員画面予約授業一覧テーブル
-MEMBER_RESERVED_CONFIRM_DIALOG		= 'memberReservedConfirmDialog';				//会員画面予約確認ダイアログ
-CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';							//会員画面予約キャンセルダイアログ
-ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';						//管理者画面授業設定一覧ダイアログ
-LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';							//管理者画面授業詳細設定ダイアログ
-ADMIN_NEW_LESSON_CREATE 			= 'adminNewLessonCreateDialog';					//管理者画面新規授業作成ダイアログ
-ADMIN_MAIL_SEND_DIALOG 				= 'adminMailSendDialog';						//管理者画面メール送信ダイアログ
-CONFIRM_DIALOG 						= 'confirmDialog';								//確認ダイアログ
-TITLE 								= 'title';										//ダイアログの設定のタイトルなどで使う
-USER_ID 							= 'userId';										//ユーザの会員番号key名
-LESSON_TABLE_REPLACE_FUNC 			= 'callReservedLessonValue';					//予約可能授業一覧置換関数名
-
+SPECIAL_RESERVED_CONFIRM_DIALOG_URL			 = 'dialog/specialReservedConfirmDialog.html';	//体験レッスン予約確認ダイアログのHTMLファイルのURL
+DIALOG_DEFAULT_ALERT_CONTENTS				 = 'dialog/defaultAlertContents.html';			//アラートを出すdomがあるファイル名
+DIALOG_RESERVE_LESSON_LIST 					 = 'dialog/reserveLessonListDialog.html';		//会員、予約可能授業一覧ダイアログファイルパス
+UI_DIALOG_CONTENT 							 = 'ui-dialog-content';							//ダイアログコンテンツのクラス名
+UI_DIALOG 									 = 'ui-dialog';									//ダイアログクラス名
+CLOSE 										 = 'close';										//クローズ処理に使う
+DIALOG_CLOSE_BUTTON 						 = 'dailogCloseButton';							//閉じるボタンクラス名
+DEFAULT_ALERT_CONTENTS 						 = 'defaultAlertContents';						//アラートダイアログの外側divのクラス名
+TAG_P										 = ' p'											//pタグ
+LESSON_TABLE 								 = 'lessonTable';								//会員画面予約授業一覧テーブル
+MEMBER_RESERVED_CONFIRM_DIALOG				 = 'memberReservedConfirmDialog';				//会員画面予約確認ダイアログ
+CANCEL_LESSON_DIALOG 						 = 'cancelLessonDialog';						//会員画面予約キャンセルダイアログ
+ADMIN_LESSONLIST_DIALOG 					 = 'adminLessonListDialog';						//管理者画面授業設定一覧ダイアログ
+LESSON_DETAIL_DIALOG 						 = 'lessonDetailDialog';						//管理者画面授業詳細設定ダイアログ
+ADMIN_NEW_LESSON_CREATE 					 = 'adminNewLessonCreateDialog';				//管理者画面新規授業作成ダイアログ
+ADMIN_MAIL_SEND_DIALOG 						 = 'adminMailSendDialog';						//管理者画面メール送信ダイアログ
+CONFIRM_DIALOG 								 = 'confirmDialog';								//確認ダイアログ
+TITLE 										 = 'title';										//ダイアログの設定のタイトルなどで使う
+USER_ID 									 = 'userId';									//ユーザの会員番号key名
+LESSON_TABLE_REPLACE_FUNC 					 = 'callReservedLessonValue';					//予約可能授業一覧置換関数名
+ADMIN_LESSON_DETAIL_TABLE					 = 'adminLessonDetailTable';					//管理者、授業詳細一覧テーブル
+ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC 		 = 'callAdminReservedLessonValue';				//管理者、授業詳細一覧テーブル置換関数名
+FINISHED_LESSONTABLE						 = 'finishedLessonTable';						//会員、受講済み授業テーブル
+FINISHED_LESSONTABLE_REPLACE_FUNC			 = 'callMemberLessonValue';						//会員、受講済み授業テーブル置換関数名
+RESERVED_LESSON_TABLE 						 = 'reservedLessonTable';						//会員、予約中授業テーブル
+RESERVED_LESSON_TABLE_REPLACE_FUNC 			 = 'callMemberLessonValue';						//会員、予約中授業テーブル置換関数名
+EACH_DAY_RESERVED_INFO_TABLE 				 = 'eachDayReservedInfoTable';					//管理者、日ごと予約者一覧テーブル
+EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC 	 = 'callEachDayReservedValue';					//管理者、日ごと予約者一覧テーブル置換関数名
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -297,7 +304,7 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
 		//置換を行うテーブルのデータを取得する
-		var tableData = creator.json[LESSON_TABLE].table;
+		var tableData = creator.json[tableName].table;
 		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
 		if(lessonList) {
 			//時間割1限分の生徒の合計人数が入った連想配列を作る
@@ -309,7 +316,7 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
 			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName);
 		}
 		//テーブルを画面に表示する
-		$(DOT + LESSON_TABLE).show();
+		$(DOT + tableName).show();
 	},1);
 }
 
@@ -320,61 +327,55 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
  */
-function reserveLessonListTableReplace() {
+function LessonTableReplace() {
 	//予約可能授業一覧を置換する
 	dbDataTableValueReplace(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator);
 	//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 	setTableRecordClass(LESSON_TABLE, 'targetLessonTable');
 }
 
-
-
-
-
-
-
-/* 関数名:adminLessonListDialogOpenFunc
+/* 関数名:adminLessonDetailTableReplace
  * 概要　:管理者授業一覧ダイアログが開くときにコールされる関数一覧。テーブルの値を置換する
  * 引数　:なし
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
  */
-function adminLessonListDialogOpenFunc() {
-	//テーブルの値を変換するため、テーブルを隠す
-	$('.adminLessonDetailTable').hide();
-	//時間差で表現するためにsetTimeOutを使う
-	setTimeout(function(){
-		//変数に管理者授業詳細一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = adminLessonListCreator.json['adminLessonDetailTable'].table;
-		// 時間割1限分の生徒の合計人数が入った連想配列を作る
-		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
-		//管理者授業詳細一覧テーブルの値を置換する
-		lessonReservedTableValueInput(DOT + 'adminLessonDetailTable', lessonTable, 'callAdminReservedLessonValue', timeStudentsCount);
-		//管理者授業詳細一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		setTableRecordClass('adminLessonDetailTable', 'targetAdminLessonRecord');
-		//テーブルの行がクリックされたときに授業詳細ダイアログを開く
-		openAdminLessonDetailDialog();
-		//新規作成ボタンがクリックされたら授業新規作成ダイアログを開く
-		openAdminNewLessonCreateDialog();
-		//値の変換が終わればテーブルを表示する
-		$('.adminLessonDetailTable').show();
-	},1);
+function adminLessonDetailTableReplace() {
+	//管理者、授業データ一覧テーブルを置換する
+	dbDataTableValueReplace(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator);
 }
 
-/* 関数名:adminLessonListDialogCloseFunc
- * 概要　:管理者授業一覧ダイアログが閉じるときにコールされる関数一覧。初期化処理を行う
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
+/* 
+ * 関数名:reservedLessonTableReplace
+ * 概要  :予約中授業がリロードした後に行う関数
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
  */
-function adminLessonListDialogCloseFunc() {
-	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	adminLessonListCreator.json['adminLessonDetailTable'].table = {};
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.adminLessonListContent')[0].instance.destroy();
+function reservedLessonTableReplace() {
+	//予約中授業一覧を置換する
+	dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, creator);
+	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+	setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 }
+
+/* 
+ * 関数名:eachDayReservedInfoTableReplace
+ * 概要  :管理者日ごと予約者一覧テーブルを置換する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.23
+ */
+function eachDayReservedInfoTableReplace() {
+	//管理者日ごと予約者一覧テーブルを置換する
+	dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, creator);
+}
+
+
+
 
 /* 
  * 関数名:insertConfirmReserveJsonDialogValueEx

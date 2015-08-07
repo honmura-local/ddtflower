@@ -29,7 +29,7 @@
 		//予約できる授業のデータ一覧テーブルを作る
 		reserveLessonListCreator.outputTagTable('lessonTable', 'lessonTable', '.lessonTableOutsideArea');
 		//テーブルの値をクライアント側で編集して画面に表示する
-		reserveLessonListTableReplace();
+		LessonTableReplace();
 		//レッスンのステータス領域を作る
 		reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
 		$('.reserveLessonListContent').off();

@@ -1412,7 +1412,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'reserveLessonListTableReplace',
+		afterReloadFunc:'LessonTableReplace',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1423,7 +1423,7 @@ function createLittleContents(){
 		//テーブルの追加先dom名
 		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'afterReloadReservedLessonTable',
+		afterReloadFunc:'reservedLessonTableReplace',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
@@ -1451,7 +1451,7 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'afterReloadEachDayReservedInfoTable',
+		afterReloadFunc:'eachDayReservedInfoTableReplace',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
@@ -1471,7 +1471,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'adminLessonListDialogOpenFunc',
+		afterReloadFunc:'adminLessonDetailTableReplace',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
 	}
@@ -2628,8 +2628,7 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		//予約授業一覧ダイアログを作る
 		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
 		//ダイアログを開くときのテーブルの値を編集して表示する
-		adminLessonListDialog.setCallbackOpen(adminLessonListDialogOpenFunc);
-		adminLessonListDialog.setCallbackClose(adminLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
 
 		// //講座一覧ダイアログを開く

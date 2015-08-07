@@ -21,6 +21,8 @@
 		adminLessonListCreator.outputTag('adminLessonDetailTableOutsideArea', 'adminLessonDetailTableOutsideArea', '.adminLessonListDialogContent');
 		//管理者授業詳細一覧テーブルを作る
 		adminLessonListCreator.outputTagTable('adminLessonDetailTable', 'adminLessonDetailTable', '.adminLessonDetailTableOutsideArea');
+		//管理者授業詳細一覧テーブルを置換する
+		adminLessonDetailTableReplace();
 		//レッスンのステータス領域を作る
 		adminLessonListCreator.outputTag('adminLessonDetailStatus', 'adminLessonDetailStatus', '.adminLessonListDialogContent');
 	}
@@ -28,5 +30,7 @@
 	adminLessonListCreator.outputTag('lessonAddButton', 'addButton', '.adminLessonListContent');
 	//ボタンの見た目をjqueryuiのものにして整える
 	$('input[type=button]').button();
+	//新規作成ボタンがクリックされたら授業新規作成ダイアログを開く
+	openAdminNewLessonCreateDialog();
 </script>
 </div>
