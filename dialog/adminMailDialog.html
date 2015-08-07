@@ -13,8 +13,6 @@
 		//ダイアログコンテンツを囲む領域を作る
 		mailDialogCreator.outputTag('mailSendContent', 'mailSendContent', '.adminMailDialogContent');
 
-		//受け取ったデータを変数に入れる
-		var receivedData = $('.adminMailDialogContent')[0].instance.argumentObj;
 
 		//受け取ったメールや名前の数だけループするためにループの終わり値を取得する
 		var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.mail.length;
@@ -63,7 +61,7 @@
 		} else if($('.adminMailDialogContent')[0].instance.argumentObj.sendType == 'announce') {
 			$('.adminMailDialogContent').on(CLICK, '.mailSendButton',function(e) {
 				var sd = new SimpleConfirmDialog(
-						''
+						announceInsert
 						,"お知らせを送信します。<br>よろしいですか?"
 				);
 				sd._showDialog();

@@ -1,5 +1,6 @@
 <div class="reserveLessonListContent">
-<script>
+	<script>
+	//イベントが重複して起こらないようにイベントを先にオフにする
 	$('.reserveLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
 	var reserveLessonListCreator = new createLittleContents();
@@ -17,12 +18,19 @@
 	reserveLessonListCreator.outputTag('lessonTableOutsideArea', 'lessonTableOutsideArea', '.memberInfomation')
 	//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
 	reserveLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, reserveLessonListCreator.json['lessonTable'], 'lessonTable');
+
 	//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 	if (reserveLessonListCreator.json['lessonTable'].table.length == 0) {
 		alert('申し訳ございません。この日は予約出来る授業がありません。');
-		//ダイアログを閉じる
-		// console.log($('.reserveLessonListContent')[0].dialog(CLOSE));
-		$('.reserveLessonListContent')[0].instance.destroy();
+		// console.log($('.reserveLessonListContent'));
+		$('.ui-dialog').dialog("close");
+		// $('.reserveLessonListContent').dialog("destroy");
+
+		// console.log(window);
+		// console.log($('.reserveLessonListContent')[0].instance.);
+		// $(window).close();
+		// window.close();
+		// $('.reserveLessonListContent')[0].instance.destroy();
 	//予約する授業のデータがある時は予約できる授業の一覧を表示する
 	} else {
 		//予約できる授業のデータ一覧テーブルを作る
@@ -31,10 +39,12 @@
 		reservedLessonListDialogOpenFunc();
 		//レッスンのステータス領域を作る
 		reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
-		//イベントが重複して起こらないようにイベントを先にオフにする
 		$('.reserveLessonListContent').off();
 		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
 		openMemberReservedConfirmDialog();
 	}
 </script>
 </div>
+
+
+

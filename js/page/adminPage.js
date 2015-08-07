@@ -731,10 +731,12 @@ function adminMessageCreate(buttonSelector, sendType) {
 			//アラートメッセージをだしてメール送信対象が1人以上選択することを警告する
 			alert('1人以上選択してください')
 		} else {
-			//送信先宛先一覧
-			 sendToList = [];
 			//送信先宛先人一覧
 			var sendToPersonList = [];
+			//送信先宛先一覧
+			var sendToList = [];
+			//送信先会員番号一覧
+			var userNumberList = [];
 			//選択されているレコードの数だけループする
 			$('.selectRecord').each(function() {
 				//選択されているレコードの会員名を取り出す
@@ -745,20 +747,54 @@ function adminMessageCreate(buttonSelector, sendType) {
 				var userMailAddress = $(this).children('.mail_address').text();
 				//送信先宛先一覧にユーザ名を追加する
 				sendToList.push(userMailAddress);
+				//選択されているレコードの会員番号を取り出す。
+				var userNumber = $(this).children('.id').text();
+				//会員番号一覧にループ中の対象の会員番号を追加する
+				userNumberList.push(userNumber);
 			});
 			//送信するデータを連想配列に入れる
-			var sendMailDailogData = {
+			var sendMailData = {
 				//送信先宛先人一覧
 				name:sendToPersonList,
 				//送信先アドレス一覧
 				mail:sendToList,
+				//会員番号
+				memberNumber:userNumberList,
 				//送信データの種類、メールかお知らせかの区別に使う
 				sendType:sendType
 			};
 			//メール送信ダイアログを作る
-			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', sendMailDailogData, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
+			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', sendMailData, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
 			mailSendDialog.setCallbackClose(mailSendDialogCloseFunc);	//閉じるときのイベントを登録
 			mailSendDialog.run();	//主処理を走らせる
 		}
 	});
 }
+
+/* 
+ * 関数名:announceInsert
+ * 概要  :管理者会員一覧でお知らせのダイアログから送信ボタンがクリックされてお知らせテーブルに対して新規データの作成を行う
+ * 引数  :
+		
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ */
+function announceInsert(){
+	//入力されたお知らせメッセージのデータを取得する
+	// var announceData = getInputData('mailSendContent');
+	// //DBにメッセージ登録のクエリを投げる
+	// mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
+	// //ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
+	// var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
+	// //ループでメッセージ宛先の情報を登録する
+	// for(var loopStartCounter=0; loopStartCounter<loopEndCount;loopStartCount++) {
+	// 	//ループ中の会員番号を取得する
+	// 	var sendReplaceArray = {
+	// 		user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
+	// 	};
+	// 	//宛先テーブルを更新する
+	// 	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
+	// }
+}
+
