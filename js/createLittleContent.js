@@ -1412,7 +1412,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'reservedLessonListDialogOpenFunc',
+		afterReloadFunc:'reserveLessonListTableReplace',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -2509,29 +2509,6 @@ function createLittleContents(){
 	}
 
 	/*
-	 * 関数名:lessonListDialogSendObject
-	 * 引数  :strig: calendarDate:カレンダーをクリックしたときに返ってくる日付の値
-	 		string:dialogOptionName:ダイアログのオプションの名前
-	 * 戻り値:object:sendObject:授業一覧ダイアログを開く時に渡される連想配列
-	 * 概要  :カレンダーをクリックしたときにその日付をダイアログのタイトルにセットし、日付を連想配列にして返す
-	 * 作成日:2015.08.06
-	 * 作成者:T.Yamamoto
-	 */
-	this.lessonListDialogSendObject = function(calendarDate, dialogOptionName){
-		//ダイアログのタイトルの日付を日本語名にして取得する
-		var dialogTitle = changeJapaneseDate(calendarDate);
-		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[dialogOptionName][TITLE] = dialogTitle;
-		//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
-		var sendObject = {
-			//予約日付をセットし、どの日に予約するのかを識別する
-			lessonDate:calendarDate
-		};
-		//予約データ連想配列を返し、ダイアログに渡すのに使う
-		return sendObject;
-	}
-
-	/*
 	 * 関数名:addUserIdToObject
 	 * 引数  :object: addTargetObject:会員番号を追加したい連想配列名
 	 * 戻り値:object:resultObject:会員番号を追加後の連想配列
@@ -2625,7 +2602,7 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
-			var dateObject = creator.lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
+			var dateObject = lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
 			//会員番号をセットしてどのユーザが予約するのかを識別する
 			var dialogDataObject = creator.addUserIdToObject(dateObject);
 			//予約授業一覧ダイアログを作る

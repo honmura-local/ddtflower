@@ -26,6 +26,7 @@ ADMIN_MAIL_SEND_DIALOG 				= 'adminMailSendDialog';						//管理者画面メー
 CONFIRM_DIALOG 						= 'confirmDialog';								//確認ダイアログ
 TITLE 								= 'title';										//ダイアログの設定のタイトルなどで使う
 USER_ID 							= 'userId';										//ユーザの会員番号key名
+LESSON_TABLE_REPLACE_FUNC 			= 'callReservedLessonValue';					//予約可能授業一覧置換関数名
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -256,28 +257,81 @@ function disappear(){
 	this.instance.destroy();
 }
 
-/* 関数名:reservedLessonListDialogOpenFunc
- * 概要　:会員top、予約授業一覧ダイアログが開くときにコールされる関数一覧。テーブルの値を置換する
+/*
+ * 関数名:lessonListDialogSendObject
+ * 引数  :strig: calendarDate:カレンダーをクリックしたときに返ってくる日付の値
+ 		string:dialogOptionName:ダイアログのオプションの名前
+ * 戻り値:object:sendObject:授業一覧ダイアログを開く時に渡される連想配列
+ * 概要  :カレンダーをクリックしたときにその日付をダイアログのタイトルにセットし、日付を連想配列にして返す
+ * 作成日:2015.08.06
+ * 作成者:T.Yamamoto
+ */
+function lessonListDialogSendObject(calendarDate, dialogOptionName){
+	//ダイアログのタイトルの日付を日本語名にして取得する
+	var dialogTitle = changeJapaneseDate(calendarDate);
+	//ダイアログのタイトルをセットして予約日を分かりやすくする
+	dialogExOption[dialogOptionName][TITLE] = dialogTitle;
+	//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
+	var sendObject = {
+		//予約日付をセットし、どの日に予約するのかを識別する
+		lessonDate:calendarDate
+	};
+	//予約データ連想配列を返し、ダイアログに渡すのに使う
+	return sendObject;
+}
+
+/* 
+ * 関数名:dbDataTableValueReplace
+ * 概要　:データベースから取り出したテーブルについて、値を置換する
+ * 引数　:string:tableName:値を置換する対象のテーブル名
+ 		:string:replaceFuncName:置換を行う関数名
+ 		:boolean:lessonList:置換するテーブルが授業を一覧で表示する(会員、管理者両方にあてはまる)テーブルであるなら受講人数を使うかどうかの判定
+ 		:creatTagInstance:creator:クリエイトタグのインスタンス名
+ * 返却値:なし
+ * 作成日　:2015.07.31
+ * 作成者　:T.Yamamoto
+ */
+function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator) {
+	//テーブルを置換が終えるまで画面に表示しなくする
+	$(DOT + tableName).hide();
+	//時間差で表現するためにsetTimeOutを使う
+	setTimeout(function(){
+		//置換を行うテーブルのデータを取得する
+		var tableData = creator.json[LESSON_TABLE].table;
+		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
+		if(lessonList) {
+			//時間割1限分の生徒の合計人数が入った連想配列を作る
+			var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
+		} else {
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName);
+		}
+		//テーブルを画面に表示する
+		$(DOT + LESSON_TABLE).show();
+	},1);
+}
+
+/* 関数名:reserveLessonListTableReplace
+ * 概要　:会員top、予約授業一覧テーブルの値を置換する
  * 引数　:なし
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
  */
-function reservedLessonListDialogOpenFunc() {
-	//時間差で表現するためにsetTimeOutを使う
-	setTimeout(function(){
-		//変数に予約一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = reserveLessonListCreator.json[LESSON_TABLE].table;
-		// 時間割1限分の生徒の合計人数が入った連想配列を作る
-		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
-		//予約一覧テーブルの値を置換する
-		lessonReservedTableValueInput(DOT + LESSON_TABLE, lessonTable, "callReservedLessonValue", timeStudentsCount);
-		//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		setTableRecordClass(LESSON_TABLE, 'targetLessonTable');
-		//予約一覧テーブルを表示する
-		$(DOT + LESSON_TABLE).show();
-	},1);
+function reserveLessonListTableReplace() {
+	//予約可能授業一覧を置換する
+	dbDataTableValueReplace(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator);
+	//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+	setTableRecordClass(LESSON_TABLE, 'targetLessonTable');
 }
+
+
+
+
+
+
 
 /* 関数名:adminLessonListDialogOpenFunc
  * 概要　:管理者授業一覧ダイアログが開くときにコールされる関数一覧。テーブルの値を置換する
