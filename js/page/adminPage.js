@@ -780,21 +780,21 @@ function adminMessageCreate(buttonSelector, sendType) {
  * 作成者:T.Yamamoto
  * 作成日:2015.08.06
  */
-function announceInsert(){
+var announceInsert = function() {
 	//入力されたお知らせメッセージのデータを取得する
-	// var announceData = getInputData('mailSendContent');
-	// //DBにメッセージ登録のクエリを投げる
-	// mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
-	// //ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
-	// var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
-	// //ループでメッセージ宛先の情報を登録する
-	// for(var loopStartCounter=0; loopStartCounter<loopEndCount;loopStartCount++) {
-	// 	//ループ中の会員番号を取得する
-	// 	var sendReplaceArray = {
-	// 		user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
-	// 	};
-	// 	//宛先テーブルを更新する
-	// 	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
-	// }
+	var announceData = getInputData('mailSendContent');
+	//DBにメッセージ登録のクエリを投げる
+	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
+	//ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
+	var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
+	//ループでメッセージ宛先の情報を登録する
+	for(var loopStartCounter = 0; loopStartCounter < loopEndCount; loopStartCounter++) {
+		//ループ中の会員番号を取得する
+		var sendReplaceArray = {
+			user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
+		};
+		//宛先テーブルを更新する
+		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
+	}
 }
 

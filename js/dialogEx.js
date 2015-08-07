@@ -8,6 +8,24 @@
 
 //定数を定義する
 SPECIAL_RESERVED_CONFIRM_DIALOG_URL = 'dialog/specialReservedConfirmDialog.html';	//体験レッスン予約確認ダイアログのHTMLファイルのURL
+DIALOG_DEFAULT_ALERT_CONTENTS 		= 'dialog/defaultAlertContents.html';			//アラートを出すdomがあるファイル名
+DIALOG_RESERVE_LESSON_LIST 			= 'dialog/reserveLessonListDialog.html';		//会員、予約可能授業一覧ダイアログファイルパス
+UI_DIALOG_CONTENT 					= 'ui-dialog-content';							//ダイアログコンテンツのクラス名
+UI_DIALOG 							= 'ui-dialog';									//ダイアログクラス名
+CLOSE 								= 'close';										//クローズ処理に使う
+DIALOG_CLOSE_BUTTON 				= 'dailogCloseButton';							//閉じるボタンクラス名
+DEFAULT_ALERT_CONTENTS 				= 'defaultAlertContents';						//アラートダイアログの外側divのクラス名
+TAG_P								= ' p'											//pタグ
+LESSON_TABLE 						= 'lessonTable';								//会員画面予約授業一覧テーブル
+MEMBER_RESERVED_CONFIRM_DIALOG		= 'memberReservedConfirmDialog';				//会員画面予約確認ダイアログ
+CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';							//会員画面予約キャンセルダイアログ
+ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';						//管理者画面授業設定一覧ダイアログ
+LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';							//管理者画面授業詳細設定ダイアログ
+ADMIN_NEW_LESSON_CREATE 			= 'adminNewLessonCreateDialog';					//管理者画面新規授業作成ダイアログ
+ADMIN_MAIL_SEND_DIALOG 				= 'adminMailSendDialog';						//管理者画面メール送信ダイアログ
+CONFIRM_DIALOG 						= 'confirmDialog';								//確認ダイアログ
+TITLE 								= 'title';										//ダイアログの設定のタイトルなどで使う
+USER_ID 							= 'userId';										//ユーザの会員番号key名
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -43,19 +61,20 @@ function dialogEx(url, argumentObj, returnObj){
 	
 	/* 関数名:load
 	 * 概要　:URLからダイアログのHTMLファイルを取得してメンバに保存する。
-	 * 引数　:なし
+	 * 引数　:String: domUrl: ダイアログの中で展開されるdomが入ったhttmlファイル名
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0729
 	 * 作成者　:T.Masuda
 	 */
-	this.load = function(){
+	//変更者:T.Yamamoto 変更指示者:H.Kaneko 日付2015.08.07 内容：引数にdomUrlを追加し、その引数からdomを読み込むようにした
+	this.load = function(domUrl){
 		//クラスインスタンスへの参照を変数に格納しておく。
 		var tmpThis = this;
 		
 		//Ajax通信でURLからHTMLを取得する。
 		$.ajax({
-			url:this.url,			//URLを設定する
+			url:domUrl,			//URLを設定する
 			dataType:'HTML',		//HTMLデータを取得する
 			async: false,			//同期通信を行う
 			cache: true,			//通信結果をキャッシュする
@@ -81,8 +100,9 @@ function dialogEx(url, argumentObj, returnObj){
 	this.run = function(){
 		//ロード失敗時の例外処理を行うため、try-catch節を使う。
 		try{
+			//変更者:T.Yamamoto 変更指示者:H.Kaneko 日付2015.08.07 内容：loadの引数を
 			//メンバのURLからHTMLデータを読み込む
-			this.load();
+			this.load(this.url);
 			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
 			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultObj;
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
@@ -152,11 +172,48 @@ function dialogEx(url, argumentObj, returnObj){
 		//画面上に展開されているダイアログのDOMを破棄する。
 		$dialog.remove();
 	}
+
+	/* 関数名:setAlertContents
+	 * 概要　:ダイアログにアラートと閉じるボタンを表示する
+	 * 引数　:String:alertMessage: アラートで表示するメッセージ文字列
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.08.07
+	 * 作成者　:T.Yamamoto
+	 */
+	this.setAlertContents = function(alertMessage) {
+		//アラートとして表示するためのdomを取得する
+		this.load(DIALOG_DEFAULT_ALERT_CONTENTS);
+		//アラートで表示するdomをセレクタとして変数に入れる
+		var alertDom = $(this.formDom)[0];
+		//domをダイアログにセットする
+		$(DOT + UI_DIALOG_CONTENT).append(alertDom);
+		//メッセージを表示する
+		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(alertMessage);
+	}
+
+	/* 関数名:setConfirmContents
+	 * 概要　:ダイアログに確認用テキストとはい、いいえのボタンを表示する
+	 * 引数　:String:confirmMessage: アラートで表示するメッセージ文字列
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.08.07
+	 * 作成者　:T.Yamamoto
+	 */
+	this.setConfirmContents = function(alertMessage) {
+		//アラートとして表示するためのdomを取得する
+		this.load(DIALOG_DEFAULT_ALERT_CONTENTS);
+		//アラートで表示するdomをセレクタとして変数に入れる
+		var alertDom = $(this.formDom)[0];
+		//domをダイアログにセットする
+		$(DOT + UI_DIALOG_CONTENT).append(alertDom);
+		//メッセージを表示する
+		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(alertMessage);
+	}
 }
 
 /* ログイン前の準備関数 */
 function beforeLoginProcedure(){
-	
 	//ログインダイアログのJSONが用意されていなければ
 	if(util.checkEmpty(creator)|| !(LOGIN_DIALOG in creator.json)){
 		//ログインダイアログのJSONを取得する
@@ -186,34 +243,17 @@ function beforeOpenSpecialReservedDialog(){
 	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
 };
 
-LESSON_TABLE 						= 'lessonTable';					//会員画面予約授業一覧テーブル
-MEMBER_RESERVED_CONFIRM_DIALOG		= 'memberReservedConfirmDialog';	//会員画面予約確認ダイアログ
-CANCEL_LESSON_DIALOG 				= 'cancelLessonDialog';				//会員画面予約キャンセルダイアログ
-ADMIN_LESSONLIST_DIALOG 			= 'adminLessonListDialog';			//管理者画面授業設定一覧ダイアログ
-LESSON_DETAIL_DIALOG 				= 'lessonDetailDialog';				//管理者画面授業詳細設定ダイアログ
-ADMIN_NEW_LESSON_CREATE 			= 'adminNewLessonCreateDialog';		//管理者画面新規授業作成ダイアログ
-ADMIN_MAIL_SEND_DIALOG 				= 'adminMailSendDialog';			//管理者画面メール送信ダイアログ
-CONFIRM_DIALOG 						= 'confirmDialog';					//確認ダイアログ
-
 //ダイアログのクローズするときにダイアログのdomを消去してリセットする
-function disappear(){
-	$('.reserveLessonListContent')[0].instance.destroy();
-}
-
-/* 関数名:reservedLessonListDialogCloseFunc
- * 概要　:会員top、予約授業一覧ダイアログが閉じるときにコールされる関数一覧。初期化処理を行う
+/* 関数名:disappear
+ * 概要　:ダイアログをクローズするときにダイアログのdomを消去してリセットする
  * 引数　:なし
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
  */
-function reservedLessonListDialogCloseFunc() {
-	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	reserveLessonListCreator.json[LESSON_TABLE].table = {};
-	//予約中授業一覧ダイアログをリロードして最新の状態にする
-	creator.tableReload(RESERVED_LESSON_TABLE);
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.reserveLessonListContent')[0].instance.destroy();
+function disappear(){
+	//ダイアログをdomごと削除する
+	this.instance.destroy();
 }
 
 /* 関数名:reservedLessonListDialogOpenFunc
@@ -347,7 +387,7 @@ function openMemberReservedConfirmDialog() {
 				//ダイアログを開くときのテーブルの値を編集して表示する
 				// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
 				memberReservedConfirmDialog.setCallbackClose(memberReservedConfirmDialogCloseFunc);	//閉じるときのイベントを登録
-				memberReservedConfirmDialog.run();	//主処理を走らせる。
+				memberReservedConfirmDialog.run('dialog/memberReservedConfirmDialog.html');	//主処理を走らせる。
 
 			//すでに予約しているのであればキャンセルダイアログを開く
 			} else if (reserveLessonListCreator.json[LESSON_TABLE][TAG_TABLE][rowNum]['user_work_status'] == 1) {
@@ -477,7 +517,9 @@ function memberReservedConfirmDialogOkButtonFunc(sendObject) {
 		//DBにデータの更新で予約処理をする
 		memberReservedConfirmtCreator.setDBdata(memberReservedConfirmtCreator.json.updateReservedData, sendObject, MESSAGE_SUCCESS_RESERVED);
 	}
-	//予約授業一覧テーブルをリロードして最新の状態にする
+	//会員トップ画面、予約中授業一覧ダイアログをリロードして最新の状態にする
+	creator.tableReload(RESERVED_LESSON_TABLE);
+	//予約授業一覧ダイアログのテーブルをリロードして最新の状態にする
 	reserveLessonListCreator.tableReload(LESSON_TABLE);
 	$('.memberReservedConfirmDialogContent').dialog(CLOSE);			//ダイアログを閉じる
 }
@@ -512,6 +554,8 @@ function cancelLssonDialogDialogOkButton(sendObject) {
 		//予約可能授業一覧テーブルをリロードする
 		reserveLessonListCreator.tableReload(LESSON_TABLE);
 	}
+	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
+	creator.tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログを閉じる
 	$('.cancelLessonDialogContent').dialog(CLOSE);
 }
@@ -564,7 +608,6 @@ function newLessonEntry() {
 	var timeTableDayKey = "";
 	//受け取った授業一覧データから時限データを探す
 	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-		var test = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount];
 		//time_table_day_keyが空白のものはループを飛ばす
 		if($('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] == "") {
 			//次のループに行く

@@ -340,32 +340,6 @@ function createSpecialDate(year, month, day){
 }
 
 /* 
- * 関数名:changeJapaneseDate(year, month, day)
- * 概要  :ダイアログのタイトルバーに表示する日時のパーツを追加する。
- * 引数  :int year, int month, int day
- * 返却値  :なし
- * 設計者:T.Masuda
- * 作成者:T.Yamamoto
- * 作成日:2015.06.13
- */
-function changeJapaneseDate(dateText){
-	//受け取った日付をスラッシュで配列に分割する
-	var dateArray = createDateArray(dateText);
-	// dateText	をオブジェクトを生成する
-	// var date = new Date(dateText);
-	// 曜日の配列を宣言、初期化する。
-	var weekChars = [ '日', '月', '火', '水', '木', '金', '土' ];
-	// 予約希望ダイアログに予約希望日時が書かれたタグを追加する。
-	// 年月日と曜日で構成された日付テキストを作る。月は日付型で0〜11で表現されているので、-1する。
-	var resultDate = dateArray[0] + '年' + dateArray[1] + '月' + dateArray[2] + '日' + '(' + weekChars[new Date(dateArray[0], dateArray[1] - 1, dateArray[2]).getDay()] + ')';
-	// 日付を返す
-	return resultDate;
-	// $('.' + dialogClass).attr('title', date);
-	//日付のinputタグにも日付を追加する。
-	// $('.reservedDate').val(date);
-}
-
-/* 
  * 関数名:function getMemberInformation(form)
  * 概要  :フォームの会員情報欄に情報を格納する。。
  * 引数  :String form:対象のフォーム

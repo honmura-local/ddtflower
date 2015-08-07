@@ -2507,9 +2507,46 @@ function createLittleContents(){
 		
 		return retText;	//作成したメッセージを返す。
 	}
-	
-}
 
+	/*
+	 * 関数名:lessonListDialogSendObject
+	 * 引数  :strig: calendarDate:カレンダーをクリックしたときに返ってくる日付の値
+	 		string:dialogOptionName:ダイアログのオプションの名前
+	 * 戻り値:object:sendObject:授業一覧ダイアログを開く時に渡される連想配列
+	 * 概要  :カレンダーをクリックしたときにその日付をダイアログのタイトルにセットし、日付を連想配列にして返す
+	 * 作成日:2015.08.06
+	 * 作成者:T.Yamamoto
+	 */
+	this.lessonListDialogSendObject = function(calendarDate, dialogOptionName){
+		//ダイアログのタイトルの日付を日本語名にして取得する
+		var dialogTitle = changeJapaneseDate(calendarDate);
+		//ダイアログのタイトルをセットして予約日を分かりやすくする
+		dialogExOption[dialogOptionName][TITLE] = dialogTitle;
+		//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
+		var sendObject = {
+			//予約日付をセットし、どの日に予約するのかを識別する
+			lessonDate:calendarDate
+		};
+		//予約データ連想配列を返し、ダイアログに渡すのに使う
+		return sendObject;
+	}
+
+	/*
+	 * 関数名:addUserIdToObject
+	 * 引数  :object: addTargetObject:会員番号を追加したい連想配列名
+	 * 戻り値:object:resultObject:会員番号を追加後の連想配列
+	 * 概要  :連想配列に会員番号を追加する
+	 * 作成日:2015.08.06
+	 * 作成者:T.Yamamoto
+	 */
+	this.addUserIdToObject = function(addTargetObject){
+		// 第一引数の連想配列に対して会員番号を追加する
+		var resultObject = $.extend(true, {}, addTargetObject, {userId:this.json.accountHeader.user_key.value});
+		return resultObject;
+	}
+
+
+}	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();
 //サブクラスのコンストラクタを有効にする
@@ -2587,35 +2624,15 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			//ダイアログのタイトルの日付を設定する
-			var titleDate = changeJapaneseDate(dateText);
-			//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
-			var dialogDataObj = {
-				//会員番号をセットしてどのユーザが予約するのかを識別する
-				userId:creator.json.accountHeader.user_key.value,
-				//予約日付をセットし、どの日に予約するのかを識別する
-				lessonDate:dateText
-			};
-			//ダイアログのタイトルをセットして予約日を分かりやすくする
-			dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]['title'] = titleDate;
+			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
+			var dateObject = creator.lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
+			//会員番号をセットしてどのユーザが予約するのかを識別する
+			var dialogDataObject = creator.addUserIdToObject(dateObject);
 			//予約授業一覧ダイアログを作る
-			var reservedLessonListDialog = new dialogEx('dialog/reserveLessonListDialog.html', dialogDataObj, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
-			//ダイアログを開くときのテーブルの値を編集して表示する
-			// reservedLessonListDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-			reservedLessonListDialog.setCallbackClose(reservedLessonListDialogCloseFunc);	//閉じるときのイベントを登録
+			var reservedLessonListDialog = new dialogEx(DIALOG_RESERVE_LESSON_LIST, dialogDataObject, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			reservedLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
-			// if (reserveLessonListCreator.json['lessonTable'].table.length == 0) {
-			// 	//ダイアログを閉じる
-			// 	$('.reserveLessonListContent').dialog("close");
-			// }
 		}
-//
-//		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
-//		minDate:1			//今日以前はクリックできなくする。
-		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
-//		beforeShowDay:function(date){
-//			return this.instance.putDisableDate(date, this.dateArray);
-//		}
 	}
 
 //管理者ダイアログ
@@ -2630,7 +2647,7 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 			lessonDate:dateText
 		};
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG]['title'] = titleDate;
+		dialogExOption[ADMIN_LESSONLIST_DIALOG][TITLE] = titleDate;
 		//予約授業一覧ダイアログを作る
 		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
 		//ダイアログを開くときのテーブルの値を編集して表示する
@@ -3329,28 +3346,6 @@ function loadScript(filename) {
 	firstScript.parentNode.insertBefore( script, firstScript );
 }
 
-/*
- * 関数名:createDateArray(dateText)
- * 引数  :String dateText
- * 戻り値:なし
- * 概要  :日付文字列を配列にして返す。
- * 作成日:2015.02.12
- * 作成者:T.M
- */
-function createDateArray(dateText){
-
-	// 選択した日付を1つの文字列から配列に変換する。
-	var date = dateText.split('/');
-	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により不要になりました。
-	// 配列内の日付の並びが年月日になっていないので、並びを修正した配列を整数に直した上でtrueDateに格納する。
-	//	var trueDate = [parseInt(date[2]), parseInt(date[0]), parseInt(date[1])];
-
-	//@mod 2015.02.19 T.M jQuery UIのバージョン変更により、trueDateではなくdateを返すことになりました。
-	// trueDateを返す。
-	return date;
-	// trueDateを返す。
-//	return trueDate;
-}
 
 /* 
  * 関数名:setTableRecordClass

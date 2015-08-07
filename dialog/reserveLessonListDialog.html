@@ -1,5 +1,6 @@
 <div class="reserveLessonListContent">
 	<script>
+	ERROR_LESSONLIST = '予約可能な授業がありません';
 	//イベントが重複して起こらないようにイベントを先にオフにする
 	$('.reserveLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
@@ -21,16 +22,8 @@
 
 	//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 	if (reserveLessonListCreator.json['lessonTable'].table.length == 0) {
-		alert('申し訳ございません。この日は予約出来る授業がありません。');
-		// console.log($('.reserveLessonListContent'));
-		$('.ui-dialog').dialog("close");
-		// $('.reserveLessonListContent').dialog("destroy");
-
-		// console.log(window);
-		// console.log($('.reserveLessonListContent')[0].instance.);
-		// $(window).close();
-		// window.close();
-		// $('.reserveLessonListContent')[0].instance.destroy();
+		//授業の予約データがないことをダイアログに表示する
+		$('.reserveLessonListContent')[0].instance.setAlertContents(ERROR_LESSONLIST);
 	//予約する授業のデータがある時は予約できる授業の一覧を表示する
 	} else {
 		//予約できる授業のデータ一覧テーブルを作る
