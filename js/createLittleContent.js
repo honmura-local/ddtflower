@@ -730,7 +730,7 @@ function createLittleContents(){
 		var $this = $(this);
 		$(selector).on('change', function(event){
 			//拡張子チェックを行う。画像の拡張子でなければはじく。
-			if(!this.checkIdentifier($(this).val())){
+			if(!checkIdentifier($(this).val())){
 				//有効なファイルを選んでもらうように警告を出す。
 				alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
 				return;	//処理を終える。
@@ -739,7 +739,7 @@ function createLittleContents(){
 			//保存先を指定して画像のアップロードを行う。input type="file"のname属性と会員IDを添えて送信する。
 			//  $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
 			//	$(this).upload('uploadImage',{"dir":init['photoDirectory'], postedName:$(this).attr('name')}, function(xml) {
-			$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:json.accountHeader.user_key.value}, function(xml) {
+			$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:creator.json.accountHeader.user_key.value}, function(xml) {
 		    	
 				//jQueryセレクターで取得して出力
 				console.log('filename(selector search): ' + $('filename', xml).text());
@@ -749,13 +749,13 @@ function createLittleContents(){
 				//アップロード画像の情報をDBに入れて送るための連想配列を作る
 				var sendReplaceArray = {};
 				//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
-				this.sendReplaceArray['photo_title'] = $('filename', xml).text();
+				sendReplaceArray['photo_title'] = $('filename', xml).text();
 				//会員番号を更新情報のクエリに入れる
-				this.sendReplaceArray['user_key'] = json.accountHeader.user_key.value;
+				sendReplaceArray['user_key'] = creator.json.accountHeader.user_key.value;
 				//画像情報をDBに新規登録する
-				this.setDBdata(json.insertMyGalleryPhoto, sendReplaceArray, '');
+				creator.setDBdata(creator.json.insertMyGalleryPhoto, sendReplaceArray, '');
 				console.log(sendReplaceArray);
-				console.log(json.insertMyGalleryPhoto);
+				console.log(creator.json.insertMyGalleryPhoto);
 				
 				//返ってきたデータから成否判定の値を取り出す。
 		    	//var issuccess = parseInt($(xml).find('issuccess').text());
@@ -783,9 +783,9 @@ function createLittleContents(){
 			    				var src = data;	//画像の保存先を取得する。
 			//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
 			    				//createTagで新たな写真を作成する。
-			    				outputTag('blankPhoto', 'myPhoto', '.myGallery');
+			    				creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
 			    				//新たな写真を初期化する。
-			    				createNewPhoto();
+			    				creator.createNewPhoto();
 			    				//画像拡大用のタグにソースをセットする。
 			    				$('.myPhotoLink:last').attr('href', src);
 			    				//画像サムネイルに使う要素の画像を設定する。
@@ -799,9 +799,9 @@ function createLittleContents(){
 			    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
 		    			var src = 'photo/general/web/DSC_0266.JPG';	//今のところはダミーの写真を追加する。
 		    			//createTagで新たな写真を作成する。
-		    			outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		    			creator.outputTag('blankPhoto', 'myPhoto', '.myGallery');
 		    			//新たな写真を初期化する。
-		    			$this.createNewPhoto();
+		    			creator.createNewPhoto();
 		    			//画像拡大用のタグにソースをセットする。
 		    			$('.myPhotoLink:last').attr('href', src);
 		    			//画像サムネイルに使う要素の画像を設定する。
@@ -1938,7 +1938,7 @@ function createLittleContents(){
 			// バナー領域のJSONを取得する。
 			this.getJsonFile('source/memberCommon.json');
 			//ユーザ情報のテキストをDBから取得する
-			this.getJsonFile('php/GetJSONString.php', json['accountHeader'], 'accountHeader');
+			this.getJsonFile('php/GetJSONString.php', this.json['accountHeader'], 'accountHeader');
 			// 会員ページヘッダーを作る
 			this.outputTag('accountHeader', 'memberHeader');
 			// バナー領域を作る
@@ -2086,17 +2086,17 @@ function createLittleContents(){
 	 */
 	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey, number) {
 		//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
-		json[getContentKey].user_key.value = json[userKeyParrentKey].user_key.value;
+		this.json[getContentKey].user_key.value = this.json[userKeyParrentKey].user_key.value;
 		//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
-		json[getContentKey].id.value = number;
+		this.json[getContentKey].id.value = number;
 		//DBからブログ記事を読み込む
-		getJsonFile('php/GetJSONString.php', json[getContentKey], getContentKey);
+		getJsonFile('php/GetJSONString.php', this.json[getContentKey], getContentKey);
 		//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-		$('[name=blogTitle]').val(json[getContentKey].title.text);
+		$('[name=blogTitle]').val(this.json[getContentKey].title.text);
 		//ブログ内容テキストエリアにDBから読込んだデータを入れる
-		$('[name="blogContent"]').text(json[getContentKey].content.text);
+		$('[name="blogContent"]').text(this.json[getContentKey].content.text);
 		//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
-		json[updateQueryKey].id.value = number;
+		this.json[updateQueryKey].id.value = number;
 	}
 	
 	/* 
@@ -2118,7 +2118,7 @@ function createLittleContents(){
 			//削除クエリを実行するために削除対象記事の連想配列を作る
 			var sendReplaceArray = {id:{value:deleteRowId}};
 			//記事を削除しDBを更新する
-			 this.setDBdata(json[deleteQueryKey], sendReplaceArray, '');
+			 this.setDBdata(this.json[deleteQueryKey], sendReplaceArray, '');
 		}
 	}
 	
