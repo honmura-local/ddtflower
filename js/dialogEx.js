@@ -79,6 +79,7 @@ function dialogEx(url, argumentObj, returnObj){
 	this.returnObj = returnObj !== void(0)? returnObj : {};
 	
 	//デフォルト設定のオブジェクト
+	//argumentObjを作る際に参考にしてください。
 	this.defaultArgumentObj = {
 			//ダイアログの設定データオブジェクト
 			config:{
@@ -101,11 +102,11 @@ function dialogEx(url, argumentObj, returnObj){
 			},
 			//インプット用データオブジェクト
 			data:{
-				
 			}
 	};
 	
 	//デフォルトのアウトプット用オブジェクト
+	//returnObjを作る際に参考にしてください。
 	this.defaultReturnObj = {
 			//ダイアログのステータスオブジェクト
 			statusObj:{
@@ -121,6 +122,9 @@ function dialogEx(url, argumentObj, returnObj){
 				        	//「はい」ボタンの処理内容
 				        }
 				]
+			},
+			//アウトプット用データのオブジェクト
+			data:{
 			}
 	};
 	
@@ -182,7 +186,7 @@ function dialogEx(url, argumentObj, returnObj){
 			this.formDom = $(form).dialog(this.argumentObj.config);
 		//例外をキャッチしたら
 		} catch(e){
-			console.log(e.message);	//投げられたエラーオブジェクトをコンソールログに出す。
+			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
 		}
 	}
 
@@ -214,7 +218,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 内容　　:セット先が変わりました。
 	 */
 	this.setCallbackCloseOnAfterOpen = function(func){
-		
+
 		if(func instanceof Function){
 			this.formDom.dialog('option', 'close', func);
 		} else {
@@ -239,7 +243,7 @@ function dialogEx(url, argumentObj, returnObj){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
 		func instanceof Function?  this.argumentObj.config['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
 	}
-	
+
 	/* 関数名:setCallbackCreate
 	 * 概要　:ダイアログのcreateイベントのコールバック関数をセットする。
 	 * 引数　:function func:コールバック関数で実行される関数のポインタ
@@ -327,6 +331,18 @@ function dialogEx(url, argumentObj, returnObj){
 			thisElem.setCallbackCloseOnAfterOpen(func);	//ボタン押下後のコールバック関数をセットする
 		}, CONFIRM_DIALOG_WAIT);	//定数で設定した時間だけ待って実行する
 	}
+
+	/* 関数名:setPushedButtonState
+	 * 概要　:押されたボタンがどれかを表す値を更新するsetterメソッド
+	 * 引数　:String buttonState:ボタンの値。ボタンが押された後にbuttonタグのvalueから値を取得することを想定しているため、文字列となっている
+	 * 返却値:なし
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.setPushedButtonState = function(buttonState){
+		//引数の値を押されたボタンの状態としてセットする
+		this.returnObj.statusObj.buttonState = parseInt(buttonState);
+	}
 	
 	/* 関数名:getPushedButtonState
 	 * 概要　:押されたボタンを表す値を返すgetterメソッド
@@ -336,21 +352,9 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.getPushedButtonState = function() {
-		return this.returnObj.statusObject.pushedButton;
+		return this.returnObj.statusObj.buttonState;
 	}
-	
-	/* 関数名:setPushedButtonState
-	 * 概要　:押されたボタンがどれかを表す値を更新するsetterメソッド
-	 * 引数　:String buttonState:ボタンの値。ボタンが押された後にbuttonタグのvalueから値を取得することを想定しているため、文字列となっている
-	 * 返却値:なし
-	 * 作成日　:015.08.08
-	 * 作成者　:T.Masuda
-	 */
-	this.setPushedButtonState = function(buttonState) {
-		//引数の値を押されたボタンの状態としてセットする
-		this.returnObj.statusObj.buttonState = parseInt(buttonState);
-	}
-	
+
 	
 	/* 関数名:getConfigObject
 	 * 概要　:configオブジェクトを返す
@@ -370,19 +374,52 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成日　:015.08.08
 	 * 作成者　:T.Masuda
 	 */
-	this.getConfigObject = function() {
+	this.getConfigDataObject = function() {
 		return this.argumentObj.data;	//dataオブジェクトを返す
 	}
 	
-	/* 関数名:getDataObject
+	/* 関数名:getReturnObject
+	 * 概要　:アウトプット用オブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用オブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnObject = function() {
+		return this.returnObj;		//アウトプット用オブジェクトを返す
+	}
+
+	/* 関数名:getReturnDataObject
 	 * 概要　:アウトプット用データオブジェクトを返す
 	 * 引数　:なし
 	 * 返却値:Object:アウトプット用データオブジェクト
 	 * 作成日　:015.08.08
 	 * 作成者　:T.Masuda
 	 */
-	this.getReturnObject = function() {
-		return this.returnObject;	//アウトプット用オブジェクトを返す
+	this.getReturnDataObject = function() {
+		return this.returnObj.data;		//アウトプット用データのオブジェクトを返す
+	}
+	
+	/* 関数名:getReturnStatusObject
+	 * 概要　:アウトプット用ステートオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用ステートオブジェクトを返す
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnStatusObject = function() {
+		return this.returnObj.statusObj;	//アウトプット用ステートのオブジェクトを返す
+	}
+	
+	/* 関数名:getReturnFunctionObject
+	 * 概要　:アウトプット用コールバック関数定義オブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用データオブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnFunctionObject = function() {
+		return this.returnObj.funcObj;	//アウトプット用コールバック関数定義オブジェクトを返す
 	}
 	
 	/* 関数名:setYESNOFunction
@@ -393,11 +430,11 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.setYESNOFunction = function(noFunc,yesFunc){
-		var yesNo = this.getReturnObject().funcObj.YES_NO;
+		var yesNo = this.returnObj.funcObj.YES_NO;
 		yesNo[NO]	= noFunc;	//いいえボタンの関数を登録する
 		yesNo[YES]	= yesFunc;	//はいボタンの関数を登録する
 	}
-	
+
 	/* 関数名:removeCloseBox
 	 * 概要　:ダイアログのクローズボックスを消す
 	 * 引数　:なし

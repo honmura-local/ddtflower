@@ -85,6 +85,9 @@ ARTICLE_OBJECT_KEY								= 'table';
 USER_ID = 'userId';
 ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
 ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
+EMPTY						= '';								//空文字
+SLASH						= '/';								//スラッシュ記号
+DOT							= '.';								//ドット
 
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列
