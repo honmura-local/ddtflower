@@ -1416,6 +1416,7 @@ function createTag(){
 		var retObj = null;	//返却用のオブジェクトを格納する変数を宣言、nullで初期化する
 		
 		//dateTextが入力されていれば
+		//※dateTextは現状ではblogCalendarで利用する
 		if(this.dateText !== void(0)){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
@@ -1480,7 +1481,6 @@ function createTag(){
 		for(key in table){
 			//日付が合っていれば
 			//できれば日付のキーを汎用的なキーにしたいと思います。
-			console.log(table[key].blogArticleTitle.blogArticleDate.text);
 			if(table[key].blogArticleTitle.blogArticleDate.text == dateText){
 				tmpObj[(i++).toString()] = table[key];	//該当する記事を追加する
 			}
