@@ -1330,7 +1330,7 @@ function createLittleContents(){
 	 * 作成日:2015.07.11
 	 */
 	this.insertTextboxToTable  = function(tableClassName, appendDom, appendTo) {
-		//テキストボックスを挿入するために表示しているセルのテキストを削除する
+		//テキストボックスをクラス名の場所に挿入するためにテーブルの1列目のクラスを消去する
 		$(DOT + tableClassName + ' tr:eq(0) td').removeClass(appendTo);
 		//テキストボックス追加先のdomに表示している文字列を空白で初期化する
 		$(DOT + appendTo).text('');
@@ -1412,7 +1412,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'LessonTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1423,7 +1423,7 @@ function createLittleContents(){
 		//テーブルの追加先dom名
 		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'reservedLessonTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, creator, RESERVED_LESSON_TABLE_RECORD)',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
@@ -1451,7 +1451,7 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'eachDayReservedInfoTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, creator, EACH_DAY_RESERVED_INFO_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
@@ -1461,7 +1461,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lecturePermitListInfoTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'afterReloadPermitListInfoTable',
+		afterReloadFunc:'afterReloadPermitListInfoTable()',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1471,7 +1471,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'adminLessonDetailTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
 	}
@@ -1588,6 +1588,27 @@ function createLittleContents(){
 	}
 	
 	/* 
+	 * 関数名:tableReset
+	 * 概要  :テーブルを完全に消去して初期化する。
+	 * 引数  :tableName:リセットするテーブルのクラス属性名
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.08
+	 */
+	this.tableReset = function(tableName) {
+		//テーブルのjsonの値が既にあれば
+		if(this.json[tableName].table){
+			//テーブルのjsonを初期化する
+			this.json[tableName].table = {};
+		}
+		//すでにテーブルがあるならテーブルを消す
+		if ($(DOT + tableName)) {
+			//テーブルを消す
+			$(DOT + tableName).remove();
+		}
+	}
+
+	/* 
 	 * 関数名:tableReload
 	 * 概要  :テーブルをリロードする
 	 * 引数  :reloadTableClassName:リロードする対象のテーブルのクラス名
@@ -1596,18 +1617,10 @@ function createLittleContents(){
 	 * 作成日:2015.07.06
 	 */
 	this.tableReload = function(reloadTableClassName) {
-		//テーブルのjsonの値が既にあれば
-		if(this.json[reloadTableClassName].table){
-			//テーブルのjsonを初期化する
-			this.json[reloadTableClassName].table = {};
-		}
+		//テーブルを初期化する
+		this.tableReset(reloadTableClassName);
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
-		//すでにテーブルがあるならテーブルを消す
-		if ($(DOT + reloadTableClassName)) {
-			//テーブルを消す
-			$(DOT + reloadTableClassName).parent().empty();
-		}
 		//DBから取得した値があった時の処理
 		if(this.json[reloadTableClassName].table[0]){
 			//テーブルを作り直す
@@ -1615,7 +1628,7 @@ function createLittleContents(){
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 			if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 				//リロード後に処理をする関数をコールする
-				eval(replaceTableOption[reloadTableClassName].afterReloadFunc)();
+				eval(replaceTableOption[reloadTableClassName].afterReloadFunc);
 			}
 		//DBから検索結果が見つからなかった時の処理
 		} else {
@@ -1835,7 +1848,7 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = this.json[tableClassName].table[rowNumber]
+		var resultTableArray = this.json[tableClassName].table[rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
@@ -2126,7 +2139,7 @@ function createLittleContents(){
 	
 	/* 
 	 * 関数名:getUserPlusPointRate
-	 * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+	 * 概要  :管理者　受講承認画面でユーザが加算するポイントのレートを取得する
 	 * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
 	 		:lessonStudents		:授業に出席した生徒様の人数
 	 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
@@ -2627,15 +2640,8 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		dialogExOption[ADMIN_LESSONLIST_DIALOG][TITLE] = titleDate;
 		//予約授業一覧ダイアログを作る
 		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
-		//ダイアログを開くときのテーブルの値を編集して表示する
 		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
-
-		// //講座一覧ダイアログを開く
-		// this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-		// 		{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
-		// 		titleDate
-		// );
 	}
 }
 

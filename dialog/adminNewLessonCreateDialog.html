@@ -21,7 +21,7 @@
 	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
 	$('.adminNewLessonCreateContent').on(CLICK, '.newLessonCreateButton', function() {
 		//新規授業を登録する処理を行う
-		newLessonEntry();
+		newLessonEntry(adminNewLessonCreator);
 		//授業詳細一覧テーブルを更新する
 		adminLessonListCreator.tableReload('adminLessonDetailTable');
 		//授業追加ダイアログを閉じる
