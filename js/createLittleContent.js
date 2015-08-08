@@ -32,6 +32,7 @@ MARGIN_TOP = 'margin-top';											//上margin
 PX_5 = '5px';														//5PX
 PX_115 = '115px';													//115PX
 BLOG_SHOW_PAGES					=  1;								//ブログ表示記事数。blog.phpでも使う
+EMPTY_STRING					=  '';								//空文字
 
 //セレクターの文字列定数
 NORMAL_HEADER = 'header.header';									//通常のヘッダー
@@ -2308,7 +2309,7 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:showNormalHeader
+	 * 関数名:hideNormalHeader
 	 * 概要  :通常ページのヘッダーを隠す
 	 * 引数  :なし
 	 * 返却値  :なし
@@ -2340,8 +2341,8 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:showNormalHeader
-	 * 概要  :通常ページのヘッダーを表示する
+	 * 関数名:createNormalHeaderContent
+	 * 概要  :通常ページのヘッダーの中身を作成する
 	 * 引数  :creatTag createtagクラスのインスタンス
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
@@ -2367,13 +2368,13 @@ function createLittleContents(){
 	this.createMyBlogImages = function(){
 		//ブログの各行を走査する
 		$('.myBlogTable tr:not(:first)').each(function(){
-			console.log($('.myBlogTable tbody tr'));
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//画像の列を走査する
 			$('.blogImage', $row).each(function(){
-				console.log($(this));
-				//テキストを画像パスにして、新たに生成する画像のパスにする
-				$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+				if($(this).text() != EMPTY_STRING){	//画像列のセルにテキスト(画像名)があれば
+					//テキストを画像パスにして、新たに生成する画像のパスにする
+					$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+				}
 			});
 		});
 	}
