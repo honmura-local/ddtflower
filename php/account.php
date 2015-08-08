@@ -9,6 +9,37 @@
  * パス	:/php/login.php
  */
 
+//返却用JSONの文字列 前後
+define('ERROR_JSON_FRONT', '{"createTagState":"');	//返却用JSON文字列 前
+define('ERROR_JSON_BACK', '"}');	//返却用JSON文字列 後
+
+/*
+ * クラス名:LoginCheckException
+ * 概要  :ログインチェックエラー時の例外クラス
+ * 設計者:H.Kaneko
+ * 作成者:T.Masuda
+ * 作成日:2015.0801
+ */
+class LoginCheckException extends  Exception{
+	
+	
+	/*
+	 * クラス名:checkLoginState
+	 * 概要  :ログイン状態を調べて数値で返す。
+	 * 作成者:T.Masuda
+	 * 作成日:2015.0801
+	 */
+	function checkLoginState(){
+		
+		$retState = 0;	//返却値の変数に初回ログインの値0をセットする
+		//cookieがあるかどうかをチェックする。
+		if(isset($_COOKIE['PHPSESSID'])){
+			$retState = 1;	//タイムアウトであれば1をセットする
+		}
+		
+		return $retState;	//状態の整数値を返す
+	}
+}
 
 //loginの親クラスのファイルを読み込む
 require_once ('JSONDBManager.php');
@@ -70,9 +101,20 @@ class account extends JSONDBManager{
 		//セッションIDを更新する。
 		session_regenerate_id();
 		
-		//会員番号(ユーザID)をセッションに入れる
-		$_SESSION['userId'] = $this->json['id']['text'];
+		//JSONから会員番号を取り出す。
+		$userId = $this->json['id']['text'];
+		$authority = $this->json['authority']['text'];
 		
+		//会員番号(ユーザID)をセッションに入れる
+		$_SESSION['userId'] = $userId;
+		//ユーザの権限をセッションに入れる
+		$_SESSION['authority'] = $authority;
+		
+		//cookieにユーザIDをセットする
+		setcookie("userId", $userId, time()+3600, '/');
+		//cookieにユーザの権限をセットする
+		setcookie("authority", $authority, time()+3600, '/');
+				
 		// 作成したJSON文字列を出力する。
 		print($jsonOut);
 	}
@@ -115,7 +157,9 @@ class account extends JSONDBManager{
 		//クラスにより例外でログインチェック時の失敗の処理を分岐させるため、try catch文を使う
 		try{
 			//セッション変数のユーザIDを参照し、値が存在するかどうかをチェックする。
-			if(isset($_SESSION['userId'])){
+			//また、セッションとCookieに保存されているユーザIDが一致するかを確かめる。
+			if(isset($_SESSION['userId']) && isset($_COOKIE['userId']) 
+					&& $_SESSION['userId'] == $_COOKIE['userId']){
 				$retBoo = true;	//返却値の変数にtrueを格納する
 			//セッションがない状態であれば
 			} else {
@@ -124,7 +168,9 @@ class account extends JSONDBManager{
 			}
 		//例外をキャッチした場合は以下のブロックに入る
 		} catch (LoginCheckException $e){
-			//未定義
+			//エラーメッセージのJSONを返す。
+			echo ERROR_JSON_FRONT.$e->checkLoginState().ERROR_JSON_BACK;
+			exit;
 		}
 
 		//真理値を返す

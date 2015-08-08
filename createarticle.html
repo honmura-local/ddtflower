@@ -12,37 +12,41 @@
 			<!-- マイページのCSSファイルを読み込む。 -->
 			<link href="css/mypage.css" rel="stylesheet" type="text/css">
 			<script>
-				creator.getJsonFile('source/createarticle.json');	// マイページのJSONを取得する。
-				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
+
+				//createTagクラスのインスタンスを生成する
+				var articleCreator = new createLittleContents();
+			
+				articleCreator.getJsonFile('source/createarticle.json');	// マイページのJSONを取得する。
+				articleCreator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
 				//ページ描画に必要なDOMがなければ
-				if(creator.dom !== void(0) && creator.dom == ''){
+				if(articleCreator.dom !== void(0) && articleCreator.dom == ''){
 					//必要なDOMを取得する。
-					creator.getDomFile('template/common.html');				
+					articleCreator.getDomFile('template/common.html');				
 				}
 				//ブログ編集ページ用のDOMを取得する
-				creator.getDomFile('template/createblogarticle.html');
+				articleCreator.getDomFile('template/createblogarticle.html');
 				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
+				articleCreator.outputTag('memberHeader');
 				// バナー領域を作る
-				creator.outputTag('userBanner');
+				articleCreator.outputTag('userBanner');
 			
-				// creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
+				// articleCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				articleCreator.outputTag('pageTitle');						// タイトル領域を作る
 				
-				creator.outputTag('blogEditImageUploader');			//画像アップロードのボタンを配置する。
-				creator.outputTag('blogEdit');						//ブログ記事タイトル編集領域を作る。
-				creator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');				//ブログ記事タイトル編集領域を作る。
-				creator.outputTag('blogEditImages', 'blogEditImages','.blogEdit');				//ブログ記事画像編集領域を作る。
+				articleCreator.outputTag('blogEditImageUploader');			//画像アップロードのボタンを配置する。
+				articleCreator.outputTag('blogEdit');						//ブログ記事タイトル編集領域を作る。
+				articleCreator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');				//ブログ記事タイトル編集領域を作る。
+				articleCreator.outputTag('blogEditImages', 'blogEditImages','.blogEdit');				//ブログ記事画像編集領域を作る。
 				//ブログ記事画像編集パーツを3つ作る。
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditText', 'blogEditText','.blogEdit');					//ブログの本文作成領域を作る。
-				creator.outputTag('blogPublication', 'blogPublication','.blogEdit');				//ブログの公開設定のパーツを作る。
-				creator.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');				//編集確定か否かを選択するボタン群を作る。
+				articleCreator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				articleCreator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				articleCreator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				articleCreator.outputTag('blogEditText', 'blogEditText','.blogEdit');					//ブログの本文作成領域を作る。
+				articleCreator.outputTag('blogPublication', 'blogPublication','.blogEdit');				//ブログの公開設定のパーツを作る。
+				articleCreator.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');				//編集確定か否かを選択するボタン群を作る。
 				
-				// creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				// creator.outputTag('footer');						// フッターを作る
+				// articleCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				// articleCreator.outputTag('footer');						// フッターを作る
 				
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');

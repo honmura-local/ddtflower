@@ -3,6 +3,8 @@
 currentLocation = '';	//現在選択中のページの変数
 //トップページのファイル名の定数
 TOPPAGE_NAME = 'index.php';
+USER_ID = 'userId';			//ユーザID
+PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
 
 /*
  * 関数名:isSupportPushState()
@@ -42,6 +44,7 @@ function isSupportPushState(){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
+		
 	});
 
 	/*
@@ -148,19 +151,15 @@ function callPage(url, state){
 		//通信成功時の処理
 		success:function(html){
 			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
-			//JSONデータを格納する変数を初期化する。
-			// creator.json = null;
-			//ひな形のHTMLのDOMを格納する変数を初期化する。
-			creator.dom = '';
 			//list.phpかdetail.phpであれば
-			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
-				//MSLのコンテンツで既存のコンテンツを上書きする
-				overwriteMSLContent('.main', html);
-			//それ以外であれば
-			} else {
+//			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
+//				//MSLのコンテンツで既存のコンテンツを上書きする
+//				overwriteMSLContent('.main', html);
+//			//それ以外であれば
+//			} else {
 				//既存のコンテンツを上書きする。
 				overwrightContent('.main', html);
-			}
+//			}
 			//カレントのURLを更新する。
 			currentLocation = url;
 
@@ -352,6 +351,7 @@ function postForm(form){
 	var formData = createFormData($form);
 	//creatorのメンバにフォームデータを保存する。
 	creator.formData['formData'] = formData;
+	// this.formData['formData'] = formData;
 	
 	//現在の日付を取得するために日付型のインスタンスを作る。
 	var time = new Date();
@@ -856,3 +856,35 @@ $(document).on('click', '.specialReservedConfirmDialog .confBackButton', functio
 $(document).on('click', '.back:not(.tabPanel button)', function(){
 		history.back();	//ブラウザバックを行う。
 });
+
+/*
+ * 関数名:addlogoutEvent
+ * 引数  :String selector:セレクタ文字列
+ * 戻り値:なし
+ * 概要  :ログアウトを行うイベントを登録する。
+ * 作成日:2015.08.01
+ * 作成者:T.M
+ */
+function addlogoutEvent(selector){
+	//指定した要素に対し、ログアウト処理のイベントを登録する。
+	$(selector).on('click', function(event){
+		
+		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
+		
+		//Ajax通信を行い、ログアウト処理を行う。
+		$.ajax({
+			//ログアウト用PHPをコールする
+			url:'php/LogoutSession.php',
+			async:false,	//同期通信を行う
+			success:function(){	//通信成功時の処理
+//				deleteCookie(USER_ID);		//ユーザIDのクッキーを削除する
+//				deleteCookie(PHP_SESSID);	//セッションIDのクッキーを削除する
+				callPage(TOPPAGE_NAME);	//トップページへ遷移する
+			},
+			error:function(xhr,status,error){	//通信エラー時
+				//エラーメッセージを出す
+				alert('通信エラーです。時間をおいて試してください。');
+			}
+		});
+	});
+}

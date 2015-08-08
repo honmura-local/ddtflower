@@ -10,24 +10,27 @@
 			<!-- コース案内のCSSファイルを読み込む。 -->
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<script>
-				creator.getJsonFile('source/national.json');		// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
+				//createTagクラスのインスタンスを生成する
+				var natinalPageCreator = new createLittleContents();
+			
+				natinalPageCreator.getJsonFile('source/national.json');		// ファイルのデータをjsonを用いて持ってくる
+				natinalPageCreator.getJsonFile('source/commonJson.json');		// ファイルのデータをjsonを用いて持ってくる
 				
-				creator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する。
-				creator.getDomFile('template/courseguide.html');	// コース紹介ページのパーツのDOMを取得する。
+				natinalPageCreator.getDomFile('template/common.html');			// 共通パーツのDOMを取得する。
+				natinalPageCreator.getDomFile('template/courseguide.html');	// コース紹介ページのパーツのDOMを取得する。
 				
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
-				creator.outputTag('examination', 'description');	// 資格試験の説明を作る
-				creator.outputTag('merit', 'description');			// ご入会メリットを作る
-				creator.outputTag('photoGallery');					// ギャラリー画像を作る
-				creator.outputTag('footGallery');					// ギャラリー画像を作る
-				creator.outputTag('courseGuide');					// コース案内テーブルを作る
-				creator.outputTag('lessonSchedule');				//レッスンスケジュールテーブル
-				creator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る
-				creator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
+				natinalPageCreator.outputTag('headImage', 'createImage');		// 天の画像を作る
+				natinalPageCreator.outputTag('pageTitle');						// タイトル領域を作る
+				natinalPageCreator.outputTag('examination', 'description');	// 資格試験の説明を作る
+				natinalPageCreator.outputTag('merit', 'description');			// ご入会メリットを作る
+				natinalPageCreator.outputTag('photoGallery');					// ギャラリー画像を作る
+				natinalPageCreator.outputTag('footGallery');					// ギャラリー画像を作る
+				natinalPageCreator.outputTag('courseGuide');					// コース案内テーブルを作る
+				natinalPageCreator.outputTag('lessonSchedule');				//レッスンスケジュールテーブル
+				natinalPageCreator.outputTag('commonText', 'itemList');		//共通リストテーブルを作る
+				natinalPageCreator.outputTag('memberRule', 'itemList');		// 会員規約のリストテーブルを作る
+				natinalPageCreator.outputTag('footImage', 'createImage');		// 地の画像を作る
+				natinalPageCreator.outputTag('footer');						// フッターを作る
 			
 				// トップメニューにマウスオーバーのフィルターを配置する。
 				functionFilter('.topMenu li');
@@ -36,7 +39,7 @@
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header');
 				//slickによるカルーセルのギャラリーを作成する。
-				createGallery('footGallery');
+				natinalPageCreator.createGallery('footGallery');
 			
 			</script>
 		</div>

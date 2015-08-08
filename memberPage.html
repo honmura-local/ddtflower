@@ -35,126 +35,118 @@
 <script type="text/javascript" src="js/controlAction.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/dailyClasses.js"></script>
+
 </head>
 <body>
 	<div id="container">
 		<div class="main">
+
+			<!-- 会員ページ用のjavascriptを読み込む -->
+			<script src="js/page/memberPage.js">
+			</script>
 			<script>
-			//ドキュメント配備後
-			$(document).ready(function(){
-				//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
-				//creator = new createTag();
-				//creator.getJsonFile('source/memberPage.json');
-				//// 会員共通のパーツのJSONを取得する。
-				//creator.getJsonFile('source/memberCommon.json');
-				//パーツのテンプレートのDOMを取得する。
-				creator.getDomFile('template/common.html');
-				// 会員共通のパーツのJSONを取得する。
-				creator.getDomFile('template/memberCommon.html');
-				// 会員ページのjsonを読み込む
-				creator.getDomFile('template/memberPage.html');
-				//ユーザ情報のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['memberHeader'], 'memberHeader');
+				try{
+					//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
+//					creator = new createTag();
+					//createTag継承クラスのインスタンスを生成する
+					var creator = new createLittleContents();
 
-				// 会員ページヘッダーを作る
-				creator.outputTag('memberHeader');
-				// バナー領域を作る
-				creator.outputTag('userBanner');
-				//告知領域のテキストをDBから取得する
-				creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
-				// 告知領域を作る
-				creator.outputTag('advertise');
-				//通知領域の内容があれば
-				if(creator.json.advertise.message_title.text){
-					$('.advertise').css('display', 'block');		//通知領域を表示する
+					creator.hideNormalHeader();	//通常ページのヘッダーを隠す
+					
+					creator.getJsonFile('source/memberPage.json');
+					// 会員共通のパーツのJSONを取得する。
+					creator.getJsonFile('source/memberCommon.json');
+					// 全共通のパーツのJSONを取得する。
+					creator.getJsonFile('source/commonJson.json');
+					//パーツのテンプレートのDOMを取得する。
+					creator.getDomFile('template/common.html');
+					// 会員共通のパーツのJSONを取得する。
+					creator.getDomFile('template/memberCommon.html');
+					// 会員ページのjsonを読み込む
+					creator.getDomFile('template/memberPage.html');
+					//告知領域をDBから取得するために会員番号をクエリの置換部分にセットする
+					creator.json.advertise.user_key.value = memberInfo;
+					//ユーザ情報のテキストをDBから取得する
+					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
+	
+					//accountHeaderから会員IDを取得する。
+					var memberInfo = creator.json.accountHeader !== void(0) ? creator.json.accountHeader.user_key.value : '';
+					
+					// 会員ページヘッダーを作る
+					creator.outputTag('accountHeader','memberHeader');
+					// バナー領域を作る
+					creator.outputTag('userBanner');
+					//告知領域のデータをDBから取得するためにクエリで送信する値の置換値をセットする
+					creator.json.advertise.user_key.value = memberInfo;
+					//告知領域のテキストをDBから取得する
+					creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
+					// 告知領域を作る
+					creator.outputTag('advertise');
+					//通知領域の内容があれば
+					if(creator.json.advertise.message_title.text){
+						$('.advertise').css('display', 'block');		//通知領域を表示する
+					}
+					// 会員ページのカレンダーを作る
+					creator.outputTag('lessonCalendar', 'calendar');
+
+					// 日ごと授業のjsonを読み込む
+					creator.getJsonFile('source/eachDayLesson.json');
+					// 日ごと授業のテンプレートを読み込む
+					creator.getDomFile('template/eachDayLesson.html');
+
+					// カレンダーを作り、クリックでダイアログ作成を作る
+					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, creator);
+					memCalendar.create();	//カレンダーを実際に作成する
+	
+					// タブ機能を作る
+					creator.outputTag('lessonTab');
+					//予約中授業のデータを取得するために会員番号をクエリの置換値にセットする
+					creator.json.reservedLessonTable.user_key.value = memberInfo;
+					//予約中授業テーブル用のJSON配列を取得する
+					creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
+					//会員が予約できる授業を取得するために会員番号をクエリの置換する場所に入れる
+					creator.json.memberCanReserveLesson.user_key.value = memberInfo;
+					//予約できる授業のテーマにをDBから取り出す
+					creator.getJsonFile('php/GetJSONArray.php', creator.json['memberCanReserveLesson'], 'memberCanReserveLesson');
+					//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
+					creator.setSelectboxText(creator.json.memberCanReserveLesson.table, creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
+					// 予約済み授業のタブ内コンテンツを作る
+					creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
+					// 受講済み授業のタブ内コンテンツを作る
+					creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
+	
+					// 予約済み授業と受講済み授業についてタブを作る
+					creator.createTab('#tab-container');
+					//受講済み授業授業のデータをDBから取り出すために会員番号を置換値にセットする
+					creator.json.finishedLessonTable.user_key.value = memberInfo;					//受講済み授業タブをクリックしたときに受講済み授業の内容を表示する
+					creator.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
+
+					//予約済み授業の絞り込み領域を作る
+					creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
+					//セレクトボックスのvalueを画面に表示されている値にする
+					creator.setSelectboxValue('.selectThemebox');
+					//予約中授業の外枠領域を作る
+					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
+					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
+					if(creator.json['reservedLessonTable']['table'][0]) {
+						// 予約中授業のテーブルを作る
+						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
+						// 予約中テーブルのテーブルの値を置換する
+						dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
+						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
+						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
+						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						//キャンセルダイアログを予約中授業テーブルから開く処理
+						cancelDialogExOpen(memberInfo);
+					}
+					//キャンセル料率のレートをアコーディオン形式で表示する
+					creator.accordionSetting('.lessonAccordion', '.attention');
+					//予約中授業テーブル絞り込みボタン機能を実装する
+					creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
+					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+				}catch(e){
+					console.log(e);
 				}
-				// 会員ページのカレンダーを作る
-				creator.outputTag('lessonCalendar', 'calendar');
-
-				// 日ごと授業のjsonを読み込む
-				creator.getJsonFile('source/eachDayLesson.json');
-				// 日ごと授業のテンプレートを読み込む
-				creator.getDomFile('template/eachDayLesson.html');
-
-				// //予約一覧ダイアログを作る
-				// var lessonList = new tagDialog('reserveLessonListDialog', '', dialogOption['reserveLessonListDialog'], function(){
-				// 	// 日ごとダイアログ領域を作る
-				// 	creator.outputTag('reserveLessonListDialog', 'dialog', 'body');
-				// //予約キャンセルダイアログを作る
-				// // var cancelLessonLesson = new TagDialog('cancelLessonDialog', '', dialogOption['canselLessonDialog'], function() {
-				// 	//予約キャンセルダイアログのdomを作る
-				// 	// creator.outputTag('canselLessonDialog', 'canselLessonDialog', 'body');
-				// // });
-				// // テーブルのステータスを概要を表示する領域を作る
-				// // creator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
-				// // 予約一覧テーブルの値を置換する
-				// // lessonTableValueInput('.lessonTable', eachDayLessonTable, "callReservedLessonValue");
-				// });
-
-				// //予約確定ダイアログを作る
-				// var confirmReserveLesson = new tagDialog(STR_MEMBER_RESERVED_CONFIRM_DIALOG, '', dialogOption[STR_MEMBER_RESERVED_CONFIRM_DIALOG], function(){
-				// 	// テーブルのステータスを概要を表示する領域を作る
-				// 	creator.outputTag(STR_MEMBER_RESERVED_CONFIRM_DIALOG, STR_MEMBER_RESERVED_CONFIRM_DIALOG,  STR_BODY);
-				// });
-				//会員番号を取得する
-				var memberInfo = creator.json.memberHeader.user_key.value;
-				// カレンダーを作り、クリックでダイアログ作成を作る
-				var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo);
-				memCalendar.create();	//カレンダーを実際に作成する
-
-				// タブ機能を作る
-				creator.outputTag('lessonTab');
-				//予約中授業テーブル用のJSON配列を取得する
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['reservedLessonTable'], 'reservedLessonTable');
-				//会員が予約できる授業を取得するために会員番号をクエリの置換する場所に入れる
-				creator.json.memberCanReserveLesson.user_key.value = creator.json.memberHeader.user_key.value;
-				//予約できる授業のテーマにをDBから取り出す
-				creator.getJsonFile('php/GetJSONArray.php', creator.json['memberCanReserveLesson'], 'memberCanReserveLesson');
-				//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-				setSelectboxText(creator.json.memberCanReserveLesson.table, creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
-				// 予約済み授業のタブ内コンテンツを作る
-				creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
-				// 受講済み授業のタブ内コンテンツを作る
-				creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
-
-				// 予約済み授業と受講済み授業についてタブを作る
-				createTab('#tab-container');
-				//受講済み授業タブをクリックしたときに受講済み授業の内容を表示する
-				createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
-
-
-				//予約済み授業の絞り込み領域を作る
-				creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
-				//予約中の授業があった時のテーブルを作る
-				if(creator.json['reservedLessonTable']['table'][0]) {
-					// 予約中授業のテーブルを作る
-					creator.outputTagTable('reservedLessonTable','reservedLessonTable','.alreadyReserved');
-				}
-				
-				//セレクトボックスのvalueを画面に表示されている値にする
-				setSelectboxValue('.selectThemebox');
-
- 				// 予約中授業の連想配列を変数に入れる 
-				var reservedNow = creator.json['reservedLessonTable']['table'];
-				// 予約中テーブルのテーブルの値をしかるべき値にする
-				lessonTableValueInput('.reservedLessonTable', reservedNow, "callMemberLessonValue");
-
-				// //予約キャンセルダイアログを作る
-				// var cancelLesson = new tagDialog('cancelLessonDialog', '', dialogOption['cancelLessonDialog'], function() {
-				// 	// 予約キャンセルダイアログのdomを作る
-				// 	creator.outputTag('cancelLessonDialog', 'cancelLessonDialog', 'body');
-				// 	//キャンセルダイアログの注意の部分をアコーディオンにしてその機能を実装する
-				// 	accordionSetting('.lessonAccordion', '.attention');
-				// });
-				// //キャンセルダイアログを予約中授業テーブルから開く処理
-				// cancelDialogOpen(cancelLesson, memberInfo);
-				//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-				setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
-				//キャンセルダイアログを予約中授業テーブルから開く処理
-				cancelDialogExOpen(memberInfo);
-				//予約中授業テーブル絞り込みボタン機能を実装する
-				reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
-			});
 			</script>
 		</div>
 	</div>

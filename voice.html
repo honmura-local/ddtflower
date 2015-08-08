@@ -12,6 +12,9 @@
 			<!-- ブログのCSSを読み込む。 -->
 			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
+				//createTagクラスのインスタンスを生成する
+				var creator = new createLittleContents();
+				
 				creator.getJsonFile('source/voice.json');			// 生徒さんの声のJSONを取得する。
 				creator.getJsonFile('source/voicestudents.json');	// 生徒さんの声の記事のJSONを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 共通のパーツのJSONを取得する。

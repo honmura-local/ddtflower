@@ -1,0 +1,79 @@
+
+<div class="adminMailDialogContent">
+	<script>
+		//このダイアログに登録されているイベントを初期化し、重複を防ぐ
+		$('.adminMailDialogContent').off();
+		//domを作るためのクラスをインスタンス化する
+		var mailDialogCreator = new createLittleContents();
+		//会員にメール送信ダイアログのjsonを取得する
+		mailDialogCreator.getJsonFile('dialog/source/adminDialog.json');
+		//会員にメール送信ダイアログのjsonを取得するのテンプレートを取得する
+		mailDialogCreator.getDomFile('dialog/template/adminDialog.html');
+
+		//ダイアログコンテンツを囲む領域を作る
+		mailDialogCreator.outputTag('mailSendContent', 'mailSendContent', '.adminMailDialogContent');
+
+
+		//受け取ったメールや名前の数だけループするためにループの終わり値を取得する
+		var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.mail.length;
+		//画面に表示する結果の名前
+		var resultName = '';
+		//画面に表示する結果のアドレス
+		var resultMail = '';
+		//0からループを初め、ユーザの情報を画面に反映させるための値を作る
+		for(var loopStartCount=0;loopStartCount<loopEndCount;loopStartCount++) {
+			if (loopStartCount == 0) {
+				//名前を足していく
+				resultName += $('.adminMailDialogContent')[0].instance.argumentObj.name[loopStartCount];
+				//メールアドレスを足していく
+				resultMail += $('.adminMailDialogContent')[0].instance.argumentObj.mail[loopStartCount];
+			} else {
+				//名前を足していく
+				resultName += ', ' + $('.adminMailDialogContent')[0].instance.argumentObj.name[loopStartCount];
+				//メールアドレスを足していく
+				resultMail += ', ' + $('.adminMailDialogContent')[0].instance.argumentObj.mail[loopStartCount];
+			}
+		}
+		$('.mailTo').text(resultMail);
+		$('.mailToPerson').text(resultName);
+
+		//ボタンをjqueryuiのものにしてレイアウトを整える
+		$('input[type="button"]').button();
+
+		//メールを送信するのかお知らせを出すのかを識別する
+		//通常メールボタンからダイアログを開いた場合
+		if($('.adminMailDialogContent')[0].instance.argumentObj.sendType == 'mail') {
+			// メール送信ボタンのクリック
+			var doSendMail = function(){
+				// TODO 個々にメール送信処理をたす
+				var sendMaidData = getInputData('mailSendContent');
+				console.log(sendMaidData);
+				alert("送信したつもり");
+			};
+			$('.adminMailDialogContent').on(CLICK, '.mailSendButton',function(e) {
+				var sd = new SimpleConfirmDialog(
+						doSendMail
+						,"メールを送信します。<br>よろしいですか?"
+				);
+				sd._showDialog();
+			});
+		//お知らせボタンからダイアログを開いた場合
+		} else if($('.adminMailDialogContent')[0].instance.argumentObj.sendType == 'announce') {
+			$('.adminMailDialogContent').on(CLICK, '.mailSendButton',function(e) {
+				var sd = new SimpleConfirmDialog(
+						announceInsert
+						,"お知らせを送信します。<br>よろしいですか?"
+				);
+				sd._showDialog();
+			});
+		}
+	</script>
+</div>
+
+
+
+
+
+
+
+

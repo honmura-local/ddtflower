@@ -3,7 +3,7 @@
 	//イベントをリセットする
 	$('.memberReservedConfirmDialogContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var memberReservedConfirmtCreator = new createTag();
+	var memberReservedConfirmtCreator = new createLittleContents();
 	//会員、予約確認ダイアログのjsonを取得する
 	memberReservedConfirmtCreator.getJsonFile('source/memberPage.json');
 	//会員、予約確認ダイアログのテンプレートを取得する
@@ -23,6 +23,7 @@
 		//DBに予約処理を行う
 		memberReservedConfirmDialogOkButtonFunc($('.memberReservedConfirmDialogContent')[0].instance.argumentObj);
 	});
+	//いいえボタンがクリックされたときにダイアログを閉じる処理を行う
 	$('.memberReservedConfirmDialogContent').on(CLICK, '.reserveNoButton', function() {
 		//ダイアログを閉じる
 		$('.memberReservedConfirmDialogContent').dialog(CLOSE);

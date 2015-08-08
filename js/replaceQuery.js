@@ -151,9 +151,10 @@ var adminUserSearcher = function() {
 				result = connectEach(result, partQuery);
 			}
 		});
-		if(baseQuery == result) {
-			throw new Error("no condition was specified");
-		}
+		//変更者:T.Yamamoto 変更日:2015.08.04 内容:ifの中をコメントにしてなにも入力されていないときは全検索を行う
+		// if(baseQuery == result) {
+		// 	throw new Error("no condition was specified");
+		// }
 		return result;
 	};	
 }

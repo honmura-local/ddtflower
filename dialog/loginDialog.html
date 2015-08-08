@@ -7,13 +7,10 @@
 	<label class="passwordLabel">パスワード</label>
 	<!-- パスワードテキストボックス -->
 	<input class="password" type="password" name="password">
-	<small class="toEntryBefore">会員登録がお済みでない方は</small>
-	<a class="toEntryPage" href="#entry.html">こちら</a>
-	<small class="toEntryAfter">へ</small>
-
-	<!-- DOM配置の際にJavaScriptのコードを実行する -->
-	<script>
-	//ログインダイアログの下準備関数
-	beforeLoginProcedure();
-	</script>
+	<!-- ログインダイアログのメッセージ領域 -->
+	<span class="loginDialogMessage">
+		<small class="toEntryBefore">会員登録がお済みでない方は</small>
+		<a class="toEntryPage" href="#entry.html">こちら</a>
+		<small class="toEntryAfter">へ</small>
+	</span>
 </div>

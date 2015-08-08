@@ -65,9 +65,11 @@
     	"dateInput":{"type":"date", "name":"lesson_date", "value":""},
     	"searchButton":{"type":"button", "value":"検索"}
     },
+    "eachDayReservedInfoTableOutsideArea":{
+        "class":"eachDayReservedInfoTableOutsideArea"
+    },
     "eachDayReservedInfoTable":{
-        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.user_work_status AS user_work_status, stage_inf.stage_no ,lesson_sub.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key;",
-        "replace_query":"SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.user_work_status AS user_work_status, stage_inf.stage_no ,lesson_sub.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key;",
+        "db_getQuery": "SELECT time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.user_work_status AS user_work_status, stage_inf.stage_no ,lesson_sub.level_no FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lesson_date' INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key ORDER BY start_time ASC;",
         "lesson_date": {
             "value": ""
         },
@@ -329,6 +331,9 @@
         }
     },
     "doLecturePermitButton":{ "type":"button", "value":"承認"},
+    "lecturePermitListInfoTableOutsideArea":{
+        "class":"lecturePermitListInfoTableOutsideArea"
+    },
     "lecturePermitListInfoTable":{
         "db_getQuery": "(SELECT  user_classwork.id AS id ,user_name ,lesson_name ,user_classwork.user_classwork_cost AS cost ,user_classwork.use_point AS use_point ,stage_inf.stage_no AS stage_no ,lesson_sub.level_no AS level_no ,1 AS sell_number ,'' AS content ,user_inf.id AS user_key ,lesson_inf.school_key AS school_key FROM user_classwork INNER JOIN classwork ON classwork.id = user_classwork.classwork_key INNER JOIN time_table_day ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date <= 'toDate' AND time_table_day.lesson_date >= 'FromDate' INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN stage_inf ON stage_inf.id = user_classwork.stage_key INNER JOIN lesson_sub ON lesson_sub.id = user_classwork.level_key ORDER BY time_table_day.lesson_date DESC) UNION ALL (SELECT commodity_sell.id AS id ,user_name ,'' AS lesson_name ,pay_cash AS cost ,commodity_sell.use_point AS use_point ,1 AS stage_no ,1 AS level_no ,sell_number ,content ,user_inf.id AS user_key ,commodity_sell.school_key AS school_key FROM commodity_sell INNER JOIN user_inf ON user_inf.id = commodity_sell.user_key AND sell_datetime <= 'toDate' AND sell_datetime >= 'FromDate' INNER JOIN commodity_inf  ON commodity_inf.id = commodity_sell.commodity_key ORDER BY sell_datetime DESC);",
         "FromDate":{
@@ -537,6 +542,7 @@
         "config": {
             "columns": {
                 "user_name": {
+                    "className":"user_name",
                     "columnName": "名前"
                 },
                 "pre_paid": {
@@ -553,6 +559,7 @@
                     "className":"id"
                 },
                 "mail_address":{
+                    "className":"mail_address",
                     "style":"display:none"
                 }
             }
@@ -563,9 +570,9 @@
 	    		"type":"button",
 	    		"value":"通常メール"
     		},
-            "maiMagaAnnounceButton":{
+            "announceButton":{
                 "type":"button",
-                "value":"メルマガ、お知らせ"
+                "value":"お知らせ"
             },
     		"userDetail":{
                 "class":"userDetail fRight",
@@ -580,8 +587,9 @@
     "adminLessonListDialogContent":{
         "replaceTable":{}
     },
+    "adminLessonDetailTableOutsideArea":{},
     "adminLessonDetailTable":{
-        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key FROM  time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key INNER JOIN school_inf ON school_inf.id = lesson_inf.school_key;",
+        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key ,timetable_inf.id AS timetable_key FROM  time_table_day LEFT JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key RIGHT JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
         "lessonDate":{
             "value":""
         },
@@ -643,6 +651,9 @@
                 },
                 "time_table_day_key":{
                     "style":"display:none;"
+                },
+                "timetable_key":{
+                    "style":"display:none;"
                 }
             }
         }
@@ -675,6 +686,7 @@
                 "text":"テーマ"
             },
             "lessonThemeSelect":{
+                "name":"lesson_key",
                 "lessonThemeSelectList1":{
                     "text":"プリザ",
                     "value":"14"
@@ -684,8 +696,8 @@
                     "value":"15"
                 },
                 "lessonThemeSelectList3":{
-                    "text":"17",
-                    "value":"NFD"
+                    "text":"NFD",
+                    "value":"17"
                 },
                 "lessonThemeSelectList4":{
                     "text":"体験",
@@ -710,6 +722,7 @@
                 "text":"時間割"
             },
             "timeTableSelect":{
+                "name":"timetable_key",
                 "timeTableSelectList1":{
                     "text":"11:00-13:00",
                     "value":"1"
@@ -738,7 +751,9 @@
             },
             "minStudentsTextbox":{
                 "type":"number",
-                "name":"min_students"
+                "name":"min_students",
+                "value":"0",
+                "min":"0"
             },
             "minStudentsUnit":{
                 "text":"人"
@@ -750,7 +765,8 @@
             },
             "maxStudentsTextbox":{
                 "type":"number",
-                "name":"max_students"
+                "name":"max_students",
+                "value":"8"
             },
             "maxStudentsUnit":{
                 "text":"人"
@@ -786,7 +802,8 @@
             },
             "classRoomTextbox":{
                 "type":"text",
-                "name":"classroom"
+                "name":"classroom",
+                "value":"A"
             }
         },
         "memoArea":{
@@ -926,6 +943,15 @@
         "school_key":{
             "value":""
         }
+    },
+    "insertTimeTableDay":{
+        "db_setQuery":"INSERT INTO time_table_day( timetable_key ,lesson_date ,create_datetime ,update_datetime ) VALUES( 'timetable_key' ,'lessonDate' ,NOW() ,NOW() );"
+    },
+    "newClassWork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students ) VALUES( 'max_students' ,'min_students' ,'classwork_status' ,'classroom' ,'classwork_note' ,(select id from user_inf where authority = 10 limit 1) ,(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key') ,'lesson_key' ,(SELECT id FROM time_table_day WHERE timetable_key = 'timetable_key' order by create_datetime DESC LIMIT 1) ,NOW() ,NOW(), 0 );"
+    },
+    "normalInsertClasswork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students) VALUES('max_students' ,'min_students','classwork_status','classroom','classwork_note',(select id from user_inf where authority = 10 limit 1),(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key'),'lesson_key','time_table_day_key',NOW(),NOW(), 0)"
     },
     "lessonDetailUpdate":{
         "db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';",

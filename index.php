@@ -43,6 +43,10 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <link rel="stylesheet" type="text/css" href="css/smoothDivScroll.css" media="screen" />
 <!-- fancyboxのCSSを読み込む。 -->
 <link rel="stylesheet" type="text/css" href="js/source/jquery.fancybox.css" media="screen" />
+<!-- 会員ページのCSSファイルを読み込む。 -->
+<link href="css/memberPage.css" rel="stylesheet" type="text/css">
+<!-- 管理者ページののCSSファイルを読み込む。 -->
+<link href="css/memberPage.css" rel="stylesheet" type="text/css">
 
 <!-- マイページのブログのCSSを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/myPageBlog.css" media="screen" />
@@ -51,13 +55,13 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 <!-- Googleアナリティクスのトラッキングコード -->
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+//   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+//   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+//   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+//   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-58020246-43', 'auto');
-  ga('send', 'pageview');
+//   ga('create', 'UA-58020246-43', 'auto');
+//   ga('send', 'pageview');
 
 </script>
 
@@ -96,6 +100,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <!-- タッチ操作のライブラリ。 -->
 <script src="js/jquery.finger.js"></script>
 
+<!-- 各ページ共通の関数ファイルを読み込む -->
+<script src="js/page/commonPage.js"></script>
 <!-- 画面操作の処理を記述したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlPage.js"></script>
 <!-- ダイアログ作成の処理を記述したJSファイルを読み込む。 -->
@@ -110,6 +116,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/dialogEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->
 <script type="text/javascript" src="js/dialogExOptions.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/dailyClasses.js"></script>
 
 </head>
 
@@ -127,21 +135,20 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 //ドキュメント配備後
 $(document).ready(function(){
-	util = new utils();			//汎用関数のクラスのインスタンスを用意する
 	
-	creator = new createTag();	//createTagクラスのインスタンスを生成する
-
+try{
+	util = new utils();			//汎用関数のクラスのインスタンスを用意する
+	var creator = new createLittleContents();	//createTagクラスのインスタンスを生成する
+	
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる
 	creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
 	creator.getDomFile('template/common.html');		// 共通パーツのDOMを取得する。
 	creator.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
 	//ヘッダー内のタグが作成済みでなければ
-	if($('header').children().length <= 0){
-		creator.outputTag('guides', 'guides', '.header');		// ガイド領域を作る
-		creator.outputTag('topMenu', 'topMenu', '.header');		// トップメニューを作る
-		// ログイン状態をチェックする。
-		checkLoginState();
-	}
+
+	creator.createNormalHeaderContent();	//ヘッダー内のタグが作成済みでなければ作る。
+	creator.showNormalHeader();				//ヘッダーが隠れていたら表示する。
+
 	creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 	//ブログのお知らせを作る。
 	creator.outputTag('topicGallery','topic', '.flowerBackground');
@@ -163,10 +170,9 @@ $(document).ready(function(){
 	//テーブルの全レコード選択の処理をオンにする。
 	checkAllRecord();
 	//JSONデータを格納する変数を初期化する。
-	creator.json = null;
+	//creator.json = null;
 	//ひな形のHTMLのDOMを格納する変数を初期化する。
 	creator.dom = '';
-	
 	//@add 2015.0604 T.Masuda MSLの記事一覧を最新記事表示ウィンドウに載せる
 	//ブログとギャラリーのお知らせの内容を消す
 	$('.topicGallery').empty();
@@ -187,13 +193,15 @@ $(document).ready(function(){
 					showRightOutOfDisplayButton('.topicShowBlog', 600, 3000);
 			});
 	});
-	
 	//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。順番にコールして順を整える。
 			fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
 			fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);		
 			fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
 			// ログインダイアログを作る
-			var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
+			// var login = new loginDialog('loginDialog', 'ログイン', {autoOpen:false});
+	}catch(e){
+		console.log(e);
+	}
 });
 
 </script>
@@ -210,10 +218,10 @@ $(document).ready(function(){
 
 <!-- msl指定のタイトル -->
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
-
-<a href="#article/list.php/1197/1984" style="display:block;font-size:10px;">MSL list.php</a>
+<!-- 編集の邪魔になるので一旦コメントアウトしました。 -->
+<!-- <a href="#article/list.php/1197/1984" style="display:block;font-size:10px;">MSL list.php</a>
 <a href="#article/detail.php/1197/190747" style="display:block;font-size:10px;">MSL detail.php</a>
 <a href="#mypage.html" style="display:block;font-size:10px;">mypage</a>
-<a href="#admin.html" style="display:block;font-size:10px;">admin</a>
+<a href="#admin.html" style="display:block;font-size:10px;">admin</a> -->
 </body>
 </html>

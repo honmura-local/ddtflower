@@ -8,20 +8,23 @@
 	<div id="container">
 		<div class="main">
 			<script>
-				creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
-				creator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のためのjsonを取得する。
+				//createTagクラスのインスタンスを生成する
+				var errorConfirmCreator = new crateTag();
+			
+				errorConfirmCreator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる
+				errorConfirmCreator.getJsonFile('source/studentmanagement.json');	// 生徒さん情報管理のためのjsonを取得する。
 				
 				//タブからの呼び出しでなければ
-				if(creator.dom == '')
+				if(errorConfirmCreator.dom == '')
 					//DOMを用意する
-					creator.getDomFile('template/common.html');	
-					creator.getDomFile('source/student.html');
+					errorConfirmCreator.getDomFile('template/common.html');	
+					errorConfirmCreator.getDomFile('source/student.html');
 				}
 					
-				creator.outputTag('headImage', 'createImage');			// 天の画像を作る
-				creator.outputTag('errorConfirm', 'showMessage');		// エラー発生のメッセージを出す。
-				creator.outputTag('footImage', 'createImage');			// 地の画像を作る
-				creator.outputTag('footer');							// フッターを作る
+				errorConfirmCreator.outputTag('headImage', 'createImage');			// 天の画像を作る
+				errorConfirmCreator.outputTag('errorConfirm', 'showMessage');		// エラー発生のメッセージを出す。
+				errorConfirmCreator.outputTag('footImage', 'createImage');			// 地の画像を作る
+				errorConfirmCreator.outputTag('footer');							// フッターを作る
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 			</script>

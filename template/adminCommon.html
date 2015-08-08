@@ -143,8 +143,8 @@
 	<div class="userListButtons">
 		<!-- メール送信ボタン -->
 		<input class="createMail" type="" value="">
-		<!-- メルマガ、アナウンス -->
-		<input class="maiMagaAnnounceButton" type="" value="">
+		<!-- アナウンス -->
+		<input class="announceButton" type="" value="">
 		<!-- 詳細設定 -->
 		<input class="userDetail" type="" value="">
 	</div>
@@ -237,10 +237,7 @@
 	<div class="adminLessonListDialog"></div>
 
 	<!-- 管理者日ごと授業ダイアログの内容 -->
-	<div class="adminLessonListDialogContent">
-		<!-- テーブルと差し替えるためのタグ -->
-		<span class="replaceTable"></span>
-	</div>
+	<div class="adminLessonListDialogContent"></div>
 
 	<!-- 管理者日ごと授業一覧テーブル -->
 	<table class="adminLessonDetailTable">
@@ -254,9 +251,9 @@
 		<span class="lessonStatusText"></span>
 	</div>
 
-	<!-- 授業詳細領域 -->
+
 	<!-- 授業詳細ダイアログ -->
-	<div class="lessonDetailDialog"></div>
+	<div class="adminLessonDetailTableOutsideArea"></div>
 
 	<!-- 他にも使う汎用的なボタン -->
 	<input class="addButton" type="" value="">
@@ -362,7 +359,7 @@
 			<!-- 最少人数ラベル領域 -->
 			<label class="minStudentsText"></label>
 			<!-- 最少人数テキストボックス領域 -->
-			<input class="minStudentsTextbox" type="" name="">
+			<input class="minStudentsTextbox" type="" name="" value="" min="">
 			<!-- 最少人数単位領域 -->
 			<span class="minStudentsUnit"></span>
 		</li>
@@ -371,7 +368,7 @@
 			<!-- 最大人数領域 -->
 			<label class="maxStudentsText"></label>
 			<!-- 最大人数テキストボックス領域 -->
-			<input class="maxStudentsTextbox" type="" name="">
+			<input class="maxStudentsTextbox" type="" name="" value="">
 			<!-- 最大人数単位領域 -->
 			<span class="maxStudentsUnit"></span>
 		
@@ -394,7 +391,7 @@
 			<!-- 教室、ラベル領域 -->
 			<label class="classRoomLabel"></label>
 			<!-- 教室テキストボックス領域 -->
-			<input class="classRoomTextbox" type="" name="">
+			<input class="classRoomTextbox" type="" name="" value="">
 		</li>
 		<!-- メモ領域 -->
 		<li class="memoArea">
