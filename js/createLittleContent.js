@@ -31,6 +31,7 @@ CHANGE							= 'change';							//イベント名がchangeのときにchangeイ�
 MARGIN_TOP = 'margin-top';											//上margin
 PX_5 = '5px';														//5PX
 PX_115 = '115px';													//115PX
+BLOG_SHOW_PAGES					=  1;								//ブログ表示記事数。blog.phpでも使う
 
 //セレクターの文字列定数
 NORMAL_HEADER = 'header.header';									//通常のヘッダー
@@ -1930,7 +1931,7 @@ function createLittleContents(){
 	 * 変更日:2015.08.02
 	 * 内容　:createTagクラスインスタンスを引数にして使うようにしました。
 	 */
-	this.createMemberPageHeader = function(createtag) {
+	this.createMemberPageHeader = function() {
 		//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
 		//@mod 2015.0802 T.Masuda ページ内で生成したcreatetagクラスインスタンスを参照するようにしました。
 		//会員番号が入っていなく、通常ヘッダーが見えていなければ
@@ -1940,7 +1941,7 @@ function createLittleContents(){
 			// バナー領域のJSONを取得する。
 			this.getJsonFile('source/memberCommon.json');
 			//ユーザ情報のテキストをDBから取得する
-			this.getJsonFile('php/GetJSONString.php', json['accountHeader'], 'accountHeader');
+			this.getJsonFile('php/GetJSONString.php', this.json['accountHeader'], 'accountHeader');
 			// 会員ページヘッダーを作る
 			this.outputTag('accountHeader', 'memberHeader');
 			// バナー領域を作る
@@ -2559,7 +2560,7 @@ calendarOptions['blog'] = {
 		onSelect: function(dateText, inst){
 			this.instance.creator.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', this.dateText);	// ブログの記事を作る。
+			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -2567,7 +2568,7 @@ calendarOptions['blog'] = {
 			
 			if(this.instance !== void(0)){
 				//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
-				retArray = this.instance.putDisableDate(date, this.instance.dateArray);
+				retArray = this.instance.putDisableDate(date, this.dateArray);
 			}
 			
 			//結果の配列を返す
@@ -2730,13 +2731,13 @@ this.putDisableDate = function(date, dateArray){
 	var retArray = [false];					//返却する配列を作る。
 	//日付が用意されていたら
 	if(dateArray != null){
-		var ymd = createYMD(date);				//日付の配列を作る。
+		var ymd = this.createYMD(date);				//日付の配列を作る。
 		var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
 			
 		//日付配列を走査する。
 		for(var i = 0; i < dateArray.length; i++){
 			//合致する日付があれば
-			if(compareYMD(ymd, createYMD(dateArray[i]))){
+			if(this.compareYMD(ymd, this.createYMD(dateArray[i]))){
 				retArray[0] = true;	//その日付を無効にする。
 			}
 		}
