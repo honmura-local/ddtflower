@@ -1569,13 +1569,15 @@ function createTag(){
 			
 			//ログインダイアログで利用するパラメータのオブジェクトを作る
 			this.argumentObj = {
-					//ログイン状態
-					createTagState: this.createTagState
+					data:{
+						//ログイン状態
+						createTagState: this.createTagState
+					},config:loginDialogOption
 			};
 			
 			//ログインダイアログを出す。
-			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, loginDialogOption);
-			loginDialog.returnObj[TITLE] = this.title;							//ダイアログのタイトルを変更する
+			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, {});
+			loginDialog.argumentObj.config[TITLE] = this.title;							//ダイアログのタイトルを変更する
 			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
 			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
@@ -1640,7 +1642,7 @@ function createTag(){
 			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
 			        					
 			        					//通常ログインかつ、管理者のIDならば
-			        					if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
+			        					if(this.instance.argumentObj.data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
 			        							//画面遷移の履歴を追加する。

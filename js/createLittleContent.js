@@ -2675,7 +2675,11 @@ function calendar(selector) {
 		var date = createDateArray(dateText);
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, $.extend(true, {}, {contentName: contentName, date:date}, specialReservedDialogOption.argumentObj), specialReservedDialogOption.returnObj);
+		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL,
+				$.extend(true, {},
+						{"contentName": contentName, "date":date}, 
+						specialReservedDialogOption.argumentObj
+						), specialReservedDialogOption.returnObj);
 		//予約ダイアログが開いたときのコールバック関数を登録する
 		reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
 		//閉じたら完全にダイアログを破棄させる

@@ -20,7 +20,7 @@ var specialReservedDialogOption = {
 					    // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
 					    if(emptyList == null && onlyAlphabetList == null && emailCheck == null &&numberList == null) {
 						    // 予約希望確認ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-						    var confirmDialog = new dialogEx(SPECIAL_RESERVED_CONFIRM_DIALOG_URL, {}, specialReservedConfirmDialogOption);
+						    var confirmDialog = new dialogEx(SPECIAL_RESERVED_CONFIRM_DIALOG_URL, specialReservedConfirmDialogOption.argumentObj, specialReservedConfirmDialogOption.returnObj);
 						    //閉じたら完全にダイアログを破棄させる
 					        confirmDialog.setCallbackClose(confirmDialog.destroy);
 					        confirmDialog.run();	//予約希望確認ダイアログを開く
