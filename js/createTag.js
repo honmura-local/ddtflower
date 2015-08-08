@@ -1491,6 +1491,33 @@ function createTag(){
 		return retObj;	//作成したオブジェクトを返す
 	}
 	
+	/*
+	 * 関数名:getUserId
+	 * 概要  :ユーザIDを取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザID。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getUserId = function(){
+		//ユーザIDを取得する
+		return this.json.accountHeader !== void(0)? this.json.accountHeader.user_key.value: EMPTY_STRING;
+	}
+	
+	/*
+	 * 関数名:getAuthority
+	 * 概要  :ユーザ権限の値を取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザ権限の値。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getAuthority = function(){
+		//ユーザ権限の値を取得する
+		return this.json.accountHeader !== void(0)? this.json.accountHeader.authority.value: EMPTY_STRING;
+	}
+	
+	
 	//コンストラクタ部分
 	//会員番号がcookie内にあれば取得する。
 	//cookieを取得して連想配列形式に変換する。

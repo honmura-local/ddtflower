@@ -307,28 +307,6 @@ function createLittleContents(){
 		}); 
 	}
 	
-	/*
-	 * 関数名:allCheckbox
-	 * 引数  :var checkboxTarget, var allCheckTarget
-	 * 戻り値:なし
-	 * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
-	 * 作成日:2015.02.28
-	 * 作成者:T.Yamamoto
-	 */
-	this.allCheckbox = function(checkboxTarget, allCheckTarget) {
-		// 第一引数の要素がクリックされたときの処理
-		$(STR_BODY).on(CLICK, checkboxTarget, function() {
-			// 第一引数のチェックボックスにチェックが入った時の処理
-			if($(checkboxTarget + ':checked').val() == 'on') {
-				// 第二引数のチェックボックスにチェックする
-				$(allCheckTarget).prop('checked', true);
-			// 第一引数のチェックボックスのチェックが外れた時の処理
-			} else if ($(checkboxTarget + ':checked').val() == undefined) {
-				// 第二引数のチェックボックスのチェックを外す
-				$(allCheckTarget).prop('checked', false);
-			};
-		});
-	}
 
 	/*
 	 * 関数名:createTab(selector)
@@ -2598,7 +2576,7 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			// 予約のダイアログを出す。
-			this.callReservedDialog(dateText, $(this));
+			this.instance.callReservedDialog(dateText, $(this));
 		},
 		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
 		minDate:1			//今日以前はクリックできなくする。
@@ -2694,10 +2672,10 @@ function calendar(selector) {
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
 		// 日付配列を取得する。
-		var date = this.createDateArray(dateText);
+		var date = createDateArray(dateText);
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
+		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, $.extend(true, {}, {contentName: contentName, date:date}, specialReservedDialogOption.argumentObj), specialReservedDialogOption.returnObj);
 		//予約ダイアログが開いたときのコールバック関数を登録する
 		reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
 		//閉じたら完全にダイアログを破棄させる
@@ -2718,7 +2696,7 @@ function calendar(selector) {
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
 		// 日付配列を取得する。
-		var date = this.createDateArray(dateText)
+		var date = createDateArray(dateText)
 		// 予約希望ダイアログを作成する
 		 var mDialog = new memberDialog('memberDialog',date,null, contentName, date);
 		mDialog.open();	//ダイアログを開く
@@ -2878,7 +2856,10 @@ this.checkDate = function(dateText, calendar){
 function reservedCalendar(selector, dateRange) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'reserved';	//カレンダー名をセットする
-	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	this.dateRange = dateRange;		//クリック可能な日付の期間の引数をメンバに格納する
+	this.dom = $(selector)[0];		//DOMをメンバに保存する
+	this.dom.instance = this;		//DOMにクラスインスタンスを保存する
+	
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['reserved'];
 }
@@ -3462,3 +3443,25 @@ function cutString(cutTargetSelector, cutCount) {
 	});
 }
 
+/*
+ * 関数名:allCheckbox
+ * 引数  :var checkboxTarget, var allCheckTarget
+ * 戻り値:なし
+ * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
+ * 作成日:2015.02.28
+ * 作成者:T.Yamamoto
+ */
+this.allCheckbox = function(checkboxTarget, allCheckTarget) {
+	// 第一引数の要素がクリックされたときの処理
+	$(STR_BODY).on(CLICK, checkboxTarget, function() {
+		// 第一引数のチェックボックスにチェックが入った時の処理
+		if($(checkboxTarget + ':checked').val() == 'on') {
+			// 第二引数のチェックボックスにチェックする
+			$(allCheckTarget).prop('checked', true);
+		// 第一引数のチェックボックスのチェックが外れた時の処理
+		} else if ($(checkboxTarget + ':checked').val() == undefined) {
+			// 第二引数のチェックボックスのチェックを外す
+			$(allCheckTarget).prop('checked', false);
+		};
+	});
+}

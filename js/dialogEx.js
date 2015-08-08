@@ -17,7 +17,7 @@ UI_DIALOG 									 = 'ui-dialog';									//ダイアログクラス名
 CLOSE 										 = 'close';										//クローズ処理に使う
 DIALOG_CLOSE_BUTTON 						 = 'dailogCloseButton';							//閉じるボタンクラス名
 DEFAULT_ALERT_CONTENTS 						 = 'defaultAlertContents';						//アラートダイアログの外側divのクラス名
-TAG_P										 = ' p'											//pタグ
+TAG_P										 = ' p';											//pタグ
 LESSON_TABLE 								 = 'lessonTable';								//会員画面予約授業一覧テーブル
 LESSON_TABLE_RECORD 						 = 'targetLessonTable';							//会員画面予約授業一覧テーブルの1行ごとのクラス名
 MEMBER_RESERVED_CONFIRM_DIALOG				 = 'memberReservedConfirmDialog';				//会員画面予約確認ダイアログ
@@ -44,7 +44,17 @@ DO_LECTURE_PERMIT_INFO_TABLE 				 = 'doLecturePermitInfoTable';					//管理者�
 DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC 	 = 'callLecturePermitValue';					//管理者、受講承認テーブル置換関数名
 LECTURE_PERMIT_LIST_INFO_TABLE				 = 'lecturePermitListInfoTable';				//管理者、受講承認一覧テーブル
 LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC  = 'callPermitLessonListValue';					//管理者、受講承認一覧テーブル置換関数名
+CONFIRM_DIALOG_BUTTONS						= '.confirmDialog button';						//確認ダイアログのボタン×2のセレクタ
+CLICK										= 'click';										//クリックイベント用文字列
+CONFIRM_DIALOG_PATH							= 'dialog/confirmDialog.html';					//確認ダイアログのHTMLファイルパス
+UI_DIALOG_CLOSEBOX							= '.ui-dialog-titlebar-close';					//jQuery UI Dialogのクローズボックスのセレクタ
+UI_DIALOG_BUTTON_PANEL						= '.ui-dialog-buttonpane';						//jQuery UI Dialogのオプションで作るボタン領域のセレクタ
 
+//選択されたボタンを表す値。
+UNSELECTED 									= -1;											//ボタン未選択の値
+NO											= 0;											//「はい」ボタンの値
+YES											= 1;											//「いいえ」ボタンの値
+CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -64,18 +74,54 @@ function dialogEx(url, argumentObj, returnObj){
 	//ダイアログのDOMを格納するメンバ
 	this.formDom = '';
 	//ダイアログ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
-	this.argumentObj = argumentObj;
+	this.argumentObj = argumentObj !== void(0)? argumentObj : {};
 	//設定用オブジェクトを格納するメンバ
 	this.returnObj = returnObj !== void(0)? returnObj : {};
+	
 	//デフォルト設定のオブジェクト
-	this.defaultObj = {
-			width: 'auto',		//幅を自動調整する
-			autoOpen : true,	//作成時の自動オープンを無効にする
-			modal : true,		//モーダル表示
-			resizable : false,	//ドラッグでのリサイズ可否
-			//表示位置の指定。
-			position :{my:'center top',at:'center top', of:window},
-			closeOnEscape : false	//escキーを押して閉じるか
+	this.defaultArgumentObj = {
+			//ダイアログの設定データオブジェクト
+			config:{
+				width: 'auto',		//幅を自動調整する
+				autoOpen : true,	//作成時の自動オープンを無効にする
+				modal : true,		//モーダル表示
+				resizable : false,	//ドラッグでのリサイズ可否
+				//表示位置の指定。
+				position :{my:'center top',at:'center top', of:window},
+				closeOnEscape : false,	//escキーを押して閉じるか
+				create:function(){	//ダイアログ作成時のイベント
+					
+				},
+				open:function(){	//ダイアログが開くときのイベント
+					
+				},
+				close:function(){	//ダイアログが閉じられるときのイベント
+					
+				}
+			},
+			//インプット用データオブジェクト
+			data:{
+				
+			}
+	};
+	
+	//デフォルトのアウトプット用オブジェクト
+	this.defaultReturnObj = {
+			//ダイアログのステータスオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+			},
+			//関数オブジェクト
+			funcObj:{
+				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
+				        function(){	//「いいえ」ボタン
+				        	//いいえ」ボタンの処理内容
+				        },
+				        function(){	//「はい」ボタン
+				        	//「はい」ボタンの処理内容
+				        }
+				]
+			}
 	};
 	
 	/* 関数名:load
@@ -123,13 +169,17 @@ function dialogEx(url, argumentObj, returnObj){
 			//メンバのURLからHTMLデータを読み込む
 			this.load(this.url);
 			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
-			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultObj;
+			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
+			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
+			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultReturnObj;
+			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
+			
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			//取得したHTMLデータをjQueryUIのダイアログにして、そのダイアログへの参照をメンバに格納する。
 			//※this.formDomへはjQueryオブジェクトとしてformDomへの参照が代入される。
 			//*formDom内のHTMLにscriptタグが記述されていた場合、このコード実行時にscriptタグのコードが動き出す。
-			this.formDom = $(form).dialog(this.returnObj);
+			this.formDom = $(form).dialog(this.argumentObj.config);
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.message);	//投げられたエラーオブジェクトをコンソールログに出す。
@@ -143,12 +193,37 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0729
 	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
 	 */
 	this.setCallbackClose = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.returnObj['close'] = func: console.log('setCallBackClose recieved enythingeles function');
+		func instanceof Function? this.argumentObj.config['close'] = func: console.log('setCallBackClose recieved enythingeles function');
 	}
 
+	/* 関数名:setCallbackCloseOnAfterOpen
+	 * 概要　:ダイアログが開いた後にcloseイベントのコールバックを設定する
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
+	 */
+	this.setCallbackCloseOnAfterOpen = function(func){
+		
+		if(func instanceof Function){
+			this.formDom.dialog('option', 'close', func);
+		} else {
+			alert("not a function");
+		}
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		//func instanceof Function? this.formDom.dialog('option', 'close', func): console.log('setCallBackClose recieved enythingeles function');
+	}
+	
 	/* 関数名:setCallbackOpen
 	 * 概要　:ダイアログのopenイベントのコールバック関数をセットする。
 	 * 引数　:function func:コールバック関数で実行される関数のポインタ
@@ -156,10 +231,13 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0729
 	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
 	 */
 	this.setCallbackOpen = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.returnObj['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
+		func instanceof Function?  this.argumentObj.config['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
 	}
 	
 	/* 関数名:setCallbackCreate
@@ -169,10 +247,13 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0729
 	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
 	 */
 	this.setCallbackCreate = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.returnObj['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
+		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
 
 	/* 関数名:destroy
@@ -186,6 +267,8 @@ function dialogEx(url, argumentObj, returnObj){
 	this.destroy = function(){
 		//ダイアログのDOMを取得する。
 		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this); 
+		//まずはダイアログを閉じる
+		$dialog.dialog('close');
 		//jQuery UIのダイアログを破棄する
 		$dialog.dialog('destroy');
 		//画面上に展開されているダイアログのDOMを破棄する。
@@ -213,21 +296,128 @@ function dialogEx(url, argumentObj, returnObj){
 
 	/* 関数名:setConfirmContents
 	 * 概要　:ダイアログに確認用テキストとはい、いいえのボタンを表示する
-	 * 引数　:String:confirmMessage: アラートで表示するメッセージ文字列
+	 * 引数　:String:message:ダイアログのメッセージ
+	 * 		:Function:func:ダイアログが閉じるときのコールバック関数
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.08.07
 	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.08.08
+	 * 変更者　:T.Masuda
+	 * 内容　　:内容を作りました。
 	 */
-	this.setConfirmContents = function(alertMessage) {
+	this.setConfirmContents = function(message, func) {
 		//アラートとして表示するためのdomを取得する
-		this.load(DIALOG_DEFAULT_ALERT_CONTENTS);
+		this.load(CONFIRM_DIALOG_PATH);
 		//アラートで表示するdomをセレクタとして変数に入れる
-		var alertDom = $(this.formDom)[0];
+		var confirm = $(this.formDom)[0];
 		//domをダイアログにセットする
-		$(DOT + UI_DIALOG_CONTENT).append(alertDom);
+		$(DOT + UI_DIALOG_CONTENT).append(confirm);
 		//メッセージを表示する
-		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(alertMessage);
+		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(message);
+		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
+		var thisElem = this;	
+		
+		//処理終了後にタイマー関数をセットする
+		window.setTimeout(function(){
+			//ダイアログのクローズボックスを消す
+			thisElem.removeDialogCloseBox();
+			//ダイアログの設定で出現するボタンを消す
+			thisElem.removeDialogButtons();
+			thisElem.setCallbackCloseOnAfterOpen(func);	//ボタン押下後のコールバック関数をセットする
+		}, CONFIRM_DIALOG_WAIT);	//定数で設定した時間だけ待って実行する
+	}
+	
+	/* 関数名:getPushedButtonState
+	 * 概要　:押されたボタンを表す値を返すgetterメソッド
+	 * 引数　:String:なし
+	 * 返却値:int:ボタンを表す整数を返す
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getPushedButtonState = function() {
+		return this.returnObj.statusObject.pushedButton;
+	}
+	
+	/* 関数名:setPushedButtonState
+	 * 概要　:押されたボタンがどれかを表す値を更新するsetterメソッド
+	 * 引数　:String buttonState:ボタンの値。ボタンが押された後にbuttonタグのvalueから値を取得することを想定しているため、文字列となっている
+	 * 返却値:なし
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.setPushedButtonState = function(buttonState) {
+		//引数の値を押されたボタンの状態としてセットする
+		this.returnObj.statusObj.buttonState = parseInt(buttonState);
+	}
+	
+	
+	/* 関数名:getConfigObject
+	 * 概要　:configオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:ダイアログの設定用オブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getConfigObject = function() {
+		return this.argumentObj.config;	//configオブジェクトを返す
+	}
+	
+	/* 関数名:getDataObject
+	 * 概要　:インプット用データオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:インプット用データオブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getConfigObject = function() {
+		return this.argumentObj.data;	//dataオブジェクトを返す
+	}
+	
+	/* 関数名:getDataObject
+	 * 概要　:アウトプット用データオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用データオブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnObject = function() {
+		return this.returnObject;	//アウトプット用オブジェクトを返す
+	}
+	
+	/* 関数名:setYESNOFunction
+	 * 概要　:「はい」ボタン、「いいえ」ボタンを押したときの関数を登録する
+	 * 引数　:String: domUrl: ダイアログの中で展開されるdomが入ったhttmlファイル名
+	 * 返却値:なし
+	 * 作成日　:2015.0808
+	 * 作成者　:T.Masuda
+	 */
+	this.setYESNOFunction = function(noFunc,yesFunc){
+		var yesNo = this.getReturnObject().funcObj.YES_NO;
+		yesNo[NO]	= noFunc;	//いいえボタンの関数を登録する
+		yesNo[YES]	= yesFunc;	//はいボタンの関数を登録する
+	}
+	
+	/* 関数名:removeCloseBox
+	 * 概要　:ダイアログのクローズボックスを消す
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0808
+	 * 作成者　:T.Masuda
+	 */
+	this.removeDialogCloseBox = function(){
+		$(UI_DIALOG_CLOSEBOX, this.formDom.parent()).remove();
+	}
+	
+	/* 関数名:removeDialogButtons
+	 * 概要　:ダイアログの設定で表示するボタンを消す
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0808
+	 * 作成者　:T.Masuda
+	 */
+	this.removeDialogButtons = function(){
+		$(UI_DIALOG_BUTTON_PANEL, this.formDom.parent()).remove();
 	}
 }
 
