@@ -1071,26 +1071,31 @@ function createLittleContents(){
 	 * 概要  　:最新記事の一覧を作る
 	 * 作成日　:2015.05.27
 	 * 作成者　:T.Masuda
+	 * 修正日　:2015.08.08
+	 * 修正者　:T.Masuda
+	 * 内容  　:現行のクラスの仕様に対応しました。
 	 */
 	this.createNewArticleList = function(){
-		var $this = $(this);
-			//各項目を走査する
-			$('.currentArticleList li').each(function(i){
-				var $elem = $('a:first',this);	//リンク部分を取得する
-				//クリックしたらブログの記事を作るコードを追加する
-				$elem.attr('onclick', '$(".numberingOuter,.blog").empty();outputTag(' + (i + 1) + ', "blogArticle",".blog");');
+		var thisElem = this;
+		//各項目を走査する
+		$('.currentArticleList li').each(function(i){
+			var $elem = $('a:first',this);	//リンク部分を取得する
+			//クリックしたらブログの記事を作るコードを追加する
+			$elem.attr('onclick', 
+						'$(".numberingOuter,.blog").empty();$(".blog").append(creator.createTag(creator.json.blogArticle.table["' + i + '"], creator.getDomNode("blogArticle")));');
 				
-				var $elems = $('*',$elem);	//項目を取得する
-				//ブログ記事のオブジェクトを取得する
-				var articleNode = json[String(i + 1)];
-				//オブジェクトが取得できていなければ
-				if(articleNode === void(0)){
-					return;	//関数を終える
-				}
-				//記事一覧にテキストを入れる
-				$this.insertArticleListText($elems, articleNode);
-			});
-		}
+			var $elems = $('*',$elem);	//項目を取得する
+			//ブログ記事のオブジェクトを取得する
+			var articleNode = thisElem.json.blogArticle.table[String(i)];
+			//オブジェクトが取得できていなければ
+			if(articleNode === void(0)){
+				return;	//関数を終える
+			}
+			//記事一覧にテキストを入れる
+			thisElem.insertBlogArticleListText($elems, articleNode);
+		});
+	}
+	
 	/*
 	 * 関数名 :insertBlogArticleListText
 	 * 引数  　:element elem:記事リストの項目を構成する要素

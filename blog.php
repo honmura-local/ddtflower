@@ -50,10 +50,12 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
 				
-				//var dateArray = creator.extractDateArray(creator.json);	//日付の配列を作る。
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', creator);
 				bCalendar.create();	//カレンダーを実際に作成する
+
+				creator.createNewArticleList();	//最新記事一覧を作る
+				
 				//ブログ記事の中にMSLのリストを配置する
 				//$('.blogRightContent').prepend($('#mslongtail_1984').show());
 			</script>
