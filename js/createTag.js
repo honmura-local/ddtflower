@@ -461,7 +461,7 @@ function createTag(){
 	 * 		 int displayPage:表示するブログのページ番号
 	 * 		 int pageNum:1ページに表示する記事数。
 	 * 		 String targetArea:記事の追加先のセレクタ。
-	 * 		Function callBack:終了後に実行する関数
+	 * 		String callBack:実行させたいコードの文字列
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -475,26 +475,34 @@ function createTag(){
 	 * 変更者:T.Masuda
 	 * 変更日:2015.07.29
 	 * 内容　:新しい記事の形式に対応しました。配列にも対応します。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.08
+	 * 内容　:日付による記事絞り込みに対応しました。
 	 */
 	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack){
+		
+		var articles = this.checkArticleDate(jsonName);	//日付を確認する関数を実行する
+		//記事の絞り込みが行われていたら、そのまま代入する。そうでなければjsonNameからオブジェクトを取得する
+		articles = articles != null? articles:this.getMapNode(jsonName);	
 		
 		//numberingの内容をクリアする（numberingはクラスのメンバとして宣言する）
 		this.numbering = {};		
 
 		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, callBack);
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, callBack, articles);
 		
 		//記事を消す
 		$(targetArea).empty();
 
+		
 		//JSONが配列形式であれば
-		if($.isArray(this.json[jsonName].table)){
+		if($.isArray(articles.table)){
 			//コンテンツ表示
-			$(targetArea).append(this.createTagTable(this.getMapNode(jsonName), this.getDomNode(jsonName) , pageNum, displayPage));
+			$(targetArea).append(this.createTagTable(articles, this.getDomNode(jsonName) , pageNum, displayPage));
 		//JSONが連想配列形式であれば
 		} else {
 			//コンテンツ表示
-			this.outputKeyNumberObject(jsonName, targetArea, pageNum, displayPage)
+			this.outputKeyNumberObject(articles, jsonName, targetArea, pageNum, displayPage)
 		}
 		
 		//ナンバリングを消す。
@@ -518,7 +526,11 @@ function createTag(){
 		
 		//コールバック関数が入力されていれば
 		if(callBack !== void(0) && callBack != 'undefined'){
-			eval(callBack + '()');	//コールバック関数を実行する
+			var evaled = eval(callBack);	//評価する
+			//evaledが関数であれば
+			if(evaled instanceof Function == true){
+				evaled();	//関数を実行する
+			}
 		}
 	}
 
@@ -530,6 +542,7 @@ function createTag(){
 	 * 		 int displayPageMax:表示するナンバリングの最大個数。
 	 * 		 int pageNum:1ページに表示する記事数。
 	 * 		Function callBack:終了後に実行する関数
+	 * 		articles Object:記事データ
 	 * 返却値  :なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
@@ -538,13 +551,16 @@ function createTag(){
 	 * 変更日:2015.04.08
 	 * 内容　:引数pageNumを追加し、1ページに複数の記事を載せることに対応しました。
 	 */
-	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack){
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack, articles){
 		//ページ数を取得する。
-		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName) / pageNum);
+		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName, articles) / pageNum);
 		
 		//ページ数が1以下ならナンバリングを作成せずに終了する。
 		if(pageMax <= 1){
-			return;
+			//空のナンバリングを用意する
+			this.numbering = {};						//メンバのナンバリングを空オブジェクトにする
+			this.json['numbering'] = this.numbering;	//JSON内のナンバリングをメンバのナンバリングで上書きする
+			return;										//処理を終えて呼び出し元に戻る
 		}
 		
 		// <<ボタンを作る。(1ページ前に進める)
@@ -635,22 +651,26 @@ function createTag(){
 	 * 関数名:getJsonObjectNum
 	 * 概要  :メンバjsonの指定キー内の整数値のキーの数を返す。
 	 * 引数  :String jsonName:メンバJSONルートの処理対象のJSONのキー名。
+	 * 		:Object Articles:記事データの連想配列
 	 * 返却値  :int:整数値のキーの数を返す。
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
-	 * 返却値  :int
 	 * 変更者:T.Masuda
-	 * 変更日:2015.007.29
+	 * 変更日:2015.07.29
 	 * 内容　:jsonNameと定数「ARTICLE_OBJECT_KEY」で走査対象のオブジェクトを指定するようにしました。
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.08
+	 * 内容　:引数を増やして記事絞り込みに対応しました。
 	 */
-	this.getJsonObjectNum = function(jsonName){
+	this.getJsonObjectNum = function(jsonName, articles){
 		//返却する値を格納するための変数を宣言、0で初期化する。
 		var retNum = 0;
 
 		//@mod 2015.0729 T.Masuda 走査対象のオブジェクトを変えました。
 		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
-		$searchObject = this.json[jsonName][ARTICLE_OBJECT_KEY];
+		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
+		$searchObject = articles !== void(0)? articles[ARTICLE_OBJECT_KEY]: this.json[jsonName][ARTICLE_OBJECT_KEY];
 		
 		//配列であれば
 		if($.isArray($searchObject)){
@@ -1337,7 +1357,8 @@ function createTag(){
 	/*
 	 * 関数名:outputKeyNumberObject(json, domkey, target)
 	 * 概要  :整数値でナンバリングされた連想配列のキーを持つオブジェクトからパーツを作り追加する。
-	 * 引数  :String domkey:DOMのキー
+	 * 引数  :Object json:JSON連想配列
+	 * 		 String domkey:作成したDOMのappend先
 	 * 		 String target:作成したDOMのappend先
 	 * 		 int showNum:生成するパーツの数。
 	 * 		 int page:ブログ等、ページャを使っているコンテンツのページ数。
@@ -1350,8 +1371,11 @@ function createTag(){
 	 * 変更日:2015.07.29
 	 * 変更者:T.Masuda
 	 * 内容　:createLittleContent.jsから移植しました。また、不要になった引数(json)を削除しました。
+	 * 変更日:2015.08.08
+	 * 変更者:T.Masuda
+	 * 内容　:第一引数を連想配列にし、その後のものはずらしました。createTagTableと引数を合わせる形です。
 	 */
-	this.outputKeyNumberObject = function(domkey, target, showNum, page){
+	this.outputKeyNumberObject = function(json, domKey, target, showNum, page){
 		//showNum、pageが未入力であれば初期化する。
 		showNum = showNum === void(0)? 100: showNum;	//showNumの初期化判定と処理をする
 		page = page === void(0)? 1: page;				//pageの初期化判定と処理をする
@@ -1359,12 +1383,12 @@ function createTag(){
 		var startIndex = showNum * (page - 1); 
 		//@mod 2015.0729 T.Masuda 新たな記事JSONの形に対応しました。
 		//記事用のナンバリングがキーとなっているJSONを格納したオブジェクトを引数のJSONから取り出す
-		var jsonNumbering = this.json[domkey][ARTICLE_OBJECT_KEY];
+		var jsonNumbering = json[ARTICLE_OBJECT_KEY];
 		
 		//取得したJSONを走査する。引数に入力された数だけループする。
 		for(var i = startIndex; (i.toString() in jsonNumbering) && i - startIndex < showNum; i++){
 				// 記事の要素を作成し、変数tagに格納する。
-				var tag = this.createTag(jsonNumbering[i.toString()], this.getDomNode(domkey));
+				var tag = this.createTag(jsonNumbering[i.toString()], this.getDomNode(domKey));
 				//targetで指定した場所に作成した要素を挿入する。
 				this.appendTag(tag, target);
 		}
@@ -1377,6 +1401,94 @@ function createTag(){
 			//tableタグを外す
 			unwrapTable('.'+records.attr('class'));
 		}
+	}
+	
+	/*
+	 * 関数名:checkArticleDate
+	 * 概要  :メンバJSONのブログ記事を日付で絞り込む
+	 * 引数  :String jsonName:JSONのキー
+	 * 		 String dateText:日付テキストの文字列
+	 * 戻り値:Object:記事の絞り込みを行ったオブジェクトを返す
+	 * 作成日:2015.08.08
+	 * 作成者:T.Masuda
+	 */
+	this.checkArticleDate = function(jsonName){
+		var retObj = null;	//返却用のオブジェクトを格納する変数を宣言、nullで初期化する
+		
+		//dateTextが入力されていれば
+		//※dateTextは現状ではblogCalendarで利用する
+		if(this.dateText !== void(0)){
+			//evaledが日付であれば、記事の絞り込みを行う。
+			if(!isNaN(Date.parse(this.dateText))){
+				//絞り込み対象のJSONの記事タイプが配列形式であれば
+				if($.isArray(this.json[jsonName].table)){
+					retObj = this.filterArticleDateForArray(jsonName, this.dateText);	//配列形式の記事絞り込みを行う
+				}else{
+					retObj = this.filterArticleDateForObject(jsonName, this.dateText);	//オブジェクト形式の記事絞り込みを行う
+				}
+			}
+		}
+		
+		return retObj;	//作成したオブジェクトか、失敗のnullを返す
+	};
+	
+	/*
+	 * 関数名:filterArticleDateForArray
+	 * 概要  :日付により配列形式の記事データを絞り込む
+	 * 引数  :String jsonName:JSONのキー
+	 * 		 String dateText:日付テキストの文字列
+	 * 戻り値:Object:記事の絞り込みを行ったオブジェクトを返す
+	 * 作成日:2015.08.08
+	 * 作成者:T.Masuda
+	 */
+	this.filterArticleDateForArray = function(jsonName, dateText){
+		//対象のオブジェクトのコピーを作成する
+		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
+		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
+		var tableLength = retObj.table.length;	//走査対象のテーブルのサイズを取得する
+		
+		//記事を走査し、日付が当てはまらない記事を削除していく
+		for(var i = 0; i < tableLength; i++){
+			//日付が合わなければ
+			if(retObj.table[i].blogArticleDate != dateText){
+				retObj.table.splice(i);	//該当する記事を削除する
+			}
+		}
+		
+		retObj.table = retObj.table.concat();	//配列をコピーしてインデックスの乱れを直す
+		
+		return retObj;	//作成したオブジェクトを返す
+	}
+	
+	/*
+	 * 関数名:filterArticleDateForObject
+	 * 概要  :日付によりオブジェクト形式の記事データを絞り込む
+	 * 引数  :String jsonName:JSONのキー
+	 * 		 String dateText:日付テキストの文字列
+	 * 戻り値:Object:記事の絞り込みを行ったオブジェクトを返す
+	 * 作成日:2015.08.08
+	 * 作成者:T.Masuda
+	 */
+	this.filterArticleDateForObject = function(jsonName, dateText){
+		//対象のオブジェクトのコピーを作成する
+		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
+		var table = retObj.table;				//tableキーのオブジェクトを取得する
+		var tableLength = table.length;	//走査対象のテーブルのサイズを取得する
+		var tmpObj = {};						//絞り込んだ記事を一時的に格納するオブジェクトを作る
+		var i = 0;								//記事番号を振るためのカウンター変数を宣言する
+		
+		//記事を走査し、日付が当てはまらない記事を削除していく
+		for(key in table){
+			//日付が合っていれば
+			//できれば日付のキーを汎用的なキーにしたいと思います。
+			if(table[key].blogArticleTitle.blogArticleDate.text == dateText){
+				tmpObj[(i++).toString()] = table[key];	//該当する記事を追加する
+			}
+		}
+		
+		retObj.table = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
+		
+		return retObj;	//作成したオブジェクトを返す
 	}
 	
 	//コンストラクタ部分

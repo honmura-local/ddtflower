@@ -31,6 +31,8 @@ CHANGE							= 'change';							//イベント名がchangeのときにchangeイ�
 MARGIN_TOP = 'margin-top';											//上margin
 PX_5 = '5px';														//5PX
 PX_115 = '115px';													//115PX
+BLOG_SHOW_PAGES					=  1;								//ブログ表示記事数。blog.phpでも使う
+EMPTY_STRING					=  '';								//空文字
 
 //セレクターの文字列定数
 NORMAL_HEADER = 'header.header';									//通常のヘッダー
@@ -1070,26 +1072,31 @@ function createLittleContents(){
 	 * 概要  　:最新記事の一覧を作る
 	 * 作成日　:2015.05.27
 	 * 作成者　:T.Masuda
+	 * 修正日　:2015.08.08
+	 * 修正者　:T.Masuda
+	 * 内容  　:現行のクラスの仕様に対応しました。
 	 */
 	this.createNewArticleList = function(){
-		var $this = $(this);
-			//各項目を走査する
-			$('.currentArticleList li').each(function(i){
-				var $elem = $('a:first',this);	//リンク部分を取得する
-				//クリックしたらブログの記事を作るコードを追加する
-				$elem.attr('onclick', '$(".numberingOuter,.blog").empty();outputTag(' + (i + 1) + ', "blogArticle",".blog");');
+		var thisElem = this;
+		//各項目を走査する
+		$('.currentArticleList li').each(function(i){
+			var $elem = $('a:first',this);	//リンク部分を取得する
+			//クリックしたらブログの記事を作るコードを追加する
+			$elem.attr('onclick', 
+						'$(".numberingOuter,.blog").empty();$(".blog").append(creator.createTag(creator.json.blogArticle.table["' + i + '"], creator.getDomNode("blogArticle")));');
 				
-				var $elems = $('*',$elem);	//項目を取得する
-				//ブログ記事のオブジェクトを取得する
-				var articleNode = json[String(i + 1)];
-				//オブジェクトが取得できていなければ
-				if(articleNode === void(0)){
-					return;	//関数を終える
-				}
-				//記事一覧にテキストを入れる
-				$this.insertArticleListText($elems, articleNode);
-			});
-		}
+			var $elems = $('*',$elem);	//項目を取得する
+			//ブログ記事のオブジェクトを取得する
+			var articleNode = thisElem.json.blogArticle.table[String(i)];
+			//オブジェクトが取得できていなければ
+			if(articleNode === void(0)){
+				return;	//関数を終える
+			}
+			//記事一覧にテキストを入れる
+			thisElem.insertBlogArticleListText($elems, articleNode);
+		});
+	}
+	
 	/*
 	 * 関数名 :insertBlogArticleListText
 	 * 引数  　:element elem:記事リストの項目を構成する要素
@@ -1930,7 +1937,7 @@ function createLittleContents(){
 	 * 変更日:2015.08.02
 	 * 内容　:createTagクラスインスタンスを引数にして使うようにしました。
 	 */
-	this.createMemberPageHeader = function(createtag) {
+	this.createMemberPageHeader = function() {
 		//会員ページヘッダーのjsonがあるときに会員ページのヘッダーを作る
 		//@mod 2015.0802 T.Masuda ページ内で生成したcreatetagクラスインスタンスを参照するようにしました。
 		//会員番号が入っていなく、通常ヘッダーが見えていなければ
@@ -1940,7 +1947,7 @@ function createLittleContents(){
 			// バナー領域のJSONを取得する。
 			this.getJsonFile('source/memberCommon.json');
 			//ユーザ情報のテキストをDBから取得する
-			this.getJsonFile('php/GetJSONString.php', json['accountHeader'], 'accountHeader');
+			this.getJsonFile('php/GetJSONString.php', this.json['accountHeader'], 'accountHeader');
 			// 会員ページヘッダーを作る
 			this.outputTag('accountHeader', 'memberHeader');
 			// バナー領域を作る
@@ -2302,7 +2309,7 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:showNormalHeader
+	 * 関数名:hideNormalHeader
 	 * 概要  :通常ページのヘッダーを隠す
 	 * 引数  :なし
 	 * 返却値  :なし
@@ -2334,8 +2341,8 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:showNormalHeader
-	 * 概要  :通常ページのヘッダーを表示する
+	 * 関数名:createNormalHeaderContent
+	 * 概要  :通常ページのヘッダーの中身を作成する
 	 * 引数  :creatTag createtagクラスのインスタンス
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
@@ -2361,13 +2368,13 @@ function createLittleContents(){
 	this.createMyBlogImages = function(){
 		//ブログの各行を走査する
 		$('.myBlogTable tr:not(:first)').each(function(){
-			console.log($('.myBlogTable tbody tr'));
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//画像の列を走査する
 			$('.blogImage', $row).each(function(){
-				console.log($(this));
-				//テキストを画像パスにして、新たに生成する画像のパスにする
-				$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+				if($(this).text() != EMPTY_STRING){	//画像列のセルにテキスト(画像名)があれば
+					//テキストを画像パスにして、新たに生成する画像のパスにする
+					$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+				}
 			});
 		});
 	}
@@ -2559,7 +2566,7 @@ calendarOptions['blog'] = {
 		onSelect: function(dateText, inst){
 			this.instance.creator.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, 5, '.blog', this.dateText);	// ブログの記事を作る。
+			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -2567,7 +2574,7 @@ calendarOptions['blog'] = {
 			
 			if(this.instance !== void(0)){
 				//@add 2015.0604 T.Masuda 日付が用意されていなければ処理しないようにしました
-				retArray = this.instance.putDisableDate(date, this.instance.dateArray);
+				retArray = this.instance.putDisableDate(date, this.dateArray);
 			}
 			
 			//結果の配列を返す
@@ -2730,13 +2737,13 @@ this.putDisableDate = function(date, dateArray){
 	var retArray = [false];					//返却する配列を作る。
 	//日付が用意されていたら
 	if(dateArray != null){
-		var ymd = createYMD(date);				//日付の配列を作る。
+		var ymd = this.createYMD(date);				//日付の配列を作る。
 		var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
 			
 		//日付配列を走査する。
 		for(var i = 0; i < dateArray.length; i++){
 			//合致する日付があれば
-			if(compareYMD(ymd, createYMD(dateArray[i]))){
+			if(this.compareYMD(ymd, this.createYMD(dateArray[i]))){
 				retArray[0] = true;	//その日付を無効にする。
 			}
 		}

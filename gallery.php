@@ -20,17 +20,17 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<script>
 				//createTagクラスのインスタンスを生成する
 				var creator = new createLittleContents();
-
+				
 				creator.getJsonFile('source/gallery.json');			// ギャラリーページ用のJSONデータを取得する。
 				creator.getJsonFile('source/gallerycontent.json');	// フォトギャラリー用のJSONデータを取得する。
 				creator.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
 				//テンプレートのDOMを取得する。
 				creator.getDomFile('template/common.html');
 				creator.getDomFile('template/gallery.html');
-
+				
 				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				creator.createMemberPageHeader(creator);
-
+				creator.createMemberPageHeader();
+				
 				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
 				creator.outputTag('pageTitle');						// タイトル領域を作る
 				creator.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
