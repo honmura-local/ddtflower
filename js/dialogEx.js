@@ -35,6 +35,12 @@ RESERVED_LESSON_TABLE 						 = 'reservedLessonTable';						//会員、予約中�
 RESERVED_LESSON_TABLE_REPLACE_FUNC 			 = 'callMemberLessonValue';						//会員、予約中授業テーブル置換関数名
 EACH_DAY_RESERVED_INFO_TABLE 				 = 'eachDayReservedInfoTable';					//管理者、日ごと予約者一覧テーブル
 EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC 	 = 'callEachDayReservedValue';					//管理者、日ごと予約者一覧テーブル置換関数名
+DO_LECTURE_PERMIT_INFO_TABLE 				 = 'doLecturePermitInfoTable';					//管理者、受講承認テーブル
+DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC 	 = 'callLecturePermitValue';					//管理者、受講承認テーブル置換関数名
+LECTURE_PERMIT_LIST_INFO_TABLE				 = 'lecturePermitListInfoTable';				//管理者、受講承認一覧テーブル
+LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC  = 'callPermitLessonListValue';					//管理者、受講承認一覧テーブル置換関数名
+
+
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -313,7 +319,7 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
 			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
 		} else {
 			//テーブルの値を置換する
-			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName);
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
 		}
 		//テーブルを画面に表示する
 		$(DOT + tableName).show();

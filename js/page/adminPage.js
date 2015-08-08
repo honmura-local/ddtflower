@@ -36,8 +36,8 @@ function createAdminPermitLessonContent () {
 
 	//受講承認のテーブルにチェックボックスを追加する
 	creator.addCheckbox('permitCheckboxArea', 'permitCheckbox');
-	//受講承認に連番を入れる
-	lessonTableValueInput('.doLecturePermitInfoTable', creator.json.doLecturePermitInfoTable.table, 'callLecturePermitValue');
+	//受講承認のテーブルを置換する
+	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, creator.json[DO_LECTURE_PERMIT_INFO_TABLE].table, DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 	creator.setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
@@ -643,7 +643,7 @@ function afterReloadPermitListInfoTable() {
 	//受講承認一覧テーブルの取り出した行にクラス名を付ける
 	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	//受講承認一覧テーブルの列内を編集する
-	lessonTableValueInput('.lecturePermitListInfoTable', creator.json.lecturePermitListInfoTable.table, 'callPermitLessonListValue');
+	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, creator.json[LECTURE_PERMIT_LIST_INFO_TABLE].table, LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
 	//受講承認一覧テーブルの料金列をテキストボックスにする
 	creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 	//受講承認一覧テーブルの使用pt列をテキストボックスにする
@@ -771,4 +771,9 @@ var announceInsert = function() {
 		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
 	}
 }
+
+
+
+
+
 

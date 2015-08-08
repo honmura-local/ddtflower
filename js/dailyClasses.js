@@ -665,106 +665,7 @@ var callAdminReservedLessonValue = function(tableName, loopData, counter, rowNum
 		// 残席の表示を正規の表示にする
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
 	}
-
 };
-
-/* 
- * 関数名:reservedLessonValueInput
- * 概要  :予約テーブルについてデータベースから取り出した値を固定値で入れる
- * 引数  :
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.06.13
- */
-function lessonTableValueInput(tableName, rowData, func) {
-	// カウンターを作る
-	var counter = 0;
-	// テーブルの行番号
-	rowNumber = 1;
-	// テーブルのすべての行に対してループで値を入れる
-	$.each(rowData, function() {
-		// テーブルの値を変える関数をコールする
-		eval(func)(tableName, rowData, counter, rowNumber);
-		// 行番号をインクリメントする
-		rowNumber++;
-		// カウンタ変数をインクリメントする
-		counter++;
-	});
-}
-
-
-/* 
- * 関数名:reservedLessonValueInput
- * 概要  :予約テーブルについてデータベースから取り出した値を固定値で入れる
- * 引数  :
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.06.13
- */
-function lessonReservedTableValueInput(tableName, rowData, func, timeTableStudents) {
-	// カウンターを作る
-	var counter = 0;
-	// テーブルの行番号
-	rowNumber = 1;
-	// テーブルのすべての行に対してループで値を入れる
-	$.each(rowData, function() {
-		// テーブルの値を変える関数をコールする
-		eval(func)(tableName, rowData, counter, rowNumber, timeTableStudents);
-		// 行番号をインクリメントする
-		rowNumber++;
-		// カウンタ変数をインクリメントする
-		counter++;
-	});
-}
-
-/* 
- * 関数名:dbDataTableReplaceExecute
- * 概要  :dbから取り出したテーブルについてクライアント側で置換させる
- * 引数  :
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.06.13
- */
-function dbDataTableReplaceExecute(tableName, rowData, func, timeTableStudents) {
-	// カウンターを作る
-	var counter = 0;
-	// テーブルの行番号
-	rowNumber = 1;
-	// テーブルのすべての行に対してループで値を入れる
-	$.each(rowData, function() {
-		// テーブルの値を変える関数をコールする
-		eval(func)(tableName, rowData, counter, rowNumber, timeTableStudents);
-		// 行番号をインクリメントする
-		rowNumber++;
-		// カウンタ変数をインクリメントする
-		counter++;
-	});
-}
-
-
-/* 
- * 関数名:insertNo
- * 概要  :テーブルに連番の番号を挿入する
- * 引数  :rowData: テーブルのデータ。行数の親
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.02
- */
-function insertNo (rowData, tableName, columnNumber) {
-	// カウンターを作る
-	var counter = 0;
-	// テーブルの行番号
-	rowNumber = 1;
-	// テーブルのすべての行に対してループで値を入れる
-	$.each(rowData, function() {
-		// 番号を連番で入れる
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(columnNumber).text(rowNumber);
-		// 行番号をインクリメントする
-		rowNumber++;
-		// カウンタ変数をインクリメントする
-		counter++;
-	});
-}
 
 /* 
  * 関数名:callLecturePermitValue
@@ -811,3 +712,26 @@ var callPermitLessonListValue = function(tableName, loopData, counter, rowNumber
 	}
 };
 
+/* 
+ * 関数名:dbDataTableReplaceExecute
+ * 概要  :dbから取り出したテーブルについてクライアント側で置換させる
+ * 引数  :
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.06.13
+ */
+function dbDataTableReplaceExecute(tableName, rowData, func, timeTableStudents) {
+	// カウンターを作る
+	var counter = 0;
+	// テーブルの行番号
+	var rowNumber = 1;
+	// テーブルのすべての行に対してループで値を入れる
+	$.each(rowData, function() {
+		// テーブルの値を変える関数をコールする
+		eval(func)(tableName, rowData, counter, rowNumber, timeTableStudents);
+		// 行番号をインクリメントする
+		rowNumber++;
+		// カウンタ変数をインクリメントする
+		counter++;
+	});
+}
