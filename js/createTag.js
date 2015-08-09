@@ -99,6 +99,7 @@ LOGIN_MESSAGE = '';		//ログインダイアログのメッセージ
 RE_LOGIN_MESSAGE = '';	//再ログインダイアログのメッセージ
 URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHTMLファイルのURL
 URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
+URL_MEMBER_PAGE = 'memberPage.html'; //管理者ページのURL
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -1531,7 +1532,7 @@ function createTag(){
 	if('userId' in cookie && cookie.userId != ""){
 		//会員IDのcookieを取得する。
 		this.json.accountHeader.user_key.value = cookie.userId;
-		this.json.accountHeader.authority.value = cookie.authority;
+		this.json.accountHeader.authority.text = cookie.authority;
 	}
 }
 
@@ -1645,14 +1646,24 @@ function createTag(){
 			        					if(this.instance.argumentObj.data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
-			        							//画面遷移の履歴を追加する。
+			        							//管理者ページの画面遷移の履歴を追加する。
 			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
 			        						//URLハッシュを利用する
 			        						} else {
 			        							//管理者ページへ移動する
 			        							location.href = URL_ADMIN_PAGE; 
 			        						}
-			        						//現在のページの履歴を書き換え、リロード後に会員ページが表示されるようにする
+			        					//通常ログインかつ、管理者のIDでなければ
+			        					} else if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
+			        						//pushStateをサポートしているブラウザなら
+			        						if(isSupportPushState()){
+			        							//会員トップページの画面遷移の履歴を追加する。
+			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
+			        						//URLハッシュを利用する
+			        						} else {
+			        							//会員トップページへ移動する
+			        							location.href = URL_MEMBER_PAGE; 
+			        						}
 			        					}
 										
 										//画面をリロードする。

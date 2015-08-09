@@ -2332,7 +2332,7 @@ function createLittleContents(){
 			this.outputTag(GUIDES , GUIDES, NORMAL_HEADER);		// ガイド領域を作る
 			this.outputTag(TOP_MENU, TOP_MENU, NORMAL_HEADER);		// トップメニューを作る
 			// ログイン状態をチェックする。
-			checkLoginState();
+			this.checkLoginState();
 		}
 	}
 	/*
@@ -2508,6 +2508,113 @@ function createLittleContents(){
 	}
 
 
+	/* 
+	 * 関数名:checkLogin()
+	 * 概要  :ログイン状態をチェックする。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.M
+	 * 作成日:2015.02.18
+	 * 修正者:T.M
+	 * 修正日:2015.03.10
+	 * 変更　:ユーザー名が複数表示されてしまうバグへ対応しました。
+	 */
+	//※現状ではこの関数は必ずfalseを返します。
+	this.checkLogin = function(){
+		// ログインしているか否かの結果を返すための変数を用意する。
+		var result = false;
+		// クッキーを連想配列で取得する。
+		var cookies = GetCookies();
+		//ログイン中であれば	※空のcookieに対しては、IEは文字列"undefined"を返し、それ以外は空文字を返す。
+		if('user' in cookies && (cookies['user'] != "" && cookies['user'] != "undefined")){
+			// ログインボタンをログアウトボタンに差し替える。
+			$('.login').removeClass('login')
+						.addClass('logout')
+						.attr('src', 'image/icon(logout22-50).png');
+			//ログアウトボタンの下にユーザ名を表示する。
+			$('.logout')
+						// spanタグを追加する。
+						.after($('<span></span>')
+								// ユーザ名のクラスを設定する。
+								.addClass('userName')
+								//cookieからユーザ名を取り出し表示する。
+								.text(cookies['userName'] + '様')
+								)
+						// spanタグを追加する。
+						.after($('<span></span>')
+								// ユーザ名のクラスを設定する。
+								.addClass('welcome')
+								//cookieからユーザ名を取り出し表示する。
+								.text('ようこそ')
+								)
+						;
+			// ログアウトのイベントを定義する。
+			$(document).on('click', '.logout', function(){
+				// ユーザのクッキーを削除してログアウトする。
+				deleteCookie('user');
+				deleteCookie('userName');
+				//画面を更新する。
+	   		 	location.reload();
+			});
+			
+			// ログインしている状態であるという結果を変数に格納する。
+			result = true;
+		}
+		
+		// ログイン状態を返す。
+		return result;
+	}
+
+	/* 
+	 * 関数名:function getUserId()
+	 * 概要  :cookieからユーザIDを取得して返す。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザIDの文字列。
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.16
+	 */
+	this.getUserId = function(){
+		// クッキーを連想配列で取得する。
+		var cookies = GetCookies();
+		//ユーザIDを取得して返す。なければ空文字を返す。
+		return 'userId' in cookies && cookies.userId != ''? cookies['userId']: '';
+	}
+
+	/* 
+	 * 関数名:function checkLoginState()
+	 * 概要  :ログイン状態をチェックする。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.02.20
+	 * 変更者:T.Masuda
+	 * 変更日:2015.06.10
+	 * 内容　:ダイアログを呼ぶ関数を共通化したものにしました
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.02
+	 * 内容　:ログイン済み状態での会員ページ、管理者ページへの転送振り分け処理を追加しました。
+	 */
+	this.checkLoginState = function(){
+		// ログイン状態をチェックする。
+		//※現状ではこのcheckLogin関数は必ずfalseを返します。
+//		if(!(checkLogin())){
+		//イベントコールバック内でクラスインスタンスを参照するため、変数にクラスインスタンスを格納しておく
+			var thisElem = this;
+			//ログインボタンのイベントを設定する。
+			$(CLASS_LOGIN).on(CLICK, function(){
+				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
+				//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
+				var loginUrl = thisElem.json.accountHeader !== void(0)
+								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+				// 会員ページ、または管理者ページへリンクする。
+				callPage(loginUrl);
+			});
+//		}
+	}
+	
+	
+	
+	
 }	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();
@@ -3379,7 +3486,7 @@ function setValueDBdata(setArray, setDomParent, targetArrayType) {
 /* 
  * 関数名:getInputData
  * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
-		:クラス名をkey、入っている値をvalueの連想配列にして返す
+           		:クラス名をkey、入っている値をvalueの連想配列にして返す
  * 引数  :string selector:値を走査したい親のセレクター名
  * 返却値  :object resultArray:入力データの結果連想配列
  * 作成者:T.Yamamoto
