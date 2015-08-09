@@ -2693,12 +2693,16 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
+			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
+			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
 			var dateObject = lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
 			//会員番号をセットしてどのユーザが予約するのかを識別する
-			var dialogDataObject = creator.addUserIdToObject(dateObject);
+			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
+			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
+			$.extend(true, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj.data, dialogDataObject);
 			//予約授業一覧ダイアログを作る
-			var reservedLessonListDialog = new dialogEx(DIALOG_RESERVE_LESSON_LIST, dialogDataObject, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			var reservedLessonListDialog = new dialogEx(DIALOG_RESERVE_LESSON_LIST, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj, {});
 			reservedLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
 		}
@@ -2708,17 +2712,18 @@ calendarOptions['member'] = {		//カレンダーを作る。
 calendarOptions['admin'] = {		//カレンダーを作る。
 	// カレンダーの日付を選択したら
 	onSelect: function(dateText, inst){
+		//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 		//ダイアログのタイトルの日付を設定する
 		var titleDate = changeJapaneseDate(dateText);
 		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
-		var dialogDataObj = {
-			//予約日付をセットし、どの日に予約するのかを識別する
-			lessonDate:dateText
-		};
+		
+		//argumentObjのインプットデータオブジェクトに授業日付をセットする
+		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.data = {lessonDate:dateText};
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG][TITLE] = titleDate;
+		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.config[TITLE] = titleDate;
+		
 		//予約授業一覧ダイアログを作る
-		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
 		//ダイアログを開くときのテーブルの値を編集して表示する
 		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
@@ -2997,19 +3002,26 @@ function myPageReservedCalendar (selector, dateRange) {
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :int dateRange:クリック可能な日付の期間
  *     :int userId:ユーザID
+ *     :createLittleContents creator:createLittleContentsクラスのインスタンス
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
  * 作成者:T.Yamamoto
  * 変更日:2015.06.13
  * 変更者:T.Masuda
+ * 変更日:2015.08.09
+ * 変更者:T.Masuda
+ * 内容	:dialogExクラス、createLittleContentsクラスの仕様に対応しました
  */
-function memberCalendar(selector, dateRange, userId) {
+function memberCalendar(selector, dateRange, userId, creator) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'member';	//カレンダー名をセットする
 	$calendar = $(selector)[0];		//カレンダーの要素を取得する
+	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.userId = userId;		//ユーザIDを保存する
+	this.creator = creator;			//createLittleContentsクラスのインスタンスを利用する
+	
 	
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する

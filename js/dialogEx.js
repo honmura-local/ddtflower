@@ -367,14 +367,14 @@ function dialogEx(url, argumentObj, returnObj){
 		return this.argumentObj.config;	//configオブジェクトを返す
 	}
 	
-	/* 関数名:getDataObject
+	/* 関数名:getArgumentDataObject
 	 * 概要　:インプット用データオブジェクトを返す
 	 * 引数　:なし
 	 * 返却値:Object:インプット用データオブジェクト
 	 * 作成日　:015.08.08
 	 * 作成者　:T.Masuda
 	 */
-	this.getConfigDataObject = function() {
+	this.getArgumentDataObject = function() {
 		return this.argumentObj.data;	//dataオブジェクトを返す
 	}
 	
@@ -515,7 +515,7 @@ function lessonListDialogSendObject(calendarDate, dialogOptionName){
 	//ダイアログのタイトルの日付を日本語名にして取得する
 	var dialogTitle = changeJapaneseDate(calendarDate);
 	//ダイアログのタイトルをセットして予約日を分かりやすくする
-	dialogExOption[dialogOptionName][TITLE] = dialogTitle;
+	dialogExOption[dialogOptionName].argumentObj.config[TITLE] = dialogTitle;
 	//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
 	var sendObject = {
 		//予約日付をセットし、どの日に予約するのかを識別する

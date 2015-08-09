@@ -877,8 +877,14 @@ function addlogoutEvent(selector){
 			url:'php/LogoutSession.php',
 			async:false,	//同期通信を行う
 			success:function(){	//通信成功時の処理
-//				deleteCookie(USER_ID);		//ユーザIDのクッキーを削除する
-//				deleteCookie(PHP_SESSID);	//セッションIDのクッキーを削除する
+				//日付クラスインスタンスを生成する。
+				var cookieLimit = new Date();
+				
+				//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+				cookieLimit.setTime(0);
+				//cookieにユーザ情報と期限の日付を格納する。
+				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';		//会員ID削除
+				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除
 				callPage(TOPPAGE_NAME);	//トップページへ遷移する
 			},
 			error:function(xhr,status,error){	//通信エラー時
