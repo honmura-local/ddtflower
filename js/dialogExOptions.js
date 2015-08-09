@@ -378,11 +378,40 @@ dialogExOption[ADMIN_MAIL_SEND_DIALOG] = {
 				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
 					
 				}
+			},
+			//アウトプット用データオブジェクト
+			data:{
+				//送信タイプ。ここに入った値で確認ダイアログを閉じたときのコールバック関数を分岐させる
+				sendType:""
 			}
 		},
 		//アウトプット用データを格納するオブジェクト
 		returnObj:{
-			
+			//ダイアログの状態を表すオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED,	//押されたボタンの値。1→未選択 0→いいえ 1→はい
+			},
+			//関数オブジェクト
+			funcObj:{
+				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
+				        function(){	//「いいえ」ボタン
+				        	//いいえ」ボタンの処理内容
+				        },
+				        function(){	//「はい」ボタン
+				        	//「はい」ボタンの処理内容
+				        }
+				],
+				//管理者メール送信用関数
+				mail:doSendMail,
+				//お知らせ送信用関数
+				announce:announceInsert
+			},
+			data:{
+				messages:{
+					mail:"メールを送信します。",
+					announce:"お知らせを配信します。"
+				}
+			}
 		}
 }
 

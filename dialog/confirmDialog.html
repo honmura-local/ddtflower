@@ -12,7 +12,6 @@
 		$buttons.button();									//ボタンをリッチな見た目に変える
 		//ボタンのデザインを整える。そして、押下時のイベントを登録する。
 		$buttons.on(CLICK, function(){
-			console.log(this);
 			//ボタンの値を取り出し、ダイアログのクラスインスタンスに渡す
 			$dialogClass.setPushedButtonState($(this).attr(VALUE));
 			$dialogClass.destroy();	//ダイアログを破棄する

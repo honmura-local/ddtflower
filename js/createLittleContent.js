@@ -1237,8 +1237,13 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.27
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.09
+	 * 内容　:操作したレコードの数を整数値で返す様にしました。
 	 */
 	this.setDBdata = function(sendQueryJsonArray, queryReplaceData, successMessage) {
+		var retInt = 0;	//返却値用の変数を宣言、0で初期化する
+		
 		//DBに送信するための連想配列
 		var send = {};
 		//置換済みであるかどうか判定するためにkey名を一つだけ取り出す
@@ -1263,22 +1268,22 @@ function createLittleContents(){
 			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
 			//予約情報のJSONを送信する
 			//変更者:T.Yamamoto 日付:2015.06.26 内容:dataを変数sendから変数sendJsonStringに変更し、送信する値を配列から文字列を送信するように修正しました
-			data:{json:sendJsonString},				//送信するデータを設定する
-			dataType: STR_TEXT,					//テキストデータを返してもらう
+			data:{json:sendJsonString},			//送信するデータを設定する
+			dataType: 'json',					//JSONデータを返す
 			type: STR_POST,						//POSTメソッドで通信する
-			success:function(ret){				//通信成功時の処理
-				//受け取ったjson文字列を連想配列にする
-				var resultJsonArray = JSON.parse(ret);
+			async:false,						//同期通信を行う
+			success:function(json){				//通信成功時の処理
 				//更新した結果が何件であったかを返すために、結果件数を変数に入れる
-				resultCount = Number(resultJsonArray.message);
+				//整数に変換できる値が返ってきていれば、整数値に変換して返却用変数に入れる
+				retInt = !isNaN(json.message)? parseInt(json.message): 0;
 				//更新成功であれば
 				//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
 				//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
 				//変更者:T.Yamamoto 日付2015.07.17 内容: ループで更新に対応するために第三引数が空白ならアラートを出さない設定をしました
 				//第三引数が空白であるならループで更新を行うということなのでアラートを出さない
-				if(successMessage != '') {
+				if(successMessage != EMPTY_STRING) {
 					//更新した内容が1件以上の時更新成功メッセージを出す
-					if(resultCount >= 1) {
+					if(retInt >= 1) {
 						alert(successMessage);	//更新成功のメッセージを出す
 					//更新失敗であれば
 					} else {
@@ -1291,6 +1296,8 @@ function createLittleContents(){
 				alert(MESSAGE_FAILED_CONNECT);
 			}
 		});
+		
+		return retInt;	//整数値を返す
 	}
 	
 	/* 
@@ -2705,17 +2712,19 @@ function createLittleContents(){
 		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
 		//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
 		//予約決定ダイアログを表示する処理
-		$('.adminLessonListContent').on(STR_CLICK, '.targetAdminLessonRecord', function(){
+		//※このあたりはセレクタ関連に無駄が多かったです。
+		$('.adminLessonListContent').on(STR_CLICK, STR_TR, function(){
 			//インプット用データオブジェクトを取得する
 			var argObj = dialogExOption[LESSON_DETAIL_DIALOG].argumentObj;
 			
 			//クリックしたセルの行番号を取得する
-			var rowNum = $('.targetAdminLessonRecord').index(this);
+			var rowNum = $('.adminLessonListContent ' + STR_TR).index(this) - 1;
 			
 			//次のダイアログに渡すデータを変数に入れる
 			var sendObject = thisElem.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
+			
 			//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-			var timeSchedule = $('.targetAdminLessonRecord:eq(' + rowNum + ') td').eq(0).text();
+			var timeSchedule = $(STR_TD, this).eq(0).text();
 			//時間割を次のダイアログに入れるためのデータに入れる
 			sendObject['time_schedule'] = timeSchedule;
 			
@@ -2723,20 +2732,24 @@ function createLittleContents(){
 			var date = sendObject.lesson_date.replace(/-/g,"/");
 			// 日付を日本語表示にする
 			var titleDate = changeJapaneseDate(date);
+			//ダイアログ用オブジェクトのコピーを用意して使う。
+			var dialogObj = $.extend(true, {}, dialogExOption[LESSON_DETAIL_DIALOG]);
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
-			dialogExOption[LESSON_DETAIL_DIALOG].argumentObj.config[TITLE] = titleDate;
+			dialogObj.argumentObj.config[TITLE] = titleDate;
 			//インプット用データオブジェクトに授業データを追加する
-			$.extend(true, dialogExOption[LESSON_DETAIL_DIALOG].argumentObj.config, sendObject);
+			$.extend(true, dialogObj.argumentObj.data, sendObject, {creator:thisElem});
 			
 			//授業詳細ダイアログを作る
 			var lessonDetailDialog = new dialogEx(	
 					LESSON_DETAIL_DIALOG_PATH, 							//管理者 授業詳細ダイアログHTMLファイルのURL
-					dialogExOption[LESSON_DETAIL_DIALOG].argumentObj,	//インプット用データオブジェクト
-					dialogExOption[LESSON_DETAIL_DIALOG].returnObj		//アウトプット用データオブジェクト
+					dialogObj.argumentObj,	//インプット用データオブジェクト
+					dialogObj.returnObj		//アウトプット用データオブジェクト
 				);
+			
+			//授業詳細で授業内容が更新された場合は、当該ダイアログを閉じたときに前のダイアログを閉じるようにする
+			lessonDetailDialog.setCallbackClose(onCloseLessonDetailDialog);
+
 			//ダイアログを開くときのテーブルの値を編集して表示する
-			// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-			lessonDetailDialog.setCallbackClose(adminLessonDetailDialogCloseFunc);	//閉じるときのイベントを登録
 			lessonDetailDialog.run();	//主処理を走らせる。
 		});
 	}
@@ -2767,8 +2780,8 @@ function createLittleContents(){
 			sendObject['tableData'] = thisElem.json.adminLessonDetailTable.table;
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
-			//sendObjectとダイアログオプションのオブジェクトを統合する
-			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject);
+			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
+			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
 			
 			//新規授業追加ダイアログを作る
 			var newLessonCreateDialog = new dialogEx(
@@ -2776,8 +2789,8 @@ function createLittleContents(){
 					dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
 					dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
 			//ダイアログを開くときのテーブルの値を編集して表示する
-			// memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-			newLessonCreateDialog.setCallbackClose(adminNewLessonCreateDialogCloseFunc);	//閉じるときのイベントを登録
+			//memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			newLessonCreateDialog.setCallbackClose(newLessonEntry);	//閉じるときのイベントを登録
 			newLessonCreateDialog.run();	//主処理を走らせる。
 		});
 	}
@@ -2929,12 +2942,6 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		//ダイアログを開くときのテーブルの値を編集して表示する
 		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
-
-		// //講座一覧ダイアログを開く
-		// this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-		// 		{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
-		// 		titleDate
-		// );
 	}
 }
 

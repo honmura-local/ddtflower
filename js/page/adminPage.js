@@ -737,9 +737,14 @@ function adminMessageCreate(buttonSelector, sendType) {
 				//送信データの種類、メールかお知らせかの区別に使う
 				sendType:sendType
 			};
+			
+			//ダイアログ用オブジェクトを作る
+			var dialogObj = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
+			//送信するデータをオブジェクトに統合する
+			$.extend(true, dialogObj.argumentObj.data, sendMailData);
 			//メール送信ダイアログを作る
-			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', sendMailData, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
-			mailSendDialog.setCallbackClose(mailSendDialogCloseFunc);	//閉じるときのイベントを登録
+			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+			mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録
 			mailSendDialog.run();	//主処理を走らせる
 		}
 	});

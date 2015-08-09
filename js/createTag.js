@@ -47,6 +47,8 @@ STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
 STR_LESSON_TABLE_AREA							= 'lessonTableArea';
 STR_DIALOG										= 'dialog';
 STR_TR											= 'tr';
+STR_TD											= 'td';
+STR_TH											= 'th';
 STR_JSON  										= 'json';				//json
 STR_DOM  										= 'dom';				//dom
 STR_OBJECT 										= 'object';				//objectかどうかの判定に使う
@@ -82,12 +84,12 @@ PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
 ARTICLE_OBJECT_KEY								= 'table';
-USER_ID = 'userId';
+USER_ID											= 'userId';
 ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
 ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
-EMPTY						= '';								//空文字
-SLASH						= '/';								//スラッシュ記号
-DOT							= '.';								//ドット
+EMPTY											= '';								//空文字
+SLASH											= '/';								//スラッシュ記号
+DOT												= '.';								//ドット
 
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列

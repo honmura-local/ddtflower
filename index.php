@@ -52,6 +52,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <link rel="stylesheet" type="text/css" href="css/myPageBlog.css" media="screen" />
 <!-- マイページのギャラリーのCSSを読み込む -->
 <link rel="stylesheet" type="text/css" href="css/myPageGallery.css" media="screen" />
+<!-- 管理者ページのcssを読み込む -->
+<link rel="stylesheet" type="text/css" href="css/adminPage.css" media="screen" />
 
 <!-- Googleアナリティクスのトラッキングコード -->
 <script>
@@ -112,6 +114,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/controlAction.js"></script>
 <!-- 会員検索クエリを検索ボタンクリックで生成する -->
 <script src="js/replaceQuery.js"></script>
+<!-- 管理者ページ用のjavascriptを読み込む -->
+<script src="js/page/adminPage.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
 <script type="text/javascript" src="js/dialogEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->

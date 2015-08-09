@@ -677,7 +677,8 @@
     "lessonAddButton":{
         "class":"lessonAddButton",
         "type":"button",
-        "value":"新規作成"
+        "text":"新規作成",
+        "value":"1"
     },
     "newLessonData":{
         "class":"lessonData",
@@ -818,7 +819,8 @@
     "newLessonCreateButton":{
         "class":"newLessonCreateButton",
         "type":"button",
-        "value":"授業作成"
+        "text":"授業作成",
+        "value":"1"
     },
     "newButtonArea":{
         "class":"buttonArea cf",
@@ -914,7 +916,7 @@
     "buttonArea":{
         "class":"buttonArea cf",
         "updateButton":{
-            "class":"fLeft",
+            "class":"fLeft updateButton",
             "type":"button",
             "value":"更新"
         },

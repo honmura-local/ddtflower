@@ -1,8 +1,16 @@
 
 <div class="adminMailDialogContent">
 	<script>
+		//ダイアログの要素を取得する
+		var $dialog = $('.adminMailDialogContent');
+		//ダイアログのクラスインスタンスを取得する
+		var dialogClass = $dialog[0].instance;
+		
+		//インプット用オブジェクトを取得する
+		var data = dialogClass.getArgumentDataObject();
 		//このダイアログに登録されているイベントを初期化し、重複を防ぐ
-		$('.adminMailDialogContent').off();
+		$dialog.off();
+		
 		//domを作るためのクラスをインスタンス化する
 		var mailDialogCreator = new createLittleContents();
 		//会員にメール送信ダイアログのjsonを取得する
@@ -13,9 +21,8 @@
 		//ダイアログコンテンツを囲む領域を作る
 		mailDialogCreator.outputTag('mailSendContent', 'mailSendContent', '.adminMailDialogContent');
 
-
 		//受け取ったメールや名前の数だけループするためにループの終わり値を取得する
-		var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.mail.length;
+		var loopEndCount = data.mail.length;
 		//画面に表示する結果の名前
 		var resultName = '';
 		//画面に表示する結果のアドレス
@@ -24,56 +31,37 @@
 		for(var loopStartCount=0;loopStartCount<loopEndCount;loopStartCount++) {
 			if (loopStartCount == 0) {
 				//名前を足していく
-				resultName += $('.adminMailDialogContent')[0].instance.argumentObj.name[loopStartCount];
+				resultName += data.name[loopStartCount];
 				//メールアドレスを足していく
-				resultMail += $('.adminMailDialogContent')[0].instance.argumentObj.mail[loopStartCount];
+				resultMail += data.mail[loopStartCount];
 			} else {
 				//名前を足していく
-				resultName += ', ' + $('.adminMailDialogContent')[0].instance.argumentObj.name[loopStartCount];
+				resultName += ', ' + data.name[loopStartCount];
 				//メールアドレスを足していく
-				resultMail += ', ' + $('.adminMailDialogContent')[0].instance.argumentObj.mail[loopStartCount];
+				resultMail += ', ' + data.mail[loopStartCount];
 			}
 		}
+		
+		//ダイアログにメール宛先を書き込む
 		$('.mailTo').text(resultMail);
+		//ダイアログにメール宛先の名前を書く
 		$('.mailToPerson').text(resultName);
 
 		//ボタンをjqueryuiのものにしてレイアウトを整える
 		$('input[type="button"]').button();
 
-		//メールを送信するのかお知らせを出すのかを識別する
-		//通常メールボタンからダイアログを開いた場合
-		if($('.adminMailDialogContent')[0].instance.argumentObj.sendType == 'mail') {
-			// メール送信ボタンのクリック
-			var doSendMail = function(){
-				// TODO 個々にメール送信処理をたす
-				var sendMaidData = getInputData('mailSendContent');
-				console.log(sendMaidData);
-				alert("送信したつもり");
-			};
-			$('.adminMailDialogContent').on(CLICK, '.mailSendButton',function(e) {
-				var sd = new SimpleConfirmDialog(
-						doSendMail
-						,"メールを送信します。<br>よろしいですか?"
-				);
-				sd._showDialog();
-			});
-		//お知らせボタンからダイアログを開いた場合
-		} else if($('.adminMailDialogContent')[0].instance.argumentObj.sendType == 'announce') {
-			$('.adminMailDialogContent').on(CLICK, '.mailSendButton',function(e) {
-				var sd = new SimpleConfirmDialog(
-						announceInsert
-						,"お知らせを送信します。<br>よろしいですか?"
-				);
-				sd._showDialog();
-			});
-		}
+		//送信ボタンのクリックイベントを登録する
+		$dialog.on(CLICK, '.mailSendButton',function(e) {
+			//ダイアログ設定用オブジェクトのコピーを作る
+			var dialogOption = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
+			//次のダイアログに渡すデータをまとめる
+			$.extend(true, dialogOption.argumentObj.data, getInputData('mailSendContent'), data);
+			//メール送信確認ダイアログを作る
+			var mailSendConfirm = new dialogEx('dialog/adminMailSendDialog.html', dialogOption.argumentObj, dialogOption.returnObj);
+			//※次のダイアログではargumentObjのdataのsendTypeを見て処理を分岐させてください。
+			//ダイアログのメッセージ、コールバック関数の設定が分岐すべき点です。
+			//また、コールバック関数のはいボタン、いいえボタンでの分岐はdialogExクラス内の既存の関数を参考にしてください。
+			mailSendConfirm.run();	//送信確認ダイアログを表示する
+		});
 	</script>
 </div>
-
-
-
-
-
-
-
-

@@ -757,31 +757,6 @@ function cancelDialogOpenFromReservedTable (memberNumber, creator) {
 }
 
 
-/* 関数名:adminNewLessonCreateDialogCloseFunc
- * 概要　:管理者新規授業作成ダイアログが閉じた時のイベント登録関数
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.08.01
- * 作成者　:T.Yamamoto
- */
-function adminNewLessonCreateDialogCloseFunc() {
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.adminNewLessonCreateContent')[0].instance.destroy();
-}
-
-
-/* 関数名:adminLessonDetailDialogCloseFunc
- * 概要　:管理者授業詳細ダイアログが閉じるときにコールされる関数一覧。初期化処理を行う
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
- */
-function adminLessonDetailDialogCloseFunc() {
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.adminLessonDetailContent')[0].instance.destroy();
-}
-
 /* 関数名:memberReservedConfirmDialogClose
  * 概要　:会員top、予約確認ダイアログでokボタンが押された時の処理を登録する
  * 引数　:なし
@@ -821,7 +796,7 @@ function memberReservedConfirmDialogClose() {
  * 返却値:なし
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
- * 修正日　:2015.07.31
+ * 修正日　:2015.08.09
  * 修正者　:T.Masuda
  * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
  */
@@ -855,60 +830,92 @@ function cancelLessonDialogClose() {
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.03
+ * 修正日　:2015.08.09
+ * 修正者　:T.Masuda
+ * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
  */
 function newLessonEntry() {
-	//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-	var loopEndCount =$('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData.length;
-	//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
-	var newLesoonData = getInputData('lessonData');
-	//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
-	var timeTableDayKey = "";
-	//受け取った授業一覧データから時限データを探す
-	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-		//time_table_day_keyが空白のものはループを飛ばす
-		if($('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] == "") {
-			//次のループに行く
-			continue;
+	
+	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	
+		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
+		var timeTableDayKey = "";
+		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
+		var loopEndCount = data.tableData.length;
+		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
+		var newLesoonData = getInputData('lessonData');
+		
+		//受け取った授業一覧データから時限データを探す
+		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
+			//time_table_day_keyが空白のものはループを飛ばす
+			if(data.tableData[loopStartCount]['time_table_day_key'] == "") {
+				//次のループに行く
+				continue;
+			}
+			//新規授業作成データの時限データが見つかった時の処理
+			if(newLesoonData['timetable_key'] == data.tableData[loopStartCount]['timetable_key'] && data.tableData[loopStartCount]['time_table_day_key'] != "") {
+				//時限データを取得し、ループを終える
+				timeTableDayKey = data.tableData[loopStartCount]['time_table_day_key'];
+				//ループを終わらせる
+				break;
+			}
 		}
-		//新規授業作成データの時限データが見つかった時の処理
-		if(newLesoonData['timetable_key'] == $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['timetable_key'] && $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'] != "") {
-			//時限データを取得し、ループを終える
-			timeTableDayKey = $('.adminNewLessonCreateContent')[0].instance.argumentObj.tableData[loopStartCount]['time_table_day_key'];
-			//ループを終わらせる
-			break;
+		
+		//新しく授業データを作るために授業日を連想配列に入れる
+		var lessonData = {lessonDate:data.lessonDate,
+						time_table_day_key:timeTableDayKey}
+		//新しく授業データを挿入するために日付データを含めて送信する
+		var sendReplaceQuery = $.extend(true, {}, newLesoonData, lessonData);
+		
+		//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
+		if(timeTableDayKey == EMPTY_STRING) {
+			//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
+			var errorCount = dialogClass.creator.setDBdata(dialogClass.creator.json.insertTimeTableDay, sendReplaceQuery, EMPTY_STRING);
+			//失敗件数が0でないなら授業データを新しく作るクエリを発行する
+			if (errorCount != 0) {
+				//新規に授業のデータをDBに登録する
+				dialogClass.creator.setDBdata(dialogClass.creator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
+			}
+		//予約する時限があった時にそれを使って新規授業を作成する
+		} else {
+			//すでにある時限データを使って授業データを作る
+			dialogClass.creator.setDBdata(dialogClass.creator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
 		}
-	}
-	//新しく授業データを作るために授業日を連想配列に入れる
-	var lessonData = {lessonDate:$('.adminNewLessonCreateContent')[0].instance.argumentObj.lessonDate,
-					time_table_day_key:timeTableDayKey}
-	//新しく授業データを挿入するために日付データを含めて送信する
-	var sendReplaceQuery = $.extend(true, {}, newLesoonData, lessonData);
-	//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
-	if(timeTableDayKey == "") {
-		//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
-		var errorCount = adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.insertTimeTableDay, sendReplaceQuery, '');
-		//失敗件数が0でないなら授業データを新しく作るクエリを発行する
-		if (errorCount != 0) {
-			//新規に授業のデータをDBに登録する
-			adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
-		}
-	//予約する時限があった時にそれを使って新規授業を作成する
-	} else {
-		//すでにある時限データを使って授業データを作る
-		adminNewLessonCreator.setDBdata(adminNewLessonCreator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
+		//授業詳細一覧テーブルを更新する
+		data.creator.tableReload('adminLessonDetailTable');
 	}
 }
 
-/* 関数名:mailSendDialogCloseFunc
- * 概要　:管理者画面、会員一覧のからメールを送信するダイアログが閉じる時の処理
+/* 関数名:onCloseLessonDetailDialog
+ * 概要　:管理者画面 授業詳細ダイアログが閉じたときのためのイベント。
  * 引数　:なし
  * 返却値:なし
- * 作成日　:2015.08.06
- * 作成者　:T.Yamamoto
+ * 作成日　:2015.08.09
+ * 作成者　:T.Masuda
  */
-function mailSendDialogCloseFunc() {
-	//ダイアログのdomを削除して初期化し次に開くときに備える
-	$('.adminMailDialogContent')[0].instance.destroy();
+function onCloseLessonDetailDialog(){
+	//createLittleContentsクラスインスタンスを取り出すため、argumentObjectのdataを取り出す
+	var data = this.instance.getArgumentDataObject();	
+	//更新に合わせ、対象のテーブルの値を更新する
+	data.creator.tableReload('adminLessonDetailTable');
+	this.instance.destroy();		//ダイアログを完全に破棄する
+}
+
+
+/* 関数名:dialogDestroy
+ * 概要　:ダイアログを破棄する。コールバック関数用の構成。
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.08.09
+ * 作成者　:T.Masuda
+ */
+function dialogDestroy() {
+	//ダイアログをDOMごと破棄する
+	$(this)[0].instance.destroy();
 }
 
 
@@ -978,4 +985,16 @@ var SimpleConfirmDialog = function(yesFunc, message) {
 	};
 };
 
+/* 関数名:doSendMail
+ * 概要　:メールを送信する
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.08.10
+ * 作成者　:T.Masuda
+ */
+function doSendMail(){
+	// メールを送信する処理
+	//メール送信用のデータを取得する
+	var sendMaidData = getInputData('mailSendContent');
+};
 
