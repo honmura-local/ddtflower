@@ -1905,34 +1905,6 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:executeDBUpdate
-	 * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
-	 * 引数  :counter:カウンタ変数
-	 		tableClassName:テーブルのクラス名
-	 		inputDataSelector:テキストボックスなど値の親のセレクター名
-	 		boolRule:条件分岐するための正否判定
-	 		trueQueryArray:条件が正の時に代入するクエリが入った連想配列
-	 		falseQueryArray:条件が否の時に代入するクエリが入った連想配列
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.executeDBUpdate = function(counter, tableClassName, inputDataSelector, boolRule, trueQueryArray, falseQueryArray) {
-		//jsonDBManagerに送信する置換の値が入った連想配列を作る(対象のテーブルの連想配列とテキストボックスなどの入力された連想配列を結合して取得する)
-		var getSendReplaceArray = this.sendReplaceArray(tableClassName, counter, inputDataSelector);
-		//jsonDBManagerに送信するクエリの入った連想配列を作る(受講料の値があるかどうかで受講料のクエリと備品のクエリのどちらを実行するか分岐する)
-		var sendQueryArray = this.choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray);
-		//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-		sendQueryArray = this.addUsePointQuery(sendQueryArray, sendReplaceArray);
-		//クエリを実行してテーブルの値1行ずつ更新していく
-		this.setDBdata(sendQueryArray, sendReplaceArray, '');
-		//ループで実行するので置換データ連想配列を初期化する
-		sendReplaceArray = {};
-		//ループで実行するので置換データ連想配列を初期化する
-		sendQueryArray = {};
-	}
-	
-	/* 
 	 * 関数名:createMemberPageHeader()
 	 * 概要  :会員ページからブログページやギャラリーページに遷移するときに通常ページのヘッダーでなく会員ページのヘッダーを表示する。
 	 * 引数  :createTag createtag:createTagクラスのインスタンス

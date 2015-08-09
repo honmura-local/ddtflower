@@ -302,14 +302,11 @@ function disappear(){
  * 作成者:T.Yamamoto
  */
 function lessonListDialogSendObject(calendarDate, dialogOptionName){
-	//ダイアログのタイトルの日付を日本語名にして取得する
-	var dialogTitle = changeJapaneseDate(calendarDate);
 	//ダイアログのタイトルをセットして予約日を分かりやすくする
-	dialogExOption[dialogOptionName][TITLE] = dialogTitle;
+	dialogExOption[dialogOptionName][TITLE] = changeJapaneseDate(calendarDate);
 	//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
 	var sendObject = {
-		//予約日付をセットし、どの日に予約するのかを識別する
-		lessonDate:calendarDate
+		lessonDate:calendarDate			//予約したい日付
 	};
 	//予約データ連想配列を返し、ダイアログに渡すのに使う
 	return sendObject;
@@ -363,21 +360,6 @@ function tableReplaceAndSetClass(tableName, tableReplaceFunc, replaceBool, creat
 	dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, creator);
 	//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 	setTableRecordClass(tableName, recordClassName);
-}
-
-/* 
- * 関数名:reservedLessonTableReplace
- * 概要  :予約中授業テーブルを置換する
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.23
- */
-function reservedLessonTableReplace() {
-	//予約中授業一覧を置換する
-	dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, creator);
-	//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-	setTableRecordClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD);
 }
 
 /* 
@@ -534,14 +516,10 @@ function openAdminLessonDetailDialog(creator) {
 	$(DOT + DIALOG_CONTENT_ADMIN_LESSON_LIST).on(CLICK, DOT + ADMIN_LESSON_DETAIL_TABLE_RECORD, function(){
 		//クリックした行の番号とデータを取得する
 		var recordData = getClickTableRecordData(this, ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_RECORD, creator);
-		//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-		var timeSchedule = $('.targetAdminLessonRecord:eq(' + recordData.number + ') td').eq(0).text();
-		//時間割を次のダイアログに入れるためのデータに入れる
-		recordData.data[TIME_SCHEDULE] = timeSchedule;
-		//日付を日本語表示にしてダイアログのタイトルにするために保存する
-		var titleDate = getDialogTitleDate(recordData.data.lesson_date)
+		//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値をデータに入れる
+		recordData.data[TIME_SCHEDULE] = $('.targetAdminLessonRecord:eq(' + recordData.number + ') td').eq(0).text();
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[LESSON_DETAIL_DIALOG][TITLE] = titleDate;
+		dialogExOption[LESSON_DETAIL_DIALOG][TITLE] = getDialogTitleDate(recordData.data.lesson_date);
 		//授業詳細ダイアログを作る
 		var lessonDetailDialog = new dialogEx(DIALOG_LESSON_DETAIL, recordData.data, dialogExOption[LESSON_DETAIL_DIALOG]);
 		lessonDetailDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
@@ -634,11 +612,6 @@ function getTimeTableDayKey(recordData) {
 	var timeTableDayKey = "";
 	//受け取った授業一覧データから時限データを探す
 	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-		//time_table_day_keyが空白のものはループを飛ばす
-		if($(DOT + DIALOG_CONTENT_ADMIN_NEW_LESSON_CREATE)[0].instance.argumentObj.tableData[loopStartCount][COLUMN_NAME_TIME_TABLE_DAY_KEY] == "") {
-			//次のループに行く
-			continue;
-		}
 		//新規授業作成データの時限データが見つかった時の処理
 		if(recordData[COLUMN_NAME_TIMETABLE_KEY] == $(DOT + DIALOG_CONTENT_ADMIN_NEW_LESSON_CREATE)[0].instance.argumentObj.tableData[loopStartCount][COLUMN_NAME_TIMETABLE_KEY] 
 			&& $(DOT + DIALOG_CONTENT_ADMIN_NEW_LESSON_CREATE)[0].instance.argumentObj.tableData[loopStartCount][COLUMN_NAME_TIME_TABLE_DAY_KEY] != "") {

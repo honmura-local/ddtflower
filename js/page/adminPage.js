@@ -385,7 +385,6 @@ function setPermitListFromToDate() {
  * 作成日:2015.07.14
  */
 function searchPermitListInfoTable() {
-	var thisElem = this;
 	//受講承認の検索ボタンをクリックした時のイベント
 	$('.permitListSearch .searchButton').click(function(){
 		//検索初めの値を取得する
