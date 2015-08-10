@@ -810,7 +810,7 @@ function cancelLessonDialogClose() {
 function newLessonEntry() {
 	
 	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
-	
+
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
 		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
