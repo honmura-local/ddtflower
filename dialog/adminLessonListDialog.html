@@ -1,4 +1,4 @@
-<div class="adminLessonListContent">
+﻿<div class="adminLessonListContent">
 <script>
 	$('.adminLessonListContent').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
@@ -25,10 +25,8 @@
 		adminLessonListCreator.outputTag('adminLessonDetailTableOutsideArea', 'adminLessonDetailTableOutsideArea', '.adminLessonListDialogContent');
 		//管理者授業詳細一覧テーブルを作る
 		adminLessonListCreator.outputTagTable('adminLessonDetailTable', 'adminLessonDetailTable', '.adminLessonDetailTableOutsideArea');
-		//管理者授業詳細一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		setTableRecordClass('adminLessonDetailTable', 'targetAdminLessonRecord');
-		//管理者授業詳細一覧テーブルを置換する
-		adminLessonDetailTableReplace();
+		//管理者授業詳細一覧テーブルを置換して行にクラスを付ける
+		tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)
 		//レッスンのステータス領域を作る
 		adminLessonListCreator.outputTag('adminLessonDetailStatus', 'adminLessonDetailStatus', '.adminLessonListDialogContent');
 		//授業詳細ダイアログを開く処理を行う

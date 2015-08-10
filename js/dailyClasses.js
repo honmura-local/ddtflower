@@ -63,23 +63,6 @@ var defaultClassworkCostColumns = [
 	,'default_flower_cost'
 ];
 
-/*
-* 授業のステータスを表す文字列を取得する
-* @param mixed timeTableRows 授業情報を(1時間割分全部)格納した連想配列
-* @return int timeTableStudents 時間割全体の予約人数
-*/ 
-// var getTotalStudentsOfTimeTable = function(timeTableRows) {
-// 	// 生徒の数を0で初期化する
-// 	var students = 0;
-// 	// ループで生徒の人数の合計を求める
-// 	for (var key in timeTableRows) {
-// 		// 生徒の数を合計の変数に足す
-// 		students += timeTableRows[key].students;
-// 	}
-// 	// 生徒の合計人数を返す
-// 	return students;
-// }
-
 /* 
  * 関数名:getTotalStudentsOfTimeTable
  * 概要  :時間割ごとの生徒の合計人数を求める
@@ -117,7 +100,6 @@ var getTotalStudentsOfTimeTable = function(rowData) {
 	// 生徒の合計人数を返す
 	return students;
 };
-
 
 /**
  * 授業が中止かどうか判定する
@@ -225,7 +207,6 @@ function computeDate(date, addDays) {
     date.setTime(targetSec);
     return date;
 }
-/**************************共通jsに移したら消しといて**************************/
 
 function isBookable(rowData) {
 	isExist(rowData, COLUMN_NAME_LESSON_DATE);
@@ -316,72 +297,6 @@ function getRestMark(rowData, timeTableStudents) {
 	}
 	return restMark;
 };
-
-/* 
- * 関数名:getRestSeatMark
- * 概要  :残席の記号を取得する
- * 引数  :array(object) rowData:DBから取り出した値1行分
- 		 :array(object) timeTableStudents 時間割１限分全体で予約している人数
- * 返却値  :reslutMark: 残席の記号の結果
- * 作成者:T.Yamamoto
- * 作成日:2015.06.２４
- */
-function getRestSeatMark(rowData, timeTableStudents) {
-	//返す結果の変数を作る
-	var resultMark;
-	//料金が0であったまたは授業ステータスが中止や開催済みである物に関して、記号を✕にする
-	if (
-		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 1 ||
-		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 2 ||
-		rowData[COLUMN_NAME_CLASSWORK_STATUS] == 3) {
-		//✕を結果の変数に入れる
-		resultMark = restMarks[0];
-	} else {
-		//１限分の全体の予約可能な人数を変数に入れ、残席を求めるために使う
-		var canAllCount = rowData[COLUMN_NAME_MAX_NUM];
-		//授業開始時間を取得し、予約している人数の引数として使う
-		var startTime = rowData[COLUMN_NAME_START_TIME];
-		//１限分全体の予約されている数を変数に入れる
-		var reservedAllCount = timeTableStudents[startTime]
-		//予約している人数が予約可能人数以上の時、✕マークを返す
-		if (reservedAllCount >= canAllCount) {
-			//✕を結果の変数に入れる
-			resultMark = restMarks[0];
-		} else {
-			//授業個別の予約可能な人数を変数に入れる
-			var canEachCount = rowData[COLUMN_NAME_MAX_STUDENTS];
-			//授業個別に予約している人数を変数に入れる
-			var reservedEachCount = rowData[COLUMN_NAME_ORDER_STUDENTS];
-			//予約している人数が予約可能な人数以上の時、✕を返す
-			if (reservedEachCount >= canEachCount){
-				//✕を結果の変数に入れる
-				resultMark = restMarks[0]
-			//予約できる人数に余りがある時の処理
-			} else {
-				//残席の整数値を求める
-				var restSeat = canEachCount - reservedEachCount;
-				//残席の値でどの記号を代入するか決める
-				if (restSeat >= 7) {
-					//結果の変数に◎を代入する
-					resultMark = restMarks[7];
-				//残席が4以上の時
-				} else if (restSeat >= 4) {
-					//結果の変数に◯を代入する
-					resultMark = restMarks[4];
-				//残席が1以上の時
-				} else if (restSeat >= 1) {
-					//結果の変数に△を代入する
-					resultMark = restMarks[1];
-				} else {
-					//結果の変数に✕を代入する
-					resultMark = restMarks[0];
-				}
-			}
-		}
-	}
-	// 結果の記号を返す
-	return resultMark
-}
 
 /* 
  * 関数名:getPoint
@@ -506,15 +421,20 @@ var buildHourFromTo = function(rowData) {
  * 作成日:2015.06.13
  */
 var allDateTime = function (rowData) {
+	// 結果となる変数を用意する
 	var result;
+	//日付の前2文字を削除する(2015-01-01を15-01-01と表記したいため)
 	result = frontTwoStringDelete(rowData, COLUMN_NAME_LESSON_DATE);
+	//空白スペースを入れて見やすくする
 	result += ' ';
+	//時間の後ろ3文字を消す(12:00:00の「:00」を削除する)
 	result += buildHourFromTo(rowData);
+	//結果を返す
 	return result;
 };
 
 /* 
- * 関数名:reservedLessonValueInput
+ * 関数名:callReservedLessonValue
  * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
  		 loopData:ループ対象となるテーブルの行全体の連想配列

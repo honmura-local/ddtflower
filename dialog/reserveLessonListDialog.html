@@ -1,4 +1,4 @@
-<div class="reserveLessonListContent">
+﻿<div class="reserveLessonListContent">
 	<script>
 	ERROR_LESSONLIST = '予約可能な授業がありません';
 	//イベントが重複して起こらないようにイベントを先にオフにする
@@ -35,10 +35,9 @@
 		//予約できる授業のデータ一覧テーブルを作る
 		reserveLessonListCreator.outputTagTable('lessonTable', 'lessonTable', '.lessonTableOutsideArea');
 		//テーブルの値をクライアント側で編集して画面に表示する
-		LessonTableReplace();
+		tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
 		reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
-		$('.reserveLessonListContent').off();
 		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
 		reserveLessonListCreator.openMemberReservedConfirmDialog();
 	}

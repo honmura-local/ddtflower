@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * ファイル名:adminPage.js
  * 概要  :管理者ページ用のjsファイル
  * 作成者:T.Yamamoto
@@ -24,12 +24,15 @@ function createAdminPermitLessonContent () {
 	creator.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
 	// 受講承認テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
-	//受講承認タブのリストテーブル
-	creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
-	//受講承認のボタン
-	creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-	//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
-	creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
+	//データがあればテーブルを追加する
+	if(creator.json.doLecturePermitInfoTable.table) {
+		//受講承認タブのリストテーブル
+		creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+		//受講承認のボタン
+		creator.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+		creator.getJsonFile('php/GetJSONArray.php', creator.json['selectCommodityInf'], 'selectCommodityInf');
+	}
 	//タブを作る
 	creator.createTab('.lecturePermitTab');
 
@@ -382,7 +385,6 @@ function setPermitListFromToDate() {
  * 作成日:2015.07.14
  */
 function searchPermitListInfoTable() {
-	var thisElem = this;
 	//受講承認の検索ボタンをクリックした時のイベント
 	$('.permitListSearch .searchButton').click(function(){
 		//検索初めの値を取得する
@@ -467,7 +469,7 @@ function setCommodityCostPrice(changeSelector) {
 function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
 	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
-	$(STR_BODY).on('change', selectboxParentSelector + ' .contentSelect', function(){
+	$(STR_BODY).on(CHANGE, selectboxParentSelector + ' .contentSelect', function(){
 		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
 		var contentSelectNumber = $(selectboxParentSelector + ' .contentSelect').index(this);
 		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
@@ -509,14 +511,10 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
  * 作成日:2015.07.17
  */
 function setDefaultSellingPrice() {
-	//備品代のデフォルト値を設定するために備品代の最初値を取得する
-	var sellingPrice = creator.json.selectCommodityInf.table[0].selling_price;
 	//備品代の連想配列にデフォルト値を設定する
-	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = sellingPrice;
-	//備品代のid値を設定するために備品代idの最初値を取得する
-	var commodityKey = creator.json.selectCommodityInf.table[0].commodity_key;
+	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = creator.json.selectCommodityInf.table[0].selling_price;
 	//備品idの連想配列にデフォルト値を設定する
-	creator.json.commodityKeyBox.value = commodityKey;
+	creator.json.commodityKeyBox.value = creator.json.selectCommodityInf.table[0].commodity_key;
 }
 
 /* 
@@ -537,6 +535,25 @@ function isBuyCommodity (sendReplaceArray) {
 	return resultBool;
 }
 
+/* 
+ * 関数名:permitDataUpdate
+ * 概要  :受講承認テーブルの承認ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新してする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.07.17
+ */
+function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKey) {
+	var sendQueryArray = creator.choiceSendQueryArray(boolRule, trueQueryKey, falseQueryKey);
+	//クエリのデフォルトを取得してあとから元の戻せるようにする
+	var defaultQuery = sendQueryArray.db_setQuery;
+	//ユーザがポイントを使用したときにポイント使用のクエリを追加する
+	sendQueryArray = creator.addUsePointQuery(sendQueryArray, sendReplaceArray);
+	//クエリを実行してテーブルの値1行ずつ更新していく
+	creator.setDBdata(sendQueryArray, sendReplaceArray, '');
+	//ループで実行するので置換データ連想配列を初期化する
+	sendQueryArray.db_setQuery = defaultQuery;
+}
 
 /* 
  * 関数名:loopUpdatePermitLesson
@@ -563,16 +580,8 @@ function loopUpdatePermitLesson() {
 				sendReplaceArray['lessonPlusPoint'] = creator.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
 				//備品代から加算ポイントを求める
 				sendReplaceArray['commodityPlusPoint'] = creator.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
-				//DBを更新するためのクエリが入った連想配列を取得して更新の準備をする
-				var sendQueryArray = creator.choiceSendQueryArray(isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
-				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-				sendQueryArray = creator.addUsePointQuery(sendQueryArray, sendReplaceArray);
-				//クエリを実行してテーブルの値1行ずつ更新していく
-				creator.setDBdata(sendQueryArray, sendReplaceArray, '');
-				//ループで実行するので置換データ連想配列を初期化する
-				sendReplaceArray = {};
-				//ループで実行するので置換データ連想配列を初期化する
-				sendQueryArray = {};
+				//受講承認データを更新する
+				permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
 			}
 			//カウンターをインクリメントする
 			counter++;
@@ -598,16 +607,8 @@ function loopUpdatePermitLessonList() {
 		$('.lecturePermitListRecord').each(function() {
 				//DBを更新するための値を取得するために置換する連想配列を取得する
 				var sendReplaceArray = creator.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
-				//DBを更新するためのクエリを設定する。行の情報にセレクトボックスがあるなら備品情報更新クエリ、ないなら授業情報更新クエリを設定する
-				var sendQueryArray = creator.choiceSendQueryArray(sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
-				//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-				sendQueryArray = creator.addUsePointQuery(sendQueryArray, sendReplaceArray);
-				//クエリを実行してテーブルの値1行ずつ更新していく
-				creator.setDBdata(sendQueryArray, sendReplaceArray, '');
-				//ループで実行するので置換データ連想配列を初期化する
-				sendReplaceArray = {};
-				//ループで実行するので置換データ連想配列を初期化する
-				sendQueryArray = {};
+				//受講承認一覧データを更新する
+				permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
 			//カウンターをインクリメントする
 			counter++;
 		});
@@ -687,6 +688,20 @@ function afterReloadUserListInfoTable() {
 }
 
 /* 
+ * 関数名:textPustArray
+ * 概要  :配列に対して文字列を追加する
+ * 引数  :stirng:parent:追加する文字列がある親のセレクター
+ 		array:arrayName:文字列を追加する配列の名前
+ 		pushText:追加する文字が入っているセレクター
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.08
+ */
+function textPustArray(parent, arrayName, pushText) {
+	arrayName.push($(parent).children(pushText).text());
+}
+
+/* 
  * 関数名:adminMessageCreate
  * 概要  :管理者ユーザ一覧で通常メールボタン、またはお知らせボタンでメッセージを作るためのダイアログを表示する
  * 引数  :selector:buttonSelector:クリックしたときにダイアログを開くためのボタンのセレクター
@@ -705,37 +720,22 @@ function adminMessageCreate(buttonSelector, sendType) {
 			//アラートメッセージをだしてメール送信対象が1人以上選択することを警告する
 			alert('1人以上選択してください')
 		} else {
-			//送信先宛先人一覧
-			var sendToPersonList = [];
-			//送信先宛先一覧
-			var sendToList = [];
-			//送信先会員番号一覧
-			var userNumberList = [];
+			//メールに送信するためのデータ配列を作る
+			var sendToPersonList = [],	//送信先宛先人一覧
+			sendToList = [],			//送信先宛先一覧
+			userNumberList = [];		//送信先会員番号一覧
 			//選択されているレコードの数だけループする
 			$('.selectRecord').each(function() {
-				//選択されているレコードの会員名を取り出す
-				var userName = $(this).children('.user_name').text();
-				//送信先宛先人一覧にユーザ名を追加する
-				sendToPersonList.push(userName);
-				//選択されているレコードのメールアドレスを取り出す。
-				var userMailAddress = $(this).children('.mail_address').text();
-				//送信先宛先一覧にユーザ名を追加する
-				sendToList.push(userMailAddress);
-				//選択されているレコードの会員番号を取り出す。
-				var userNumber = $(this).children('.id').text();
-				//会員番号一覧にループ中の対象の会員番号を追加する
-				userNumberList.push(userNumber);
+				textPustArray(this, sendToPersonList, '.user_name');
+				textPustArray(this, sendToList, '.mail_address');
+				textPustArray(this, userNumberList, '.mail_address');
 			});
 			//送信するデータを連想配列に入れる
 			var sendMailData = {
-				//送信先宛先人一覧
-				name:sendToPersonList,
-				//送信先アドレス一覧
-				mail:sendToList,
-				//会員番号
-				memberNumber:userNumberList,
-				//送信データの種類、メールかお知らせかの区別に使う
-				sendType:sendType
+				name:sendToPersonList,			//送信先宛先人一覧
+				mail:sendToList,				//送信先アドレス一覧
+				memberNumber:userNumberList,	//会員番号
+				sendType:sendType				//送信データの種類、メールかお知らせかの区別に使う
 			};
 			
 			//ダイアログ用オブジェクトを作る
