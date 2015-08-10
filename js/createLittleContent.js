@@ -23,29 +23,37 @@ var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
 //定数定義
-ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
-NOW_PAGE						= 'nowPage';						//ページングの現在のページのクラス名
-PAGING 							= 'paging';							//ページングのクラス名
-PAGING_AREA						= 'pagingArea';						//ページングを囲むdivクラス名
-CHANGE							= 'change';							//イベント名がchangeのときにchangeイベントを登録するための定数
-MARGIN_TOP = 'margin-top';											//上margin
-PX_5 = '5px';														//5PX
-PX_115 = '115px';													//115PX
-BLOG_SHOW_PAGES					=  1;								//ブログ表示記事数。blog.phpでも使う
-EMPTY_STRING					=  '';								//空文字
+ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';						//管理者日ごとダイアログの内容
+NOW_PAGE						= 'nowPage';									//ページングの現在のページのクラス名
+PAGING 							= 'paging';										//ページングのクラス名
+PAGING_AREA						= 'pagingArea';									//ページングを囲むdivクラス名
+CHANGE							= 'change';										//イベント名がchangeのときにchangeイベントを登録するための定数
+MARGIN_TOP = 'margin-top';														//上margin
+PX_5 = '5px';																	//5PX
+PX_115 = '115px';																//115PX
+BLOG_SHOW_PAGES					=  1;											//ブログ表示記事数。blog.phpでも使う
+EMPTY_STRING					=  '';											//空文字
 
 //セレクターの文字列定数
-NORMAL_HEADER = 'header.header';									//通常のヘッダー
-HEADER_VISIBLE = 'header.header:visible';							//隠してないヘッダー
-HEADER_HIDDEN = 'header.header:hidden';								//隠してあるヘッダー
-MAIN_TAG = '.main';													//メインのタグのセレクタ
-GUIDES = 'guides';													//ガイド領域
-TOP_MENU = 'topMenu';												//トップメニュー
-LOCATION	= 'flower_clone/';								//サイトルート前
-SITE_ROOT	= 'http://localhost/' + LOCATION;				//サイトルート
-IMAGE_PATH	= 'uploadImage/flowerImage/';					//アップロード画像フォルダ
-UPLOAD_LOCATION = SITE_ROOT + SITE_ROOT;					//アップロードURL
-SPECIAL_RESERVED_DIALOG_URL		= 'dialog/specialReservedDialog.html';	//体験レッスン予約ダイアログのHMTLファイルURL
+NORMAL_HEADER								= 'header.header';							//通常のヘッダー
+HEADER_VISIBLE								= 'header.header:visible';					//隠してないヘッダー
+HEADER_HIDDEN								= 'header.header:hidden';					//隠してあるヘッダー
+MAIN_TAG									= '.main';									//メインのタグのセレクタ
+GUIDES										= 'guides';									//ガイド領域
+TOP_MENU									= 'topMenu';								//トップメニュー
+LOCATION									= 'flower_clone/';							//サイトルート前
+SITE_ROOT									= 'http://localhost/' + LOCATION;			//サイトルート
+IMAGE_PATH									= 'uploadImage/flowerImage/';				//アップロード画像フォルダ
+UPLOAD_LOCATION								= SITE_ROOT + SITE_ROOT;					//アップロードURL
+SPECIAL_RESERVED_DIALOG_URL					= 'dialog/specialReservedDialog.html';		//体験レッスン予約ダイアログのHMTLファイルURL
+ADMIN_NEWLESSON_CREATE_DIALOG_PATH 			= 'dialog/adminNewLessonCreateDialog.html';	//授業新規作成ダイアログのHTMLファイルのパス
+LESSON_DETAIL_DIALOG_PATH					= 'dialog/lessonDetailDialog.html';			//管理者 授業詳細ダイアログのHTMLファイルのパス
+//createLittleContentクラスインスタンスの連想配列内キー用文字列
+CREATOR										= 'creator';
+//会員ページ 予約一覧ダイアログのcreateLittleContentsクラスインスタンスの連想配列内キー用文字列
+RESERVE_LIST_CREATOR						= 'reserveListCreator';	
+NUMBER										= 'number';									//numberキーの文字列
+STRING										= 'string';									//stringの文字列
 
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -307,28 +315,6 @@ function createLittleContents(){
 		}); 
 	}
 	
-	/*
-	 * 関数名:allCheckbox
-	 * 引数  :var checkboxTarget, var allCheckTarget
-	 * 戻り値:なし
-	 * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
-	 * 作成日:2015.02.28
-	 * 作成者:T.Yamamoto
-	 */
-	this.allCheckbox = function(checkboxTarget, allCheckTarget) {
-		// 第一引数の要素がクリックされたときの処理
-		$(STR_BODY).on(CLICK, checkboxTarget, function() {
-			// 第一引数のチェックボックスにチェックが入った時の処理
-			if($(checkboxTarget + ':checked').val() == 'on') {
-				// 第二引数のチェックボックスにチェックする
-				$(allCheckTarget).prop('checked', true);
-			// 第一引数のチェックボックスのチェックが外れた時の処理
-			} else if ($(checkboxTarget + ':checked').val() == undefined) {
-				// 第二引数のチェックボックスのチェックを外す
-				$(allCheckTarget).prop('checked', false);
-			};
-		});
-	}
 
 	/*
 	 * 関数名:createTab(selector)
@@ -1001,7 +987,7 @@ function createLittleContents(){
 		//フォームデータを作る。
 		var retMap = createFormData($('.optionForm'));
 		//ユーザIDを格納する。
-		retMap['userId'] = getUserId();
+		retMap['userId'] = this.getUserId();
 	
 		return retMap;	//作成したデータを返す。
 	}
@@ -1251,8 +1237,13 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.27
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.09
+	 * 内容　:操作したレコードの数を整数値で返す様にしました。
 	 */
 	this.setDBdata = function(sendQueryJsonArray, queryReplaceData, successMessage) {
+		var retInt = 0;	//返却値用の変数を宣言、0で初期化する
+		
 		//DBに送信するための連想配列
 		var send = {};
 		//置換済みであるかどうか判定するためにkey名を一つだけ取り出す
@@ -1267,29 +1258,32 @@ function createLittleContents(){
 		} else {
 			send = $.extend(true, {}, sendQueryJsonArray, queryReplaceData);
 		}
+		
+		var checkedObj = this.checkBeforeConvertJsonString(send);
+		
 		//変更者:T.Yamamoto 日付:2015.06.26 内容:jsondbManagerに送信する値はjson文字列でないといけないので連想配列を文字列にする処理を追加しました。
-		var sendJsonString = JSON.stringify(send);
+		var sendJsonString = JSON.stringify(checkedObj);
 		//Ajax通信を行う
 		$.ajax({
 			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
 			//予約情報のJSONを送信する
 			//変更者:T.Yamamoto 日付:2015.06.26 内容:dataを変数sendから変数sendJsonStringに変更し、送信する値を配列から文字列を送信するように修正しました
-			data:{json:sendJsonString},				//送信するデータを設定する
-			dataType: STR_TEXT,					//テキストデータを返してもらう
+			data:{json:sendJsonString},			//送信するデータを設定する
+			dataType: 'json',					//JSONデータを返す
 			type: STR_POST,						//POSTメソッドで通信する
-			success:function(ret){				//通信成功時の処理
-				//受け取ったjson文字列を連想配列にする
-				var resultJsonArray = JSON.parse(ret);
+			async:false,						//同期通信を行う
+			success:function(json){				//通信成功時の処理
 				//更新した結果が何件であったかを返すために、結果件数を変数に入れる
-				resultCount = Number(resultJsonArray.message);
+				//整数に変換できる値が返ってきていれば、整数値に変換して返却用変数に入れる
+				retInt = !isNaN(json.message)? parseInt(json.message): 0;
 				//更新成功であれば
 				//変更者:T.Yamamoto 日付:2015.07.06 内容:コメント化しました
 				//if(!parseInt(parseInt(ret.message)) && ret.message != "0"){
 				//変更者:T.Yamamoto 日付2015.07.17 内容: ループで更新に対応するために第三引数が空白ならアラートを出さない設定をしました
 				//第三引数が空白であるならループで更新を行うということなのでアラートを出さない
-				if(successMessage != '') {
+				if(successMessage != EMPTY_STRING) {
 					//更新した内容が1件以上の時更新成功メッセージを出す
-					if(resultCount >= 1) {
+					if(retInt >= 1) {
 						alert(successMessage);	//更新成功のメッセージを出す
 					//更新失敗であれば
 					} else {
@@ -1302,6 +1296,8 @@ function createLittleContents(){
 				alert(MESSAGE_FAILED_CONNECT);
 			}
 		});
+		
+		return retInt;	//整数値を返す
 	}
 	
 	/* 
@@ -2354,7 +2350,7 @@ function createLittleContents(){
 			this.outputTag(GUIDES , GUIDES, NORMAL_HEADER);		// ガイド領域を作る
 			this.outputTag(TOP_MENU, TOP_MENU, NORMAL_HEADER);		// トップメニューを作る
 			// ログイン状態をチェックする。
-			checkLoginState();
+			this.checkLoginState();
 		}
 	}
 	/*
@@ -2462,7 +2458,7 @@ function createLittleContents(){
 	}
 
 	/*
-	 * 関数名:function createErrorText
+	 * 関数名:createErrorText
 	 * 引数  :jQuery errors: エラーがあった要素。
 	 * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
 	 * 戻り値:String:エラーメッセージの文字列。
@@ -2525,11 +2521,307 @@ function createLittleContents(){
 	 */
 	this.addUserIdToObject = function(addTargetObject){
 		// 第一引数の連想配列に対して会員番号を追加する
-		var resultObject = $.extend(true, {}, addTargetObject, {userId:this.json.accountHeader.user_key.value});
+		var resultObject = $.extend(true, {}, addTargetObject, {userId:this.getUserId()});
 		return resultObject;
 	}
 
 
+	/* 
+	 * 関数名:checkLogin()
+	 * 概要  :ログイン状態をチェックする。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.M
+	 * 作成日:2015.02.18
+	 * 修正者:T.M
+	 * 修正日:2015.03.10
+	 * 変更　:ユーザー名が複数表示されてしまうバグへ対応しました。
+	 */
+	//※現状ではこの関数は必ずfalseを返します。
+	this.checkLogin = function(){
+		// ログインしているか否かの結果を返すための変数を用意する。
+		var result = false;
+		// クッキーを連想配列で取得する。
+		var cookies = GetCookies();
+		//ログイン中であれば	※空のcookieに対しては、IEは文字列"undefined"を返し、それ以外は空文字を返す。
+		if('user' in cookies && (cookies['user'] != "" && cookies['user'] != "undefined")){
+			// ログインボタンをログアウトボタンに差し替える。
+			$('.login').removeClass('login')
+						.addClass('logout')
+						.attr('src', 'image/icon(logout22-50).png');
+			//ログアウトボタンの下にユーザ名を表示する。
+			$('.logout')
+						// spanタグを追加する。
+						.after($('<span></span>')
+								// ユーザ名のクラスを設定する。
+								.addClass('userName')
+								//cookieからユーザ名を取り出し表示する。
+								.text(cookies['userName'] + '様')
+								)
+						// spanタグを追加する。
+						.after($('<span></span>')
+								// ユーザ名のクラスを設定する。
+								.addClass('welcome')
+								//cookieからユーザ名を取り出し表示する。
+								.text('ようこそ')
+								)
+						;
+			// ログアウトのイベントを定義する。
+			$(document).on('click', '.logout', function(){
+				// ユーザのクッキーを削除してログアウトする。
+				deleteCookie('user');
+				deleteCookie('userName');
+				//画面を更新する。
+	   		 	location.reload();
+			});
+			
+			// ログインしている状態であるという結果を変数に格納する。
+			result = true;
+		}
+		
+		// ログイン状態を返す。
+		return result;
+	}
+
+	/* 
+	 * 関数名:function getUserId()
+	 * 概要  :cookieからユーザIDを取得して返す。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザIDの文字列。
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.16
+	 */
+//createTagクラスで定義してあるものを使った方が適切であるため無効にしました
+//	this.getUserId = function(){
+//		// クッキーを連想配列で取得する。
+//		var cookies = GetCookies();
+//		//ユーザIDを取得して返す。なければ空文字を返す。
+//		return 'userId' in cookies && cookies.userId != ''? cookies['userId']: '';
+//	}
+
+	/* 
+	 * 関数名:function checkLoginState()
+	 * 概要  :ログイン状態をチェックする。
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.02.20
+	 * 変更者:T.Masuda
+	 * 変更日:2015.06.10
+	 * 内容　:ダイアログを呼ぶ関数を共通化したものにしました
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.02
+	 * 内容　:ログイン済み状態での会員ページ、管理者ページへの転送振り分け処理を追加しました。
+	 */
+	this.checkLoginState = function(){
+		// ログイン状態をチェックする。
+		//※現状ではこのcheckLogin関数は必ずfalseを返します。
+//		if(!(checkLogin())){
+		//イベントコールバック内でクラスインスタンスを参照するため、変数にクラスインスタンスを格納しておく
+			var thisElem = this;
+			//ログインボタンのイベントを設定する。
+			$(CLASS_LOGIN).on(CLICK, function(){
+				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
+				//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
+				var loginUrl = thisElem.json.accountHeader !== void(0)
+								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+				// 会員ページ、または管理者ページへリンクする。
+				callPage(loginUrl);
+			});
+//		}
+	}
+	
+	/* 関数名:openMemberReservedConfirmDialog
+	 * 概要　:会員top、予約確認ダイアログを開く処理
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07.31
+	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.08.09
+	 * 変更者　:T.Masuda
+	 * 内容	　:改修したdialogExクラスへの対応とcreateLittleContentsクラスへの移動を行いました
+	 */
+	this.openMemberReservedConfirmDialog = function() {
+		var thisElem = this;							//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
+		var $dialog = $('.reserveLessonListContent');	//ダイアログのDOMを取得しておく
+		//予約一覧の行を選択して、予約確認ダイアログを表示する処理
+		$dialog.on(CLICK, '.targetLessonTable', function(){
+			
+			//クリックした行の番号とデータを取得する
+			var recordData = getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem);
+			//残席の記号を取得する
+			var restMarkNow = $('.targetLessonTable' +':eq(' + (recordData.number) + ') td').eq(4).text();
+			
+			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+			if (thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST] && restMarkNow != '✕') {
+				//予約一覧ダイアログを開く際にセットされたデータを取得する
+				var prevDialogData = $dialog[0].instance.getArgumentDataObject();
+				//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
+				recordData.data[USER_ID] = thisElem.getUserId();
+				//日付を日本語表示にしてダイアログのタイトルにするために保存する
+				var titleDate = getDialogTitleDate(recordData.data.lesson_date)
+				var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
+				//予約、キャンセルのどちらのダイアログでも使うため、
+				//createLittleContentsクラスのインスタンスとダイアログのデータを行データに入れておく
+				recordData.data = $.extend(true, {}, recordData.data, prevDialogData, {reservedListCreator:thisElem});
+				
+				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
+				if(thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
+					//ダイアログのタイトルをセットして予約日を分かりやすくする
+					dialogOption.argumentObj.config[TITLE] = titleDate;
+					
+					//インプット用のデータを作る
+					//recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
+					var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
+					sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
+							{},								//新たにオブジェクトを作り、そこにまとめる
+							dialogOption.argumentObj.data, 	//argumentObjのdata部分
+							recordData.data, 				//選択された行データ
+							{number: recordData.number}, 	//行の番号
+							prevDialogData 				//予約一覧ダイアログのargumentObjのデータ
+						);
+					
+					//予約確認ダイアログを作る
+					var memberReservedConfirmDialog = new dialogEx(
+							DIALOG_MEMBER_RESERVED_CONFIRM, 					//予約確認ダイアログのHTMLファイルパス	
+							sendObj, 											//インプット用データオブジェクト
+							dialogOption[RETURN_OBJ]);							//アウトプット用データオブジェクト
+					//閉じるときのイベントを登録
+					memberReservedConfirmDialog.setCallbackClose(memberReservedConfirmDialogClose);	
+					memberReservedConfirmDialog.run();							//主処理を走らせる。
+				//すでに予約しているのであればキャンセルダイアログを開く
+				} else {
+					//キャンセルダイアログを開く
+					cancelDialogOpen(recordData.data, titleDate);
+				}
+			}
+		});
+	}
+
+	/* 関数名:openAdminLessonDetailDialog
+	 * 概要　:管理者授業詳細ダイアログを開く
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07.31
+	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.08.09
+	 * 変更者　:T.Masuda
+	 * 内容	　:改修したdialogExクラスへの対応とcreateLittleContentsクラスへの移動を行いました
+	 */
+	this.openAdminLessonDetailDialog = function() {
+		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
+		//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
+		//予約決定ダイアログを表示する処理
+		//※このあたりはセレクタ関連に無駄が多かったです。
+		$('.adminLessonListContent').on(STR_CLICK, STR_TR, function(){
+			//インプット用データオブジェクトを取得する
+			var argObj = dialogExOption[LESSON_DETAIL_DIALOG].argumentObj;
+			
+			//クリックしたセルの行番号を取得する
+			var rowNum = $('.adminLessonListContent ' + STR_TR).index(this) - 1;
+			
+			//次のダイアログに渡すデータを変数に入れる
+			var sendObject = thisElem.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
+			
+			//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
+			var timeSchedule = $(STR_TD, this).eq(0).text();
+			//時間割を次のダイアログに入れるためのデータに入れる
+			sendObject['time_schedule'] = timeSchedule;
+			
+			//日付のハイフンを置換前のスラッシュ区切りにする
+			var date = sendObject.lesson_date.replace(/-/g,"/");
+			// 日付を日本語表示にする
+			var titleDate = changeJapaneseDate(date);
+			//ダイアログ用オブジェクトのコピーを用意して使う。
+			var dialogObj = $.extend(true, {}, dialogExOption[LESSON_DETAIL_DIALOG]);
+			//ダイアログのタイトルをセットして予約日を分かりやすくする
+			dialogObj.argumentObj.config[TITLE] = titleDate;
+			//インプット用データオブジェクトに授業データを追加する
+			$.extend(true, dialogObj.argumentObj.data, sendObject, {creator:thisElem});
+			
+			//授業詳細ダイアログを作る
+			var lessonDetailDialog = new dialogEx(	
+					LESSON_DETAIL_DIALOG_PATH, 							//管理者 授業詳細ダイアログHTMLファイルのURL
+					dialogObj.argumentObj,	//インプット用データオブジェクト
+					dialogObj.returnObj		//アウトプット用データオブジェクト
+				);
+			
+			//授業詳細で授業内容が更新された場合は、当該ダイアログを閉じたときに前のダイアログを閉じるようにする
+			lessonDetailDialog.setCallbackClose(onCloseLessonDetailDialog);
+
+			//ダイアログを開くときのテーブルの値を編集して表示する
+			lessonDetailDialog.run();	//主処理を走らせる。
+		});
+	}
+	
+	/* 関数名:openAdminNewLessonCreateDialog
+	 * 概要　:管理者新規授業作成ダイアログを開く
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.08.01
+	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.08.09
+	 * 変更者　:T.Masuda
+	 * 内容	　:改修したdialogExクラスへの対応とcreateLittleContentsクラスへの移動を行いました
+	 */
+	 this.openAdminNewLessonCreateDialog = function() {
+		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
+		//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
+		$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
+			//ダイアログのクラスインスタンスを取得する
+			var dialogClass = $('.adminLessonListContent')[0].instance;
+			var argObj = dialogClass.getArgumentObject();	//argumentObjを取得する
+			
+			//新規授業追加ダイアログに渡す変数を宣言しておく
+			var sendObject = {};
+			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
+			sendObject['lessonDate'] = argObj.data.lessonDate.replace(/\//g,"-");
+			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
+			sendObject['tableData'] = thisElem.json.adminLessonDetailTable.table;
+			//ダイアログのタイトルをセットして予約日を分かりやすくする
+			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
+			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
+			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
+			
+			//新規授業追加ダイアログを作る
+			var newLessonCreateDialog = new dialogEx(
+					ADMIN_NEWLESSON_CREATE_DIALOG_PATH, 
+					dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
+					dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
+			//ダイアログを開くときのテーブルの値を編集して表示する
+			//memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			newLessonCreateDialog.setCallbackClose(newLessonEntry);	//閉じるときのイベントを登録
+			newLessonCreateDialog.run();	//主処理を走らせる。
+		});
+	}
+	
+		/*
+		 * 関数名:checkBeforeConvertJsonString
+		 * 概要  :オブジェクト内のJSON文字列に変換できない値を持つノードを削除する。
+		 * 引数  :Object object:JSON文字列にに変換する予定のオブジェクト
+		 * 戻り値:Object:JSON文字列に変換できない要素を持つキーを削除した引数のオブジェクトを返す
+		 * 作成日:2015.08.09
+		 * 作成者:T.Masuda
+		 */
+		this.checkBeforeConvertJsonString = function(object){
+			var retObject = $.extend(true, {}, object);	//返却するオブジェクトを用意する
+			
+			//オブジェクトを走査する
+			for(key in retObject){
+				//keyのvalueキーに入っている値が文字列、数値でなければ
+				if(retObject[key].value !== void(0) && 
+						!(typeof retObject[key].value == STRING 
+						|| typeof retObject[key].value == NUMBER)){
+					delete retObject[key];	//該当するノードを削除する
+				}
+			}
+			
+			return retObject;	//チェックが終わったオブジェクトを返す
+		}
+
+		
+		
+	 
 }	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();
@@ -2598,7 +2890,7 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			// 予約のダイアログを出す。
-			this.callReservedDialog(dateText, $(this));
+			this.instance.callReservedDialog(dateText, $(this));
 		},
 		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
 		minDate:1			//今日以前はクリックできなくする。
@@ -2608,12 +2900,24 @@ calendarOptions['reserved'] = {		//カレンダーを作る。
 calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
+			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
+			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
 			var dateObject = lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
 			//会員番号をセットしてどのユーザが予約するのかを識別する
-			var dialogDataObject = creator.addUserIdToObject(dateObject);
+			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
+			//ページ内にある会員の予約状況のテーブルをダイアログから更新するため、
+			//dialogDataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
+			dialogDataObject[CREATOR] = instance.creator;
+			
+			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
+			$.extend(true, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj.data, dialogDataObject);
+			
 			//予約授業一覧ダイアログを作る
-			var reservedLessonListDialog = new dialogEx(DIALOG_RESERVE_LESSON_LIST, dialogDataObject, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			var reservedLessonListDialog = new dialogEx(
+					DIALOG_RESERVE_LESSON_LIST, 
+					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj, 
+					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].returnObj);
 			reservedLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 			reservedLessonListDialog.run();	//主処理を走らせる。
 		}
@@ -2623,26 +2927,21 @@ calendarOptions['member'] = {		//カレンダーを作る。
 calendarOptions['admin'] = {		//カレンダーを作る。
 	// カレンダーの日付を選択したら
 	onSelect: function(dateText, inst){
+		//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 		//ダイアログのタイトルの日付を設定する
 		var titleDate = changeJapaneseDate(dateText);
 		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
-		var dialogDataObj = {
-			//予約日付をセットし、どの日に予約するのかを識別する
-			lessonDate:dateText
-		};
+		
+		//argumentObjのインプットデータオブジェクトに授業日付をセットする
+		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.data = {lessonDate:dateText};
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG][TITLE] = titleDate;
+		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.config[TITLE] = titleDate;
+		
 		//予約授業一覧ダイアログを作る
-		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogDataObj, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
 		//ダイアログを開くときのテーブルの値を編集して表示する
 		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
-
-		// //講座一覧ダイアログを開く
-		// this.dialog.openTagTable({lessonDate:dateText.replace(/\//g,'-')}, 
-		// 		{url:URL_GET_JSON_STRING_PHP, key:ADMIN_LESSON_LIST_INFORMATION, domName:ADMIN_LESSON_LIST_INFORMATION, appendTo:DOT + ADMIN_LESSON_LIST_DIALOG},
-		// 		titleDate
-		// );
 	}
 }
 
@@ -2694,10 +2993,14 @@ function calendar(selector) {
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
 		// 日付配列を取得する。
-		var date = this.createDateArray(dateText);
+		var date = createDateArray(dateText);
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL, {contentName: contentName, date:date}, specialReservedDialogOption);
+		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL,
+				$.extend(true, {},
+						{"contentName": contentName, "date":date}, 
+						specialReservedDialogOption.argumentObj
+						), specialReservedDialogOption.returnObj);
 		//予約ダイアログが開いたときのコールバック関数を登録する
 		reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
 		//閉じたら完全にダイアログを破棄させる
@@ -2718,7 +3021,7 @@ function calendar(selector) {
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
 		// 日付配列を取得する。
-		var date = this.createDateArray(dateText)
+		var date = createDateArray(dateText)
 		// 予約希望ダイアログを作成する
 		 var mDialog = new memberDialog('memberDialog',date,null, contentName, date);
 		mDialog.open();	//ダイアログを開く
@@ -2863,7 +3166,9 @@ this.checkDate = function(dateText, calendar){
 	}
 	
 	return retBoo;	//retBooを返す。
-}	
+}
+
+
 }
 
 /*
@@ -2878,7 +3183,10 @@ this.checkDate = function(dateText, calendar){
 function reservedCalendar(selector, dateRange) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'reserved';	//カレンダー名をセットする
-	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
+	this.dateRange = dateRange;		//クリック可能な日付の期間の引数をメンバに格納する
+	this.dom = $(selector)[0];		//DOMをメンバに保存する
+	this.dom.instance = this;		//DOMにクラスインスタンスを保存する
+	
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['reserved'];
 }
@@ -2905,19 +3213,26 @@ function myPageReservedCalendar (selector, dateRange) {
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :int dateRange:クリック可能な日付の期間
  *     :int userId:ユーザID
+ *     :createLittleContents creator:createLittleContentsクラスのインスタンス
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
  * 作成者:T.Yamamoto
  * 変更日:2015.06.13
  * 変更者:T.Masuda
+ * 変更日:2015.08.09
+ * 変更者:T.Masuda
+ * 内容	:dialogExクラス、createLittleContentsクラスの仕様に対応しました
  */
-function memberCalendar(selector, dateRange, userId) {
+function memberCalendar(selector, dateRange, userId, creator) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'member';	//カレンダー名をセットする
 	$calendar = $(selector)[0];		//カレンダーの要素を取得する
+	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.userId = userId;		//ユーザIDを保存する
+	this.creator = creator;			//createLittleContentsクラスのインスタンスを利用する
+	
 	
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
 	//オプションを設定する
@@ -3141,7 +3456,7 @@ var articleSubmitHandler = {
 		var command = parseInt($('.valueHolder:first', form).attr('data-role'));
 		//チェック済みのチェックボックスの数を数える。
 		var checked = $('input:checkbox:checked' ,form).length;
-		var userId = getUserId();				//ユーザIDを取得する。
+		//var userId = getUserId();				//ユーザIDを取得する。
 		var contentNum = $(form).attr('data-role');	//コンテンツ番号を取得する。
 		
 		//編集ボタンをクリックされてかつ、リストのチェックボックスに2つ以上チェックが入っていれば
@@ -3394,7 +3709,7 @@ function setValueDBdata(setArray, setDomParent, targetArrayType) {
 /* 
  * 関数名:getInputData
  * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
-		:クラス名をkey、入っている値をvalueの連想配列にして返す
+           		:クラス名をkey、入っている値をvalueの連想配列にして返す
  * 引数  :string selector:値を走査したい親のセレクター名
  * 返却値  :object resultArray:入力データの結果連想配列
  * 作成者:T.Yamamoto
@@ -3462,3 +3777,25 @@ function cutString(cutTargetSelector, cutCount) {
 	});
 }
 
+/*
+ * 関数名:allCheckbox
+ * 引数  :var checkboxTarget, var allCheckTarget
+ * 戻り値:なし
+ * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
+ * 作成日:2015.02.28
+ * 作成者:T.Yamamoto
+ */
+this.allCheckbox = function(checkboxTarget, allCheckTarget) {
+	// 第一引数の要素がクリックされたときの処理
+	$(STR_BODY).on(CLICK, checkboxTarget, function() {
+		// 第一引数のチェックボックスにチェックが入った時の処理
+		if($(checkboxTarget + ':checked').val() == 'on') {
+			// 第二引数のチェックボックスにチェックする
+			$(allCheckTarget).prop('checked', true);
+		// 第一引数のチェックボックスのチェックが外れた時の処理
+		} else if ($(checkboxTarget + ':checked').val() == undefined) {
+			// 第二引数のチェックボックスのチェックを外す
+			$(allCheckTarget).prop('checked', false);
+		};
+	});
+}

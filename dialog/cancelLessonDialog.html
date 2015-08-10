@@ -1,9 +1,14 @@
 <div class="cancelLessonDialogContent">
 <script>
+	//ダイアログの要素をjQueryオブジェクトで取得する
+	$dialog = $('.cancelLessonDialogContent');
 	//イベントをリセットする
-	$('.cancelLessonDialogContent').off();
+	$dialog.off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
 	var cancelLessonCreator = new createLittleContents();
+	//ダイアログにcreateLittleContentsクラスインスタンスへの参照を持たせておく
+	$dialog[0].instance.creator = cancelLessonCreator;
+	
 	//会員、予約キャンセルダイアログのjsonを取得する
 	cancelLessonCreator.getJsonFile('source/memberPage.json');
 	//会員、予約キャンセルダイアログのテンプレートを取得する
@@ -17,15 +22,11 @@
 	// ボタンタグをjqueryuiの見た目にする
 	$('button').button();
 	//送信ボタンがクリックされたときにDBに予約情報を登録する
-	$('.cancelLessonDialogContent').on(CLICK, '.cancelYesButton', function() {
-		//DBに予約キャンセル処理を行う
-		cancelLssonDialogDialogOkButton($('.cancelLessonDialogContent')[0].instance.argumentObj);
-	});
-	$('.cancelLessonDialogContent').on(CLICK, '.cancelNoButton', function() {
+	$dialog.on(CLICK, 'button', function() {
+		//押されたボタンのvalueを取得し、ダイアログの押されたボタンの状態のデータに反映する
+		$dialog[0].instance.setPushedButtonState($(this).attr('value'));
 		//ダイアログを閉じる
 		$('.cancelLessonDialogContent').dialog(CLOSE);
 	});
-	
-
 </script>
 </div>

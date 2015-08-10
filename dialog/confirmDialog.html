@@ -1,0 +1,20 @@
+<div class="confirmDialog">
+	<!-- メッセージ領域-->
+	<p>messageArea</p>
+	<!-- はいボタン -->
+	<button type="button" class="yes" value="1">はい</button>
+	<!-- いいえボタン -->
+	<button type="button" class="no" value="0">いいえ</button>
+	<script>
+		var $buttons = $(CONFIRM_DIALOG_BUTTONS);			//ボタン要素を取得する
+		var $dialog = $($buttons.parent().parent());		//ダイアログのクラスインスタンスを取得する
+		$dialogClass = $dialog[0].instance;					//ダイアログのクラスインスタンスを取得する
+		$buttons.button();									//ボタンをリッチな見た目に変える
+		//ボタンのデザインを整える。そして、押下時のイベントを登録する。
+		$buttons.on(CLICK, function(){
+			//ボタンの値を取り出し、ダイアログのクラスインスタンスに渡す
+			$dialogClass.setPushedButtonState($(this).attr(VALUE));
+			$dialogClass.destroy();	//ダイアログを破棄する
+		});
+	</script>
+</div>

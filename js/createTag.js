@@ -47,6 +47,8 @@ STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
 STR_LESSON_TABLE_AREA							= 'lessonTableArea';
 STR_DIALOG										= 'dialog';
 STR_TR											= 'tr';
+STR_TD											= 'td';
+STR_TH											= 'th';
 STR_JSON  										= 'json';				//json
 STR_DOM  										= 'dom';				//dom
 STR_OBJECT 										= 'object';				//objectかどうかの判定に使う
@@ -82,9 +84,12 @@ PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
 ARTICLE_OBJECT_KEY								= 'table';
-USER_ID = 'userId';
+USER_ID											= 'userId';
 ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
 ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
+EMPTY											= '';								//空文字
+SLASH											= '/';								//スラッシュ記号
+DOT												= '.';								//ドット
 
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列
@@ -96,6 +101,7 @@ LOGIN_MESSAGE = '';		//ログインダイアログのメッセージ
 RE_LOGIN_MESSAGE = '';	//再ログインダイアログのメッセージ
 URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHTMLファイルのURL
 URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
+URL_MEMBER_PAGE = 'memberPage.html'; //管理者ページのURL
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -1314,15 +1320,20 @@ function createTag(){
 	 * 戻り値　:なし
 	 * 作成日　:2015.0614
 	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0809
+	 * 変更者　:T.Masuda
+	 * 内容　 :引数に取ったオブジェクトに影響が出ない様にしました。
 	 */
 	this.replaceValueNode = function(object){
+		//返却用オブジェクトを用意し、引数のオブジェクトのコピーを格納する
+		var retObj = $.extend(true, {}, object);
 		//オブジェクトを走査する
-		for(key in object){
+		for(key in retObj){
 			//keyのvalueを、新たに生成したオブジェクトのvalueのkeyにセットし、元のkeyにセットする
-			object[key] = {value:object[key]};
+			retObj[key] = {value:retObj[key]};
 		}
 		
-		return object;	//処理を終えたobjectを返す
+		return retObj;	//処理を終えたobjectを返す
 	}
 	
 	/*
@@ -1491,6 +1502,33 @@ function createTag(){
 		return retObj;	//作成したオブジェクトを返す
 	}
 	
+	/*
+	 * 関数名:getUserId
+	 * 概要  :ユーザIDを取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザID。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getUserId = function(){
+		//ユーザIDを取得する
+		return this.json.accountHeader !== void(0)? this.json.accountHeader.user_key.value: EMPTY_STRING;
+	}
+	
+	/*
+	 * 関数名:getAuthority
+	 * 概要  :ユーザ権限の値を取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザ権限の値。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getAuthority = function(){
+		//ユーザ権限の値を取得する
+		return this.json.accountHeader !== void(0)? this.json.accountHeader.authority.value: EMPTY_STRING;
+	}
+	
+	
 	//コンストラクタ部分
 	//会員番号がcookie内にあれば取得する。
 	//cookieを取得して連想配列形式に変換する。
@@ -1501,7 +1539,7 @@ function createTag(){
 	if('userId' in cookie && cookie.userId != ""){
 		//会員IDのcookieを取得する。
 		this.json.accountHeader.user_key.value = cookie.userId;
-		this.json.accountHeader.authority.value = cookie.authority;
+		this.json.accountHeader.authority.text = cookie.authority;
 	}
 }
 
@@ -1539,13 +1577,15 @@ function createTag(){
 			
 			//ログインダイアログで利用するパラメータのオブジェクトを作る
 			this.argumentObj = {
-					//ログイン状態
-					createTagState: this.createTagState
+					data:{
+						//ログイン状態
+						createTagState: this.createTagState
+					},config:loginDialogOption
 			};
 			
 			//ログインダイアログを出す。
-			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, loginDialogOption);
-			loginDialog.returnObj[TITLE] = this.title;							//ダイアログのタイトルを変更する
+			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, {});
+			loginDialog.argumentObj.config[TITLE] = this.title;							//ダイアログのタイトルを変更する
 			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
 			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
@@ -1610,17 +1650,27 @@ function createTag(){
 			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
 			        					
 			        					//通常ログインかつ、管理者のIDならば
-			        					if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
+			        					if(this.instance.argumentObj.data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
-			        							//画面遷移の履歴を追加する。
+			        							//管理者ページの画面遷移の履歴を追加する。
 			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
 			        						//URLハッシュを利用する
 			        						} else {
 			        							//管理者ページへ移動する
 			        							location.href = URL_ADMIN_PAGE; 
 			        						}
-			        						//現在のページの履歴を書き換え、リロード後に会員ページが表示されるようにする
+			        					//通常ログインかつ、管理者のIDでなければ
+			        					} else if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
+			        						//pushStateをサポートしているブラウザなら
+			        						if(isSupportPushState()){
+			        							//会員トップページの画面遷移の履歴を追加する。
+			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
+			        						//URLハッシュを利用する
+			        						} else {
+			        							//会員トップページへ移動する
+			        							location.href = URL_MEMBER_PAGE; 
+			        						}
 			        					}
 										
 										//画面をリロードする。

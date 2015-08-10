@@ -168,7 +168,7 @@ function openMemberReservedConfirmDialog() {
 				var cancelLessonDialog = new dialogEx('dialog/cancelLessonDialog.html', sendObject, dialogExOption[CANCEL_LESSON_DIALOG]);
 				//ダイアログを開くときのテーブルの値を編集して表示する
 				// cancelLessonDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-				cancelLessonDialog.setCallbackClose(cancelLssonDialogCloseFunc);	//閉じるときのイベントを登録
+				cancelLessonDialog.setCallbackClose(cancelLessonDialogCloseFunc);	//閉じるときのイベントを登録
 				cancelLessonDialog.run();	//主処理を走らせる。
 			}
 		}
@@ -299,7 +299,7 @@ function memberReservedConfirmDialogOkButtonFunc(sendObject) {
  * 作成日　:2015.07.31
  * 作成者　:T.Yamamoto
  */
-function cancelLssonDialogCloseFunc() {
+function cancelLessonDialogCloseFunc() {
 	//予約がキャンセルされたことを分かりやすくするためにテーブルを再読み込みし、予約していた内容が消えることをすぐに確認できるようにする
 	tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
@@ -350,7 +350,7 @@ function cancelDialogExOpen (memberNumber) {
 		var cancelLessonDialog = new dialogEx('dialog/cancelLessonDialog.html', sendObject, dialogExOption[CANCEL_LESSON_DIALOG]);
 		//ダイアログを開くときのテーブルの値を編集して表示する
 		// cancelLessonDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-		cancelLessonDialog.setCallbackClose(cancelLssonDialogCloseFunc);	//閉じるときのイベントを登録
+		cancelLessonDialog.setCallbackClose(cancelLessonDialogCloseFunc);	//閉じるときのイベントを登録
 		cancelLessonDialog.run();	//主処理を走らせる。
 	});
 }
