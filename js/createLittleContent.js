@@ -2004,7 +2004,9 @@ function createLittleContents(){
 	this.sendMailmagazine = function(mailSubject, mailContent) {
 		
 		var resulwork = null;
+		alert("メルマガを送信しました。");
 	}
+	
 	/* 
 	 * 関数名:sendMail
 	 * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う

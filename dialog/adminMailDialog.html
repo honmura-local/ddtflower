@@ -24,9 +24,9 @@
 		//受け取ったメールや名前の数だけループするためにループの終わり値を取得する
 		var loopEndCount = data.mail.length;
 		//画面に表示する結果の名前
-		var resultName = '';
+		var resultName = EMPTY_STRING;
 		//画面に表示する結果のアドレス
-		var resultMail = '';
+		var resultMail = EMPTY_STRING;
 		//0からループを初め、ユーザの情報を画面に反映させるための値を作る
 		for(var loopStartCount=0;loopStartCount<loopEndCount;loopStartCount++) {
 			if (loopStartCount == 0) {
@@ -55,7 +55,12 @@
 			//ダイアログ設定用オブジェクトのコピーを作る
 			var dialogOption = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
 			//次のダイアログに渡すデータをまとめる
-			$.extend(true, dialogOption.argumentObj.data, getInputData('mailSendContent'), data);
+			$.extend(true, 	
+					dialogOption.argumentObj.data,		//送信確認ダイアログのdataオブジェクト 
+					getInputData('mailSendContent'),	//このダイアログで編集したデータ 
+					data, 								//このダイアログに渡されたパラメータのdataオブジェクト
+					{dialog:dialogClass}				//このダイアログのクラスインスタンス
+			);
 			//メール送信確認ダイアログを作る
 			var mailSendConfirm = new dialogEx('dialog/adminMailSendDialog.html', dialogOption.argumentObj, dialogOption.returnObj);
 			//※次のダイアログではargumentObjのdataのsendTypeを見て処理を分岐させてください。

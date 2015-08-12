@@ -5,6 +5,8 @@ currentLocation = '';	//現在選択中のページの変数
 TOPPAGE_NAME = 'index.php';
 USER_ID = 'userId';			//ユーザID
 PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
+//サーバへメッセージを送信したという文言
+SEND_TO_SERVER_MESSAGE = 'サーバへデータの送信を行いました。';
 
 /*
  * 関数名:isSupportPushState()
@@ -317,17 +319,37 @@ function afterSubmitForm(form, event){
 	//submitボタンにconfirm属性が指定してありかつ、trueであれば
 	if($(('input:submit[confirm="true"]'), $this).length){
 		var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
-		var sd = new SimpleConfirmDialog(
-				function(){
-						postForm($this);
-				},
-				message);
-		sd._showDialog();
+		
+		//マイブログ記事更新(仮) 要調整
+		//ダイアログ用オブジェクトを作る
+		var dialogObj = $.extend(true, {}, dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG]);
+		//送信するデータをオブジェクトに統合する
+		$.extend(true, dialogObj.argumentObj.data, sendData, {form:$this});
+		//更新確認ダイアログを作る
+		var myBlogConfirmDialog = new dialogEx('dialog/myBlogConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+		myBlogConfirmDialog.setCallbackClose(submitArticle);	//閉じるときのイベントを登録
+		myBlogConfirmDialog.run();	//主処理を走らせる
 	} else {
 		//チェックの必要がなければ通常通りフォームをsubmitする。
 		postForm($this);
 	}
 }
+
+/*
+ * 関数名:submitArticle
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :記事を投稿する
+ * 作成日 :2015.08.12
+ * 作成者 :T.M
+ */
+function submitArticle(){
+	var dialogClass = $(this)[0].instance;	//ダイアログのクラスインスタンスを取得する
+	var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
+	postForm(data.form);					//フォームを送信する
+	alert(SEND_TO_SERVER_MESSAGE);			//メッセージを出す
+}
+
 
 
 /*
@@ -381,7 +403,7 @@ function postForm(form){
 					//inputタグなどに入力したデータを取得しDB更新のために用いる
 					var sendData = getInputData('blogEdit');
 					//送信するデータに会員番号を加え、DBに更新するデータが誰のデータなのかを明確にする
-					sendData['user_key'] = creator.json.memberHeader.user_key.value;;
+					sendData['user_key'] = creator.json.accountHeader.user_key.value;;
 					//データ更新クエリのidに値が入っていれば記事更新のクエリを使う
 					if (creator.json.updateMyBlog.id.value != "") {
 						//ブログデータを更新しデータをDBにセットする

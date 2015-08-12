@@ -204,6 +204,22 @@ function createAdminLessonDetailContent() {
  * 作成日:2015.07.20
  */
 function createAdminMailMagaAnnounceContent() {
+	var creator = new createLittleContents();
+
+	// ユーザーページのパーツのテンプレートのJSONを取得する。
+	creator.getJsonFile('source/commonUser.json');
+	// 管理者ページ共通のパーツのJSONを取得する。
+	creator.getJsonFile('source/adminCommon.json');
+	//共通のjsonを取得する
+	creator.getJsonFile('source/commonJson.json');
+
+	// ユーザーページのパーツのテンプレートのDOMを取得する。
+	creator.getDomFile('template/commonUser.html');
+	// 管理者ページ共通のパーツのJSONを取得する。
+	creator.getDomFile('template/adminCommon.html');
+	// 共通パーツのDOMを取得する
+	creator.getDomFile('template/common.html');
+	
 	//メルマガ＆アナウンスタブのコンテンツ
 	//過去のメルマガを検索するための領域を作る
 	creator.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
@@ -257,22 +273,19 @@ function createAdminMailMagaAnnounceContent() {
 
 	//送信ボタンがクリックされたときにメール送信イベントを開始する
 	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
-		var doSend = function() {
 			//メルマガ送信にチェックが入っていたらメルマガを送信する
 			if($('[name="messegeType"]').val() == "0") {
 				//メルマガを送信するための値をテキストボックスから取得する
 				var sendData = getInputData('mailMagaAndAnnounceArea');
-				//メルマガをDBに新規登録する
-				creator.setDBdata(json.insertMailMagazine, sendData, '');
-				// メルマガ送信処理
-				creator.sendMailmagazine(sendData['magazine_title'],sendData['magazine_content']);
+				//ダイアログ用オブジェクトを作る
+				var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
+				//送信するデータをオブジェクトに統合する
+				$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
+				//メルマガ送信ダイアログを作る
+				var mailmagazineSendDialog = new dialogEx('dialog/mailMagazineSendConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+				mailmagazineSendDialog.setCallbackClose(mailmagazineSendDialog.sendMailmagazine);	//閉じるときのイベントを登録
+				mailmagazineSendDialog.run();	//主処理を走らせる
 			}
-		};
-		var sd = new SimpleConfirmDialog(
-				doSend,
-				"メルマガの送信を行います。よろしいですか?"
-		);
-		sd._showDialog();
 	});
 
 	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
@@ -750,32 +763,6 @@ function adminMessageCreate(buttonSelector, sendType) {
 	});
 }
 
-/* 
- * 関数名:announceInsert
- * 概要  :管理者会員一覧でお知らせのダイアログから送信ボタンがクリックされてお知らせテーブルに対して新規データの作成を行う
- * 引数  :
-		
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.08.06
- */
-var announceInsert = function() {
-	//入力されたお知らせメッセージのデータを取得する
-	var announceData = getInputData('mailSendContent');
-	//DBにメッセージ登録のクエリを投げる
-	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
-	//ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
-	var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
-	//ループでメッセージ宛先の情報を登録する
-	for(var loopStartCounter = 0; loopStartCounter < loopEndCount; loopStartCounter++) {
-		//ループ中の会員番号を取得する
-		var sendReplaceArray = {
-			user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
-		};
-		//宛先テーブルを更新する
-		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
-	}
-}
 
 
 

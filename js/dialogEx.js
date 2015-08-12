@@ -74,6 +74,13 @@ YES											= 1;											//「いいえ」ボタンの値
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
 RETURN_OBJ									= 'returnObj';									//dialogExクラスのアウトプット用オブジェクト名
+SELECTOR_LAST								= ':last';										//「一番後ろの要素」の疑似セレクタ
+MESSAGE_SEND_SIMPLE_NOTICE					= "メッセージの送信が完了しました。";					//簡易的なメッセージ送信完了のメッセージ	
+ROLE										= 'role';										//role属性
+CONFIRM_DIALOG								= 'confirmDialog';								//確認ダイアログ
+SUGGESTION_BOX_CONFIRM_DIALOG				= 'suggestionBoxConfirmDialog';					//目安箱送信確認ダイアログ
+MY_BLOG_CONFIRM_DIALOG						= 'myBlogConfirmDialog';						//マイブログ更新確認ダイアログ
+MAIL_MAGAZINE_CONFIRM_DIALOG				= 'mailmagazineConfirmDialog';					//メルマガ送信確認ダイアログ
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -278,7 +285,7 @@ function dialogEx(url, argumentObj, returnObj){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
 		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
-
+	
 	/* 関数名:destroy
 	 * 概要　:ダイアログのを破棄する。
 	 * 引数　:なし
@@ -289,13 +296,20 @@ function dialogEx(url, argumentObj, returnObj){
 	 */
 	this.destroy = function(){
 		//ダイアログのDOMを取得する。
-		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this); 
+		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this);
+		var dialogRole = $dialog.attr(ROLE);	//ダイアログのrole属性を取得する
+		//ダイアログが確認ダイアログであれば、その親の要素(=元のダイアログ)を取得して処理対象にする
+		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 ? $($dialog.parent()): $dialog;
+		var dialogClassName = $dialog.attr('class').split(' ')[0];	//ダイアログのクラス名を取得する
 		//まずはダイアログを閉じる
-		$dialog.dialog('close');
+		$dialog.dialog(CLOSE);
+//		$(DOT + dialogClassName).dialog(CLOSE);
 		//jQuery UIのダイアログを破棄する
 		$dialog.dialog('destroy');
+		console.log($('.ui-dialog').has(DOT+dialogClassName));
 		//画面上に展開されているダイアログのDOMを破棄する。
-		$dialog.remove();
+		$('.ui-dialog').has(DOT+dialogClassName).remove();
+//		$dialog.remove();
 	}
 
 	/* 関数名:setAlertContents
@@ -335,12 +349,11 @@ function dialogEx(url, argumentObj, returnObj){
 		//アラートで表示するdomをセレクタとして変数に入れる
 		var confirm = $(this.formDom)[0];
 		//domをダイアログにセットする
-		$(DOT + UI_DIALOG_CONTENT).append(confirm);
+		$(DOT + UI_DIALOG_CONTENT).filter(SELECTOR_LAST).append(confirm);
 		//メッセージを表示する
-		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(message);
+		$(DOT + UI_DIALOG_CONTENT + TAG_P).filter(SELECTOR_LAST).text(message);
 		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
 		var thisElem = this;	
-		
 		//処理終了後にタイマー関数をセットする
 		window.setTimeout(function(){
 			//ダイアログのクローズボックスを消す
@@ -486,6 +499,74 @@ function dialogEx(url, argumentObj, returnObj){
 	this.removeDialogButtons = function(){
 		$(UI_DIALOG_BUTTON_PANEL, this.formDom.parent()).remove();
 	}
+	
+	/* 本村さんのメール送信関数 */
+	this.sendMemberMail = function() {
+		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
+		
+		//はいボタンが押されていたら
+		if(dialogClass.getPushedButtonState() == YES){
+			var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+			var resulwork = null;
+		
+			$.ajax({
+				url:'php/mailSendEntryMemberMail.php'
+				,data:{
+						from:data.from
+						,subject:data.mailSubject
+						,content:data.mailContent
+				}
+				,dataType:"json"
+				,type:"POST"
+				,success:function(result){
+					resulwork = result;
+					//送信完了と共に入力ダイアログを消す
+					alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+				}
+				,error:function(xhr, status, error){
+					throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+					//送信完了と共に入力ダイアログを消す
+					alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+				}
+			});
+		
+		// @TODO 結果をどうしいのかはまだ未定
+		//return resulwork
+		
+		}
+	}
+
+	/* 本村さんのメルマガ送信関数 改修中 */
+	this.sendMailmagazine = function() {
+		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
+		
+		//はいボタンが押されていたら
+		if(dialogClass.getPushedButtonState() == YES){
+			var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+			//メルマガをDBに新規登録する
+			data.creator.setDBdata(data.creator.json.insertMailMagazine, data, '');
+			var resultwork = null;
+			alert("メルマガを送信しました。");
+		}
+	}
+	
+	//目安箱としてメールを送信する
+	/* 								sendSuggest(
+											sendData['user_key']
+											,sendData['suggest_type']
+											,sendData['suggest_content']
+											,sendData['suggest_title']
+	 							);
+	 							*/	
+									//通常メールとして送信する
+	/* 								sendMemberMail(
+											sendData['user_key']
+											,sendData['suggest_content']
+											,sendData['suggest_title']
+	 */								
+	
+	
+	
 }
 
 /* ログイン前の準備関数 */
@@ -966,8 +1047,52 @@ var SimpleConfirmDialog = function(yesFunc, message) {
  * 作成者　:T.Masuda
  */
 function doSendMail(){
-	// メールを送信する処理
-	//メール送信用のデータを取得する
-	var sendMaidData = getInputData('mailSendContent');
+	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+		// メールを送信する処理
+		//メール送信用のデータを取得する
+		var sendMaidData = getInputData('mailSendContent');
+		//送信完了と共に入力ダイアログを消す
+		data.dialog.formDom.dialog(CLOSE);
+		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+	}
 };
 
+/* 
+ * 関数名:announceInsert
+ * 概要  :管理者会員一覧でお知らせのダイアログから送信ボタンがクリックされてお知らせテーブルに対して新規データの作成を行う
+ * 引数  :
+ * 返却値 :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ */
+function announceInsert(){
+	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	//@mod 2015.0811 T,Masuda 山本さんが再度着手するまで一旦処理を凍結します。
+	//入力されたお知らせメッセージのデータを取得する
+//	var announceData = getInputData('mailSendContent');
+//	//DBにメッセージ登録のクエリを投げる
+//	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
+//	//ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
+//	var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
+//	//ループでメッセージ宛先の情報を登録する
+//	for(var loopStartCounter = 0; loopStartCounter < loopEndCount; loopStartCounter++) {
+//		//ループ中の会員番号を取得する
+//		var sendReplaceArray = {
+//			user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
+//		};
+//		//宛先テーブルを更新する
+//		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
+//	}
+		//送信完了と共に入力ダイアログを消す
+		data.dialog.formDom.dialog(CLOSE);
+		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+	}
+}

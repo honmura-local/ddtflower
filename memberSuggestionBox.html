@@ -82,42 +82,30 @@
 					$('input[type="button"], input[type="reset"]').button();
 					//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
 					$(STR_BODY).on(CLICK, '.button1', function() {
-						var doIt = function (){
-							//入力されているデータを取得しクエリを挿入するための値として扱う
-							var sendData = getInputData('suggestionArea');
-							//クエリに送信するデータに会員番号を加える
-							sendData['user_key'] = creator.json.memberHeader.user_key.value;
-							//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
-							if($('[name="suggestionRadio"]').val() == "0") {
-								//目安箱テーブルに新たにデータを挿入する
-								setDBdata(creator.json.insertSuggestionBox, sendData, '');
-								//目安箱としてメールを送信する
-								sendSuggest(
-										sendData['user_key']
-										,sendData['suggest_type']
-										,sendData['suggest_content']
-										,sendData['suggest_title']
-								);
-							//目安箱でないなら
-							} else {
-								//通常メールとして送信する
-								sendMemberMail(
-										sendData['user_key']
-										,sendData['suggest_content']
-										,sendData['suggest_title']
-								);
-							}
-						};
-						var sd = new SimpleConfirmDialog(
-								function(){
-										doIt();
-								},
-								"送信します。よろしいですか?");
-						sd._showDialog();
+						
+						var sendData = getInputData('suggestionArea');
+						//クエリに送信するデータに会員番号を加える
+						sendData['user_key'] = creator.json.accountHeader.user_key.value;
+							
+						//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
+						if($('[name="suggestionRadio"]').val() == "0") {
+							//目安箱テーブルに新たにデータを挿入する
+							creator.setDBdata(creator.json.insertSuggestionBox, sendData, '');
+						}
+							
+						//ダイアログ用オブジェクトを作る
+						var dialogObj = $.extend(true, {}, dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG]);
+						//送信するデータをオブジェクトに統合する
+						$.extend(true, dialogObj.argumentObj.data, sendData);
+						//メール送信ダイアログを作る
+						var mailSendDialog = new dialogEx('dialog/suggestionConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+						mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録
+						mailSendDialog.run();	//主処理を走らせる
 					});
+					
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				} catch(e) {
-					console.log(e)
+					console.log(e);
 				}
 			</script>
 		</div>
