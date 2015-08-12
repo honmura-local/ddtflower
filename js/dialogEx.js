@@ -1,4 +1,4 @@
-/* ファイル名:dialogEx.js
+﻿/* ファイル名:dialogEx.js
  * 概要　　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 設計者　:H.Kaneko
  * 作成日　:2015.0729
@@ -75,6 +75,19 @@ YES											= 1;											//「いいえ」ボタンの値
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
 RETURN_OBJ									= 'returnObj';									//dialogExクラスのアウトプット用オブジェクト名
+SELECTOR_LAST								= ':last';										//「一番後ろの要素」の疑似セレクタ
+MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE			= "メッセージの送信が完了しました。";					//簡易的なメッセージ送信完了のメッセージ	
+ROLE										= 'role';										//role属性
+CONFIRM_DIALOG								= 'confirmDialog';								//確認ダイアログ
+SUGGESTION_BOX_CONFIRM_DIALOG				= 'suggestionBoxConfirmDialog';					//目安箱送信確認ダイアログ
+MY_BLOG_CONFIRM_DIALOG						= 'myBlogConfirmDialog';						//マイブログ更新確認ダイアログ
+MAIL_MAGAZINE_CONFIRM_DIALOG				= 'mailmagazineConfirmDialog';					//メルマガ送信確認ダイアログ
+DESTROY										= 'destroy';									//破棄命令の文字列
+MESSAGE_SEND_FAILED_SIMPLE_NOTICE			= 'メッセージの送信に失敗しました。時間をおいてお試しください。';	//簡易的なメッセージ送信失敗のメッセージ	
+MEMBER_MAIL									= 0;											//目安箱 会員メールを示す数値
+SUGGESTION_MAIL								= 1;											//目安箱 目安箱メールを示す数値
+SEND_MEMBERMAIL_PHP							= 'php/mailSendEntryMemberMail.php';			//目安箱 会員メール送信用のPHP
+SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';				//目安箱 目安箱メール送信用のPHP
 
 //DBにクエリを発行するためkey名一覧
 RESERVE 									= 'reserve';									//会員、授業予約クエリkey
@@ -207,7 +220,6 @@ function dialogEx(url, argumentObj, returnObj){
 			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
 			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultReturnObj;
 			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
-			console.log(this);
 			
 			var form = $(this.formDom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;			//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
@@ -290,7 +302,7 @@ function dialogEx(url, argumentObj, returnObj){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
 		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
-
+	
 	/* 関数名:destroy
 	 * 概要　:ダイアログのを破棄する。
 	 * 引数　:なし
@@ -301,12 +313,18 @@ function dialogEx(url, argumentObj, returnObj){
 	 */
 	this.destroy = function(){
 		//ダイアログのDOMを取得する。
-		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this); 
+		var $dialog = this.formDom !== void(0)? $(this.formDom) : $(this);
+		var dialogRole = $dialog.attr(ROLE);	//ダイアログのrole属性を取得する
+		//ダイアログが確認ダイアログであれば、その親の要素(=元のダイアログ)を取得して処理対象にする
+		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 
+			? $(DOT + CONFIRM_DIALOG + SELECTOR_LAST).parent(): $dialog;
+//		var dialogClassName = $dialog.attr('class').split(' ')[0];	//ダイアログのクラス名を取得する
+		
 		//まずはダイアログを閉じる
-		$dialog.dialog('close');
+		$dialog.dialog(CLOSE);
+//		$(DOT + dialogClassName).dialog(CLOSE);
 		//jQuery UIのダイアログを破棄する
-		$dialog.dialog('destroy');
-		//画面上に展開されているダイアログのDOMを破棄する。
+		$dialog.dialog(DESTROY);
 		$dialog.remove();
 	}
 
@@ -347,12 +365,11 @@ function dialogEx(url, argumentObj, returnObj){
 		//アラートで表示するdomをセレクタとして変数に入れる
 		var confirm = $(this.formDom)[0];
 		//domをダイアログにセットする
-		$(DOT + UI_DIALOG_CONTENT).append(confirm);
+		$(DOT + UI_DIALOG_CONTENT).filter(SELECTOR_LAST).append(confirm);
 		//メッセージを表示する
-		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(message);
+		$(DOT + UI_DIALOG_CONTENT + TAG_P).filter(SELECTOR_LAST).text(message);
 		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
 		var thisElem = this;	
-		
 		//処理終了後にタイマー関数をセットする
 		window.setTimeout(function(){
 			//ダイアログのクローズボックスを消す
@@ -485,7 +502,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.removeDialogCloseBox = function(){
-		$(UI_DIALOG_CLOSEBOX, this.formDom.parent()).remove();
+		$(UI_DIALOG_CLOSEBOX + SELECTOR_LAST).remove();
 	}
 	
 	/* 関数名:removeDialogButtons
@@ -498,6 +515,112 @@ function dialogEx(url, argumentObj, returnObj){
 	this.removeDialogButtons = function(){
 		$(UI_DIALOG_BUTTON_PANEL, this.formDom.parent()).remove();
 	}
+	
+	/* 本村さんのメール送信関数 */
+	/* 関数名:sendMemberMail
+	 * 概要　:会員ページ 会員メール/目安箱メールを送信する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
+	 */
+	this.sendMemberMail = function() {
+		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
+		
+		//はいボタンが押されていたら
+		if(dialogClass.getPushedButtonState() == YES){
+			var data = dialogClass.getArgumentDataObject();		//argumentObjのdataを取得する
+			var resultwork = null;								//
+			var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+			var sendObject = {									//送信するデータのオブジェクト
+					from:data.user_key					//送信元
+					,subject:data.suggest_title		//タイトル
+					,content:data.suggest_content	//本文
+			};
+			
+			//メールのタイプの数値で送信先PHP、送信データの構成を変える
+			switch(parseInt(data.suggestionRadio)){
+			//通常会員メールの場合
+			case MEMBER_MAIL:break;	//初期化内容が該当するのでなにもしない
+			//目安箱メールの場合
+			case SUGGESTION_MAIL:
+					//目安箱メールならタイプの値を追加する
+					$.extend(true, sendObject, {type:data.suggest_type});
+					//目安箱メール送信用PHPにメールを処理させる
+					sendUrl = SEND_SUGGEST_PHP;
+					break;
+			default:break;
+			}
+			
+			$.ajax({					//PHPにメール用データを渡すAjax通信
+					url:sendUrl			//PHPのURLを設定する
+					,data:sendObject	//送信データのオブジェクト
+					,dataType:"json"	//JSON形式でデータをもらう
+					,type:"POST"		//POSTメソッドでHTTP通信する
+					,success:function(result){		//通信成功時
+						resultwork = result;		//通信結果から情報を取り出す
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+						//目安箱メールを送信していたら
+						if(parseInt(data.suggestionRadio) == SUGGESTION_MAIL){
+							//目安箱テーブルに新たにデータを挿入する
+							data.creator.setDBdata(data.creator.json.insertSuggestionBox, data, EMPTY_STRING);
+						}
+					}
+					//通信失敗時
+					,error:function(xhr, status, error){
+						//throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	//送信失敗のメッセージを出す
+					}
+				});
+		}
+	}
+
+	/* 本村さんのメルマガ送信関数 改修中 */
+	/* 関数名:sendMailmagazine
+	 * 概要　:メルマガを送信する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
+	 */
+	this.sendMailmagazine = function() {
+		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
+		
+		//はいボタンが押されていたら
+		if(dialogClass.getPushedButtonState() == YES){
+			var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+			//メルマガをDBに新規登録する
+			data.creator.setDBdata(data.creator.json.insertMailMagazine, data, '');
+			var resultwork = null;
+			alert("メルマガを送信しました。");
+		}
+	}
+	
+	//目安箱としてメールを送信する
+	/* 								sendSuggest(
+											sendData['user_key']
+											,sendData['suggest_type']
+											,sendData['suggest_content']
+											,sendData['suggest_title']
+	 							);
+	 							*/	
+									//通常メールとして送信する
+	/* 								sendMemberMail(
+											sendData['user_key']
+											,sendData['suggest_content']
+											,sendData['suggest_title']
+	 */								
+	
+	
+	
 
 	//サーバーに対してクエリを発行するデータjson一覧
 	this.setDBquery = {};
@@ -507,8 +630,6 @@ function dialogEx(url, argumentObj, returnObj){
 	this.setDBquery[TIME_TABLE] = this.dialogCreator.json.insertTimeTableDay;		//管理者、時限新規追加クエリ
 	this.setDBquery[NEW_CLASSWORK] = this.dialogCreator.json.newClassWork;			//管理者、新規授業追加クエリ
 	this.setDBquery[ADD_CLASSWORK] = this.dialogCreator.json.normalInsertClasswork;	//管理者、時限が存在するときの新規授業の追加
-
-
 
 
 } // dialogExクラスの終わり
@@ -811,11 +932,9 @@ function cancelDialogOpenFromReservedTable (memberNumber, creator) {
 				data:$.extend(true, {userId:memberNumber}, {'creator':creator}, recordData.data)
 			}
 		};
-		console.log(sendObject);
 		//日付を日本語表示にする
 		var titleDate = getDialogTitleDate(sendObject.argumentObj.data.lesson_date);
 		//キャンセルダイアログを開く
-		console.log(1);
 		cancelDialogOpen(dialogExData, titleDate);
 	});
 }
@@ -1086,6 +1205,8 @@ var SimpleConfirmDialog = function(yesFunc, message) {
 	};
 };
 
+//管理者メール送信確認ダイアログのコールバック関数。
+
 /* 関数名:doSendMail
  * 概要　:メールを送信する
  * 引数　:なし
@@ -1094,8 +1215,78 @@ var SimpleConfirmDialog = function(yesFunc, message) {
  * 作成者　:T.Masuda
  */
 function doSendMail(){
-	// メールを送信する処理
-	//メール送信用のデータを取得する
-	var sendMaidData = getInputData('mailSendContent');
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+		// メールを送信する処理
+		//メール送信用のデータを取得する
+		var sendMaidData = getInputData('mailSendContent');
+		//送信完了と共に入力ダイアログを消す
+		data.dialog.formDom.dialog(CLOSE);
+		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+	}
 };
 
+/* 
+ * 関数名:announceInsert
+ * 概要  :管理者会員一覧でお知らせのダイアログから送信ボタンがクリックされてお知らせテーブルに対して新規データの作成を行う
+ * 引数  :
+ * 返却値 :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ * 修正者:T.Yamamoto
+ * 修正日:2015.08.12
+ * 内容　:現時点でのdialogExクラスへの対応をしました
+ */
+function announceInsert(){
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	//@mod 2015.0811 T,Masuda 山本さんが再度着手するまで一旦処理を凍結します。
+	//入力されたお知らせメッセージのデータを取得する
+//	var announceData = getInputData('mailSendContent');
+//	//DBにメッセージ登録のクエリを投げる
+//	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
+//	//ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
+//	var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
+//	//ループでメッセージ宛先の情報を登録する
+//	for(var loopStartCounter = 0; loopStartCounter < loopEndCount; loopStartCounter++) {
+//		//ループ中の会員番号を取得する
+//		var sendReplaceArray = {
+//			user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
+//		};
+//		//宛先テーブルを更新する
+//		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
+//	}
+		//送信完了と共に入力ダイアログを消す
+		data.dialog.formDom.dialog(CLOSE);
+		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+	}
+}
+
+/*
+ * 関数名:submitArticle
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :記事を投稿する
+ * 作成日 :2015.08.12
+ * 作成者 :T.M
+ */
+function submitArticle(){
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
+		var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
+		postForm(data.form);								//フォームを送信する
+		//alert(SEND_TO_SERVER_MESSAGE);					//メッセージを出す
+	}
+}

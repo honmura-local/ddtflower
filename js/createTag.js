@@ -1514,6 +1514,19 @@ function createTag(){
 		//ユーザIDを取得する
 		return this.json.accountHeader !== void(0)? this.json.accountHeader.user_key.value: EMPTY_STRING;
 	}
+
+	/*
+	 * 関数名:getUserId
+	 * 概要  :ユーザIDを取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザID。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getUserName = function(){
+		//ユーザ名を返す
+		return this.json.accountHeader !== void(0) ? this.json.accountHeader.memberStatus.memberName.user_name.text: EMPTY_STRING;
+	}
 	
 	/*
 	 * 関数名:getAuthority
@@ -1628,7 +1641,7 @@ function createTag(){
 				        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
 				        	 	var userLoginPassword = $('.password').val();
 				        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
-				        	 	if(userLoginId != '' || userLoginPassword != '') {
+				        	 	if(userLoginId != EMPTY_STRING || userLoginPassword != EMPTY_STRING) {
 				        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
 				        	 		loginCreator.json.login.userName.value = userLoginId;
 				        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
@@ -1636,21 +1649,21 @@ function createTag(){
 				        	 		//JSONDBManagerによるログイン処理を行う
 				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
 				        	 		//会員IDをJSONから取得する
-				        	 		memberInfo = loginCreator.json.login.id.text;
+				        	 		var memberInfo = loginCreator.json.login.id.text;
 				        	 		//会員の権限の数値を取得する
-				        	 		authority =  loginCreator.json.login.authority.text;
+				        	 		var authority =  loginCreator.json.login.authority.text;
 				        	 		//ログイン成否チェックの分岐
 				        	 		//会員IDが取得できていなかった場合
-				        	 		if(memberInfo == '') {
+				        	 		if(memberInfo == EMPTY_STRING) {
 				        	 			//エラーメッセージを表示して処理をそのまま終了する
 				        				alert(MESSAGE_LOGIN_ERROR);
 				        			//会員IDが取得できていれば
 				        	 		} else {
 				        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
 			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
-			        					
+			        					var data = this.instance.getArgumentDataObject();	//インプット用データオブジェクトを取得する
 			        					//通常ログインかつ、管理者のIDならば
-			        					if(this.instance.argumentObj.data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
+			        					if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
 			        							//管理者ページの画面遷移の履歴を追加する。
@@ -1661,7 +1674,7 @@ function createTag(){
 			        							location.href = URL_ADMIN_PAGE; 
 			        						}
 			        					//通常ログインかつ、管理者のIDでなければ
-			        					} else if(this.instance.argumentObj.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
+			        					} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(isSupportPushState()){
 			        							//会員トップページの画面遷移の履歴を追加する。

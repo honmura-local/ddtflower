@@ -1,24 +1,31 @@
-<div class="dialog">
+﻿<div class="dialog">
 <script>
 	//ダイアログの要素をjQueryオブジェクトで取得する
+
 	$dialog = $('.dialog:last');
+	var dialogClass = $dialog[0].instance;	//ダイアログのクラスインスタンスを取得する
+	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
+	//var creator = new createLittleContents();
+	//ダイアログにcreateLittleContentsクラスインスタンスへの参照を持たせておく
+	$dialog[0].instance.creator = dialogClass.dialogCreator;
 	//イベントをリセットする
 	$dialog.off();
-	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var cancelLessonCreator = new createLittleContents();
-	//ダイアログにcreateLittleContentsクラスインスタンスへの参照を持たせておく
-	$dialog[0].instance.creator = cancelLessonCreator;
+
 	
 	//会員、予約キャンセルダイアログのjsonを取得する
-	cancelLessonCreator.getJsonFile('source/memberPage.json');
+	dialogClass.dialogCreator.getJsonFile('source/memberPage.json');
 	//会員、予約キャンセルダイアログのテンプレートを取得する
-	cancelLessonCreator.getDomFile('template/memberPage.html');
+	dialogClass.dialogCreator.getDomFile('template/memberPage.html');
 	//予約キャンセルダイアログに必要な値を受け取った値で入れる
-	insertConfirmReserveJsonDialogValueEx('cancelLessonContent', 'dialog', cancelLessonCreator);
+
+	insertConfirmReserveJsonDialogValueEx('cancelLessonContent', 'dialog', dialogClass.dialogCreator);
+
 	//アコーディオンの中身をDBから取り出す
-	cancelLessonCreator.getJsonFile(URL_GET_JSON_STRING_PHP, cancelLessonCreator.json.cancelLessonContent, 'cancelLessonContent');
+	dialogClass.dialogCreator.getJsonFile(URL_GET_JSON_STRING_PHP, dialogClass.dialogCreator.json.cancelLessonContent, 'cancelLessonContent');
 	//ダイアログの中身のコンテンツを作る
-	cancelLessonCreator.outputTag('cancelLessonContent', 'cancelLessonContent', '.dialog:last');
+
+	dialogClass.dialogCreator.outputTag('cancelLessonContent', 'cancelLessonContent', '.dialog:last');
+
 	// ボタンタグをjqueryuiの見た目にする
 	$('button').button();
 	//送信ボタンがクリックされたときにDBに予約情報を登録する
@@ -27,6 +34,7 @@
 		$dialog[0].instance.setPushedButtonState($(this).attr('value'));
 		//ダイアログを閉じる
 		$('.dialog:last').dialog(CLOSE);
+		dialogClass.destroy('value');	//ダイアログを破棄する
 	});
 </script>
 </div>
