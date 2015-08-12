@@ -1514,6 +1514,19 @@ function createTag(){
 		//ユーザIDを取得する
 		return this.json.accountHeader !== void(0)? this.json.accountHeader.user_key.value: EMPTY_STRING;
 	}
+
+	/*
+	 * 関数名:getUserId
+	 * 概要  :ユーザIDを取得する。
+	 * 引数  :なし
+	 * 返却値  :String:ユーザID。なければ空文字を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.08
+	 */
+	this.getUserName = function(){
+		//ユーザ名を返す
+		return this.json.accountHeader !== void(0) ? this.json.accountHeader.memberStatus.memberName.user_name.text: EMPTY_STRING;
+	}
 	
 	/*
 	 * 関数名:getAuthority

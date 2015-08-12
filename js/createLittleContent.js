@@ -55,6 +55,12 @@ RESERVE_LIST_CREATOR						= 'reserveListCreator';
 NUMBER										= 'number';									//numberキーの文字列
 STRING										= 'string';									//stringの文字列
 
+//画像縮小時のデフォルトサイズ
+DEFAULT_WIDTH								= 300;										//画像の縮小サイズ 横
+DEFAULT_HEIGHT								= 300;										//画像の縮小サイズ 縦
+IMG_QUALITY									= 80;										//画像圧縮時の品質
+USER_IMAGE_UPLOADER							= 'uploadImage/imageUpload.php';			//画像アップローダーのパス
+	
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
   if (appVersion.indexOf('msie 6.') != -1) {
@@ -393,22 +399,73 @@ function createLittleContents(){
 	/*
 	 * 関数名:createNewPhoto()
 	 * 概要  :作成したMyギャラリーの新規のし写真に基本データを追加する。
-	 * 引数  :なし
+	 * 引数  :String imgPath: 画像パス
 	 * 戻り値:なし
 	 * 作成日:2015.03.27
 	 * 作成者:T.Masuda
+	 * 修正日:2015.08.12
+	 * 修正者:T.Masuda
+	 * 内容	:変更された仕様に対応しました
 	 */
-	this.createNewPhoto = function(){
-		var $new = $('.myPhoto:last');	//新規の写真を変数に入れる。
-		var cookieData = GetCookies();	//ユーザ名取得のため、クッキーのデータを連想配列で取得する。
-		
-		//ユーザ名を写真に追加する。ログインしていない状態なら、ゲスト名を入れる。
-		$('.myPhotoUser', $new).text('userName' in cookieData 
-				&& cookieData['userName'] != "" ? cookieData['userName'] : "Guest");
-		//今日の日付を取得し、写真に追加する。
-		$('.myPhotoDate', $new).text(getDateTime());
-		//公開設定を追加する。
-		$('.myPhotoPublication', $new).text('全体').attr('value', '0');
+	this.createNewPhoto = function(imgPath){
+		//新たな記事のひな形をつくる
+		//最初に枠(行)を作る
+		var newPhoto = $('<tr></tr>')
+							.addClass('myPhoto')
+							.append(
+								$('<td></td>')	//画像枠
+									.addClass('myPhotoImage')
+									.append($('<a></a>')	//画像のリンク部分
+											.attr({
+												href: imgPath,
+												rel:'gallery'
+											})
+										.append($('<span></span>')	//画像部分
+												.attr('style', 'background-image:url("' + imgPath + '")')
+										)
+									)
+							)
+							.append(	
+								$('<td></td>')	//日付
+									.addClass('myPhotoDate')
+									.text(this.getDateTime())
+							)
+							.append(
+								$('<td></td>')	//タイトル
+									.addClass('myPhotoTitle')
+									.text('新規')
+							)
+							.append(
+								$('<td></td>')	//ユーザ名
+									.addClass('myPhotoUser')
+									.text(this.json.accountHeader !== void(0) ? this.getUserName() : "Guest")
+							)
+							.append(
+								$('<td></td>')	//コメント
+									.addClass('myPhotoComment')
+									.text('一言お願いします')
+							)
+							.append(
+								$('<td></td>')	//公開設定。現状不要なので見せない
+									.addClass('myPhotoPublication')
+									.text('全体')
+									.attr('value', '0')
+									.css('display', 'none')
+							)
+							.append(
+								$('<input>')	//チェックボックス
+									.addClass('myPhotoCheck')
+									.attr('type', 'checkbox')
+							)
+							; 
+		//新規記事を作成する
+		return newPhoto;
+		//画像拡大用のタグにソースをセットする。
+		$('.myPhotoLink:last').attr('href', imgPath);
+		//画像サムネイルに使う要素の画像を設定する。
+		$('.myPhotoImage:last').css('background-image', 'url('  +  imgPath + ')');
+		$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+
 	}
 	
 	/*
@@ -706,6 +763,17 @@ function createLittleContents(){
 		});
 	}
 	
+	
+	/** 画像縮小アップロードの流れ
+	*	1. input type="file"を用意します。
+	*	2. 1の要素にchangeイベントを登録します。
+	*	3. 2のコールバック関数で1の要素から取得したFileオブジェクトをcanvasResizeにかけます。これで画像が縮小されます。
+	*	4. canvasResizeはコールバック関数の引数にbase64形式の画像パスを渡します。これをBLOBデータに変換します。
+	*	   一発でBLOBデータに変換する関数はないようなので、自分で実装します。
+	*	5. フォームデータを作ります。(new FormData())。サーバへ送信するデータをappend関数で登録します。
+	*	   append関数の引数は 1 キー 2 値 です。BLOBデータのみ3にファイル名の文字列を渡せます。
+	*	6. Ajax関数で画像保存用PHPにフォームデータを送信します。その後はそのままPHP側で保存します。
+	*/
 	/*
 	 * 関数名:function setMyGalleryChangeEvent
 	 * 引数 	:String selector:イベントをバインドする対象のセレクタ
@@ -714,97 +782,105 @@ function createLittleContents(){
 	 * 作成日:2015.04.23
 	 * 作成者:T.Masuda
 	 */
-	this.setMyGalleryChangeEvent = function (selector){
-		var $this = $(this);
+	this.setMyGalleryChangeEvent = function (selector, imgWidth, imgHeight){
+		var thisElem = this;
 		$(selector).on('change', function(event){
 			//拡張子チェックを行う。画像の拡張子でなければはじく。
-			if(!this.checkIdentifier($(this).val())){
+			if(!checkIdentifier($(this).val())){
 				//有効なファイルを選んでもらうように警告を出す。
 				alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
 				return;	//処理を終える。
 			}
 			
-			//保存先を指定して画像のアップロードを行う。input type="file"のname属性と会員IDを添えて送信する。
-			//  $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
-			//	$(this).upload('uploadImage',{"dir":init['photoDirectory'], postedName:$(this).attr('name')}, function(xml) {
-			$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:json.accountHeader.user_key.value}, function(xml) {
-		    	
-				//jQueryセレクターで取得して出力
-				console.log('filename(selector search): ' + $('filename', xml).text());
-				//find関数で取得して出力
-				console.log('filename(find function): ' + $(xml).find('filename').text());
-				//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
-				//アップロード画像の情報をDBに入れて送るための連想配列を作る
-				var sendReplaceArray = {};
-				//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
-				this.sendReplaceArray['photo_title'] = $('filename', xml).text();
-				//会員番号を更新情報のクエリに入れる
-				this.sendReplaceArray['user_key'] = json.accountHeader.user_key.value;
-				//画像情報をDBに新規登録する
-				this.setDBdata(json.insertMyGalleryPhoto, sendReplaceArray, '');
-				console.log(sendReplaceArray);
-				console.log(json.insertMyGalleryPhoto);
-				
-				//返ってきたデータから成否判定の値を取り出す。
-		    	//var issuccess = parseInt($(xml).find('issuccess').text());
-		    	//ローカルでのテスト用のxmlデータを作る。
-		    	var issuccess = 1;
-		    	xml = $('<root></root>')
-		    			.append($('<src></src>')
-		    					.text('')
-		    			)
-		    			.append($('<message></message>')
-		    					.text('success')
-		    			);
-		    	if(issuccess){	//保存に成功していたら
-		    		//IE9以下でなければ
-		    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
-			    		//ファイルのオブジェクトをを取得する。
-			    		var file = event.target.files[0];
-			    		//画像の縮小を行う。
-			    		canvasResize(file, {
-			    			crop: false,	//画像を切り取るかを選択する
-			    			quality: 80,	//画像の品質
-			    			//コールバック関数。画像パスを引数として受け取る。
-			    			callback: function(data) {
-			    				$(xml).attr('src', data);	//アップロードした画像をセットする。
-			    				var src = data;	//画像の保存先を取得する。
-			//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
-			    				//createTagで新たな写真を作成する。
-			    				outputTag('blankPhoto', 'myPhoto', '.myGallery');
-			    				//新たな写真を初期化する。
-			    				createNewPhoto();
-			    				//画像拡大用のタグにソースをセットする。
-			    				$('.myPhotoLink:last').attr('href', src);
-			    				//画像サムネイルに使う要素の画像を設定する。
-			    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-			    				$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-			    			}
-			    		});
-			    	//IE6~9なら
-			    	} else {
-			    		//サムネイルが出ないことを伝える。
-			    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
-		    			var src = 'photo/general/web/DSC_0266.JPG';	//今のところはダミーの写真を追加する。
-		    			//createTagで新たな写真を作成する。
-		    			outputTag('blankPhoto', 'myPhoto', '.myGallery');
-		    			//新たな写真を初期化する。
-		    			$this.createNewPhoto();
-		    			//画像拡大用のタグにソースをセットする。
-		    			$('.myPhotoLink:last').attr('href', src);
-		    			//画像サムネイルに使う要素の画像を設定する。
-		    			$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-		    			$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-			    	}
-		    	//保存に失敗していたら
-		    	} else {
-		    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
-		    	}
-		    //サーバから返されたデータをXMLとして扱う。
-		    },"xml");
+			var $uploader = $(this);		//画像アップローダーの要素を取得する
+    		canvasResize(this.files[0], {	//画像の縮小を行う
+    			//横サイズを設定
+    			width:imgWidth !== void(0)? imgWidth: DEFAULT_WIDTH,
+    			//縦サイズを設定
+    			height:imgHeight !== void(0)? imgHeight: DEFAULT_HEIGHT,
+    			crop: false,	//画像を切り取るかを選択する
+    			quality: IMG_QUALITY,	//画像の品質
+    			//コールバック関数。画像パスを引数として受け取る。
+    			callback: function(data) {
+    				thisElem.uploadUserPhoto(data);	//画像をアップロードする
+    			}
+    		});
 		});
 	}
+	
+	/*
+	 * 関数名:uploadUserPhoto
+	 * 引数 	:String data:base64形式の画像パス
+	 * 戻り値:なし
+	 * 概要  :Myギャラリーの新規投稿画像をアップロードし、ギャラリー領域に表示する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.uploadUserPhoto = function(data){
+		var thisElem = this;						//クラスインスタンスを変数に入れる
+		//PHPへはフォームデータを作って送信する
+		var fd = new FormData();					//フォームデータを作る
+		fd.append('photo', toBlob(data), 'userPhoto');	//フォームデータにBLOB化した写真を登録する
+		fd.append('postedName', 'photo');			//フォームデータに投稿名を登録する
+		fd.append('userId', this.getUserId());		//フォームデータにユーザIDを登録する
 		
+        $.ajax({	//Ajax通信でサーバにデータを送る
+            url: USER_IMAGE_UPLOADER,	//画像アップローダーのURLを指定する	
+            type: 'post',				//HTTP通信のPOSTメソッドを使う
+            async:false,				//同期通信
+            data: fd,					//フォームデータを送信する
+            dataType: 'xml',			//XMLデータを返してもらう
+            //以下2点、よくわかっていません
+            contentType: false,
+            processData: false,
+            //通信成功時の処理
+            success: function(xml){
+            	thisElem.saveImgIntoDB(xml);	//アップロードした画像を保存する
+            	thisElem.setNewPhoto($(xml).find('src').text());	//アップロードした画像を基に新たな記事を作る
+            },
+            //通信失敗時の処理
+            error: function(xhr, status, error){
+            	
+            }
+        });
+	}
+	
+	
+	/*
+	 * 関数名:saveImgIntoDB
+	 * 引数 	:XMLElement xml:画像のデータ一式が入ったxml
+	 * 戻り値:なし
+	 * 概要  :保存した画像をDBにも保存する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.saveImgIntoDB = function(xml){
+		//アップロード画像の情報をDBに入れて送るための連想配列を作る
+		var sendReplaceArray = {};
+		//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
+		sendReplaceArray['photo_title'] = $('filename', xml).text();
+		//会員番号を更新情報のクエリに入れる
+		sendReplaceArray['user_key'] = this.getUserId();
+		//画像情報をDBに新規登録する
+		this.setDBdata(this.json.insertMyGalleryPhoto, sendReplaceArray, EMPTY_STRING);
+	}
+
+	/*
+	 * 関数名:setNewPhoto
+	 * 引数 	:String imgPath:画像パス
+	 * 戻り値:なし
+	 * 概要  :アップロードした画像を基にギャラリー記事を新規作成する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.setNewPhoto = function(imgPath){
+		//createTagで新たな写真を作成する。
+		this.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		//新たな記事を追加する。
+		$('.myGalleryTable tbody').append(this.createNewPhoto(imgPath));
+	}
+	
+	
 	/*
 	 * 関数名:function uploadImage(uploader, parent, srcReturn)
 	 * 引数  :element uploader:input type="file"の要素
@@ -2372,6 +2448,9 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
+	 * 修正者:T.Masuda
+	 * 修正日:2015.08.12
+	 * 内容	:チェックボックスを追加する処理を追加しました。
 	 */
 	this.createMyGalleryImages = function(){
 		//各記事を処理する
@@ -2388,6 +2467,9 @@ function createLittleContents(){
 								)
 					);
 		});
+		
+		//最後にまとめてチェックボックスを追加する
+		$('.myGalleryTable tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
 	}
 	
 	/*
@@ -3789,3 +3871,19 @@ this.createErrorText = function(errors, jpNames){
 	return retText;	//作成したメッセージを返す。
 }
 
+function toBlob(base64) {
+    var bin = atob(base64.replace(/^.*,/, ''));
+    var buffer = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) {
+        buffer[i] = bin.charCodeAt(i);
+    }
+    // Blobを作成
+    try{
+        var blob = new Blob([buffer.buffer], {
+            type: 'image/png'
+        });
+    }catch (e){
+        return false;
+    }
+    return blob;
+}
