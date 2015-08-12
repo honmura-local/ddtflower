@@ -27,6 +27,18 @@ function checkIdentifier(fileName){
 	return retBoo;	//判定結果を返す。
 }
 
+/*
+ * 関数名:clickButtonToFile
+ * 引数  :String parentClass:ボタンの親の要素のクラス名
+ * 		:String button:ボタンのセレクタ文字列
+ * 		:String uploader:ファイルアップロードを行う要素
+ * 		:Function callBacktton:コールバック関数
+ * 		:? arg1~arg3:任意の引数
+ * 戻り値:boolean
+ * 概要  :ボタンにクリックイベントを登録し、ファイルエクスプローラでファイルを選択するようにする。
+ * 作成日:2015.04.18
+ * 作成者:T.M
+ */
 function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, arg3){
 	var $parent = '';	//ボタンの親要素を格納する変数を宣言する。
 	

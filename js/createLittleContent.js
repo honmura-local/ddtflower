@@ -2099,6 +2099,9 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.27
+	 * 変更者:T.Masuda
+	 * 変更者:2015.08.12
+	 * 内容	:createLittleContentsクラスの関数として対応しました
 	 */
 	this.deleteBlogArticle = function(deleteQueryKey, deleteArticleNumberArray) {
 		//記事を削除する個数をカウントし、ループさせる回数として使う
@@ -2106,11 +2109,11 @@ function createLittleContents(){
 		//ループで記事削除処理を行う
 		for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
 			//削除するid番号を取得して削除するレコードを識別する
-			var deleteRowId = this.deleteArticleNumberArray[roopStartCount];
+			var deleteRowId = deleteArticleNumberArray[roopStartCount];
 			//削除クエリを実行するために削除対象記事の連想配列を作る
 			var sendReplaceArray = {id:{value:deleteRowId}};
 			//記事を削除しDBを更新する
-			 this.setDBdata(json[deleteQueryKey], sendReplaceArray, '');
+			 this.setDBdata(this.json[deleteQueryKey], sendReplaceArray, '');
 		}
 	}
 	
@@ -2442,60 +2445,6 @@ function createLittleContents(){
 			//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
 			$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
 		});
-	}
-
-	/*
-	 * 関数名:createErrorText
-	 * 引数  :jQuery errors: エラーがあった要素。
-	 * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
-	 * 戻り値:String:エラーメッセージの文字列。
-	 * 概要  :エラーメッセージを作成する。
-	 * 作成日:2015.04.15
-	 * 作成者:T.Masuda
-	 */
-	this.createErrorText = function(errors, jpNames){
-		//返却する文字列を格納する変数を用意する。
-		var retText = "";
-		//エラーメッセージの数を取得する。
-		var errorLength = errors.length;
-		//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
-		var errorMessages = [errors[0].message];
-
-		//エラーメッセージの数を取得する。
-		var messageLength;
-		
-		//エラーメッセージを取得する。
-		for(var i = 0; i < errorLength; i++){
-			messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
-			//エラーメッセージの重複をチェックする。
-			for(var j = 0; j < messageLength; j++){
-				//エラーメッセージが重複していれば
-				if(errorMessages[j] == errors[i].message){
-					break;	//追加せずに抜ける。
-				//エラーメッセージの重複がなかったら
-				} else if(errorMessages.length >= j){
-					//エラーメッセージを配列に追加する。
-					errorMessages.push(errors[i].message);	
-				}
-			}
-		}
-		
-		//エラーメッセージを取得する。
-		for(var i = 0; i < messageLength; i++){
-			//エラー文を追加する。
-			retText += errorMessages[i] + '\n';
-			//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
-			$(errors).filter(function(){
-				return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
-			}).each(function(){	//each関数で対象を走査する。
-				//retTextに名前を箇条書きする。
-				retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
-			});
-			//項目ごとに改行する。
-			retText +='\n';
-		}
-		
-		return retText;	//作成したメッセージを返す。
 	}
 
 	/*
@@ -3785,3 +3734,58 @@ this.allCheckbox = function(checkboxTarget, allCheckTarget) {
 		};
 	});
 }
+
+/*
+ * 関数名:createErrorText
+ * 引数  :jQuery errors: エラーがあった要素。
+ * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
+ * 戻り値:String:エラーメッセージの文字列。
+ * 概要  :エラーメッセージを作成する。
+ * 作成日:2015.04.15
+ * 作成者:T.Masuda
+ */
+this.createErrorText = function(errors, jpNames){
+	//返却する文字列を格納する変数を用意する。
+	var retText = "";
+	//エラーメッセージの数を取得する。
+	var errorLength = errors.length;
+	//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
+	var errorMessages = [errors[0].message];
+
+	//エラーメッセージの数を取得する。
+	var messageLength;
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < errorLength; i++){
+		messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
+		//エラーメッセージの重複をチェックする。
+		for(var j = 0; j < messageLength; j++){
+			//エラーメッセージが重複していれば
+			if(errorMessages[j] == errors[i].message){
+				break;	//追加せずに抜ける。
+			//エラーメッセージの重複がなかったら
+			} else if(errorMessages.length >= j){
+				//エラーメッセージを配列に追加する。
+				errorMessages.push(errors[i].message);	
+			}
+		}
+	}
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < messageLength; i++){
+		//エラー文を追加する。
+		retText += errorMessages[i] + '\n';
+		//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
+		$(errors).filter(function(){
+			return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
+		}).each(function(){	//each関数で対象を走査する。
+			//retTextに名前を箇条書きする。
+			retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
+		});
+		//項目ごとに改行する。
+		retText +='\n';
+	}
+	
+	return retText;	//作成したメッセージを返す。
+}
+

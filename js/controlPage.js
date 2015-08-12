@@ -315,9 +315,10 @@ function afterSubmitForm(form, event){
 		//submitイベントをキャンセルする。
 		event.preventDefault();
 	}
-	
+	//@mod 2015.0812 T.Masuda 一時的にMyブログ記事編集ページ用にします。
 	//submitボタンにconfirm属性が指定してありかつ、trueであれば
 	if($(('input:submit[confirm="true"]'), $this).length){
+		//フォームのvalue属性にmessageがあれば取得する
 		var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
 		
 		//マイブログ記事更新(仮) 要調整
@@ -334,23 +335,6 @@ function afterSubmitForm(form, event){
 		postForm($this);
 	}
 }
-
-/*
- * 関数名:submitArticle
- * 引数   :なし
- * 戻り値 :なし
- * 概要   :記事を投稿する
- * 作成日 :2015.08.12
- * 作成者 :T.M
- */
-function submitArticle(){
-	var dialogClass = $(this)[0].instance;	//ダイアログのクラスインスタンスを取得する
-	var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
-	postForm(data.form);					//フォームを送信する
-	alert(SEND_TO_SERVER_MESSAGE);			//メッセージを出す
-}
-
-
 
 /*
  * 関数名:function postForm(form)
@@ -405,15 +389,15 @@ function postForm(form){
 					//送信するデータに会員番号を加え、DBに更新するデータが誰のデータなのかを明確にする
 					sendData['user_key'] = creator.json.accountHeader.user_key.value;;
 					//データ更新クエリのidに値が入っていれば記事更新のクエリを使う
-					if (creator.json.updateMyBlog.id.value != "") {
+					if (creator.json.updateMyBlog.id.value != EMPTY_STRING) {
 						//ブログデータを更新しデータをDBにセットする
-						setDBdata(creator.json.updateMyBlog, sendData, '');
+						creator.setDBdata(creator.json.updateMyBlog, sendData, EMPTY_STRING);
 						//画面を更新せずに記事の新規作成ができるように判定に使っているjsonを空白で初期化する
-						creator.json.updateMyBlog.id.value = "";
+						creator.json.updateMyBlog.id.value = EMPTY_STRING;
 					//データ更新クエリのidに値が入っていなければ新規記事作成クエリを使う
 					} else {
 						//ブログデータを新規作成しデータをDBにセットする
-						setDBdata(creator.json.insertMyBlog, sendData, '');
+						creator.setDBdata(creator.json.insertMyBlog, sendData, EMPTY_STRING);
 					}
 				
 				}

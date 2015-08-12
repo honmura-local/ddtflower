@@ -487,7 +487,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.removeDialogCloseBox = function(){
-		$(UI_DIALOG_CLOSEBOX, this.formDom.parent()).remove();
+		$(UI_DIALOG_CLOSEBOX + SELECTOR_LAST).remove();
 	}
 	
 	/* 関数名:removeDialogButtons
@@ -1042,6 +1042,8 @@ var SimpleConfirmDialog = function(yesFunc, message) {
 	};
 };
 
+//管理者メール送信確認ダイアログのコールバック関数。
+
 /* 関数名:doSendMail
  * 概要　:メールを送信する
  * 引数　:なし
@@ -1050,7 +1052,8 @@ var SimpleConfirmDialog = function(yesFunc, message) {
  * 作成者　:T.Masuda
  */
 function doSendMail(){
-	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
 
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
@@ -1071,9 +1074,13 @@ function doSendMail(){
  * 返却値 :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.06
+ * 修正者:T.Yamamoto
+ * 修正日:2015.08.12
+ * 内容　:現時点でのdialogExクラスへの対応をしました
  */
 function announceInsert(){
-	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
 
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
@@ -1097,5 +1104,26 @@ function announceInsert(){
 		//送信完了と共に入力ダイアログを消す
 		data.dialog.formDom.dialog(CLOSE);
 		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+	}
+}
+
+/*
+ * 関数名:submitArticle
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :記事を投稿する
+ * 作成日 :2015.08.12
+ * 作成者 :T.M
+ */
+function submitArticle(){
+	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
+	var dialogClass = this.instance !== void(0)? this.instance : this;
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
+		var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
+		postForm(data.form);								//フォームを送信する
+		//alert(SEND_TO_SERVER_MESSAGE);					//メッセージを出す
 	}
 }
