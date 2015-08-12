@@ -455,3 +455,44 @@ dialogExOption[CONFIRM_DIALOG] = {
 		}
 }
 
+var dialogExData = {};
+//会員ページTOP、予約確認ダイアログ用設定
+dialogExData = {
+		argumentObj:{
+			config:{
+				buttons:[],
+				// 幅を設定する。
+				width			: STR_AUTO,
+				// ダイアログを生成と同時に開く。
+				autoOpen		: true,
+				// Escキーを押してもダイアログが閉じないようにする。
+				closeOnEscape	: false,
+				//モーダル化する
+				modal:true,
+				//リサイズ不可にする
+				resizable:false,
+				//画面上部にダイアログを表示する
+				position :{my:'center top',at:'center top', of:window}
+			},
+			data:{
+			}
+		},
+		//アウトプット用データを格納するオブジェクト
+		returnObj:{
+			//ダイアログの状態を表すオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+			},
+			//関数オブジェクト
+			funcObj:{
+				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
+				        function(){	//「いいえ」ボタン
+				        	//いいえ」ボタンの処理内容
+				        },
+				        function(){	//「はい」ボタン
+				        	//「はい」ボタンの処理内容
+				        }
+				]
+			}
+		}
+};

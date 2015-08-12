@@ -1,37 +1,35 @@
-<div class="memberReservedConfirmDialogContent">
+<div class="dialog">
 <script>
 	//@mod 2015.0809 T.Masuda 改修したdialogExクラスに対応しました。このHTMLファイルは全域に渡って変わっています。
 	//ダイアログクラスのインスタンスを取得する
-	var dialogClass = $('.memberReservedConfirmDialogContent')[0].instance;
+	var dialogClass = $('.dialog:last')[0].instance;
 	//イベントをリセットする
-	$('.memberReservedConfirmDialogContent').off();
+	$('.dialog:last').off();
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var memberReservedConfirmtCreator = new createLittleContents();
+	// var memberReservedConfirmtCreator = new createLittleContents();
 	//ダイアログのクラスインスタンスにcreateLittleContentsクラスのインスタンスを渡し、
 	//ダイアログを閉じるイベントの中で活用する
-	dialogClass.creator = memberReservedConfirmtCreator;
-	
+	dialogClass.creator = dialogClass.dialogCreator;
 	//会員、予約確認ダイアログのjsonを取得する
-	memberReservedConfirmtCreator.getJsonFile('source/memberPage.json');
+	dialogClass.dialogCreator.getJsonFile('source/memberPage.json');
 	//会員、予約確認ダイアログのテンプレートを取得する
-	memberReservedConfirmtCreator.getDomFile('template/memberPage.html');
+	dialogClass.dialogCreator.getDomFile('template/memberPage.html');
 	//予約確認ダイアログに必要な値を受け取った値で入れる
-	insertConfirmReserveJsonDialogValueEx('memberReservedConfirmContent', 'memberReservedConfirmDialogContent', memberReservedConfirmtCreator);
-
+	insertConfirmReserveJsonDialogValueEx('memberReservedConfirmContent', 'dialog', dialogClass.dialogCreator);
+	// console.log(memberReservedConfirmtCreator.json);
 	//アコーディオンの中身をDBから取り出す
-	memberReservedConfirmtCreator.getJsonFile(URL_GET_JSON_STRING_PHP, memberReservedConfirmtCreator.json.memberReservedConfirmContent, 'memberReservedConfirmContent');
+	dialogClass.dialogCreator.getJsonFile(URL_GET_JSON_STRING_PHP, dialogClass.dialogCreator.json.memberReservedConfirmContent, 'memberReservedConfirmContent');
 	//ダイアログの中身のコンテンツを作る
-	memberReservedConfirmtCreator.outputTag('memberReservedConfirmContent', 'memberReservedConfirmContent', '.memberReservedConfirmDialogContent');
+	dialogClass.dialogCreator.outputTag('memberReservedConfirmContent', 'memberReservedConfirmContent', '.dialog:last');
 
 	// ボタンタグをjqueryuiの見た目にする
 	$('button').button();
 	//送信ボタンがクリックされたときにDBに予約情報を登録する
-	$('.memberReservedConfirmDialogContent').on(CLICK, 'button', function() {
+	$('.dialog').on(CLICK, 'button', function() {
 		//押されたボタンのvalueを取得してダイアログの状態オブジェクトにセットする
 		dialogClass.setPushedButtonState($(this).attr(VALUE));	
 		//ダイアログを閉じる
 		dialogClass.destroy(CLOSE);
 	});
-
 </script>
 </div>

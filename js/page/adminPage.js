@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:adminPage.js
  * 概要  :管理者ページ用のjsファイル
  * 作成者:T.Yamamoto
@@ -58,7 +58,7 @@ function createAdminPermitLessonContent () {
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
 	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	creator.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 	//受講承認の備品名セレクトボックスにvalueを入れる
 	creator.setSelectboxValue('.contentSelect');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
@@ -245,9 +245,11 @@ function createAdminMailMagaAnnounceContent() {
 	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
 	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
-		var targetNumber = $('.targetMailMagazine').index(this);
+		var rowNumber = $('.targetMailMagazine').index(this);
+		var targetNumber = $('.targetMailMagazine').eq(rowNumber).children('.mailMagaId').text();
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = creator.json.mailMagaTable.table[targetNumber];
+		var targetInf = creator.json.mailMagaTable.table[rowNumber];
+		console.log(targetInf);
 		//取得した連想配列をテキストボックスにセットする
 		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
 	});
@@ -718,7 +720,7 @@ function adminMessageCreate(buttonSelector, sendType) {
 		//会員一覧から送信するメールの対象となる人が1人以上選択されているなら送信ダイアログを開く
 		if(selected <= 0) {
 			//アラートメッセージをだしてメール送信対象が1人以上選択することを警告する
-			alert('1人以上選択してください')
+			alert('1人以上選択してください');
 		} else {
 			//メールに送信するためのデータ配列を作る
 			var sendToPersonList = [],	//送信先宛先人一覧
@@ -728,7 +730,7 @@ function adminMessageCreate(buttonSelector, sendType) {
 			$('.selectRecord').each(function() {
 				textPustArray(this, sendToPersonList, '.user_name');
 				textPustArray(this, sendToList, '.mail_address');
-				textPustArray(this, userNumberList, '.mail_address');
+				textPustArray(this, userNumberList, '.id');
 			});
 			//送信するデータを連想配列に入れる
 			var sendMailData = {
@@ -743,9 +745,10 @@ function adminMessageCreate(buttonSelector, sendType) {
 			//送信するデータをオブジェクトに統合する
 			$.extend(true, dialogObj.argumentObj.data, sendMailData);
 			//メール送信ダイアログを作る
-			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
-			mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録
-			mailSendDialog.run();	//主処理を走らせる
+			createDialog('dialog/dialogMail.html', dialogObj, dialogDestroy);
+			// var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+			// mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録
+			// mailSendDialog.run();	//主処理を走らせる
 		}
 	});
 }
@@ -776,8 +779,6 @@ var announceInsert = function() {
 		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
 	}
 }
-
-
 
 
 

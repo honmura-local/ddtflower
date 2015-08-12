@@ -1,45 +1,50 @@
-﻿<div class="reserveLessonListContent">
+﻿
+<div class="dialog">
 	<script>
-	ERROR_LESSONLIST = '予約可能な授業がありません';
+	ERROR_LESSONLIST 	= '予約可能な授業がありません';
 	//イベントが重複して起こらないようにイベントを先にオフにする
-	$('.reserveLessonListContent').off();
+	$(DOT + 'dialog:last').off();
+	var dialogClass = $(DOT + 'dialog')[0].instance;	//ダイアログのクラスインスタンスを取得する
+	var data = dialogClass.getArgumentDataObject();			//dataオブジェクトを取得する
 	//ダイアログのコンテンツを生成するためにcreateTagのインスタンスを生成する
-	var reserveLessonListCreator = new createLittleContents();
+	// var dialogClass.dialogCreator = new createLittleContents();
 	//キャンセル時に必要なクエリがあるため、会員ページのJSONを取得する
-	reserveLessonListCreator.getJsonFile('source/memberPage.json');
+	dialogClass.dialogCreator.getJsonFile('source/memberPage.json');
 	//会員、予約授業一覧のjsonを取得する
-	reserveLessonListCreator.getJsonFile('source/eachDayLesson.json');
+	dialogClass.dialogCreator.getJsonFile('source/eachDayLesson.json');
 	//会員、予約授業一覧のテンプレートを取得する
-	reserveLessonListCreator.getDomFile('template/eachDayLesson.html');
+	dialogClass.dialogCreator.getDomFile('template/eachDayLesson.html');
 	//ダイアログの中身の外枠を作る
-	reserveLessonListCreator.outputTag('memberInfomation', 'memberInfomation', '.reserveLessonListContent');
+	dialogClass.dialogCreator.outputTag('memberInfomation', 'memberInfomation', '.dialog:last');
 	
-	var dialogClass = $('.reserveLessonListContent')[0].instance;	//ダイアログのクラスインスタンスを取得する
-	var data = dialogClass.getArgumentDataObject();						//dataオブジェクトを取得する
 	
 	//dbに接続する前に日付をクエリの置換連想配列に挿入する
-	reserveLessonListCreator.json.lessonTable.lessonDate.value = data.lessonDate;
+	dialogClass.dialogCreator.json.lessonTable.lessonDate.value = data.lessonDate;
 	//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
-	reserveLessonListCreator.json.lessonTable.user_key.value = data.userId;
+	dialogClass.dialogCreator.json.lessonTable.user_key.value = data.userId;
 	//予約可能授業一覧テーブルの外側の領域を作る
-	reserveLessonListCreator.outputTag('lessonTableOutsideArea', 'lessonTableOutsideArea', '.memberInfomation')
+	dialogClass.dialogCreator.outputTag('lessonTableOutsideArea', 'lessonTableOutsideArea', '.memberInfomation')
 	//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-	reserveLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, reserveLessonListCreator.json['lessonTable'], 'lessonTable');
+	dialogClass.dialogCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, dialogClass.dialogCreator.json['lessonTable'], 'lessonTable');
 
 	//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
-	if (reserveLessonListCreator.json['lessonTable'].table.length == 0) {
+	if (dialogClass.dialogCreator.json['lessonTable'].table.length == 0) {
 		//授業の予約データがないことをダイアログに表示する
 		dialogClass.setAlertContents(ERROR_LESSONLIST);
 	//予約する授業のデータがある時は予約できる授業の一覧を表示する
 	} else {
 		//予約できる授業のデータ一覧テーブルを作る
-		reserveLessonListCreator.outputTagTable('lessonTable', 'lessonTable', '.lessonTableOutsideArea');
+		dialogClass.dialogCreator.outputTagTable('lessonTable', 'lessonTable', '.lessonTableOutsideArea');
 		//テーブルの値をクライアント側で編集して画面に表示する
-		tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD);
+		tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, dialogClass.dialogCreator, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
-		reserveLessonListCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+		dialogClass.dialogCreator.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
 		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
-		reserveLessonListCreator.openMemberReservedConfirmDialog();
+		dialogClass.dialogCreator.openMemberReservedConfirmDialog();
+
+		// $(DOT + 'dialog:last')[0].instance.argumentObj.config.buttons.push(abc);
+		// $('.dialog:last').dialog('option', 'buttons').push(aaa);
+		
 	}
 </script>
 </div>

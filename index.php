@@ -103,6 +103,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/jquery.finger.js"></script>
 
 <!-- 各ページ共通の関数ファイルを読み込む -->
+<script type="text/javascript" src="js/commonJs.js"></script>
+<!-- 各ページ共通の関数ファイルを読み込む -->
 <script src="js/page/commonPage.js"></script>
 <!-- 画面操作の処理を記述したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/controlPage.js"></script>

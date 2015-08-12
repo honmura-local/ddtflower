@@ -1042,7 +1042,8 @@
         "config": {
             "columns": {
                 "id": {
-                    "columnName":"No."
+                    "columnName":"No.",
+                    "className":"mailMagaId"
                 },
                 "school_key":{
                     "columnName":"店舗名",

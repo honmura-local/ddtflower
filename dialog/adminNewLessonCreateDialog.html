@@ -1,24 +1,25 @@
-﻿<div class="adminNewLessonCreateContent">
+﻿<div class="dialog">
 <script>
 	//ダイアログの要素をjQueryオブジェクトとして取得する
-	var $dialog = $('.adminNewLessonCreateContent');
+	var $dialog = $('.dialog:last');
+	dialogClass = $dialog[0].instance;
 	//クリックなどのイベントをリセットする
 	$dialog.off();
 	//ダイアログのコンテンツを生成するためにcreateLittleContentsのインスタンスを生成する
-	var adminNewLessonCreator = new createLittleContents();
+	// var dialogClass.dialogCreator = new createLittleContents();
 	//ダイアログの暮らすインスタンスにcreateLittleContentsクラスへの参照を持たせる
-	$dialog[0].instance.creator = adminNewLessonCreator;
+	// $dialog[0].instance.creator = dialogClass.dialogCreator;
 	//管理者授業詳細一覧のjsonを取得する
-	adminNewLessonCreator.getJsonFile('source/adminCommon.json');
+	dialogClass.dialogCreator.getJsonFile('source/adminCommon.json');
 	//管理者授業詳細のテンプレートを取得する
-	adminNewLessonCreator.getDomFile('template/adminCommon.html');
+	dialogClass.dialogCreator.getDomFile('template/adminCommon.html');
 
 	//受け取った値を	変数に入れて扱いやすくする
 	var receivedObject = $dialog[0].instance.argumentObj;
 	//授業データ入力領域を作る
-	adminNewLessonCreator.outputTag('newLessonData', 'newLessonData', '.adminNewLessonCreateContent');
+	dialogClass.dialogCreator.outputTag('newLessonData', 'newLessonData', '.dialog:last');
 	//ボタン領域を作る
-	adminNewLessonCreator.outputTag('newLessonCreateButton', 'addButton', '.adminNewLessonCreateContent');
+	dialogClass.dialogCreator.outputTag('newLessonCreateButton', 'addButton', '.dialog:last');
 	//ボタンをjqueryuiのものにしてレイアウトを整える
 	$('button').button();
 	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する

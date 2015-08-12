@@ -1474,10 +1474,10 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
+		afterReloadFunc:'tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, dialogClass.dialogCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
-	}
+	};
 
 	/*
 	 * 関数名 :addQueryExtractionCondition
@@ -2628,10 +2628,10 @@ function createLittleContents(){
 	 */
 	this.openMemberReservedConfirmDialog = function() {
 		var thisElem = this;							//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
-		var $dialog = $('.reserveLessonListContent');	//ダイアログのDOMを取得しておく
+		var $dialog = $(DOT + DIALOG);	//ダイアログのDOMを取得しておく
 		//予約一覧の行を選択して、予約確認ダイアログを表示する処理
 		$dialog.on(CLICK, '.targetLessonTable', function(){
-			
+
 			//クリックした行の番号とデータを取得する
 			var recordData = getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem);
 			//残席の記号を取得する
@@ -2641,43 +2641,42 @@ function createLittleContents(){
 			if (thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST] && restMarkNow != '✕') {
 				//予約一覧ダイアログを開く際にセットされたデータを取得する
 				var prevDialogData = $dialog[0].instance.getArgumentDataObject();
-				//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
-				recordData.data[USER_ID] = thisElem.getUserId();
 				//日付を日本語表示にしてダイアログのタイトルにするために保存する
 				var titleDate = getDialogTitleDate(recordData.data.lesson_date)
-				var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
+				// var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
 				//予約、キャンセルのどちらのダイアログでも使うため、
 				//createLittleContentsクラスのインスタンスとダイアログのデータを行データに入れておく
-				recordData.data = $.extend(true, {}, recordData.data, prevDialogData, {reservedListCreator:thisElem});
+				dialogExData.argumentObj.data = $.extend(true, {}, recordData.data, prevDialogData, {reservedListCreator:thisElem});
 				
 				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
 				if(thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
 					//ダイアログのタイトルをセットして予約日を分かりやすくする
-					dialogOption.argumentObj.config[TITLE] = titleDate;
+					dialogExData.argumentObj.config[TITLE] = titleDate;
 					
-					//インプット用のデータを作る
-					//recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
-					var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
-					sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
-							{},								//新たにオブジェクトを作り、そこにまとめる
-							dialogOption.argumentObj.data, 	//argumentObjのdata部分
-							recordData.data, 				//選択された行データ
-							{number: recordData.number}, 	//行の番号
-							prevDialogData 				//予約一覧ダイアログのargumentObjのデータ
-						);
+					// //インプット用のデータを作る
+					// //recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
+					// var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
+					// sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
+					// 		{},								//新たにオブジェクトを作り、そこにまとめる
+					// 		dialogOption.argumentObj.data, 	//argumentObjのdata部分
+					// 		recordData.data, 				//選択された行データ
+					// 		{number: recordData.number}, 	//行の番号
+					// 		prevDialogData 				//予約一覧ダイアログのargumentObjのデータ
+					// 	);
 					
 					//予約確認ダイアログを作る
-					var memberReservedConfirmDialog = new dialogEx(
-							DIALOG_MEMBER_RESERVED_CONFIRM, 					//予約確認ダイアログのHTMLファイルパス	
-							sendObj, 											//インプット用データオブジェクト
-							dialogOption[RETURN_OBJ]);							//アウトプット用データオブジェクト
-					//閉じるときのイベントを登録
-					memberReservedConfirmDialog.setCallbackClose(memberReservedConfirmDialogClose);	
-					memberReservedConfirmDialog.run();							//主処理を走らせる。
+					createDialog(DIALOG_MEMBER_RESERVED_CONFIRM, dialogExData, memberReservedConfirmDialogClose);
+					// var memberReservedConfirmDialog = new dialogEx(
+					// 		DIALOG_MEMBER_RESERVED_CONFIRM, 					//予約確認ダイアログのHTMLファイルパス	
+					// 		sendObj, 											//インプット用データオブジェクト
+					// 		dialogOption[RETURN_OBJ]);							//アウトプット用データオブジェクト
+					// //閉じるときのイベントを登録
+					// memberReservedConfirmDialog.setCallbackClose(memberReservedConfirmDialogClose);	
+					// memberReservedConfirmDialog.run();							//主処理を走らせる。
 				//すでに予約しているのであればキャンセルダイアログを開く
 				} else {
 					//キャンセルダイアログを開く
-					cancelDialogOpen(recordData.data, titleDate);
+					cancelDialogOpen(dialogExData, titleDate);
 				}
 			}
 		});
@@ -2698,44 +2697,39 @@ function createLittleContents(){
 		//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
 		//予約決定ダイアログを表示する処理
 		//※このあたりはセレクタ関連に無駄が多かったです。
-		$('.adminLessonListContent').on(STR_CLICK, STR_TR, function(){
+		$('.dialog').on(STR_CLICK, STR_TR, function(){
 			//インプット用データオブジェクトを取得する
-			var argObj = dialogExOption[LESSON_DETAIL_DIALOG].argumentObj;
+			// var argObj = dialogExOption[LESSON_DETAIL_DIALOG].argumentObj;
 			
 			//クリックしたセルの行番号を取得する
-			var rowNum = $('.adminLessonListContent ' + STR_TR).index(this) - 1;
+			var rowNum = $('.dialog ' + STR_TR).index(this) - 1;
 			
 			//次のダイアログに渡すデータを変数に入れる
 			var sendObject = thisElem.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
 			
-			//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-			var timeSchedule = $(STR_TD, this).eq(0).text();
 			//時間割を次のダイアログに入れるためのデータに入れる
-			sendObject['time_schedule'] = timeSchedule;
-			
-			//日付のハイフンを置換前のスラッシュ区切りにする
-			var date = sendObject.lesson_date.replace(/-/g,"/");
-			// 日付を日本語表示にする
-			var titleDate = changeJapaneseDate(date);
+			sendObject['time_schedule'] = $(STR_TD, this).eq(0).text();
 			//ダイアログ用オブジェクトのコピーを用意して使う。
-			var dialogObj = $.extend(true, {}, dialogExOption[LESSON_DETAIL_DIALOG]);
+			// var dialogObj = $.extend(true, {}, dialogExOption[LESSON_DETAIL_DIALOG]);
+			var dialogObj = $.extend(true, {}, dialogExData);
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
-			dialogObj.argumentObj.config[TITLE] = titleDate;
+			dialogObj.argumentObj.config[TITLE] = getDialogTitleDate(sendObject.lesson_date);
 			//インプット用データオブジェクトに授業データを追加する
 			$.extend(true, dialogObj.argumentObj.data, sendObject, {creator:thisElem});
 			
 			//授業詳細ダイアログを作る
-			var lessonDetailDialog = new dialogEx(	
-					LESSON_DETAIL_DIALOG_PATH, 							//管理者 授業詳細ダイアログHTMLファイルのURL
-					dialogObj.argumentObj,	//インプット用データオブジェクト
-					dialogObj.returnObj		//アウトプット用データオブジェクト
-				);
+			createDialog(LESSON_DETAIL_DIALOG_PATH, dialogObj, onCloseLessonDetailDialog);
+			// var lessonDetailDialog = new dialogEx(	
+			// 		LESSON_DETAIL_DIALOG_PATH, 							//管理者 授業詳細ダイアログHTMLファイルのURL
+			// 		dialogObj.argumentObj,	//インプット用データオブジェクト
+			// 		dialogObj.returnObj		//アウトプット用データオブジェクト
+			// 	);
 			
-			//授業詳細で授業内容が更新された場合は、当該ダイアログを閉じたときに前のダイアログを閉じるようにする
-			lessonDetailDialog.setCallbackClose(onCloseLessonDetailDialog);
+			// //授業詳細で授業内容が更新された場合は、当該ダイアログを閉じたときに前のダイアログを閉じるようにする
+			// lessonDetailDialog.setCallbackClose(onCloseLessonDetailDialog);
 
-			//ダイアログを開くときのテーブルの値を編集して表示する
-			lessonDetailDialog.run();	//主処理を走らせる。
+			// //ダイアログを開くときのテーブルの値を編集して表示する
+			// lessonDetailDialog.run();	//主処理を走らせる。
 		});
 	}
 	
@@ -2752,9 +2746,9 @@ function createLittleContents(){
 	 this.openAdminNewLessonCreateDialog = function() {
 		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
 		//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
-		$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
+		$('.dialog').on(STR_CLICK, '.lessonAddButton', function(){
 			//ダイアログのクラスインスタンスを取得する
-			var dialogClass = $('.adminLessonListContent')[0].instance;
+			var dialogClass = $('.dialog')[0].instance;
 			var argObj = dialogClass.getArgumentObject();	//argumentObjを取得する
 			
 			//新規授業追加ダイアログに渡す変数を宣言しておく
@@ -2764,19 +2758,25 @@ function createLittleContents(){
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
 			sendObject['tableData'] = thisElem.json.adminLessonDetailTable.table;
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
-			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
+			dialogExData.argumentObj.config[TITLE] = argObj.config[TITLE];
+			// dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
+
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
-			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
+			$.extend(true, dialogExData.argumentObj.data, sendObject, {creator:thisElem});
+
+			// $.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
+
 			
 			//新規授業追加ダイアログを作る
-			var newLessonCreateDialog = new dialogEx(
-					ADMIN_NEWLESSON_CREATE_DIALOG_PATH, 
-					dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
-					dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
-			//ダイアログを開くときのテーブルの値を編集して表示する
-			//memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
-			newLessonCreateDialog.setCallbackClose(newLessonEntry);	//閉じるときのイベントを登録
-			newLessonCreateDialog.run();	//主処理を走らせる。
+			createDialog(ADMIN_NEWLESSON_CREATE_DIALOG_PATH, dialogExData, newLessonEntry);
+			// var newLessonCreateDialog = new dialogEx(
+			// 		ADMIN_NEWLESSON_CREATE_DIALOG_PATH, 
+			// 		dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
+			// 		dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
+			// //ダイアログを開くときのテーブルの値を編集して表示する
+			// //memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
+			// newLessonCreateDialog.setCallbackClose(newLessonEntry);	//閉じるときのイベントを登録
+			// newLessonCreateDialog.run();	//主処理を走らせる。
 		});
 	}
 	
@@ -2886,25 +2886,16 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
-			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
-			var dateObject = lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
+			var dateObject = lessonListDialogSendObject(dateText, dialogExData);
 			//会員番号をセットしてどのユーザが予約するのかを識別する
-			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
-			//ページ内にある会員の予約状況のテーブルをダイアログから更新するため、
-			//dialogDataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
-			dialogDataObject[CREATOR] = instance.creator;
-			
+			dateObject = this.instance.creator.addUserIdToObject(dateObject);
 			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
-			$.extend(true, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj.data, dialogDataObject);
+			$.extend(true, dialogExData.argumentObj.data, dateObject);
 			
+			// createDialog('dialog/dialogTable.html', dialogExData, disappear);
 			//予約授業一覧ダイアログを作る
-			var reservedLessonListDialog = new dialogEx(
-					DIALOG_RESERVE_LESSON_LIST, 
-					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj, 
-					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].returnObj);
-			reservedLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
-			reservedLessonListDialog.run();	//主処理を走らせる。
+			createDialog(DIALOG_RESERVE_LESSON_LIST, dialogExData, disappear);
 		}
 	}
 
@@ -2914,18 +2905,14 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	onSelect: function(dateText, inst){
 		//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 		//ダイアログのタイトルの日付を設定する
-		var titleDate = changeJapaneseDate(dateText);
-		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
-		
-		//argumentObjのインプットデータオブジェクトに授業日付をセットする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.data = {lessonDate:dateText};
-		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.config[TITLE] = titleDate;
-		
+		var dateObject = lessonListDialogSendObject(dateText, dialogExData);
+		//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
+		$.extend(true, dialogExData.argumentObj.data, dateObject);
 		//予約授業一覧ダイアログを作る
-		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
-		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
-		adminLessonListDialog.run();	//主処理を走らせる。
+		createDialog(DIALOG_ADMIN_LESSON_LIST, dialogExData, disappear);
+		// var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
+		// adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
+		// adminLessonListDialog.run();	//主処理を走らせる。
 	}
 }
 
@@ -3758,28 +3745,5 @@ function cutString(cutTargetSelector, cutCount) {
 			//そのまま表示するように設定する
 			$(this).css({visibility:'visible'});
 		}
-	});
-}
-
-/*
- * 関数名:allCheckbox
- * 引数  :var checkboxTarget, var allCheckTarget
- * 戻り値:なし
- * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
- * 作成日:2015.02.28
- * 作成者:T.Yamamoto
- */
-this.allCheckbox = function(checkboxTarget, allCheckTarget) {
-	// 第一引数の要素がクリックされたときの処理
-	$(STR_BODY).on(CLICK, checkboxTarget, function() {
-		// 第一引数のチェックボックスにチェックが入った時の処理
-		if($(checkboxTarget + ':checked').val() == 'on') {
-			// 第二引数のチェックボックスにチェックする
-			$(allCheckTarget).prop('checked', true);
-		// 第一引数のチェックボックスのチェックが外れた時の処理
-		} else if ($(checkboxTarget + ':checked').val() == undefined) {
-			// 第二引数のチェックボックスのチェックを外す
-			$(allCheckTarget).prop('checked', false);
-		};
 	});
 }
