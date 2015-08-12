@@ -461,7 +461,7 @@ dialogExOption[MY_BLOG_CONFIRM_DIALOG] = {
 		}
 }
 
-//目安箱確認ダイアログ
+//会員メール/目安箱メール 送信確認ダイアログ
 dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG] = {
 		argumentObj:{
 			config:{

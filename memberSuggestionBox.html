@@ -85,18 +85,12 @@
 						
 						var sendData = getInputData('suggestionArea');
 						//クエリに送信するデータに会員番号を加える
-						sendData['user_key'] = creator.json.accountHeader.user_key.value;
-							
-						//目安箱にチェックが入っていればDBの値を更新するクエリを発行する
-						if($('[name="suggestionRadio"]').val() == "0") {
-							//目安箱テーブルに新たにデータを挿入する
-							creator.setDBdata(creator.json.insertSuggestionBox, sendData, '');
-						}
-							
+						sendData['user_key'] = creator.getUserId();
+
 						//ダイアログ用オブジェクトを作る
 						var dialogObj = $.extend(true, {}, dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG]);
 						//送信するデータをオブジェクトに統合する
-						$.extend(true, dialogObj.argumentObj.data, sendData);
+						$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
 						//メール送信ダイアログを作る
 						var mailSendDialog = new dialogEx('dialog/suggestionConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
 						mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録

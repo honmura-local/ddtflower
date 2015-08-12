@@ -83,6 +83,10 @@ MY_BLOG_CONFIRM_DIALOG						= 'myBlogConfirmDialog';						//マイブログ更�
 MAIL_MAGAZINE_CONFIRM_DIALOG				= 'mailmagazineConfirmDialog';					//メルマガ送信確認ダイアログ
 DESTROY										= 'destroy';									//破棄命令の文字列
 MESSAGE_SEND_FAILED_SIMPLE_NOTICE			= 'メッセージの送信に失敗しました。時間をおいてお試しください。';	//簡易的なメッセージ送信失敗のメッセージ	
+MEMBER_MAIL									= 0;											//目安箱 会員メールを示す数値
+SUGGESTION_MAIL								= 1;											//目安箱 目安箱メールを示す数値
+SEND_MEMBERMAIL_PHP							= 'php/mailSendEntryMemberMail.php';			//目安箱 会員メール送信用のPHP
+SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';				//目安箱 目安箱メール送信用のPHP
 
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
@@ -502,28 +506,58 @@ function dialogEx(url, argumentObj, returnObj){
 	}
 	
 	/* 本村さんのメール送信関数 */
+	/* 関数名:sendMemberMail
+	 * 概要　:会員ページ 会員メール/目安箱メールを送信する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
+	 */
 	this.sendMemberMail = function() {
 		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
 		
 		//はいボタンが押されていたら
 		if(dialogClass.getPushedButtonState() == YES){
-			var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-			var resultwork = null;
+			var data = dialogClass.getArgumentDataObject();		//argumentObjのdataを取得する
+			var resultwork = null;								//
+			var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+			var sendObject = {									//送信するデータのオブジェクト
+					from:data.user_key					//送信元
+					,subject:data.suggest_title		//タイトル
+					,content:data.suggest_content	//本文
+			};
 			
-				$.ajax({
-					url:'php/mailSendEntryMemberMail.php'
-					,data:{
-							from:data.from
-							,subject:data.mailSubject
-							,content:data.mailContent
-					}
-					,dataType:"json"
-					,type:"POST"
-					//通信成功時
-					,success:function(result){
+			//メールのタイプの数値で送信先PHP、送信データの構成を変える
+			switch(parseInt(data.suggestionRadio)){
+			//通常会員メールの場合
+			case MEMBER_MAIL:break;	//初期化内容が該当するのでなにもしない
+			//目安箱メールの場合
+			case SUGGESTION_MAIL:
+					//目安箱メールならタイプの値を追加する
+					$.extend(true, sendObject, {type:data.suggest_type});
+					//目安箱メール送信用PHPにメールを処理させる
+					sendUrl = SEND_SUGGEST_PHP;
+					break;
+			default:break;
+			}
+			
+			$.ajax({					//PHPにメール用データを渡すAjax通信
+					url:sendUrl			//PHPのURLを設定する
+					,data:sendObject	//送信データのオブジェクト
+					,dataType:"json"	//JSON形式でデータをもらう
+					,type:"POST"		//POSTメソッドでHTTP通信する
+					,success:function(result){		//通信成功時
 						resultwork = result;		//通信結果から情報を取り出す
 						//送信完了と共に入力ダイアログを消す
 						alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+						//目安箱メールを送信していたら
+						if(parseInt(data.suggestionRadio) == SUGGESTION_MAIL){
+							//目安箱テーブルに新たにデータを挿入する
+							data.creator.setDBdata(data.creator.json.insertSuggestionBox, data, EMPTY_STRING);
+						}
 					}
 					//通信失敗時
 					,error:function(xhr, status, error){
@@ -532,14 +566,20 @@ function dialogEx(url, argumentObj, returnObj){
 						alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	//送信失敗のメッセージを出す
 					}
 				});
-		
-		// @TODO 結果をどうしいのかはまだ未定
-		//return resultwork
-		
 		}
 	}
 
 	/* 本村さんのメルマガ送信関数 改修中 */
+	/* 関数名:sendMailmagazine
+	 * 概要　:メルマガを送信する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
+	 */
 	this.sendMailmagazine = function() {
 		var dialogClass = $(this)[0].instance;	//クラスインスタンス取得
 		
