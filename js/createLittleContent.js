@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * ファイル名:createLittleContent.js
  * 概要  :小規模の処理の関数を定義する
  * 作成者:T.M
@@ -55,6 +55,12 @@ RESERVE_LIST_CREATOR						= 'reserveListCreator';
 NUMBER										= 'number';									//numberキーの文字列
 STRING										= 'string';									//stringの文字列
 
+//画像縮小時のデフォルトサイズ
+DEFAULT_WIDTH								= 300;										//画像の縮小サイズ 横
+DEFAULT_HEIGHT								= 300;										//画像の縮小サイズ 縦
+IMG_QUALITY									= 80;										//画像圧縮時の品質
+USER_IMAGE_UPLOADER							= 'uploadImage/imageUpload.php';			//画像アップローダーのパス
+	
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
   if (appVersion.indexOf('msie 6.') != -1) {
@@ -393,22 +399,73 @@ function createLittleContents(){
 	/*
 	 * 関数名:createNewPhoto()
 	 * 概要  :作成したMyギャラリーの新規のし写真に基本データを追加する。
-	 * 引数  :なし
+	 * 引数  :String imgPath: 画像パス
 	 * 戻り値:なし
 	 * 作成日:2015.03.27
 	 * 作成者:T.Masuda
+	 * 修正日:2015.08.12
+	 * 修正者:T.Masuda
+	 * 内容	:変更された仕様に対応しました
 	 */
-	this.createNewPhoto = function(){
-		var $new = $('.myPhoto:last');	//新規の写真を変数に入れる。
-		var cookieData = GetCookies();	//ユーザ名取得のため、クッキーのデータを連想配列で取得する。
-		
-		//ユーザ名を写真に追加する。ログインしていない状態なら、ゲスト名を入れる。
-		$('.myPhotoUser', $new).text('userName' in cookieData 
-				&& cookieData['userName'] != "" ? cookieData['userName'] : "Guest");
-		//今日の日付を取得し、写真に追加する。
-		$('.myPhotoDate', $new).text(getDateTime());
-		//公開設定を追加する。
-		$('.myPhotoPublication', $new).text('全体').attr('value', '0');
+	this.createNewPhoto = function(imgPath){
+		//新たな記事のひな形をつくる
+		//最初に枠(行)を作る
+		var newPhoto = $('<tr></tr>')
+							.addClass('myPhoto')
+							.append(
+								$('<td></td>')	//画像枠
+									.addClass('myPhotoImage')
+									.append($('<a></a>')	//画像のリンク部分
+											.attr({
+												href: imgPath,
+												rel:'gallery'
+											})
+										.append($('<span></span>')	//画像部分
+												.attr('style', 'background-image:url("' + imgPath + '")')
+										)
+									)
+							)
+							.append(	
+								$('<td></td>')	//日付
+									.addClass('myPhotoDate')
+									.text(this.getDateTime())
+							)
+							.append(
+								$('<td></td>')	//タイトル
+									.addClass('myPhotoTitle')
+									.text('新規')
+							)
+							.append(
+								$('<td></td>')	//ユーザ名
+									.addClass('myPhotoUser')
+									.text(this.json.accountHeader !== void(0) ? this.getUserName() : "Guest")
+							)
+							.append(
+								$('<td></td>')	//コメント
+									.addClass('myPhotoComment')
+									.text('一言お願いします')
+							)
+							.append(
+								$('<td></td>')	//公開設定。現状不要なので見せない
+									.addClass('myPhotoPublication')
+									.text('全体')
+									.attr('value', '0')
+									.css('display', 'none')
+							)
+							.append(
+								$('<input>')	//チェックボックス
+									.addClass('myPhotoCheck')
+									.attr('type', 'checkbox')
+							)
+							; 
+		//新規記事を作成する
+		return newPhoto;
+		//画像拡大用のタグにソースをセットする。
+		$('.myPhotoLink:last').attr('href', imgPath);
+		//画像サムネイルに使う要素の画像を設定する。
+		$('.myPhotoImage:last').css('background-image', 'url('  +  imgPath + ')');
+		$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+
 	}
 	
 	/*
@@ -706,6 +763,17 @@ function createLittleContents(){
 		});
 	}
 	
+	
+	/** 画像縮小アップロードの流れ
+	*	1. input type="file"を用意します。
+	*	2. 1の要素にchangeイベントを登録します。
+	*	3. 2のコールバック関数で1の要素から取得したFileオブジェクトをcanvasResizeにかけます。これで画像が縮小されます。
+	*	4. canvasResizeはコールバック関数の引数にbase64形式の画像パスを渡します。これをBLOBデータに変換します。
+	*	   一発でBLOBデータに変換する関数はないようなので、自分で実装します。
+	*	5. フォームデータを作ります。(new FormData())。サーバへ送信するデータをappend関数で登録します。
+	*	   append関数の引数は 1 キー 2 値 です。BLOBデータのみ3にファイル名の文字列を渡せます。
+	*	6. Ajax関数で画像保存用PHPにフォームデータを送信します。その後はそのままPHP側で保存します。
+	*/
 	/*
 	 * 関数名:function setMyGalleryChangeEvent
 	 * 引数 	:String selector:イベントをバインドする対象のセレクタ
@@ -714,97 +782,105 @@ function createLittleContents(){
 	 * 作成日:2015.04.23
 	 * 作成者:T.Masuda
 	 */
-	this.setMyGalleryChangeEvent = function (selector){
-		var $this = $(this);
+	this.setMyGalleryChangeEvent = function (selector, imgWidth, imgHeight){
+		var thisElem = this;
 		$(selector).on('change', function(event){
 			//拡張子チェックを行う。画像の拡張子でなければはじく。
-			if(!this.checkIdentifier($(this).val())){
+			if(!checkIdentifier($(this).val())){
 				//有効なファイルを選んでもらうように警告を出す。
 				alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
 				return;	//処理を終える。
 			}
 			
-			//保存先を指定して画像のアップロードを行う。input type="file"のname属性と会員IDを添えて送信する。
-			//  $(this).upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(xml) {
-			//	$(this).upload('uploadImage',{"dir":init['photoDirectory'], postedName:$(this).attr('name')}, function(xml) {
-			$(this).upload(init['photoPost'],{postedName:$(this).attr('name'), userId:json.accountHeader.user_key.value}, function(xml) {
-		    	
-				//jQueryセレクターで取得して出力
-				console.log('filename(selector search): ' + $('filename', xml).text());
-				//find関数で取得して出力
-				console.log('filename(find function): ' + $(xml).find('filename').text());
-				//追記者 T.Yamamoto 追記日:2015．07.29 内容:DBに画像のコメントを除くデータをDBにアップロードする
-				//アップロード画像の情報をDBに入れて送るための連想配列を作る
-				var sendReplaceArray = {};
-				//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
-				this.sendReplaceArray['photo_title'] = $('filename', xml).text();
-				//会員番号を更新情報のクエリに入れる
-				this.sendReplaceArray['user_key'] = json.accountHeader.user_key.value;
-				//画像情報をDBに新規登録する
-				this.setDBdata(json.insertMyGalleryPhoto, sendReplaceArray, '');
-				console.log(sendReplaceArray);
-				console.log(json.insertMyGalleryPhoto);
-				
-				//返ってきたデータから成否判定の値を取り出す。
-		    	//var issuccess = parseInt($(xml).find('issuccess').text());
-		    	//ローカルでのテスト用のxmlデータを作る。
-		    	var issuccess = 1;
-		    	xml = $('<root></root>')
-		    			.append($('<src></src>')
-		    					.text('')
-		    			)
-		    			.append($('<message></message>')
-		    					.text('success')
-		    			);
-		    	if(issuccess){	//保存に成功していたら
-		    		//IE9以下でなければ
-		    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
-			    		//ファイルのオブジェクトをを取得する。
-			    		var file = event.target.files[0];
-			    		//画像の縮小を行う。
-			    		canvasResize(file, {
-			    			crop: false,	//画像を切り取るかを選択する
-			    			quality: 80,	//画像の品質
-			    			//コールバック関数。画像パスを引数として受け取る。
-			    			callback: function(data) {
-			    				$(xml).attr('src', data);	//アップロードした画像をセットする。
-			    				var src = data;	//画像の保存先を取得する。
-			//    				var src = $(xml).find('src').text();	//画像の保存先を取得する。
-			    				//createTagで新たな写真を作成する。
-			    				outputTag('blankPhoto', 'myPhoto', '.myGallery');
-			    				//新たな写真を初期化する。
-			    				createNewPhoto();
-			    				//画像拡大用のタグにソースをセットする。
-			    				$('.myPhotoLink:last').attr('href', src);
-			    				//画像サムネイルに使う要素の画像を設定する。
-			    				$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-			    				$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-			    			}
-			    		});
-			    	//IE6~9なら
-			    	} else {
-			    		//サムネイルが出ないことを伝える。
-			    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
-		    			var src = 'photo/general/web/DSC_0266.JPG';	//今のところはダミーの写真を追加する。
-		    			//createTagで新たな写真を作成する。
-		    			outputTag('blankPhoto', 'myPhoto', '.myGallery');
-		    			//新たな写真を初期化する。
-		    			$this.createNewPhoto();
-		    			//画像拡大用のタグにソースをセットする。
-		    			$('.myPhotoLink:last').attr('href', src);
-		    			//画像サムネイルに使う要素の画像を設定する。
-		    			$('.myPhotoImage:last').css('background-image', 'url('  +  src + ')');
-		    			$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-			    	}
-		    	//保存に失敗していたら
-		    	} else {
-		    		alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
-		    	}
-		    //サーバから返されたデータをXMLとして扱う。
-		    },"xml");
+			var $uploader = $(this);		//画像アップローダーの要素を取得する
+    		canvasResize(this.files[0], {	//画像の縮小を行う
+    			//横サイズを設定
+    			width:imgWidth !== void(0)? imgWidth: DEFAULT_WIDTH,
+    			//縦サイズを設定
+    			height:imgHeight !== void(0)? imgHeight: DEFAULT_HEIGHT,
+    			crop: false,	//画像を切り取るかを選択する
+    			quality: IMG_QUALITY,	//画像の品質
+    			//コールバック関数。画像パスを引数として受け取る。
+    			callback: function(data) {
+    				thisElem.uploadUserPhoto(data);	//画像をアップロードする
+    			}
+    		});
 		});
 	}
+	
+	/*
+	 * 関数名:uploadUserPhoto
+	 * 引数 	:String data:base64形式の画像パス
+	 * 戻り値:なし
+	 * 概要  :Myギャラリーの新規投稿画像をアップロードし、ギャラリー領域に表示する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.uploadUserPhoto = function(data){
+		var thisElem = this;						//クラスインスタンスを変数に入れる
+		//PHPへはフォームデータを作って送信する
+		var fd = new FormData();					//フォームデータを作る
+		fd.append('photo', toBlob(data), 'userPhoto');	//フォームデータにBLOB化した写真を登録する
+		fd.append('postedName', 'photo');			//フォームデータに投稿名を登録する
+		fd.append('userId', this.getUserId());		//フォームデータにユーザIDを登録する
 		
+        $.ajax({	//Ajax通信でサーバにデータを送る
+            url: USER_IMAGE_UPLOADER,	//画像アップローダーのURLを指定する	
+            type: 'post',				//HTTP通信のPOSTメソッドを使う
+            async:false,				//同期通信
+            data: fd,					//フォームデータを送信する
+            dataType: 'xml',			//XMLデータを返してもらう
+            //以下2点、よくわかっていません
+            contentType: false,
+            processData: false,
+            //通信成功時の処理
+            success: function(xml){
+            	thisElem.saveImgIntoDB(xml);	//アップロードした画像を保存する
+            	thisElem.setNewPhoto($(xml).find('src').text());	//アップロードした画像を基に新たな記事を作る
+            },
+            //通信失敗時の処理
+            error: function(xhr, status, error){
+            	
+            }
+        });
+	}
+	
+	
+	/*
+	 * 関数名:saveImgIntoDB
+	 * 引数 	:XMLElement xml:画像のデータ一式が入ったxml
+	 * 戻り値:なし
+	 * 概要  :保存した画像をDBにも保存する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.saveImgIntoDB = function(xml){
+		//アップロード画像の情報をDBに入れて送るための連想配列を作る
+		var sendReplaceArray = {};
+		//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
+		sendReplaceArray['photo_title'] = $('filename', xml).text();
+		//会員番号を更新情報のクエリに入れる
+		sendReplaceArray['user_key'] = this.getUserId();
+		//画像情報をDBに新規登録する
+		this.setDBdata(this.json.insertMyGalleryPhoto, sendReplaceArray, EMPTY_STRING);
+	}
+
+	/*
+	 * 関数名:setNewPhoto
+	 * 引数 	:String imgPath:画像パス
+	 * 戻り値:なし
+	 * 概要  :アップロードした画像を基にギャラリー記事を新規作成する
+	 * 作成日:2015.08.12
+	 * 作成者:T.Masuda
+	 */
+	this.setNewPhoto = function(imgPath){
+		//createTagで新たな写真を作成する。
+		this.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		//新たな記事を追加する。
+		$('.myGalleryTable tbody').append(this.createNewPhoto(imgPath));
+	}
+	
+	
 	/*
 	 * 関数名:function uploadImage(uploader, parent, srcReturn)
 	 * 引数  :element uploader:input type="file"の要素
@@ -1333,7 +1409,7 @@ function createLittleContents(){
 	 * 作成日:2015.07.11
 	 */
 	this.insertTextboxToTable  = function(tableClassName, appendDom, appendTo) {
-		//テキストボックスを挿入するために表示しているセルのテキストを削除する
+		//テキストボックスをクラス名の場所に挿入するためにテーブルの1列目のクラスを消去する
 		$(DOT + tableClassName + ' tr:eq(0) td').removeClass(appendTo);
 		//テキストボックス追加先のdomに表示している文字列を空白で初期化する
 		$(DOT + appendTo).text('');
@@ -1415,7 +1491,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'LessonTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1426,7 +1502,7 @@ function createLittleContents(){
 		//テーブルの追加先dom名
 		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'reservedLessonTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, this, RESERVED_LESSON_TABLE_RECORD)',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
@@ -1454,7 +1530,7 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'eachDayReservedInfoTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, creator, EACH_DAY_RESERVED_INFO_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
@@ -1464,7 +1540,7 @@ function createLittleContents(){
 		//テーブルのafterでの追加先
 		addDomPlace:'.lecturePermitListInfoTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'afterReloadPermitListInfoTable',
+		afterReloadFunc:'afterReloadPermitListInfoTable()',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1474,7 +1550,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'adminLessonDetailTableReplace',
+		afterReloadFunc:'tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
 	}
@@ -1591,6 +1667,27 @@ function createLittleContents(){
 	}
 	
 	/* 
+	 * 関数名:tableReset
+	 * 概要  :テーブルを完全に消去して初期化する。
+	 * 引数  :tableName:リセットするテーブルのクラス属性名
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.08
+	 */
+	this.tableReset = function(tableName) {
+		//テーブルのjsonの値が既にあれば
+		if(this.json[tableName].table){
+			//テーブルのjsonを初期化する
+			this.json[tableName].table = {};
+		}
+		//すでにテーブルがあるならテーブルを消す
+		if ($(DOT + tableName)) {
+			//テーブルを消す
+			$(DOT + tableName).remove();
+		}
+	}
+
+	/* 
 	 * 関数名:tableReload
 	 * 概要  :テーブルをリロードする
 	 * 引数  :reloadTableClassName:リロードする対象のテーブルのクラス名
@@ -1599,18 +1696,10 @@ function createLittleContents(){
 	 * 作成日:2015.07.06
 	 */
 	this.tableReload = function(reloadTableClassName) {
-		//テーブルのjsonの値が既にあれば
-		if(this.json[reloadTableClassName].table){
-			//テーブルのjsonを初期化する
-			this.json[reloadTableClassName].table = {};
-		}
+		//テーブルを初期化する
+		this.tableReset(reloadTableClassName);
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
-		//すでにテーブルがあるならテーブルを消す
-		if ($(DOT + reloadTableClassName)) {
-			//テーブルを消す
-			$(DOT + reloadTableClassName).parent().empty();
-		}
 		//DBから取得した値があった時の処理
 		if(this.json[reloadTableClassName].table[0]){
 			//テーブルを作り直す
@@ -1618,7 +1707,7 @@ function createLittleContents(){
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
 			if(replaceTableOption[reloadTableClassName].afterReloadFunc) {
 				//リロード後に処理をする関数をコールする
-				eval(replaceTableOption[reloadTableClassName].afterReloadFunc)();
+				eval(replaceTableOption[reloadTableClassName].afterReloadFunc);
 			}
 		//DBから検索結果が見つからなかった時の処理
 		} else {
@@ -1838,7 +1927,7 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = this.json[tableClassName].table[rowNumber]
+		var resultTableArray = this.json[tableClassName].table[rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
@@ -1892,34 +1981,6 @@ function createLittleContents(){
 		}
 		//クエリの結果を返す
 		return sendQueryArray;
-	}
-	
-	/* 
-	 * 関数名:executeDBUpdate
-	 * 概要  :置換連想配列とクエリ連想配列を取得し、jsonDBManagerを使ってデータベースを更新する
-	 * 引数  :counter:カウンタ変数
-	 		tableClassName:テーブルのクラス名
-	 		inputDataSelector:テキストボックスなど値の親のセレクター名
-	 		boolRule:条件分岐するための正否判定
-	 		trueQueryArray:条件が正の時に代入するクエリが入った連想配列
-	 		falseQueryArray:条件が否の時に代入するクエリが入った連想配列
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.17
-	 */
-	this.executeDBUpdate = function(counter, tableClassName, inputDataSelector, boolRule, trueQueryArray, falseQueryArray) {
-		//jsonDBManagerに送信する置換の値が入った連想配列を作る(対象のテーブルの連想配列とテキストボックスなどの入力された連想配列を結合して取得する)
-		var getSendReplaceArray = this.sendReplaceArray(tableClassName, counter, inputDataSelector);
-		//jsonDBManagerに送信するクエリの入った連想配列を作る(受講料の値があるかどうかで受講料のクエリと備品のクエリのどちらを実行するか分岐する)
-		var sendQueryArray = this.choiceSendQueryArray(boolRule, trueQueryArray, falseQueryArray);
-		//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-		sendQueryArray = this.addUsePointQuery(sendQueryArray, sendReplaceArray);
-		//クエリを実行してテーブルの値1行ずつ更新していく
-		this.setDBdata(sendQueryArray, sendReplaceArray, '');
-		//ループで実行するので置換データ連想配列を初期化する
-		sendReplaceArray = {};
-		//ループで実行するので置換データ連想配列を初期化する
-		sendQueryArray = {};
 	}
 	
 	/* 
@@ -2019,7 +2080,9 @@ function createLittleContents(){
 	this.sendMailmagazine = function(mailSubject, mailContent) {
 		
 		var resulwork = null;
+		alert("メルマガを送信しました。");
 	}
+	
 	/* 
 	 * 関数名:sendMail
 	 * 概要  :mailSend.phpにデータを渡してメールの送信処理を行う
@@ -2112,6 +2175,9 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.27
+	 * 変更者:T.Masuda
+	 * 変更者:2015.08.12
+	 * 内容	:createLittleContentsクラスの関数として対応しました
 	 */
 	this.deleteBlogArticle = function(deleteQueryKey, deleteArticleNumberArray) {
 		//記事を削除する個数をカウントし、ループさせる回数として使う
@@ -2119,17 +2185,17 @@ function createLittleContents(){
 		//ループで記事削除処理を行う
 		for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
 			//削除するid番号を取得して削除するレコードを識別する
-			var deleteRowId = this.deleteArticleNumberArray[roopStartCount];
+			var deleteRowId = deleteArticleNumberArray[roopStartCount];
 			//削除クエリを実行するために削除対象記事の連想配列を作る
 			var sendReplaceArray = {id:{value:deleteRowId}};
 			//記事を削除しDBを更新する
-			 this.setDBdata(json[deleteQueryKey], sendReplaceArray, '');
+			 this.setDBdata(this.json[deleteQueryKey], sendReplaceArray, '');
 		}
 	}
 	
 	/* 
 	 * 関数名:getUserPlusPointRate
-	 * 概要  :管理者　受講承認画面でユーザが加算するポイントを取得する
+	 * 概要  :管理者　受講承認画面でユーザが加算するポイントのレートを取得する
 	 * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
 	 		:lessonStudents		:授業に出席した生徒様の人数
 	 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
@@ -2382,6 +2448,9 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
+	 * 修正者:T.Masuda
+	 * 修正日:2015.08.12
+	 * 内容	:チェックボックスを追加する処理を追加しました。
 	 */
 	this.createMyGalleryImages = function(){
 		//各記事を処理する
@@ -2398,6 +2467,9 @@ function createLittleContents(){
 								)
 					);
 		});
+		
+		//最後にまとめてチェックボックスを追加する
+		$('.myGalleryTable tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
 	}
 	
 	/*
@@ -2455,60 +2527,6 @@ function createLittleContents(){
 			//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
 			$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
 		});
-	}
-
-	/*
-	 * 関数名:createErrorText
-	 * 引数  :jQuery errors: エラーがあった要素。
-	 * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
-	 * 戻り値:String:エラーメッセージの文字列。
-	 * 概要  :エラーメッセージを作成する。
-	 * 作成日:2015.04.15
-	 * 作成者:T.Masuda
-	 */
-	this.createErrorText = function(errors, jpNames){
-		//返却する文字列を格納する変数を用意する。
-		var retText = "";
-		//エラーメッセージの数を取得する。
-		var errorLength = errors.length;
-		//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
-		var errorMessages = [errors[0].message];
-
-		//エラーメッセージの数を取得する。
-		var messageLength;
-		
-		//エラーメッセージを取得する。
-		for(var i = 0; i < errorLength; i++){
-			messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
-			//エラーメッセージの重複をチェックする。
-			for(var j = 0; j < messageLength; j++){
-				//エラーメッセージが重複していれば
-				if(errorMessages[j] == errors[i].message){
-					break;	//追加せずに抜ける。
-				//エラーメッセージの重複がなかったら
-				} else if(errorMessages.length >= j){
-					//エラーメッセージを配列に追加する。
-					errorMessages.push(errors[i].message);	
-				}
-			}
-		}
-		
-		//エラーメッセージを取得する。
-		for(var i = 0; i < messageLength; i++){
-			//エラー文を追加する。
-			retText += errorMessages[i] + '\n';
-			//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
-			$(errors).filter(function(){
-				return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
-			}).each(function(){	//each関数で対象を走査する。
-				//retTextに名前を箇条書きする。
-				retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
-			});
-			//項目ごとに改行する。
-			retText +='\n';
-		}
-		
-		return retText;	//作成したメッセージを返す。
 	}
 
 	/*
@@ -2939,7 +2957,6 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		
 		//予約授業一覧ダイアログを作る
 		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
-		//ダイアログを開くときのテーブルの値を編集して表示する
 		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
 		adminLessonListDialog.run();	//主処理を走らせる。
 	}
@@ -3798,4 +3815,75 @@ this.allCheckbox = function(checkboxTarget, allCheckTarget) {
 			$(allCheckTarget).prop('checked', false);
 		};
 	});
+}
+
+/*
+ * 関数名:createErrorText
+ * 引数  :jQuery errors: エラーがあった要素。
+ * 　　  :Object jpNames: name属性に対応する日本語名が格納された連想配列。
+ * 戻り値:String:エラーメッセージの文字列。
+ * 概要  :エラーメッセージを作成する。
+ * 作成日:2015.04.15
+ * 作成者:T.Masuda
+ */
+this.createErrorText = function(errors, jpNames){
+	//返却する文字列を格納する変数を用意する。
+	var retText = "";
+	//エラーメッセージの数を取得する。
+	var errorLength = errors.length;
+	//エラーメッセージを格納する配列を用意する。1つ目の要素に1個目のエラーメッセージを配置する。
+	var errorMessages = [errors[0].message];
+
+	//エラーメッセージの数を取得する。
+	var messageLength;
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < errorLength; i++){
+		messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
+		//エラーメッセージの重複をチェックする。
+		for(var j = 0; j < messageLength; j++){
+			//エラーメッセージが重複していれば
+			if(errorMessages[j] == errors[i].message){
+				break;	//追加せずに抜ける。
+			//エラーメッセージの重複がなかったら
+			} else if(errorMessages.length >= j){
+				//エラーメッセージを配列に追加する。
+				errorMessages.push(errors[i].message);	
+			}
+		}
+	}
+	
+	//エラーメッセージを取得する。
+	for(var i = 0; i < messageLength; i++){
+		//エラー文を追加する。
+		retText += errorMessages[i] + '\n';
+		//エラーメッセージごとに要素を走査する。filter関数で対象の要素を絞り込む。
+		$(errors).filter(function(){
+			return this.message == errorMessages[i];	//エラーメッセージが一致した要素を返す。
+		}).each(function(){	//each関数で対象を走査する。
+			//retTextに名前を箇条書きする。
+			retText += '・' + jpNames[$(this.element).attr('name')] +'\n';
+		});
+		//項目ごとに改行する。
+		retText +='\n';
+	}
+	
+	return retText;	//作成したメッセージを返す。
+}
+
+function toBlob(base64) {
+    var bin = atob(base64.replace(/^.*,/, ''));
+    var buffer = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) {
+        buffer[i] = bin.charCodeAt(i);
+    }
+    // Blobを作成
+    try{
+        var blob = new Blob([buffer.buffer], {
+            type: 'image/png'
+        });
+    }catch (e){
+        return false;
+    }
+    return blob;
 }

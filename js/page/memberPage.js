@@ -28,8 +28,6 @@ function createMemberFinishedLessonContent() {
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
-	//受講済みテーブルの値を置換する
-	dbDataTableValueReplace(FINISHED_LESSONTABLE, FINISHED_LESSONTABLE_REPLACE_FUNC, false, creator);
 	//セレクトボックスのvalueを画面に表示されている値にする
 	creator.setSelectboxValue('.selectThemebox');
 	//絞り込み機能を実装する
@@ -56,14 +54,9 @@ function finshedLessonTableAfterPaging() {
 		//テーブルの値を編集するループを開始する値を取得する
 		var loopStartCount = nowPageNumber * 10;
 		//テーブルのレコード数を取得する
-		var recordCount = Number(creator.json.finishedLessonTable.table.length);
-		//テーブルの値を編集するループを終了する値を取得する
-		var loopEndCount = nowPageNumber * 10 + 9;
-		//テーブルのレコード数よりループ最終数の方が大きければレコード数をループ最終数にする
-		if (loopEndCount >= recordCount) {
-			//ループの回数をテーブルの行数を超えないようにする
-			loopEndCount = recordCount-1;
-		}
+		var recordCount = Number(tableRow.length);
+		//今のページングの値が最大値なら行数の最大値、違うならページングの最後の行の値をループの終わり値とする
+		var loopEndCount = loopEndCount >= recordCount ? recordCount-1 : nowPageNumber * 10 + 9;
 		//テーブルのループのための行番号を取得する
 		var rowNumber = 1;
 		//ループで受講済みテーブルを編集する
@@ -91,7 +84,7 @@ function finshedLessonTableThemeSelect() {
 	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
 		//デフォルトのクエリを保存して変化後のクエリを基に戻せるようにする
 		var defaultQuery = creator.json.finishedLessonTable.db_getQuery;
-		//テーブルの値を置換する
+		//テーブルを作るためのクエリを置換する
 		creator.replaceTableQuery('finishedLessonTable');
 		//ページングに使うものを初期化し、ページングを作り直すために備える
 		creator.pagingReset('finishedLessonTable');

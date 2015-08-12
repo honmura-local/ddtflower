@@ -1,4 +1,4 @@
-<div class="adminNewLessonCreateContent">
+﻿<div class="adminNewLessonCreateContent">
 <script>
 	//ダイアログの要素をjQueryオブジェクトとして取得する
 	var $dialog = $('.adminNewLessonCreateContent');
@@ -20,14 +20,13 @@
 	//ボタン領域を作る
 	adminNewLessonCreator.outputTag('newLessonCreateButton', 'addButton', '.adminNewLessonCreateContent');
 	//ボタンをjqueryuiのものにしてレイアウトを整える
-	$('input[type="button"]').button();
+	$('button').button();
 	//授業詳細ダイアログで更新ボタンがクリックされた時、DBの値を更新する
 	$dialog.on(CLICK, 'button', function() {
 		//押されたボタンのvalueを取得してダイアログの状態オブジェクトにセットする
-		$dialog[0].instance.setPushedButtonState($(this).attr(VALUE));	
+		$dialog[0].instance.setPushedButtonState($(this).attr(VALUE));
 		//ダイアログを閉じる
 		$dialog[0].instance.destroy();
 	});
-	// });
 </script>
 </div>
