@@ -67,6 +67,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 </script>
 
+<!-- 定数定義クラスを読み込む。 -->
+<script src="js/constants.js"></script>
 <!-- jQueryの本体を読み込む。 -->
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->
@@ -122,7 +124,6 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/dialogExOptions.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/dailyClasses.js"></script>
-
 </head>
 
 <body>
@@ -141,7 +142,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 $(document).ready(function(){
 	
 try{
-	util = new utils();			//汎用関数のクラスのインスタンスを用意する
+	common = new common();		//汎用共通関数定義クラスインスタンスを生成する
+	
 	var creator = new createLittleContents();	//createTagクラスのインスタンスを生成する
 	
 	creator.getJsonFile('source/index.json');				// ファイルのデータをjsonを用いて持ってくる

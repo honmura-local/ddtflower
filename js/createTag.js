@@ -1,107 +1,5 @@
 //JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
 
-//createTagコール時の引数として使う定数。
-CREATETAG_FIRST 				= -1;
-//@add 2015.0610 T,Masuda「JSON」と「DOM」の文字列の定数を追加しました
-//固定の文字列の定数を定義していく
-CHAR_DOT										= '.';
-CHAR_HYPHEN										= '-';
-CHAR_RIGHT_ARROW								= '>';
-MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
-MESSAGE_SUCCESS_CANCELED						= '予約をキャンセルしました。';
-MESSAGE_SUCCESS_PROFILE_UPDATE					= 'プロフィールを変更しました。';
-MESSAGE_SUCCESS_PASSWORD_UPDATE					= 'パスワードを変更しました。';
-MESSAGE_FAILED_RESERVED							= '予約の処理に失敗しました。時間をおいてもう一度お試しください。';
-MESSAGE_FAILED_CONNECT							= '通信に失敗しました。時間をおいてもう一度お試しください。';
-MESSAGE_LOGIN_ERROR								= 'idまたはパスワードが間違っています';
-SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
-SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
-SELECTOR_CLOSE_ATTRIBUTE						= '"]';
-SELECTOR_KEYS									= '.keys'; 
-SELECTOR_MAIN									= '.main';
-SELECTOR_NUMBERING_OUGHTER						= '.numberingOuter';
-SELECTOR_VALUES									= '.values';
-SELECTOR_LESSON_TABLE							= '.lessonTable';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR			= '.reserveLessonListDialog table tr';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD			= '.reserveLessonListDialog table tr td';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG				= '.reserveLessonListDialog';
-SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG			= '.memberReservedConfirmDialog';
-SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT	= '.memberReservedConfirmDialogContent';
-STR_FAILD_TO_CREATE								= 'の作成に失敗しました。';	//outputTagでパーツの作成を失敗したときのメッセージ
-STR_ARROW_LEFT_DOUBLE							= '<<';
-STR_TEXT										= 'text';
-STR_HTML										= 'html';
-STR_BODY										= 'body';
-STR_NUMBERING									= 'numbering';
-STR_PRE											= 'pre';
-STR_KEY_AND_VALUE								= 'keyAndValue';
-STR_VALUELABEL									= 'valueLabel';
-STR_VALUES										= 'values';
-STR_KEYS										= 'keys';
-STR_EDITVALUE									= 'editValue';
-STR_NAME										= 'name';
-STR_CLICK										= 'click';
-STR_STYLE										= 'style';
-STR_OPEN										= 'open';
-STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
-STR_LESSON_TABLE_AREA							= 'lessonTableArea';
-STR_DIALOG										= 'dialog';
-STR_TR											= 'tr';
-STR_TD											= 'td';
-STR_TH											= 'th';
-STR_JSON  										= 'json';				//json
-STR_DOM  										= 'dom';				//dom
-STR_OBJECT 										= 'object';				//objectかどうかの判定に使う
-STR_TRANSPORT_FAILD_MESSAGE						= '通信に失敗しました。';	//通信失敗のメッセージ
-STR_POST										= 'POST';				//リクエストのPOSTメソッド設定
-STR_HTML										= 'HTML';				//AJAXのレスポンスの指定をHTMLにする時に使う
-STR_AUTO										= 'auto';
-STR_FONT_SIZE									= 'font-size';
-STR_TAG_TABLE									= 'tagTable';
-STR_LESSON_TABLE								= 'lessonTable';
-STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT		= 'memberReservedConfirmDialogContent';
-SYMBOL_UNIT										= ' 〜 ';
-TAG_DIV											= '<div></div>';
-TAG_SPAN										= '<span></span>'; 
-TAG_LABEL										= '<label></label>';
-TAG_TEXTAREA									= '<textarea></textarea>'; 
-URL_GET_JSON_STRING_PHP							= 'php/GetJSONString.php';
-URL_GET_JSON_ARRAY_PHP							= 'php/GetJSONArray.php';
-URL_GET_JSON_ARRAY_FOR_JQGRID_PHP				= 'php/GetJSONArrayForJqGrid.php';
-URL_SAVE_JSON_DATA_PHP							= 'php/SaveJSONRecord.php';
-STR_LESSON_TABLE								= 'lessonTable';
-STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
-STR_CENTER_CENTER								= 'center center';
-STR_MEMBER_RESERVED_CONFIRM_DIALOG				= 'memberReservedConfirmDialog';
-STR_EVENT										= 'event';
-STR_COLSPAN										= 'colspan';
-VALUE_0_5EM										= '0.5em';
-STR_MEMBER_INFORMATION							= 'memberInfomation';
-STR_REPLACE_TABLE								= 'replaceTable';
-SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
-//処理の分岐のフラグの数値
-PATTERN_ADD = 0;
-PATTERN_REPLACE = 1;
-//outputNumberingTagで用いる記事のオブジェクトの親のキー。
-ARTICLE_OBJECT_KEY								= 'table';
-USER_ID											= 'userId';
-ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
-ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
-EMPTY											= '';								//空文字
-SLASH											= '/';								//スラッシュ記号
-DOT												= '.';								//ドット
-
-//ログインエラー時の状態の整数値定数
-TITLE = 'title';		//タイトルの文字列
-STATE_NOT_LOGIN	= 0;	//非ログイン時
-STATE_TIMEOUT	= 1;	//タイムアウト時
-LOGIN = 'ログイン';		//ログインダイアログのタイトル「ログイン」
-RE_LOGIN = '再ログイン';	//再ログインダイアログのタイトル「再ログイン」
-LOGIN_MESSAGE = '';		//ログインダイアログのメッセージ
-RE_LOGIN_MESSAGE = '';	//再ログインダイアログのメッセージ
-URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHTMLファイルのURL
-URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
-URL_MEMBER_PAGE = 'memberPage.html'; //管理者ページのURL
 
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
@@ -1602,7 +1500,7 @@ function createTag(){
 			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
 			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
-			$('.loginDialogMessage', loginDialog.formDom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
+			$('.loginDialogMessage', loginDialog.dom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
 		}
 	};
 	

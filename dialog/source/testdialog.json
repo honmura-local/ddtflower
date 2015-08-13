@@ -1,0 +1,45 @@
+{
+    "notice1": {
+        "paragraph1": {
+            "text": "段落1"
+        },
+        "paragraph2": {
+            "text": "段落2"
+        }
+    },
+    "table1": {
+        "row1": {
+            "headCell1": {
+                "text": "1行目見出"
+            },
+            "cell1": {
+                "text": "項目1-1"
+            },
+            "cell2": {
+                "text": "項目1-2"
+            }
+        },
+        "row2": {
+            "headCell1": {
+                "text": "2行目見出"
+            },
+            "cell1": {
+                "text": "項目2-1"
+            },
+            "cell2": {
+                "text": "項目2-2"
+            }
+        },
+        "row3": {
+            "headCell1": {
+                "text": "3行目見出"
+            },
+            "cell1": {
+                "text": "項目3-1"
+            },
+            "cell2": {
+                "text": "項目3-2"
+            }
+        }
+    }
+}

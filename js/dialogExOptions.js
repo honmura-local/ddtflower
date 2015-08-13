@@ -1,3 +1,9 @@
+/* ファイル名:dialogExOptions.js
+ * 概要　　　:dialogExクラスインスタンスに渡すオプションのオブジェクトを定義する
+ * 作成日　:2015.0729
+ * 作成者　:T.Masuda
+ * 場所　　:js/dialogEx.js
+ */
 
 var specialReservedDialogOption = {
 	argumentObj:{
