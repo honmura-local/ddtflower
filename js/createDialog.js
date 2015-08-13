@@ -11,6 +11,61 @@
  */
 	
 //ファイルパスの定数	
+MSL_LIST_PHP					= 'list.php';						//MSLのリスト
+MSL_DETAIL_PHP					= 'detail.php';						//MSLの記事詳細
+INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
+//@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
+PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
+PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
+CLASS_HEADER					= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
+
+ADMIN_LESSON_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
+CLASS							= 'class';							//クラス
+TABLE							= 'table';							//テーブル
+
+LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
+CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+PATH_LOGIN_DIALOG			= 'dialog/loginDialog.html';					//ログインダイアログのクラスのセレクタ
+CLASS_LOGIN					= '.login';							//ログインボタンのクラスのセレクタ
+CLICK						= 'click';							//クリックイベントの文字列
+CLOSE						= 'close';							//closeの文字列
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+PATH_MEMBERPAGE_JSON		= 'source/memberPage.json';			//会員ページのJSON
+PATH_MEMBERCOMMON_JSON		= 'source/memberCommon.json';		//会員ページ共通のJSON
+MEMBERPAGE_HTML				= 'memberPage.html';				//会員ページのHTML
+USER_KEY					= 'user_key';						//ユーザキー
+VALUE						= 'value';							//バリュー
+ID							= 'id';								//ID
+SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
+PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
+PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
+PATH_ADMINPAGE_CSS			= '<link href="css/adminPage.css" rel="stylesheet" type="text/css">';			//管理者ページ共通のCSS
+PATH_CONTACT_CSS			= '<link href="css/contact.css" rel="stylesheet" type="text/css">';
+PATH_DAILYCLASSES_JS		= '<script type="text/javascript" src="js/dailyClasses.js"></script>';
+CLASS_HEADER				= '.header';						//ヘッダーのクラス
+CLASS_LOGOUT_LINK			= '.logoutLink';					//ログアウトボタンのクラス
+CLASS_HEADERS				= '.memberHeader, .adminHeader';	//会員ページ、管理者ページのヘッダーのクラス
+
+RESERVED_LESSON_TABLE		= 'reservedLessonTable';			//予約中授業のテーブル
+TAG_TR						= ' tr';							//trタグ
+TAG_TABLE					= 'table';							//tableタグ
+CANCEL_LESSON_DIALOG_CONTENT= 'cancelLessonDialogContent';		//授業予約キャンセルダイアログの中身のコンテンツセレクター
+CANCEL_LESSON_DIALOG 		= 'cancelLessonDialog';				//予約キャンセルダイアログの外枠
+ADMIN_EACH_DAY_LESSON_TABLE = 'adminEachDayLessonTable';		//管理者日ごと授業テーブル
+ADMIN_LESSON_LIST_DIALOG	= 'adminLessonListDialog';			//管理者日ごとダイアログ
+COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST = 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
+WAIT_DEFAULT				= 0;								//待ち時間のデフォルト値
+LESSON_DETAIL_DIALOG		= 'lessonDetailDialog';				//管理者ページ授業詳細ダイアログ
+ADMIN_LESSON_LIST_DIALOG_TR = '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
+ADMIN_LESSON_LIST_DIALOG_TD = '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
+LESSON_DATA					= 'lessonData';						//管理者の授業詳細ダイアログのコンテンツ部分
+ADMIN_PAGE_URL = 'adminPage.html';								//管理者ページURL
+MEMBER_PAGE_URL = 'memberPage.html';							//会員ページURL
+
+//定数
+EXPERIENCE	= 'experience';
+LESSON		= 'Lesson';
 /* 
  * 関数名:getCurrentPageFileName()
  * 概要  :ファイル名を取得する。引数に拡張子が入っていた場合、末尾のパスに依存せずURL全体から抽出する
