@@ -8,7 +8,6 @@ $content = $_POST['content'];
 $type = $_POST['type'];
 
 try {
-	//@mod 2015 0812 T.Masuda valueからではなく直接引数に値を渡す様にしました
 	$sendResult = ModelMail::sendSuggestion($type, $from, $subject, $content);
 } catch(SendFailException $e) {
 	// ajax的に500返して異常を伝える。
