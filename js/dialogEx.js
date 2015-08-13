@@ -6,7 +6,6 @@
  * 場所　　:js/dialogEx.js
  */
 
-
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -26,6 +25,37 @@ function dialogEx(url, argumentObj, returnObj){
 	//親クラスのコンストラクタを起動する
 	windowEx.call(this, url, argumentObj, returnObj);
 
+	/* 関数名:run
+	 * 概要　:ダイアログを生成して表示する。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 */
+	this.run = function(){
+		//ロード失敗時の例外処理を行うため、try-catch節を使う。
+		try{
+			//変更者:T.Yamamoto 変更指示者:H.Kaneko 日付2015.08.07 内容：loadの引数を
+			//メンバのURLからHTMLデータを読み込む
+			this.load(this.url);
+			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
+			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
+			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
+			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
+			
+			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
+			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
+			this.dom = form;			//クラスインスタンスにDOMへの参照を持たせる
+			
+			$(form).dialog(this.argumentObj.config);	//configの設定を使ってダイアログを作成、表示する
+		//例外をキャッチしたら
+		} catch(e){
+			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
+		}
+	}
+
+	
 	/* 関数名:destroy
 	 * 概要　:ダイアログの破棄する。
 	 * 引数　:なし

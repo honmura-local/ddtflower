@@ -6,7 +6,7 @@
 		//当該ダイアログのDOMを取得する
 		var thisDialog = $(DOT + DIALOG + SELECTOR_LAST);
 		$.ajax({
-			url:DIALOG_JS_DIR + TEST_DIALOG + JS_IDENTIFIER,
+			url:DIALOG_JS_DIR + TEST_DIALOG+'child' + JS_IDENTIFIER,
 			dataTYpe:"script",
 			async:false,
 			success:function(sc){
@@ -17,9 +17,7 @@
 			}
 		})
 		//当該ダイアログ用関数クラスインスタンスを生成する
-		console.log('11');
-		var dialogBuilder = new testdialog(thisDialog);
-		console.log('13');
+		var dialogBuilder = new testdialogchild(thisDialog);
 		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
 		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>

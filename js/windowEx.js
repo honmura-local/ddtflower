@@ -20,8 +20,6 @@ function windowEx(url, argumentObj){
 	this.dom = '';
 	//ウィンドウ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
 	this.argumentObj = argumentObj !== void(0)? argumentObj : {};
-	//設定用オブジェクトを格納するメンバ
-	this.returnObj = returnObj !== void(0)? returnObj : {};
 	
 	//デフォルト設定のオブジェクト
 	//argumentObjを作る際に参考にしてください。
@@ -50,28 +48,6 @@ function windowEx(url, argumentObj){
 		}
 	};
 	
-	//デフォルトのアウトプット用オブジェクト
-	//returnObjを作る際に参考にしてください。
-	this.defaultReturnObj = {
-		//ダイアログのステータスオブジェクト
-		statusObj:{
-			buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
-		},
-		//関数オブジェクト
-		funcObj:{
-			YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
-			        function(){	//「いいえ」ボタン
-			        	//いいえ」ボタンの処理内容
-			        },
-			        function(){	//「はい」ボタン
-			        	//「はい」ボタンの処理内容
-			        }
-			]
-		},
-			//アウトプット用データのオブジェクト
-		data:{
-		}
-	};
 
 	/* 関数名:load
 	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。
@@ -99,7 +75,6 @@ function windowEx(url, argumentObj){
 				throw e;			//例外を投げる。エラーオブジェクトを渡す。
 			}
 		});
-		
 	}
 
 	/* 関数名:run
@@ -142,7 +117,7 @@ function windowEx(url, argumentObj){
 		//引数が関数であれば
 		if(func instanceof Function){
 			//optionでcloseコールバック関数をセットする
-			$(this.dom).dialog('option', 'close', func);
+			$(this.dom).dialog(OPTION, CLOSE, func);
 		//関数以外であれば
 		} else {
 			console.log("not a function");
@@ -248,39 +223,6 @@ function windowEx(url, argumentObj){
 		return this.argumentObj.data;	//dataオブジェクトを返す
 	}
 
-	/* 関数名:getReturnObject
-	 * 概要　:アウトプット用オブジェクトを返す
-	 * 引数　:なし
-	 * 返却値:Object:アウトプット用オブジェクト
-	 * 作成日　:015.08.08
-	 * 作成者　:T.Masuda
-	 */
-	this.getReturnObject = function() {
-		return this.returnObj;		//アウトプット用オブジェクトを返す
-	}
-
-	/* 関数名:getReturnDataObject
-	 * 概要　:アウトプット用データオブジェクトを返す
-	 * 引数　:なし
-	 * 返却値:Object:アウトプット用データオブジェクト
-	 * 作成日　:015.08.08
-	 * 作成者　:T.Masuda
-	 */
-	this.getReturnDataObject = function() {
-		return this.returnObj.data;		//アウトプット用データのオブジェクトを返す
-	}
-	
-	/* 関数名:getReturnStatusObject
-	 * 概要　:アウトプット用ステートオブジェクトを返す
-	 * 引数　:なし
-	 * 返却値:Object:アウトプット用ステートオブジェクトを返す
-	 * 作成日　:015.08.08
-	 * 作成者　:T.Masuda
-	 */
-	this.getReturnStatusObject = function() {
-		return this.returnObj.statusObj;	//アウトプット用ステートのオブジェクトを返す
-	}
-	
 	/* 関数名:createDialogEx
 	 * 概要　:渡されたURLから新たなダイアログを開く
 	 * 引数　:String url:ダイアログのURL
@@ -293,7 +235,7 @@ function windowEx(url, argumentObj){
 	this.createDialogEx = function(url, argumentObj){
 		var newDialog = new dialogEx(url, argumentObj);		//ダイアログクラスのインスタンスを作成する
 		//openイベントのコールバック関数をセットする
-		newDialog.setCallbackOpen({open:this.dialogBuilder.openDialog});	
+		newDialog.setCallbackOpen(callOpenDialog);	
 		newDialog.run();									//ダイアログを開く
 	}
 }

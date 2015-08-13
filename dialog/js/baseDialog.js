@@ -14,12 +14,13 @@
  * 作成日:2015.0813
  * 作成者:T.Masuda
  */
+
 function baseDialog(dialog){
 	//各コンストラクタ引数をメンバに格納する
 	this.dialog = dialog;	//ダイアログのDOM
-	
+
 	/* 関数名:openDialog
-	 * 概要　:open時にコールバックされる関数。
+	 * 概要　:open時にコールバックされる関数。現状ではグローバル領域の関数callOpenDialogでコールする必要がある
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
@@ -53,9 +54,9 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0813
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogOption(optionName, value){
+	this.setDialogOption = function(optionName, value){
 		//引数のダイアログのオプションをセットする
-		this.dialog(OPTION, optionName, value);
+		$(this.dialog).dialog(OPTION, optionName, value);
 	}
 	
 	/* 関数名:setDialogButtons
@@ -66,9 +67,9 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0813
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogButtons(buttons){
+	this.setDialogButtons = function(buttons){
 		//ダイアログのbuttonsオプションを設定する
-		this.setDialogOption(BUTTONS, buttons)
+		this.setDialogOption(BUTTONS, buttons);
 	}
 	
 	/* 関数名:setDialogTitle
@@ -79,9 +80,9 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0813
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogTitle(){
+	this.setDialogTitle = function(title){
 		//ダイアログのbuttonsオプションを設定する
-		this.setDialogOption(TITLE, buttons)
+		this.setDialogOption(TITLE, title);
 	}
 	
 	//画面パーツ生成用関数。現状createTagクラスで画面パーツを作っているので一旦定義だけ行う
@@ -89,4 +90,17 @@ function baseDialog(dialog){
 	this.createTextbox = function(){};
 	this.createDialog = function(){};
 	
+}
+
+/* 関数名:callOpenDialog
+ * 概要　:ダイアログが開いたときのコールバック関数openDialogをコールする。
+ * 		:ダイアログのcloseイベントのコールバック関数には基本的にこれをセットする
+ * 引数　:なし
+ * 返却値:なし
+ * 作成日　:2015.0813
+ * 作成者　:T.Masuda
+ */
+function callOpenDialog(){
+	//openDialog関数を実行する
+	this.dialogBuilder.openDialog();
 }

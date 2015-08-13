@@ -290,3 +290,6 @@ SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';				//目安箱 目安�
 DIALOG_JS_DIR								= 'dialog/js/';
 JS_IDENTIFIER								= '.js';
 TEST_DIALOG									= 'testdialog';
+DIALOG										= 'dialog';
+BUTTONS										= 'buttons';
+OPTION										= 'option';

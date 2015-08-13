@@ -1,35 +1,35 @@
-/* ファイル名:testdialog.js
+/* ファイル名:testdialogchild.js
  * 概要　　　:テスト用ダイアログ
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/testdialog.js
+ * 場所　　:dialog/js/testdialogchild.js
  */
 
-/* クラス名:testdialog.js
+/* クラス名:testdialogchild.js
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 親クラス:baseDialog
  * 引数	 :Element dialog:ダイアログのDOM
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/testdialog.js
+ * 場所　　:dialog/js/testdialogchild.js
  */
-function testdialog(dialog){
+function testdialogchild(dialog){
 	baseDialog.call(this, dialog);
 	
-	//はい、いいえボタンの配列
-	this.yes_no = [
+	//とじるボタンの配列
+	this.buttons = [
+	              	{
+	              		text:'開く',
+	              		click:function(){
+	              			//次の子ダイアログを開く
+	              			this.dialogBuilder.callTestChildDialog();
+	              		}
+	              	},
 					{
-						text:'はい',
+						text:'閉じる',
 						click:function(){
-							this.dialogBuilder.callTestChildDialog();
-						}
-					},
-					{
-						text:'いいえ',
-						click:function(){
-							$(this).dialog('close');
+							$(this).dialog(CLOSE);	//閉じる
 						}
 					}
 	           ];
-
 	//子ダイアログ用オブジェクト
 	this.dialogExOptionSampleChild = {
 			argumentObj:{
@@ -62,14 +62,9 @@ function testdialog(dialog){
 				}
 			}
 	}
-	
-	
-	this.callAlert = function(){
-		alert("I called.")
-	}
-	
+
 	//タイトルの文字列
-	this.alterTitle = '変更できました。';
+	this.alterTitle = '子ダイアログ。';
 	
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
@@ -80,18 +75,33 @@ function testdialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContents = function(){
-		this.setDialogButtons(this.yes_no);		//YES_NOボタンを配置する
+		this.setDialogButtons(this.buttons);		//YES_NOボタンを配置する
 		this.setDialogTitle(this.alterTitle);	//タイトルを入れ替える
-		//ダイアログを閉じるときは破棄する
-		dialog[0].instance.setCallbackCloseOnAfterOpen(dialog[0].instance.destroy);
+		var data = dialog[0].instance.getArgumentDataObject();	//データのオブジェクトを取得する
+		console.log(this);
+		//ダイアログを閉じるときは親子共々破棄する
+		dialog[0].instance.setCallbackCloseOnAfterOpen(this.michidure);
 		var creator = new createLittleContents();	//createLittleContentsクラスインスタンスを用意する
-		creator.getJsonFile('dialog/source/testdialog.json');
-		creator.getDomFile('dialog/template/testdialog.html');
+		creator.getJsonFile('dialog/source/testdialogchild.json');
+		creator.getDomFile('dialog/template/testdialogchild.html');
 		console.log(creator);
 		creator.outputTag('notice1', 'notice1', '.dialog:last');
-		creator.outputTag('table1', 'table1', '.dialog:last');
 	}
 
+	/* 関数名:dispContents
+	 * 概要　:自分と親のダイアログをまとめて消す
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0813
+	 * 作成者　:T.Masuda
+	 */
+	this.michidure = function(){
+		//ダイアログのインプットパラメータ用オブジェクトを取得する
+		data = this.instance.getArgumentDataObject();
+		this.instance.destroy();					//自分を消す
+		$(data.parentDialogEx.dom).dialog(CLOSE);	//親を消す
+	}
+	
 	/* 関数名:callTestChildDialog
 	 * 概要　:子ダイアログを開く
 	 * 引数　:なし
@@ -104,11 +114,11 @@ function testdialog(dialog){
 		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
 		$.extend(true, childObj.data, {parentDialogEx:this.dialog[0].instance});
 		//はいボタンのコールバック関数
-		this.dialog[0].instance.createDialogEx('dialog/testdialogchild.html', childObj);
+		this.dialog[0].instance.createDialogEx('dialog/testdialoggrandchild.html', childObj);
 	}
 }
 
 //継承の記述
-testdialog.prototype = new baseDialog();
+testdialogchild.prototype = new testdialog();
 //サブクラスのコンストラクタを有効にする
-testdialog.prototype.constructor = baseDialog;
+testdialogchild.prototype.constructor = testdialog;
