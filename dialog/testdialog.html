@@ -1,26 +1,25 @@
-<div class="dialog">
-	<!-- テスト用にcreateTagのものとそうでないものを混在させる -->
-	<p>元々あるタグです。</p>
+<div class="testDialog">
+	<p>テスト用</p>
+	<p>ダイアログ</p>
+	<p>です。</p>
+	<!-- OKボタン -->
+	<button class="OK" type="button" onclick="">OK</button>
+	<!-- キャンセルボタン -->
+	<button class="cancel" type="button" onclick="">キャンセル</button>
 	<!-- JSコードを記述する -->
 	<script>
-		//当該ダイアログのDOMを取得する
-		var thisDialog = $(DOT + DIALOG + SELECTOR_LAST);
-		$.ajax({
-			url:DIALOG_JS_DIR + TEST_DIALOG + JS_IDENTIFIER,
-			dataTYpe:"script",
-			async:false,
-			success:function(sc){
-				console.log("got script");
-			},
-			error:function(a,b,c){
-				
-			}
-		})
-		//当該ダイアログ用関数クラスインスタンスを生成する
-		console.log('11');
-		var dialogBuilder = new testdialog(thisDialog);
-		console.log('13');
-		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
-		thisDialog[0].dialogBuilder = dialogBuilder;
+			console.log(this);	//thisの対象をログに出す
+			//コード実行タイミング測定用のアラーと
+			alert('I\'m ready! (testdialog.html is called.)')
+		$('.OK').click(function(){	//OKボタンのクリックイベント
+			alert('OK!');			//アラートを出す
+		});							//キャンセルボタンのクリックイベント
+		$('.cancel').click(function(){
+			alert('bye.');			//アラートを出す
+			//ダイアログのクラスのインスタンスにアクセスし、ダイアログ破棄関数をコールして閉じる。
+			//※jQueryオブジェクトとしてダイアログを取得してクラスインスタンスにアクセスする場合、
+			// [0]を指定して.instanceでクラスインスタンスを指定する。
+			$('.testDialog')[0].instance.destroy();
+		});
 	</script>
 </div>
