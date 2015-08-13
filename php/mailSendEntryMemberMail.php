@@ -13,7 +13,6 @@ try{
 		throw new SendFailException("メールが送信できませんでした。");
 	}
 	$jsonResult = json_encode(array());
-error_log("aaaa" . json_encode($sendResult));
 } catch(SendFailException $e) {
 		// ajax的に500返して異常を伝える。
 		error_log(e.getMessage());
