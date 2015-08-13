@@ -11,7 +11,7 @@ foreach($toTmp as $each) {
 }
 
 $ADMIN_ID = '1';
-$sendResult = ModelMail::send_mail_each($to, $ADMIN_ID, $subject['value'], $content['value']);
+$sendResult = ModelMail::send_mail_each($to, $ADMIN_ID, $subject, $content);
 $jsonResult = json_encode(array(
 		'sendCount'			=> $sendResult[0],
 		'failCount'			=> $sendResult[1],
