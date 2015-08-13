@@ -1,0 +1,23 @@
+{
+	"notice1":{
+		"paragraph1":"",
+		"paragraph2":""
+	},
+	"table1":{
+		"row1":{
+			"headCell1":"1行目見出",
+			"cell1":"項目1",
+			"cell2":"項目2"
+		},
+		"row2":{
+			"headCell1":"2行目見出",
+			"cell1":"項目1",
+			"cell2":"項目2"
+		},
+		"row3":{
+			"headCell1":"3行目見出",
+			"cell1":"項目1",
+			"cell2":"項目2"
+		}
+	}
+}

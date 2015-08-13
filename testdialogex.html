@@ -14,22 +14,74 @@
 <!-- タグを作成するJSの関数群を読み込む -->
 <script type="text/javascript" src="js/createTag.js"></script>
 <!-- ダイアログ作成の処理を記述したJSファイルを読み込む。 -->
+<!-- 画面操作の処理を記述したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/controlPage.js"></script>
+<!-- ダイアログ作成の処理を記述したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/createDialog.js"></script>
+<!-- 小規模のの処理を記述したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/createLittleContent.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/controlAction.js"></script>
+<!-- 会員検索クエリを検索ボタンクリックで生成する -->
+<script src="js/replaceQuery.js"></script>
+<!-- 管理者ページ用のjavascriptを読み込む -->
+<script src="js/page/adminPage.js"></script>
+<!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
+<script type="text/javascript" src="js/dialogEx.js"></script>
+<!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->
+<script type="text/javascript" src="js/dialogExOptions.js"></script>
+<!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
+<script type="text/javascript" src="js/dailyClasses.js"></script>
+
 
 <!-- JavaScriptのコードの記述を開始する -->
 <script>
+//会員メール/目安箱メール 送信確認ダイアログ
 
-	function disappear(){
-		this.instance.destroy();
-	}
+
+//確認ダイアログ
+dialogExOptionSample = {
+		argumentObj:{
+			config:{
+				//幅を自動設定する。
+				width			: 300,
+				//ダイアログを生成と同時に開く。
+				autoOpen		: true,
+				//リサイズ不可にする
+				resizable:false,
+				//Escキーを押してもダイアログが閉じないようにする。
+				closeOnEscape	: false,
+				//モーダル化する
+				modal:true,
+				//ダイアログタイトルを送信確認にする
+				title:'タイトル',
+				//画面上部にダイアログを表示する
+				position :{my:'center top',at:'center top', of:window},
+				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
+				},
+				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
+				},
+				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
+					
+				},
+				buttons:[]
+			},
+			data:{
+				message:""
+			}
+		}
+}
+	
 	//ドキュメントの配置が終了した後の処理
 	$(document).ready(function(){
+		hideLoadingScreen();	//ローディング画面を消す
+		
+		var windowEx = new windowEx();	//windowExクラスインスタンスを生成する
+		
 		//ダイアログ表示ボタンのクリック時コールバック関数を定義する
 		$('#testDialogButton').on('click', function(){
-			//dialogExクラスのインスタンスを生成する
-			var testDialog = new dialogEx('dialog/testdialog.html');
-			testDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
-			testDialog.run();	//主処理を走らせる。
+			//テストダイアログを開く
+			windowEx.createDialogEx('dialog/testdialog.html',dialogExOptionSample.argumentObj);
 		});
 	});
 </script>

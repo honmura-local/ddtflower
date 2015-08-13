@@ -1,7 +1,5 @@
 /* アクションを制御するJSファイル。 */
 
-//有効な拡張子を配列に格納する。
-var validIdentifiers = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
 
 /*
  * 関数名:function checkIdentifier(fileName)

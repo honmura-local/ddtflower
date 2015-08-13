@@ -22,44 +22,6 @@ var uaName = 'unknown';
 var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
-//定数定義
-ADMIN_LESSON_LIST_INFORMATION	= 'adminLessonInformation';						//管理者日ごとダイアログの内容
-NOW_PAGE						= 'nowPage';									//ページングの現在のページのクラス名
-PAGING 							= 'paging';										//ページングのクラス名
-PAGING_AREA						= 'pagingArea';									//ページングを囲むdivクラス名
-CHANGE							= 'change';										//イベント名がchangeのときにchangeイベントを登録するための定数
-MARGIN_TOP = 'margin-top';														//上margin
-PX_5 = '5px';																	//5PX
-PX_115 = '115px';																//115PX
-BLOG_SHOW_PAGES					=  1;											//ブログ表示記事数。blog.phpでも使う
-EMPTY_STRING					=  '';											//空文字
-
-//セレクターの文字列定数
-NORMAL_HEADER								= 'header.header';							//通常のヘッダー
-HEADER_VISIBLE								= 'header.header:visible';					//隠してないヘッダー
-HEADER_HIDDEN								= 'header.header:hidden';					//隠してあるヘッダー
-MAIN_TAG									= '.main';									//メインのタグのセレクタ
-GUIDES										= 'guides';									//ガイド領域
-TOP_MENU									= 'topMenu';								//トップメニュー
-LOCATION									= 'flower_clone/';							//サイトルート前
-SITE_ROOT									= 'http://localhost/' + LOCATION;			//サイトルート
-IMAGE_PATH									= 'uploadImage/flowerImage/';				//アップロード画像フォルダ
-UPLOAD_LOCATION								= SITE_ROOT + SITE_ROOT;					//アップロードURL
-SPECIAL_RESERVED_DIALOG_URL					= 'dialog/specialReservedDialog.html';		//体験レッスン予約ダイアログのHMTLファイルURL
-ADMIN_NEWLESSON_CREATE_DIALOG_PATH 			= 'dialog/adminNewLessonCreateDialog.html';	//授業新規作成ダイアログのHTMLファイルのパス
-LESSON_DETAIL_DIALOG_PATH					= 'dialog/lessonDetailDialog.html';			//管理者 授業詳細ダイアログのHTMLファイルのパス
-//createLittleContentクラスインスタンスの連想配列内キー用文字列
-CREATOR										= 'creator';
-//会員ページ 予約一覧ダイアログのcreateLittleContentsクラスインスタンスの連想配列内キー用文字列
-RESERVE_LIST_CREATOR						= 'reserveListCreator';	
-NUMBER										= 'number';									//numberキーの文字列
-STRING										= 'string';									//stringの文字列
-
-//画像縮小時のデフォルトサイズ
-DEFAULT_WIDTH								= 300;										//画像の縮小サイズ 横
-DEFAULT_HEIGHT								= 300;										//画像の縮小サイズ 縦
-IMG_QUALITY									= 80;										//画像圧縮時の品質
-USER_IMAGE_UPLOADER							= 'uploadImage/imageUpload.php';			//画像アップローダーのパス
 	
 if (userAgent.indexOf('msie') != -1) {
   uaName = 'ie';
@@ -3519,7 +3481,7 @@ var articleSubmitHandler = {
 //					url:init['getSelectedBlog'],
 						method:'post',	//postメソッドで送信する。
 						//ユーザIDと記事番号とコンテンツ番号を送る。
-						data:{'userId':userId, 'number':number, 'contentNum':contentNum},
+						data:{'userId':GetCookies().userId, 'number':number, 'contentNum':contentNum},
 						dataType:'JSON',	//JSONを返してもらう。
 						headers: {			//リクエストヘッダを設定する
 							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
