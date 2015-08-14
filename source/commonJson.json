@@ -2,7 +2,7 @@
     "guides": {
         "guideFASchool": {
             "toppageLink": {
-                "href": "#index.php",
+                "href": "#top.php",
                 "flowerIcon": {
                     "src": "image/icon(logo50).png"
                 },

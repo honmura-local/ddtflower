@@ -1599,7 +1599,7 @@ function createTag(){
 				        	 // ボタン押下時の処理を記述する。
 				        	 click:function(event, ui){
 				        		 //トップページに戻る
-				        		 callPage('index.php');
+				        		 callPage('top.php');
 				        		 // ダイアログを消去する。
 				        		 $(this).dialog('close');
 				        	 }

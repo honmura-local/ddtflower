@@ -786,7 +786,7 @@
         },
         "returnToTop": {
             "text": "トップへ戻る",
-            "href": "#index.php"
+            "href": "#top.php"
         }
     },
     "errorConfirm": {
@@ -801,7 +801,7 @@
         },
         "returnToTop": {
             "text": "トップへ戻る",
-            "href": "#index.php"
+            "href": "#top.php"
         }
     },
     "contentSearch":{

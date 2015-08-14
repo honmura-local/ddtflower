@@ -27,6 +27,33 @@ function dialogEx(url, argumentObj, returnObj){
 	//親クラスのコンストラクタを起動する
 	windowEx.call(this, url, argumentObj, returnObj);
 
+	//デフォルト設定のオブジェクト
+	//argumentObjを作る際に参考にしてください。
+	this.defaultArgumentObj = {
+		//ダイアログの設定データオブジェクト
+		config:{
+			width: 'auto',		//幅を自動調整する
+			autoOpen : true,	//作成時の自動オープンを無効にする
+			modal : true,		//モーダル表示
+			resizable : false,	//ドラッグでのリサイズ可否
+			//表示位置の指定。
+			position :{my:'center top',at:'center top', of:window},
+			closeOnEscape : false,	//escキーを押して閉じるか
+			create:function(){	//ダイアログ作成時のイベント
+				
+			},
+			open:function(){	//ダイアログが開くときのイベント
+				
+			},
+			close:function(){	//ダイアログが閉じられるときのイベント
+				
+			}
+		},
+		//インプット用データオブジェクト
+		data:{
+		}
+	};
+	
 	/* 関数名:run
 	 * 概要　:ダイアログを生成して表示する。
 	 * 引数　:なし
