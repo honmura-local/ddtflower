@@ -73,6 +73,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->
 <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- 共通関数クラスを読み込む。 -->
+<script src="js/common.js"></script>
 <!-- ユーティリティクラスのjsファイル。 -->
 <script src="js/utils.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
@@ -118,6 +120,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/replaceQuery.js"></script>
 <!-- 管理者ページ用のjavascriptを読み込む -->
 <script src="js/page/adminPage.js"></script>
+<!-- ウィンドウ作成用クラス windowExクラスのJSファイル -->
+<script type="text/javascript" src="js/windowEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
 <script type="text/javascript" src="js/dialogEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->

@@ -20,7 +20,7 @@ function common(){
 	 * 作成日:2015.0813
 	 * 作成者:T.Masuda
 	 */
-	this.theFunc(){
+	this.theFunc = function(){
 		
 	}
 
