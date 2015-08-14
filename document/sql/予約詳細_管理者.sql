@@ -93,6 +93,7 @@ INSERT INTO
 INSERT INTO
 	classwork(
 		max_students
+        ,lesson_date
 		,min_students
 		,classwork_status
 		,classroom
@@ -106,6 +107,7 @@ INSERT INTO
 	)
 	VALUES(
 		{{max_students}}
+        ,'{{lesson_date}}'
 		,{{min_students}}
 		,{{classwork_status}}
 		,'{{classroom}}'
