@@ -293,3 +293,9 @@ TEST_DIALOG									= 'testdialog';
 DIALOG										= 'dialog';
 BUTTONS										= 'buttons';
 OPTION										= 'option';
+
+GET_SCRIPT_FAIL_MESSAGE_FRONT				= "Faild to get Script File(location:";			//JSファイル取得エラーメッセージの前方
+PARENTHESES_REAR							= ")";											//丸括弧閉じ
+URL_TEST_DIALOG_CHILD						= 'dialog/testdialogchild.html'					//テスト用子ダイアログ(2世代目)のURL
+COMMON_FUNCS_NOT_EXIST						= 'commonFuncs is not exist.';					//共通関数クラスインスタンスcommonFuncsがないエラーメッセージ		
+TEST_DIALOG_GRANDCHILD_URL					= 'dialog/testdialoggrandchild.html';			//孫ダイアログURL

@@ -12,15 +12,14 @@
  * 場所　　:dialog/js/testdialogchild.js
  */
 function testdialogchild(dialog){
-	baseDialog.call(this, dialog);
-	
+	testdialog.call(this, dialog);
 	//とじるボタンの配列
 	this.buttons = [
 	              	{
 	              		text:'開く',
 	              		click:function(){
 	              			//次の子ダイアログを開く
-	              			this.dialogBuilder.callTestChildDialog();
+	              			this.dialogBuilder.openDialog(TEST_DIALOG_GRANDCHILD_URL);
 	              		}
 	              	},
 					{
@@ -30,8 +29,9 @@ function testdialogchild(dialog){
 						}
 					}
 	           ];
+	
 	//子ダイアログ用オブジェクト
-	this.dialogExOptionSampleChild = {
+	this.dialogExOptionSampleGrandChild = {
 			argumentObj:{
 				config:{
 					//幅を自動設定する。
@@ -65,30 +65,57 @@ function testdialogchild(dialog){
 
 	//タイトルの文字列
 	this.alterTitle = '子ダイアログ。';
-	
-	/* 関数名:dispContents
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
+
+	/* 関数名:dispContentsMain
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のメイン部分作成担当関数
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
+	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContents = function(){
-		this.setDialogButtons(this.buttons);		//YES_NOボタンを配置する
-		this.setDialogTitle(this.alterTitle);	//タイトルを入れ替える
-		var data = dialog[0].instance.getArgumentDataObject();	//データのオブジェクトを取得する
-		console.log(this);
-		//ダイアログを閉じるときは親子共々破棄する
-		dialog[0].instance.setCallbackCloseOnAfterOpen(this.michidure);
+	this.dispContentsMain = function(){
+		//以下、createTagによる画面パーツ追加
 		var creator = new createLittleContents();	//createLittleContentsクラスインスタンスを用意する
 		creator.getJsonFile('dialog/source/testdialogchild.json');
 		creator.getDomFile('dialog/template/testdialogchild.html');
-		console.log(creator);
 		creator.outputTag('notice1', 'notice1', '.dialog:last');
 	}
+	
+	/* 関数名:dispContentsFooter
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のフッター部分作成担当関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.dispContentsFooter = function(){
+		var data = dialog[0].instance.getArgumentDataObject();	//データのオブジェクトを取得する
+		//ダイアログを閉じるときは親子共々破棄する
+		dialog[0].instance.setCallbackCloseOnAfterOpen(this.michidure);
+		this.setDialogButtons(this.buttons);		//YES_NOボタンを配置する
+		this.setDialogTitle(this.alterTitle);	//タイトルを入れ替える
+	}
+	
+	
+	/* 関数名:setArgumentObj
+	 * 概要　:ダイアログに渡すオブジェクトを生成する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.13
+	 * 作成者　:T.Masuda
+	 */
+	this.setArgumentObj = function() {
+		var argumentObj = $.extend(true, {}, this.dialogExOptionSampleGrandChild.argumentObj);
+		//openイベントを設定する
+		$.extend(true, argumentObj.config, {open:commonFuncs.callOpenDialog});
+		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
+		$.extend(true, argumentObj.data, {parentDialogEx:this.dialog[0].instance});
+		return argumentObj;	//生成したオブジェクトを返す
+	}
 
-	/* 関数名:dispContents
+	/* 関数名:michidure
 	 * 概要　:自分と親のダイアログをまとめて消す
 	 * 引数　:なし
 	 * 返却値:なし
@@ -100,21 +127,6 @@ function testdialogchild(dialog){
 		data = this.instance.getArgumentDataObject();
 		this.instance.destroy();					//自分を消す
 		$(data.parentDialogEx.dom).dialog(CLOSE);	//親を消す
-	}
-	
-	/* 関数名:callTestChildDialog
-	 * 概要　:子ダイアログを開く
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.callTestChildDialog = function(){
-		var childObj = $.extend(true, {}, this.dialogExOptionSampleChild.argumentObj);
-		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
-		$.extend(true, childObj.data, {parentDialogEx:this.dialog[0].instance});
-		//はいボタンのコールバック関数
-		this.dialog[0].instance.createDialogEx('dialog/testdialoggrandchild.html', childObj);
 	}
 }
 

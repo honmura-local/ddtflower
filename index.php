@@ -146,7 +146,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 $(document).ready(function(){
 	
 try{
-	common = new common();		//汎用共通関数定義クラスインスタンスを生成する
+	commonFuncs = new common();		//汎用共通関数定義クラスインスタンスを生成する
 	
 	var creator = new createLittleContents();	//createTagクラスのインスタンスを生成する
 	

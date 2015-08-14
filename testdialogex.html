@@ -11,6 +11,8 @@
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->
 <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- 共通関数クラスを読み込む -->
+<script type="text/javascript" src="js/common.js"></script>
 <!-- ユーティリティクラスのjsファイル。 -->
 <script src="js/utils.js"></script>
 <!-- タグを作成するJSの関数群を読み込む -->
@@ -80,14 +82,19 @@ dialogExOptionSample = {
 	
 	//ドキュメントの配置が終了した後の処理
 	$(document).ready(function(){
-		hideLoadingScreen();	//ローディング画面を消す
+		hideLoadingScreen();			//ローディング画面を消す
+		commonFuncs = new common();		//共通関数クラスインスタンスを生成する
 		//windowExクラスインスタンスを生成する
-		var windowex = new windowEx();
+		var mainWindow = new windowEx();
 		
 		//ダイアログ表示ボタンのクリック時コールバック関数を定義する
 		$('#testDialogButton').on('click', function(){
+			//テスト用ダイアログのインスタンスを生成する
+			var newDialog = new dialogEx('dialog/testdialog.html', dialogExOptionSample.argumentObj);
+			//ダイアログopen時のコールバック関数をセットする
+			newDialog.setCallbackOpen(commonFuncs.callOpenDialog);
 			//テストダイアログを開く
-			windowex.createDialogEx('dialog/testdialog.html',dialogExOptionSample.argumentObj);
+			newDialog.run();
 		});
 	});
 </script>

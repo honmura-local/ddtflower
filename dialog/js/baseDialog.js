@@ -18,19 +18,6 @@
 function baseDialog(dialog){
 	//各コンストラクタ引数をメンバに格納する
 	this.dialog = dialog;	//ダイアログのDOM
-
-	/* 関数名:openDialog
-	 * 概要　:open時にコールバックされる関数。現状ではグローバル領域の関数callOpenDialogでコールする必要がある
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.openDialog = function(){
-		//コンテンツを表示する。
-		this.dispContents();
-	}
 	
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
@@ -41,6 +28,45 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContents = function(){
+		//小分けした画面作成用関数をコールする
+		this.dispContentsHeader();
+		this.dispContentsMain();
+		this.dispContentsFooter();
+	}
+	
+	/* 関数名:dispContentsHeader
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のヘッダー部分作成担当関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.dispContentsHeader = function(){
+		
+	}
+	
+	/* 関数名:dispContentsMain
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のメイン部分作成担当関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.dispContentsMain = function(){
+		
+	}
+	
+	/* 関数名:dispContentsFooter
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のフッター部分作成担当関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.dispContentsFooter = function(){
 		
 	}
 	
@@ -85,22 +111,39 @@ function baseDialog(dialog){
 		this.setDialogOption(TITLE, title);
 	}
 	
+	/* 関数名:setArgumentObj
+	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
+	 * 		:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.14
+	 * 作成者　:T.Masuda
+	 */
+	this.setArgumentObj = function() {
+		return {};	//argumentObjをセットする。継承して各自定義すること。
+	}
+	
+	/* 関数名:openDialog
+	 * 概要　:渡されたURLから新たなダイアログを開く
+	 * 引数　:String url:ダイアログのURL
+	 * 		:Object argumentObj:ダイアログのインプットデータ、設定データのオブジェクト
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.openDialog = function(url){
+		//ダイアログのクラスインスタンスを生成する。
+		//openイベントはsetArgumentObjでセットしておく
+		this.dialogEx = new dialogEx(url, this.setArgumentObj());
+		console.log(this.setArgumentObj());
+		//openイベントのコールバック関数をセットする
+		this.dialogEx.run();	//ダイアログを開く
+	}
+	
 	//画面パーツ生成用関数。現状createTagクラスで画面パーツを作っているので一旦定義だけ行う
 	this.createTable = function(){};
 	this.createTextbox = function(){};
 	this.createDialog = function(){};
-	
 }
 
-/* 関数名:callOpenDialog
- * 概要　:ダイアログが開いたときのコールバック関数openDialogをコールする。
- * 		:ダイアログのcloseイベントのコールバック関数には基本的にこれをセットする
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.0813
- * 作成者　:T.Masuda
- */
-function callOpenDialog(){
-	//openDialog関数を実行する
-	this.dialogBuilder.openDialog();
-}

@@ -6,6 +6,8 @@
  * 場所　　:js/dialogEx.js
  */
 
+WINDOW_EX_PATH = 'js/windowEx.js';		//windowEx.jsのパス
+
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -151,7 +153,84 @@ function dialogEx(url, argumentObj, returnObj){
 	this.removeDialogButtons = function(){
 		$(UI_DIALOG_BUTTON_PANEL, this.dom.parent()).remove();
 	}
+
+	/* 関数名:setCallbackClose
+	 * 概要　:ダイアログのcloseイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
+	 */
+	this.setCallbackClose = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function? this.argumentObj.config['close'] = func: console.log('setCallBackClose recieved enythingeles function');
+	}
+
+	/* 関数名:setCallbackCloseOnAfterOpen
+	 * 概要　:ダイアログが開いた後にcloseイベントのコールバックを設定する
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0813
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
+	 */
+	this.setCallbackCloseOnAfterOpen = function(func){
+		//引数が関数であれば
+		if(func instanceof Function){
+			//optionでcloseコールバック関数をセットする
+			$(this.dom).dialog(OPTION, CLOSE, func);
+		//関数以外であれば
+		} else {
+			console.log("not a function");
+		}
+	}
 	
+	/* 関数名:setCallbackOpen
+	 * 概要　:ダイアログのopenイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0813
+	 * 作成者　:T.Masuda
+	 */
+	this.setCallbackOpen = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function?  this.argumentObj.config['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
+	}
+
+	/* 関数名:setCallbackCreate
+	 * 概要　:ダイアログのcreateイベントのコールバック関数をセットする。
+	 * 引数　:function func:コールバック関数で実行される関数のポインタ
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0729
+	 * 作成者　:T.Masuda
+	 * 変更日　:2015.0808
+	 * 変更者　:T.Masuda
+	 * 内容　　:セット先が変わりました。
+	 */
+	this.setCallbackCreate = function(func){
+		//引数が関数であれば、closeイベントのコールバック関数として登録する。
+		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
+	}
+}
+
+//親クラスwindowExが読み込まれていなければ読み込むコード
+//親クラスが読み込まれていなければ
+if(windowEx === void(0)){
+	//共通関数クラスが用意されていれば
+	if(commonFuncs !== void(0)){
+		//dialogExの親クラスwindowExの定義ファイルを読み込む
+		commonFuncs.getScriptFile(WINDOW_EX_PATH);
+	} else {
+		//共通関数クラスが用意されていない旨を伝える
+		console.log(COMMON_FUNCS_NOT_EXIST);
+	}
 }
 
 //windowExクラスを継承する
