@@ -6,7 +6,7 @@
  */
 
 //トップページのファイル名の定数
-TOPPAGE_NAME = 'index.php';
+TOPPAGE_NAME = 'top.php';
 USER_ID = 'userId';			//ユーザID
 PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
 //サーバへメッセージを送信したという文言
@@ -299,3 +299,4 @@ PARENTHESES_REAR							= ")";											//丸括弧閉じ
 URL_TEST_DIALOG_CHILD						= 'dialog/testdialogchild.html'					//テスト用子ダイアログ(2世代目)のURL
 COMMON_FUNCS_NOT_EXIST						= 'commonFuncs is not exist.';					//共通関数クラスインスタンスcommonFuncsがないエラーメッセージ		
 TEST_DIALOG_GRANDCHILD_URL					= 'dialog/testdialoggrandchild.html';			//孫ダイアログURL
+TOP_LOCATION								= 'top.php';	//トップページ用PHPのURL

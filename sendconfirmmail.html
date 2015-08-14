@@ -13,7 +13,7 @@
 				//初回読み込み時にこのページが指定されていたら
 				if(creator.dom ==''){
 					//トップページに戻る
-					callPage('index.php');
+					callPage('top.php');
 				//通常のページ移動からこのページが呼び出されていれば
 				} else if($('.contentManagement').length <= 0){
 					creator.getJsonFile('source/commonJson.json');			// ファイルのデータをjsonを用いて持ってくる

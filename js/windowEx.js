@@ -22,33 +22,17 @@ function windowEx(url, argumentObj){
 	this.argumentObj = argumentObj !== void(0)? argumentObj : {};
 	
 	//デフォルト設定のオブジェクト
-	//argumentObjを作る際に参考にしてください。
 	this.defaultArgumentObj = {
 		//ダイアログの設定データオブジェクト
 		config:{
-			width: 'auto',		//幅を自動調整する
-			autoOpen : true,	//作成時の自動オープンを無効にする
-			modal : true,		//モーダル表示
-			resizable : false,	//ドラッグでのリサイズ可否
-			//表示位置の指定。
-			position :{my:'center top',at:'center top', of:window},
-			closeOnEscape : false,	//escキーを押して閉じるか
-			create:function(){	//ダイアログ作成時のイベント
-				
-			},
-			open:function(){	//ダイアログが開くときのイベント
-				
-			},
-			close:function(){	//ダイアログが閉じられるときのイベント
-				
-			}
 		},
 		//インプット用データオブジェクト
 		data:{
 		}
 	};
 	
-
+	
+	
 	/* 関数名:load
 	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。
 	 * 引数　:String: domUrl:取得するHTMLファイルのパス
@@ -86,8 +70,21 @@ function windowEx(url, argumentObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.run = function(){
+		this.load(this.url);			//HTMLファイルをロードする
+		//画面を切り替える
+		$(STR_BODY).prepend(this.dom);	//
 	}
 
+	/* 関数名:setUrl
+	 * 概要　:URLをセットする
+	 * 引数　:String url:URL文字列
+	 * 返却値:なし
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.setUrl = function(url){
+		this.url = url;
+	}
 	
 	/* 関数名:destroy
 	 * 概要　:ウィンドウをを破棄する。

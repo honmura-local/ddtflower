@@ -73,4 +73,41 @@ function common(){
 		//openDialog関数を実行する
 		this.dialogBuilder.dispContents();
 	}
+	
+	/* 関数名:moveNoticeWindows
+	 * 概要　:お知らせウィンドウを開くボタン群を移動させる
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0813
+	 * 作成者　:T.Masuda
+	 */
+	this.moveNoticeWindows = function(){
+		$.when(
+		//0ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
+			showRightOutOfDisplayButton('.topicShowCampaign', 0, 3000)
+			).then(function(){
+				$.when(
+					//400ミリ秒後にギャラリーお知らせ表示ボタンをスライド表示する。
+					showRightOutOfDisplayButton('.topicShowGallery', 300, 3000)
+					).then(function(){
+						//900ミリ秒後にブログお知らせ表示ボタンをスライド表示する。
+						showRightOutOfDisplayButton('.topicShowBlog', 600, 3000);
+				});
+		});
+	}
+	/* 関数名:toggleNoticeWindows
+	 * 概要　:お知らせウィンドウを開くボタン群を開閉するイベントを登録する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0813
+	 * 作成者　:T.Masuda
+	 */
+	this.toggleNoticeWindows = function(){
+		//3つのウィンドウとそれを表示・非表示にするボタンのイベントを登録する。順番にコールして順を整える。
+		fadeToggleSet('div.topicShowCampaign', '.topicCampaign', '.topic', 500);
+		fadeToggleSet('div.topicShowGallery', '.topicGallery', '.topic', 500);		
+		fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
+	}
+	
+	
 }

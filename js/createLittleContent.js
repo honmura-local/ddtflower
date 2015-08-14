@@ -1825,7 +1825,7 @@ function createLittleContents(){
 				//通常ページを使いやすくするためにヘッダーを表示するようにする
 				$('header').css('display', 'block');
 				//通常ページに遷移する(creatorがリセットされる問題があるかも？)
-				callPage('index.php');
+				callPage('top.php');
 			}
 		});
 	}
