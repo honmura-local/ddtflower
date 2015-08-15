@@ -122,11 +122,98 @@ function common(){
 	 * 作成者　:T.Masuda
 	 * 作成者　:dialogExからcommon.jsに移動しました
 	 */
-	this.tableReplaceAndSetClass = function(tableName, tableReplaceFunc, replaceBool, creator, recordClassName) {
+	this.tableReplaceAndSetClass = function(tableName, tableReplaceFunc, replaceBool, create_tag, recordClassName) {
 		//予約可能授業一覧を置換する
-		dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, creator);
+		this.dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, create_tag);
 		//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-		setTableRecordClass(tableName, recordClassName);
+		this.setTableRecordClass(tableName, recordClassName);
+	}
+
+	/* 
+	 * 関数名:dbDataTableValueReplace
+	 * 概要　:データベースから取り出したテーブルについて、値を置換する
+	 * 引数　:string:tableName:値を置換する対象のテーブル名
+	 		:string:replaceFuncName:置換を行う関数名
+	 		:boolean:lessonList:置換するテーブルが授業を一覧で表示する(会員、管理者両方にあてはまる)テーブルであるなら受講人数を使うかどうかの判定
+	 		:creatTagInstance:creator:クリエイトタグのインスタンス名
+	 * 返却値:なし
+	 * 作成日　:2015.07.31
+	 * 作成者　:T.Yamamoto
+	 * 作成日　:2015.08.15
+	 * 作成者　:T.Masuda
+	 * 内容　	　:dialogExに対応しました
+	 */
+	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator) {
+		//テーブルを置換が終えるまで画面に表示しなくする
+		$(DOT + tableName).hide();
+		//時間差で表現するためにsetTimeOutを使う
+	//	setTimeout(function(){
+			//置換を行うテーブルのデータを取得する
+			var tableData = creator.json[tableName][TABLE_DATA_KEY];
+			//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
+			if(lessonList) {
+				//時間割1限分の生徒の合計人数が入った連想配列を作る
+				var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
+				//テーブルの値を置換する
+				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
+			} else {
+				//テーブルの値を置換する
+				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
+			}
+	//	},1);
+	}
+
+	
+	/* 
+	 * 関数名:showElem
+	 * 概要　:隠れている要素を表示する
+	 * 引数　:string selector:要素のセレクタ
+	 * 返却値:なし
+	 * 作成日　:2015.07.31
+	 * 作成者　:T.Yamamoto
+	 */
+	this.showElem = function(selector){
+		//テーブルを画面に表示する
+		$(selector).show();
+	}
+
+	/* 
+	 * 関数名:dbDataTableReplaceExecute
+	 * 概要  :dbから取り出したテーブルについてクライアント側で置換させる
+	 * 引数  :
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.06.13
+	 */
+	this.dbDataTableReplaceExecute = function(tableName, rowData, func, timeTableStudents) {
+		// カウンターを作る
+		var counter = 0;
+		// テーブルの行番号
+		var rowNumber = 1;
+		// テーブルのすべての行に対してループで値を入れる
+		$.each(rowData, function() {
+			// テーブルの値を変える関数をコールする
+			eval(func)(tableName, rowData, counter, rowNumber, timeTableStudents);
+			// 行番号をインクリメントする
+			rowNumber++;
+			// カウンタ変数をインクリメントする
+			counter++;
+		});
 	}
 	
+	/* 
+	 * 関数名:setTableRecordClass
+	 * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
+	 		これによってアコーディオン機能を実装するための行がどの行なのかを
+	 		識別できるようになる
+	 * 引数  :tableClassName: 行にクラス属性を付けたいテーブル名
+	 		:tableRecordClasssName: 行に新しくつけるクラス名
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.16
+	 */
+	this.setTableRecordClass = function(tableClassName, tableRecordClasssName) {
+		//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
+		$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
+	}	
 }

@@ -303,7 +303,6 @@ function baseDialog(dialog){
 		//ダイアログのクラスインスタンスを生成する。
 		//openイベントはsetArgumentObjでセットしておく
 		this.dialogEx = new dialogEx(url, this.setArgumentObj());
-		console.log(this.setArgumentObj());
 		//openイベントのコールバック関数をセットする
 		this.dialogEx.run();	//ダイアログを開く
 	}
@@ -361,6 +360,16 @@ function jsonFailedToParseException(json){
  * 作成者　:T.Masuda
  */
 function failedToDisplayException(json){
+	Error.apply(this);	//エラーを起こす
+}
+
+/* クラス名:cannotGetAnyRecordException
+ * 概要　:目的のレコードが取得できなかった時に投げる例外
+ * 引数　:なし
+ * 作成日　:2015.0815
+ * 作成者　:T.Masuda
+ */
+function cannotGetAnyRecordException(){
 	Error.apply(this);	//エラーを起こす
 }
 

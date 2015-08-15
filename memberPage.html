@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <!-- 画面の幅を使用している端末に依存する。加えてズームを許可しない。 -->
@@ -129,14 +129,13 @@
 					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 					if(creator.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
-						customizeTableData(creator.json['reservedLessonTable'][TABLE_DATA_KEY], customizeMemberLessonTable);
 						// 予約中授業のテーブルを作る
 						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 						// 予約中テーブルのテーブルの値を置換する
-						// dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
+						commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
 						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 						//キャンセルダイアログを予約中授業テーブルから開く処理
 						cancelDialogOpenFromReservedTable(memberInfo, creator);
 					}
