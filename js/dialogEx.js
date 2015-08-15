@@ -426,38 +426,6 @@ function disappear(){
 
 
 
-/* 
- * 関数名:dbDataTableValueReplace
- * 概要　:データベースから取り出したテーブルについて、値を置換する
- * 引数　:string:tableName:値を置換する対象のテーブル名
- 		:string:replaceFuncName:置換を行う関数名
- 		:boolean:lessonList:置換するテーブルが授業を一覧で表示する(会員、管理者両方にあてはまる)テーブルであるなら受講人数を使うかどうかの判定
- 		:creatTagInstance:creator:クリエイトタグのインスタンス名
- * 返却値:なし
- * 作成日　:2015.07.31
- * 作成者　:T.Yamamoto
- */
-function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator) {
-	//テーブルを置換が終えるまで画面に表示しなくする
-	$(DOT + tableName).hide();
-	//時間差で表現するためにsetTimeOutを使う
-	setTimeout(function(){
-		//置換を行うテーブルのデータを取得する
-		var tableData = creator.json[tableName][TABLE_DATA_KEY];
-		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
-		if(lessonList) {
-			//時間割1限分の生徒の合計人数が入った連想配列を作る
-			var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
-			//テーブルの値を置換する
-			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
-		} else {
-			//テーブルの値を置換する
-			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
-		}
-		//テーブルを画面に表示する
-		$(DOT + tableName).show();
-	},1);
-}
 
 
 /* 
