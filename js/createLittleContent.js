@@ -1638,9 +1638,9 @@ function createLittleContents(){
 	 */
 	this.tableReset = function(tableName) {
 		//テーブルのjsonの値が既にあれば
-		if(this.json[tableName].table){
+		if(this.json[tableName][TABLE_DATA_KEY]){
 			//テーブルのjsonを初期化する
-			this.json[tableName].table = {};
+			this.json[tableName][TABLE_DATA_KEY] = {};
 		}
 		//すでにテーブルがあるならテーブルを消す
 		if ($(DOT + tableName)) {
@@ -1663,7 +1663,7 @@ function createLittleContents(){
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
 		//DBから取得した値があった時の処理
-		if(this.json[reloadTableClassName].table[0]){
+		if(this.json[reloadTableClassName][TABLE_DATA_KEY][0]){
 			//テーブルを作り直す
 			this.outputTagTable(reloadTableClassName,reloadTableClassName, replaceTableOption[reloadTableClassName].addDomPlace);
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
@@ -1868,7 +1868,7 @@ function createLittleContents(){
 		//ユーザ一覧テーブルを削除する
 		$(DOT + targetPagingClassName).remove();
 		//会員一覧テーブルをリセットして検索に備える
-		creator.json[targetPagingClassName].table = {};
+		creator.json[targetPagingClassName][TABLE_DATA_KEY] = {};
 		//ナンバリングのdomを初期化する
 		$('.numbering').remove();
 		//新しくページングを作り直すためにページングの番号一覧をリセットする
@@ -1889,7 +1889,7 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = this.json[tableClassName].table[rowNumber];
+		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
@@ -2171,17 +2171,17 @@ function createLittleContents(){
 		//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//加算ポイントについてループして値を走査するためにループの値を取得する
-		var loopMaxCount = this.json[plusPointQueryKey].table.length;
+		var loopMaxCount = this.json[plusPointQueryKey][[TABLE_DATA_KEY]].length;
 		//加算ポイントのレートを返すための変数を作る
 		var userPlusPointRate;
 		//ループでポイントのレートを求める
 		for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
 			//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
-			var studentsCount = this.json[plusPointQueryKey].table[loopCount].students;
+			var studentsCount = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].students;
 			//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
 			if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
 				//加算ポイントのレートを決定しループを終わらせる
-				userPlusPointRate = this.json[plusPointQueryKey].table[loopCount].point_rate;
+				userPlusPointRate = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].point_rate;
 				break;
 			}
 		}
@@ -2611,72 +2611,6 @@ function createLittleContents(){
 //		}
 	}
 	
-	/* 関数名:openMemberReservedConfirmDialog
-	 * 概要　:会員top、予約確認ダイアログを開く処理
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.07.31
-	 * 作成者　:T.Yamamoto
-	 * 変更日　:2015.08.09
-	 * 変更者　:T.Masuda
-	 * 内容	　:改修したdialogExクラスへの対応とcreateLittleContentsクラスへの移動を行いました
-	 */
-	this.openMemberReservedConfirmDialog = function() {
-		var thisElem = this;							//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
-		var $dialog = $('.reserveLessonListContent');	//ダイアログのDOMを取得しておく
-		//予約一覧の行を選択して、予約確認ダイアログを表示する処理
-		$dialog.on(CLICK, '.targetLessonTable', function(){
-			
-			//クリックした行の番号とデータを取得する
-			var recordData = getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem);
-			//残席の記号を取得する
-			var restMarkNow = $('.targetLessonTable' +':eq(' + (recordData.number) + ') td').eq(4).text();
-			
-			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-			if (thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST] && restMarkNow != '✕') {
-				//予約一覧ダイアログを開く際にセットされたデータを取得する
-				var prevDialogData = $dialog[0].instance.getArgumentDataObject();
-				//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
-				recordData.data[USER_ID] = thisElem.getUserId();
-				//日付を日本語表示にしてダイアログのタイトルにするために保存する
-				var titleDate = getDialogTitleDate(recordData.data.lesson_date)
-				var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
-				//予約、キャンセルのどちらのダイアログでも使うため、
-				//createLittleContentsクラスのインスタンスとダイアログのデータを行データに入れておく
-				recordData.data = $.extend(true, {}, recordData.data, prevDialogData, {reservedListCreator:thisElem});
-				
-				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-				if(thisElem.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
-					//ダイアログのタイトルをセットして予約日を分かりやすくする
-					dialogOption.argumentObj.config[TITLE] = titleDate;
-					
-					//インプット用のデータを作る
-					//recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
-					var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
-					sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
-							{},								//新たにオブジェクトを作り、そこにまとめる
-							dialogOption.argumentObj.data, 	//argumentObjのdata部分
-							recordData.data, 				//選択された行データ
-							{number: recordData.number}, 	//行の番号
-							prevDialogData 				//予約一覧ダイアログのargumentObjのデータ
-						);
-					
-					//予約確認ダイアログを作る
-					var memberReservedConfirmDialog = new dialogEx(
-							DIALOG_MEMBER_RESERVED_CONFIRM, 					//予約確認ダイアログのHTMLファイルパス	
-							sendObj, 											//インプット用データオブジェクト
-							dialogOption[RETURN_OBJ]);							//アウトプット用データオブジェクト
-					//閉じるときのイベントを登録
-					memberReservedConfirmDialog.setCallbackClose(memberReservedConfirmDialogClose);	
-					memberReservedConfirmDialog.run();							//主処理を走らせる。
-				//すでに予約しているのであればキャンセルダイアログを開く
-				} else {
-					//キャンセルダイアログを開く
-					cancelDialogOpen(recordData.data, titleDate);
-				}
-			}
-		});
-	}
 
 	/* 関数名:openAdminLessonDetailDialog
 	 * 概要　:管理者授業詳細ダイアログを開く
@@ -2757,7 +2691,7 @@ function createLittleContents(){
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
 			sendObject['lessonDate'] = argObj.data.lessonDate.replace(/\//g,"-");
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-			sendObject['tableData'] = thisElem.json.adminLessonDetailTable.table;
+			sendObject['tableData'] = thisElem.json.adminLessonDetailTable[TABLE_DATA_KEY];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
@@ -3013,164 +2947,164 @@ function calendar(selector) {
 		mDialog.open();	//ダイアログを開く
 	}
 
-/*
- * 関数名:putDisableDate(date, dateArray)
- * 引数  :Date date: 日付
- *     :Array dateArray: 日付の配列
- * 戻り値:Array:DatepickerのbeforeShowDayで要求されるbooleanの配列を返す
- * 概要  :配列に該当する日付があるかのチェックを行い、判定を返す
- * 作成日:2015.06.04
- * 作成者:T.Masuda
- */
-this.putDisableDate = function(date, dateArray){
-	var retArray = [false];					//返却する配列を作る。
-	//日付が用意されていたら
-	if(dateArray != null){
-		var ymd = this.createYMD(date);				//日付の配列を作る。
-		var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
-			
-		//日付配列を走査する。
-		for(var i = 0; i < dateArray.length; i++){
-			//合致する日付があれば
-			if(this.compareYMD(ymd, this.createYMD(dateArray[i]))){
-				retArray[0] = true;	//その日付を無効にする。
+	/*
+	 * 関数名:putDisableDate(date, dateArray)
+	 * 引数  :Date date: 日付
+	 *     :Array dateArray: 日付の配列
+	 * 戻り値:Array:DatepickerのbeforeShowDayで要求されるbooleanの配列を返す
+	 * 概要  :配列に該当する日付があるかのチェックを行い、判定を返す
+	 * 作成日:2015.06.04
+	 * 作成者:T.Masuda
+	 */
+	this.putDisableDate = function(date, dateArray){
+		var retArray = [false];					//返却する配列を作る。
+		//日付が用意されていたら
+		if(dateArray != null){
+			var ymd = this.createYMD(date);				//日付の配列を作る。
+			var dArrayLength = dateArray.length;	//日付配列の要素数を取得する。
+				
+			//日付配列を走査する。
+			for(var i = 0; i < dateArray.length; i++){
+				//合致する日付があれば
+				if(this.compareYMD(ymd, this.createYMD(dateArray[i]))){
+					retArray[0] = true;	//その日付を無効にする。
+				}
+			}
+		//日付の配列が用意されていなければ
+		} else {
+			retArray[0] = true;	//日付を有効にする
+		}
+		
+		return retArray;	//判定の配列を返す。
+	}
+	
+	/*
+	 * 関数名: extractDateArray(map)
+	 * 引数  :map map: 処理対象とする連想配列。
+	 * 戻り値:Array:日付型の配列。
+	 * 概要  :blogのJSONから日付型の配列を作る。現状ではblogcontent.jsonの形式にあわせる。
+	 * 作成日:2015.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.extractDateArray = function(map){
+		var retArray = [];		//返却するための配列を用意する。
+		//キーが数字かどうかのチェックを行いながら走査する。
+		for(key in map){
+			//キーが数字であれば
+			if(!(isNaN(key))){
+				//日付のキーを取得して配列に格納する。
+				retArray.push(new Date(map[key].blogArticleTitle.blogArticleDate.text));
 			}
 		}
-	//日付の配列が用意されていなければ
-	} else {
-		retArray[0] = true;	//日付を有効にする
-	}
-	
-	return retArray;	//判定の配列を返す。
-}
-
-/*
- * 関数名: extractDateArray(map)
- * 引数  :map map: 処理対象とする連想配列。
- * 戻り値:Array:日付型の配列。
- * 概要  :blogのJSONから日付型の配列を作る。現状ではblogcontent.jsonの形式にあわせる。
- * 作成日:2015.04.19
- * 作成者:T.Masuda
- */
-this.extractDateArray = function(map){
-	var retArray = [];		//返却するための配列を用意する。
-	//キーが数字かどうかのチェックを行いながら走査する。
-	for(key in map){
-		//キーが数字であれば
-		if(!(isNaN(key))){
-			//日付のキーを取得して配列に格納する。
-			retArray.push(new Date(map[key].blogArticleTitle.blogArticleDate.text));
-		}
-	}
-	
-	return retArray;	//配列を返す。
-}
-
-/*
- * 関数名:createYMD(date)
- * 引数  :Date date: 日付。
- * 戻り値:Array:年月日の配列。
- * 概要  :日付型から年月日の配列を作って返す。
- * 作成日:2015.04.19
- * 作成者:T.Masuda
- */
-this.createYMD = function(date){
-	var retArray = [];	//返却する配列を作成する。
-	
-	retArray.push(date.getFullYear());				//年を取得する。
-	retArray.push(date.getMonth() + 1);				//月を取得する。
-	retArray.push(date.getDate());					//日を取得する。
-	
-	return retArray;	//配列を返す。
-}
-
-/*
- * 関数名: compareYMD(target1, target2)
- * 引数  :Array target1: 比較対象1。
- *     :Array target2: 比較対象2。
- * 戻り値:boolean:日付が同じかどうかの判定を返す。
- * 概要  :2つの日付型の配列が同じかどうかを判定して結果を返す。
- * 作成日:2015.04.19
- * 作成者:T.Masuda
- */
-this.compareYMD = function(target1, target2){
-	var retBoo = true;	//返す真理値を格納する配列を用意する。
-	
-	var ymdLength = target1.length;	//日付の構成要素の数を取得する。
-	
-	//2つの日付を走査する。
-	for(var i = 0; i < ymdLength; i++){
-		if(target1[i] != target2[i]){	//日付が違ったら
-			retBoo = false;				//false判定を返す。
-			break;						//ループを抜ける。
-		}
-	}
-	
-	return retBoo;	//判定を返す。
-}
-
-/*
- * 関数名:setCallCalendar(selector)
- * 引数  :string selector:カレンダーと関連づける要素のセレクタ。
- * 戻り値:なし
- * 概要  :指定した要素をクリックしてカレンダーを呼ぶようにする。
- * 作成日:2015.03.26
- * 作成者:T.Y
- */
-this.setCallCalendar = function(selector) {
-		//datepickerの日本語表示設定。
-        $.datepicker.regional['ja'] = dpJpSetting;
-		$.datepicker.setDefaults($.datepicker.regional['ja']);
-
-        $(selector).datepicker();
-}
-
-/*
- * 関数名:function checkDate(dateText, calendar)
- * 引数  :string dateText:日付のテキスト。
- *     :element calendar:この関数をコールしたdatepicker。
- * 戻り値:booelan:判定結果を返す。
- * 概要  :選択したカレンダーの日付が今日より前かどうかをチェックすり。
- * 作成日:2015.04.10
- * 作成者:T.Masuda
- */
-this.checkDate = function(dateText, calendar){
-	var retBoo = true;	//返却値を格納する変数を宣言、trueで初期化する。
-	//予約カレンダーであれば
-	if(calendar.hasClass('reservedCalendar')){
-		//本日の日付のインスタンスを生成する。
-		var today = new Date();
-		//本日の0時0分0秒の日付を作成する。
-		var today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
 		
-		//選択した日付のインスタンスを生成する。
-		var selectedDay = new Date(dateText);
-		//今日より前の日付なら
-		if(today.getTime() > selectedDay.getTime()){
-			retBoo = false;	//falseを返すようにする。
-		}
+		return retArray;	//配列を返す。
 	}
 	
-	return retBoo;	//retBooを返す。
-}
+	/*
+	 * 関数名:createYMD(date)
+	 * 引数  :Date date: 日付。
+	 * 戻り値:Array:年月日の配列。
+	 * 概要  :日付型から年月日の配列を作って返す。
+	 * 作成日:2015.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.createYMD = function(date){
+		var retArray = [];	//返却する配列を作成する。
+		
+		retArray.push(date.getFullYear());				//年を取得する。
+		retArray.push(date.getMonth() + 1);				//月を取得する。
+		retArray.push(date.getDate());					//日を取得する。
+		
+		return retArray;	//配列を返す。
+	}
 
-/*
- * 関数名:lessonListDialogSendObject
- * 引数  :string: calendarDate:日付文字列
- * 戻り値:object:授業の日付と日付の日本語表示の文字列
- * 概要  :日付の文字列を受け取り、値としての日付と日本語文字列としての日付をオブジェクトに格納して返す。
- * 作成日:2015.08.06
- * 作成者:T.Yamamoto
- * 修正日:2015.08.15
- * 修正者:T.Masuda
- * 内容	:オブジェクトを作って返すだけにしました。$.extendsで統合してください。
- */
-this.lessonListDialogSendObject = function(calendarDate){
-	//ダイアログのタイトルの日付を日本語名にして取得する
-	var dialogTitle = changeJapaneseDate(calendarDate);
-	//ダイアログの日付データと日本語形式にした日付をを連想配列として返す
-	return {lessonDate: calendarDate, dateJapanese:dialogTitle};
-}
+	/*
+	 * 関数名: compareYMD(target1, target2)
+	 * 引数  :Array target1: 比較対象1。
+	 *     :Array target2: 比較対象2。
+	 * 戻り値:boolean:日付が同じかどうかの判定を返す。
+	 * 概要  :2つの日付型の配列が同じかどうかを判定して結果を返す。
+	 * 作成日:2015.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.compareYMD = function(target1, target2){
+		var retBoo = true;	//返す真理値を格納する配列を用意する。
+		
+		var ymdLength = target1.length;	//日付の構成要素の数を取得する。
+		
+		//2つの日付を走査する。
+		for(var i = 0; i < ymdLength; i++){
+			if(target1[i] != target2[i]){	//日付が違ったら
+				retBoo = false;				//false判定を返す。
+				break;						//ループを抜ける。
+			}
+		}
+		
+		return retBoo;	//判定を返す。
+	}
+	
+	/*
+	 * 関数名:setCallCalendar(selector)
+	 * 引数  :string selector:カレンダーと関連づける要素のセレクタ。
+	 * 戻り値:なし
+	 * 概要  :指定した要素をクリックしてカレンダーを呼ぶようにする。
+	 * 作成日:2015.03.26
+	 * 作成者:T.Y
+	 */
+	this.setCallCalendar = function(selector) {
+			//datepickerの日本語表示設定。
+	        $.datepicker.regional['ja'] = dpJpSetting;
+			$.datepicker.setDefaults($.datepicker.regional['ja']);
+	
+	        $(selector).datepicker();
+	}
+	
+	/*
+	 * 関数名:function checkDate(dateText, calendar)
+	 * 引数  :string dateText:日付のテキスト。
+	 *     :element calendar:この関数をコールしたdatepicker。
+	 * 戻り値:booelan:判定結果を返す。
+	 * 概要  :選択したカレンダーの日付が今日より前かどうかをチェックすり。
+	 * 作成日:2015.04.10
+	 * 作成者:T.Masuda
+	 */
+	this.checkDate = function(dateText, calendar){
+		var retBoo = true;	//返却値を格納する変数を宣言、trueで初期化する。
+		//予約カレンダーであれば
+		if(calendar.hasClass('reservedCalendar')){
+			//本日の日付のインスタンスを生成する。
+			var today = new Date();
+			//本日の0時0分0秒の日付を作成する。
+			var today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+			
+			//選択した日付のインスタンスを生成する。
+			var selectedDay = new Date(dateText);
+			//今日より前の日付なら
+			if(today.getTime() > selectedDay.getTime()){
+				retBoo = false;	//falseを返すようにする。
+			}
+		}
+		
+		return retBoo;	//retBooを返す。
+	}
+	
+	/*
+	 * 関数名:lessonListDialogSendObject
+	 * 引数  :string: calendarDate:日付文字列
+	 * 戻り値:object:授業の日付と日付の日本語表示の文字列
+	 * 概要  :日付の文字列を受け取り、値としての日付と日本語文字列としての日付をオブジェクトに格納して返す。
+	 * 作成日:2015.08.06
+	 * 作成者:T.Yamamoto
+	 * 修正日:2015.08.15
+	 * 修正者:T.Masuda
+	 * 内容	:オブジェクトを作って返すだけにしました。$.extendsで統合してください。
+	 */
+	this.lessonListDialogSendObject = function(calendarDate){
+		//ダイアログのタイトルの日付を日本語名にして取得する
+		var dialogTitle = changeJapaneseDate(calendarDate);
+		//ダイアログの日付データと日本語形式にした日付をを連想配列として返す
+		return {lessonDate: calendarDate, dateJapanese:dialogTitle};
+	}
 }
 
 /*
@@ -3281,7 +3215,7 @@ function blogCalendar(selector, creator) {
 	this.creator = creator;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
 	//creatorが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle.table);	
+	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle[TABLE_DATA_KEY]);	
 	//オプションを設定する
 	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];

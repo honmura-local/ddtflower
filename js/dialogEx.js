@@ -443,7 +443,7 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
 		//置換を行うテーブルのデータを取得する
-		var tableData = creator.json[tableName].table;
+		var tableData = creator.json[tableName][TABLE_DATA_KEY];
 		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
 		if(lessonList) {
 			//時間割1限分の生徒の合計人数が入った連想配列を作る
@@ -484,30 +484,7 @@ function insertConfirmReserveJsonDialogValueEx(targetJson, dialogJsonKey, creato
 	object.attention.addPointValue.lesson_key.value = receivedObject.lesson_key;			//受講授業id(加算ポイント)
 }
 
-/*
- * 関数名:getClickTableRecordData
- * 概要　:クリックされたテーブルの行にある連想配列のデータを取得する。
- 		使い方としてクリックイベントの中で使う
- * 引数　:string:tableName:データ取得対象のテーブルクラス名
- 		string:clickRecordClassName:クリックされたレコードのクラス名
- 		createTagInstance:creator:クリエイトタグインスタンス名
- * 返却値:object:returnObject:取得したデータの結果
- * 作成日　:2015.08.08
- * 作成者　:T.Yamamoto
- */
-function getClickTableRecordData(clickTarget, tableName, clickRecordClassName, creator) {
-	//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
-	var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
-	//次のダイアログに渡すデータを変数に入れる
-	var recordObject = creator.json[tableName][TABLE][rowNum];
-	//取得したデータを返却する
-	var returnObject = {
-		number:rowNum,			//クリックされた行番号
-		data:recordObject		//クリックされた行のデータ
-	}
-	//取得した行の番号とデータを返す
-	return returnObject;
-}
+
 
 /*
  * 関数名:getDialogTitleDate
@@ -673,21 +650,21 @@ function newLessonEntry() {
 		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 		var timeTableDayKey = "";
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-		var loopEndCount = data.tableData.length;
+		var loopEndCount = data[TABLE_DATA_KEY].length;
 		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
 		var newLesoonData = getInputData('lessonData');
 		
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
 			//time_table_day_keyが空白のものはループを飛ばす
-			if(data.tableData[loopStartCount]['time_table_day_key'] == "") {
+			if(data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] == "") {
 				//次のループに行く
 				continue;
 			}
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData['timetable_key'] == data.tableData[loopStartCount]['timetable_key'] && data.tableData[loopStartCount]['time_table_day_key'] != "") {
+			if(newLesoonData['timetable_key'] == data[TABLE_DATA_KEY][loopStartCount]['timetable_key'] && data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] != "") {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data.tableData[loopStartCount]['time_table_day_key'];
+				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'];
 				//ループを終わらせる
 				break;
 			}

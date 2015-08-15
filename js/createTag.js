@@ -400,7 +400,7 @@ function createTag(){
 
 		
 		//JSONが配列形式であれば
-		if($.isArray(articles.table)){
+		if($.isArray(articles[TABLE_DATA_KEY])){
 			//コンテンツ表示
 			$(targetArea).append(this.createTagTable(articles, this.getDomNode(jsonName) , pageNum, displayPage));
 		//JSONが連想配列形式であれば
@@ -574,8 +574,8 @@ function createTag(){
 		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
-		$searchObject = articles !== void(0)? articles[ARTICLE_OBJECT_KEY]: this.json[jsonName][ARTICLE_OBJECT_KEY];
-		
+		$searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
+
 		//配列であれば
 		if($.isArray($searchObject)){
 			retNum = $searchObject.length;	//要素数を取り出す
@@ -1330,7 +1330,7 @@ function createTag(){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
 				//絞り込み対象のJSONの記事タイプが配列形式であれば
-				if($.isArray(this.json[jsonName].table)){
+				if($.isArray(this.json[jsonName][TABLE_DATA_KEY])){
 					retObj = this.filterArticleDateForArray(jsonName, this.dateText);	//配列形式の記事絞り込みを行う
 				}else{
 					retObj = this.filterArticleDateForObject(jsonName, this.dateText);	//オブジェクト形式の記事絞り込みを行う
@@ -1354,17 +1354,17 @@ function createTag(){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
 		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
-		var tableLength = retObj.table.length;	//走査対象のテーブルのサイズを取得する
+		var tableLength = retObj[TABLE_DATA_KEY].length;	//走査対象のテーブルのサイズを取得する
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
 		for(var i = 0; i < tableLength; i++){
 			//日付が合わなければ
-			if(retObj.table[i].blogArticleDate != dateText){
-				retObj.table.splice(i);	//該当する記事を削除する
+			if(retObj[TABLE_DATA_KEY][i].blogArticleDate != dateText){
+				retObj[TABLE_DATA_KEY].splice(i);	//該当する記事を削除する
 			}
 		}
 		
-		retObj.table = retObj.table.concat();	//配列をコピーしてインデックスの乱れを直す
+		retObj[TABLE_DATA_KEY] = retObj[TABLE_DATA_KEY].concat();	//配列をコピーしてインデックスの乱れを直す
 		
 		return retObj;	//作成したオブジェクトを返す
 	}
@@ -1381,7 +1381,7 @@ function createTag(){
 	this.filterArticleDateForObject = function(jsonName, dateText){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
-		var table = retObj.table;				//tableキーのオブジェクトを取得する
+		var table = retObj[TABLE_DATA_KEY];				//tableキーのオブジェクトを取得する
 		var tableLength = table.length;	//走査対象のテーブルのサイズを取得する
 		var tmpObj = {};						//絞り込んだ記事を一時的に格納するオブジェクトを作る
 		var i = 0;								//記事番号を振るためのカウンター変数を宣言する
@@ -1395,7 +1395,7 @@ function createTag(){
 			}
 		}
 		
-		retObj.table = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
+		retObj[TABLE_DATA_KEY] = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
 		
 		return retObj;	//作成したオブジェクトを返す
 	}

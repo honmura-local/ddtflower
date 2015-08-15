@@ -13,7 +13,7 @@
  */
 function memberReserveListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
-	
+
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
@@ -45,24 +45,9 @@ function memberReserveListDialog(dialog){
 		this.dispContentsMain(dialogClass);		//ダイアログ中部
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
 		//ダイアログの位置を修正する
-		this.setDialogOption(OPTION, 'position', {my:'center top',at:'center top', of:window});
+		this.setDialogPosition({my:'center top',at:'center top', of:window});
 	}
 
-	/* 関数名:getTableData
-	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
-	 * 引数　:String tableName:テーブルのJSONのキー
-	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.getTableData = function(tableName){
-		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
-		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName].tableData.length != 0? true: false;
-	}
-
-	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
 	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
@@ -74,9 +59,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContentsHeader = function(dialogClass){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
+		this.setDialogTitle(dialogClass.getArgumentDataObject().dateJapanese);
 	}
-	
+
 	/* 関数名:dispContentsMain
 	 * 概要　:画面パーツ設定用関数のメイン部分作成担当関数
 	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
@@ -86,18 +71,9 @@ function memberReserveListDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsMain = function(dialogClass){
-		var data = dialogClass.getArgumentDataObject();			//dataオブジェクトを取得する
-		
-		//ダイアログの中身の外枠を作る
-		this.create_tag.outputTag('memberInfomation', 'memberInfomation', CURRENT_DIALOG_SELECTOR);
-		//予約可能授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag('tableArea', 'tableArea', '.memberInfomation')
-		
-		//予約できる授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
-		//テーブルの値をクライアント側で編集して画面に表示する
-		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
+	this.dispContentsMain = function(){
+		//ダイアログのコンテンツを挿入する
+		this.insertDialogContents();
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -110,28 +86,65 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsFooter = function(dialogClass){
-		//レッスンのステータス領域を作る
-		this.create_tag.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
-
-		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
-		this.create_tag.openMemberReservedConfirmDialog();
-		//ダイアログを閉じるときは破棄するように設定する
-		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		this.insertFooterContents();	//フッターのコンテンツを作る
+		this.setDialogEvents();			//ダイアログのイベントを設定する
 	}
 	
-
-	/* 関数名:setDialogTitle
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
+	/* 関数名:insertFooterContents
+	 * 概要　:フッターのコンテンツを作る
+	 * 引数　:なし
 	 * 返却値:なし
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogTitle = function(dialogClass){
-		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = dialogClass.getArgumentDataObject();
-		//タイトルを入れ替える
-		this.setDialogTitle(data.dateJapanese);
+	this.insertFooterContents = function(){
+		//レッスンのステータス領域を作る
+		this.create_tag.outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
+	}
+	
+	/* 関数名:setDialogEvents
+	 * 概要　:ダイアログのイベントを設定する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.setDialogEvents = function(){
+		//ダイアログを閉じるときは破棄するように設定する
+		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		//
+		this.openMemberReservedConfirmDialog(SELECTOR_LESSON_TABLE);
+	}
+	
+	
+	/* 関数名:getTableData
+	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
+	 * 引数　:String tableName:テーブルのJSONのキー
+	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.getTableData = function(tableName){
+		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
+		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		//予約データが取得できていたらtrue、そうでなければfalseを返す
+		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+	}
+	
+	/* 関数名:insertDialogContents
+	 * 概要　:ダイアログのメインのコンテンツを作る
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日:2015.0815
+	 * 作成者:T.Masuda
+	 */
+	this.insertDialogContents = function(){
+		//予約可能授業一覧テーブルの外側の領域を作る
+		this.create_tag.outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
+		//予約できる授業のデータ一覧テーブルを作る
+		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
+		//テーブルの値をクライアント側で編集して画面に表示する
+		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 	}
 	
 	/* 関数名:setLessonDataToJSON
@@ -146,18 +159,18 @@ function memberReserveListDialog(dialog){
 		this.create_tag.getJsonFile(jsonPath);
 		//ダイアログのdataオブジェクトを取得する
 		var data = this.dialog[0].instance.getArgumentDataObject();
+		console.log(data);
 		//dbに接続する前に日付をクエリの置換連想配列に挿入する
 		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
 		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
 		this.create_tag.json.lessonTable.user_key.value = data.userId;
 	}
 	
-	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:015.08.14
+	 * 作成日　:015.08.15
 	 * 作成者　:T.Masuda
 	 */
 	this.setArgumentObj = function() {
@@ -169,6 +182,112 @@ function memberReserveListDialog(dialog){
 		$.extend(true, argumentObj.data, {parentDialogEx:this.dialog[0].instance});
 		return argumentObj;	//生成したオブジェクトを返す
 	}
+
+	/* 関数名:whenRecordSelectEvent
+	 * 概要　:テーブルのレコードを渡して処理させるダイアログを開くイベントを登録する
+	 * 引数　:String target:データ取得元のテーブルのセレクタ
+	 * 返却値:なし
+	 * 作成日　:2015.08.15
+	 * 作成者　:T.Masuda 
+	 */
+	this.whenRecordSelectEvent = function(target) {
+		var thisElem = this;							//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
+		//予約一覧の行を選択して、予約確認ダイアログを表示する処理
+		$dialog.on(CLICK + TAG_CHILD_TR, target, function(){
+
+			//クリックした行の番号とデータを取得する
+			var recordData = getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
+			//残席の記号を取得する
+			var restMarkNow = $('.targetLessonTable' +':eq(' + (recordData.number) + ') td').eq(4).text();
+			
+			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+			if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+				&& restMarkNow != CHAR_INVALIDATE) {
+				//予約一覧ダイアログを開く際にセットされたデータを取得する
+				var prevDialogData = $dialog[0].instance.getArgumentDataObject();
+				//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
+				recordData.data[USER_ID] = thisElem.create_tag.getUserId();
+				
+				//日付を日本語表示にしてダイアログのタイトルにするために保存する
+				var titleDate = getDialogTitleDate(recordData.data.lesson_date)
+				var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
+				//予約、キャンセルのどちらのダイアログでも使うため、
+				//createLittleContentsクラスのインスタンスとダイアログのデータを行データに入れておく
+				recordData.data = $.extend(true, {}, recordData.data,
+						prevDialogData, {reservedListCreator:thisElem, recordData:recordData.number});
+				
+				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
+				if(thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
+					//予約ダイアログを開く
+					this.openRecordProcessDialog(recordData.data);
+				//すでに予約しているのであればキャンセルダイアログを開く
+				} else {
+					//キャンセルダイアログを開く
+					cancelDialogOpen(recordData.data, titleDate);
+				}
+			}
+		});
+	}
+	
+	/* 関数名:openRecordProcessDialog
+	 * 概要　:テーブルのレコードを渡して処理させるダイアログを開く
+	 * 引数　:String target:データ取得元のテーブルのセレクタ
+	 * 返却値:なし
+	 * 作成日　:2015.08.15
+	 * 作成者　:T.Masuda 
+	 */
+	this.openRecordProcessDialog = function(recordData){
+		//ダイアログのタイトルをセットして予約日を分かりやすくする
+		dialogOption.argumentObj.config[TITLE] = titleDate;
+
+		//インプット用のデータを作る
+		//recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
+		var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
+		sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
+				{},								//新たにオブジェクトを作り、そこにまとめる
+				dialogOption.argumentObj.data, 	//argumentObjのdata部分
+				recordData.data, 				//選択された行データ
+				{number: recordData.number}, 	//行の番号
+				prevDialogData 					//予約一覧ダイアログのargumentObjのデータ
+			);
+		
+		//ダイアログを作る
+		var newDialog = new dialogEx(
+				DIALOG_MEMBER_RESERVED_CONFIRM, 					//予約確認ダイアログのHTMLファイルパス	
+				sendObj 											//インプット用データオブジェクト
+				);
+		
+		//閉じるときのイベントを登録
+		newDialog.setCallbackClose(memberReservedConfirmDialogClose);	
+		newDialog.run();							//主処理を走らせる。
+	}	
+	
+
+	/*
+	 * 関数名:getClickTableRecordData
+	 * 概要　:クリックされたテーブルの行にある連想配列のデータを取得する。
+	 		使い方としてクリックイベントの中で使う
+	 * 引数　:string:tableName:データ取得対象のテーブルクラス名
+	 		string:clickRecordClassName:クリックされたレコードのクラス名
+	 		createTagInstance:creator:クリエイトタグインスタンス名
+	 * 返却値:object:returnObject:取得したデータの結果
+	 * 作成日　:2015.08.08
+	 * 作成者　:T.Yamamoto
+	 */
+	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName, creator) {
+		//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
+		var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
+		//次のダイアログに渡すデータを変数に入れる
+		var recordObject = creator.json[tableName][TABLE][rowNum];
+		//取得したデータを返却する
+		var returnObject = {
+			number:rowNum,			//クリックされた行番号
+			data:recordObject		//クリックされた行のデータ
+		}
+		//取得した行の番号とデータを返す
+		return returnObject;
+	}
+
 }
 
 //継承の記述

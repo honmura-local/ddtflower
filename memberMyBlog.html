@@ -56,7 +56,7 @@
 				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogListTable'], 'myBlogListTable');
 				//ブログの投稿したことがある人のみブログリストテーブルを作る
-				if(creator.json.myBlogListTable.table.length != 0) {
+				if(creator.json.myBlogListTable[TABLE_DATA_KEY].length != 0) {
 					//ブログリストのテーブルを作る
 					creator.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
 					//テーブルの1列目をチェックボックスにする
@@ -80,7 +80,7 @@
 				//ユーザ情報のテキストをDBから取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myBlogTable'], 'myBlogTable');
 				//ブログデータがあればブログ一覧を作る
-				if(creator.json.myBlogTable.table[0]) {
+				if(creator.json.myBlogTable[TABLE_DATA_KEY][0]) {
 					creator.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'creator.createMyBlogImages');	// ブログの記事を作る。
 				}
 				
