@@ -312,6 +312,18 @@ LESSON_TABLE								= 'lessonTable';
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
 
+//会員、予約確認ダイアログ
+MEMBER_RESERVE_CONFIRM_DIALOG				= 'dialog/memberReserveConfirmDialog.html';
+MEMBER_RESERVE_CONFIRM_DIALOG_JS 			= 'dialog/js/memberReserveConfirmDialog.js';
+MEMBER_RESERVE_CONFIRM_DIALOG_HTML 			= 'dialog/template/memberReserveConfirmDialog.html';
+MEMBER_RESERVE_CONFIRM_DIALOG_JSON 			= 'dialog/source/memberReserveConfirmDialog.json';
+
+//会員、予約キャンセルダイアログ
+MEMBER_RESERVE_CANCEL_DIALOG 				= 'dialog/memberReserveCancelDialog.html';
+MEMBER_RESERVE_CANCEL_DIALOG_JS 			= 'dialog/js/memberReserveCancelDialog.js';
+MEMBER_RESERVE_CANCEL_DIALOG_HTML 			= 'dialog/template/memberReserveCancelDialog.html';
+MEMBER_RESERVE_CANCEL_DIALOG_JSON 			= 'dialog/source/memberReserveCancelDialog.json';
+
 //管理者、授業一覧ダイアログ
 ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
 ADMIN_LESSON_LIST_DIALOG_JS 				= 'dialog/js/adminLessonListDialog.js';

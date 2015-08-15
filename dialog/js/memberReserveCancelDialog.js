@@ -1,17 +1,17 @@
-/* ファイル名:memberReserveListDialog.js
- * 概要　　　:テスト用ダイアログ
- * 作成者　:T.Masuda
- * 場所　　:dialog/js/memberReserveListDialog.js
+/* ファイル名:memberReserveCancelDialog.js
+ * 概要　　　:会員、予約キャンセルダイアログ
+ * 作成者　:T.Yamamoto
+ * 場所　　:dialog/js/memberReserveCancelDialog.js
  */
 
-/* クラス名:memberReserveListDialog.js
+/* クラス名:memberReserveCancelDialog.js
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 親クラス:baseDialog
  * 引数	 :Element dialog:ダイアログのDOM
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/memberReserveListDialog.js
+ * 場所　　:dialog/js/memberReserveCancelDialog.js
  */
-function memberReserveListDialog(dialog){
+function memberReserveCancelDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
 	/* 関数名:dispContents
@@ -24,7 +24,24 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContents = function(){
 		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
-		
+
+//仮処理
+	//予約キャンセルダイアログに必要な値を受け取った値で入れる
+	insertConfirmReserveJsonDialogValueEx('cancelLessonContent', 'cancelLessonDialogContent', creator);
+	//アコーディオンの中身をDBから取り出す
+	creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json.cancelLessonContent, 'cancelLessonContent');
+	//ダイアログの中身のコンテンツを作る
+	creator.outputTag('cancelLessonContent', 'cancelLessonContent', '.cancelLessonDialogContent');
+	// ボタンタグをjqueryuiの見た目にする
+	$('button').button();
+	//送信ボタンがクリックされたときにDBに予約情報を登録する
+	$dialog.on(CLICK, 'button', function() {
+		//押されたボタンのvalueを取得し、ダイアログの押されたボタンの状態のデータに反映する
+		dialogClass.setPushedButtonState($(this).attr('value'));
+		dialogClass.destroy('value');	//ダイアログを破棄する
+	});
+
+
 		//ダイアログのタイトルをセットする
 		this.dispContentsHeader(dialogClass);
 		//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
@@ -171,6 +188,6 @@ function memberReserveListDialog(dialog){
 }
 
 //継承の記述
-memberReserveListDialog.prototype = new baseDialog();
+memberReserveCancelDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
-memberReserveListDialog.prototype.constructor = baseDialog;
+memberReserveCancelDialog.prototype.constructor = baseDialog;
