@@ -313,3 +313,4 @@ ERROR_LESSONLIST							= '予約可能な授業がありません';	//予約で�
 LESSON_TABLE								= 'lessonTable';
 RESERVE_LIST_JSON							= 'dialog/source/reserveLessonListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/reserveLessonListDialog.html';
+TABLE_DATA_KEY								= 'tableData';

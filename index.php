@@ -120,6 +120,9 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/replaceQuery.js"></script>
 <!-- 管理者ページ用のjavascriptを読み込む -->
 <script src="js/page/adminPage.js"></script>
+
+<!-- ダイアログ作成クラスの基底クラスを定義したJSファイル -->
+<script type="text/javascript" src="dialog/js/baseDialog.js"></script>
 <!-- ウィンドウ作成用クラス windowExクラスのJSファイル -->
 <script type="text/javascript" src="js/windowEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->

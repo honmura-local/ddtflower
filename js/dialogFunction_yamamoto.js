@@ -38,7 +38,7 @@ function reservedLessonListDialogOpenFunc() {
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
 		//変数に予約一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = reserveLessonListCreator.json[LESSON_TABLE].table;
+		var lessonTable = reserveLessonListCreator.json[LESSON_TABLE][TABLE_DATA_KEY];
 		// 時間割1限分の生徒の合計人数が入った連想配列を作る
 		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 		//予約一覧テーブルの値を置換する

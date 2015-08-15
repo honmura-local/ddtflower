@@ -109,5 +109,24 @@ function common(){
 		fadeToggleSet('div.topicShowBlog', '.topicBlog', '.topic', 500);
 	}
 	
+	/* 関数名:tableReplaceAndSetClass
+	 * 概要　:テーブルを置換し、さらに行に対してクラス属性を付ける
+	 * 引数　:string:tableName:テーブル名
+	 		string :tableReplaceFunc:テーブル置換関数名
+			bool:replaceBool:置換するときにレッスン合計人数がどうかの判定
+			string:recordClassName:行につけるクラス属性名
+	 * 返却値:なし
+	 * 作成日　:2015.08.08
+	 * 作成者　:T.Yamamoto
+	 * 作成日　:2015.08.14
+	 * 作成者　:T.Masuda
+	 * 作成者　:dialogExからcommon.jsに移動しました
+	 */
+	this.tableReplaceAndSetClass = function(tableName, tableReplaceFunc, replaceBool, creator, recordClassName) {
+		//予約可能授業一覧を置換する
+		dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, creator);
+		//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
+		setTableRecordClass(tableName, recordClassName);
+	}
 	
 }

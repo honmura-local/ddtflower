@@ -2901,7 +2901,7 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//予約授業一覧ダイアログを作る
 			var reservedLessonListDialog = new dialogEx(
 					DIALOG_RESERVE_LESSON_LIST, 
-					sendObject.argumentObj 
+					sendObject.argumentObj
 					);
 			//ダイアログが開いたときのコールバック関数を指定する。
 			//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる

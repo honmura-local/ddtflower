@@ -967,7 +967,7 @@ function createTag(){
 	 */
 	this.createTagTable = function(mapNode, domNode , pageNum, displayPage){
 		//mapNodeからテーブル用のデータを取り出す
-		var mapNodeArray = mapNode.table;
+		var mapNodeArray = mapNode[TABLE_DATA_KEY];
 		//見出し行用のDOMを格納する変数を宣言する
 		var colNameNode = null;
 		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
