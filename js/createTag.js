@@ -575,7 +575,7 @@ function createTag(){
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
 		$searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
-		
+
 		//配列であれば
 		if($.isArray($searchObject)){
 			retNum = $searchObject.length;	//要素数を取り出す

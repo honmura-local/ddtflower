@@ -1,4 +1,4 @@
-/** ファイル名:constants.js
+﻿/** ファイル名:constants.js
  * 概要　　　:定数定義ファイル
  * 作成日　:2015.0813
  * 作成者　:T.Masuda
@@ -308,7 +308,8 @@ LOGIN_BUTTON								= 'loginButton';			//ログインボタンのテキスト
 USERNAME_SELECTOR							= '.userName';				//ユーザ名
 CURRENT_DIALOG_SELECTOR						= '.dialog:last';			//カレントのダイアログのセレクタ
 ERROR_LESSONLIST							= '予約可能な授業がありません';	//予約できる授業がないというメッセージ
-LESSON_TABLE								= 'lessonTable';
+LESSON_TABLE								= 'lessonTable';			//授業テーブル
+SELECTOR_LESSON_TABLE						= DOT + LESSON_TABLE;		////授業テーブルのセレクタ
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
 
@@ -351,3 +352,12 @@ DATE_JAPANESE								= 'dateJapanese';
 //jQuery UI Position用文字列。ダイアログの座標指定に使う
 POSITION									= 'position';
 DIALOG_POSITION 							= 'center top';				//ダイアログのポジション
+LESSON_STATUS								= 'lessonStatus';
+//テーブルの領域名とセレクタ
+TABLE_AREA									= 'tableArea';
+SELECTOR_TABLE_AREA							= DOT + TABLE_AREA;
+EXPLAIN										= 'explain';
+CHAR_INVALIDATE								= '✕';
+TAG_CHILD_TR								= ' tr';	//子セレクタとしてのtr
+TEXT_YES									= 'はい';	//「はい」の文字列
+TEXT_NO										= 'いいえ';	//「いいえ」の文字列
