@@ -116,6 +116,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.setAlertContents = function(alertMessage) {
+		var domtmp = this.dom;	//現在参照しているDOMが書き変わるため、退避する
 		//アラートとして表示するためのdomを取得する
 		this.load(DIALOG_DEFAULT_ALERT_CONTENTS);
 		//アラートで表示するdomをセレクタとして変数に入れる
@@ -124,6 +125,7 @@ function dialogEx(url, argumentObj, returnObj){
 		$(DOT + UI_DIALOG_CONTENT).append(alertDom);
 		//メッセージを表示する
 		$(DOT + UI_DIALOG_CONTENT + TAG_P).text(alertMessage);
+		this.dom = domtmp;	//退避していたDOMの参照を戻す
 	}
 
 	/* 関数名:setConfirmContents
@@ -139,6 +141,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 * 内容　　:内容を作りました。
 	 */
 	this.setConfirmContents = function(message, func) {
+		var domtmp = this.dom;	//現在参照しているDOMが書き変わるため、退避する
 		//アラートとして表示するためのdomを取得する
 		this.load(CONFIRM_DIALOG_PATH);
 		//アラートで表示するdomをセレクタとして変数に入れる
@@ -149,6 +152,7 @@ function dialogEx(url, argumentObj, returnObj){
 		$(DOT + UI_DIALOG_CONTENT + TAG_P).filter(SELECTOR_LAST).text(message);
 		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
 		var thisElem = this;	
+		this.dom = domtmp;	//退避していたDOMの参照を戻す
 		//処理終了後にタイマー関数をセットする
 		window.setTimeout(function(){
 			//ダイアログのクローズボックスを消す
@@ -420,28 +424,7 @@ function disappear(){
 	this.instance.destroy();
 }
 
-/*
- * 関数名:lessonListDialogSendObject
- * 引数  :strig: calendarDate:カレンダーをクリックしたときに返ってくる日付の値
- 		string:dialogOptionName:ダイアログのオプションの名前
- * 戻り値:object:sendObject:授業一覧ダイアログを開く時に渡される連想配列
- * 概要  :カレンダーをクリックしたときにその日付をダイアログのタイトルにセットし、日付を連想配列にして返す
- * 作成日:2015.08.06
- * 作成者:T.Yamamoto
- */
-function lessonListDialogSendObject(calendarDate, dialogOptionName){
-	//ダイアログのタイトルの日付を日本語名にして取得する
-	var dialogTitle = changeJapaneseDate(calendarDate);
-	//ダイアログのタイトルをセットして予約日を分かりやすくする
-	dialogExOption[dialogOptionName].argumentObj.config[TITLE] = dialogTitle;
-	//予約ダイアログを開くのに必要なデータである日付を連想配列に入れる
-	var sendObject = {
-		//予約日付をセットし、どの日に予約するのかを識別する
-		lessonDate:calendarDate
-	};
-	//予約データ連想配列を返し、ダイアログに渡すのに使う
-	return sendObject;
-}
+
 
 /* 
  * 関数名:dbDataTableValueReplace

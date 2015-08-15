@@ -2882,23 +2882,30 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		onSelect: function(dateText, inst){
 			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
+			//予約一覧ダイアログ用オブジェクトをコピーする
+			var sendObject = $.extend(true, {}, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG]);
+			
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
-			var dateObject = lessonListDialogSendObject(dateText, STR_RESERVE_LESSON_LIST_DIALOG);
+			var dateObject = instance.lessonListDialogSendObject(dateText);
+			
 			//会員番号をセットしてどのユーザが予約するのかを識別する
 			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
+			
 			//ページ内にある会員の予約状況のテーブルをダイアログから更新するため、
 			//dialogDataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
-			dialogDataObject[CREATOR] = instance.creator;
+			dialogDataObject.creator = instance.creator;
 			
 			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
-			$.extend(true, dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj.data, dialogDataObject);
+			$.extend(true, sendObject.argumentObj.data, dialogDataObject);
 			
 			//予約授業一覧ダイアログを作る
 			var reservedLessonListDialog = new dialogEx(
 					DIALOG_RESERVE_LESSON_LIST, 
-					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].argumentObj, 
-					dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG].returnObj);
-			reservedLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
+					sendObject.argumentObj 
+					);
+			//ダイアログが開いたときのコールバック関数を指定する。
+			//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
+			reservedLessonListDialog.setCallbackOpen(commonFuncs.callOpenDialog);
 			reservedLessonListDialog.run();	//主処理を走らせる。
 		}
 	}
@@ -3147,7 +3154,23 @@ this.checkDate = function(dateText, calendar){
 	return retBoo;	//retBooを返す。
 }
 
-
+/*
+ * 関数名:lessonListDialogSendObject
+ * 引数  :string: calendarDate:日付文字列
+ * 戻り値:object:授業の日付と日付の日本語表示の文字列
+ * 概要  :日付の文字列を受け取り、値としての日付と日本語文字列としての日付をオブジェクトに格納して返す。
+ * 作成日:2015.08.06
+ * 作成者:T.Yamamoto
+ * 修正日:2015.08.15
+ * 修正者:T.Masuda
+ * 内容	:オブジェクトを作って返すだけにしました。$.extendsで統合してください。
+ */
+this.lessonListDialogSendObject = function(calendarDate){
+	//ダイアログのタイトルの日付を日本語名にして取得する
+	var dialogTitle = changeJapaneseDate(calendarDate);
+	//ダイアログの日付データと日本語形式にした日付をを連想配列として返す
+	return {lessonDate: calendarDate, dateJapanese:dialogTitle};
+}
 }
 
 /*
