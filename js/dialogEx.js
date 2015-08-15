@@ -484,30 +484,7 @@ function insertConfirmReserveJsonDialogValueEx(targetJson, dialogJsonKey, creato
 	object.attention.addPointValue.lesson_key.value = receivedObject.lesson_key;			//受講授業id(加算ポイント)
 }
 
-/*
- * 関数名:getClickTableRecordData
- * 概要　:クリックされたテーブルの行にある連想配列のデータを取得する。
- 		使い方としてクリックイベントの中で使う
- * 引数　:string:tableName:データ取得対象のテーブルクラス名
- 		string:clickRecordClassName:クリックされたレコードのクラス名
- 		createTagInstance:creator:クリエイトタグインスタンス名
- * 返却値:object:returnObject:取得したデータの結果
- * 作成日　:2015.08.08
- * 作成者　:T.Yamamoto
- */
-function getClickTableRecordData(clickTarget, tableName, clickRecordClassName, creator) {
-	//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
-	var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
-	//次のダイアログに渡すデータを変数に入れる
-	var recordObject = creator.json[tableName][TABLE][rowNum];
-	//取得したデータを返却する
-	var returnObject = {
-		number:rowNum,			//クリックされた行番号
-		data:recordObject		//クリックされた行のデータ
-	}
-	//取得した行の番号とデータを返す
-	return returnObject;
-}
+
 
 /*
  * 関数名:getDialogTitleDate
