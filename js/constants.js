@@ -311,4 +311,11 @@ ERROR_LESSONLIST							= '予約可能な授業がありません';	//予約で�
 LESSON_TABLE								= 'lessonTable';
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
+//「テーブルデータ」のキー
 TABLE_DATA_KEY								= 'tableData';
+//「データ」のキー
+DATA_KEY									= 'data';
+//日本語に変換した日付文字列
+DATE_JAPANESE								= 'dateJapanese';
+//jQuery UI Position用文字列。ダイアログの座標指定に使う
+POSITION									= 'position';

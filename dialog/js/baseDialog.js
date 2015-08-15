@@ -125,6 +125,16 @@ function baseDialog(dialog){
 		this.setDialogOption(POSITION, positionObj);
 	}
 	
+	/* 関数名:setDialogEvents
+	 * 概要　:ダイアログのイベントを設定する
+	 * 引数　:なし(オーバーライド時に定義する)
+	 * 返却値:なし
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.setDialogEvents = function(){
+		
+	}
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
