@@ -319,3 +319,4 @@ DATA_KEY									= 'data';
 DATE_JAPANESE								= 'dateJapanese';
 //jQuery UI Position用文字列。ダイアログの座標指定に使う
 POSITION									= 'position';
+DIALOG_POSITION 							= 'center top';				//ダイアログのポジション
