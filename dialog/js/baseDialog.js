@@ -112,6 +112,19 @@ function baseDialog(dialog){
 		//ダイアログのbuttonsオプションを設定する
 		this.setDialogOption(TITLE, title);
 	}
+
+	/* 関数名:setDialogPosition
+	 * 概要　:ダイアログの位置をセットする
+	 * 引数　:Object positionObj:位置設定の3つのキーが入ったオブジェクト
+	 * 返却値:なし
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.setDialogPosition = function(positionObj){
+		//ダイアログの位置を設定する
+		this.setDialogOption(POSITION, positionObj);
+	}
+	
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。

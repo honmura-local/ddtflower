@@ -45,7 +45,7 @@ function memberReserveListDialog(dialog){
 		this.dispContentsMain(dialogClass);		//ダイアログ中部
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
 		//ダイアログの位置を修正する
-		this.setDialogOption(OPTION, 'position', {my:'center top',at:'center top', of:window});
+		this.setDialogPosition({my:'center top',at:'center top', of:window});
 	}
 
 	/* 関数名:getTableData
