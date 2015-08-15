@@ -50,7 +50,7 @@ function finshedLessonTableAfterPaging() {
 		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
 		var nowPageNumber = Number($('.select').text() - 1);
 		//テーブルのデータを取得する
-		var tableRow = creator.json.finishedLessonTable.table;
+		var tableRow = creator.json.finishedLessonTable[TABLE_DATA_KEY];
 		//テーブルの値を編集するループを開始する値を取得する
 		var loopStartCount = nowPageNumber * 10;
 		//テーブルのレコード数を取得する

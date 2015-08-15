@@ -443,7 +443,7 @@ function dbDataTableValueReplace(tableName, replaceFuncName, lessonList, creator
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
 		//置換を行うテーブルのデータを取得する
-		var tableData = creator.json[tableName].table;
+		var tableData = creator.json[tableName][TABLE_DATA_KEY];
 		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
 		if(lessonList) {
 			//時間割1限分の生徒の合計人数が入った連想配列を作る
@@ -673,21 +673,21 @@ function newLessonEntry() {
 		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 		var timeTableDayKey = "";
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-		var loopEndCount = data.tableData.length;
+		var loopEndCount = data[TABLE_DATA_KEY].length;
 		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
 		var newLesoonData = getInputData('lessonData');
 		
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
 			//time_table_day_keyが空白のものはループを飛ばす
-			if(data.tableData[loopStartCount]['time_table_day_key'] == "") {
+			if(data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] == "") {
 				//次のループに行く
 				continue;
 			}
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData['timetable_key'] == data.tableData[loopStartCount]['timetable_key'] && data.tableData[loopStartCount]['time_table_day_key'] != "") {
+			if(newLesoonData['timetable_key'] == data[TABLE_DATA_KEY][loopStartCount]['timetable_key'] && data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] != "") {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data.tableData[loopStartCount]['time_table_day_key'];
+				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'];
 				//ループを終わらせる
 				break;
 			}

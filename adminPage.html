@@ -92,7 +92,7 @@
 					// 日ごと予約者一覧テーブル用のJSON配列を取得する
 					creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 					//日ごと予約者の情報がないときにテーブルを作らない
-					if(creator.json.eachDayReservedInfoTable.table[0]) {
+					if(creator.json.eachDayReservedInfoTable[TABLE_DATA_KEY][0]) {
 						//日ごと予約者一覧テーブルを作る
 						creator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
 						//管理者日ごと予約者一覧テーブルを置換する

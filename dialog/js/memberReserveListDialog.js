@@ -59,7 +59,7 @@ function memberReserveListDialog(dialog){
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
 		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
 		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName].tableData.length != 0? true: false;
+		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
 	}
 
 	
