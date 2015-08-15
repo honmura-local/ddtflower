@@ -1638,9 +1638,9 @@ function createLittleContents(){
 	 */
 	this.tableReset = function(tableName) {
 		//テーブルのjsonの値が既にあれば
-		if(this.json[tableName].table){
+		if(this.json[tableName][TABLE_DATA_KEY]){
 			//テーブルのjsonを初期化する
-			this.json[tableName].table = {};
+			this.json[tableName][TABLE_DATA_KEY] = {};
 		}
 		//すでにテーブルがあるならテーブルを消す
 		if ($(DOT + tableName)) {
@@ -1663,7 +1663,7 @@ function createLittleContents(){
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
 		//DBから取得した値があった時の処理
-		if(this.json[reloadTableClassName].table[0]){
+		if(this.json[reloadTableClassName][TABLE_DATA_KEY][0]){
 			//テーブルを作り直す
 			this.outputTagTable(reloadTableClassName,reloadTableClassName, replaceTableOption[reloadTableClassName].addDomPlace);
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
@@ -1868,7 +1868,7 @@ function createLittleContents(){
 		//ユーザ一覧テーブルを削除する
 		$(DOT + targetPagingClassName).remove();
 		//会員一覧テーブルをリセットして検索に備える
-		creator.json[targetPagingClassName].table = {};
+		creator.json[targetPagingClassName][TABLE_DATA_KEY] = {};
 		//ナンバリングのdomを初期化する
 		$('.numbering').remove();
 		//新しくページングを作り直すためにページングの番号一覧をリセットする
@@ -1889,7 +1889,7 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = this.json[tableClassName].table[rowNumber];
+		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
@@ -2171,17 +2171,17 @@ function createLittleContents(){
 		//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//加算ポイントについてループして値を走査するためにループの値を取得する
-		var loopMaxCount = this.json[plusPointQueryKey].table.length;
+		var loopMaxCount = this.json[plusPointQueryKey][[TABLE_DATA_KEY]].length;
 		//加算ポイントのレートを返すための変数を作る
 		var userPlusPointRate;
 		//ループでポイントのレートを求める
 		for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
 			//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
-			var studentsCount = this.json[plusPointQueryKey].table[loopCount].students;
+			var studentsCount = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].students;
 			//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
 			if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
 				//加算ポイントのレートを決定しループを終わらせる
-				userPlusPointRate = this.json[plusPointQueryKey].table[loopCount].point_rate;
+				userPlusPointRate = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].point_rate;
 				break;
 			}
 		}
@@ -2757,7 +2757,7 @@ function createLittleContents(){
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
 			sendObject['lessonDate'] = argObj.data.lessonDate.replace(/\//g,"-");
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-			sendObject['tableData'] = thisElem.json.adminLessonDetailTable.table;
+			sendObject['tableData'] = thisElem.json.adminLessonDetailTable[TABLE_DATA_KEY];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
@@ -3281,7 +3281,7 @@ function blogCalendar(selector, creator) {
 	this.creator = creator;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
 	//creatorが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle.table);	
+	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle[TABLE_DATA_KEY]);	
 	//オプションを設定する
 	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];

@@ -548,7 +548,7 @@ function afterCreateClassList(elem, time){
 		//ダイアログの直下の子のクラス名を取得する
 		var className = $this.children().eq(0).attr(CLASS).split(' ')[0];
 		//変数に予約一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = creator.json[className].table;
+		var lessonTable = creator.json[className][TABLE_DATA_KEY];
 		// 時間割1限分の生徒の合計人数が入った連想配列を作る
 		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 		//予約一覧テーブルの値を置換する

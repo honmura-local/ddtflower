@@ -24,7 +24,6 @@ CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
 
 ADMIN_LESSON_INFORMATION	= 'adminLessonInformation';			//管理者日ごとダイアログの内容
 CLASS							= 'class';							//クラス
-TABLE							= 'table';							//テーブル
 
 LOGIN_DIALOG				= 'loginDialog';					//ログインダイアログ
 CLASS_LOGIN_DIALOG			= '.loginDialog';					//ログインダイアログのクラスのセレクタ
@@ -187,7 +186,6 @@ SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
 PATTERN_ADD = 0;
 PATTERN_REPLACE = 1;
 //outputNumberingTagで用いる記事のオブジェクトの親のキー。
-ARTICLE_OBJECT_KEY								= 'table';
 USER_ID											= 'userId';
 ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
 ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー

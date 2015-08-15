@@ -25,7 +25,7 @@ function createAdminPermitLessonContent () {
 	// 受講承認テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
 	//データがあればテーブルを追加する
-	if(creator.json.doLecturePermitInfoTable.table) {
+	if(creator.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
 		//受講承認タブのリストテーブル
 		creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 		//受講承認のボタン
@@ -40,10 +40,10 @@ function createAdminPermitLessonContent () {
 	//受講承認のテーブルにチェックボックスを追加する
 	creator.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
-	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, creator.json[DO_LECTURE_PERMIT_INFO_TABLE].table, DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, creator.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-	creator.setSelectboxText(creator.json.selectCommodityInf.table, creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	creator.setSelectboxText(creator.json.selectCommodityInf[TABLE_DATA_KEY], creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
 	setDefaultSellingPrice();
 	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
@@ -101,7 +101,7 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧の検索機能を実装する
 	searchPermitListInfoTable();
 	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-	creator.setSelectboxText(creator.json.selectCommodityInf.table, creator.json.contentSelect.contentOption, 'commodity_name');
+	creator.setSelectboxText(creator.json.selectCommodityInf[TABLE_DATA_KEY], creator.json.contentSelect.contentOption, 'commodity_name');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
@@ -151,7 +151,7 @@ function createAdminUserListContent() {
 		//クエリをデフォルトに戻す
 		creator.json.userListInfoTable.db_getQuery = defaultQuery;
 		//取得した値が0の時のテーブルを作らない
-		if(creator.json.userListInfoTable.table.length != 0) {
+		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
 			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
 		}
@@ -263,7 +263,7 @@ function createAdminMailMagaAnnounceContent() {
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
 		var targetNumber = $('.targetMailMagazine').index(this);
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = creator.json.mailMagaTable.table[targetNumber];
+		var targetInf = creator.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
 		//取得した連想配列をテキストボックスにセットする
 		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
 	});
@@ -494,7 +494,7 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 		//取り出した行のデータを数えるためにカウンターを変数を作る
 		var counter = 0;
 		//行データを変数に入れる
-		var rowData = creator.json.selectCommodityInf.table
+		var rowData = creator.json.selectCommodityInf[TABLE_DATA_KEY]
 		//取り出したデータの数だけループし、価格を取り出す
 		$.each(rowData, function(){
 			//取得した備品名と比較するためにループしている備品名を取得する
@@ -502,9 +502,9 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 			//取得した備品名とセレクトボックスの中にあるタグの名前が同じときにその番号を取得する
 			if (contentName == commodityName) {
 				//備品代をテキストボックスに入れるための番号を取得する
-				sellingPrice = creator.json.selectCommodityInf.table[counter].selling_price;
+				sellingPrice = creator.json.selectCommodityInf[TABLE_DATA_KEY][counter].selling_price;
 				//備品idをテキストボックスに入れるための番号を取得する
-				commodityKey = creator.json.selectCommodityInf.table[counter].commodity_key;
+				commodityKey = creator.json.selectCommodityInf[TABLE_DATA_KEY][counter].commodity_key;
 			}
 			counter++;
 		});
@@ -525,9 +525,9 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
  */
 function setDefaultSellingPrice() {
 	//備品代の連想配列にデフォルト値を設定する
-	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = creator.json.selectCommodityInf.table[0].selling_price;
+	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = creator.json.selectCommodityInf[TABLE_DATA_KEY][0].selling_price;
 	//備品idの連想配列にデフォルト値を設定する
-	creator.json.commodityKeyBox.value = creator.json.selectCommodityInf.table[0].commodity_key;
+	creator.json.commodityKeyBox.value = creator.json.selectCommodityInf[TABLE_DATA_KEY][0].commodity_key;
 }
 
 /* 
@@ -657,7 +657,7 @@ function afterReloadPermitListInfoTable() {
 	//受講承認一覧テーブルの取り出した行にクラス名を付ける
 	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	//受講承認一覧テーブルの列内を編集する
-	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, creator.json[LECTURE_PERMIT_LIST_INFO_TABLE].table, LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
+	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, creator.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
 	//受講承認一覧テーブルの料金列をテキストボックスにする
 	creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 	//受講承認一覧テーブルの使用pt列をテキストボックスにする
@@ -669,7 +669,7 @@ function afterReloadPermitListInfoTable() {
 	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
 	creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable']['table'], creator.setInputValueToLecturePermitListInfoTable);
+	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], creator.setInputValueToLecturePermitListInfoTable);
 }
 
 /* 

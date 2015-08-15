@@ -53,7 +53,7 @@
 				//ユーザのギャラリー情報を取得する
 				creator.getJsonFile('php/GetJSONArray.php', creator.json['myGalleryTable'], 'myGalleryTable');
 				//ギャラリーデータがあればコンテンツを作る
-				if(creator.json.myGalleryTable.table[0]) {
+				if(creator.json.myGalleryTable[TABLE_DATA_KEY][0]) {
 					//ギャラリーの内容を追加する。
 					creator.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'creator.createMyGalleryImages');	// ブログの記事を作る。
 				}

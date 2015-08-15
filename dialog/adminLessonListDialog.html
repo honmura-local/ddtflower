@@ -20,7 +20,7 @@
 	adminLessonListCreator.getJsonFile(URL_GET_JSON_ARRAY_PHP, adminLessonListCreator.json['adminLessonDetailTable'], 'adminLessonDetailTable');
 	
 	//取り出した値が0でないときに授業一覧テーブルを表示する
-	if(adminLessonListCreator.json.adminLessonDetailTable.table.length != 0) {
+	if(adminLessonListCreator.json.adminLessonDetailTable[TABLE_DATA_KEY].length != 0) {
 		//管理者授業詳細一覧テーブルの外枠を作る
 		adminLessonListCreator.outputTag('adminLessonDetailTableOutsideArea', 'adminLessonDetailTableOutsideArea', '.adminLessonListDialogContent');
 		//管理者授業詳細一覧テーブルを作る

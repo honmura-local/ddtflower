@@ -20,7 +20,7 @@ function disappear(){
  */
 function reservedLessonListDialogCloseFunc() {
 	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	creator.json[LESSON_TABLE].table = {};
+	creator.json[LESSON_TABLE][TABLE_DATA_KEY] = {};
 	//予約中授業一覧ダイアログをリロードして最新の状態にする
 	tableReload(RESERVED_LESSON_TABLE);
 	//ダイアログのdomを削除して初期化し次に開くときに備える
@@ -63,7 +63,7 @@ function adminLessonListDialogOpenFunc() {
 	//時間差で表現するためにsetTimeOutを使う
 	setTimeout(function(){
 		//変数に管理者授業詳細一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = adminLessonListCreator.json['adminLessonDetailTable'].table;
+		var lessonTable = adminLessonListCreator.json['adminLessonDetailTable'][TABLE_DATA_KEY];
 		// 時間割1限分の生徒の合計人数が入った連想配列を作る
 		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 		//管理者授業詳細一覧テーブルの値を置換する
@@ -88,7 +88,7 @@ function adminLessonListDialogOpenFunc() {
  */
 function adminLessonListDialogCloseFunc() {
 	//読み込んだテーブルのデータを消して初期化し、次に別のデータを開くときに備える
-	adminLessonListCreator.json['adminLessonDetailTable'].table = {};
+	adminLessonListCreator.json['adminLessonDetailTable'][TABLE_DATA_KEY] = {};
 	//ダイアログのdomを削除して初期化し次に開くときに備える
 	$('.adminLessonListContent')[0].instance.destroy();
 }
