@@ -29,13 +29,18 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContents = function(){
-		//ダイアログ内コンテンツの準備を行う
-		this.constructionContent();
-		//小分けした画面作成用関数をコールする
-		this.dispContentsHeader();	//上部
-		this.dispContentsMain();	//メイン部分
-		this.dispContentsFooter();	//下部
-		this.setDialogEvents();		//ダイアログ内のイベントを設定する
+		try{
+			//ダイアログ内コンテンツの準備を行う
+			this.constructionContent();
+			//小分けした画面作成用関数をコールする
+			this.dispContentsHeader();	//上部
+			this.dispContentsMain();	//メイン部分
+			this.dispContentsFooter();	//下部
+			this.setDialogEvents();		//ダイアログ内のイベントを設定する
+		} catch(e){
+			//
+			throw new failedToDisplayException();
+		}
 	}
 
 	/* 関数名:constructionContent
@@ -199,7 +204,7 @@ function baseDialog(dialog){
 		//JSONが無効なものであれば
 		if(!commonFuncs.checkEmpty(jsonString)){
 			//JSON解析エラー例外を投げる
-			throw jsonFailedToParseException(sendObj);
+			throw new jsonFailedToParseException(sendObj);
 		}
 		var retObj = {};	//返却用の変数を宣言する
 		$.ajax({
@@ -214,7 +219,7 @@ function baseDialog(dialog){
 			//通信失敗時の処理
 			error:function(xhr, status, error){	//通信結果を返してもらう
 				//通信エラー例外を投げる
-				throw connectErrorException(xhr, status, error);
+				throw new connectErrorException(xhr, status, error);
 			}
 		});
 		
@@ -345,6 +350,17 @@ function failedToDBControleException(json, status){
  * 作成者　:T.Masuda
  */
 function jsonFailedToParseException(json){
+	Error.apply(this);	//エラーを起こす
+}
+
+/* クラス名:failedToDisplayException
+ * 概要　:dispContents内で起きたエラーに対する例外
+ * 引数　:Object json:サーバから返ってきたJSONのオブジェクト
+ * 		:int status:通信ステータスの値
+ * 作成日　:2015.0815
+ * 作成者　:T.Masuda
+ */
+function failedToDisplayException(json){
 	Error.apply(this);	//エラーを起こす
 }
 
