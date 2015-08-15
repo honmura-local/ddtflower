@@ -311,6 +311,25 @@ ERROR_LESSONLIST							= '予約可能な授業がありません';	//予約で�
 LESSON_TABLE								= 'lessonTable';
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
+
+//管理者、授業一覧ダイアログ
+ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
+ADMIN_LESSON_LIST_DIALOG_JS 				= 'dialog/js/adminLessonListDialog.js';
+ADMIN_LESSON_LIST_DIALOG_HTML 				= 'dialog/template/adminLessonListDialog.html';
+ADMIN_LESSON_LIST_DIALOG_JSON 				= 'dialog/source/adminLessonListDialog.json';
+
+//管理者、授業詳細ダイアログ
+ADMIN_LESSON_DETAIL_DIALOG 					= 'dialog/adminLessonDetailDialog.html';
+ADMIN_LESSON_DETAIL_DIALOG_JS 				= 'dialog/js/adminLessonDetailDialog.js';
+ADMIN_LESSON_DETAIL_DIALOG_HTML 			= 'dialog/template/adminLessonDetailDialog.html';
+ADMIN_LESSON_DETAIL_DIALOG_JSON 			= 'dialog/source/adminLessonDetailDialog.json';
+
+//管理者、新規授業作成ダイアログ
+ADMIN_LESSON_CREATE_DIALOG 					= 'dialog/adminLessonCreateDialog.html';
+ADMIN_LESSON_CREATE_DIALOG_JS 				= 'dialog/js/adminLessonCreateDialog.js';
+ADMIN_LESSON_CREATE_DIALOG_HTML 			= 'dialog/template/adminLessonCreateDialog.html';
+ADMIN_LESSON_CREATE_DIALOG_JSON 			= 'dialog/source/adminLessonCreateDialog.json';
+
 //「テーブルデータ」のキー
 TABLE_DATA_KEY								= 'tableData';
 //「データ」のキー
