@@ -1,17 +1,17 @@
-/* ファイル名:reserveLessonListDialog.js
+/* ファイル名:memberReserveListDialog.js
  * 概要　　　:テスト用ダイアログ
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/reserveLessonListDialog.js
+ * 場所　　:dialog/js/memberReserveListDialog.js
  */
 
-/* クラス名:reserveLessonListDialog.js
+/* クラス名:memberReserveListDialog.js
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 親クラス:baseDialog
  * 引数	 :Element dialog:ダイアログのDOM
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/reserveLessonListDialog.js
+ * 場所　　:dialog/js/memberReserveListDialog.js
  */
-function reserveLessonListDialog(dialog){
+function memberReserveListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
 	/* 関数名:dispContents
@@ -46,7 +46,6 @@ function reserveLessonListDialog(dialog){
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
 		//ダイアログの位置を修正する
 		this.setDialogOption(OPTION, 'position', {my:'center top',at:'center top', of:window});
-
 	}
 
 	/* 関数名:getTableData
@@ -173,6 +172,6 @@ function reserveLessonListDialog(dialog){
 }
 
 //継承の記述
-reserveLessonListDialog.prototype = new baseDialog();
+memberReserveListDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
-reserveLessonListDialog.prototype.constructor = baseDialog;
+memberReserveListDialog.prototype.constructor = baseDialog;
