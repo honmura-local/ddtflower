@@ -2849,19 +2849,24 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	// カレンダーの日付を選択したら
 	onSelect: function(dateText, inst){
 		//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
-		//ダイアログのタイトルの日付を設定する
-		var titleDate = changeJapaneseDate(dateText);
-		//予約ダイアログを開くのに必要なデータである日付と会員番号を連想配列に入れる
-		
-		//argumentObjのインプットデータオブジェクトに授業日付をセットする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.data = {lessonDate:dateText};
-		//ダイアログのタイトルをセットして予約日を分かりやすくする
-		dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj.config[TITLE] = titleDate;
-		
+		var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
+		//授業一覧ダイアログ用オブジェクトをコピーする
+		var sendObject = $.extend(true, {}, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		//授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
+		var dataObject = instance.lessonListDialogSendObject(dateText);
+		//ページ内にある管理者の予約状況のテーブルをダイアログから更新するため、
+		//dataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
+		dataObject.creator = instance.creator;
+		//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
+		$.extend(true, sendObject.argumentObj.data, dataObject);
+
 		//予約授業一覧ダイアログを作る
-		var adminLessonListDialog = new dialogEx('dialog/adminLessonListDialog.html', dialogExOption[ADMIN_LESSONLIST_DIALOG].argumentObj, {});
-		adminLessonListDialog.setCallbackClose(disappear);	//閉じるときのイベントを登録
-		adminLessonListDialog.run();	//主処理を走らせる。
+
+		var lessonListDialog = new dialogEx(ADMIN_LESSON_LIST_DIALOG, sendObject.argumentObj);
+		//ダイアログが開いたときのコールバック関数を指定する。
+		//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
+		lessonListDialog.setCallbackOpen(commonFuncs.callOpenDialog);
+		lessonListDialog.run();	//主処理を走らせる。
 	}
 }
 
@@ -3191,6 +3196,9 @@ function adminCalendar(selector, dialog) {
 	$calendar = $(selector)[0];		//カレンダーの要素を取得する
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
+	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
+	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
+	this.creator = creator;			//createLittleContentsクラスのインスタンスを利用する
 	
 	//@mod 2015.0704 T.Masuda 引数にない変数を使おうとしているのでコメントアウトしました。
 	//this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
