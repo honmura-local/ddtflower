@@ -13,13 +13,16 @@
  * 作成日:2015.0813
  * 作成者:T.Masuda
  */
-function windowEx(url, argumentObj){
+function windowEx(url, argumentObj, returnObj){
 	//ウィンドウのHTMLのURLを格納するメンバ
 	this.url = url;
 	//ウィンドウのDOMを格納するメンバ
 	this.dom = '';
-	//ウィンドウ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
+	//インプット用データのオブジェクト。ダイアログの設定の値も入る
 	this.argumentObj = argumentObj !== void(0)? argumentObj : {};
+	//アウトプット用データのオブジェクト。
+	this.returnObj = returnObj !== void(0)? returnObj : {};
+	
 	
 	//デフォルト設定のオブジェクト
 	this.defaultArgumentObj = {
@@ -29,6 +32,16 @@ function windowEx(url, argumentObj){
 		//インプット用データオブジェクト
 		data:{
 		}
+	};
+	
+	//デフォルト設定のreturnObj
+	this.defaultReturnObj = {
+			//ダイアログにまつわるものの状態のオブジェクト
+			statusObj:{
+			},
+			//インプット用データオブジェクト
+			data:{
+			}
 	};
 	
 	
@@ -155,4 +168,38 @@ function windowEx(url, argumentObj){
 	this.getArgumentDataObject = function() {
 		return this.argumentObj.data;	//dataオブジェクトを返す
 	}
+	
+	/* 関数名:getReturnObject
+	 * 概要　:アウトプット用オブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用オブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnObject = function() {
+		return this.returnObj;		//アウトプット用オブジェクトを返す
+	}
+
+	/* 関数名:getReturnDataObject
+	 * 概要　:アウトプット用データオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用データオブジェクト
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnDataObject = function() {
+		return this.returnObj.data;		//アウトプット用データのオブジェクトを返す
+	}
+	
+	/* 関数名:getReturnStatusObject
+	 * 概要　:アウトプット用ステートオブジェクトを返す
+	 * 引数　:なし
+	 * 返却値:Object:アウトプット用ステートオブジェクトを返す
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnStatusObject = function() {
+		return this.returnObj.statusObj;	//アウトプット用ステートのオブジェクトを返す
+	}
+	
 }

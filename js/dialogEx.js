@@ -11,8 +11,8 @@ WINDOW_EX_PATH = 'js/windowEx.js';		//windowEx.jsのパス
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
- * 		　:Object argumentObj:イアログ内のコンテンツ作成のためのパラメータをまとめたオブジェクト
- * 		　:Object returnObject:jQuery UI Dialogの設定用オブジェクト
+ * 		　:Object argumentObj:インプット用データオブジェクト
+ * 		　:Object returnObj:アウトプット用データオブジェクト
  * 設計者　:H.Kaneko
  * 作成日　:2015.0729
  * 作成者　:T.Masuda
@@ -53,6 +53,19 @@ function dialogEx(url, argumentObj, returnObj){
 		data:{
 		}
 	};
+
+	//デフォルトのアウトプット用オブジェクト
+	//returnObjを作る際に参考にしてください。
+	this.defaultReturnObj = {
+			//ダイアログのステータスオブジェクト
+			statusObj:{
+				buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+			},
+			//アウトプット用データのオブジェクト
+			data:{
+			}
+	};
+	
 	
 	/* 関数名:run
 	 * 概要　:ダイアログを生成して表示する。
@@ -72,6 +85,7 @@ function dialogEx(url, argumentObj, returnObj){
 			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
 			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
 			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
+			this.returnObj = Object.keys(this.returnObj).length? this.argumentObj: this.defaultReturnObj;
 			
 			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
@@ -151,19 +165,12 @@ function dialogEx(url, argumentObj, returnObj){
 		//メッセージを表示する
 		$(DOT + UI_DIALOG_CONTENT + TAG_P).filter(SELECTOR_LAST).text(message);
 		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
-		var thisElem = this;	
+		var thisElem = this;
 		this.dom = domtmp;	//退避していたDOMの参照を戻す
-		//処理終了後にタイマー関数をセットする
-		window.setTimeout(function(){
-			//ダイアログのクローズボックスを消す
-			thisElem.removeDialogCloseBox();
-			//ダイアログの設定で出現するボタンを消す
-			thisElem.removeDialogButtons();
-			thisElem.setCallbackCloseOnAfterOpen(func);	//ボタン押下後のコールバック関数をセットする
-		}, CONFIRM_DIALOG_WAIT);	//定数で設定した時間だけ待って実行する
+		this.setCallbackCloseOnAfterOpen(func);
 	}
 
-	/* 関数名:removeCloseBox
+	/* 関数名:removeDialogCloseBox
 	 * 概要　:ダイアログのクローズボックスを消す
 	 * 引数　:なし
 	 * 返却値:なし
@@ -249,6 +256,30 @@ function dialogEx(url, argumentObj, returnObj){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
 		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
+	
+	/* 関数名:setPushedButtonState
+	 * 概要　:押されたボタンがどれかを表す値を更新するsetterメソッド
+	 * 引数　:String buttonState:ボタンの値。ボタンが押された後にbuttonタグのvalueから値を取得することを想定しているため、文字列となっている
+	 * 返却値:なし
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.setPushedButtonState = function(buttonState){
+		//引数の値を押されたボタンの状態としてセットする
+		this.returnObj.statusObj.buttonState = parseInt(buttonState);
+	}
+	
+	/* 関数名:getPushedButtonState
+	 * 概要　:押されたボタンを表す値を返すgetterメソッド
+	 * 引数　:String:なし
+	 * 返却値:int:ボタンを表す整数を返す
+	 * 作成日　:015.08.08
+	 * 作成者　:T.Masuda
+	 */
+	this.getPushedButtonState = function() {
+		return this.returnObj.statusObj.buttonState;
+	}
+	
 }
 
 //親クラスwindowExが読み込まれていなければ読み込むコード
@@ -391,25 +422,6 @@ function beforeLoginProcedure(){
 //ここまでログインダイアログの関数
 
 //体験レッスン予約ダイアログ関連関数
-//予約ダイアログの準備関数
-function beforeOpenSpecialReservedDialog(){
-	//予約ダイアログのインスタンスを取得する。
-	var specialReservedDialogClass = $('.specialReservedDialog')[0].instance;
-	
-	//日付の配列を取り出す。
-	var array = specialReservedDialogClass.argumentObj.date;
-	var content = specialReservedDialogClass.argumentObj.contentName;
-	// ダイアログのデータを格納する連想配列を宣言し、引数の配列に格納されたコンテンツ名と予約希望日時を格納する。
-	reservedData = {'year': array[0], 'month': array[1], 'day': array[2]};
-	
-	// 全ての曜日のチェックボックスにチェックする
-	allCheckbox('.allDayCheckbox', 'input[name="dayOfWeek"]');
-	// 全ての週のチェックボックスにチェックする
-	allCheckbox('.allWeekCheckbox', 'input[name="week"]');
-	
-	// ダイアログに日付欄を追加する。
-	createSpecialDate(reservedData['year'], reservedData['month'], reservedData['day']);
-};
 
 //ダイアログのクローズするときにダイアログのdomを消去してリセットする
 /* 関数名:disappear

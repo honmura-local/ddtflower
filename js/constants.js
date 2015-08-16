@@ -269,6 +269,8 @@ UI_DIALOG_BUTTON_PANEL						= '.ui-dialog-buttonpane';						//jQuery UI Dialog�
 UNSELECTED 									= -1;											//ボタン未選択の値
 NO											= 0;											//「はい」ボタンの値
 YES											= 1;											//「いいえ」ボタンの値
+CANCEL										= 2;											//「キャンセル」ボタンの値
+
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
 RETURN_OBJ									= 'returnObj';									//dialogExクラスのアウトプット用オブジェクト名
@@ -393,15 +395,43 @@ TEXT_NO										= 'いいえ';	//「いいえ」の文字列
 HTML_MEMBER_RESERVE_CANCEL_DIALOG			= 'memberReserveCancelDialog.html';
 //予約確認ダイアログ
 HTML_MEMBER_RESERVE_CONFIRM_DIALOG			= 'memberReserveConfirmDialog.html';
+//整数の4
 INT_4										= 4;
+//ターゲットの授業テーブル
 SELECTOR_TARGET_LESSON_TABLE				= '.targetLessonTable';
+//疑似セレクタ eqの文字列 前部
 EQ_FRONT									= ':eq(';
+//閉じ括弧と子セレクタtd
 CLOSE_AND_TD_TAG 							= ') td';
+//閉じるテキスト
 STR_CLOSE_JP								= '閉じる';
+//createTagクラスインスタンス用変数orキー名
 VAR_CREATE_TAG								= 'create_tag';
+//ログインダイアログのテンプレートHTLMパス
 PATH_LOGIN_DIALOG_TEMPLATE					= 'dialog/template/loginDialog.html';
+//ログインダイアログのJSONパス
 PATH_LOGIN_DIALOG_JSON						= 'dialog/source/loginDialog.json';
+//クラスインスタンスを表すinstanceの文字列
 INSTANCE									= 'instance';
+//各ダイアログ専用クラスインスタンス用の変数orキー名
 DIALOG_BUILDER								= 'dialogBuilder';
+//パスワードのセレクタ
 PASSWORD_SELECTOR							= '.password';
-
+//ハッシュの文字
+CHAR_HASH									= '#';
+//ユーザ名とパスワードをまとめたセレクタ
+SELECTOR_USERNAME_PASSWORD					= '.userName, .password';
+//ログインボタンのセレクタ
+SELECTOR_LOGIN_BUTTON						= DOT + LOGIN_BUTTON;
+//最新のダイアログのセレクタ
+CURRENT_DIALOG								= DOT + DIALOG + SELECTOR_LAST;
+//ログインダイアログのJSファイルのURL
+URL_LOGIN_DIALOG_JS							= 'dialog/js/loginDialog.js';
+//入力エリア
+INPUT_AREA									= 'inputArea';
+//体験レッスン予約希望ダイアログのJSファイルパス
+EXPERIENCE_RESERVED_DIALOG_JS				= 'dialog/js/experienceReservedDialog.js';
+ALLDAY_CHECKBOX								= '.allDayCheckbox';
+ALLWEEK_CHECKBOX							= '.allWeekCheckbox';
+CHECKBOX_DAYOFWEEK							= 'input[name="dayOfWeek"]';
+CHECKBOX_WEEK								= 'input[name="week"]';
