@@ -1,34 +1,27 @@
 {
-    "contentBox1":{
-        "label1":{
-        	"class":"userNameLabel",
+    "loginDialog":{
+        "userNameLabel":{
             "text": "ユーザ名"
         },
-        "textbox1":{
-        	"class":"userName",
+        "userName":{
             "type": "text",
             "name": "userName"
         },
-        "label2":{
-        	"class":"passwordLabel",
+        "passwordLabel":{
             "text":"パスワード"
         },
-        "password1":{
-        	"class":"password",
+        "password":{
             "type": "password",
             "name": "password"
         },
-        "smallMessage1":{
-        	"class":"toEntryBefore",
+        "toEntryBefore":{
         	"text":"会員登録がお済みでない方は"
         },
-        "linkText1":{
-        	"class":"toEntryPage",
+        "toEntryPage":{
         	"text":"こちら",
         	"href":"#entry.html"
         },
-        "smallMessage2":{
-        	"class":"toEntryAfter",
+        "toEntryAfter":{
         	"text":"へ"
         }
     },

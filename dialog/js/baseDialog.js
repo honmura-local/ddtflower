@@ -15,6 +15,8 @@
  * 作成者:T.Masuda
  */
 function baseDialog(dialog){
+	//※このクラスを継承したクラスのインスタンスはdialogBuilder変数に入れて使う。
+	
 	//各コンストラクタ引数をメンバに格納する
 	this.dialog = dialog;		//ダイアログのDOM
 	//dialogExクラスインスタンス

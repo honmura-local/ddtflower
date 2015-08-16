@@ -23,6 +23,7 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContents = function(){
+		//DBから1件もレコードを取得できなければ例外を投げてアラートダイアログに変化させる
 		try{
 			//画面を表示する準備をする
 			this.constructionContent();
@@ -31,11 +32,11 @@ function memberReserveListDialog(dialog){
 			//ダイアログをアラートのダイアログに変える
 			this.showAlertNoReserve();
 		}
-		
-		//ダイアログのタイトルをセットする
-		this.dispContentsHeader(dialogClass);
-		this.dispContentsMain(dialogClass);		//ダイアログ中部
-		this.dispContentsFooter(dialogClass);	//ダイアログ下部
+
+		//ダイアログの画面パーツをセットする
+		this.dispContentsHeader();	//ダイアログ上部
+		this.dispContentsMain();		//ダイアログ中部
+		this.dispContentsFooter();	//ダイアログ下部
 		//ダイアログの位置を修正する
 		this.setDialogPosition({my:'center top',at:'center top', of:window});
 	}
@@ -71,7 +72,51 @@ function memberReserveListDialog(dialog){
 			}
 		}
 	};
+	
+	/* 関数名:getJson
+	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.getJson = function(){
+		//このダイアログ用のJSONファイルを取得する
+		this.create_tag.getJsonFile(jsonPath);
+	};
 
+	/* 関数名:setLessonDataToJSON
+	 * 概要　:授業のデータをcerateTagのJSONにセットする
+	 * 引数　:String jsonPath:jsonファイルのパス
+	 * 返却値:なし
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.setLessonDataToJSON = function(jsonPath){
+		//ダイアログのdataオブジェクトを取得する
+		var data = this.dialog[0].instance.getArgumentDataObject();
+		//dbに接続する前に日付をクエリの置換連想配列に挿入する
+		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
+		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
+		this.create_tag.json.lessonTable.user_key.value = data.userId;
+	}
+	
+	
+	/* 関数名:getTableData
+	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
+	 * 引数　:String tableName:テーブルのJSONのキー
+	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.getTableData = function(tableName){
+		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
+		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		//予約データが取得できていたらtrue、そうでなければfalseを返す
+		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+	}
+	
 	/* 関数名:customizeJson
 	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
 	 * 引数　:なし
@@ -82,10 +127,21 @@ function memberReserveListDialog(dialog){
 	 */
 	this.customizeJson = function(){
 		//テーブル置換用の時限データを取得する
-		this.getReplacedTableData(tableName);
-//		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
+//		this.getReplacedTableData(tableName);
+		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
+		//授業一覧のJSON配列に授業開始~終了時間の列を追加する
+//		this.setStartAndEndTimeColumn(LESSON_TABLE, START_AND_END_TIME, START_TIME, END_TIME, ' ~ ');
 	};
 
+	
+	/* 関数名:getReplacedTableData
+	 * 概要　:存在する時限情報を取得する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
 	this.getReplacedTableData = function(tableName){
 		var tableData = creator.json[tableName][TABLE_DATA_KEY];
 		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
@@ -93,22 +149,20 @@ function memberReserveListDialog(dialog){
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
+	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsHeader = function(dialogClass){
+	this.dispContentsHeader = function(){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass.getArgumentDataObject().dateJapanese);
+		this.setDialogTitle(this.dialogClass.getArgumentDataObject().dateJapanese);
 	}
 
 	/* 関数名:dispContentsMain
 	 * 概要　:画面パーツ設定用関数のメイン部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
+	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0814
@@ -121,14 +175,13 @@ function memberReserveListDialog(dialog){
 
 	/* 関数名:dispContentsFooter
 	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
+	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(dialogClass){
+	this.dispContentsFooter = function(){
 		this.insertFooterContents();	//フッターのコンテンツを作る
 	}
 	
@@ -153,24 +206,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.setDialogEvents = function(){
 		//ダイアログを閉じるときは破棄するように設定する
-		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 		//予約確認ダイアログを出すイベントを登録する
 		this.whenRecordSelectEvent(SELECTOR_LESSON_TABLE);
-	}
-	
-	
-	/* 関数名:getTableData
-	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
-	 * 引数　:String tableName:テーブルのJSONのキー
-	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.getTableData = function(tableName){
-		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
-		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
 	}
 	
 	/* 関数名:insertDialogContents
@@ -192,25 +230,6 @@ function memberReserveListDialog(dialog){
 //		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 	}
 
-	/* 関数名:setLessonDataToJSON
-	 * 概要　:授業のデータをcerateTagのJSONにセットする
-	 * 引数　:String jsonPath:jsonファイルのパス
-	 * 返却値:なし
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.setLessonDataToJSON = function(jsonPath){
-		//このダイアログ用のJSONファイルを取得する
-		this.create_tag.getJsonFile(jsonPath);
-		//ダイアログのdataオブジェクトを取得する
-		var data = this.dialog[0].instance.getArgumentDataObject();
-		console.log(data);
-		//dbに接続する前に日付をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
-		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.user_key.value = data.userId;
-	}
-	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -223,16 +242,16 @@ function memberReserveListDialog(dialog){
 		//新たにオブジェクトを作り、親ダイアログから引き継いだargumentObjの内容をセットする
 		var argumentObj = $.extend(true, {}, this.dialog[0].instance.argumentObj, this.recordData[DATA_KEY]);
 		
-		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
-		$.extend(true, argumentObj.data,
-				{parentDialogEx:this.dialog[0].instance},
-				{parentDialogCreateTag:this.createTag},
-				recordData.data,
-				recordData.number
+		//子ダイアログに渡すオブジェクトを生成する
+		$.extend(true, argumentObj.data,	//元データ
+				{parentDialogEx:this.dialog[0].instance},	//このダイアログのクラスインスタンス
+				{parentDialogCreateTag:this.createTag},		//このダイアログのcreateTag
+				recordData.data,		//行データ
+				recordData.number		//行番号
 		);
 		
 		return argumentObj;	//生成したオブジェクトを返す
-s		}
+	}
 
 	/* 関数名:showAlertNoReserve
 	 * 概要　:予約なしのアラートダイアログを作る
@@ -242,11 +261,10 @@ s		}
 	 * 作成者　:T.Masuda
 	 */
 	this.showAlertNoReserve = function(){
-		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
 		//授業の予約データがないことをダイアログに表示する
-		dialogClass.setAlertContents(ERROR_LESSONLIST);
+		this.dialogClass.setAlertContents(ERROR_LESSONLIST);
 		//ダイアログを閉じるときは破棄するように設定する
-		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 	}
 
 	/* 関数名:whenRecordSelectEvent
