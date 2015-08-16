@@ -82,9 +82,9 @@ function adminLessonListDialog(dialog){
 		//テーブルのデータを連想配列に入れる
 		var tableData = this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY];
 		//時限ごとの人数を取り出す
-		var timeTableStudents = getTotalStudentsOfTimeTable(tableData);
+		var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
 		//jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
-		customizeTableData(tableData, customizeAdminLessonTable, timeTableStudents);
+		commonFuncs.customizeTableData(tableData, this.customizeAdminLessonTable, timeTableStudents);
 	};
 
 	/* 関数名:dispContents
@@ -109,8 +109,6 @@ function adminLessonListDialog(dialog){
 		this.dispContentsHeader(dialogClass);
 		this.dispContentsMain(dialogClass);		//ダイアログ中部
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
 	}
 
 
@@ -119,8 +117,6 @@ function adminLessonListDialog(dialog){
 			this.dispContentsMain(dialogClass);		//ダイアログ中部
 		}
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -146,13 +142,10 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		//データがなければテーブルは作らない
-		if(this.create_tag.json.[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
-			//授業一覧のテーブルを作る
-			this.createTable();
-			//レッスンのステータス領域を作る
-			this.create_tag.outputTag('lessonStatus', 'lessonStatus', CURRENT_DIALOG_SELECTOR);
-		}
+		//授業一覧のテーブルを作る
+		this.createTable();
+		//レッスンのステータス領域を作る
+		this.create_tag.outputTag('lessonStatus', 'lessonStatus', CURRENT_DIALOG_SELECTOR);
 	}
 
 	/* 関数名:createTable
@@ -163,10 +156,13 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.createTable = function() {
-		//授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag('tableArea', 'tableArea', CURRENT_DIALOG_SELECTOR);
-		//授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
+				//データがなければテーブルは作らない
+		if(this.create_tag.json.[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
+			//授業一覧テーブルの外側の領域を作る
+			this.create_tag.outputTag('tableArea', 'tableArea', CURRENT_DIALOG_SELECTOR);
+			//授業のデータ一覧テーブルを作る
+			this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
+		}
 	}
 
 	/* 関数名:dispContentsFooter
@@ -185,6 +181,8 @@ function adminLessonListDialog(dialog){
 		this.setDialogButtons(this.button);
 		//ダイアログを閉じるときは破棄するように設定する
 		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		//ダイアログの位置を修正する
+		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
 	}
 	
 
@@ -235,6 +233,35 @@ function adminLessonListDialog(dialog){
 		$.extend(true, argumentObj.data, {parentDialogEx:this.dialog[0].instance});
 		return argumentObj;	//生成したオブジェクトを返す
 	}
+
+	/* 
+	 * 関数名:customizeAdminLessonTable
+	 * 概要  :管理者、授業一覧テーブルの値必要な値をクライアント側で設定してjsonに入れる
+	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
+	 		 counter:カウンタ変数。加工する行を識別するのに使う
+	 		 timeTableStudents:時限ごとに予約している生徒の数
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.16
+	 */
+	this.customizeAdminLessonTable = function(tableData, counter, timeTableStudents) {
+		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+		var recordData = tableData[counter];
+		//レッスンテーマ名または店舗名が空であるならばその行を飛ばす
+		if(recordData[COLUMN_NAME_LESSON_NAME] !="" && recordData[COLUMN_NAME_SCHOOL_NAME] != "") {
+			// 開始日時と終了時刻を組み合わせた値を入れる
+			var timeSchedule = buildHourFromTo(recordData);
+			//状況を入れる
+			var  lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+			//残席を記号にする
+			var  rest = getRestMark(recordData, timeTableStudents);
+			//取得したデータをjsonに入れていく
+			tableData[counter][START_END_TIME]	= timeSchedule;	//時間割開始と終了時刻
+			tableData[counter][LESSON_STATUS]	= lessonStatus;	//レッスンの開講状況ステータス
+			tableData[counter][LESSON_REST]		= rest;			//レッスン残席記号
+		}
+	};
+
 }
 
 //継承の記述

@@ -642,7 +642,6 @@ function dbDataTableReplaceExecute(tableName, rowData, func, timeTableStudents) 
 function customizeTableData(tableData, customizeFunc, timeTableStudents) {
 	//カウンターを作る
 	var counter = 0;
-	console.log(tableData)
 	//テーブルのレコード数を取得し、ループの終わり値として設定する
 	var recordLength = tableData.length;
 	//テーブルの全ての行についてループする

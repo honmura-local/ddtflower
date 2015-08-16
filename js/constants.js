@@ -343,6 +343,31 @@ ADMIN_LESSON_CREATE_DIALOG_JS 				= 'dialog/js/adminLessonCreateDialog.js';
 ADMIN_LESSON_CREATE_DIALOG_HTML 			= 'dialog/template/adminLessonCreateDialog.html';
 ADMIN_LESSON_CREATE_DIALOG_JSON 			= 'dialog/source/adminLessonCreateDialog.json';
 
+//テーブルから取り出す列名
+COLUMN_NAME_MAX_NUM					= 'max_num';					// １限に予約できる最大の数
+COLUMN_NAME_START_TIME				= 'start_time';					// 授業開始時間
+COLUMN_NAME_END_TIME				= 'end_time';					// 授業終了時間
+COLUMN_NAME_ORDER_STUDENTS			= 'order_students';				// 予約している生徒の数
+COLUMN_NAME_MAX_STUDENTS			= 'max_students';				// 個別の予約できる最大の数
+COLUMN_NAME_LESSON_DATE				= 'lesson_date';				// 授業受講日
+COLUMN_NAME_USER_WORK_STATUS		= 'user_work_status';			// ユーザ授業ステータス
+COLUMN_NAME_CLASSWORK_STATUS		= 'classwork_status';			// 授業ステータス
+COLUMN_NAME_POINT_RATE				= 'point_rate';					// ポイントレート
+COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			// 授業締切日？
+COLUMN_NAME_SCHOOL_NAME				= 'school_name';				// 店舗名
+COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
+COLUMN_NAME_TODAY					= 'today';						// 今日の日付
+COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
+COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
+
+//カスタマイズ後の行のKey名
+START_END_TIME 						= 'startEndTime';				//開始時間と終了時間を合わせたもの
+LESSON_DATE_TIME 					= 'lessonDateTime';				//年月日を含んだ開始時間と終了時間を合わせたもの
+SUM_COST							= 'sumCost';					//受講料の合計
+LESSON_POINT 						= 'lessonPoint';				//レッスン受講で加算されるポイント
+LESSON_REST 						= 'lesssonRest';				//受講情報の残席情報記号
+LESSON_STATUS 						= 'lessonStatus';				//レッスンの予約状況
+
 //「テーブルデータ」のキー
 TABLE_DATA_KEY								= 'tableData';
 //「データ」のキー
