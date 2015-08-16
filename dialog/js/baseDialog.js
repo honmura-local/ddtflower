@@ -54,6 +54,7 @@ function baseDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
+			this.setJson();			//JSONを取得する
 			this.customizeJson();	//取得したJSONを加工する
 		//例外時処理
 		}catch(e){
