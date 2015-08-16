@@ -16,9 +16,12 @@
  */
 function baseDialog(dialog){
 	//各コンストラクタ引数をメンバに格納する
-	this.dialog = dialog;	//ダイアログのDOM
+	this.dialog = dialog;		//ダイアログのDOM
+	//dialogExクラスインスタンス
+	this.dialogClass = dialog[0].instance;	
 	//ダイアログの生成と操作に使うcreateLittleContentsインスタンスを用意する
 	this.create_tag = new createLittleContents();
+	
 	
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
