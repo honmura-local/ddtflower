@@ -1,27 +1,29 @@
 {
-    "loginDialog":{
-        "userNameLabel":{
+    "inputArea":{
+        "label1":{
             "text": "ユーザ名"
         },
-        "userName":{
+        "textbox1":{
+        	"class":"userName",
             "type": "text",
             "name": "userName"
         },
-        "passwordLabel":{
+        "label2":{
             "text":"パスワード"
         },
-        "password":{
+        "textbox2":{
+        	"class":"password",
             "type": "password",
             "name": "password"
         },
-        "toEntryBefore":{
+        "label3":{
         	"text":"会員登録がお済みでない方は"
         },
-        "toEntryPage":{
+        "linktext1":{
         	"text":"こちら",
         	"href":"#entry.html"
         },
-        "toEntryAfter":{
+        "label4":{
         	"text":"へ"
         }
     },

@@ -96,6 +96,7 @@ function loginDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//以下、createTagによる画面パーツの配置。
+		this.create_tag.outputTag(INPUT_AREA, INPUT_AREA, CURRENT_DIALOG);
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -121,6 +122,8 @@ function loginDialog(dialog){
 	this.setDialogEvents = function(){
 		//ダイアログを閉じるときは破棄する
 		this.dialog[0].instance.setCallbackCloseOnAfterOpen(dialog[0].instance.destroy);
+		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
+		commonFuncs.enterKeyButtonClick(SELECTOR_USERNAME_PASSWORD, SELECTOR_LOGIN_BUTTON);
 	}
 
 	/* 関数名:closeLoginDialog
@@ -187,9 +190,9 @@ function loginDialog(dialog){
 		//通常ログインかつ、管理者のIDならば
 		if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
-			if(isSupportPushState()){
+			if(commonFuncs.isSupportPushState()){
 				//管理者ページの画面遷移の履歴を追加する。
-				history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
+				history.pushState({url:CHAR_HASH + URL_ADMIN_PAGE}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//管理者ページへ移動する
@@ -198,9 +201,9 @@ function loginDialog(dialog){
 		//通常ログインかつ、管理者のIDでなければ
 		} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
-			if(isSupportPushState()){
+			if(commonFuncs.isSupportPushState()){
 				//会員トップページの画面遷移の履歴を追加する。
-				history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
+				history.pushState({url:CHAR_HASH + URL_MEMBER_PAGE}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//会員トップページへ移動する
@@ -231,33 +234,22 @@ function loginDialog(dialog){
 			//ログイン処理を実行し、結果を取得する
 			var loginResult = this.getLoginProcedureResult();
 			//JSONDBManagerによるログイン処理を行う
-		        	 		//ログイン成否チェックの分岐
-		        	 		//会員IDが取得できていなかった場合
-		        	 		if(loginResult[USER_ID] == EMPTY_STRING) {
-		        	 			//エラーメッセージを表示して処理をそのまま終了する
-		        				alert(MESSAGE_LOGIN_ERROR);
-		        			//会員IDが取得できていればログイン成功
-		        	 		} else {
-		        	 			this.afterLogin();
-		        	 		}
-		        	 	//ログイン情報の入力を求めるアラートを出す
-		        	 	} else {
-							alert(errorMessages[3]);
-		        	 	}
-		        	 }
-	/*
-	 * 関数名:whenLoginDialogCreate
-	 * 概要  :ログインダイアログが作られたときのコールバック関数
-	 * 引数  :なし
-	 * 戻り値:なし
-	 * 作成日:2015.08.01
-	 * 作成者:T.Masuda
-	 */
-	function whenLoginDialogCreate(){
-		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
-		commonFuncs.enterKeyButtonClick('.userName, .password', '.loginButton');
-		$('.loading').hide();	//例外で消えなかったローディング画面を消す。
+		    //ログイン成否チェックの分岐
+		    //会員IDが取得できていなかった場合
+		    if(loginResult[USER_ID] == EMPTY_STRING) {
+		    	//エラーメッセージを表示して処理をそのまま終了する
+		    	alert(MESSAGE_LOGIN_ERROR);
+		    //会員IDが取得できていればログイン成功
+		    } else {
+		    	this.afterLogin();	//ログイン後の処理を行う
+		    }
+		//ログイン情報の入力を求めるアラートを出す
+		} else {
+			alert(errorMessages[3]);
+		}
 	}
+	
+	//ここまでクラス定義
 }
 
 //継承の記述
