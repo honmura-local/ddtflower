@@ -205,7 +205,6 @@ URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHT
 URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
 URL_MEMBER_PAGE = 'memberPage.html'; //管理者ページのURL
 
-SPECIAL_RESERVED_CONFIRM_DIALOG_URL			 = 'dialog/specialReservedConfirmDialog.html';	//体験レッスン予約確認ダイアログのHTMLファイルのURL
 DIALOG_DEFAULT_ALERT_CONTENTS				 = 'dialog/defaultAlertContents.html';			//アラートを出すdomがあるファイル名
 DIALOG_RESERVE_LESSON_LIST 					 = 'dialog/memberReserveListDialog.html';		//会員、予約可能授業一覧ダイアログファイルパス
 DIALOG_MEMBER_RESERVED_CONFIRM 				 = 'dialog/memberReservedConfirmDialog.html';	//会員、授業予約確認ダイアログパス
@@ -477,3 +476,62 @@ ALLDAY_CHECKBOX								= '.allDayCheckbox';
 ALLWEEK_CHECKBOX							= '.allWeekCheckbox';
 CHECKBOX_DAYOFWEEK							= 'input[name="dayOfWeek"]';
 CHECKBOX_WEEK								= 'input[name="week"]';
+DIALOG_CLASS								= 'dialogClass';
+STR_SEND_JP									= '送信';
+//体験レッスン予約確認ダイアログのHTMLファイルのURL
+EXPERIENCE_RESERVED_CONFIRM_DIALOG_URL		 = 'dialog/experienceReservedConfirmDialog.html';	
+EXPERIENCE_RESERVED_CONFIRM_DIALOG_JS		 = 'dialog/js/experienceReservedConfirmDialog.js';	
+EXPERIENCE_RESERVED_CONFIRM_DIALOG_JSON		 = 'dialog/source/experienceReservedConfirmDialog.json';	
+EXPERIENCE_RESERVED_CONFIRM_DIALOG_HTML		 = 'dialog/template/experienceReservedConfirmDialog.html';	
+//体験レッスン予約希望ダイアログの入力チェック用の定数群
+//必須入力を行う入力フォームのname属性を配列に入れる。
+EXPERIENCE_CHECK_FORMS = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
+//必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
+EXPERIENCE_CHECK_FORMS_JP_NAME = {
+			construct:'希望作品', 
+			schedule:'希望時限', 
+			name:'ご氏名', 
+			personPhoneNumber:'電話番号', 
+			email:'メールアドレス', 
+			personEmailCheck:'メールアドレス(確認)', 
+			personCount:'人数',
+			course:'コース'
+		};
+//入力項目のエラー別メッセージの連想配列。
+EXPERIENCE_CHECK_FORMS_ERROR_TEXT = {
+		emptyList:"以下の項目が未入力となっています。\n",
+		onlyAlphabetList	:"以下の項目は半角英数字記号のみを入力してください。\n",
+		emailCheck	:"確認のため、同じメールアドレスもう一度入力してください。\n\n",
+		numberList:"以下の項目の数値を1以上で入力してください。\n"
+}
+//体験レッスン予約希望ダイアログのパーツ名群
+RESERVED_DATE								= 'reservedDate';
+RESERVED_SUMMARY							= 'reservedSummary';
+SPECIAL_CONTRUCT							= 'radioButtonSpecialConstruct';
+SPECIAL_SCHEDULE							= 'radioButtonSpecialSchedule';
+SUBINFO										= 'subInfo';
+PERSON_INFORMATION							= 'personInformation';
+MAIL_SUBJECT								= 'mailSubject';
+
+//体験レッスン予約希望ダイアログ　入力チェックのリスト名称群
+EMPTY_LIST									= 'emptyList';
+ONLY_ALPHABET_LIST							= 'onlyAlphabetList';
+EMAIL_CHECK									= 'emailCheck';
+NUMBER_LIST									= 'numberList';
+//体験レッスン予約希望ダイアログ 英数字入力チェック対象のセレクタ
+IS_ALPHABET_CHECK_ELEMS_RESERVED_DIALOG		= 'input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]';
+SELECTOR_PERSON_MAIL						= '.personEmail input';
+SELECTOR_PERSON_MAIL_CHECK					= '.personEmailCheck input';
+SELECTOR_COUNT								= '.count';
+ESCAPE_KAIGYOU								= "\n";				//改行のエスケープ文字
+DISABLED									= 'disabled';
+FORM_ELEMS									= 'input,button,textarea';	//フォームで使うタグ
+FORM_DATA									= 'formData';
+SELECTOR_NAME_FRONT							= '[name="';		//name属性を指定して取得するinputタグのセレクタの前部
+SELECTOR_INPUT_NAME_FRONT					= 'input[name="';	//name属性を指定して取得するinputタグのセレクタの前部
+SELECTOR_ATTR_REAR_AND_CHECKED				= '"]:checked';		//属性を指定するセレクタの閉じ括弧＋チェックが入った要素の疑似セレクタの文字列
+RADIO										= 'radio';
+CHECKBOX									= 'checkbox';
+TYPE										= 'type';
+FORM_VALIE_INPUTS							= 'input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]';
+ATTR_DISABLED								= '[disabled]';

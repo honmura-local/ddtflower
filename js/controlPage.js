@@ -3,27 +3,6 @@
 currentLocation = '';	//現在選択中のページの変数
 
 /*
- * 関数名:isSupportPushState()
- * 引数  :なし
- * 戻り値:boolean
- * 概要  :ブラウザがpushStateに対応しているかをbooleanで返す。
- * 作成日:2015.03.10
- * 作成者:T.M
- */
-function isSupportPushState(){
-	// 返却値を格納する変数returnsを宣言し、falseで初期化する。
-	var returns = false;
-	//ブラウザがpushStateに対応していれば
-	if(window.history && window.history.pushState){
-		//trueを返す様にする。
-		returns = true;
-	}
-	
-	//returnsを返す。
-	return returns;
-}
-
-/*
  * イベント:ready
  * 引数   :なし
  * 戻り値 :なし
@@ -36,7 +15,7 @@ function isSupportPushState(){
 		//pushState対応ブラウザであれば
 			//URLを引数にしてページを切り替える関数をコールする。
 			callPage($(this).attr('href'));
-		if(isSupportPushState()){
+		if(commonFuncs.isSupportPushState()){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
@@ -56,7 +35,7 @@ function isSupportPushState(){
 		//pushState対応ブラウザであれば
 		//URLを引数にしてページを切り替える関数をコールする。
 		callPage($(this).attr('href'));
-		if(isSupportPushState()){
+		if(commonFuncs.isSupportPushState()){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
@@ -161,7 +140,7 @@ function callPage(url, state){
 
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
 			//@mod 2015.0604 T.Masuda 1つ目の条件式のtrue条件に || state == null を追加しました
-			if((state === void(0) || state == null) && isSupportPushState()){
+			if((state === void(0) || state == null) && commonFuncs.isSupportPushState()){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + currentLocation}, '', location.href);
 			}
@@ -223,54 +202,6 @@ $(document).ready(function(){
 	);
 });
 
-/*
- * 関数名:createFormData(form)
- * 引数  :jQuery form
- * 戻り値:Object
- * 概要  :フォームの投稿データを作る。
- * 作成日:2015.03.09
- * 作成者:T.Masuda
- */
-function createFormData(form){
-	//返却するデータを格納する変数を宣言する。
-	var formDataReturn = {};
-	
-	//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
-	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]', form)
-		.not('[disabled]').each(function(){
-		var val = this.value;	//入力フォームから値を取得する
-		//name属性の値を取得する。
-		var name = $(this).attr('name');
-		//type属性の値を取得する。
-		var type = $(this).attr('type');
-		
-		//nameが空でなければ
-		if(name != "" && name !== void(0)){
-			//チェックボックスか、ラジオボタンなら
-			if(type == 'checkbox' || type=='radio'){
-				if($(this).index('[name="' + name + '"]:checked') == 0){
-					val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
-					//name属性で括られたチェックボックスを走査していく。
-					$('input[name="' + name + '"]:checked').each(function(){
-						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-						val.push(this.getAttribute('value'));
-					});
-					//formDataを連想配列として扱い、keyとvalueを追加していく。
-					formDataReturn[name] = val;
-				}
-			//それ以外であれば
-			} else {
-				//formDataを連想配列として扱い、keyとvalueを追加していく。
-				formDataReturn[name] = val;
-			}
-		}
-	});
-
-	
-	
-	//フォームデータを返す。
-	return formDataReturn;
-}
 
 /*
  * イベント:submit
@@ -434,7 +365,7 @@ function postForm(form){
 					//カレントのURLを更新する。
 					currentLocation = url;
 					//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
-					if(!(isCgiHistory) && isSupportPushState()){
+					if(!(isCgiHistory) && commonFuncs.isSupportPushState()){
 						//画面遷移の履歴を追加する。
 						history.pushState({'url':'#' + currentLocation}, '', location.href);
 					}
@@ -576,7 +507,7 @@ $(document).ajaxStop( function(){
  * 作成者:T.Masuda
  */
 //popStateに対応できているブラウザであれば
-if (isSupportPushState()){
+if (commonFuncs.isSupportPushState()){
 	//popStateのイベントを定義する。
     $(window).on("popstate",function(event){
         //初回アクセスであれば何もしない。
@@ -602,7 +533,7 @@ if (isSupportPushState()){
  */
 $(window).on('load', function(){
 	//pushStateに対応していれば、pushStateで更新のイベント
-	if (isSupportPushState()){
+	if (commonFuncs.isSupportPushState()){
 		//@mod 2015.0604 T.Masuda コードの重複を減らしました
 		var state = null;		//pushstateで保存されているstateを格納する変数を用意する
 		var currentUrl = null;	//URLを格納する変数を用意する

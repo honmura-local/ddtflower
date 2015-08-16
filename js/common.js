@@ -1,4 +1,4 @@
-/** ファイル名:common.js
+﻿/** ファイル名:common.js
  * 概要　　　:汎用関数クラス定義のファイル
  * 作成日　:2015.0813
  * 作成者　:T.Masuda
@@ -897,4 +897,276 @@ function common(){
 	}
 
 
+	
+	/*
+	 * 関数名:isSupportPushState
+	 * 引数  :なし
+	 * 戻り値:boolean
+	 * 概要  :ブラウザがpushStateに対応しているかをbooleanで返す。
+	 * 作成日:2015.03.10
+	 * 作成者:T.M
+	 * 作成日:2015.08.16
+	 * 作成者:T.M
+	 * 内容	:controlPage.jsからcommonクラスに移動しました
+	 */
+	this.isSupportPushState = function(){
+		// 返却値を格納する変数retBooを宣言し、falseで初期化する。
+		var retBoo = false;
+		//ブラウザがpushStateに対応していれば
+		if(window.history && window.history.pushState){
+			//trueを返す様にする。
+			retBoo = true;
+		}
+		
+		//判定結果を返す
+		return retBoo;
+	}
+	
+	/* 
+	 * 関数名:numberCheck
+	 * 概要  :指定した要素のテキストボックスの値が0以下でないかをチェックする。
+	 * 引数  :String selector:チェックするクラス。
+	 * 返却値  :null || Array:チェックがOKならnullを返し、そうでなければname属性の配列を返す。
+	 * 作成者:T.Masuda
+	 * 作成日:2015.04.18
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	this.numberCheck = function(selector){
+		//返却する配列を宣言、初期化する。
+		var returns = [];
+		
+		//指定されたクラスの要素を走査する。
+		$(selector).each(function(){
+			//現在さす要素の値が0以下であれば
+			if(parseInt($(this).val()) <= 0 ){
+				//配列にこの要素のname属性を格納する。
+				returns.push($(this).attr('name'));
+			}
+		})
+		
+		//チェックに引っかかった要素があれば配列を返し、なければnullを返す。
+		return returns.length > 0? returns: null;
+	}
+
+	/* 
+	 * 関数名:checkEmptyInput
+	 * 概要  :入力フォームの空チェックを行う。
+	 * 引数  :Array names:チェックするフォームのname属性をまとめた配列。
+	 * 返却値:null || Array
+	 * 作成者:T.M
+	 * 作成日:2015.04.01
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	this.checkEmptyInput = function(names){
+		//namesの要素数を取得する。
+		var nameslength = names.length;
+		//返す配列を作成する。
+		var retArray = [];
+		//namesを走査する。
+		for(var i = 0; i < nameslength; i++){
+			//入力フォームのタイプを取得する。
+			var type = $('input[name="' + names[i] + '"]:not(:hidden)').attr('type');
+			if(type !== void(0)){	//要素が存在していればチェックを行う
+				//typeがチェックするものであれば
+				if(type == 'radio' || type == 'checkbox'){
+					//チェックが入っているものがないなら
+					if($('input[name="' + names[i] + '"]:checked').length <= 0){
+						//配列にname属性の値を入れる。
+						retArray.push(names[i]);
+					}
+					//テキストボックス等なら
+				} else {
+					//何も入力されていなければ
+					if($('input[name="' + names[i] + '"]').val() == ''){
+						//配列にname属性の値を入れる。
+						retArray.push(names[i]);
+					}
+				}
+			}
+		}
+		
+		//結果を返す。未入力のname属性の配列か、未入力なしのnullを返す。
+		return retArray.length > 0 ? retArray: null;
+	}
+	
+	/* 
+	 * 関数名:replaceJpName
+	 * 概要  :配列の英語名を日本語する。
+	 * 引数  :Array names:英語名の配列。
+	 * 　　　 :Object jpNames:キーが英語名、値が日本語名の連想配列。
+	 * 返却値:Array
+	 * 作成者:T.M
+	 * 作成日:2015.04.01
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	this.replaceJpName = function(names, jpNames){
+		var retArray = [];				//返す配列を宣言する。
+		var nameslength = names.length;	//namesの要素数を取得する。
+		
+		//namesを走査する。
+		for(var i = 0; i < nameslength; i++){
+			var key = names[i];
+			//返す配列に日本語名を順次格納していく。
+			retArray[i] = jpNames[key];
+		}
+		
+		//作成した配列を返す。
+		return retArray;
+	}
+
+	/* 
+	 * 関数名:function checkAllAlphabet
+	 * 概要  :全角文字の入力チェックを行う。
+	 * 引数  :String selector:対象となる要素のセレクタ。
+	 * 返却値:Array
+	 * 作成者:T.M
+	 * 作成日:2015.04.09
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	 this.checkAllAlphabet = function(selector){
+		var retArray = [];	//返却値を格納する配列を宣言、空の配列で初期化する。
+		 //全角入力チェックを行う。
+		 $(selector).each(function(){
+			 var onlyAlphabet = checkAlphabet($(this).val());	//アルファベットオンリーでないかのチェックをする。
+			 //有効でない文字があったら
+			 if(onlyAlphabet == false){
+				 retArray.push($(this).attr(STR_NAME));	//name属性を配列に入れる。
+			 }
+		 });
+		 
+		 //作成した配列、またはnullを返す。
+		return retArray.length > 0? retArray: null;
+	}
+
+
+	/* 
+	 * 関数名:function makeFailedAlertString(list, jpNameMap)
+	 * 概要  :入力失敗の警告メッセージを作る。
+	 * 引数  :map lists:エラーがあった欄のリストの連想配列。
+	 * 　　  :map jpNameMap:英語名のキーと日本語名の値の連想配列。
+	 * 　　  :map messages:エラーメッセージの序文の連想配列。
+	 * 返却値  :なし
+	 * 作成者:T.M
+	 * 作成日:2015.04.18
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	this.makeFailedAlertString = function(lists, jpNameMap, messages){
+		var errorString = EMPTY_STRING;	//エラーメッセージのテキストを格納する変数を宣言、初期化する。
+		
+		//listsのキーを走査する
+		for(key in lists){
+			//チェックが通った項目でなければ
+			if(lists[key] != null){
+				 //エラーのリストを日本語に訳す。
+				 var errorList = replaceJpName(lists[key], jpNameMap);
+				 //エラーのリストを1つの文字列にする。
+				 var errorListString = errorList.join(ESCAPE_KAIGYOU);
+				 //警告を追加する。
+				 errorString += messages[key] + errorListString + ESCAPE_KAIGYOU + ESCAPE_KAIGYOU;
+			}
+		}
+		
+		//エラーメッセージを返す。
+		return errorString;
+	}
+
+	/* 
+	 * 関数名:nullCheckInObject
+	 * 概要  :オブジェクトのルートのキーにnullがないかをチェックする
+	 * 引数  :Object obj:nullチェック対象のオブジェクト
+	 * 返却値  :int:nullがあった数を返す
+	 * 作成者:T.M
+	 * 作成日:2015.08.16
+	 */
+	this.nullCheckInObject = function(obj){
+		var retInt = 0;	//nullの数を格納する変数を宣言、0で初期化する
+		//対象のオブジェクトの各キーをチェックする
+		for(key in obj){
+			//走査対象のキーにnullが入っていたら
+			if(obj[key] == null){
+				retInt++;	//nullの数をカウントアップする
+			}
+		}
+
+		return retInt;	//検出したnullの数を返す
+	}
+	
+	/*
+	 * 関数名:createFormData
+	 * 引数  :Element form
+	 * 戻り値:FormData:フォームデータのオブジェクトを返す
+	 * 概要  :フォームの投稿データを作る。
+	 * 作成日:2015.03.09
+	 * 作成者:T.Masuda
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。また、FormDataとして返すようにしました
+	 */
+	this.createFormData = function(form){
+		//返却するデータを格納する変数を宣言する。
+		var formDataReturn = new FormData();
+		
+		//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
+		$(FORM_VALIE_INPUTS, form)
+			.not(ATTR_DISABLED).each(function(){
+			var val = this.value;	//入力フォームから値を取得する
+			//name属性の値を取得する。
+			var name = $(this).attr(STR_NAME);
+			//type属性の値を取得する。
+			var type = $(this).attr(TYPE);
+			
+			//nameが空でなければ
+			if(name != EMPTY_STRING && name !== void(0)){
+				//チェックボックスか、ラジオボタンなら
+				if(type == CHECKBOX || type==RADIO){
+					if($(this).index(SELECTOR_NAME_FRONT + name + SELECTOR_ATTR_REAR_AND_CHECKED) == 0){
+						val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
+						//name属性で括られたチェックボックスを走査していく。
+						$(SELECTOR_INPUT_NAME_FRONT + name + SELECTOR_ATTR_REAR_AND_CHECKED).each(function(){
+							//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
+							val.push(this.getAttribute(VALUE));
+						});
+						//formDataを連想配列として扱い、keyとvalueを追加していく。
+						formDataReturn.append(name, val);
+					}
+				//それ以外であれば
+				} else {
+					//formDataを連想配列として扱い、keyとvalueを追加していく。
+					formDataReturn.append(name, val);
+				}
+			}
+		});
+
+		//フォームデータを返す。
+		return formDataReturn;
+	}
+
+	/* 
+	 * 関数名:disableInputs(dialog)
+	 * 概要  :対象のダイアログの入力要素を一時無効にする。
+	 * 引数  :Element || String area:この要素の子要素を無効にする
+	 * 返却値  :なし
+	 * 作成者:T.M
+	 * 作成日:2015.02.11
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.16
+	 * 内容	:createDialog.jsからcommonクラスに移動しました。
+	 */
+	this.disableInputs = function(area){
+		// dialogのinputタグ、buttonタグにdisabled属性を追加して一時無効化する。
+		$(FORM_ELEMS, area).attr(DISABLED, DISABLED);
+	}
+
+	
+//ここまでクラス定義領域
 }
