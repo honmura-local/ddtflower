@@ -1,21 +1,16 @@
-<form class="specialReservedDialog" action="postmail/postmail.cgi">
-	<!--  JSコード -->
+<div class="dialog">
 	<script>
-	
-	//createTagクラスのインスタンスを作成する。
-	var specialReservedCreator = new createTag();
-	
-	specialReservedCreator.getJsonFile('source/experiencelesson.json');	//予約ダイアログのJSONをい読み込む
-	specialReservedCreator.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
-
-	//createTagでダイアログに必要なタグを生成する。
-	specialReservedCreator.outputTag('reservedDate','reservedDate','.specialReservedDialog');
-	specialReservedCreator.outputTag('reservedSummary','reservedSummary','.specialReservedDialog');
-	specialReservedCreator.outputTag('radioButtonSpecialConstruct','radioButtonSpecialConstruct','.specialReservedDialog');
-	specialReservedCreator.outputTag('radioButtonSpecialSchedule','radioButtonSpecialSchedule','.specialReservedDialog');
-	specialReservedCreator.outputTag('subInfo','subInfo','.specialReservedDialog');
-	specialReservedCreator.outputTag('personInformation','personInformation','.specialReservedDialog');
-	specialReservedCreator.outputTag('mailSubject','mailSubject','.specialReservedDialog');
-	
+		//当該ダイアログのDOMを取得する
+		var thisDialog = $(CURRENT_DIALOG);
+		//このダイアログのクラスを定義したJSファイルを読み込む
+		commonFuncs.getScriptFile(SPECIAL_RESERVED_DIALOG_JS);
+		
+		//当該ダイアログ用関数クラスインスタンスを生成する
+		var dialogBuilder = new memberReserveListDialog(thisDialog);
+		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
+		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>
-</form>
+</div>
+
+
+
