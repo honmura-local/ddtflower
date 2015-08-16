@@ -191,9 +191,9 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setDialogTitle = function(dialogClass){
-		console.log(this.dialogClass);
 		//ダイアログ生成時に渡されたインプット用データを取得する
 		var data = this.dialogClass.getArgumentDataObject();
+		// console.log(data);
 		//タイトルを入れ替える
 		this.setDialogTitle(data.dateJapanese);
 	}

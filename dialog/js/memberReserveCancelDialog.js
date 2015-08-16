@@ -14,6 +14,60 @@
 function memberReserveCancelDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
+	this.button = [
+		{	//はいボタン
+			text:TEXT_YES,
+			//クリック時のコールバック関数
+			click:function(){
+				//ダイアログを閉じる処理
+				//ダイアログのステータスにはいボタンを登録する
+			}
+		},
+		{
+			//いいえボタン
+			text:TEXT_NO,
+			click:function(){
+				//いいえボタンクリック処理
+			}
+		}
+	];
+
+	/* 関数名:constructionContent
+	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.constructionContent = function(){
+		//主に分岐処理を行うためにtry catchブロックを用意する
+		try{
+			//画面パーツ作成に必要なHTMLテンプレートを取得する
+			this.create_tag.getDomFile(MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
+			//データとなるjsonを読み込む
+			this.create_tag.getJsonFile(MEMBER_RESERVE_CONFIRM_DIALOG_JSON);
+			//
+			this.customizeJson();	//取得したJSONを加工する
+		//例外時処理
+		}catch(e){
+			//もう一度例外を投げ、dispContents内で処理する
+			throw new cannotGetAnyRecordException();
+		}
+	}
+
+	/* 関数名:getJson
+	 * 概要　:create_tagのインスタンスにデータのjsonをまとめるための処理
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.getJson = function(){
+
+	}
+
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
