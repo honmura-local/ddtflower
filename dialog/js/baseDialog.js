@@ -66,7 +66,7 @@ function baseDialog(dialog){
 		}
 	};
 
-	/* 関数名:setJson
+	/* 関数名:getJson
 	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
 	 * 返却値:なし
@@ -74,7 +74,7 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.setJson = function(){
+	this.getJson = function(){
 		
 	};
 	
