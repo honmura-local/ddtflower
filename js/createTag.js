@@ -1563,7 +1563,7 @@ function createTag(){
 			        					//通常ログインかつ、管理者のIDならば
 			        					if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
-			        						if(isSupportPushState()){
+			        						if(commonFuncs.isSupportPushState()){
 			        							//管理者ページの画面遷移の履歴を追加する。
 			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
 			        						//URLハッシュを利用する
@@ -1574,7 +1574,7 @@ function createTag(){
 			        					//通常ログインかつ、管理者のIDでなければ
 			        					} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
 			        						//pushStateをサポートしているブラウザなら
-			        						if(isSupportPushState()){
+			        						if(commonFuncs.isSupportPushState()){
 			        							//会員トップページの画面遷移の履歴を追加する。
 			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
 			        						//URLハッシュを利用する

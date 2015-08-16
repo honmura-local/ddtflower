@@ -323,11 +323,11 @@ function eachDialogTmp(){
 			var resultwork = null;								//
 			var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
 			var sendObject = {									//送信するデータのオブジェクト
-					from:data.user_key					//送信元
+					from:data.user_key				//送信元
 					,subject:data.suggest_title		//タイトル
 					,content:data.suggest_content	//本文
 			};
-			
+
 			//メールのタイプの数値で送信先PHP、送信データの構成を変える
 			switch(parseInt(data.suggestionRadio)){
 			//通常会員メールの場合
