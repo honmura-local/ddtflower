@@ -1,4 +1,4 @@
-/** ファイル名:constants.js
+﻿/** ファイル名:constants.js
  * 概要　　　:定数定義ファイル
  * 作成日　:2015.0813
  * 作成者　:T.Masuda
@@ -312,6 +312,65 @@ LESSON_TABLE								= 'lessonTable';			//授業テーブル
 SELECTOR_LESSON_TABLE						= DOT + LESSON_TABLE;		////授業テーブルのセレクタ
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
+
+LESSON_NEW_BUTTON_TEXT						= '新規作成'				 //授業新規作成ボタンテキスト
+
+
+//会員、予約確認ダイアログ
+MEMBER_RESERVE_CONFIRM_DIALOG				= 'dialog/memberReserveConfirmDialog.html';
+MEMBER_RESERVE_CONFIRM_DIALOG_JS 			= 'dialog/js/memberReserveConfirmDialog.js';
+MEMBER_RESERVE_CONFIRM_DIALOG_HTML 			= 'dialog/template/memberReserveConfirmDialog.html';
+MEMBER_RESERVE_CONFIRM_DIALOG_JSON 			= 'dialog/source/memberReserveConfirmDialog.json';
+
+//会員、予約キャンセルダイアログ
+MEMBER_RESERVE_CANCEL_DIALOG 				= 'dialog/memberReserveCancelDialog.html';
+MEMBER_RESERVE_CANCEL_DIALOG_JS 			= 'dialog/js/memberReserveCancelDialog.js';
+MEMBER_RESERVE_CANCEL_DIALOG_HTML 			= 'dialog/template/memberReserveCancelDialog.html';
+MEMBER_RESERVE_CANCEL_DIALOG_JSON 			= 'dialog/source/memberReserveCancelDialog.json';
+
+//管理者、授業一覧ダイアログ
+ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
+ADMIN_LESSON_LIST_DIALOG_JS 				= 'dialog/js/adminLessonListDialog.js';
+ADMIN_LESSON_LIST_DIALOG_HTML 				= 'dialog/template/adminLessonListDialog.html';
+ADMIN_LESSON_LIST_DIALOG_JSON 				= 'dialog/source/adminLessonListDialog.json';
+
+//管理者、授業詳細ダイアログ
+ADMIN_LESSON_DETAIL_DIALOG 					= 'dialog/adminLessonDetailDialog.html';
+ADMIN_LESSON_DETAIL_DIALOG_JS 				= 'dialog/js/adminLessonDetailDialog.js';
+ADMIN_LESSON_DETAIL_DIALOG_HTML 			= 'dialog/template/adminLessonDetailDialog.html';
+ADMIN_LESSON_DETAIL_DIALOG_JSON 			= 'dialog/source/adminLessonDetailDialog.json';
+
+//管理者、新規授業作成ダイアログ
+ADMIN_LESSON_CREATE_DIALOG 					= 'dialog/adminLessonCreateDialog.html';
+ADMIN_LESSON_CREATE_DIALOG_JS 				= 'dialog/js/adminLessonCreateDialog.js';
+ADMIN_LESSON_CREATE_DIALOG_HTML 			= 'dialog/template/adminLessonCreateDialog.html';
+ADMIN_LESSON_CREATE_DIALOG_JSON 			= 'dialog/source/adminLessonCreateDialog.json';
+
+//テーブルから取り出す列名
+COLUMN_NAME_MAX_NUM					= 'max_num';					// １限に予約できる最大の数
+COLUMN_NAME_START_TIME				= 'start_time';					// 授業開始時間
+COLUMN_NAME_END_TIME				= 'end_time';					// 授業終了時間
+COLUMN_NAME_ORDER_STUDENTS			= 'order_students';				// 予約している生徒の数
+COLUMN_NAME_MAX_STUDENTS			= 'max_students';				// 個別の予約できる最大の数
+COLUMN_NAME_LESSON_DATE				= 'lesson_date';				// 授業受講日
+COLUMN_NAME_USER_WORK_STATUS		= 'user_work_status';			// ユーザ授業ステータス
+COLUMN_NAME_CLASSWORK_STATUS		= 'classwork_status';			// 授業ステータス
+COLUMN_NAME_POINT_RATE				= 'point_rate';					// ポイントレート
+COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			// 授業締切日？
+COLUMN_NAME_SCHOOL_NAME				= 'school_name';				// 店舗名
+COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
+COLUMN_NAME_TODAY					= 'today';						// 今日の日付
+COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
+COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
+
+//カスタマイズ後の行のKey名
+START_END_TIME 						= 'startEndTime';				//開始時間と終了時間を合わせたもの
+LESSON_DATE_TIME 					= 'lessonDateTime';				//年月日を含んだ開始時間と終了時間を合わせたもの
+SUM_COST							= 'sumCost';					//受講料の合計
+LESSON_POINT 						= 'lessonPoint';				//レッスン受講で加算されるポイント
+LESSON_REST 						= 'lesssonRest';				//受講情報の残席情報記号
+LESSON_STATUS 						= 'lessonStatus';				//レッスンの予約状況
+
 //「テーブルデータ」のキー
 TABLE_DATA_KEY								= 'tableData';
 //「データ」のキー
@@ -320,6 +379,7 @@ DATA_KEY									= 'data';
 DATE_JAPANESE								= 'dateJapanese';
 //jQuery UI Position用文字列。ダイアログの座標指定に使う
 POSITION									= 'position';
+DIALOG_POSITION 							= 'center top';				//ダイアログのポジション
 LESSON_STATUS								= 'lessonStatus';
 //テーブルの領域名とセレクタ
 TABLE_AREA									= 'tableArea';
@@ -338,3 +398,4 @@ SELECTOR_TARGET_LESSON_TABLE				= '.targetLessonTable';
 EQ_FRONT									= ':eq(';
 CLOSE_AND_TD_TAG 							= ') td';
 STR_CLOSE_JP								= '閉じる';
+
