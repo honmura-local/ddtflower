@@ -1,0 +1,50 @@
+{
+    "contentBox1":{
+        "label1":{
+        	"class":"userNameLabel",
+            "text": "ユーザ名"
+        },
+        "textbox1":{
+        	"class":"userName",
+            "type": "text",
+            "name": "userName"
+        },
+        "label2":{
+        	"class":"passwordLabel",
+            "text":"パスワード"
+        },
+        "password1":{
+        	"class":"password",
+            "type": "password",
+            "name": "password"
+        },
+        "smallMessage1":{
+        	"class":"toEntryBefore",
+        	"text":"会員登録がお済みでない方は"
+        },
+        "linkText1":{
+        	"class":"toEntryPage",
+        	"text":"こちら",
+        	"href":"#entry.html"
+        },
+        "smallMessage2":{
+        	"class":"toEntryAfter",
+        	"text":"へ"
+        }
+    },
+    "login":{
+        "db_getQuery":"SELECT id, login_id, authority FROM user_inf WHERE login_id='userName' AND password='password';",
+        "userName":{
+            "value":""
+        },
+        "password":{
+            "value":""
+        },
+        "id":{
+            "text":""
+        },
+        "authority":{
+        	"text":""
+        }
+    }
+}

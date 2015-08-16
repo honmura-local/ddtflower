@@ -38,7 +38,7 @@ function baseDialog(dialog){
 			this.dispContentsFooter();	//下部
 			this.setDialogEvents();		//ダイアログ内のイベントを設定する
 		} catch(e){
-			//
+			//ダイアログ生成エラー
 			throw new failedToDisplayException();
 		}
 	}
@@ -54,6 +54,7 @@ function baseDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
+			this.setJson();			//JSONを取得する
 			this.customizeJson();	//取得したJSONを加工する
 		//例外時処理
 		}catch(e){
@@ -65,6 +66,18 @@ function baseDialog(dialog){
 		}
 	};
 
+	/* 関数名:getJson
+	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.getJson = function(){
+		
+	};
+	
 	/* 関数名:customizeJson
 	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
 	 * 引数　:なし
@@ -303,7 +316,6 @@ function baseDialog(dialog){
 		//ダイアログのクラスインスタンスを生成する。
 		//openイベントはsetArgumentObjでセットしておく
 		this.dialogEx = new dialogEx(url, this.setArgumentObj());
-		console.log(this.setArgumentObj());
 		//openイベントのコールバック関数をセットする
 		this.dialogEx.run();	//ダイアログを開く
 	}
@@ -361,6 +373,16 @@ function jsonFailedToParseException(json){
  * 作成者　:T.Masuda
  */
 function failedToDisplayException(json){
+	Error.apply(this);	//エラーを起こす
+}
+
+/* クラス名:cannotGetAnyRecordException
+ * 概要　:目的のレコードが取得できなかった時に投げる例外
+ * 引数　:なし
+ * 作成日　:2015.0815
+ * 作成者　:T.Masuda
+ */
+function cannotGetAnyRecordException(){
 	Error.apply(this);	//エラーを起こす
 }
 
