@@ -493,30 +493,6 @@ var callReservedLessonValue = function(tableName, loopData, counter, rowNumber, 
 };
 
 /* 
- * 関数名:customizeMemberLessonTable
- * 概要  :予約中テーブルと予約済みテーブルのjsonに置換後の値を入れる
- * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
- 		 counter:カウンタ変数。加工する行を識別するのに使う
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.08.15
- */
-var customizeMemberLessonTable = function(tableData, counter) {
-	//加工を行う行のデータを変数に入れる
-	var recordData = tableData[counter];
-	//年月日と開始日時と終了時刻を組み合わせた値を入れる
-	var lesson_date_time = allDateTime(recordData);
-	//料金を求めるために0で初期化する
-	var cost = sumCost(recordData);
-	//ポイントを求める
-	var point = getPoint(recordData, cost);
-	//取得したデータをjsonに入れていく
-	tableData[counter][LESSON_DATE_TIME]	= lesson_date_time;		//時間割開始と終了時刻
-	tableData[counter][SUM_COST]			= cost;					//レッスン合計受講料
-	tableData[counter][LESSON_POINT]		= point;				//授業加算ポイント
-};
-
-/* 
  * 関数名:callEachDayReservedValue
  * 概要  :管理者日ごと予約者一覧テーブルの値を置換する
  * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
@@ -658,11 +634,12 @@ function dbDataTableReplaceExecute(tableName, rowData, func, timeTableStudents) 
  * 概要  :dbから取り出したテーブルについて加工した値をjsonに追加する
  * 引数  :tabledata:DBから取得したテーブルのjson
  		:customizeFunc:カスタマイズするテーブルの関数名
+ 		:timeTableStudents:時限ごとの受講生徒数
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.15
  */
-function customizeTableData(tableData, customizeFunc) {
+function customizeTableData(tableData, customizeFunc, timeTableStudents) {
 	//カウンターを作る
 	var counter = 0;
 	console.log(tableData)
@@ -671,6 +648,59 @@ function customizeTableData(tableData, customizeFunc) {
 	//テーブルの全ての行についてループする
 	for(counter; counter < recordLength; counter++) {
 		//テーブルのjsonについて値を加工する
-		customizeFunc(tableData, counter);
+		customizeFunc(tableData, counter, timeTableStudents);
 	}
 }
+
+/* 
+ * 関数名:customizeMemberLessonTable
+ * 概要  :予約中テーブルと予約済みテーブルのjsonに置換後の値を入れる
+ * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
+ 		 counter:カウンタ変数。加工する行を識別するのに使う
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.15
+ */
+var customizeMemberLessonTable = function(tableData, counter) {
+	//加工を行う行のデータを変数に入れる
+	var recordData = tableData[counter];
+	//年月日と開始日時と終了時刻を組み合わせた値を入れる
+	var lesson_date_time = allDateTime(recordData);
+	//料金を求めるために0で初期化する
+	var cost = sumCost(recordData);
+	//ポイントを求める
+	var point = getPoint(recordData, cost);
+	//取得したデータをjsonに入れていく
+	tableData[counter][LESSON_DATE_TIME]	= lesson_date_time;		//時間割開始と終了時刻
+	tableData[counter][SUM_COST]			= cost;					//レッスン合計受講料
+	tableData[counter][LESSON_POINT]		= point;				//授業加算ポイント
+};
+
+/* 
+ * 関数名:customizeAdminLessonTable
+ * 概要  :管理者、授業一覧テーブルの値必要な値をクライアント側で設定してjsonに入れる
+ * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
+ 		 counter:カウンタ変数。加工する行を識別するのに使う
+ 		 timeTableStudents:時限ごとに予約している生徒の数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.16
+ */
+var customizeAdminLessonTable = function(tableData, counter, timeTableStudents) {
+	// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+	var recordData = tableData[counter];
+	//レッスンテーマ名または店舗名が空であるならばその行を飛ばす
+	if(recordData[COLUMN_NAME_LESSON_NAME] !="" && recordData[COLUMN_NAME_SCHOOL_NAME] != "") {
+		// 開始日時と終了時刻を組み合わせた値を入れる
+		var timeSchedule = buildHourFromTo(recordData);
+		//状況を入れる
+		var  lessonStatus = getClassworkStatus(recordData, timeTableStudents);
+		//残席を記号にする
+		var  rest = getRestMark(recordData, timeTableStudents);
+		//取得したデータをjsonに入れていく
+		tableData[counter][START_END_TIME]	= timeSchedule;	//時間割開始と終了時刻
+		tableData[counter][LESSON_STATUS]	= lessonStatus;	//レッスンの開講状況ステータス
+		tableData[counter][LESSON_REST]		= rest;			//レッスン残席記号
+	}
+};
+

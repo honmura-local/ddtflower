@@ -14,6 +14,8 @@
 function adminLessonListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 
+	var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
+
 	//新規にダイアログを作るためのボタンの配列
 	this.button = [
 		{	//はいボタン
@@ -26,6 +28,65 @@ function adminLessonListDialog(dialog){
 		}
 	];
 
+	/* 関数名:constructionContent
+	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.constructionContent = function(){
+		//主に分岐処理を行うためにtry catchブロックを用意する
+		try{
+			//授業データ一覧ダイアログのテンプレートを取得する
+			this.create_tag.getDomFile(ADMIN_LESSON_DETAIL_DIALOG_HTML);
+			//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
+			this.getJson();
+			//取得したJSONを加工する
+			this.customizeJson();
+		//例外時処理
+		}catch(e){
+			//予約一覧のレコードが取得できなかったら
+			if(e instanceof cannotGetAnyRecordException){
+				//もう一度例外を投げ、dispContents内で処理する
+				throw new cannotGetAnyRecordException();
+			}
+		}
+	};
+
+	/* 関数名:getJson
+	 * 概要　:必要なjsonデータをクリエイトタグのインスタンスに格納する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0816
+	 * 作成者　:T.Yamamoto
+	 */
+	this.getJson = function() {
+		//授業一覧ダイアログのjsonデータを取得する
+		this.create_tag.getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);
+		//授業一覧データをDBから取得する
+		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[LESSON_TABLE], LESSON_TABLE);
+	}
+
+	/* 関数名:customizeJson
+	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
+			この中で使っている関数はjs/customizeTableData.js で定義されているものを使う
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0816
+	 * 作成者　:T.Yamamoto
+	 */
+	this.customizeJson = function(){
+		//テーブルのデータを連想配列に入れる
+		var tableData = this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY];
+		//時限ごとの人数を取り出す
+		var timeTableStudents = getTotalStudentsOfTimeTable(tableData);
+		//jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
+		customizeTableData(tableData, customizeAdminLessonTable, timeTableStudents);
+	};
+
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
@@ -35,12 +96,24 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContents = function(){
-		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
+		try{
+			//画面を表示する準備をする
+			this.constructionContent();
+		//レコードが取得できていなければ
+		}catch (e){
+			//ダイアログをアラートのダイアログに変える
+			this.showAlertNoReserve();
+		}
 		
 		//ダイアログのタイトルをセットする
 		this.dispContentsHeader(dialogClass);
-		//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-		this.setLessonDataToJSON(ADMIN_LESSON_LIST_DIALOG_JSON);
+		this.dispContentsMain(dialogClass);		//ダイアログ中部
+		this.dispContentsFooter(dialogClass);	//ダイアログ下部
+		//ダイアログの位置を修正する
+		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
+	}
+
+
 		//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 		if (this.getTableData(LESSON_TABLE)) {
 			this.dispContentsMain(dialogClass);		//ダイアログ中部
@@ -48,22 +121,6 @@ function adminLessonListDialog(dialog){
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
 		//ダイアログの位置を修正する
 		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
-	}
-
-	/* 関数名:getTableData
-	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
-	 * 引数　:String tableName:テーブルのJSONのキー
-	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.getTableData = function(tableName){
-		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
-		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
-	}
-
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -89,14 +146,13 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(ADMIN_LESSON_LIST_DIALOG_HTML);
-		//授業一覧のテーブルを作る
-		this.createTable();
-		//テーブルの値をクライアント側で編集して画面に表示する
-		// commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
-		//レッスンのステータス領域を作る
-		this.create_tag.outputTag('lessonStatus', 'lessonStatus', CURRENT_DIALOG_SELECTOR);
+		//データがなければテーブルは作らない
+		if(this.create_tag.json.[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
+			//授業一覧のテーブルを作る
+			this.createTable();
+			//レッスンのステータス領域を作る
+			this.create_tag.outputTag('lessonStatus', 'lessonStatus', CURRENT_DIALOG_SELECTOR);
+		}
 	}
 
 	/* 関数名:createTable
@@ -145,24 +201,7 @@ function adminLessonListDialog(dialog){
 		//タイトルを入れ替える
 		this.setDialogTitle(data.dateJapanese);
 	}
-	
-	/* 関数名:setLessonDataToJSON
-	 * 概要　:授業のデータをcerateTagのJSONにセットする
-	 * 引数　:String jsonPath:jsonファイルのパス
-	 * 返却値:なし
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.setLessonDataToJSON = function(jsonPath){
-		//このダイアログ用のJSONファイルを取得する
-		this.create_tag.getJsonFile(jsonPath);
-		//ダイアログのdataオブジェクトを取得する
-		var data = this.dialog[0].instance.getArgumentDataObject();
-		//dbに接続する前に日付をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
-	}
-	
-	
+
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -199,7 +238,7 @@ function adminLessonListDialog(dialog){
 }
 
 //継承の記述
-memberReserveListDialog.prototype = new baseDialog();
+adminLessonListDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
-memberReserveListDialog.prototype.constructor = baseDialog;
+adminLessonListDialog.prototype.constructor = baseDialog;
 
