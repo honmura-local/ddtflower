@@ -18,57 +18,17 @@ function memberSuggestionConfirmDialog(dialog){
 					{	//はいボタン
 						text:TEXT_YES,
 						//クリック時のコールバック関数
-						click:function(){
-							//ダイアログのステータスをはいボタンが押されたステータスに変更する
-							this[DIALOG_BUILDER].buttonCallBack(YES);
-						}
+						click://ダイアログのステータスをはいボタンが押されたステータスに変更する
+							this[DIALOG_BUILDER].buttonCallBack(YES)
 					},
 					//いいえボタン
 					{	//ボタンテキスト
 						text:TEXT_NO,
 						//クリック時のコールバック関数
-						click:function(){	//クリックのコールバック関数
-							//ダイアログのステータスをいいえボタンが押されたステータスに変更する
-							this[DIALOG_BUILDER].buttonCallBack(NO);
-						}
+						click://ダイアログのステータスをいいえボタンが押されたステータスに変更する
+							this[DIALOG_BUILDER].buttonCallBack(NO)
 					}
 	           ];
-
-	/* 関数名:setUpdateStatus
-	 * 概要　:ダイアログの記事更新のステータスをセットする。主にボタンがクリックされたときに変更する
-	 * 引数　:setValue:ボタンがクリックされた時にsetするステータスの値
-	 * 返却値:なし
-	 * 作成日　:2015.08.16
-	 * 作成者　:T.Yamamoto
-	 */
-	 this.setSuggestionStatus = function(setValue) {
-	 	//記事更新ステータスをセットする
-	 	this.suggestionStatus = setValue;
-	 }
-
-	/* 関数名:dispContents
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContents = function(){
-		try{
-			//画面を表示する準備をする
-			this.constructionContent();
-		//レコードが取得できていなければ
-		}catch (e){
-			//ダイアログをアラートのダイアログに変える
-			this.showAlertNoReserve();
-		}
-		
-		//ダイアログのタイトルをセットする
-		this.dispContentsHeader();
-		this.dispContentsMain();		//ダイアログ中部
-		this.dispContentsFooter();	//ダイアログ下部
-	}
 
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
@@ -116,7 +76,7 @@ function memberSuggestionConfirmDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//確認ダイアログを作成する。送信タイプ別にメッセージ、コールバック関数を設定する
-		this.dialogClass.setConfirmContents(SUGGESTION_CONFIRM_TEXT, dialogCloseFunc);
+		this.dialogClass.setConfirmContents(SUGGESTION_CONFIRM_TEXT, );
 	}
 
 	/* 関数名:dispContentsFooter
@@ -169,60 +129,74 @@ function memberSuggestionConfirmDialog(dialog){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.updateJson = function() {
-		//入力されたメッセージのデータを取得する
-		var data = this.dialogClass.getArgumentDataObject();
-		//目安箱か普通のメールかを識別するためにステータスを取得する
-		var blogUpdateStatus = data[SUGGESTION_STATUS];
-		//入力された内容をクエリに入れる
-		var sendQueryObject = $.extend(true, {}, data);
-		//目安箱として送信する場合、クエリも送信データに含める
-		if(blogUpdateStatus == SUGGESTION_STATUS_OWNER) {
-			//更新クエリを入れる
-			sendQueryObject = $.extend(true, {}, this[VAR_CREATE_TAG].json[SUGGESTION_QUERY_KEY], data);
+		var data = dialogClass.getArgumentDataObject();		//argumentObjのdataを取得する
+		var resultwork = null;								//
+		var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+		var sendObject = {									//送信するデータのオブジェクト
+				from:data.user_key				//送信元
+				,subject:data.suggest_title		//タイトル
+				,content:data.suggest_content	//本文
 		}
-		//クエリを返す
-		return sendQueryObject;
+		//送信するデータを更新する
+		var sendObject = $.extend(true, {}, sendObject, data);
+		return sendObject;
 	}
 
-	/* 関数名:myBlogUpdate
-	 * 概要　:ブログ記事を更新する
+	/* 本村さんのメール送信関数 */
+	/* 関数名:sendMemberMail
+	 * 概要　:会員ページ 会員メール/目安箱メールを送信する
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:2015.08.16
-	 * 作成者　:T.Yamamoto
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
 	 */
-	 this.sendSuggestion = function() {
-	 	//ブログ記事を更新するためのデータを取得する
-	 	var sendQueryObject = this.updateJson();
-	 	//メール送信処理を行う
-	 	var mailSendObject = new eachDialogTmp()
-	 	//目安箱としてメッセージを送信する
-	 	if(sendQueryObject[DB_SETQUERY]) {
-	 		//クエリを発行して目安箱のDBを新しく作る
-	 		this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendQueryObject);
-	 		//メール送信処理を行う
-	 		// mailSendObject.mailsend();
-	 		//そこで処理を行う
-	 		return;
-	 	}
- 		//メール送信処理を行う
- 		// mailSendObject.mailsend();
-	 }
-
-	/* 関数名:dialogCloseFunc
-	 * 概要　:ブログ記事更新確認ダイアログが閉じるときに記事を更新するかを決める
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.08.16
-	 * 作成者　:T.Yamamoto
-	 */
-	 this.dialogCloseFunc = function() {
-	 	//ボタンステータスを見て更新のステータスなら更新を行う
-	 	if(this.getPushedButtonState() == YES) {
-	 		//記事の更新を行う
-	 		this.sendSuggestion();
-	 	}
-	 }
+	this.sendMemberMail = function() {
+		//はいボタンが押されていたら
+		if(dialogClass.getPushedButtonState() == YES){
+			//インスタンスを保存して関数内でも使えるようにする
+			var instance = this;
+			//送信するデータを取得する
+			var sendObject = updateJson();
+			//メールのタイプの数値で送信先PHP、送信データの構成を変える
+			switch(parseInt(sendObject.suggestionRadio)){
+			//通常会員メールの場合
+			case MEMBER_MAIL:break;	//初期化内容が該当するのでなにもしない
+			//目安箱メールの場合
+			case SUGGESTION_MAIL:
+					//目安箱メールならタイプの値を追加する
+					$.extend(true, sendObject, {type:sendObject.suggest_type});
+					//目安箱メール送信用PHPにメールを処理させる
+					sendUrl = SEND_SUGGEST_PHP;
+					break;
+			default:break;
+			}
+			
+			$.ajax({					//PHPにメール用データを渡すAjax通信
+					url:sendUrl			//PHPのURLを設定する
+					,data:sendObject	//送信データのオブジェクト
+					,dataType:"json"	//JSON形式でデータをもらう
+					,type:"POST"		//POSTメソッドでHTTP通信する
+					,success:function(result){		//通信成功時
+						resultwork = result;		//通信結果から情報を取り出す
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+						//目安箱メールを送信していたら
+						if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
+							//目安箱テーブルに新たにデータを挿入する
+							instance.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+						}
+					}
+					//通信失敗時
+					,error:function(xhr, status, error){
+						//throw new (status + ":" + MESSAGE_FAILED_CONNECT);
+						//送信完了と共に入力ダイアログを消す
+						alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	//送信失敗のメッセージを出す
+					}
+				});
+		}
 
 }
 
