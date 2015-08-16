@@ -313,6 +313,9 @@ SELECTOR_LESSON_TABLE						= DOT + LESSON_TABLE;		////授業テーブルのセ�
 RESERVE_LIST_JSON							= 'dialog/source/memberReserveListDialog.json';
 RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
 
+LESSON_NEW_BUTTON_TEXT						= '新規作成'				 //授業新規作成ボタンテキスト
+
+
 //会員、予約確認ダイアログ
 MEMBER_RESERVE_CONFIRM_DIALOG				= 'dialog/memberReserveConfirmDialog.html';
 MEMBER_RESERVE_CONFIRM_DIALOG_JS 			= 'dialog/js/memberReserveConfirmDialog.js';
@@ -395,3 +398,4 @@ SELECTOR_TARGET_LESSON_TABLE				= '.targetLessonTable';
 EQ_FRONT									= ':eq(';
 CLOSE_AND_TD_TAG 							= ') td';
 STR_CLOSE_JP								= '閉じる';
+

@@ -13,13 +13,10 @@
  */
 function adminLessonListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
-
-	var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
-
 	//新規にダイアログを作るためのボタンの配列
 	this.button = [
 		{	//はいボタン
-			text:'新規作成',
+			text:LESSON_NEW_BUTTON_TEXT,
 			//クリック時のコールバック関数
 			click:function(){
 				//子のダイアログを開く
@@ -106,17 +103,17 @@ function adminLessonListDialog(dialog){
 		}
 		
 		//ダイアログのタイトルをセットする
-		this.dispContentsHeader(dialogClass);
-		this.dispContentsMain(dialogClass);		//ダイアログ中部
-		this.dispContentsFooter(dialogClass);	//ダイアログ下部
+		this.dispContentsHeader();
+		this.dispContentsMain();		//ダイアログ中部
+		this.dispContentsFooter();	//ダイアログ下部
 	}
 
 
-		//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
-		if (this.getTableData(LESSON_TABLE)) {
-			this.dispContentsMain(dialogClass);		//ダイアログ中部
-		}
-		this.dispContentsFooter(dialogClass);	//ダイアログ下部
+		// //取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
+		// if (this.getTableData(LESSON_TABLE)) {
+		// 	this.dispContentsMain(dialogClass);		//ダイアログ中部
+		// }
+		// this.dispContentsFooter(dialogClass);	//ダイアログ下部
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -127,9 +124,9 @@ function adminLessonListDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsHeader = function(dialogClass){
+	this.dispContentsHeader = function(){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
+		this.setDialogTitle();
 	}
 	
 	/* 関数名:dispContentsMain
@@ -157,7 +154,7 @@ function adminLessonListDialog(dialog){
 	 */
 	this.createTable = function() {
 				//データがなければテーブルは作らない
-		if(this.create_tag.json.[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
+		if(this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
 			//授業一覧テーブルの外側の領域を作る
 			this.create_tag.outputTag('tableArea', 'tableArea', CURRENT_DIALOG_SELECTOR);
 			//授業のデータ一覧テーブルを作る
@@ -174,13 +171,13 @@ function adminLessonListDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(dialogClass){
+	this.dispContentsFooter = function(){
 		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
 		// this.create_tag.openAdminLessonDetailDialog();
 		//新規に授業を作成するためのボタンを作る
 		this.setDialogButtons(this.button);
 		//ダイアログを閉じるときは破棄するように設定する
-		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
+		this.dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
 		//ダイアログの位置を修正する
 		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
 	}
@@ -194,8 +191,9 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setDialogTitle = function(dialogClass){
+		console.log(this.dialogClass);
 		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = dialogClass.getArgumentDataObject();
+		var data = this.dialogClass.getArgumentDataObject();
 		//タイトルを入れ替える
 		this.setDialogTitle(data.dateJapanese);
 	}
@@ -209,8 +207,7 @@ function adminLessonListDialog(dialog){
 	 */
 	this.setArgumentObj = function() {
 		//ダイアログのインスタンスを変数に入れて扱いやすくする
-		var dialogClass = $(CURRENT_DIALOG_SELECTOR)[0].instance;
-		var data = dialogClass.getArgumentObject();	//argumentObjを取得する
+		var data = this.dialogClass.getArgumentObject();	//argumentObjを取得する
 		
 		//新規授業追加ダイアログに渡す変数を作る
 		var sendObject = {
