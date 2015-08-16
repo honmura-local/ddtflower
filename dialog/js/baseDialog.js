@@ -38,7 +38,7 @@ function baseDialog(dialog){
 			this.dispContentsFooter();	//下部
 			this.setDialogEvents();		//ダイアログ内のイベントを設定する
 		} catch(e){
-			//
+			//ダイアログ生成エラー
 			throw new failedToDisplayException();
 		}
 	}
@@ -65,6 +65,18 @@ function baseDialog(dialog){
 		}
 	};
 
+	/* 関数名:setJson
+	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.setJson = function(){
+		
+	};
+	
 	/* 関数名:customizeJson
 	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
 	 * 引数　:なし
