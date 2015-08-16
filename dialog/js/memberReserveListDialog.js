@@ -71,7 +71,7 @@ function memberReserveListDialog(dialog){
 			}
 		}
 	};
-	
+
 	/* 関数名:customizeJson
 	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
 	 * 引数　:なし
@@ -85,7 +85,7 @@ function memberReserveListDialog(dialog){
 		this.getReplacedTableData(tableName);
 //		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 	};
-	
+
 	this.getReplacedTableData = function(tableName){
 		var tableData = creator.json[tableName][TABLE_DATA_KEY];
 		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
@@ -118,7 +118,7 @@ function memberReserveListDialog(dialog){
 		//ダイアログのコンテンツを挿入する
 		this.insertDialogContents();
 	}
-	
+
 	/* 関数名:dispContentsFooter
 	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
 	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
@@ -221,58 +221,18 @@ function memberReserveListDialog(dialog){
 	this.setArgumentObj = function() {
 
 		//新たにオブジェクトを作り、親ダイアログから引き継いだargumentObjの内容をセットする
-		var argumentObj = $.extend(true, {}, this.dialogExOptionSampleChild.argumentObj);
-
+		var argumentObj = $.extend(true, {}, this.dialog[0].instance.argumentObj, this.recordData[DATA_KEY]);
 		
-		
-		//openイベントを設定する
-		$.extend(true, argumentObj.config, {open:commonFuncs.callOpenDialog});
 		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
-		$.extend(true, argumentObj.data, {parentDialogEx:this.dialog[0].instance});
+		$.extend(true, argumentObj.data,
+				{parentDialogEx:this.dialog[0].instance},
+				{parentDialogCreateTag:this.createTag},
+				recordData.data,
+				recordData.number
+		);
+		
 		return argumentObj;	//生成したオブジェクトを返す
-		
-		this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
-		//残席の記号を取得する
-		this.restMarkNow = $('.targetLessonTable' +':eq(' + (this.recordData.number) + ') td').eq(4).text();
-		
-		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-		if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
-			&& restMarkNow != CHAR_INVALIDATE) {
-			//予約一覧ダイアログを開く際にセットされたデータを取得する
-			var prevDialogData = $dialog[0].instance.getArgumentDataObject();
-			//予約する人が誰なのかを分かりやすくするために会員番号を送信する連想配列に入れる
-			recordData.data[USER_ID] = thisElem.create_tag.getUserId();
-			
-			//日付を日本語表示にしてダイアログのタイトルにするために保存する
-			var titleDate = getDialogTitleDate(recordData.data.lesson_date)
-			var  dialogOption = dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG];	//ダイアログのオプションオブジェクトを取得する
-			//予約、キャンセルのどちらのダイアログでも使うため、
-			//createLittleContentsクラスのインスタンスとダイアログのデータを行データに入れておく
-			recordData.data = $.extend(true, {}, recordData.data,
-					prevDialogData, {reservedListCreator:thisElem, recordData:recordData.number});
-			
-			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-			if(thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
-				//予約ダイアログを開く
-				this.openRecordProcessDialog(recordData.data);
-			//すでに予約しているのであればキャンセルダイアログを開く
-			} else {
-				//キャンセルダイアログを開く
-				cancelDialogOpen(recordData.data, titleDate);
-			}
-		}
-		
-		
-		//recordDataの階層を直した方がいいかもしれません。numberとdataが同じ階層にあるため、無駄な記述が増えます
-		var sendObj = $.extend(true, {},dialogOption.argumentObj);	//argumentObjのコピーを作る
-		sendObj.data = 	$.extend(true, 			//dataオブジェクトを統合する
-				{},								//新たにオブジェクトを作り、そこにまとめる
-				dialogOption.argumentObj.data, 	//argumentObjのdata部分
-				recordData.data, 				//選択された行データ
-				{number: recordData.number}, 	//行の番号
-				prevDialogData 					//予約一覧ダイアログのargumentObjのデータ
-			);
-		}
+s		}
 
 	/* 関数名:showAlertNoReserve
 	 * 概要　:予約なしのアラートダイアログを作る
@@ -288,8 +248,7 @@ function memberReserveListDialog(dialog){
 		//ダイアログを閉じるときは破棄するように設定する
 		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
 	}
-	
-	
+
 	/* 関数名:whenRecordSelectEvent
 	 * 概要　:テーブルのレコードを渡して処理させるダイアログを開くイベントを登録する
 	 * 引数　:String target:データ取得元のテーブルのセレクタ
@@ -304,9 +263,24 @@ function memberReserveListDialog(dialog){
 			//クリックした行の番号とデータを取得する
 			this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
 			//残席の記号を取得する
-			this.restMarkNow = $('.targetLessonTable' +':eq(' + (this.recordData.number) + ') td').eq(4).text();
+			var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(INT_4).text();
 			
-			this.openDialog();
+			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+			if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+				&& restMarkNow != CHAR_INVALIDATE) {
+				var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
+				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
+				if(thisElem.create_tag.json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
+					//予約確認ダイアログのURLをセットする
+					dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
+				//予約済みであれば
+				} else {
+					//予約キャンセルダイアログのURLをセットする
+					dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
+				}
+				
+				this.openDialog(dialogUrl);	//ダイアログを開く
+			}
 		});
 	}
 
