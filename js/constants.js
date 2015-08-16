@@ -346,6 +346,23 @@ ADMIN_LESSON_CREATE_DIALOG_JS 				= 'dialog/js/adminLessonCreateDialog.js';
 ADMIN_LESSON_CREATE_DIALOG_HTML 			= 'dialog/template/adminLessonCreateDialog.html';
 ADMIN_LESSON_CREATE_DIALOG_JSON 			= 'dialog/source/adminLessonCreateDialog.json';
 
+//マイブログ確認ダイアログ
+MYBLOG_CONFIRM_DIALOG 						= 'dialog/myBlogConfirmDialog.html';
+MYBLOG_CONFIRM_DIALOG_JS 					= 'dialog/js/myBlogConfirmDialog.js';
+MYBLOG_CONFIRM_DIALOG_JSON 					= 'dialog/json/myBlogConfirmDialog.json';
+MYBLOG_CONFIRM_TEXT							= 'ブログを更新します。よろしいですか？';
+MYBLOG_CONFIRM_DIALOG_TITLE					= 'ブログ更新確認';
+INSERT_MYBLOG_STATUS						= 100;
+UPDATE_MYBLOG_STATUS						= 200;
+INSERT_MYBLOG_QUERY_KEY 					= 'insertMyBlog';
+UPDATE_MYBLOG_QUERY_KEY						= 'updateMyBlog';
+
+
+CONFIRM_DIALOG_DEFAULT_STATUS				= 0;
+CONFIRM_DAILOG_YES_BUTTON_STATUS 			= 1;
+
+
+
 //テーブルから取り出す列名
 COLUMN_NAME_MAX_NUM					= 'max_num';					// １限に予約できる最大の数
 COLUMN_NAME_START_TIME				= 'start_time';					// 授業開始時間

@@ -1,18 +1,16 @@
-<div class="myBlogConfirmDialog">
+<div class="dialog">
 	<script>
-		//ダイアログのクラスインスタンスを生成する
-		var dialogClass = $('.myBlogConfirmDialog')[0].instance;
-		//ダイアログのインプット用データオブジェクトを取得する
-		var argData = dialogClass.getArgumentDataObject();
-		//確認ダイアログを作成する。送信タイプ別にメッセージ、コールバック関数を設定する
-		dialogClass.setConfirmContents(argData.message, submitArticle);
+		//当該ダイアログのDOMを取得する
+		var thisDialog = $(DOT + DIALOG + SELECTOR_LAST);
+		//このダイアログのクラスを定義したJSファイルを読み込む
+		commonFuncs.getScriptFile(MYBLOG_CONFIRM_DIALOG_JS);
+		
+		//当該ダイアログ用関数クラスインスタンスを生成する
+		var dialogBuilder = new myBlogConfirmDialog(thisDialog);
+		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
+		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>
 </div>
-
-
-
-
-
 
 
 
