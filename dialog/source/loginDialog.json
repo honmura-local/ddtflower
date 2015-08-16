@@ -1,7 +1,6 @@
 {
-    "contentBox1":{
+    "inputArea":{
         "label1":{
-        	"class":"userNameLabel",
             "text": "ユーザ名"
         },
         "textbox1":{
@@ -10,25 +9,21 @@
             "name": "userName"
         },
         "label2":{
-        	"class":"passwordLabel",
             "text":"パスワード"
         },
-        "password1":{
+        "textbox2":{
         	"class":"password",
             "type": "password",
             "name": "password"
         },
-        "smallMessage1":{
-        	"class":"toEntryBefore",
+        "label3":{
         	"text":"会員登録がお済みでない方は"
         },
-        "linkText1":{
-        	"class":"toEntryPage",
+        "linktext1":{
         	"text":"こちら",
         	"href":"#entry.html"
         },
-        "smallMessage2":{
-        	"class":"toEntryAfter",
+        "label4":{
         	"text":"へ"
         }
     },
