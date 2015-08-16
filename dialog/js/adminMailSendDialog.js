@@ -1,17 +1,17 @@
-/* ファイル名:memberSuggestionConfirmDialog.js
- * 概要　　　:会員目安箱送信確認ダイアログ
+/* ファイル名:adminMailSendDialog.js
+ * 概要　　　:管理者、メール送信確認ダイアログ
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/memberSuggestionConfirmDialog.js
+ * 場所　　:dialog/js/adminMailSendDialog.js
  */
 
-/* クラス名:memberSuggestionConfirmDialog.js
+/* クラス名:adminMailSendDialog.js
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 親クラス:baseDialog
  * 引数	 :Element dialog:ダイアログのDOM
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/memberSuggestionConfirmDialog.js
+ * 場所　　:dialog/js/adminMailSendDialog.js
  */
-function memberSuggestionConfirmDialog(dialog){
+function adminMailSendDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	//はい、いいえボタンの配列
 	this.yes_no = [
@@ -62,7 +62,7 @@ function memberSuggestionConfirmDialog(dialog){
 	 */
 	this.dispContentsHeader = function(dialogClass){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(SUGGESTION_CONFIRM_DIALOG_TITLE);
+		this.setDialogTitle(ADMIN_MAIL_SEND_TITLE);
 	}
 
 	/* 関数名:dispContentsMain
@@ -76,7 +76,7 @@ function memberSuggestionConfirmDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//確認ダイアログを作成する。送信タイプ別にメッセージ、コールバック関数を設定する
-		this.dialogClass.setConfirmContents(SUGGESTION_CONFIRM_TEXT, sendMemberMail);
+		this.dialogClass.setConfirmContents(ADMIN_MAIL_SEND_TEXT, sendAdminMail);
 	}
 
 	/* 関数名:dispContentsFooter
@@ -129,13 +129,13 @@ function memberSuggestionConfirmDialog(dialog){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.updateJson = function() {
-		var data = commonFuncs.getInputData(SUGGESTION_DATA_DOM_PARENT);		//domからデータを取得する
+		var data = commmonFuncs.getInputData(ADMIN_MAIL_DATA_DOM_PARENT);		//argumentObjのdataを取得する
 		var resultwork = null;								//
-		var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+		var sendUrl = MAIL_SEND_ENTRY_ADMIN_MAIL_PHP ;	//通常会員メールの送信先PHP
 		var sendObject = {									//送信するデータのオブジェクト
 				from:data.user_key				//送信元
-				,subject:data.suggest_title		//タイトル
-				,content:data.suggest_content	//本文
+				,subject:data.message_title		//タイトル
+				,content:data.message_content	//本文
 		}
 		//送信するデータを更新する
 		var sendObject = $.extend(true, {}, sendObject, data);
@@ -153,21 +153,19 @@ function memberSuggestionConfirmDialog(dialog){
 	 * 変更者　:T.Masuda
 	 * 内容　	:現行のdialogExクラス用に作り直しました。
 	 */
-	this.sendMemberMail = function() {
+	this.sendAdminMail = function() {
 		//はいボタンが押されていたら
-		if(this.dialogClass.getPushedButtonState() == YES){
+		if(dialogClass.getPushedButtonState() == YES){
 			//インスタンスを保存して関数内でも使えるようにする
-			var thisElem = this;
+			var instance = this;
 			//送信するデータを取得する
 			var sendObject = updateJson();
 			//メールのタイプの数値で送信先PHP、送信データの構成を変える
-			switch(parseInt(sendObject.suggestionRadio)){
-			//通常会員メールの場合
-			case MEMBER_MAIL:break;	//初期化内容が該当するのでなにもしない
+			switch(parseInt(sendObject.sendType)){
+			//通常メールの場合
+			case ADMIN_NORMAL_MAIL:break;	//初期化内容が該当するのでなにもしない
 			//目安箱メールの場合
-			case SUGGESTION_MAIL:
-					//目安箱メールならタイプの値を追加する
-					$.extend(true, sendObject, {type:sendObject.suggest_type});
+			case ADMIN_ANNOUNCE_MESSAGE:
 					//目安箱メール送信用PHPにメールを処理させる
 					sendUrl = SEND_SUGGEST_PHP;
 					break;
@@ -184,9 +182,9 @@ function memberSuggestionConfirmDialog(dialog){
 						//送信完了と共に入力ダイアログを消す
 						alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
 						//目安箱メールを送信していたら
-						if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
+						if(parseInt(sendObject.sendType) == ADMIN_ANNOUNCE_MESSAGE){
 							//目安箱テーブルに新たにデータを挿入する
-							thisElem.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+							instance.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 						}
 					}
 					//通信失敗時
@@ -201,6 +199,6 @@ function memberSuggestionConfirmDialog(dialog){
 }
 
 //継承の記述
-memberSuggestionConfirmDialog.prototype = new baseDialog();
+adminMailSendDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
-memberSuggestionConfirmDialog.prototype.constructor = baseDialog;
+adminMailSendDialog.prototype.constructor = baseDialog;

@@ -287,6 +287,7 @@ MEMBER_MAIL									= 0;											//目安箱 会員メールを示す数値
 SUGGESTION_MAIL								= 1;											//目安箱 目安箱メールを示す数値
 SEND_MEMBERMAIL_PHP							= 'php/mailSendEntryMemberMail.php';			//目安箱 会員メール送信用のPHP
 SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';				//目安箱 目安箱メール送信用のPHP
+MAIL_SEND_ENTRY_ADMIN_MAIL_PHP					= 'php/mailSendEntryAdminMail.php';						//管理者 メール送信用php
 DIALOG_JS_DIR								= 'dialog/js/';
 JS_IDENTIFIER								= '.js';
 TEST_DIALOG									= 'testdialog';
@@ -365,15 +366,29 @@ SUGGESTION_CONFIRM_DIALOG 						= 'dialog/memberSuggestionConfirmDialog.html';
 SUGGESTION_CONFIRM_DIALOG_JS 					= 'dialog/js/memberSuggestionConfirmDialog.js';
 SUGGESTION_CONFIRM_DIALOG_JSON 					= 'dialog/json/memberSuggestionConfirmDialog.json';
 SUGGESTION_CONFIRM_TEXT							= 'メッセージを送信します。よろしいですか？';
-SUGGESTION_CONFIRM_DIALOG_TITLE					= 'メッセージ送信確認確認';
+SUGGESTION_CONFIRM_DIALOG_TITLE					= 'メッセージ送信確認';
 
 SUGGESTION_STATUS_OWNER							= 0;
 SUGGESTION_STATUS_STAFF							= 1;
 RECEIVE_SUGGEST_STATE 							= '目安箱チェックボックスのname属性の値';
 SUGGESTION_QUERY_KEY 							= 'insertSuggestionBox';
+SUGGESTION_DATA_DOM_PARENT 						= 'suggestionArea';	//データを取得する親のクラス名
 
-DB_SETQUERY = 'db_setQuery';
+db_setQuery 									= 'db_setQuery';
 
+//管理者メッセージ送信確認ダイアログ
+ADMIN_MAIL_SEND_DIALOG 							= 'dialog/adminMailSendDialog.html';
+ADMIN_MAIL_SEND_DIALOG_JS 						= 'dialog/js/adminMailSendDialog.js';
+ADMIN_MAIL_SEND_DIALOG_JSON 					= 'dialog/json/adminMailSendDialog.json';
+ADMIN_MAIL_SEND_TEXT							= 'メッセージを送信します。よろしいですか？';
+ADMIN_MAIL_SEND_TITLE							= 'メッセージ送信確認';
+ADMIN_MAIL_DATA_DOM_PARENT 						= 'mailSendContent';	//データを取得する親のクラス名
+
+ADMIN_NORMAL_MAIL 							= 0;
+ADMIN_ANNOUNCE_MESSAGE							= 1;
+
+ADMIN_MESSAGE_INF_QUERY_KEY 					= 'insertMessageInf';
+ADMIN_MESSAGE_TO_QUERY_KEY 						= 'insertMessageTo';
 
 //テーブルから取り出す列名
 COLUMN_NAME_MAX_NUM					= 'max_num';					// １限に予約できる最大の数

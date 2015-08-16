@@ -1,5 +1,5 @@
 /* ファイル名:myBlogConfirmDialog.js
- * 概要　　　:テスト用ダイアログ
+ * 概要　　　:マイブログ更新確認ダイアログ
  * 作成者　:T.Masuda
  * 場所　　:dialog/js/myBlogConfirmDialog.js
  */
@@ -18,19 +18,17 @@ function myBlogConfirmDialog(dialog){
 					{	//はいボタン
 						text:TEXT_YES,
 						//クリック時のコールバック関数
-						click:function(){
+						click:
 							//ダイアログのステータスをはいボタンが押されたステータスに変更する
-							this[DIALOG_BUILDER].buttonCallBack(YES);
-						}
+							this[DIALOG_BUILDER].buttonCallBack(YES)
 					},
 					//いいえボタン
 					{	//ボタンテキスト
 						text:TEXT_NO,
 						//クリック時のコールバック関数
-						click:function(){	//クリックのコールバック関数
+						click:
 							//ダイアログのステータスをいいえボタンが押されたステータスに変更する
 							this[DIALOG_BUILDER].buttonCallBack(NO);
-						}
 					}
 	           ];
 
