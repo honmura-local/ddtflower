@@ -20,7 +20,7 @@ function adminLessonListDialog(dialog){
 			//クリック時のコールバック関数
 			click:function(){
 				//子のダイアログを開く
-				this.dialogBuilder.openDialog(ADMIN_LESSON_CREATE_DIALOG);
+				this.dialogBuilder.openDialog(PATH_ADMIN_LESSON_CREATE_DIALOG);
 			}
 		}
 	];
@@ -37,7 +37,7 @@ function adminLessonListDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//授業データ一覧ダイアログのテンプレートを取得する
-			this.create_tag.getDomFile(ADMIN_LESSON_DETAIL_DIALOG_HTML);
+			this.create_tag.getDomFile(PATH_ADMIN_LESSON_DETAIL_DIALOG_HTML);
 			//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
 			this.getJson();
 			//取得したJSONを加工する
@@ -61,9 +61,9 @@ function adminLessonListDialog(dialog){
 	 */
 	this.getJson = function() {
 		//授業一覧ダイアログのjsonデータを取得する
-		this.create_tag.getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);
+		this.create_tag.getJsonFile(PATH_ADMIN_LESSON_DETAIL_DIALOG_JSON);
 		//授業一覧データをDBから取得する
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[LESSON_TABLE], LESSON_TABLE);
+		this.create_tag.getJsonFile(PATH_GET_JSON_STRING_PHP, this.create_tag.json[LESSON_TABLE], LESSON_TABLE);
 	}
 
 	/* 関数名:customizeJson
@@ -77,7 +77,7 @@ function adminLessonListDialog(dialog){
 	 */
 	this.customizeJson = function(){
 		//テーブルのデータを連想配列に入れる
-		var tableData = this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY];
+		var tableData = this.create_tag.json[LESSON_TABLE][KEY_TABLE_DATA];
 		//時限ごとの人数を取り出す
 		var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
 		//jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
@@ -154,7 +154,7 @@ function adminLessonListDialog(dialog){
 	 */
 	this.createTable = function() {
 				//データがなければテーブルは作らない
-		if(this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY].length != 0) {
+		if(this.create_tag.json[LESSON_TABLE][KEY_TABLE_DATA].length != 0) {
 			//授業一覧テーブルの外側の領域を作る
 			this.create_tag.outputTag('tableArea', 'tableArea', CURRENT_DIALOG_SELECTOR);
 			//授業のデータ一覧テーブルを作る
@@ -214,7 +214,7 @@ function adminLessonListDialog(dialog){
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
 			lessonData:data.data.lessonDate.replace(/\//g,"-"),
 			//テーブルのデータをセットする
-			tableData:this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY]
+			tableData:this.create_tag.json[LESSON_TABLE][KEY_TABLE_DATA]
 		};
 		//ダイアログのタイトルをセットして予約日を分かりやすくする
 		dialogExOption[ADMIN_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
@@ -253,9 +253,9 @@ function adminLessonListDialog(dialog){
 			//残席を記号にする
 			var  rest = getRestMark(recordData, timeTableStudents);
 			//取得したデータをjsonに入れていく
-			tableData[counter][START_END_TIME]	= timeSchedule;	//時間割開始と終了時刻
-			tableData[counter][LESSON_STATUS]	= lessonStatus;	//レッスンの開講状況ステータス
-			tableData[counter][LESSON_REST]		= rest;			//レッスン残席記号
+			tableData[counter][COLUMN_START_END_TIME]	= timeSchedule;	//時間割開始と終了時刻
+			tableData[counter][COLUMN_LESSON_REST]	= lessonStatus;	//レッスンの開講状況ステータス
+			tableData[counter][COLUMN_LESSON_STATUS]		= rest;			//レッスン残席記号
 		}
 	};
 

@@ -162,7 +162,7 @@ function createTag(){
 		
 		//@mod 2015.0609 T.Masuda createTagの引数をオブジェクトから取得した値にしました(指示者:H.Kaneko)
 		// createTagでキーに対応したHTMLのパーツを作成し、変数tagに格納する。
-		var tag = this.createTag(headNodes[STR_JSON], headNodes[STR_DOM]);
+		var tag = this.createTag(headNodes[JSON], headNodes[DOM]);
 		// パーツの作成に成功したならば
 		if(tag != null){
 			//@mod 2015.03.10 T.Masuda 第三引数appendToに対応しました。(指示者:H.Kaneko)
@@ -400,7 +400,7 @@ function createTag(){
 
 		
 		//JSONが配列形式であれば
-		if($.isArray(articles[TABLE_DATA_KEY])){
+		if($.isArray(articles[KEY_TABLE_DATA])){
 			//コンテンツ表示
 			$(targetArea).append(this.createTagTable(articles, this.getDomNode(jsonName) , pageNum, displayPage));
 		//JSONが連想配列形式であれば
@@ -574,7 +574,7 @@ function createTag(){
 		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
-		$searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
+		$searchObject = articles !== void(0)? articles[KEY_TABLE_DATA]: this.json[jsonName][KEY_TABLE_DATA];
 
 		//配列であれば
 		if($.isArray($searchObject)){
@@ -934,7 +934,7 @@ function createTag(){
 		var headNodes = this.readyCreateTag(key, domNodeName);
 		
 		// createTagTableでテーブルを作成し、変数tagに格納する。
-		var tag = this.createTagTable(headNodes[STR_JSON], headNodes[STR_DOM]);
+		var tag = this.createTagTable(headNodes[JSON], headNodes[DOM]);
 		// パーツの作成に成功したならば
 		if(tag != null){
 			//appendToが入力されていれば
@@ -967,7 +967,7 @@ function createTag(){
 	 */
 	this.createTagTable = function(mapNode, domNode , pageNum, displayPage){
 		//mapNodeからテーブル用のデータを取り出す
-		var mapNodeArray = mapNode[TABLE_DATA_KEY];
+		var mapNodeArray = mapNode[KEY_TABLE_DATA];
 		//見出し行用のDOMを格納する変数を宣言する
 		var colNameNode = null;
 		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
@@ -1023,8 +1023,8 @@ function createTag(){
 				//各domNodeに属性の値を指定していく
 				$firstRow.children().eq(objectCounter++)
 				.addClass(this.getClassName(config, column))
-				.attr(STR_STYLE, this.getStyle(config, column))
-				.attr(STR_COLSPAN, this.getColspan(config, column));
+				.attr(STYLE, this.getStyle(config, column))
+				.attr(ATTR_COLSPAN, this.getColspan(config, column));
 			}
 		}
 		
@@ -1127,7 +1127,7 @@ function createTag(){
 		//keyで指定された列のオブジェクトを取得する
 		var ret = this.getConfigColumn(configNode, key);
 		//スタイルの文字列を取得して返す。取得できなければ空文字を返す
-		return ret[STR_STYLE] !== void(0)? ret[STR_STYLE]: '';
+		return ret[STYLE] !== void(0)? ret[STYLE]: '';
 	}
 
 	/*
@@ -1330,7 +1330,7 @@ function createTag(){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
 				//絞り込み対象のJSONの記事タイプが配列形式であれば
-				if($.isArray(this.json[jsonName][TABLE_DATA_KEY])){
+				if($.isArray(this.json[jsonName][KEY_TABLE_DATA])){
 					retObj = this.filterArticleDateForArray(jsonName, this.dateText);	//配列形式の記事絞り込みを行う
 				}else{
 					retObj = this.filterArticleDateForObject(jsonName, this.dateText);	//オブジェクト形式の記事絞り込みを行う
@@ -1354,17 +1354,17 @@ function createTag(){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
 		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
-		var tableLength = retObj[TABLE_DATA_KEY].length;	//走査対象のテーブルのサイズを取得する
+		var tableLength = retObj[KEY_TABLE_DATA].length;	//走査対象のテーブルのサイズを取得する
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
 		for(var i = 0; i < tableLength; i++){
 			//日付が合わなければ
-			if(retObj[TABLE_DATA_KEY][i].blogArticleDate != dateText){
-				retObj[TABLE_DATA_KEY].splice(i);	//該当する記事を削除する
+			if(retObj[KEY_TABLE_DATA][i].blogArticleDate != dateText){
+				retObj[KEY_TABLE_DATA].splice(i);	//該当する記事を削除する
 			}
 		}
 		
-		retObj[TABLE_DATA_KEY] = retObj[TABLE_DATA_KEY].concat();	//配列をコピーしてインデックスの乱れを直す
+		retObj[KEY_TABLE_DATA] = retObj[KEY_TABLE_DATA].concat();	//配列をコピーしてインデックスの乱れを直す
 		
 		return retObj;	//作成したオブジェクトを返す
 	}
@@ -1381,7 +1381,7 @@ function createTag(){
 	this.filterArticleDateForObject = function(jsonName, dateText){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
-		var table = retObj[TABLE_DATA_KEY];				//tableキーのオブジェクトを取得する
+		var table = retObj[KEY_TABLE_DATA];				//tableキーのオブジェクトを取得する
 		var tableLength = table.length;	//走査対象のテーブルのサイズを取得する
 		var tmpObj = {};						//絞り込んだ記事を一時的に格納するオブジェクトを作る
 		var i = 0;								//記事番号を振るためのカウンター変数を宣言する
@@ -1395,7 +1395,7 @@ function createTag(){
 			}
 		}
 		
-		retObj[TABLE_DATA_KEY] = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
+		retObj[KEY_TABLE_DATA] = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
 		
 		return retObj;	//作成したオブジェクトを返す
 	}
@@ -1495,7 +1495,7 @@ function createTag(){
 			};
 			
 			//ログインダイアログを出す。
-			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, {});
+			var loginDialog = new dialogEx(PATH_LOGIN_DIALOG, this.argumentObj, {});
 			loginDialog.argumentObj.config[TITLE] = this.title;							//ダイアログのタイトルを変更する
 			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
 			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
@@ -1545,7 +1545,7 @@ function createTag(){
 				        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
 				        	 		loginCreator.json.login.password.value = userLoginPassword;
 				        	 		//JSONDBManagerによるログイン処理を行う
-				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
+				        	 		loginCreator.getJsonFile(PATH_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
 				        	 		//会員IDをJSONから取得する
 				        	 		var memberInfo = loginCreator.json.login.id.text;
 				        	 		//会員の権限の数値を取得する
@@ -1576,11 +1576,11 @@ function createTag(){
 			        						//pushStateをサポートしているブラウザなら
 			        						if(commonFuncs.isSupportPushState()){
 			        							//会員トップページの画面遷移の履歴を追加する。
-			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
+			        							history.pushState({'url':'#' + PATH_MEMBER_PAGE}, '', location.href);
 			        						//URLハッシュを利用する
 			        						} else {
 			        							//会員トップページへ移動する
-			        							location.href = URL_MEMBER_PAGE; 
+			        							location.href = PATH_MEMBER_PAGE; 
 			        						}
 			        					}
 										

@@ -171,7 +171,7 @@ function loginDialog(dialog){
 	this.getLoginProcedureResult(){
 		//※ログインダイアログ表示時に引数のJSONは取得されている
 		//サーバにアクセスし、ログイン処理を行う
- 		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[login], LOGIN);
+ 		this[VAR_CREATE_TAG].getJsonFile(PATH_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[login], LOGIN);
  		//DBから取得したログイン処理の結果をオブジェクトにまとめて返す
  		return {userId: this[VAR_CREATE_TAG].json.login.id.text, authority: this[VAR_CREATE_TAG].json.login.authority.text};
 	}
@@ -192,7 +192,7 @@ function loginDialog(dialog){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//管理者ページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + URL_ADMIN_PAGE}, EMPTY_STRING, location.href);
+				history.pushState({url:HASH + URL_ADMIN_PAGE}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//管理者ページへ移動する
@@ -203,7 +203,7 @@ function loginDialog(dialog){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//会員トップページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + URL_MEMBER_PAGE}, EMPTY_STRING, location.href);
+				history.pushState({url:HASH + URL_MEMBER_PAGE}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//会員トップページへ移動する

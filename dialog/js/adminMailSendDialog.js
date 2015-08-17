@@ -42,7 +42,7 @@ function adminMailSendDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//ブログ確認ダイアログのjsonデータを取得する
-			this.create_tag.getJsonFile(SUGGESTION_CONFIRM_DIALOG_JSON);
+			this.create_tag.getJsonFile(PATH_SUGGESTION_CONFIRM_DIALOG_JSON);
 			//記事更新ステータスを取得する
 		//例外時処理
 		}catch(e){
@@ -131,7 +131,7 @@ function adminMailSendDialog(dialog){
 	this.updateJson = function() {
 		var data = commmonFuncs.getInputData(ADMIN_MAIL_DATA_DOM_PARENT);		//argumentObjのdataを取得する
 		var resultwork = null;								//
-		var sendUrl = MAIL_SEND_ENTRY_ADMIN_MAIL_PHP ;	//通常会員メールの送信先PHP
+		var sendUrl = PATH_MAIL_SEND_ENTRY_ADMIN_MAIL_PHP ;	//通常会員メールの送信先PHP
 		var sendObject = {									//送信するデータのオブジェクト
 				from:data.user_key				//送信元
 				,subject:data.message_title		//タイトル
@@ -167,7 +167,7 @@ function adminMailSendDialog(dialog){
 			//目安箱メールの場合
 			case ADMIN_ANNOUNCE_MESSAGE:
 					//目安箱メール送信用PHPにメールを処理させる
-					sendUrl = SEND_SUGGEST_PHP;
+					sendUrl = PATH_SEND_SUGGEST_PHP;
 					break;
 			default:break;
 			}
@@ -184,7 +184,7 @@ function adminMailSendDialog(dialog){
 						//目安箱メールを送信していたら
 						if(parseInt(sendObject.sendType) == ADMIN_ANNOUNCE_MESSAGE){
 							//目安箱テーブルに新たにデータを挿入する
-							instance.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+							instance.sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
 						}
 					}
 					//通信失敗時

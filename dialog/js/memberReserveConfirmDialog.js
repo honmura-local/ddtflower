@@ -28,7 +28,7 @@ function memberReserveListDialog(dialog){
 		//ダイアログのタイトルをセットする
 		this.dispContentsHeader(dialogClass);
 		//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-		this.setLessonDataToJSON(RESERVE_LIST_JSON);
+		this.setLessonDataToJSON(PATH_RESERVE_LIST_JSON);
 
 		//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 		if (!this.getTableData(LESSON_TABLE)) {
@@ -40,7 +40,7 @@ function memberReserveListDialog(dialog){
 		}
 
 		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(RESERVE_LIST_HTML);
+		this.create_tag.getDomFile(PATH_RESERVE_LIST_HTML);
 
 		this.dispContentsMain(dialogClass);		//ダイアログ中部
 		this.dispContentsFooter(dialogClass);	//ダイアログ下部
@@ -57,9 +57,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getTableData = function(tableName){
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		this.create_tag.getJsonFile(PATH_GET_JSON_STRING_PHP, this.create_tag.json[tableName], tableName);
 		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+		return this.create_tag.json[tableName][KEY_TABLE_DATA].length != 0? true: false;
 	}
 
 	

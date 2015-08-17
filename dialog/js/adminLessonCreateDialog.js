@@ -26,8 +26,8 @@ function adminLessonCreateDialog(dialog){
 		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
 
 		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);
-		this.create_tag.getJsonFile(ADMIN_LESSON_CREATE_DIALOG_JSON);
+		this.create_tag.getDomFile(PATH_ADMIN_LESSON_CREATE_DIALOG_HTML);
+		this.create_tag.getJsonFile(PATH_ADMIN_LESSON_CREATE_DIALOG_JSON);
 		this.dispContentsMain();		//ダイアログ中部
 		this.dispContentsFooter();	//ダイアログ下部
 		//ダイアログの位置を修正する

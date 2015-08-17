@@ -66,7 +66,7 @@ dialogExOption[STR_RESERVE_LESSON_LIST_DIALOG] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				//ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				//Escキーを押してもダイアログが閉じないようにする。
@@ -92,7 +92,7 @@ dialogExOption[MEMBER_RESERVED_CONFIRM_DIALOG] = {
 		argumentObj:{
 			config:{
 				// 幅を設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				// ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				// Escキーを押してもダイアログが閉じないようにする。
@@ -132,7 +132,7 @@ dialogExOption[CANCEL_LESSON_DIALOG] = {
 		argumentObj:{
 			config:{
 				// 幅を設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				// ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				//モーダル化する
@@ -172,7 +172,7 @@ dialogExOption[ADMIN_LESSONLIST_DIALOG] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				//ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				//リサイズ不可にする
@@ -194,11 +194,11 @@ dialogExOption[ADMIN_LESSONLIST_DIALOG] = {
 };
 
 //管理者、授業詳細ダイアログ
-dialogExOption[LESSON_DETAIL_DIALOG] = {
+dialogExOption[KEY_ADMIN_LESSON_DETAIL_DIALOG] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				//ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				//リサイズ不可にする
@@ -235,7 +235,7 @@ dialogExOption[ADMIN_NEW_LESSON_CREATE] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。
-				width			: STR_AUTO,
+				width			: AUTO,
 				//ダイアログを生成と同時に開く。
 				autoOpen		: true,
 				//リサイズ不可にする

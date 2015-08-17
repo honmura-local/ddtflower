@@ -48,7 +48,7 @@ function adminLessonDetailDialog(dialog){
 		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
 
 		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(ADMIN_LESSON_DETAIL_DIALOG_HTML);
+		this.create_tag.getDomFile(PATH_ADMIN_LESSON_DETAIL_DIALOG_HTML);
 		this.dispContentsMain();		//ダイアログ中部
 		this.dispContentsFooter();	//ダイアログ下部
 		//ダイアログの位置を修正する
@@ -70,7 +70,7 @@ function adminLessonDetailDialog(dialog){
 		//ダイアログのタイトルを変更する
 		this.setDialogTitle(dialogClass);
 		//jsonを取得する
-		this.create_tag.getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);
+		this.create_tag.getJsonFile(PATH_ADMIN_LESSON_DETAIL_DIALOG_JSON);
 		//受講する授業のテーマを入れる
 		this.create_tag.json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
 		//受講する授業の時間割を入れる

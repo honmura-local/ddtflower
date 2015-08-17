@@ -85,7 +85,7 @@ function windowEx(url, argumentObj, returnObj){
 	this.run = function(){
 		this.load(this.url);			//HTMLファイルをロードする
 		//画面を切り替える
-		$(STR_BODY).prepend(this.dom);	//
+		$(BODY).prepend(this.dom);	//
 	}
 
 	/* 関数名:setUrl

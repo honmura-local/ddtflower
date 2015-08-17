@@ -69,6 +69,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 <!-- 定数定義クラスを読み込む。 -->
 <script src="js/constants.js"></script>
+<script src="js/constantsAfter.js"></script>
 <!-- jQueryの本体を読み込む。 -->
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->

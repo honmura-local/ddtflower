@@ -25,7 +25,7 @@ function createAdminPermitLessonContent () {
 	// 受講承認テーブル用のJSON配列を取得する
 	creator.getJsonFile('php/GetJSONArray.php', creator.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
 	//データがあればテーブルを追加する
-	if(creator.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
+	if(creator.json.doLecturePermitInfoTable[KEY_TABLE_DATA]) {
 		//受講承認タブのリストテーブル
 		creator.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 		//受講承認のボタン
@@ -40,10 +40,10 @@ function createAdminPermitLessonContent () {
 	//受講承認のテーブルにチェックボックスを追加する
 	creator.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
-	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, creator.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, creator.json[DO_LECTURE_PERMIT_INFO_TABLE][KEY_TABLE_DATA], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-	creator.setSelectboxText(creator.json.selectCommodityInf[TABLE_DATA_KEY], creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	creator.setSelectboxText(creator.json.selectCommodityInf[KEY_TABLE_DATA], creator.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
 	setDefaultSellingPrice();
 	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
@@ -101,7 +101,7 @@ function createAdminPermitLessonListContent() {
 	//受講承認一覧の検索機能を実装する
 	searchPermitListInfoTable();
 	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-	creator.setSelectboxText(creator.json.selectCommodityInf[TABLE_DATA_KEY], creator.json.contentSelect.contentOption, 'commodity_name');
+	creator.setSelectboxText(creator.json.selectCommodityInf[KEY_TABLE_DATA], creator.json.contentSelect.contentOption, 'commodity_name');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
@@ -134,12 +134,12 @@ function createAdminUserListContent() {
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
+	$(BODY).on(CLICK, '.userListInfoTable tr', function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
 		$(this).toggleClass('selectRecord');
 	});
 	//検索ボタンをクリックしたときにテーブルの内容を更新する
-	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+	$(BODY).on(CLICK, '.searchUserButton', function() {
 		//ユーザ一覧テーブルを削除する
 		creator.pagingReset('userListInfoTable');
 		//クエリを変数に入れてクエリ発行の準備をする
@@ -151,14 +151,14 @@ function createAdminUserListContent() {
 		//クエリをデフォルトに戻す
 		creator.json.userListInfoTable.db_getQuery = defaultQuery;
 		//取得した値が0の時のテーブルを作らない
-		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+		if(creator.json.userListInfoTable[KEY_TABLE_DATA].length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
 			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
 		}
 	});
 
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, '.userDetail', function(){
+	$(BODY).on(CLICK, '.userDetail', function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
 		var selected = $('.selectRecord').length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
@@ -230,12 +230,12 @@ function createAdminMailMagaAnnounceContent() {
 	// ナンバリング領域を作る
 	creator.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
 	//メルマガのデータを取り出す
-	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+	creator.getJsonFile(PATH_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 
 	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
-	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+	$(BODY).on(CLICK, '.mailMagaSearchButton', function() {
 		//ページングの設定を初期化し、作り直しに備える
 		creator.pagingReset('mailMagaTable');
 		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
@@ -251,7 +251,7 @@ function createAdminMailMagaAnnounceContent() {
 		//クエリに切り取ったORDER BYを付け足す
 		creator.json.mailMagaTable.db_getQuery += cutString;
 		//メルマガのデータを取り出す
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+		creator.getJsonFile(PATH_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
 		//ページング機能付きでメルマガテーブルを作る
 		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//クエリをデフォルトに戻す
@@ -263,7 +263,7 @@ function createAdminMailMagaAnnounceContent() {
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
 		var targetNumber = $('.targetMailMagazine').index(this);
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = creator.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
+		var targetInf = creator.json.mailMagaTable[KEY_TABLE_DATA][targetNumber];
 		//取得した連想配列をテキストボックスにセットする
 		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
 	});
@@ -272,7 +272,7 @@ function createAdminMailMagaAnnounceContent() {
 	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
 
 	//送信ボタンがクリックされたときにメール送信イベントを開始する
-	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
+	$(BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
 			//メルマガ送信にチェックが入っていたらメルマガを送信する
 			if($('[name="messegeType"]').val() == "0") {
 				//メルマガを送信するための値をテキストボックスから取得する
@@ -289,7 +289,7 @@ function createAdminMailMagaAnnounceContent() {
 	});
 
 	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
-	$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
+	$(BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
 		//メッセージ内容テキストエリアの中身を空にする
 		$('.mailMagaAndAnnounceArea textarea').text('');
 	});
@@ -459,7 +459,7 @@ function setDefaultCommodityCostPrice() {
  */
 function setCommodityCostPrice(changeSelector) {
 	//備品名、または個数が変化した時に会計の値をセットするイベントを登録する
-	$(STR_BODY).on('change', changeSelector, function(){
+	$(BODY).on('change', changeSelector, function(){
 		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
 		var contentSelectNumber = $(changeSelector).index(this);
 		//会計のデフォルト値を設定するために会計の値を取得する
@@ -482,7 +482,7 @@ function setCommodityCostPrice(changeSelector) {
 function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 	//備品名セレクトボックスの値が変更されたときに備品代を変えるイベントを開始する
 	//イベントをonで登録しているのは違うページを読み込むときにイベントをoffにしやすくするため
-	$(STR_BODY).on(CHANGE, selectboxParentSelector + ' .contentSelect', function(){
+	$(BODY).on(CHANGE, selectboxParentSelector + ' .contentSelect', function(){
 		//他の行の備品代テキストボックスの値を変更しないために変更されたセレクトボックスが何番目のものなのかを取得する
 		var contentSelectNumber = $(selectboxParentSelector + ' .contentSelect').index(this);
 		//選択されているテキストを取得し、備品名を取り出すための値を取り出すために使う
@@ -494,7 +494,7 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 		//取り出した行のデータを数えるためにカウンターを変数を作る
 		var counter = 0;
 		//行データを変数に入れる
-		var rowData = creator.json.selectCommodityInf[TABLE_DATA_KEY]
+		var rowData = creator.json.selectCommodityInf[KEY_TABLE_DATA]
 		//取り出したデータの数だけループし、価格を取り出す
 		$.each(rowData, function(){
 			//取得した備品名と比較するためにループしている備品名を取得する
@@ -502,9 +502,9 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
 			//取得した備品名とセレクトボックスの中にあるタグの名前が同じときにその番号を取得する
 			if (contentName == commodityName) {
 				//備品代をテキストボックスに入れるための番号を取得する
-				sellingPrice = creator.json.selectCommodityInf[TABLE_DATA_KEY][counter].selling_price;
+				sellingPrice = creator.json.selectCommodityInf[KEY_TABLE_DATA][counter].selling_price;
 				//備品idをテキストボックスに入れるための番号を取得する
-				commodityKey = creator.json.selectCommodityInf[TABLE_DATA_KEY][counter].commodity_key;
+				commodityKey = creator.json.selectCommodityInf[KEY_TABLE_DATA][counter].commodity_key;
 			}
 			counter++;
 		});
@@ -525,9 +525,9 @@ function setSellingPrice(selectboxParentSelector, textboxParentSelector) {
  */
 function setDefaultSellingPrice() {
 	//備品代の連想配列にデフォルト値を設定する
-	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = creator.json.selectCommodityInf[TABLE_DATA_KEY][0].selling_price;
+	creator.json.accordionContent.sellingPrice.sellingPriceTextbox.value = creator.json.selectCommodityInf[KEY_TABLE_DATA][0].selling_price;
 	//備品idの連想配列にデフォルト値を設定する
-	creator.json.commodityKeyBox.value = creator.json.selectCommodityInf[TABLE_DATA_KEY][0].commodity_key;
+	creator.json.commodityKeyBox.value = creator.json.selectCommodityInf[KEY_TABLE_DATA][0].commodity_key;
 }
 
 /* 
@@ -578,7 +578,7 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
+	$(BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -613,7 +613,7 @@ function loopUpdatePermitLesson() {
 function loopUpdatePermitLessonList() {
 	var thisElem = this;
 	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '#lecturePermitList .normalButton', function(){
+	$(BODY).on(CLICK, '#lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -657,7 +657,7 @@ function afterReloadPermitListInfoTable() {
 	//受講承認一覧テーブルの取り出した行にクラス名を付ける
 	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	//受講承認一覧テーブルの列内を編集する
-	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, creator.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
+	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, creator.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_TABLE_DATA], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
 	//受講承認一覧テーブルの料金列をテキストボックスにする
 	creator.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 	//受講承認一覧テーブルの使用pt列をテキストボックスにする
@@ -669,7 +669,7 @@ function afterReloadPermitListInfoTable() {
 	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
 	creator.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], creator.setInputValueToLecturePermitListInfoTable);
+	creator.setTableTextboxValuefromDB(creator.json['lecturePermitListInfoTable'][KEY_TABLE_DATA], creator.setInputValueToLecturePermitListInfoTable);
 }
 
 /* 
@@ -725,7 +725,7 @@ function textPustArray(parent, arrayName, pushText) {
  */
 function adminMessageCreate(buttonSelector, sendType) {
 	//お知らせボタンをクリックでメール送信ダイアログを作る
-	$(STR_BODY).on(CLICK, buttonSelector, function() {
+	$(BODY).on(CLICK, buttonSelector, function() {
 		//選択されているユーザの数を変数に入れ、ユーザが選択されていればメール送信処理を開始する
 		var selected = $('.selectRecord').length;
 		//会員一覧から送信するメールの対象となる人が1人以上選択されているなら送信ダイアログを開く

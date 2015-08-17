@@ -53,14 +53,14 @@ function memberReserveListDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-			this.setLessonDataToJSON(RESERVE_LIST_JSON);
+			this.setLessonDataToJSON(PATH_RESERVE_LIST_JSON);
 			//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 			if (!this.getTableData(LESSON_TABLE)) {
 				throw new cannotGetAnyRecordException();
 			}
 
 			//画面パーツ作成に必要なHTMLテンプレートを取得する
-			this.create_tag.getDomFile(RESERVE_LIST_HTML);
+			this.create_tag.getDomFile(PATH_RESERVE_LIST_HTML);
 			
 			this.customizeJson();	//取得したJSONを加工する
 		//例外時処理
@@ -112,9 +112,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getTableData = function(tableName){
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		this.create_tag.getJsonFile(PATH_GET_JSON_STRING_PHP, this.create_tag.json[tableName], tableName);
 		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+		return this.create_tag.json[tableName][KEY_TABLE_DATA].length != 0? true: false;
 	}
 	
 	/* 関数名:customizeJson
@@ -143,7 +143,7 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getReplacedTableData = function(tableName){
-		var tableData = creator.json[tableName][TABLE_DATA_KEY];
+		var tableData = creator.json[tableName][KEY_TABLE_DATA];
 		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
 	}
 	
@@ -224,7 +224,7 @@ function memberReserveListDialog(dialog){
 		//予約できる授業のデータ一覧テーブルを作る
 		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
 		//テーブルの値を置換する
-		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
+		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this.create_tag.json[LESSON_TABLE][KEY_TABLE_DATA], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
 
 		//テーブルの値をクライアント側で編集して画面に表示する
 //		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
@@ -284,7 +284,7 @@ function memberReserveListDialog(dialog){
 			var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(INT_4).text();
 			
 			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-			if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+			if (thisElem.create_tag.json[LESSON_TABLE][KEY_TABLE_DATA][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
 				&& restMarkNow != CHAR_INVALIDATE) {
 				var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
 				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
@@ -317,7 +317,7 @@ function memberReserveListDialog(dialog){
 		//クリックされたのが何行目なのかを取得する。ここでのthisはクリックされた時に要素を指す
 		var rowNum = $(DOT + clickRecordClassName).index(clickTarget);
 		//次のダイアログに渡すデータを変数に入れる
-		var recordObject = creator.json[tableName][TABLE][rowNum];
+		var recordObject = creator.json[tableName][KEY_TABLE_DATA][rowNum];
 		//取得したデータを返却する
 		var returnObject = {
 			number:rowNum,			//クリックされた行番号

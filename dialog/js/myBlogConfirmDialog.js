@@ -44,7 +44,7 @@ function myBlogConfirmDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//ブログ確認ダイアログのjsonデータを取得する
-			this.create_tag.getJsonFile(MYBLOG_CONFIRM_DIALOG_JSON);
+			this.create_tag.getJsonFile(PATH_MYBLOG_CONFIRM_DIALOG_JSON);
 			//記事更新ステータスを取得する
 		//例外時処理
 		}catch(e){
@@ -64,7 +64,7 @@ function myBlogConfirmDialog(dialog){
 	 */
 	this.dispContentsHeader = function(dialogClass){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(MYBLOG_CONFIRM_DIALOG_TITLE);
+		this.setDialogTitle(PATH_MYBLOG_CONFIRM_DIALOG_TITLE);
 	}
 
 	/* 関数名:dispContentsMain
@@ -145,7 +145,7 @@ function myBlogConfirmDialog(dialog){
 	 	//ブログ記事を更新するためのデータを取得する
 	 	var sendQueryObject = this.updateJson();
 	 	//クエリを発行してブログを更新する
-	 	this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendQueryObject);
+	 	this.sendQuery(PATH_SAVE_JSON_DATA_PHP, sendQueryObject);
 	 }
 
 	/* 関数名:dialogCloseFunc

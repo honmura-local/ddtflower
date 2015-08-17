@@ -1303,12 +1303,12 @@ function createLittleContents(){
 		var sendJsonString = JSON.stringify(checkedObj);
 		//Ajax通信を行う
 		$.ajax({
-			url: URL_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
+			url: PATH_SAVE_JSON_DATA_PHP,		//レコード保存のためのPHPを呼び出す
 			//予約情報のJSONを送信する
 			//変更者:T.Yamamoto 日付:2015.06.26 内容:dataを変数sendから変数sendJsonStringに変更し、送信する値を配列から文字列を送信するように修正しました
 			data:{json:sendJsonString},			//送信するデータを設定する
 			dataType: 'json',					//JSONデータを返す
-			type: STR_POST,						//POSTメソッドで通信する
+			type: POST,						//POSTメソッドで通信する
 			async:false,						//同期通信を行う
 			success:function(json){				//通信成功時の処理
 				//更新した結果が何件であったかを返すために、結果件数を変数に入れる
@@ -1594,7 +1594,7 @@ function createLittleContents(){
 	this.reloadTableTriggerEvent = function(eventSelector, eventName, reloadTableClassName, inputDataParent) {
 			var thisElem = this;
 			//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
-			$(STR_BODY).on(eventName, eventSelector, function(){
+			$(BODY).on(eventName, eventSelector, function(){
 				//テーブルをリロードして最新のデータを表示する
 				thisElem.eventTableReload(reloadTableClassName, inputDataParent);
 			});
@@ -1638,9 +1638,9 @@ function createLittleContents(){
 	 */
 	this.tableReset = function(tableName) {
 		//テーブルのjsonの値が既にあれば
-		if(this.json[tableName][TABLE_DATA_KEY]){
+		if(this.json[tableName][KEY_TABLE_DATA]){
 			//テーブルのjsonを初期化する
-			this.json[tableName][TABLE_DATA_KEY] = {};
+			this.json[tableName][KEY_TABLE_DATA] = {};
 		}
 		//すでにテーブルがあるならテーブルを消す
 		if ($(DOT + tableName)) {
@@ -1661,9 +1661,9 @@ function createLittleContents(){
 		//テーブルを初期化する
 		this.tableReset(reloadTableClassName);
 		//テーブルを作るためのjsonをDBから持ってきた値で作る
-		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
+		this.getJsonFile(PATH_GET_JSON_ARRAY_PHP, this.json[reloadTableClassName], reloadTableClassName);
 		//DBから取得した値があった時の処理
-		if(this.json[reloadTableClassName][TABLE_DATA_KEY][0]){
+		if(this.json[reloadTableClassName][KEY_TABLE_DATA][0]){
 			//テーブルを作り直す
 			this.outputTagTable(reloadTableClassName,reloadTableClassName, replaceTableOption[reloadTableClassName].addDomPlace);
 			//テーブルのリロード後にテーブルに対して必要な処理が必要であるならばその処理を行う
@@ -1679,6 +1679,35 @@ function createLittleContents(){
 			$(DOT + reloadTableClassName).text(replaceTableOption[reloadTableClassName].errorMessage);
 		}
 	}
+
+	/* 
+	 * 関数名:dbTableReload
+	 * 概要  :対象のテーブル要素をリムーブし、DBの値を新しく読み込んでからテーブルを作る
+	 * 引数  :reloadTableClassName:リロードする対象のテーブルのクラス名
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.06
+	 */
+	this.tableReload = function(tableClassName, tableJsonName, appendTo, tableCustomizeFunc, errorMessage) {
+		//テーブルを初期化する
+		this.tableReset(reloadTableClassName);
+		//テーブルを作るためのjsonをDBから持ってきた値で作る
+		this.getJsonFile(PATH_GET_JSON_ARRAY_PHP, this.json[tableJsonName], tableJsonName);
+		//DBから取得した値があった時の処理
+		if(this.json[tableClassName][KEY_TABLE_DATA][0]){
+			//テーブルをカスタマイズする
+			commonFuncs.customizeTableData(this.json[tableJsonName][KEY_TABLE_DATA], tableCustomizeFunc);
+			//テーブルを作り直す
+			this.outputTagTable(tableJsonName, tableClassName, appendTo);
+		//DBから検索結果が見つからなかった時の処理
+		} else {
+			//見つからなかったことを表示するためのdivを作る
+			$(appendTo).append('<div class="' + tableClassName + '"><div>');
+			//作ったdivに検索結果が見つからなかったメッセージを表示する
+			$(DOT + tableClassName).text(errorMessage);
+		}
+	}
+
 	
 	/* 
 	 * 関数名:getDateFormatDB
@@ -1733,7 +1762,7 @@ function createLittleContents(){
 	 */
 	this.accordionSetting = function(clickSelector, accordionDomSelector) {
 		//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
-		$(STR_BODY).on(CLICK, clickSelector, function(){
+		$(BODY).on(CLICK, clickSelector, function(){
 			//第二引数のセレクター要素が非表示状態なら表示状態に、表示状態なら非表示状態にする
 			$(accordionDomSelector).slideToggle();
 		});
@@ -1750,7 +1779,7 @@ function createLittleContents(){
 	 */
 	this.accordionSettingToTable = function(clickSelector, accordionDomSelector) {
 		//第一引数のセレクター要素がクリックされたときにアコーディオンを表示するためのイベントが発生する
-		$(STR_BODY).on(CLICK, clickSelector + ' td', function(){
+		$(BODY).on(CLICK, clickSelector + ' td', function(){
 			//どのレコードを開くのか判別するためにレコードの番号を取得する
 			var rowNumber = $(this).parent().index(clickSelector);
 			//チェックボックスをクリックしてもアコーディオンが反応しないようにする
@@ -1815,7 +1844,7 @@ function createLittleContents(){
 	 */
 	this.logoutMemberPage = function() {
 		//ログアウトボタンがクリックされた時に処理を行うイベントを登録する
-		$(STR_BODY).on(CLICK, '.logoutLink', function(){
+		$(BODY).on(CLICK, '.logoutLink', function(){
 			//管理者としてログインしていたなら管理者ページに遷移する
 			if (this.json.accountHeader.authority == '80') {
 				//管理者ページを呼び出し、続けて管理者としての処理をできるようにする
@@ -1843,7 +1872,7 @@ function createLittleContents(){
 	 */
 	this.insertTableRecord = function(tableRecordClasssName, addDomClassName) {
 		//追加するDOMをとりあえずbodyに作る
-		creator.outputTag(addDomClassName, addDomClassName, STR_BODY);
+		creator.outputTag(addDomClassName, addDomClassName, BODY);
 		//後でテーブルの中にdomを移動させるために追加するDOMの子要素を全て取得する
 		var addDomChild = $(DOT + addDomClassName).html();
 		//取得したDOMのうち、テーブルのセルに適応させるため「div」を「td」に置換する
@@ -1868,7 +1897,7 @@ function createLittleContents(){
 		//ユーザ一覧テーブルを削除する
 		$(DOT + targetPagingClassName).remove();
 		//会員一覧テーブルをリセットして検索に備える
-		creator.json[targetPagingClassName][TABLE_DATA_KEY] = {};
+		creator.json[targetPagingClassName][KEY_TABLE_DATA] = {};
 		//ナンバリングのdomを初期化する
 		$('.numbering').remove();
 		//新しくページングを作り直すためにページングの番号一覧をリセットする
@@ -1889,7 +1918,7 @@ function createLittleContents(){
 	 */
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
-		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
+		var resultTableArray = this.json[tableClassName][KEY_TABLE_DATA][rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 		var inputDataArray = getInputData(inputDataSelector);
 		//取得した連想配列を結合する
@@ -2169,19 +2198,19 @@ function createLittleContents(){
 		//レッスンの加算ポイントを取得するために加算ポイント取得クエリの置換する値となるlesson_keyの値を入れる
 		this.json[plusPointQueryKey].lesson_key.value = lessonKey;
 		//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
-		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
+		this.getJsonFile(PATH_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//加算ポイントについてループして値を走査するためにループの値を取得する
-		var loopMaxCount = this.json[plusPointQueryKey][[TABLE_DATA_KEY]].length;
+		var loopMaxCount = this.json[plusPointQueryKey][[KEY_TABLE_DATA]].length;
 		//加算ポイントのレートを返すための変数を作る
 		var userPlusPointRate;
 		//ループでポイントのレートを求める
 		for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
 			//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
-			var studentsCount = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].students;
+			var studentsCount = this.json[plusPointQueryKey][KEY_TABLE_DATA][loopCount].students;
 			//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
 			if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
 				//加算ポイントのレートを決定しループを終わらせる
-				userPlusPointRate = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].point_rate;
+				userPlusPointRate = this.json[plusPointQueryKey][KEY_TABLE_DATA][loopCount].point_rate;
 				break;
 			}
 		}
@@ -2218,7 +2247,7 @@ function createLittleContents(){
 		//DBからデータを取得するために備品のidを連想配列に入れてデータ取得のための準備をする
 		this.json[plusPointQueryKey].commodity_key.value = sendReplaceArray['commodity_key'];
 		//備品の加算ポイントレートを取得するためにDBからデータを取得する
-		this.getJsonFile(URL_GET_JSON_STRING_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
+		this.getJsonFile(PATH_GET_JSON_STRING_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
 		//備品の加算ポイントレートを変数に入れる
 		var commodityPlusPointRate = this.json[plusPointQueryKey].get_point.text;
 		//加算ポイントを求める
@@ -2238,7 +2267,7 @@ function createLittleContents(){
 	 * 作成日:2015.07.28
 	 */
 	this.deleteMyGalleryPhoto = function() {
-		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
+		$(BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
 			//チェックが入っている値が0であるならアラートを出して削除処理を行わない
@@ -2277,7 +2306,7 @@ function createLittleContents(){
 	 * 作成日:2015.07.28
 	 */
 	this.updateMyGalleryPhotoData = function() {
-		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .updateButton', function() {
+		$(BODY).on(CLICK, '.myGalleryEditButtons .updateButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
 			//チェックが入っている値が0であるならアラートを出して削除処理を行わない
@@ -2604,7 +2633,7 @@ function createLittleContents(){
 				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
 				//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
 				var loginUrl = thisElem.json.accountHeader !== void(0)
-								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :PATH_MEMBER_PAGE;
 				// 会員ページ、または管理者ページへリンクする。
 				callPage(loginUrl);
 			});
@@ -2627,18 +2656,17 @@ function createLittleContents(){
 		//レコードをクリックして授業詳細ダイアログを開くイベントを登録する
 		//予約決定ダイアログを表示する処理
 		//※このあたりはセレクタ関連に無駄が多かったです。
-		$('.adminLessonListContent').on(STR_CLICK, STR_TR, function(){
+		$(SELECTOR_CURRENT_DIALOG).on(CLICK, SELECTOR_CURRENT_DIALOG + SPACE + TAG_TR, function(){
 			//インプット用データオブジェクトを取得する
-			var argObj = dialogExOption[LESSON_DETAIL_DIALOG].argumentObj;
+			var argObj = dialogExOption[KEY_ADMIN_LESSON_DETAIL_DIALOG].argumentObj;
 			
 			//クリックしたセルの行番号を取得する
-			var rowNum = $('.adminLessonListContent ' + STR_TR).index(this) - 1;
-			
+			var rowNum = $('.adminLessonListContent ' + TAG_TR).index(this) - 1;
 			//次のダイアログに渡すデータを変数に入れる
-			var sendObject = thisElem.json['adminLessonDetailTable'][TAG_TABLE][rowNum];
+			var sendObject = thisElem.json['adminLessonDetailTable'][KEY_TABLE_DATA][rowNum];
 			
 			//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-			var timeSchedule = $(STR_TD, this).eq(0).text();
+			var timeSchedule = $(TAG_TD, this).eq(0).text();
 			//時間割を次のダイアログに入れるためのデータに入れる
 			sendObject['time_schedule'] = timeSchedule;
 			
@@ -2681,7 +2709,7 @@ function createLittleContents(){
 	 this.openAdminNewLessonCreateDialog = function() {
 		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
 		//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
-		$('.adminLessonListContent').on(STR_CLICK, '.lessonAddButton', function(){
+		$('.adminLessonListContent').on(CLICK, '.lessonAddButton', function(){
 			//ダイアログのクラスインスタンスを取得する
 			var dialogClass = $('.adminLessonListContent')[0].instance;
 			var argObj = dialogClass.getArgumentObject();	//argumentObjを取得する
@@ -2691,7 +2719,7 @@ function createLittleContents(){
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
 			sendObject['lessonDate'] = argObj.data.lessonDate.replace(/\//g,"-");
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-			sendObject['tableData'] = thisElem.json.adminLessonDetailTable[TABLE_DATA_KEY];
+			sendObject[KEY_TABLE_DATA] = thisElem.json.adminLessonDetailTable[KEY_TABLE_DATA];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
@@ -2699,7 +2727,7 @@ function createLittleContents(){
 			
 			//新規授業追加ダイアログを作る
 			var newLessonCreateDialog = new dialogEx(
-					ADMIN_NEWLESSON_CREATE_DIALOG_PATH, 
+					PATH_ADMIN_NEWLESSON_CREATE_DIALOG, 
 					dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
 					dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
 			//ダイアログを開くときのテーブルの値を編集して表示する
@@ -2733,8 +2761,7 @@ function createLittleContents(){
 			return retObject;	//チェックが終わったオブジェクトを返す
 		}
 
-		
-		
+
 	 
 }	//createLittleContentsクラスの終わり
 
@@ -2921,7 +2948,7 @@ function calendar(selector) {
 		var date = createDateArray(dateText);
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL,
+		var reservedDialog = new dialogEx(PATH_SPECIAL_RESERVED_DIALOG,
 				$.extend(true, {},
 						{"contentName": contentName, "date":date}, 
 						specialReservedDialogOption.argumentObj
@@ -3223,7 +3250,7 @@ function blogCalendar(selector, creator) {
 	this.creator = creator;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
 	//creatorが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle[TABLE_DATA_KEY]);	
+	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle[KEY_TABLE_DATA]);	
 	//オプションを設定する
 	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];
@@ -3602,7 +3629,7 @@ function loadScript(filename) {
  */
 function setTableRecordClass (tableClassName, tableRecordClasssName) {
 	//第一引数のテーブルの1行目を除くtrタグに対して第2引数の名前のクラス属性を付け、行に対する対象を当てやすくする
-	$(DOT + tableClassName + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
+	$(DOT + tableClassName + SPACE + TAG_TR).eq(0).siblings().addClass(tableRecordClasssName);
 }
 
 
@@ -3695,7 +3722,7 @@ function cutString(cutTargetSelector, cutCount) {
  */
 this.allCheckbox = function(checkboxTarget, allCheckTarget) {
 	// 第一引数の要素がクリックされたときの処理
-	$(STR_BODY).on(CLICK, checkboxTarget, function() {
+	$(BODY).on(CLICK, checkboxTarget, function() {
 		// 第一引数のチェックボックスにチェックが入った時の処理
 		if($(checkboxTarget + ':checked').val() == 'on') {
 			// 第二引数のチェックボックスにチェックする

@@ -321,7 +321,7 @@ function eachDialogTmp(){
 		if(dialogClass.getPushedButtonState() == YES){
 			var data = dialogClass.getArgumentDataObject();		//argumentObjのdataを取得する
 			var resultwork = null;								//
-			var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+			var sendUrl = PATH_SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
 			var sendObject = {									//送信するデータのオブジェクト
 					from:data.user_key				//送信元
 					,subject:data.suggest_title		//タイトル
@@ -337,7 +337,7 @@ function eachDialogTmp(){
 					//目安箱メールならタイプの値を追加する
 					$.extend(true, sendObject, {type:data.suggest_type});
 					//目安箱メール送信用PHPにメールを処理させる
-					sendUrl = SEND_SUGGEST_PHP;
+					sendUrl = PATH_SEND_SUGGEST_PHP;
 					break;
 			default:break;
 			}
@@ -529,7 +529,7 @@ function cancelDialogOpen(dialogData, dialogTitleDate) {
  */
 function cancelDialogOpenFromReservedTable (memberNumber, creator) {
 	//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
-	$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
+	$(BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
 		var recordData = getClickTableRecordData(this, RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD , creator);
 		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる
 		//@mod 2015.0809 T.Masuda creatorもsendObjectに含む様にしました
@@ -630,21 +630,21 @@ function newLessonEntry() {
 		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 		var timeTableDayKey = "";
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-		var loopEndCount = data[TABLE_DATA_KEY].length;
+		var loopEndCount = data[KEY_TABLE_DATA].length;
 		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
 		var newLesoonData = getInputData('lessonData');
 		
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
 			//time_table_day_keyが空白のものはループを飛ばす
-			if(data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] == "") {
+			if(data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'] == "") {
 				//次のループに行く
 				continue;
 			}
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData['timetable_key'] == data[TABLE_DATA_KEY][loopStartCount]['timetable_key'] && data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] != "") {
+			if(newLesoonData['timetable_key'] == data[KEY_TABLE_DATA][loopStartCount]['timetable_key'] && data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'] != "") {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'];
+				timeTableDayKey = data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'];
 				//ループを終わらせる
 				break;
 			}

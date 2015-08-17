@@ -44,7 +44,7 @@ function memberReserveCancelDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//画面パーツ作成に必要なHTMLテンプレートを取得する
-			this[VAR_CREATE_TAG].getDomFile(MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
+			this[VAR_CREATE_TAG].getDomFile(PATH_MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
 			//必要なデータのjsonを取得する
 			this.getJson();	//取得したJSONを加工する
 		//例外時処理
@@ -64,11 +64,11 @@ function memberReserveCancelDialog(dialog){
 	 */
 	this.getJson = function(){
 		//データとなるjsonを読み込む
-		this[VAR_CREATE_TAG].getJsonFile(MEMBER_RESERVE_CANCEL_DIALOG_JSON);
+		this[VAR_CREATE_TAG].getJsonFile(PATH_MEMBER_RESERVE_CANCEL_DIALOG_JSON);
 		//DBから値を読み込むためにデータをセットする
-		setJsonDataFromArgumentObj(MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
+		setJsonDataFromArgumentObj(PATH_MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
 		//DBからデータを読み込む
-		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG][MEMBER_RESERVE_CANCEL_DIALOG_CONTENT], MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
+		this[VAR_CREATE_TAG].getJsonFile(PATH_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG][PATH_MEMBER_RESERVE_CANCEL_DIALOG_CONTENT], MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
 	}
 
 	/* 関数名:dispContentsHeader
@@ -167,10 +167,10 @@ function memberReserveCancelDialog(dialog){
 		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
 		var setFromObject = this.dialogClass.getArgumentDataObject();
 		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-		setToObject.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(setFromObject);	//受講時間
-		setToObject.lessonConfirm.lessonInfo.store[STR_TEXT] 					= setFromObject[COLUMN_NAME_SCHOOL_NAME];				//店舗名
-		setToObject.lessonConfirm.lessonInfo.course[STR_TEXT]					= setFromObject[COLUMN_NAME_LESSON_NAME];				//授業テーマ
-		setToObject.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(setFromObject);					//受講料
+		setToObject.lessonConfirm.lessonInfo.timeSchedule[TEXT] 			= buildHourFromTo(setFromObject);	//受講時間
+		setToObject.lessonConfirm.lessonInfo.store[TEXT] 					= setFromObject[COLUMN_NAME_SCHOOL_NAME];				//店舗名
+		setToObject.lessonConfirm.lessonInfo.course[TEXT]					= setFromObject[COLUMN_NAME_LESSON_NAME];				//授業テーマ
+		setToObject.lessonConfirm.lessonInfo.price[TEXT] 					= sumCost(setFromObject);					//受講料
 		setToObject.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= setFromObject[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
 		setToObject.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= setFromObject[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
 	}
@@ -189,7 +189,7 @@ function memberReserveCancelDialog(dialog){
 			//ダイアログに送信された値を取得する
 			var sendObject = this.dialogClass.getArgumentDataObject();
 			//クエリを発行してキャンセル処理を行う
-			this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+			this.sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
 		}
 
 		//ダイアログを閉じるときは破棄するように設定する

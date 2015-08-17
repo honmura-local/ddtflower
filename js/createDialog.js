@@ -55,11 +55,11 @@ function getCurrentPageFileName(identifier){
 var currentPage = getCurrentPageFileName('php');	//現在のページ名を取得する。phpでなければ空文字を返す
 
 //現在のページがMSLのphpであれば
-if(currentPage == MSL_LIST_PHP || currentPage == MSL_DETAIL_PHP){
-	INIT_JSON_PATH = "../../../" + INIT_JSON;		//2階層下がってファイルを取得する
+if(currentPage == PATH_MSL_LIST || currentPage == PATH_MSL_DETAIL){
+	INIT_JSON_PATH = "../../../" + PATH_INIT_JSON;		//2階層下がってファイルを取得する
 //他のページなら
 } else {
-	INIT_JSON_PATH = INIT_JSON;		//階層を下げない
+	INIT_JSON_PATH = PATH_INIT_JSON;		//階層を下げない
 }
 
 
@@ -351,7 +351,7 @@ function toggleHeader(targetObject){
 //会員ページでのみヘッダーを表示するようにイベントを登録する
 //注意:現状ではログアウトボタンが画面上に存在するかを基準にしています。
 //短絡的な判断基準ですので、後々詰めるべきであると思います。
-//inspectAfterLoad(toggleHeader, {evaluation:CLASS_HEADERS,target:CLASS_HEADER})
+//inspectAfterLoad(toggleHeader, {evaluation:SELECTOR_HEADERS,target:SELECTOR_HEADER})
 
 
 /* 
@@ -372,7 +372,7 @@ function afterCreateClassList(elem, time){
 		//ダイアログの直下の子のクラス名を取得する
 		var className = $this.children().eq(0).attr(CLASS).split(' ')[0];
 		//変数に予約一覧テーブルのjsonの連想配列を入れる
-		var lessonTable = creator.json[className][TABLE_DATA_KEY];
+		var lessonTable = creator.json[className][KEY_TABLE_DATA];
 		// 時間割1限分の生徒の合計人数が入った連想配列を作る
 		var timeStudentsCount = getTotalStudentsOfTimeTable(lessonTable);
 		//予約一覧テーブルの値を置換する
@@ -531,4 +531,4 @@ var errorMessages = [
 ];
 
 // 初期化用関数をコールして初期化用データの連想配列を用意する。
-var init = getInitData(INIT_JSON_PATH, 100);
+var init = getInitData(PATH_INIT_JSON, 100);

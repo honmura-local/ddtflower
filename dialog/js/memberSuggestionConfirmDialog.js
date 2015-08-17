@@ -42,7 +42,7 @@ function memberSuggestionConfirmDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//ブログ確認ダイアログのjsonデータを取得する
-			this.create_tag.getJsonFile(SUGGESTION_CONFIRM_DIALOG_JSON);
+			this.create_tag.getJsonFile(PATH_SUGGESTION_CONFIRM_DIALOG_JSON);
 			//記事更新ステータスを取得する
 		//例外時処理
 		}catch(e){
@@ -62,7 +62,7 @@ function memberSuggestionConfirmDialog(dialog){
 	 */
 	this.dispContentsHeader = function(dialogClass){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(SUGGESTION_CONFIRM_DIALOG_TITLE);
+		this.setDialogTitle(PATH_SUGGESTION_CONFIRM_DIALOG_TITLE);
 	}
 
 	/* 関数名:dispContentsMain
@@ -131,7 +131,7 @@ function memberSuggestionConfirmDialog(dialog){
 	this.updateJson = function() {
 		var data = commonFuncs.getInputData(SUGGESTION_DATA_DOM_PARENT);		//domからデータを取得する
 		var resultwork = null;								//
-		var sendUrl = SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+		var sendUrl = PATH_SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
 		var sendObject = {									//送信するデータのオブジェクト
 				from:data.user_key				//送信元
 				,subject:data.suggest_title		//タイトル
@@ -169,7 +169,7 @@ function memberSuggestionConfirmDialog(dialog){
 					//目安箱メールならタイプの値を追加する
 					$.extend(true, sendObject, {type:sendObject.suggest_type});
 					//目安箱メール送信用PHPにメールを処理させる
-					sendUrl = SEND_SUGGEST_PHP;
+					sendUrl = PATH_SEND_SUGGEST_PHP;
 					break;
 			default:break;
 			}
@@ -186,7 +186,7 @@ function memberSuggestionConfirmDialog(dialog){
 						//目安箱メールを送信していたら
 						if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
 							//目安箱テーブルに新たにデータを挿入する
-							thisElem.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+							thisElem.sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
 						}
 					}
 					//通信失敗時

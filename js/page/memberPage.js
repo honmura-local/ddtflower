@@ -25,7 +25,7 @@ function createMemberFinishedLessonContent() {
 	// ナンバリング領域を作る
 	creator.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
 	//受講済み授業一覧のデータを取り出す
-	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
+	creator.getJsonFile(PATH_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	//セレクトボックスのvalueを画面に表示されている値にする
@@ -50,7 +50,7 @@ function finshedLessonTableAfterPaging() {
 		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
 		var nowPageNumber = Number($('.select').text() - 1);
 		//テーブルのデータを取得する
-		var tableRow = creator.json.finishedLessonTable[TABLE_DATA_KEY];
+		var tableRow = creator.json.finishedLessonTable[KEY_TABLE_DATA];
 		//テーブルの値を編集するループを開始する値を取得する
 		var loopStartCount = nowPageNumber * 10;
 		//テーブルのレコード数を取得する
@@ -81,7 +81,7 @@ function finshedLessonTableAfterPaging() {
  */
 function finshedLessonTableThemeSelect() {
 	//ページングがクリックされた時のイベントを登録する
-	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
+	$(BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
 		//デフォルトのクエリを保存して変化後のクエリを基に戻せるようにする
 		var defaultQuery = creator.json.finishedLessonTable.db_getQuery;
 		//テーブルを作るためのクエリを置換する
@@ -89,7 +89,7 @@ function finshedLessonTableThemeSelect() {
 		//ページングに使うものを初期化し、ページングを作り直すために備える
 		creator.pagingReset('finishedLessonTable');
 		//クエリを発行してDBから対象のデータの受講済み授業一覧のデータを取り出す
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
+		creator.getJsonFile(PATH_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
 		//ページング機能付きで受講済みテーブルを作り直す
 		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	});
