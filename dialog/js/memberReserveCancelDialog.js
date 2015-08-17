@@ -14,23 +14,23 @@
 function memberReserveCancelDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
-	this.button = [
-		{	//はいボタン
-			text:TEXT_YES,
-			//クリック時のコールバック関数
-			click:function(){
-				//ダイアログを閉じる処理
-				//ダイアログのステータスにはいボタンを登録する
-			}
-		},
-		{
-			//いいえボタン
-			text:TEXT_NO,
-			click:function(){
-				//いいえボタンクリック処理
-			}
-		}
-	];
+	//はい、いいえボタンの配列
+	this.yes_no = [
+					{	//はいボタン
+						text:TEXT_YES,
+						//クリック時のコールバック関数
+						click://ダイアログのステータスをはいボタンが押されたステータスに変更する
+							this[DIALOG_BUILDER].buttonCallBack(YES)
+					},
+					//いいえボタン
+					{	//ボタンテキスト
+						text:TEXT_NO,
+						//クリック時のコールバック関数
+						click://ダイアログのステータスをいいえボタンが押されたステータスに変更する
+							this[DIALOG_BUILDER].buttonCallBack(NO)
+					}
+	           ];
+
 
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
@@ -44,11 +44,9 @@ function memberReserveCancelDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//画面パーツ作成に必要なHTMLテンプレートを取得する
-			this.create_tag.getDomFile(MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
-			//データとなるjsonを読み込む
-			this.create_tag.getJsonFile(MEMBER_RESERVE_CONFIRM_DIALOG_JSON);
-			//
-			this.customizeJson();	//取得したJSONを加工する
+			this[VAR_CREATE_TAG].getDomFile(MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
+			//必要なデータのjsonを取得する
+			this.getJson();	//取得したJSONを加工する
 		//例外時処理
 		}catch(e){
 			//もう一度例外を投げ、dispContents内で処理する
@@ -65,75 +63,14 @@ function memberReserveCancelDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getJson = function(){
-
+		//データとなるjsonを読み込む
+		this[VAR_CREATE_TAG].getJsonFile(MEMBER_RESERVE_CANCEL_DIALOG_JSON);
+		//DBから値を読み込むためにデータをセットする
+		setJsonDataFromArgumentObj(MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
+		//DBからデータを読み込む
+		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG][MEMBER_RESERVE_CANCEL_DIALOG_CONTENT], MEMBER_RESERVE_CANCEL_DIALOG_CONTENT);
 	}
 
-	/* 関数名:dispContents
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContents = function(){
-		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
-
-//仮処理
-	//予約キャンセルダイアログに必要な値を受け取った値で入れる
-	insertConfirmReserveJsonDialogValueEx('cancelLessonContent', 'cancelLessonDialogContent', creator);
-	//アコーディオンの中身をDBから取り出す
-	creator.getJsonFile(URL_GET_JSON_STRING_PHP, creator.json.cancelLessonContent, 'cancelLessonContent');
-	//ダイアログの中身のコンテンツを作る
-	creator.outputTag('cancelLessonContent', 'cancelLessonContent', '.cancelLessonDialogContent');
-	// ボタンタグをjqueryuiの見た目にする
-	$('button').button();
-	//送信ボタンがクリックされたときにDBに予約情報を登録する
-	$dialog.on(CLICK, 'button', function() {
-		//押されたボタンのvalueを取得し、ダイアログの押されたボタンの状態のデータに反映する
-		dialogClass.setPushedButtonState($(this).attr('value'));
-		dialogClass.destroy('value');	//ダイアログを破棄する
-	});
-
-
-		//ダイアログのタイトルをセットする
-		this.dispContentsHeader(dialogClass);
-		//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-		this.setLessonDataToJSON(RESERVE_LIST_JSON);
-
-		//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
-		if (!this.getTableData(LESSON_TABLE)) {
-			//授業の予約データがないことをダイアログに表示する
-			dialogClass.setAlertContents(ERROR_LESSONLIST);
-			//ダイアログを閉じるときは破棄するように設定する
-			dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
-			return;		//処理を終える
-		}
-
-		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(RESERVE_LIST_HTML);
-
-		this.dispContentsMain(dialogClass);		//ダイアログ中部
-		this.dispContentsFooter(dialogClass);	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
-	}
-
-	/* 関数名:getTableData
-	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
-	 * 引数　:String tableName:テーブルのJSONのキー
-	 * 返却値:boolean:テーブルのデータがあるかどうかを判定して返す
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.getTableData = function(tableName){
-		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
-		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
-	}
-
-	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
 	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
@@ -143,9 +80,9 @@ function memberReserveCancelDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsHeader = function(dialogClass){
+	this.dispContentsHeader = function(){
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
+		this.setDialogTitle(this.dialogClass);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -157,18 +94,9 @@ function memberReserveCancelDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsMain = function(dialogClass){
-		var data = dialogClass.getArgumentDataObject();			//dataオブジェクトを取得する
-		
-		//ダイアログの中身の外枠を作る
-		this.create_tag.outputTag('memberInfomation', 'memberInfomation', CURRENT_DIALOG_SELECTOR);
-		//予約可能授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag('tableArea', 'tableArea', '.memberInfomation')
-		
-		//予約できる授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
-		//テーブルの値をクライアント側で編集して画面に表示する
-		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
+	this.dispContentsMain = function(){
+		//ダイアログの中身のコンテンツを作る
+		creator.outputTag('cancelLessonContent', 'cancelLessonContent', '.cancelLessonDialogContent');
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -180,16 +108,22 @@ function memberReserveCancelDialog(dialog){
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(dialogClass){
-		//レッスンのステータス領域を作る
-		this.create_tag.outputTag('lessonStatus', 'lessonStatus', '.memberInfomation');
+	this.dispContentsFooter = function(){
+		//ダイアログの位置を修正する
+		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
+	}
 
-		//予約授業一覧テーブルをクリックしたときに予約確認ダイアログを表示するイベントを登録する
-		this.create_tag.openMemberReservedConfirmDialog();
+	/* 関数名:setDialogEvents
+	 * 概要　:ダイアログのイベントを設定する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.setDialogEvents = function(){
 		//ダイアログを閉じるときは破棄するように設定する
 		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
 	}
-	
 
 	/* 関数名:setDialogTitle
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -205,40 +139,63 @@ function memberReserveCancelDialog(dialog){
 		this.setDialogTitle(data.dateJapanese);
 	}
 	
-	/* 関数名:setLessonDataToJSON
-	 * 概要　:授業のデータをcerateTagのJSONにセットする
-	 * 引数　:String jsonPath:jsonファイルのパス
+	/* 関数名:buttonCallBack
+	 * 概要　:ダイアログのイエスノーボタンがクリックされた時に走るコールバック関数
+	 * 引数　:string:buttonType:クリックされたボタンの種類
 	 * 返却値:なし
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
+	 * 作成日　:2015.08.16
+	 * 作成者　:T.Yamamoto
 	 */
-	this.setLessonDataToJSON = function(jsonPath){
-		//このダイアログ用のJSONファイルを取得する
-		this.create_tag.getJsonFile(jsonPath);
-		//ダイアログのdataオブジェクトを取得する
-		var data = this.dialog[0].instance.getArgumentDataObject();
-		//dbに接続する前に日付をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
-		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.user_key.value = data.userId;
+	this.buttonCallBack = function(buttonType) {
+		//ボタンがクリックされたステータスを登録する
+		this.setPushedButtonState(buttonType);
+		//ダイアログを閉じる
+		$(this).dialog(CLOSE);
 	}
-	
-	/* 関数名:setArgumentObj
-	 * 概要　:ダイアログに渡すオブジェクトを生成する
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:015.08.14
-	 * 作成者　:T.Masuda
+
+	/* 
+	 * 関数名:setJsonDataFromArgumentObj
+	 * 概要  :受け取ったデータをダイアログのjsonにsetする
+	 * 引数  :Object setToJson:値をセットする先のjson
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.16
 	 */
-	this.setArgumentObj = function() {
-		//新たにオブジェクトを作り、親ダイアログから引き継いだargumentObjの内容をセットする
-		var argumentObj = $.extend(true, {}, this.dialogExOptionSampleChild.argumentObj);
-		//openイベントを設定する
-		$.extend(true, argumentObj.config, {open:commonFuncs.callOpenDialog});
-		//このダイアログのdialogExクラスインスタンスを子へ渡すオブジェクトに追加する
-		$.extend(true, argumentObj.data, {parentDialogEx:this.dialog[0].instance});
-		return argumentObj;	//生成したオブジェクトを返す
+	this.setJsonDataFromArgumentObj = function(setToJson){
+		//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
+		var setToObject = this[VAR_CREATE_TAG].json[targetJson];
+		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
+		var setFromObject = this.dialogClass.getArgumentDataObject();
+		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
+		setToObject.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(setFromObject);	//受講時間
+		setToObject.lessonConfirm.lessonInfo.store[STR_TEXT] 					= setFromObject[COLUMN_NAME_SCHOOL_NAME];				//店舗名
+		setToObject.lessonConfirm.lessonInfo.course[STR_TEXT]					= setFromObject[COLUMN_NAME_LESSON_NAME];				//授業テーマ
+		setToObject.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(setFromObject);					//受講料
+		setToObject.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= setFromObject[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
+		setToObject.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= setFromObject[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
 	}
+
+	/* 
+	 * 関数名:setJsonDataFromArgumentObj
+	 * 概要  :受け取ったデータをダイアログのjsonにsetする
+	 * 引数  :Object setToJson:値をセットする先のjson
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.16
+	 */
+	this.dialogCloseFunc = function() {
+		//クローズボタンがクリックされたときはDBの更新処理を行う
+		if(this.dialogClass.getPushedButtonState() == YES){
+			//ダイアログに送信された値を取得する
+			var sendObject = this.dialogClass.getArgumentDataObject();
+			//クエリを発行してキャンセル処理を行う
+			this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+		}
+
+		//ダイアログを閉じるときは破棄するように設定する
+		this.dialogClass.destroy();
+	}
+
 }
 
 //継承の記述

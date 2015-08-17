@@ -329,6 +329,7 @@ MEMBER_RESERVE_CANCEL_DIALOG 				= 'dialog/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JS 			= 'dialog/js/memberReserveCancelDialog.js';
 MEMBER_RESERVE_CANCEL_DIALOG_HTML 			= 'dialog/template/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JSON 			= 'dialog/source/memberReserveCancelDialog.json';
+MEMBER_RESERVE_CANCEL_DIALOG_CONTENT		= 'lessonConfirmContent';		//コンテンツデータの親のクラス名
 
 //管理者、授業一覧ダイアログ
 ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
@@ -403,6 +404,7 @@ COLUMN_NAME_STOP_ORDER_DATE			= 'stop_order_date';			// 授業締切日？
 COLUMN_NAME_SCHOOL_NAME				= 'school_name';				// 店舗名
 COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
 COLUMN_NAME_TODAY					= 'today';						// 今日の日付
+COLUMN_NAME_LESSON_KEY				= 'lesson_key';					// 授業(classwork)のid
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
 
