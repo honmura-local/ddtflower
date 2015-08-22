@@ -14,23 +14,6 @@
 function experienceReservedDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
-	//送信・キャンセルボタンの配列
-	this.send_cancel = [
-					{	
-						//送信ボタン
-						text:STR_SEND_JP,
-						//送信ボタンのコールバック関数をセットする
-						//予約希望情報送信確認ダイアログを開く
-						click:this[DIALOG_BUILDER].openDialog(EXPERIENCE_RESERVED_CONFIRM_DIALOG_URL)
-					},
-					{
-						//閉じるボタン
-						text:STR_CLOSE_JP,
-						//閉じるボタンのコールバック関数をセットする
-						click:$(this).dialog(CLOSE)
-					}
-	           ];
-	
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
 	 * 引数　:なし
@@ -134,27 +117,29 @@ function experienceReservedDialog(dialog){
 		this.create_tag.outputTag(MAIL_SUBJECT, MAIL_SUBJECT, CURRENT_DIALOG);
 	}
 
-	/* 関数名:dispContentsFooter
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のフッター部分作成担当関数
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(){
-		//送信・キャンセルボタンを配置する
-		this.setDialogButtons(this.send_cancel);		
+	this.setConfig = function(){
+		//確認・キャンセルボタンを配置する
+		this.setDialogButtons(this.confirm_cancel);		
+		//ダイアログの位置を修正する
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
-
-	/* 関数名:setDialogEvents
-	 * 概要　:ダイアログのイベントを設定する
-	 * 引数　:なし(オーバーライド時に定義する)
+	
+	
+	/* 関数名:setCallback
+	 * 概要　:ダイアログのイベントコールバックを設定する
+	 * 引数　:なし
 	 * 返却値:なし
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogEvents = function(){
+	this.setCallback = function(){
 		// 全ての曜日のチェックボックスにチェックする
 		commonFuncs.allCheckbox(ALLDAY_CHECKBOX, CHECKBOX_DAYOFWEEK);
 		// 全ての週のチェックボックスにチェックする
@@ -203,11 +188,16 @@ function experienceReservedDialog(dialog){
 		    //入力確認のものは送信すべきではないので、送信前に前持って無効化する。
 	        //対象はメールチェックのテキストボックス
 		    $(SELECTOR_PERSON_MAIL_CHECK, $form).attr(DISABLED, DISABLED);
-		    //子ダイアログに渡すオブジェクトのインプット用データ部分を作成する。以下のデータを結合する
+		    //子ダイアログ(確認ダイアログ)に渡すオブジェクトのインプット用データ部分を作成する。以下のデータを結合する
 		    $.extend(true, 
 		    		argumentObj[DATA_KEY], {						//今のダイアログのargumentObjのdata
 		    		formData:commonFuncs.createFormData($form)},	//フォームデータ 
-		    		{parentDialog:this.dialogClass.dom}			//今のダイアログのDOM
+		    		//子ダイアログのcloseイベント用データを追加する
+		    		{
+		    			parentDialog:this.dialogClass.dom,			//今のダイアログのDOM
+		    			callback:sendReservedMail,					//予約のメールを送る
+		    			message:'入力した内容で体験レッスンの予約希望を送信します。'
+		    		}			
 		    	);
 		    // このダイアログの入力要素を一時的に無効化する。
 		    commonFuncs.disableInputs($form);
@@ -243,6 +233,51 @@ function experienceReservedDialog(dialog){
 			this.dialogEx.run();	//ダイアログを開く
 		}
 	}
+
+	/* 関数名:callbackConfirm
+	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackConfirm = function(){
+		//確認ダイアログを開く
+		this.openDialog(URL_CONFIRM_DIALOG);
+	};
+	
+
+	/* 関数名:sendReservedMail
+	 * 概要　:予約メールの送信を行うコールバック用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.sendReservedMail = function(){
+		//ダイアログのクラスインスタンスを取得する
+		var dialogClass = this.instance;
+		
+		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
+		switch(dialogClass.getPushedButtonState()){
+		//はいボタンが押されていたら
+			case YES:
+				var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+				//予約希望メールを送信する
+				var isSend = this.sendMail(object, url, data.message);
+				
+				//メールの送信に成功していたら
+				if(isSend){
+					//送信完了と共に入力ダイアログを消す
+					$(dialogClass.dom).dialog(CLOSE);
+				}
+				break;	//switch文を抜ける
+			//処理を行うボタンが押されていなければ
+			default:break;	//そのまま処理を終える
+		}
+	}
+	
 	
 	//ここまでクラス定義
 }

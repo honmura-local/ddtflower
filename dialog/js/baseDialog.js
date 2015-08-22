@@ -41,6 +41,7 @@ function baseDialog(dialog){
 			this.dispContentsHeader();	//上部
 			this.dispContentsMain();	//メイン部分
 			this.dispContentsFooter();	//下部
+			this.setConfig();			//ダイアログの設定関数をコールする
 			this.setCallback();			//イベントのコールバック関数をセットする
 		} catch(e){
 			//ダイアログ生成エラー
@@ -152,6 +153,18 @@ function baseDialog(dialog){
 	 */
 	this.setCallback = function(){
 		
+	}
+	
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。任意でオーバーライドして定義する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.setConfig = function(){
+		//デフォルトではダイアログの位置調整のみ行う
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
 	
 	//以下オプションセット関数はopenDialog関数内に記述する
@@ -296,6 +309,24 @@ function baseDialog(dialog){
 	                   }
 	             ];
 	
+	//確認・キャンセルボタンの配列
+	this.confirm_cancel = [
+					{	
+						//確認ボタン
+						text:'確認',
+						//送信ボタンのコールバック関数をセットする
+						//予約希望情報送信確認ダイアログを開く
+						click:callbackConfirm
+					},
+					{
+						//閉じるボタン
+						text:STR_CLOSE_JP,
+						//閉じるボタンのコールバック関数をセットする
+						click:callbackCloseButton
+					}
+	           ];
+	
+	
 	
 	/* 関数名:callbackYes
 	 * 概要　:ダイアログのはいボタンを押したときのコールバック関数用関数
@@ -365,7 +396,7 @@ function baseDialog(dialog){
 	this.callbackRowClick = function() {
 	};
 	
-	/* 関数名:callbackSend
+	/* 関数名:callbackConfirm
 	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -374,6 +405,18 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
+	};
+	
+	/* 関数名:callbackCloseButton
+	 * 概要　:ダイアログの閉じるボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackCloseButton = function(){
+		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
 	/* 関数名:callbackReset
