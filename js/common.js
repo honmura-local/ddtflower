@@ -1054,7 +1054,7 @@ this.defaultClassworkCostColumns = [
 
 
 	/* 
-	 * 関数名:function makeFailedAlertString(list, jpNameMap)
+	 * 関数名:makeFailedAlertString(list, jpNameMap)
 	 * 概要  :入力失敗の警告メッセージを作る。
 	 * 引数  :map lists:エラーがあった欄のリストの連想配列。
 	 * 　　  :map jpNameMap:英語名のキーと日本語名の値の連想配列。
@@ -1074,7 +1074,7 @@ this.defaultClassworkCostColumns = [
 			//チェックが通った項目でなければ
 			if(lists[key] != null){
 				 //エラーのリストを日本語に訳す。
-				 var errorList = replaceJpName(lists[key], jpNameMap);
+				 var errorList = this.replaceJpName(lists[key], jpNameMap);
 				 //エラーのリストを1つの文字列にする。
 				 var errorListString = errorList.join(ESCAPE_KAIGYOU);
 				 //警告を追加する。
@@ -1157,6 +1157,54 @@ this.defaultClassworkCostColumns = [
 		return formDataReturn;
 	}
 
+	/*
+	 * 関数名:createFormObject(form)
+	 * 引数  :Element form:フォームの要素
+	 * 戻り値:Object:フォームデータのオブジェクトを返す
+	 * 概要  :フォームからオブジェクトを作る。
+	 * 作成日:2015.08.22
+	 * 作成者:T.Masuda
+	 */
+	this.createFormObject = function(form){
+		//返却するデータを格納する変数を宣言する。
+		var formDataReturn = {};
+
+		//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
+		$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]', form)
+			.not('[disabled]').each(function(){
+			var val = this.value;	//入力フォームから値を取得する
+			//name属性の値を取得する。
+			var name = $(this).attr('name');
+			//type属性の値を取得する。
+			var type = $(this).attr('type');
+			
+			//nameが空でなければ
+			if(name != "" && name !== void(0)){
+				//チェックボックスか、ラジオボタンなら
+				if(type == 'checkbox' || type=='radio'){
+					if($(this).index('[name="' + name + '"]:checked') == 0){
+						val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
+						//name属性で括られたチェックボックスを走査していく。
+						$('input[name="' + name + '"]:checked').each(function(){
+							//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
+							val.push(this.getAttribute('value'));
+						});
+						//formDataを連想配列として扱い、keyとvalueを追加していく。
+						formDataReturn[name] = val;
+					}
+				//それ以外であれば
+				} else {
+					//formDataを連想配列として扱い、keyとvalueを追加していく。
+					formDataReturn[name] = val;
+				}
+			}
+		});
+		
+		//フォームデータを返す。
+		return formDataReturn;
+	}
+	
+	
 	/* 
 	 * 関数名:disableInputs(dialog)
 	 * 概要  :対象のダイアログの入力要素を一時無効にする。

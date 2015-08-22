@@ -136,21 +136,20 @@ function adminLessonListDialog(dialog){
 		}
 	}
 
-	/* 関数名:dispContentsFooter
-	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う
+	 * 引数　:なし
 	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(){
+	this.setConfig = function(){
 		//新規に授業を作成するためのボタンを作る
 		this.setDialogButtons(this.createNew);
 		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
+
 
 	/* 関数名:setCallback
 	 * 概要　:ダイアログのイベントコールバックを設定する
