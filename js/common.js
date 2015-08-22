@@ -75,7 +75,7 @@ this.defaultClassworkCostColumns = [
 	/* 
 	 * 関数名:getTotalStudentsOfTimeTable
 	 * 概要  :時間割ごとの生徒の合計人数を求める
-	 * 引数  :rowData:テーブル1行のデータ
+	 * 引数  :rowData:テーブルのデータ配列
 	 * 返却値:時間ごとの合計人数が入った連想配列
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.23
@@ -117,7 +117,7 @@ this.defaultClassworkCostColumns = [
 	 */ 
 	this.isCanceled = function(classworkStatus) {
 		// 授業が中止するかどうかを見るための配列を作る
-		var classworkCancelStatus = new Array(3,2)
+		var classworkCancelStatus = new Array(3,2);
 		// 授業ステータスがキャンセルならtrueを返す
 		 if($.inArray(classworkStatus, classworkCancelStatus) >= 0) {
 			// if(classworkCancelStatus.indexOf(classworkStatus == -1)) {
@@ -950,7 +950,7 @@ this.defaultClassworkCostColumns = [
 				//配列にこの要素のname属性を格納する。
 				returns.push($(this).attr('name'));
 			}
-		})
+		});
 		
 		//チェックに引っかかった要素があれば配列を返し、なければnullを返す。
 		return returns.length > 0? returns: null;
@@ -1173,6 +1173,151 @@ this.defaultClassworkCostColumns = [
 		$(FORM_ELEMS, area).attr(DISABLED, DISABLED);
 	}
 
+	/* 関数名:setLessonDataToJSON
+	 * 概要　:授業のデータをcerateTagのJSONにセットする
+	 * 引数　:dialogEx dialog:ダイアログのクラスインスタンス
+	 * 		:createLittleContents create_tag:createLittleContentsクラスインスタンス
+	 * 返却値:なし
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:共通で使えるためcommon.jsに移動しました
+	 */
+	this.setLessonDataToJSON = function(dialog, create_tag){
+		//ダイアログのdataオブジェクトを取得する
+		var data = dialog.getArgumentDataObject();
+		//dbに接続する前に日付をクエリの置換連想配列に挿入する
+		create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
+		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
+		create_tag.json.lessonTable.user_key.value = data.userId;
+	}
+	
+	
+	/* 関数名:getTableJsonLength
+	 * 概要　:createTag(createLittleContents)クラスインスタンスのテーブル用JSONの行数を取得する
+	 * 引数　:createLittleContents create_tag:createLittleContentsクラスインスタンス
+	 * 		:String tableName:テーブルのJSONのキー
+	 * 返却値:int:テーブルの行数を返す
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.getTableJsonLength(create_tag, tableName){
+		//指定したキーのテーブルの行数を返す
+		return create_tag.json[tableName][TABLE_DATA_KEY].length;
+	}
+	
+	/* 関数名:createCloneObject
+	 * 概要　:オブジェクトのクローンを作成する
+	 * 引数　:Object object:クローン作成元のオブジェクト
+	 * 返却値:object:引数のオブジェクトのクローンを返す
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.createCloneObject(object){
+		//オブジェクトのクローンを作成して返す
+		return $.extend(true, {}, object);
+	}
+	
+	/* 
+	 * 関数名:getInputData
+	 * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
+	        :クラス名をkey、入っている値をvalueの連想配列にして返す
+	 * 引数  :string selector:値を走査したい親のセレクター名
+	 * 返却値  :Object:入力データの結果連想配列
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.06.27
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:共通で使えるためcommon.jsに移動しました。また、セレクタをクラスに限定しないようにしました
+	 */
+	this.getInputData = function(selector) {
+		var $form = $(selector);	//処理対象の親要素を取得する
+		//結果の変数を初期化する
+		var retMap = {};
+		//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
+		$(SEL_INPUT_DATA , $form).each(function() {
+			//入力データのname属性を取得する
+			var name = $(this).attr(NAME);
+			//入力データの値を取得する
+			var value = $(this).val();
+			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+			var typeAttr = $(this).attr(TYPE);
+			//ラジオボタンに対応する
+			if (typeAttr == RADIO) {
+				//ラジオボタンの値がチェックされているものだけ送信する
+				if($(this).prop(CHECKED)) {
+					//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+					retMap[name] = value;
+				}
+			} else {
+				//入力データを結果の変数に、key名をクラス名にして保存する
+				retMap[name] = valueData;
+			}
+		});
+		//結果を返す
+		return retMap;
+	}
+	
+	
+	/* 関数名:sendMail
+	 * 概要　:メールを送信する
+	 * 引数　:Object sendObject:送信するデータのオブジェクト
+	 * 		:String sendUrl:メール送信処理を行うプログラムのURL
+	 * 		:String message:送信成功時のメッセージ
+	 * 返却値:boolean:メール送信の成否を返す
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.sendMail = function(sendObject, sendUrl, message) {
+		var retBoo = false;	//メール送信の成否の判定を返すための変数を用意する
+		
+		$.ajax({				//PHPにメール用データを渡すAjax通信
+			url:sendUrl			//PHPのURLを設定する
+			,data:sendObject	//送信データのオブジェクト
+			,dataType:"json"	//JSON形式でデータをもらう
+			,type:"POST"		//POSTメソッドでHTTP通信する
+			,success:function(result){		//通信成功時
+				//メール送信が行われていれば
+				if(result == EMPTY_STRING || parseInt(result.sendCount) > 0){
+					//送信完了と共に入力ダイアログを消す
+					alert(message);	//送信完了のメッセージを出す
+					retBoo = true;	//成功判定にする
+				//メール送信が失敗していれば
+				} else {
+					//送信失敗のメッセージを出す
+					alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+				}
+			}
+			//通信失敗時
+			,error:function(xhr, status, error){
+				//送信失敗のメッセージを出す
+				alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+			}
+		});
+		
+		return retBoo;	//判定を返す
+	}
+	
+	/* 
+	 * 関数名:textPustArray
+	 * 概要  :配列に対して文字列を追加する
+	 * 引数  :String parent:追加する文字列がある親のセレクタ
+	 *		Array array:文字列を追加する配列の名前
+	 *		String pushText 追加する文字が入っているセレクタ
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.08
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:共通で使えるためcommon.jsに移動しました。
+	 */
+	this.textPustArray = function(parent, array, pushText) {
+		//配列に引数で指定した値を追加していく
+		arrayName.push($(parent).children(pushText).text());
+	}
+	
+	
 	
 //ここまでクラス定義領域
 }

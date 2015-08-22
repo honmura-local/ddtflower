@@ -41,7 +41,7 @@ function baseDialog(dialog){
 			this.dispContentsHeader();	//上部
 			this.dispContentsMain();	//メイン部分
 			this.dispContentsFooter();	//下部
-			this.setDialogEvents();		//ダイアログ内のイベントを設定する
+			this.setCallback();			//イベントのコールバック関数をセットする
 		} catch(e){
 			//ダイアログ生成エラー
 			throw new failedToDisplayException();
@@ -80,6 +80,18 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getJson = function(){
+		
+	};
+	
+	/* 関数名:getDom
+	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.getDom = function(){
 		
 	};
 	
@@ -131,14 +143,14 @@ function baseDialog(dialog){
 		
 	}
 
-	/* 関数名:setDialogEvents
-	 * 概要　:ダイアログのイベントを設定する
+	/* 関数名:setCallback
+	 * 概要　:ダイアログのイベントのコールバック関数を設定する
 	 * 引数　:なし(オーバーライド時に定義する)
 	 * 返却値:なし
-	 * 作成日　:2015.0815
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogEvents = function(){
+	this.setCallback = function(){
 		
 	}
 	
@@ -259,7 +271,33 @@ function baseDialog(dialog){
 		                         }
 	                         ];
 	
-	/* 関数名:callBackYes
+	//デフォルトの新規作成ボタン設定用配列
+	this.createNew = [
+	                         {	//新規作成ボタン
+	                        	 text:'新規作成',
+	                        	 //クリック時のコールバック関数を設定する
+	                        	 click:this.callbackCreateNew
+	                         }
+	                 ];
+	
+	//送信の確認・リセットボタンの配列
+	this.confirm_reset = [
+	                   {
+	                	   //確認ボタン
+	                	   text:'確認',
+	                	   //コールバック関数
+	                	   click:this.callbackConfirm
+	                   },
+	                   {
+	                	   //リセットボタン
+	                	   text:'リセット',
+	                	   //コールバック関数
+	                	   click:this.callbackReset
+	                   }
+	             ];
+	
+	
+	/* 関数名:callbackYes
 	 * 概要　:ダイアログのはいボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -267,11 +305,11 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.callBackYes = function(){
+	this.callbackYes = function(){
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
-	/* 関数名:callBackNo
+	/* 関数名:callbackNo
 	 * 概要　:ダイアログのいいえボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -279,11 +317,11 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.callBackNo = function(){
+	this.callbackNo = function(){
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
-	/* 関数名:callBackCancel
+	/* 関数名:callbackCancel
 	 * 概要　:ダイアログのキャンセルボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -291,11 +329,64 @@ function baseDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.callBackCancel = function(){
+	this.callbackCancel = function(){
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 
+	/* 関数名:callbackCreateNew
+	 * 概要　:新規作成ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackCreateNew = function(){
+	}
 	
+	/* 関数名:setCallbackRowClick
+	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数を設定する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.setCallbackRowClick = function() {
+		//ダイアログの内のテーブルの行をクリックしたときのコールバック関数をセットする
+		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, this.callbackRowClick());
+	};
+	
+	/* 関数名:callbackRowClick
+	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数(内容はオーバーライドして定義されたし)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackRowClick = function() {
+	};
+	
+	/* 関数名:callbackSend
+	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackConfirm = function(){
+	};
+	
+	/* 関数名:callbackReset
+	 * 概要　:ダイアログのリセットボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackReset = function(){
+	};
+
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
@@ -334,6 +425,7 @@ function baseDialog(dialog){
 	 */
 	this.insertFooterContents = function(){
 	}
+	
 }
 
 /* クラス名:connectErrorException

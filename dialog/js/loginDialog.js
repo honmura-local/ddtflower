@@ -44,9 +44,8 @@ function loginDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
-			//ログインダイアログのHTML、jsonを読み込む
-			this.getJson();
-			this[VAR_CREATE_TAG].getDomFile(PATH_LOGIN_DIALOG_TEMPLATE);
+			this.getJson();//ログインダイアログのjsonを読み込む
+			this.getDom();//ログインダイアログのHTML
 		//例外時処理
 		}catch(e){
 			//接続エラー例外であれば
@@ -71,6 +70,20 @@ function loginDialog(dialog){
 		//ログインダイアログのJSONファイルを読み込む
 		this[VAR_CREATE_TAG].getJsonFile(PATH_LOGIN_DIALOG_JSON);
 	};
+
+	/* 関数名:getDom
+	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.getDom = function(){
+		//ログインダイアログのテンプレートHTMLを取得する
+		this[VAR_CREATE_TAG].getDomFile(PATH_LOGIN_DIALOG_TEMPLATE);		
+	};
+	
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のヘッダー部分作成担当関数

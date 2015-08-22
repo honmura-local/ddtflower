@@ -50,16 +50,13 @@ function memberReserveListDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
-			//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-			this.setLessonDataToJSON(RESERVE_LIST_JSON);
+			this.getJson();	//JSONを取得する
 			//取得したデータが0のときダイアログを開いても閉じ,データがあるならそのままダイアログを開く
 			if (!this.getTableData(LESSON_TABLE)) {
 				throw new cannotGetAnyRecordException();
 			}
 
-			//画面パーツ作成に必要なHTMLテンプレートを取得する
-			this.create_tag.getDomFile(RESERVE_LIST_HTML);
-			
+			this.getDom();			//画面パーツ作成に必要なHTMLテンプレートを取得する
 			this.customizeJson();	//取得したJSONを加工する
 		//例外時処理
 		}catch(e){
@@ -78,28 +75,29 @@ function memberReserveListDialog(dialog){
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:当関数内でsetLessonDataToJSONをコールするようにしました
 	 */
 	this.getJson = function(){
 		//このダイアログ用のJSONファイルを取得する
-		this.create_tag.getJsonFile(jsonPath);
+		this[VAR_CREATE_TAG].getJsonFile(RESERVE_LIST_JSON);
+		//授業データを取得する
+		commonFuncs.setLessonDataToJSON(this[DIALOG_CLASS], this[VAR_CREATE_TAG]);	
 	};
 
-	/* 関数名:setLessonDataToJSON
-	 * 概要　:授業のデータをcerateTagのJSONにセットする
-	 * 引数　:String jsonPath:jsonファイルのパス
+	/* 関数名:getDom
+	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:2015.0814
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.setLessonDataToJSON = function(jsonPath){
-		//ダイアログのdataオブジェクトを取得する
-		var data = this.dialog[0].instance.getArgumentDataObject();
-		//dbに接続する前に日付をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
-		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
-		this.create_tag.json.lessonTable.user_key.value = data.userId;
-	}
-	
+	this.getDom = function(){
+		//会員ページ 授業一覧ダイアログのテンプレートHTMLを取得する
+		this[VAR_CREATE_TAG].getDomFile(RESERVE_LIST_HTML);		
+	};
 	
 	/* 関数名:getTableData
 	 * 概要　:サーバからテーブルのデータを取得し、中身が空かどうかのチェックを行う。
@@ -110,9 +108,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getTableData = function(tableName){
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
 		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this.create_tag.json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+		return this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY].length != 0? true: false;
 	}
 	
 	/* 関数名:customizeJson
@@ -136,12 +134,13 @@ function memberReserveListDialog(dialog){
 	 * 概要　:存在する時限情報を取得する
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
 	this.getReplacedTableData = function(tableName){
-		var tableData = creator.json[tableName][TABLE_DATA_KEY];
+		//授業のデータを取得する
+		var tableData = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY];
+		//授業のデータから、その日の存在する時限一覧を取得する。
 		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
 	}
 	
@@ -197,14 +196,14 @@ function memberReserveListDialog(dialog){
 		this.create_tag.outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
 	}
 	
-	/* 関数名:setDialogEvents
-	 * 概要　:ダイアログのイベントを設定する
+	/* 関数名:setCallback
+	 * 概要　:ダイアログのイベントコールバックを設定する
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:2015.0815
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogEvents = function(){
+	this.setCallback = function(){
 		//ダイアログを閉じるときは破棄するように設定する
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 		//予約確認ダイアログを出すイベントを登録する

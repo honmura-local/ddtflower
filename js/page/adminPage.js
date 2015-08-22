@@ -700,6 +700,7 @@ function afterReloadUserListInfoTable() {
 	setTableRecordClass('userListInfoTable', 'targetUser');
 }
 
+<<<<<<< HEAD
 /* 
  * 関数名:textPushArray
  * 概要  :配列に対して文字列を追加する
@@ -714,6 +715,8 @@ function textPushArray(parent, arrayName, pushText) {
 	//第二引数の配列に対して値を追加する
 	arrayName.push($(parent).children(pushText).text());
 }
+=======
+>>>>>>> feature/dialogEx_v3
 
 /* 
  * 関数名:getSendPersonInfo
@@ -765,9 +768,9 @@ function adminMessageCreate(buttonSelector, sendType) {
 			alert(TEXT_ERROR_SELECT_USER);
 		} else {
 			//メッセージを送信するための情報を取得する
-			var sendPersonInfo = getSendPersonInfo();
+			var sendMailData = getSendPersonInfo();
 			// ダイアログを開くための情報とメール情報を結合する
-			$.extend(true, sendPersonInfo, {sendType:sendType});
+			$.extend(true, sendMailData, {sendType:sendType});
 			//ダイアログ用オブジェクトを作る
 			var dialogObj = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
 			//送信するデータをオブジェクトに統合する

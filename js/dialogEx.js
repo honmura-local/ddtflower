@@ -765,70 +765,7 @@ var SimpleConfirmDialog = function(yesFunc, message) {
 	};
 };
 
-//管理者メール送信確認ダイアログのコールバック関数。
 
-/* 関数名:doSendMail
- * 概要　:メールを送信する
- * 引数　:なし
- * 返却値:なし
- * 作成日　:2015.08.10
- * 作成者　:T.Masuda
- */
-function doSendMail(){
-	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
-	var dialogClass = this.instance !== void(0)? this.instance : this;
-
-	//はいボタンが押されていたら
-	if(dialogClass.getPushedButtonState() == YES){
-		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-		// メールを送信する処理
-		//メール送信用のデータを取得する
-		var sendMaidData = getInputData('mailSendContent');
-		//送信完了と共に入力ダイアログを消す
-		data.dialog.dom.dialog(CLOSE);
-		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
-	}
-};
-
-/* 
- * 関数名:announceInsert
- * 概要  :管理者会員一覧でお知らせのダイアログから送信ボタンがクリックされてお知らせテーブルに対して新規データの作成を行う
- * 引数  :
- * 返却値 :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.08.06
- * 修正者:T.Yamamoto
- * 修正日:2015.08.12
- * 内容　:現時点でのdialogExクラスへの対応をしました
- */
-function announceInsert(){
-	//ダイアログのクラスインスタンスを取得する。コールバックか否かで取得方法が変わる。
-	var dialogClass = this.instance !== void(0)? this.instance : this;
-
-	//はいボタンが押されていたら
-	if(dialogClass.getPushedButtonState() == YES){
-		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-	//@mod 2015.0811 T,Masuda 山本さんが再度着手するまで一旦処理を凍結します。
-	//入力されたお知らせメッセージのデータを取得する
-//	var announceData = getInputData('mailSendContent');
-//	//DBにメッセージ登録のクエリを投げる
-//	mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageInf, announceData, '');
-//	//ループでメッセージ宛先を登録するため、登録する宛先となる会員番号が何個あるか取得する
-//	var loopEndCount = $('.adminMailDialogContent')[0].instance.argumentObj.memberNumber.length;
-//	//ループでメッセージ宛先の情報を登録する
-//	for(var loopStartCounter = 0; loopStartCounter < loopEndCount; loopStartCounter++) {
-//		//ループ中の会員番号を取得する
-//		var sendReplaceArray = {
-//			user_key:$('.adminMailDialogContent')[0].instance.argumentObj.memberNumber[loopStartCounter]
-//		};
-//		//宛先テーブルを更新する
-//		mailDialogCreator.setDBdata(mailDialogCreator.json.insertMessageTo, sendReplaceArray, '');
-//	}
-		//送信完了と共に入力ダイアログを消す
-		data.dialog.dom.dialog(CLOSE);
-		alert(MESSAGE_SEND_SIMPLE_NOTICE);	//送信完了のメッセージを出す
-	}
-}
 
 /*
  * 関数名:submitArticle

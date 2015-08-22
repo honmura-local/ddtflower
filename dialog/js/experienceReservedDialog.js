@@ -42,10 +42,8 @@ function experienceReservedDialog(dialog){
 	this.constructionContent = function(){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
-			create_tag.getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
-			//ログインダイアログのHTML、jsonを読み込む
-			this.getJson();
-			this[VAR_CREATE_TAG].getDomFile(PATH_LOGIN_DIALOG_TEMPLATE);
+			this.getJson();	//体験レッスン予約希望ダイアログのJSONを読み込む
+			this.getDom();	//体験レッスン予約希望ダイアログのテンプレートHTMLを読み込む
 		//例外時処理
 		}catch(e){
 			//接続エラー例外であれば
@@ -68,8 +66,22 @@ function experienceReservedDialog(dialog){
 	 */
 	this.getJson = function(){
 		//体験レッスン予約希望ダイアログのJSONを読み込む
-		create_tag.getJsonFile(EXPERIENCE_RESERVED_CONFIRM_DIALOG_JSON);	//予約ダイアログのJSONをい読み込む
+		this[VAR_CREATE_TAG].getJsonFile(EXPERIENCE_RESERVED_CONFIRM_DIALOG_JSON);	//予約ダイアログのJSONをい読み込む
 	};
+
+	/* 関数名:getDom
+	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.getDom = function(){
+		//体験レッスン予約希望ダイアログのテンプレートHTMLを取得する
+		this[VAR_CREATE_TAG].getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
+	};
+	
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のヘッダー部分作成担当関数

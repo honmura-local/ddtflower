@@ -1,72 +1,14 @@
 
-<div class="adminMailDialogContent">
+<div class="dialog">
 	<script>
-		//ダイアログの要素を取得する
-		var $dialog = $('.adminMailDialogContent');
-		//ダイアログのクラスインスタンスを取得する
-		var dialogClass = $dialog[0].instance;
+		//当該ダイアログのDOMを取得する
+		var thisDialog = $(CURRENT_DIALOG);
+		//このダイアログのクラスを定義したJSファイルを読み込む
+		commonFuncs.getScriptFile('dialog/js/adminMailDialog.js');
 		
-		//インプット用オブジェクトを取得する
-		var data = dialogClass.getArgumentDataObject();
-		//このダイアログに登録されているイベントを初期化し、重複を防ぐ
-		$dialog.off();
-		
-		//domを作るためのクラスをインスタンス化する
-		var mailDialogCreator = new createLittleContents();
-		//会員にメール送信ダイアログのjsonを取得する
-		mailDialogCreator.getJsonFile('dialog/source/adminDialog.json');
-		//会員にメール送信ダイアログのjsonを取得するのテンプレートを取得する
-		mailDialogCreator.getDomFile('dialog/template/adminDialog.html');
-
-		//ダイアログコンテンツを囲む領域を作る
-		mailDialogCreator.outputTag('mailSendContent', 'mailSendContent', '.adminMailDialogContent');
-
-		//受け取ったメールや名前の数だけループするためにループの終わり値を取得する
-		var loopEndCount = data.mail.length;
-		//画面に表示する結果の名前
-		var resultName = EMPTY_STRING;
-		//画面に表示する結果のアドレス
-		var resultMail = EMPTY_STRING;
-		//0からループを初め、ユーザの情報を画面に反映させるための値を作る
-		for(var loopStartCount=0;loopStartCount<loopEndCount;loopStartCount++) {
-			if (loopStartCount == 0) {
-				//名前を足していく
-				resultName += data.name[loopStartCount];
-				//メールアドレスを足していく
-				resultMail += data.mail[loopStartCount];
-			} else {
-				//名前を足していく
-				resultName += ', ' + data.name[loopStartCount];
-				//メールアドレスを足していく
-				resultMail += ', ' + data.mail[loopStartCount];
-			}
-		}
-		
-		//ダイアログにメール宛先を書き込む
-		$('.mailTo').text(resultMail);
-		//ダイアログにメール宛先の名前を書く
-		$('.mailToPerson').text(resultName);
-
-		//ボタンをjqueryuiのものにしてレイアウトを整える
-		$('input[type="button"]').button();
-
-		//送信ボタンのクリックイベントを登録する
-		$dialog.on(CLICK, '.mailSendButton',function(e) {
-			//ダイアログ設定用オブジェクトのコピーを作る
-			var dialogOption = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
-			//次のダイアログに渡すデータをまとめる
-			$.extend(true, 	
-					dialogOption.argumentObj.data,		//送信確認ダイアログのdataオブジェクト 
-					getInputData('mailSendContent'),	//このダイアログで編集したデータ 
-					data, 								//このダイアログに渡されたパラメータのdataオブジェクト
-					{dialog:dialogClass}				//このダイアログのクラスインスタンス
-			);
-			//メール送信確認ダイアログを作る
-			var mailSendConfirm = new dialogEx('dialog/adminMailSendDialog.html', dialogOption.argumentObj, dialogOption.returnObj);
-			//※次のダイアログではargumentObjのdataのsendTypeを見て処理を分岐させてください。
-			//ダイアログのメッセージ、コールバック関数の設定が分岐すべき点です。
-			//また、コールバック関数のはいボタン、いいえボタンでの分岐はdialogExクラス内の既存の関数を参考にしてください。
-			mailSendConfirm.run();	//送信確認ダイアログを表示する
-		});
+		//当該ダイアログ用関数クラスインスタンスを生成する
+		var dialogBuilder = new adminMailDialog(thisDialog);
+		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
+		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>
 </div>
