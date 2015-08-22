@@ -312,14 +312,6 @@ dialogExOption[ADMIN_MAIL_SEND_DIALOG] = {
 			},
 			//関数オブジェクト
 			funcObj:{
-				YES_NO:[	//「はい」ボタン、「いいえ」ボタン用コールバック関数
-				        function(){	//「いいえ」ボタン
-				        	//いいえ」ボタンの処理内容
-				        },
-				        function(){	//「はい」ボタン
-				        	//「はい」ボタンの処理内容
-				        }
-				],
 				//管理者メール送信用関数
 				mail:doSendMail,
 				//お知らせ送信用関数

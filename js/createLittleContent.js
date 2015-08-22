@@ -3650,41 +3650,6 @@ function setValueDBdata(setArray, setDomParent, targetArrayType) {
 	}
 }
 
-/* 
- * 関数名:getInputData
- * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
-           		:クラス名をkey、入っている値をvalueの連想配列にして返す
- * 引数  :string selector:値を走査したい親のセレクター名
- * 返却値  :object resultArray:入力データの結果連想配列
- * 作成者:T.Yamamoto
- * 作成日:2015.06.27
- */
-function getInputData(selector) {
-	//結果の変数を初期化する
-	var resultArray = {};
-	//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
-	$('.' + selector + ' input, .' + selector + ' select, .' + selector + ' textarea').each(function() {
-		//入力データのname属性を取得する
-		var name = $(this).attr('name');
-		//入力データの値を取得する
-		var valueData = $(this).val();
-		//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
-		var typeAttr = $(this).attr('type');
-		//ラジオボタンに対応する
-		if (typeAttr == 'radio') {
-			//ラジオボタンの値がチェックされているものだけ送信する
-			if($(this).prop('checked')) {
-				//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
-				resultArray[name] = valueData;
-			}
-		} else {
-			//入力データを結果の変数に、key名をクラス名にして保存する
-			resultArray[name] = valueData;
-		}
-	});
-	//結果を返す
-	return resultArray;
-}
 
 /* 
  * 関数名:cutString

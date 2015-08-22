@@ -1175,6 +1175,88 @@ function common(){
 		return $.extend(true, {}, object);
 	}
 	
+	/* 
+	 * 関数名:getInputData
+	 * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
+	        :クラス名をkey、入っている値をvalueの連想配列にして返す
+	 * 引数  :string selector:値を走査したい親のセレクター名
+	 * 返却値  :Object:入力データの結果連想配列
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.06.27
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:共通で使えるためcommon.jsに移動しました。また、セレクタをクラスに限定しないようにしました
+	 */
+	this.getInputData = function(selector) {
+		var $form = $(selector);	//処理対象の親要素を取得する
+		//結果の変数を初期化する
+		var retMap = {};
+		//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
+		$(SEL_INPUT_DATA , $form).each(function() {
+			//入力データのname属性を取得する
+			var name = $(this).attr(NAME);
+			//入力データの値を取得する
+			var value = $(this).val();
+			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+			var typeAttr = $(this).attr(TYPE);
+			//ラジオボタンに対応する
+			if (typeAttr == RADIO) {
+				//ラジオボタンの値がチェックされているものだけ送信する
+				if($(this).prop(CHECKED)) {
+					//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+					retMap[name] = value;
+				}
+			} else {
+				//入力データを結果の変数に、key名をクラス名にして保存する
+				retMap[name] = valueData;
+			}
+		});
+		//結果を返す
+		return retMap;
+	}
+	
+	
+	/* 関数名:sendMail
+	 * 概要　:メールを送信する
+	 * 引数　:Object sendObject:送信するデータのオブジェクト
+	 * 		:String sendUrl:メール送信処理を行うプログラムのURL
+	 * 		:String message:送信成功時のメッセージ
+	 * 返却値:boolean:メール送信の成否を返す
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.sendMail = function(sendObject, sendUrl, message) {
+		var retBoo = false;	//メール送信の成否の判定を返すための変数を用意する
+		
+		$.ajax({				//PHPにメール用データを渡すAjax通信
+			url:sendUrl			//PHPのURLを設定する
+			,data:sendObject	//送信データのオブジェクト
+			,dataType:"json"	//JSON形式でデータをもらう
+			,type:"POST"		//POSTメソッドでHTTP通信する
+			,success:function(result){		//通信成功時
+				//メール送信が行われていれば
+				if(result == EMPTY_STRING || parseInt(result.sendCount) > 0){
+					//送信完了と共に入力ダイアログを消す
+					alert(message);	//送信完了のメッセージを出す
+					retBoo = true;	//成功判定にする
+				//メール送信が失敗していれば
+				} else {
+					//送信失敗のメッセージを出す
+					alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+				}
+			}
+			//通信失敗時
+			,error:function(xhr, status, error){
+				//送信失敗のメッセージを出す
+				alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+			}
+		});
+		
+		return retBoo;	//判定を返す
+	}
+	
+	
+	
 	
 //ここまでクラス定義領域
 }

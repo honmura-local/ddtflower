@@ -280,6 +280,23 @@ function baseDialog(dialog){
 	                         }
 	                 ];
 	
+	//送信の確認・リセットボタンの配列
+	this.confirm_reset = [
+	                   {
+	                	   //確認ボタン
+	                	   text:'確認',
+	                	   //コールバック関数
+	                	   click:this.callbackConfirm
+	                   },
+	                   {
+	                	   //リセットボタン
+	                	   text:'リセット',
+	                	   //コールバック関数
+	                	   click:this.callbackReset
+	                   }
+	             ];
+	
+	
 	/* 関数名:callbackYes
 	 * 概要　:ダイアログのはいボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
@@ -348,6 +365,28 @@ function baseDialog(dialog){
 	this.callbackRowClick = function() {
 	};
 	
+	/* 関数名:callbackSend
+	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackConfirm = function(){
+	};
+	
+	/* 関数名:callbackReset
+	 * 概要　:ダイアログのリセットボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackReset = function(){
+	};
+
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
