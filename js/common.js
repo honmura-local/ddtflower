@@ -5,8 +5,17 @@
  * 場所　　:js/common.js
  */
 
+/** クラス名:common
+ * 概要　:汎用関数クラス
+ * 引数	:なし
+ * 設計者:H.Kaneko
+ * 作成日:2015.0813
+ * 作成者:T.Masuda
+ */
+function common(){
+
 //授業状況
-var classworkStatuses = {
+this.classworkStatuses = {
 		0:"予約可能"
 		,1:"開催済み"
 		,2:"中止"
@@ -15,11 +24,11 @@ var classworkStatuses = {
 };
 
 //授業情報補足
-var noLongerBookable = "予約締切";
-var fullHouse = "満席";
+this.noLongerBookable = "予約締切";
+this.fullHouse = "満席";
 
 //ユーザ授業状況
-var userClassworkStatuses = {
+this.userClassworkStatuses = {
 	0:"予約済み"
 	,1:"予約済み"
 	,2:"受付"
@@ -30,14 +39,14 @@ var userClassworkStatuses = {
 };
 
 //授業残席
-var restMarks = {
+this.restMarks = {
 	0:"✕"
 	,1:"△"
 	,4:"◯"
 	,7:"◎"
 };
 
-var classworkCostColumns = [
+this.classworkCostColumns = [
 	'user_classwork_cost'
 	,'user_classwork_cost_aj'
 	,'flower_cost'
@@ -45,19 +54,11 @@ var classworkCostColumns = [
 	,'extension_cost'
 ];
 
-var defaultClassworkCostColumns = [
+this.defaultClassworkCostColumns = [
 	'default_user_classwork_cost'
 	,'default_flower_cost'
 ];
 
-/** クラス名:common
- * 概要　:汎用関数クラス
- * 引数	:なし
- * 設計者:H.Kaneko
- * 作成日:2015.0813
- * 作成者:T.Masuda
- */
-function common(){
 	
 	/** クラス名:theFunc
 	 * 概要　:コピペ用関数
@@ -235,7 +236,7 @@ function common(){
 	*/ 
 	this.getClassworkStatus = function(rowData, timeTableStudents) {
 		if (rowData[COLUMN_NAME_MAX_NUM] == 0) {
-			return classworkStatuses[2];
+			return this.classworkStatuses[2];
 		}
 		// 授業コマステータス中止は問答無用で"中止"を表示
 		this.isExist(rowData, COLUMN_NAME_CLASSWORK_STATUS);
@@ -243,7 +244,7 @@ function common(){
 		var classworkStatus = rowData[COLUMN_NAME_CLASSWORK_STATUS];
 		// 授業が中止であるなら中止であることの結果を返す
 		if(this.isCanceled(classworkStatus)) {
-			return classworkStatuses[classworkStatus];
+			return this.classworkStatuses[classworkStatus];
 		}
 		
 		// 予約ステータス取得 
@@ -253,9 +254,9 @@ function common(){
 		// 授業終了時の判断
 		if(this.hasDone(classworkStatus)) {
 			if(userClassworkStatus) {
-				return userClassworkStatuses[userClassworkStatus];
+				return this.userClassworkStatuses[userClassworkStatus];
 			}
-			return classworkStatuses[classworkStatus];
+			return thid.classworkStatuses[classworkStatus];
 		}
 		
 		if(this.isFull(rowData, timeTableStudents)) {
@@ -265,12 +266,12 @@ function common(){
 		// 締め切られてないかの判断
 		if(this.isBookable(rowData)) {
 			if(userClassworkStatus) {
-				return userClassworkStatuses[userClassworkStatus];
+				return this.userClassworkStatuses[userClassworkStatus];
 			}
-			return classworkStatuses[classworkStatus];
+			return this.classworkStatuses[classworkStatus];
 		}
 		
-		return noLongerBookable;	// 締切リターン
+		return this.noLongerBookable;	// 締切リターン
 	}
 
 	/*
@@ -287,13 +288,13 @@ function common(){
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 1 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 2 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 3) {
-			restMark = restMarks[0];
+			restMark = this.restMarks[0];
 		} else {
 			for(var key in restMarks) {
 				if(key > rest) {
 					break;
 				}
-				restMark = restMarks[key];
+				restMark = this.restMarks[key];
 			}
 		}
 		return restMark;
@@ -332,8 +333,8 @@ function common(){
 		}
 		
 		var result = 0;
-		for (var i = 0; i < classworkCostColumns.length; i ++) {
-			this.isExist(rowData, classworkCostColumns[i]);
+		for (var i = 0; i < this.classworkCostColumns.length; i ++) {
+			this.isExist(rowData, this.classworkCostColumns[i]);
 			result += Number(rowData[classworkCostColumns[i]]);
 			
 		}
@@ -347,8 +348,8 @@ function common(){
 	 */
 	this.getDefaultCost = function(rowData) {
 		var result = 0;
-		for (var i = 0; i < defaultClassworkCostColumns.length; i ++) {
-			this.isExist(rowData, defaultClassworkCostColumns[i]);
+		for (var i = 0; i < this.defaultClassworkCostColumns.length; i ++) {
+			this.isExist(rowData, this.defaultClassworkCostColumns[i]);
 			result += Number(rowData[defaultClassworkCostColumns[i]]);
 		}
 		return result;
@@ -457,9 +458,9 @@ function common(){
 			//料金を空白にする
 			cost = "";
 			//残席を罰にする
-			rest = restMarks[0];
+			rest = this.restMarks[0];
 			//状況を予約不可にする
-			lessonStatus = classworkStatuses[4];
+			lessonStatus = this.classworkStatuses[4];
 		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
 		} else {
 			//料金を入れる
@@ -470,7 +471,7 @@ function common(){
 			rest = this.getRestMark(recordData, timeTableStudents);
 		}
 		//残席がバツのときにはクリックできないことを分かりやすくするために行の背景をグレーにする
-		if(rest == restMarks[0]) {
+		if(rest == this.restMarks[0]) {
 			//行の色をグレーっぽくする
 			$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
 		}
@@ -503,9 +504,9 @@ function common(){
 		// 時間割の終わりの時間を求める
 		end_time = this.backThreeStringDelete(recordData, COLUMN_NAME_END_TIME);
 		//ユーザステータスの番号を取得する
-		userStatusNumber = recordData[COLUMN_NAME_USER_WORK_STATUS]
+		userStatusNumber = this.recordData[COLUMN_NAME_USER_WORK_STATUS]
 		//ユーザのステータスを取得する
-		userStatus = userClassworkStatuses[userStatusNumber];
+		userStatus = this.userClassworkStatuses[userStatusNumber];
 		// No.を入力する
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
 		// 開始時間を表示する
@@ -641,6 +642,49 @@ function common(){
 			customizeFunc(tableData, counter, timeTableStudents);
 		}
 	}
+
+	/* 
+	 * 関数名:customizeReserveLessonListTable
+	 * 概要  :会員トップページ、予約授業一覧テーブルのjsonに対して加工を行い、
+	 		加工後のデータをjsonにセットする
+	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
+	 		 counter:カウンタ変数。加工する行を識別するのに使う
+	 		 timeTableStudents:時限ごと受講生徒数
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.08.15
+	 */
+	this.customizeReserveLessonTable = function(tableData, counter, timeTableStudents) {
+		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+		var recordData = loopData[counter];
+		// 開始日時と終了時刻を組み合わせた値を入れる
+		var timeSchedule = this.buildHourFromTo(recordData);
+		var cost,			//料金
+			rest,			//残席
+		 	lessonStatus;	//状況
+		//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
+		if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
+			//料金を空白にする
+			cost = "";
+			//残席を罰にする
+			rest = this.restMarks[0];
+			//状況を予約不可にする
+			lessonStatus = this.classworkStatuses[4];
+		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
+		} else {
+			//料金を入れる
+			cost = this.sumCost(recordData);
+			//残席を記号にする
+			rest = this.getRestMark(recordData, timeTableStudents);
+			//状況を入れる
+			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
+		}
+		//取得したデータをjsonに入れていく
+		tableData[counter][COLUMN_START_END_TIME]	= timeSchedule;		//時間割開始と終了時刻
+		tableData[counter][SUM_COST]				= cost;				//受講料
+		tableData[counter][COLUMN_LESSON_REST]		= rest;				//残席
+		tableData[counter][COLUMN_LESSON_STATUS]	= lessonStatus;		//予約ステータス
+	};
 
 	/* 
 	 * 関数名:customizeMemberLessonTable
