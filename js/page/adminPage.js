@@ -716,6 +716,36 @@ function textPushArray(parent, arrayName, pushText) {
 }
 
 /* 
+ * 関数名:getSendPersonInfo
+ * 概要  :管理者ユーザ一覧で通常メールボタン、またはお知らせボタンでメッセージを送る人の情報を取得する
+ * 引数  :selector:buttonSelector:クリックしたときにダイアログを開くためのボタンのセレクター
+		string:sendType:お知らせとして送信するか、メールとして送信するかを識別するための文字列
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.06
+ */
+function getSendPersonInfo() {
+	//メールに送信するためのデータ配列を作る
+	var sendToPersonList = [],	//送信先宛先人一覧
+	sendToList = [],			//送信先宛先一覧
+	userNumberList = [];		//送信先会員番号一覧
+	//選択されているレコードの数だけループする
+	$(SEL_SELECT_USER).each(function() {
+		//選択されたユーザの情報を配列に入れていく
+		textPushArray(this, sendToPersonList, SEL_USER_NAME);	//名前
+		textPushArray(this, sendToList, SEL_MAIL_ADDRESS);		//メールアドレス
+		textPushArray(this, userNumberList, SEL_USER_NUMBER);	//会員番号
+	});
+	//取得した結果を返すために連想配列に入れる
+	var sendPersonInfo = {
+		name:sendToPersonList,			//送信先宛先人一覧
+		mail:sendToList,				//送信先アドレス一覧
+		memberNumber:userNumberList	//会員番号
+	};
+	return sendPersonInfo;
+}
+
+/* 
  * 関数名:adminMessageCreate
  * 概要  :管理者ユーザ一覧で通常メールボタン、またはお知らせボタンでメッセージを作るためのダイアログを表示する
  * 引数  :selector:buttonSelector:クリックしたときにダイアログを開くためのボタンのセレクター
@@ -728,30 +758,16 @@ function adminMessageCreate(buttonSelector, sendType) {
 	//お知らせボタンをクリックでメール送信ダイアログを作る
 	$(STR_BODY).on(CLICK, buttonSelector, function() {
 		//選択されているユーザの数を変数に入れ、ユーザが選択されていればメール送信処理を開始する
-		var selected = $('.selectRecord').length;
+		var selected = $(SEL_SELECT_USER).length;
 		//会員一覧から送信するメールの対象となる人が1人以上選択されているなら送信ダイアログを開く
-		if(selected <= 0) {
+		if(selected <= UNSELECTED_USER) {
 			//アラートメッセージをだしてメール送信対象が1人以上選択することを警告する
-			alert('1人以上選択してください')
+			alert(TEXT_ERROR_SELECT_USER);
 		} else {
-			//メールに送信するためのデータ配列を作る
-			var sendToPersonList = [],	//送信先宛先人一覧
-			sendToList = [],			//送信先宛先一覧
-			userNumberList = [];		//送信先会員番号一覧
-			//選択されているレコードの数だけループする
-			$('.selectRecord').each(function() {
-				textPushArray(this, sendToPersonList, '.user_name');
-				textPushArray(this, sendToList, '.mail_address');
-				textPushArray(this, userNumberList, '.mail_address');
-			});
-			//送信するデータを連想配列に入れる
-			var sendMailData = {
-				name:sendToPersonList,			//送信先宛先人一覧
-				mail:sendToList,				//送信先アドレス一覧
-				memberNumber:userNumberList,	//会員番号
-				sendType:sendType				//送信データの種類、メールかお知らせかの区別に使う
-			};
-			
+			//メッセージを送信するための情報を取得する
+			var sendPersonInfo = getSendPersonInfo();
+			// ダイアログを開くための情報とメール情報を結合する
+			$.extend(true, sendPersonInfo, {sendType:sendType});
 			//ダイアログ用オブジェクトを作る
 			var dialogObj = $.extend(true, {}, dialogExOption[ADMIN_MAIL_SEND_DIALOG]);
 			//送信するデータをオブジェクトに統合する

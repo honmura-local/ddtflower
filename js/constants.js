@@ -554,6 +554,26 @@ LESSSON_NEW_BUTTON_TEXT 					= '新規作成';
 //授業確認内容ダイアログ、キャンセル料率と加算ポイントの親となるセレクタ名
 CLASS_ATTENTION 							= 'attention';
 
+//管理者、会員一覧で選択されたユーザにつくセレクタ-名
+SEL_SELECT_USER 							= '.selectRecord';
+//一人もユーザが選択されていない状態でメールダイアログまたはお知らせダイアログを開くボタンを押した時の処理
+TEXT_ERROR_SELECT_USER 						= '1人以上選択してください';
+//ユーザ名のセレクタ
+SEL_USER_NAME 								= '.user_name';
+//ユーザのメールアドレスのセレクタ						
+SEL_MAIL_ADDRESS 							= '.mail_address';
+//ユーザの会員番号のセレクタ
+SEL_USER_NUMBER 							= '.user_number';
 
+//会員、確認ダイアログ
+CLASS_LESSON_INFO 							= 'lessonConfirmInfo';		//会員確認ダイアログ、授業情報クラス名
+CLASS_INFO_ACCORDION 						= 'infoAccordion';			//会員、確認ダイアログ、アコーディオンを開くきっかけとなるリンククラス名
+CLASS_LESSON_ACCORDION 						= 'attention';				//会員、確認ダイアログ、アコーディオンの親となる要素のクラス名
+CLASS_MEMBER_CONFIRM 						= "confirmText";			//会員、確認ダイアログ、確認テキストのクラス名
+
+//管理者、授業詳細と新規授業追加ダイアログ
+
+//管理者、メール・お知らせダイアログ
+UNSELECTED_USER 							= 0;	//会員が一人も選択されていないときの数値
 
 
