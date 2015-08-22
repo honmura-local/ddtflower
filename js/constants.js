@@ -549,6 +549,11 @@ TEXT_LESSON_UPDATE_BUTTON 					= '更新';
 TEXT_LESSON_STUDENTS_BUTTON 				= '受講者一覧';
 
 //新規作成ボタン
-LESSSON_NEW_BUTTON_TEXT 						= '新規作成';
+LESSSON_NEW_BUTTON_TEXT 					= '新規作成';
+
+//授業確認内容ダイアログ、キャンセル料率と加算ポイントの親となるセレクタ名
+CLASS_ATTENTION 							= 'attention';
+
+
 
 
