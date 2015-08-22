@@ -202,4 +202,16 @@ function windowEx(url, argumentObj, returnObj){
 		return this.returnObj.statusObj;	//アウトプット用ステートのオブジェクトを返す
 	}
 	
+	/* 関数名:setReturnStatusObject
+	 * 概要　:アウトプット用ステートオブジェクトの状態オブジェクトをセットする
+	 * 引数　:Object statusObj
+	 * 返却値:なし
+	 * 作成日　:015.08.17
+	 * 作成者　:T.Masuda
+	 */
+	this.getReturnStatusObject = function(statusObj) {
+		//statusObjをセットする
+		this.returnObj.statusObj = statusObj;
+	}
+	
 }

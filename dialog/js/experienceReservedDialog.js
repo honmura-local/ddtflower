@@ -175,29 +175,30 @@ function experienceReservedDialog(dialog){
 	
 	
 	/* 関数名:setArgumentObj
-	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
+	 * 概要　:ダイアログに渡すオブジェクトを生成する。
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:015.08.14
+	 * 作成日　:015.08.17
 	 * 作成者　:T.Masuda
 	 */
 	this.setArgumentObj = function() {
 		var $form = $(CURRENT_DIALOG);	//フォーム(このパターンではダイアログの本体)を取得する
 		var argumentObj = $.extend(true, {}, this[DIALOG_CLASS].getArgumentObject());
 		var checkResult = this.validationForm($form);	//フォームの入力チェックを行う
-		var existNull = commonFuncs.nullCheckInObject(checkResult);
 	    // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-	    if(existNull) {	//checkResultルートのnull持ちキーがなければOK
+	    if(commonFuncs.nullCheckInObject(checkResult)) {	//checkResultルートのnull持ちキーがなければOK
 	    	
 		    //入力確認のものは送信すべきではないので、送信前に前持って無効化する。
 	        //対象はメールチェックのテキストボックス
 		    $(SELECTOR_PERSON_MAIL_CHECK, $form).attr(DISABLED, DISABLED);
-		    //フォームデータを生成し、argumentObjにセットする
-		    argumentObj[DATA_KEY][FORM_DATA] = commonFuncs.createFormData($form);
+		    //子ダイアログに渡すオブジェクトのインプット用データ部分を作成する。以下のデータを結合する
+		    $.extend(true, 
+		    		argumentObj[DATA_KEY], {						//今のダイアログのargumentObjのdata
+		    		formData:commonFuncs.createFormData($form)},	//フォームデータ 
+		    		{parentDialog:this.dialogClass.dom}			//今のダイアログのDOM
+		    	);
 		    // このダイアログの入力要素を一時的に無効化する。
 		    commonFuncs.disableInputs($form);
-		    
-		    argumentObj
 	    } else {
 	        //警告のテキストを作る。
 	        var alerts = commonFuncs.makeFailedAlertString(checkResult, EXPERIENCE_CHECK_FORMS_JP_NAME, EXPERIENCE_CHECK_FORMS_ERROR_TEXT);
@@ -214,7 +215,7 @@ function experienceReservedDialog(dialog){
 	 * 		:Object argumentObj:ダイアログのインプットデータ、設定データのオブジェクト
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
+	 * 作成日　:2015.0817
 	 * 作成者　:T.Masuda
 	 */
 	this.openDialog = function(url){
