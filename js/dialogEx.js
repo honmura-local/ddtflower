@@ -37,7 +37,7 @@ function dialogEx(url, argumentObj, returnObj){
 			modal : true,		//モーダル表示
 			resizable : false,	//ドラッグでのリサイズ可否
 			//表示位置の指定。
-			position :{my:DIALOG_POSITION,at:DIALOG_POSITION, of:window},
+			position :POSITION_CENTER_TOP,
 			closeOnEscape : false,	//escキーを押して閉じるか
 			create:function(){	//ダイアログ作成時のイベント
 				

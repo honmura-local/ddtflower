@@ -701,21 +701,6 @@ function afterReloadUserListInfoTable() {
 }
 
 /* 
- * 関数名:textPushArray
- * 概要  :配列に対して文字列を追加する
- * 引数  :stirng:parent:追加する文字列がある親のセレクター
- 		array:arrayName:文字列を追加する配列の名前
- 		pushText:追加する文字が入っているセレクター
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.08.08
- */
-function textPushArray(parent, arrayName, pushText) {
-	//第二引数の配列に対して値を追加する
-	arrayName.push($(parent).children(pushText).text());
-}
-
-/* 
  * 関数名:getSendPersonInfo
  * 概要  :管理者ユーザ一覧で通常メールボタン、またはお知らせボタンでメッセージを送る人の情報を取得する
  * 引数  :selector:buttonSelector:クリックしたときにダイアログを開くためのボタンのセレクター
@@ -732,15 +717,15 @@ function getSendPersonInfo() {
 	//選択されているレコードの数だけループする
 	$(SEL_SELECT_USER).each(function() {
 		//選択されたユーザの情報を配列に入れていく
-		textPushArray(this, sendToPersonList, SEL_USER_NAME);	//名前
-		textPushArray(this, sendToList, SEL_MAIL_ADDRESS);		//メールアドレス
-		textPushArray(this, userNumberList, SEL_USER_NUMBER);	//会員番号
+		commonFuncs.textPushArray(this, sendToPersonList, SEL_USER_NAME);	//名前
+		commonFuncs.textPushArray(this, sendToList, SEL_MAIL_ADDRESS);		//メールアドレス
+		commonFuncs.textPushArray(this, userNumberList, SEL_USER_NUMBER);	//会員番号
 	});
 	//取得した結果を返すために連想配列に入れる
 	var sendPersonInfo = {
 		name:sendToPersonList,			//送信先宛先人一覧
 		mail:sendToList,				//送信先アドレス一覧
-		memberNumber:userNumberList	//会員番号
+		memberNumber:userNumberList		//会員番号
 	};
 	return sendPersonInfo;
 }

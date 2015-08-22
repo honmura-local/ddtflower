@@ -1202,7 +1202,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
 	 */
-	this.getTableJsonLength(create_tag, tableName){
+	this.getTableJsonLength = function(create_tag, tableName){
 		//指定したキーのテーブルの行数を返す
 		return create_tag.json[tableName][TABLE_DATA_KEY].length;
 	}
@@ -1214,7 +1214,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.createCloneObject(object){
+	this.createCloneObject = function(object){
 		//オブジェクトのクローンを作成して返す
 		return $.extend(true, {}, object);
 	}

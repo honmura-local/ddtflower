@@ -69,7 +69,7 @@ function adminMailDialog(dialog){
 	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.createSendData(data){
+	this.createSendData = function(data){
 		//送信するメールまたはお知らせの数を取得する
 		var mailNum = data.name.length;
 		
@@ -187,7 +187,7 @@ function adminMailDialog(dialog){
 	 * 作成日　:015.08.22
 	 * 作成者　:T.Masuda
 	 */
-	this.sendMailOrAnnounce(data){
+	this.sendMailOrAnnounce = function(data){
 		//メール送信が成功したか否かの判定の変数を用意する
 		var isSend = 0;	
 		// メールを送信する処理
