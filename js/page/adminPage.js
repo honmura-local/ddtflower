@@ -700,7 +700,6 @@ function afterReloadUserListInfoTable() {
 	setTableRecordClass('userListInfoTable', 'targetUser');
 }
 
-<<<<<<< HEAD
 /* 
  * 関数名:textPushArray
  * 概要  :配列に対して文字列を追加する
@@ -715,8 +714,6 @@ function textPushArray(parent, arrayName, pushText) {
 	//第二引数の配列に対して値を追加する
 	arrayName.push($(parent).children(pushText).text());
 }
-=======
->>>>>>> feature/dialogEx_v3
 
 /* 
  * 関数名:getSendPersonInfo
