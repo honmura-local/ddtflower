@@ -59,7 +59,7 @@ function adminLessonCreateDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//授業データ入力領域を作る
-		this.create_tag.outputTag('lessonData', 'lessonData', CURRENT_DIALOG_SELECTOR);
+		this.create_tag.outputTag(LESSON_DATA, LESSON_DATA, CURRENT_DIALOG_SELECTOR);
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -74,7 +74,7 @@ function adminLessonCreateDialog(dialog){
 	this.dispContentsFooter = function(){
 		this.button= [
 			{	//はいボタン
-				text:'授業作成',
+				text:TEXT_LESSON_CREATE_BUTTON,
 				//クリック時のコールバック関数
 				click:function(){
 					//returnObjに返す値をセットする

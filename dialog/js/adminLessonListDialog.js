@@ -259,6 +259,44 @@ function adminLessonListDialog(dialog){
 		}
 	};
 
+	/* 関数名:getDetailDailogArgData
+	 * 概要　:授業詳細ダイアログを開くためのarguObjectを取得する
+	 * 引数　:clickThis:テーブルに行をクリックしたときのイベントのthis
+	 		:dialogInstance:ダイアログのインスタンス
+	 * 返却値:return returnArgObject
+	 * 作成日　:2015.08.22
+	 * 作成者　:T.Yamamoto
+	 */
+	this.getDetailLessonDailogArgData = function(clickThis, dialogInstance) {
+		//授業一覧のダイアログのデータを取得し、次のダイアログを渡すのに使う
+		var argObj = dialogInstance.dialogClass.getArgumentObject();
+		//クリックしたセルの行番号を取得する
+		var rowNum = $(CURRENT_DIALOG_SELECTOR + SPACE + STR_TR).index(clickThis) - 1;
+		//次のダイアログに渡すデータを変数に入れる
+		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][rowNum];
+		//セットするargObjectを取得する
+		var returnArgObject = $extend(true, {}, argObj, tableData);
+		//取得したデータを返す
+		return returnArgObject;
+	}
+	
+	/* 関数名:getCreateLessonDialogArgData
+	 * 概要　:新規授業作成ダイアログを開くためのarguObjectを取得する
+	 * 引数　::dialogInstance:ダイアログのインスタンス	 		
+	 * 返却値:return returnArgObject
+	 * 作成日　:2015.08.22
+	 * 作成者　:T.Yamamoto
+	 */
+	 this.getCreateLessonDialogArgData = function(dialogInstane) {
+	 	//授業一覧のダイアログのデータを取得し、次のダイアログを渡すのに使う
+		var argObj = dialogInstance.dialogClass.getArgumentObject();
+		//次のダイアログに渡すデータを変数に入れる
+		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
+		//セットするargObjectを取得する
+		var returnArgObject = $extend(true, {}, argObj, tableData);
+		//取得したデータを返す
+		return returnArgObject;
+	}
 }
 
 //継承の記述

@@ -16,11 +16,11 @@ function common(){
 
 //授業状況
 this.classworkStatuses = {
-		0:"予約可能"
-		,1:"開催済み"
-		,2:"中止"
-		,3:"中止"
-		,4:"予約不可"
+		CAN_RESERVED:"予約可能"
+		,HELD_ALREADY:"開催済み"
+		,STOP_RESERVED_2:"中止"
+		,STOP_RESERVED_3:"中止"
+		,CANNOT_RESERVED:"予約不可"
 };
 
 //授業情報補足
@@ -29,21 +29,21 @@ this.fullHouse = "満席";
 
 //ユーザ授業状況
 this.userClassworkStatuses = {
-	0:"予約済み"
-	,1:"予約済み"
-	,2:"受付"
-	,3:"受講済み"
-	,10:"キャンセル(本人)"
-	,11:"キャンセル(管理者)"
-	,12:"中止"
+	HAS_RESERVED_0:"予約済み"
+	,HAS_RESERVED_1:"予約済み"
+	,RECEIPT:"受付"
+	,HAS_LECTURES:"受講済み"
+	,CANCEL_CUSTOMER:"キャンセル(本人)"
+	,CANCEL_ADMIN:"キャンセル(管理者)"
+	,STOP_LESSON:"中止"
 };
 
 //授業残席
 this.restMarks = {
-	0:"✕"
-	,1:"△"
-	,4:"◯"
-	,7:"◎"
+	MARK_CROSS:"✕"
+	,MARK_TRIANGLE:"△"
+	,MARK_CIRCLE:"◯"
+	,MARK_DOUBLE_CIRCLE:"◎"
 };
 
 this.classworkCostColumns = [
@@ -236,7 +236,7 @@ this.defaultClassworkCostColumns = [
 	*/ 
 	this.getClassworkStatus = function(rowData, timeTableStudents) {
 		if (rowData[COLUMN_NAME_MAX_NUM] == 0) {
-			return this.classworkStatuses[2];
+			return this.classworkStatuses[RECEIPT];
 		}
 		// 授業コマステータス中止は問答無用で"中止"を表示
 		this.isExist(rowData, COLUMN_NAME_CLASSWORK_STATUS);
@@ -285,10 +285,10 @@ this.defaultClassworkCostColumns = [
 		var restMark = "";
 		if (lessonStatus == '予約締切' || 
 			rowData[COLUMN_NAME_MAX_NUM] == 0 ||
-			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 1 ||
-			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 2 ||
-			rowData[COLUMN_NAME_CLASSWORK_STATUS] == 3) {
-			restMark = this.restMarks[0];
+			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_RESERVED_1 ||
+			rowData[COLUMN_NAME_CLASSWORK_STATUS] == RECEIPT ||
+			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_LECTURES) {
+			restMark = this.restMarks[MARK_CROSS];
 		} else {
 			for(var key in restMarks) {
 				if(key > rest) {

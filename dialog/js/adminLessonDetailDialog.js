@@ -17,7 +17,7 @@ function adminLessonDetailDialog(dialog){
 	//更新ボタンと受講者一覧ボタン
 	this.button = [
 					{	//更新ボタン
-						text:'更新',
+						text:TEXT_LESSON_UPDATE_BUTTON,
 						//クリック時のコールバック関数
 						click:function(){
 							//親のダイアログに更新の返り値を返す
@@ -27,7 +27,7 @@ function adminLessonDetailDialog(dialog){
 						}
 					},
 					{	//受講者一覧ボタン
-						text:'受講者一覧',
+						text:TEXT_LESSON_STUDENTS_BUTTON,
 						//クリック時のコールバック関数
 						click:function(){	//クリックのコールバック関数
 							//受講者一覧ダイアログを開く処理
@@ -91,9 +91,9 @@ function adminLessonDetailDialog(dialog){
 		//受け取った値をテキストボックスやセレクトボックスに入れるためにデータを取得する
 		var data = dialogClass.getArgumentDataObject();
 		//授業データ入力領域を作る
-		this.create_tag.outputTag('lessonData', 'lessonData', CURRENT_DIALOG_SELECTOR);
+		this.create_tag.outputTag(LESSON_DATA, LESSON_DATA, CURRENT_DIALOG_SELECTOR);
 		//連想配列のデータをダイアログの各要素に配置していく
-		setValueDBdata(data, '.lessonData', 'keyTable');
+		setValueDBdata(data, DOT + LESSON_DATA, SET_ARRAY_TYPE_KEY_DB);
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -108,7 +108,7 @@ function adminLessonDetailDialog(dialog){
 	this.dispContentsFooter = function(){
 		this.button= [
 			{	//はいボタン
-				text:'授業作成',
+				text:TEXT_LESSON_CREATE_BUTTON,
 				//クリック時のコールバック関数
 				click:function(){
 					//returnObjに返す値をセットする
@@ -149,7 +149,7 @@ function adminLessonDetailDialog(dialog){
 		//ダイアログ生成時に渡されたインプット用データを取得する
 		var data = dialogClass.getArgumentDataObject();
 		//入力した値を取得し、データの更新に用いる
-		var updateData = getInputData('lessonData');
+		var updateData = getInputData(LESSON_DATA);
 		//授業idを取得する
 		updateData['classwork_key'] = data['classwork_key'];
 		//授業詳細テーブルを更新する

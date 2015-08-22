@@ -701,7 +701,7 @@ function afterReloadUserListInfoTable() {
 }
 
 /* 
- * 関数名:textPustArray
+ * 関数名:textPushArray
  * 概要  :配列に対して文字列を追加する
  * 引数  :stirng:parent:追加する文字列がある親のセレクター
  		array:arrayName:文字列を追加する配列の名前
@@ -710,7 +710,8 @@ function afterReloadUserListInfoTable() {
  * 作成者:T.Yamamoto
  * 作成日:2015.08.08
  */
-function textPustArray(parent, arrayName, pushText) {
+function textPushArray(parent, arrayName, pushText) {
+	//第二引数の配列に対して値を追加する
 	arrayName.push($(parent).children(pushText).text());
 }
 
@@ -739,9 +740,9 @@ function adminMessageCreate(buttonSelector, sendType) {
 			userNumberList = [];		//送信先会員番号一覧
 			//選択されているレコードの数だけループする
 			$('.selectRecord').each(function() {
-				textPustArray(this, sendToPersonList, '.user_name');
-				textPustArray(this, sendToList, '.mail_address');
-				textPustArray(this, userNumberList, '.mail_address');
+				textPushArray(this, sendToPersonList, '.user_name');
+				textPushArray(this, sendToList, '.mail_address');
+				textPushArray(this, userNumberList, '.mail_address');
 			});
 			//送信するデータを連想配列に入れる
 			var sendMailData = {
