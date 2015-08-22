@@ -317,6 +317,10 @@ RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
 
 LESSON_NEW_BUTTON_TEXT						= '新規作成'				 //授業新規作成ボタンテキスト
 
+//会員予約確認、キャンセルダイアログ共通html
+MEMBER_LESSON_CONFIRM_DIALOG_HTML 			= 'dialog/template/memberLessonConfirmDialog.html';
+//会員予約確認、キャンセルダイアログ共通html
+MEMBER_LESSON_CONFIRM_DIALOG_JSON 			= 'dialog/source/memberLessonConfirmDialog.json';
 
 //会員、予約確認ダイアログ
 MEMBER_RESERVE_CONFIRM_DIALOG				= 'dialog/memberReserveConfirmDialog.html';
@@ -329,6 +333,10 @@ MEMBER_RESERVE_CANCEL_DIALOG 				= 'dialog/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JS 			= 'dialog/js/memberReserveCancelDialog.js';
 MEMBER_RESERVE_CANCEL_DIALOG_HTML 			= 'dialog/template/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JSON 			= 'dialog/source/memberReserveCancelDialog.json';
+
+//授業詳細・作成ダイアログ共通テンプレート
+ADMIN_LESSON_BASE_HTML						= 'dialog/template/adminLessonBase.html';
+ADMIN_LESSON_BASE_JSON 						= 'dialog/source/adminLessonBase.json';
 
 //管理者、授業一覧ダイアログ
 ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
