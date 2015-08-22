@@ -79,6 +79,7 @@ PX_5 = '5px';																	//5PX
 PX_115 = '115px';																//115PX
 BLOG_SHOW_PAGES					=  1;											//ブログ表示記事数。blog.phpでも使う
 EMPTY_STRING					=  '';											//空文字
+SPACE 										= ' ';		//半角スペース
 
 //セレクターの文字列定数
 NORMAL_HEADER								= 'header.header';							//通常のヘッダー
@@ -256,8 +257,8 @@ LECTURE_PERMIT_LIST_INFO_TABLE				 = 'lecturePermitListInfoTable';				//管理�
 LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC  = 'callPermitLessonListValue';					//管理者、受講承認一覧テーブル置換関数名
 ADMIN_LESSON_ADD_BUTTON						 = 'lessonAddButton';							//管理者、授業詳細、新規授業の追加ボタン
 LESSON_DATA 								 = 'lessonData';								//管理者、授業詳細、授業データ部分クラス名
-COLUMN_NAME_TIME_TABLE_DAY_KEY 				 = 'time_table_day_key';						//授業の時限データのキー名
-COLUMN_NAME_TIMETABLE_KEY 					 = 'timetable_key';								//スクールの時限ごとのキー名
+COL_TIME_TABLE_DAY_KEY 						 = 'time_table_day_key';						//授業の時限データのキー名
+COL_TIMETABLE_KEY 							 = 'timetable_key';								//スクールの時限ごとのキー名
 CREATE_NEW_LESSON_MESSAGE 					 = '新規授業の作成に成功しました。';	
 CONFIRM_DIALOG_BUTTONS						= '.confirmDialog button';						//確認ダイアログのボタン×2のセレクタ
 CLICK										= 'click';										//クリックイベント用文字列
@@ -317,6 +318,10 @@ RESERVE_LIST_HTML							= 'dialog/template/memberReserveListDialog.html';
 
 LESSON_NEW_BUTTON_TEXT						= '新規作成'				 //授業新規作成ボタンテキスト
 
+//会員予約確認、キャンセルダイアログ共通html
+MEMBER_LESSON_CONFIRM_DIALOG_HTML 			= 'dialog/template/memberLessonConfirmDialog.html';
+//会員予約確認、キャンセルダイアログ共通html
+MEMBER_LESSON_CONFIRM_DIALOG_JSON 			= 'dialog/source/memberLessonConfirmDialog.json';
 
 //会員、予約確認ダイアログ
 MEMBER_RESERVE_CONFIRM_DIALOG				= 'dialog/memberReserveConfirmDialog.html';
@@ -329,6 +334,10 @@ MEMBER_RESERVE_CANCEL_DIALOG 				= 'dialog/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JS 			= 'dialog/js/memberReserveCancelDialog.js';
 MEMBER_RESERVE_CANCEL_DIALOG_HTML 			= 'dialog/template/memberReserveCancelDialog.html';
 MEMBER_RESERVE_CANCEL_DIALOG_JSON 			= 'dialog/source/memberReserveCancelDialog.json';
+
+//授業詳細・作成ダイアログ共通テンプレート
+ADMIN_LESSON_BASE_HTML						= 'dialog/template/adminLessonBase.html';
+ADMIN_LESSON_BASE_JSON 						= 'dialog/source/adminLessonBase.json';
 
 //管理者、授業一覧ダイアログ
 ADMIN_LESSON_LIST_DIALOG 					= 'dialog/adminLessonListDialog.html';
@@ -364,6 +373,8 @@ COLUMN_NAME_LESSON_NAME				= 'lesson_name';				//授業テーマ名
 COLUMN_NAME_TODAY					= 'today';						// 今日の日付
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
+
+COLUMN_CLASSWORK_KEY				= 'COLUMN_NAME_TODAY';			// 授業id
 
 //カスタマイズ後の行のKey名
 START_END_TIME 						= 'startEndTime';				//開始時間と終了時間を合わせたもの
@@ -516,3 +527,85 @@ URL_ADMIN_LESSON_DETAIL_DIALOG				= 'dialog/adminLessonDetailDialog.html';
 CLICKED_ROW									= 'clickedRow';
 //確認ダイアログのURL
 URL_CONFIRM_DIALOG							= 'dialog/confirmDialog.html';
+
+//getInpuData関数内で使うセレクタ。inputタグ、selectタグ、textareaタグのデータをセレクタで指定
+SEL_INPUT_DATA								= 'input,select,textarea';
+
+//dialogExファイル定数化作業分
+MAILMAGA_SEND_SUCCESS 						= "メルマガを送信しました。";	//メルマガ送信後の完了メッセージ
+
+//授業作成ダイアログでデータを取得する先の親のクラス名
+CLASS_NEW_LESSON_DATA_P 					= 'lessonData';
+
+//commonJson.js
+//レッスン予約数ステータス
+CAN_RESERVED								= 0;
+HELD_ALREADY								= 1;
+STOP_RESERVED_2 							= 2;
+STOP_RESERVED_3 							= 3;
+CANNOT_RESERVED 							= 4;
+
+//ユーザがレッスンを予約したステータス
+HAS_RESERVED_0 								= 0;
+HAS_RESERVED_1 								= 1;
+RECEIPT 									= 2;
+HAS_LECTURES								= 3;
+CANCEL_CUSTOMER 							= 10;
+CANCEL_ADMIN								= 11;
+STOP_LESSON 								= 12;
+
+//残席のマーク
+MARK_DOUBLE_CIRCLE							= 7;
+MARK_CIRCLE									= 4;
+MARK_TRIANGLE								= 1;
+MARK_CROSS									= 0;
+
+LESSON_DATA 								= 'lessonData';
+TEXT_LESSON_CREATE_BUTTON 					= '授業作成';
+TABLE_OUTER 								= 'tableArea';	//テーブルタグの外側を囲むdivタグクラス名
+
+//setValueDBdata関数の第三引数で値をテキストボックスなどに入れる時にDBから取り出したテーブルの値を使ってテキストボックスに値を入れるためのフラグ
+SET_ARRAY_TYPE_KEY_DB 						= 'keyTable'
+
+//授業詳細ダイアログ
+TEXT_LESSON_UPDATE_BUTTON 					= '更新';
+TEXT_LESSON_STUDENTS_BUTTON 				= '受講者一覧';
+
+//新規作成ボタン
+LESSSON_NEW_BUTTON_TEXT 					= '新規作成';
+
+//授業確認内容ダイアログ、キャンセル料率と加算ポイントの親となるセレクタ名
+CLASS_ATTENTION 							= 'attention';
+
+//管理者、会員一覧で選択されたユーザにつくセレクタ-名
+SEL_SELECT_USER 							= '.selectRecord';
+//一人もユーザが選択されていない状態でメールダイアログまたはお知らせダイアログを開くボタンを押した時の処理
+TEXT_ERROR_SELECT_USER 						= '1人以上選択してください';
+//ユーザ名のセレクタ
+SEL_USER_NAME 								= '.user_name';
+//ユーザのメールアドレスのセレクタ						
+SEL_MAIL_ADDRESS 							= '.mail_address';
+//ユーザの会員番号のセレクタ
+SEL_USER_NUMBER 							= '.user_number';
+
+//会員、確認ダイアログ
+CLASS_LESSON_INFO 							= 'lessonConfirmInfo';		//会員、確認ダイアログ、授業情報クラス名
+CLASS_INFO_ACCORDION 						= 'infoAccordion';			//会員、確認ダイアログ、アコーディオンを開くきっかけとなるリンククラス名
+CLASS_LESSON_ACCORDION 						= 'attention';				//会員、確認ダイアログ、アコーディオンの親となる要素のクラス名
+CLASS_MEMBER_CONFIRM 						= "confirmText";			//会員、確認ダイアログ、確認テキストのクラス名
+
+//管理者、授業詳細と新規授業追加ダイアログ
+CLASS_LESSON_DATA 							= 'lessonData';				//授業データの一番上となるクラス名
+CLASS_LESSON_THEME 							= 'themeArea';				//授業のテーマ選択の領域クラス名
+CLASS_LESSON_TIMETABLE						= 'timeTableArea';			//授業時間割領域クラス名
+CLASS_LESSON_MIN_STUDENTS 					= 'minStudentsArea';		//授業最少人数設定領域クラス名
+CLASS_LESSON_MAX_STUDENTS 					= 'maxStudentsArea';		//授業最大人数設定領域クラス名
+CLASS_LESSON_STATUS 						= 'statusArea';				//授業、受講状況設定領域クラス名
+CLASS_LESSON_CLASSROOM						= 'classRoomArea';			//授業教室設定領域クラス名
+CLASS_LESSON_MEMO 							= 'memoArea';				//授業メモ設定領域クラス名
+
+//管理者、メール・お知らせダイアログ
+UNSELECTED_USER 							= 0;	//会員が一人も選択されていないときの数値
+
+
+

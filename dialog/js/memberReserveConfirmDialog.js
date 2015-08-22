@@ -92,10 +92,10 @@ function memberReserveListDialog(dialog){
 		//ダイアログの中身の外枠を作る
 		this.create_tag.outputTag('memberInfomation', 'memberInfomation', CURRENT_DIALOG_SELECTOR);
 		//予約可能授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag('tableArea', 'tableArea', '.memberInfomation')
+		this.create_tag.outputTag(TABLE_OUTER, TABLE_OUTER, '.memberInfomation')
 		
 		//予約できる授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
+		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, DOT + TABLE_OUTER);
 		//テーブルの値をクライアント側で編集して画面に表示する
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 	}

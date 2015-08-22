@@ -37,7 +37,7 @@ function dialogEx(url, argumentObj, returnObj){
 			modal : true,		//モーダル表示
 			resizable : false,	//ドラッグでのリサイズ可否
 			//表示位置の指定。
-			position :{my:'center top',at:'center top', of:window},
+			position :POSITION_CENTER_TOP,
 			closeOnEscape : false,	//escキーを押して閉じるか
 			create:function(){	//ダイアログ作成時のイベント
 				
@@ -387,7 +387,7 @@ function eachDialogTmp(){
 			//メルマガをDBに新規登録する
 			data.creator.setDBdata(data.creator.json.insertMailMagazine, data, '');
 			var resultwork = null;
-			alert("メルマガを送信しました。");
+			alert(MAILMAGA_SEND_SUCCESS);
 		}
 	}
 	
@@ -632,19 +632,14 @@ function newLessonEntry() {
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
 		var loopEndCount = data[TABLE_DATA_KEY].length;
 		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
-		var newLesoonData = getInputData('lessonData');
+		var newLesoonData = getInputData(CLASS_NEW_LESSON_DATA_P);
 		
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-			//time_table_day_keyが空白のものはループを飛ばす
-			if(data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] == "") {
-				//次のループに行く
-				continue;
-			}
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData['timetable_key'] == data[TABLE_DATA_KEY][loopStartCount]['timetable_key'] && data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'] != "") {
+			if(newLesoonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount]['time_table_day_key'];
+				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
 				//ループを終わらせる
 				break;
 			}
