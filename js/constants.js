@@ -365,6 +365,8 @@ COLUMN_NAME_TODAY					= 'today';						// 今日の日付
 COLUMN_DEFAULT_USER_CLASSWORK_COST	= 'default_user_classwork_cost';// デフォルト授業料
 COLUMN_USER_CLASSWORK_COST			= 'user_classwork_cost';		// 授業料
 
+COLUMN_CLASSWORK_KEY				= 'COLUMN_NAME_TODAY';			// 授業id
+
 //カスタマイズ後の行のKey名
 START_END_TIME 						= 'startEndTime';				//開始時間と終了時間を合わせたもの
 LESSON_DATE_TIME 					= 'lessonDateTime';				//年月日を含んだ開始時間と終了時間を合わせたもの
@@ -566,12 +568,20 @@ SEL_MAIL_ADDRESS 							= '.mail_address';
 SEL_USER_NUMBER 							= '.user_number';
 
 //会員、確認ダイアログ
-CLASS_LESSON_INFO 							= 'lessonConfirmInfo';		//会員確認ダイアログ、授業情報クラス名
+CLASS_LESSON_INFO 							= 'lessonConfirmInfo';		//会員、確認ダイアログ、授業情報クラス名
 CLASS_INFO_ACCORDION 						= 'infoAccordion';			//会員、確認ダイアログ、アコーディオンを開くきっかけとなるリンククラス名
 CLASS_LESSON_ACCORDION 						= 'attention';				//会員、確認ダイアログ、アコーディオンの親となる要素のクラス名
 CLASS_MEMBER_CONFIRM 						= "confirmText";			//会員、確認ダイアログ、確認テキストのクラス名
 
 //管理者、授業詳細と新規授業追加ダイアログ
+CLASS_LESSON_DATA 							= 'lessonData';				//授業データの一番上となるクラス名
+CLASS_LESSON_THEME 							= 'themeArea';				//授業のテーマ選択の領域クラス名
+CLASS_LESSON_TIMETABLE						= 'timeTableArea';			//授業時間割領域クラス名
+CLASS_LESSON_MIN_STUDENTS 					= 'minStudentsArea';		//授業最少人数設定領域クラス名
+CLASS_LESSON_MAX_STUDENTS 					= 'maxStudentsArea';		//授業最大人数設定領域クラス名
+CLASS_LESSON_STATUS 						= 'statusArea';				//授業、受講状況設定領域クラス名
+CLASS_LESSON_CLASSROOM						= 'classRoomArea';			//授業教室設定領域クラス名
+CLASS_LESSON_MEMO 							= 'memoArea';				//授業メモ設定領域クラス名
 
 //管理者、メール・お知らせダイアログ
 UNSELECTED_USER 							= 0;	//会員が一人も選択されていないときの数値

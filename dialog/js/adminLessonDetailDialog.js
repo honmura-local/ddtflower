@@ -151,7 +151,7 @@ function adminLessonDetailDialog(dialog){
 		//入力した値を取得し、データの更新に用いる
 		var updateData = getInputData(LESSON_DATA);
 		//授業idを取得する
-		updateData['classwork_key'] = data['classwork_key'];
+		updateData[COLUMN_CLASSWORK_KEY] = data[COLUMN_CLASSWORK_KEY];
 		//授業詳細テーブルを更新する
 		this.create_tag.setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
 	}
