@@ -5,19 +5,24 @@
 	        "mailToPersonLabel": {
 	            "text": "宛先人"
 	        },
-	        "mailToPerson": {}
+	        "mailToPerson": {
+	        	"text":""
+	        }
 	    },
 	    "mailToArea": {
 	        "mailToLabel": {
 	            "text": "宛先"
 	        },
-	        "mailTo": {}
+	        "mailTo": {
+	        	"text":""
+	        }
 	    },
 	    "mailTitleArea": {
 	        "mailTitleLabel": {
 	            "text": "タイトル"
 	        },
 	        "mailTitleTextbox": {
+	        	"class":"mailTitleTextbox message_title"
 	            "type": "text",
 	            "name": "message_title"
 	        }
@@ -28,6 +33,7 @@
 	            "text": "本文"
 	        },
 	        "mailContentTextbox": {
+	        	"class":"mailContentTextbox message_content"
 	            "name": "message_content"
 	        }
 	    },

@@ -700,19 +700,6 @@ function afterReloadUserListInfoTable() {
 	setTableRecordClass('userListInfoTable', 'targetUser');
 }
 
-/* 
- * 関数名:textPustArray
- * 概要  :配列に対して文字列を追加する
- * 引数  :stirng:parent:追加する文字列がある親のセレクター
- 		array:arrayName:文字列を追加する配列の名前
- 		pushText:追加する文字が入っているセレクター
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.08.08
- */
-function textPustArray(parent, arrayName, pushText) {
-	arrayName.push($(parent).children(pushText).text());
-}
 
 /* 
  * 関数名:adminMessageCreate
@@ -739,15 +726,15 @@ function adminMessageCreate(buttonSelector, sendType) {
 			userNumberList = [];		//送信先会員番号一覧
 			//選択されているレコードの数だけループする
 			$('.selectRecord').each(function() {
-				textPustArray(this, sendToPersonList, '.user_name');
-				textPustArray(this, sendToList, '.mail_address');
-				textPustArray(this, userNumberList, '.mail_address');
+				commonFuncs.textPustArray(this, sendToPersonList, '.user_name');
+				commonFuncs.textPustArray(this, sendToList, '.mail_address');
+				commonFuncs.textPustArray(this, userNumberList, '.mail_address');
 			});
 			//送信するデータを連想配列に入れる
 			var sendMailData = {
 				name:sendToPersonList,			//送信先宛先人一覧
 				mail:sendToList,				//送信先アドレス一覧
-				memberNumber:userNumberList,	//会員番号
+				id:userNumberList,				//会員番号
 				sendType:sendType				//送信データの種類、メールかお知らせかの区別に使う
 			};
 			
