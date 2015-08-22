@@ -18,48 +18,46 @@
  * licence: MIT
  *
  */
-var uaName = 'unknown';
+var uaName = UNKNOWN;
 var userAgent = window.navigator.userAgent.toLowerCase();
 var appVersion = window.navigator.appVersion.toLowerCase();
  
 	
-if (userAgent.indexOf('msie') != -1) {
-  uaName = 'ie';
-  if (appVersion.indexOf('msie 6.') != -1) {
-    uaName = 'ie6';
-  } else if (appVersion.indexOf('msie 7.') != -1) {
-    uaName = 'ie7';
-  } else if (appVersion.indexOf('msie 8.') != -1) {
-    uaName = 'ie8';
-  } else if (appVersion.indexOf('msie 9.') != -1) {
-    uaName = 'ie9';
-  } else if (appVersion.indexOf('msie 10.') != -1) {
-    uaName = 'ie10';
+if (userAgent.indexOf(MSIE) != -1) {
+  uaName = IE;
+  if (appVersion.indexOf(MISE_6) != -1) {
+    uaName = IE_6;
+  } else if (appVersion.indexOf(MISE_7) != -1) {
+    uaName = IE_7;
+  } else if (appVersion.indexOf(MISE_8) != -1) {
+    uaName = IE_8;
+  } else if (appVersion.indexOf(MISE_9) != -1) {
+    uaName = IE_9;
+  } else if (appVersion.indexOf(MISE_10) != -1) {
+    uaName = IE_10;
   }
-} else if (userAgent.indexOf('android') != -1) {
-	uaName = 'android';
-} else if (userAgent.indexOf('ipad') != -1) {
-  uaName = 'ipad';
-} else if (userAgent.indexOf('ipod') != -1) {
-  uaName = 'ipod';
-} else if (userAgent.indexOf('iphone') != -1) {
-  uaName = 'iphone';
+} else if (userAgent.indexOf(ANDROID) != -1) {
+	uaName = ANDROID;
+} else if (userAgent.indexOf(IPAD) != -1) {
+  uaName = IPAD;
+} else if (userAgent.indexOf(IPOD) != -1) {
+  uaName = IPOD;
+} else if (userAgent.indexOf(IPHONE) != -1) {
+  uaName = IPHONE;
   var ios = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 //  uaName = [parseInt(ios[1], 10), parseInt(ios[2], 10), parseInt(ios[3] || 0, 10)];
-} else if (userAgent.indexOf('mobile') != -1) {
-	uaName = 'mobile';
-} else if (userAgent.indexOf('chrome') != -1) {
-	  uaName = 'chrome';
-} else if (userAgent.indexOf('safari') != -1) {
-  uaName = 'safari';
-} else if (userAgent.indexOf('gecko') != -1) {
-  uaName = 'gecko';
-} else if (userAgent.indexOf('opera') != -1) {
-  uaName = 'opera';
+} else if (userAgent.indexOf(MOBILE) != -1) {
+	uaName = MOBILE;
+} else if (userAgent.indexOf(CHROME) != -1) {
+	  uaName = CHROME;
+} else if (userAgent.indexOf(SAFARI) != -1) {
+  uaName = SAFARI;
+} else if (userAgent.indexOf(GECHO) != -1) {
+  uaName = GECHO;
+} else if (userAgent.indexOf(OPERA) != -1) {
+  uaName = OPERA;
 };
 //以上、引用終了。
-
-
 
 
 /* createLittleContentsクラス(仮) */
@@ -70,7 +68,7 @@ function createLittleContents(){
 	//使っているのがAndroidの標準ブラウザかの判定の関数です。
 	this.isAndDefaultBrowser = function(){
 	    var ua=window.navigator.userAgent.toLowerCase();
-	    if(ua.indexOf('linux; u;')>0){
+	    if(ua.indexOf(LINUX_U)>0){
 	        return true;
 	    }else{
 	        return false;
@@ -87,15 +85,15 @@ function createLittleContents(){
 	 */
 	this.isIE =function (){
 		//IEであればIEのUA文字列を返し、そうでなければfalseを返す。
-		return uaName.indexOf('ie') != -1? uaName: false;
+		return uaName.indexOf(IE) != -1? uaName: false;
 	}
 	
 	//Optionタグを生成するための連想配列。createOptions関数で使う。
 	this.options = {
-					"publifications":{
-						"0":{"text":"全体"},
-						"1":{"text":"友達のみ"},
-						"2":{"text":"非公開"}
+					PUBLIFICATIONS:{
+						ZERO:{TEXT:ALL_PUBLIFICATIONS},
+						ONE:{TEXT:LIMIT_PUBLIFICATIONS},
+						TWO:{TEXT:NO_PUBLIFICATIONS}
 					}
 				};
 	
@@ -116,38 +114,37 @@ function createLittleContents(){
 	this.toolTip = function() {
 	  $(function() {
 	    // 要素を追加する処理
-	    $('body').append('<div class="tip"></div>');
+	    $(BODY).append(TAG_AREA_TIP);
 	
-	    $('.tip')                         // 表示するツールチップに関するcssを有効にする
+	    $(SEL_TIP)                         // 表示するツールチップに関するcssを有効にする
 	      .css({                          // jqueryでcssを記述する宣言をする
-	          border: '1px solid Black',  // 枠線を1pxで黒色、実線で描く
-	          backgroundColor: '#ffc',    // 背景を黄色っぽくする
-	          fontSize: 'smaller',        // ツールチップ内での文字のサイズは小さめにする
-	          padding: '2px',             // 2px分要素全体の幅を広くとる
-	          position: 'absolute',       // ポジションを絶対位置にする
-	          display: 'none'             // 画面には表示しない
-	
+	          CSS_BORDER: CSS_BORDER_BLACK,  // 枠線を1pxで黒色、実線で描く
+	          CSS_BACKGROUND_COLOR: CSS_YELLOW_COLOR,    // 背景を黄色っぽくする
+	          CSS_FONT_SIZE: CSS_FONT_SMALLER,        // ツールチップ内での文字のサイズは小さめにする
+	          CSS_PADDING: CSS_PX_2,             // 2px分要素全体の幅を広くとる
+	          POSITION: CSS_ABSOLUTE,       // ポジションを絶対位置にする
+	          CSS_DISPLAY: NONE             // 画面には表示しない	
 	      })
 	    //ツールチップを表示する処理
-	    $('.tiplink')
+	    $(SEL_TIPLINK)
 	      //マウスオーバしたときの処理
 	      .mouseenter(function(e) {
 	      //.tipがアニメーション中でない場合のみ処理をする
-	        $('.tip:not(:animated)')
+	        $(SEL_TIP_NOT_ANIMATED)
 	        //data-tips属性から本体テキストを設定
-	          .text($(this).data('tips'))
+	          .text($(this).data(ATTR_TIPS))
 	        //マウスの座標に応じて表示位置を決定
 	          .css({
 	            top: e.pageY,	//現在マウスポインターがあるY座標
 	            left: e.pageX,	//現在マウスポインターがあるX座標
-	            zIndex: 2		//z-indexを指定して重なりを制御する。
+	            zIndex: TIPS_Z_INDEX		//z-indexを指定して重なりを制御する。
 	          })
-	          .fadeIn(300);//300ミリ秒かけて表示する
+	          .fadeIn(TIPS_DISPLAY_TIME);//300ミリ秒かけて表示する
 	      })
 	      //マウスオーバから離れたときの処理
 	      .mouseleave(function(e) {
-	      $('.tip')//tipの中身について
-	        .fadeOut(500);//500ミリ秒かけて表示しなくなる
+	      $(SEL_TIP)//tipの中身について
+	        .fadeOut(TIPS_FADEOUT_TIME);//500ミリ秒かけて表示しなくなる
 	      })
 	
 	  });  
@@ -163,11 +160,11 @@ function createLittleContents(){
 	 */
 	this.getContentName = function (){
 		// URLからファイル名を取得する。
-		var contentName = location.href.substring(location.href.lastIndexOf("/")+1,location.href.length);
+		var contentName = location.href.substring(location.href.lastIndexOf(SLASH)+1,location.href.length);
 		// ファイル名から拡張子を取り除く。
-		contentName = contentName.substring(0,contentName.indexOf('.'));
+		contentName = contentName.substring(CUT_START,contentName.indexOf(DOT));
 		// ファイル名に予約コンテンツであるということを示す文字列を追加する。
-		contentName = contentName + 'Reserved';
+		contentName = contentName + RESERVED;
 		
 		//contentNameを返す
 		return contentName;
@@ -186,8 +183,8 @@ function createLittleContents(){
 	this.useZoomImage = function(selector){
 		// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
 		// 拡大表示を行うようにする。
-		$('.' + selector + ' a').fancybox({
-			'hideOnContentClick': true
+		$(DOT + selector + SPACE + TAG_A).fancybox({
+			HIDE_ON_CONTENT_CLICK: TRUE
 		});
 	}
 	
@@ -200,12 +197,12 @@ function createLittleContents(){
 	 * 作成者:T.M
 	 */
 	this.isTouchDevice = function(){
-		var retBoo = false;	//返却する真理値を格納する変数を宣言、falseで初期化する。
-		if ((navigator.userAgent.indexOf('iPhone') > 0 				//UAがIPhoneか
-				|| navigator.userAgent.indexOf('iPad') > 0) 		//iPadか
-				|| navigator.userAgent.indexOf('iPod') > 0 			//iPodか
-				|| navigator.userAgent.indexOf('Android') > 0) {	//Androidであれば
-			retBoo = true;	//trueを返すようにする。
+		var retBoo = FALSE;	//返却する真理値を格納する変数を宣言、falseで初期化する。
+		if ((navigator.userAgent.indexOf(IPHONE) > ZERO 				//UAがIPhoneか
+				|| navigator.userAgent.indexOf(IPAD) > ZERO) 		//iPadか
+				|| navigator.userAgent.indexOf(IPOD) > ZERO 			//iPodか
+				|| navigator.userAgent.indexOf(ANDROID) > ZERO) {	//Androidであれば
+			retBoo = TRUE;	//trueを返すようにする。
 		}
 		
 		return retBoo;	//結果を返す。
@@ -240,18 +237,18 @@ function createLittleContents(){
 				//スマホなら両端のHotSpotによるスクロールを無効にする。
 				hotSpotScrolling: !touchDevice,
 				//タッチでのスクロールを有効にする。
-				touchScrolling: true,
+				touchScrolling: TRUE,
 				//手動の無限スクロールをオンにする。
-				manualContinuousScrolling: true,
+				manualContinuousScrolling: TRUE,
 				//スマホならホットスポットの背景をを出さない、PCなら出す。
-				visibleHotSpotBackgrounds:touchDevice? "":"always",
+				visibleHotSpotBackgrounds:touchDevice? EMPTY:ALWAYS,
 				//マウスホイールによるスクロールを無効にする。
-				mousewheelScrolling: false
+				mousewheelScrolling: FALSE
 			});
 			//fancyboxで画像を拡大できるようにする。
 			thisElem.useZoomImage(selector);
 		//1秒置いて実行する。
-		}, 1000);
+		}, GALLERY_DISPALY_TIME);
 	}
 	
 	/*
@@ -264,22 +261,22 @@ function createLittleContents(){
 	 */
 	this.createUnmovableGallery = function(selector){
 	// jQueryプラグイン「Slick」によりカルーセルのギャラリーを作成する。
-		$('.' + selector).slick({
+		$(DOT + selector).slick({
 	        //以下2ステップ、矢印を使わない設定。
-			accessibility:false,
-	        arrows:false,
+			accessibility:FALSE,
+	        arrows:FALSE,
 	        // レスポンシブレイアウトに対応する。
-	        responsive:true,
+	        responsive:TRUE,
 	        //可変幅にする。
-			variableWidth:true,
+			variableWidth:TRUE,
 	        // 用意されている画像の数だけ並べる。
-	        slidesToShow:$('.' + selector + ' img').length
+	        slidesToShow:$(DOT + selector + SPACE + TAG_IMG).length
 		});
 		
 	// フッター前のギャラリーをクリックしたらjQueryプラグイン「fancybox」により
 	// 拡大表示を行うようにする。
-		$('.' + selector + ' a').fancybox({
-			'hideOnContentClick': true
+		$(DOT + selector + SPACE + TAG_A).fancybox({
+			HIDE_ON_CONTENT_CLICK: TRUE
 		}); 
 	}
 	
@@ -295,7 +292,7 @@ function createLittleContents(){
 	this.createTab = function (selector){
 		//タブのコンテンツを作成する。
 		$(selector).easytabs({
-			updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
+			updateHash:FALSE	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
 		});
 	}
 	
@@ -308,9 +305,9 @@ function createLittleContents(){
 	 * 作成者:T.Masuda
 	 */
 	this.setTabAjaxCompleteEvent = function(){
-		$(document).bind('easytabs:ajax:complete', function(event, $clicked, $targetPanel, response, status, xhr){
+		$(document).bind(EASYTABS_AJAX_XOMPLATE, function(event, $clicked, $targetPanel, response, status, xhr){
 			//overwriteContent関数同様、scriptタグとlinkタグを取得する。
-			var pagedrawer = $('script, link', response);
+			var pagedrawer = $(SCRIPT_LINK, response);
 			//コードを順番に実行する。
 			$.when(
 					//読み込み先のタブパネル内に取得したタグを展開する。
@@ -352,9 +349,9 @@ function createLittleContents(){
 		//mapを走査する。
 		for(key in map){
 			//対応するセルにデータを流し込む。
-			$('.' + key + ' td', $table).text(map[key]);
+			$(DOT + key + SPACE + TAG_TD, $table).text(map[key]);
 			//疑似フォームで値を受け取る準備がしてあれば、そちらにも値を流し込む。
-			$('.imitateForm input:hidden').filter('[name="' + key + '"]').val(map[key]);
+			$(SEL_IMITATE_FORM).filter(SEL_NAME_FRONT + key + SEL_CLOSE_ATTRIBUTE).val(map[key]);
 		}
 	}
 	
@@ -372,61 +369,61 @@ function createLittleContents(){
 	this.createNewPhoto = function(imgPath){
 		//新たな記事のひな形をつくる
 		//最初に枠(行)を作る
-		var newPhoto = $('<tr></tr>')
-							.addClass('myPhoto')
+		var newPhoto = $(TAG_AREA_TR)
+							.addClass(CLASS_MYPHOTO)
 							.append(
-								$('<td></td>')	//画像枠
-									.addClass('myPhotoImage')
-									.append($('<a></a>')	//画像のリンク部分
+								$(TAG_AREA_TD)	//画像枠
+									.addClass(CLASS_MYPHOTOIMAGE)
+									.append($(TAG_AREA_A)	//画像のリンク部分
 											.attr({
 												href: imgPath,
-												rel:'gallery'
+												relGALLERY:
 											})
-										.append($('<span></span>')	//画像部分
-												.attr('style', 'background-image:url("' + imgPath + '")')
+										.append($(TAG_AREA_SPAN)	//画像部分
+												.attr(STYLE, CSS_BG_IMAGE_FRONT + imgPath + CSS_ATTR_CLOSE)
 										)
 									)
 							)
 							.append(	
-								$('<td></td>')	//日付
-									.addClass('myPhotoDate')
+								$(TAG_AREA_TD)	//日付
+									.addClass(CLASS_MYPHOTODATE)
 									.text(this.getDateTime())
 							)
 							.append(
-								$('<td></td>')	//タイトル
-									.addClass('myPhotoTitle')
-									.text('新規')
+								$(TAG_AREA_TD)	//タイトル
+									.addClass(CLASS_MYPHOTOTITLE)
+									.text(TEXT_NEW)
 							)
 							.append(
-								$('<td></td>')	//ユーザ名
-									.addClass('myPhotoUser')
-									.text(this.json.accountHeader !== void(0) ? this.getUserName() : "Guest")
+								$(TAG_AREA_TD)	//ユーザ名
+									.addClass(CLASS_MYPHOTOUSER)
+									.text(this.json.accountHeader !== void(0) ? this.getUserName() : GUEST)
 							)
 							.append(
-								$('<td></td>')	//コメント
-									.addClass('myPhotoComment')
-									.text('一言お願いします')
+								$(TAG_AREA_TD)	//コメント
+									.addClass(CLASS_MYPHOTOCOMMENT)
+									.text(TEXT_DEF_IMAGE_COMMENT)
 							)
 							.append(
-								$('<td></td>')	//公開設定。現状不要なので見せない
-									.addClass('myPhotoPublication')
-									.text('全体')
-									.attr('value', '0')
-									.css('display', 'none')
+								$(TAG_AREA_TD)	//公開設定。現状不要なので見せない
+									.addClass(CLASS_MYPHOTOPUBLIATION)
+									.text(TEXT_DEF_PUBLIATION)
+									.attr(VALUE, ALL_PUBLIFICATIONS_VALUE)
+									.css(CSS_DISPLAY, NONE)
 							)
 							.append(
-								$('<input>')	//チェックボックス
-									.addClass('myPhotoCheck')
-									.attr('type', 'checkbox')
+								$(TAG_AREA_INPUT)	//チェックボックス
+									.addClass(CLASS_MYPHOTOCHECK)
+									.attr(TYPE, ATTR_CHECKBOX)
 							)
 							; 
 		//新規記事を作成する
 		return newPhoto;
 		//画像拡大用のタグにソースをセットする。
-		$('.myPhotoLink:last').attr('href', imgPath);
+		$(SEL_NEW_MY_PHOTO).attr(ATTR_HREF, imgPath);
 		//画像サムネイルに使う要素の画像を設定する。
-		$('.myPhotoImage:last').css('background-image', 'url('  +  imgPath + ')');
-		$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
+		$(SEL_NEW_MY_PHOTO_IMAGE).css(CSS_BG_IMAGE, CSS_URL_FRONT  +  imgPath + CSS_URL_BACK);
+		$(SEL_NEW_MY_PHOTO).removeClass(CLASS_BLANK_PHOTO);	//空の写真のクラスを消す。
 
 	}
 	
@@ -441,7 +438,7 @@ function createLittleContents(){
 	this.getDateTime = function (){
 		var date = new Date()//日付取得のため、Dateクラスのインスタンスを生成する。
 		//日付を取得して返す。
-		return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+		return date.getFullYear() + SLASH + (date.getMonth() + 1) + SLASH + date.getDate();
 	}
 	
 	/*
@@ -454,12 +451,12 @@ function createLittleContents(){
 	 */
 	this.deletePhoto = function(){
 		//チェックボックスが入っている写真があれば
-		if($('.myPhotoCheck:checked')){
+		if($(SEL_MY_PHOTO_CHECK_CHECKED)){
 			//選択された写真を消す。
-			$('.myPhoto').has('.myPhotoCheck:checked').remove();
+			$(SEL_MY_PHOTO).has(SEL_MY_PHOTO_CHECK_CHECKED).remove();
 		} else {
 			//写真未選択の旨を伝える。
-			alert('削除する写真を選んでください。');
+			alert(TEXT_ALERT_DELETE_PHOTO);
 		}
 	}
 	
@@ -477,9 +474,9 @@ function createLittleContents(){
 		
 		//Ajax通信でサーバに写真のデータを送信する。
 		$.ajax({
-			url:init['photoPost'],	//初期化データの連想配列にあるURLに送信する
+			url:init[POST_PHOTO_URL_KEY],	//初期化データの連想配列にあるURLに送信する
 	//		dataType:'json',		//JSONで返してもらう。
-			dataType:'text',		
+			dataType:TEXT,		
 			data:photoData,			//作成した写真データを送信する。
 			//通信が成功したら
 			success:function(json){
@@ -488,7 +485,7 @@ function createLittleContents(){
 			//通信が失敗したら
 			error:function(){
 				//保存失敗の旨を伝える。
-				alert('写真の保存に失敗しました。');
+				alert(TEXT_ERROR_PHOTO_SAVE);
 			}
 		});
 	}
@@ -504,15 +501,15 @@ function createLittleContents(){
 	this.createPhotoData = function(photo){
 		var retMap = {};	//返す連想配列を用意する。
 		//日付を格納する。
-		retMap['date'] = $('.myPhotoDate', photo).text();
+		retMap[PHOTO_KEY_DATE] = $(SEL_MY_PHOTO_DATE, photo).text();
 		//ユーザ名を格納する。
-		retMap['user'] = $('.myPhotoUser', photo).text();
+		retMap[PHOTO_KEY_USER] = $(SEL_MY_PHOTO_USER, photo).text();
 		//タイトルを格納する。
-		retMap['title'] = $('.myPhotoTitle', photo).text();
+		retMap[PHOTO_KEY_TITLE] = $(SEL_MY_PHOTO_TITLE, photo).text();
 		//コメントを格納する。
-		retMap['comment'] = $('.myPhotoComment', photo).text();
+		retMap[PHOTO_KEY_COMMENT] = $(SEL_MY_PHOTO_COMMENT, photo).text();
 		//公開設定を格納する。
-		retMap['publication'] = $('.myPhotoPublication', photo).attr('value');
+		retMap[PHOTO_KEY_PUBLICATION] = $(SEL_MY_PHOTO_PUBLOCATION, photo).attr(VALUE);
 		
 		//作成した連想配列を返す。
 		return retMap;
@@ -529,15 +526,15 @@ function createLittleContents(){
 	this.createOptions = function(key){
 		//キーに応じた連想配列を取得する。
 		var map = options[key];
-		var retElem = document.createElement('div');	//返却する値を格納する変数を宣言する。外枠となるdivタグを生成しておく。
+		var retElem = document.createElement(TAG_DIV);	//返却する値を格納する変数を宣言する。外枠となるdivタグを生成しておく。
 		//連想配列を走査する。
 		for(key in map){
 			//optionタグを生成して変数に格納する。keyをoptionの値とする。
-			var option = $('<option></option>').attr('value', key);
+			var option = $(TAG_AREA_OPTION).attr(VALUE, key);
 			//更に連想配列を進んでいく。
 			for(childKey in map[key]){
 				//キーがテキストなら
-				if(childKey == 'text'){
+				if(childKey == TEXT){
 					//optionにテキストを追加する。
 					option.text(map[key][childKey]);
 				//属性なら
@@ -550,7 +547,7 @@ function createLittleContents(){
 			}
 		}	
 		
-		return $('option', retElem);	//生成した要素を返す。
+		return $(OPTION, retElem);	//生成した要素を返す。
 	}
 		
 	
@@ -564,54 +561,54 @@ function createLittleContents(){
 	 */
 	this.startEditText = function(textElem){
 		var currentText = $(textElem).text()		//テキストの値を取得する。
-		var className = $(textElem).attr('class');	//クラス名を取得する。
+		var className = $(textElem).attr(CLASS);	//クラス名を取得する。
 		
 		//classNameがコメントのクラスであれば
-		if(className == 'myPhotoComment'){
+		if(className == CLASS_MYPHOTOCOMMENT){
 			//編集用のテキストエリアを配置する。
-			$(textElem).after($('<textarea>')
-					.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
+			$(textElem).after($(TAG_FRONT_TEXTAREA)
+					.addClass(className + EDIT)	//編集テキストエリア用のクラスをセットする。
 					.val(currentText)				//テキストを引き継ぐ。
 				);
 		//公開設定であれば
-		} else if(className == 'myPhotoPublication'){
+		} else if(className == CLASS_MYPHOTOPUBLIATION){
 			//編集用のテキストエリアを配置する。
-			$(textElem).after($('<select></select>')
-					.addClass(className + 'Edit')				//編集テキストエリア用のクラスをセットする。
-					.val($(textElem).attr('value'))							//テキストを引き継ぐ。
-					.append(createOptions('publifications'))	//optionタグをセットする。
+			$(textElem).after($(TAG_AREA_SELECT)
+					.addClass(className + EDIT)				//編集テキストエリア用のクラスをセットする。
+					.val($(textElem).attr(VALUE))							//テキストを引き継ぐ。
+					.append(createOptions(PUBLIFICATIONS))	//optionタグをセットする。
 					.focus());
 			//選択済みにする。
 	//		$('.' + className + 'Edit').val($(textElem).attr('value'));
 		}else {
 			//編集用のテキストエリアを配置する。
-			$(textElem).after($('<input>')
-					.addClass(className + 'Edit')	//編集テキストエリア用のクラスをセットする。
+			$(textElem).after($(TAG_AREA_INPUT)
+					.addClass(className + EDIT)	//編集テキストエリア用のクラスをセットする。
 					.val(currentText)				//テキストを引き継ぐ。
-					.attr('type', 'text')			//テキストボックスのtypeをセットする。	
+					.attr(TYPE, TEXT)			//テキストボックスのtypeをセットする。	
 			);
 		}
 	
 		//Androidの標準ブラウザでなければ　※Androidの標準ブラウザはfocus()を使わずともセレクトメニューにフォーカスするので
-		if(!this.isAndDefaultBrowser() && !$('.' + className + 'Edit')[0].tagName != 'SELECT'){
+		if(!this.isAndDefaultBrowser() && !$(DOT + className + EDIT)[0].tagName != TAG_NAME_SELECT){
 			//追加した要素にフォーカスする。
-			$('.' + className + 'Edit').focus();
+			$(DOT + className + EDIT).focus();
 			//編集終了のイベントを登録する。
-			$('.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit').on('blur', function(){
+			$(SEL_PHOTO_EDIT).on(ATTR_BLUR, function(){
 				//自身を持つ写真要素のセレクタを取得する。
-				var myphoto = $('.myPhoto').has(this);
+				var myphoto = $(SEL_MY_PHOTO).has(this);
 				//編集モードを解除する。
 				this.endEditText(this);
 				//編集したデータを送信する。
 				this.postPhoto(myphoto);
 			});
 		} else {
-			$('body').on('click.editSelect', function(){
+			$(BODY).on(SEL_CLICK_EDIT_SELECT, function(){
 				//自身を持つ写真要素のセレクタを取得する。
-				var myphoto = $('.myPhoto').has('.myPhotoPublicationEdit').eq(0);
+				var myphoto = $(SEL_MY_PHOTO).has(SEL_MY_PHOTO_PUBLOCATION_EDIT).eq(0);
 				//編集終了の関数をコールする。
-				this.endEditText($('.myPhotoPublicationEdit').eq(0));
-				$('body').off('click.editSelect');
+				this.endEditText($(SEL_MY_PHOTO_PUBLOCATION_EDIT).eq(0));
+				$(BODY).off(SEL_CLICK_EDIT_SELECT);
 				//編集したデータを送信する。
 				this.postPhoto(myphoto);
 			});
@@ -634,21 +631,21 @@ function createLittleContents(){
 		//編集後のテキストボックスを取得する。
 		var currentText = $this.val();
 		//編集モードになる前のクラス名を取得する。
-		var pastClass = $this.attr('class').replace('Edit', '');
+		var pastClass = $this.attr(CLASS).replace(EDIT, EMPTY);
 		
 		//セレクトメニューであれば
-		if($this[0].tagName == 'SELECT'){
+		if($this[0].tagName == TAG_NAME_SELECT){
 			//編集モードになる前のタグを生成する。
-			$this.after($('<p></p>')
-					.attr('value', currentText)	//value属性を設定する。
+			$this.after($(TAG_AREA_P)
+					.attr(VALUE, currentText)	//value属性を設定する。
 					//テキストを反映する。
-					.text($('option[value="' + currentText + '"]', $this).text())
+					.text($(SEL_OPTION_VALUE_FRONT + currentText + SEL_OPTION_VALUE_BACK, $this).text())
 					.addClass(pastClass)	//元のクラスを設定する。
 			);
 		//それ以外であれば
 		} else {
 			//編集モードになる前のタグを生成する。
-			$this.after($('<p></p>')
+			$this.after($(TAG_AREA_P)
 					.text(currentText)		//テキストを反映する。
 					.addClass(pastClass)	//元のクラスを設定する。
 			);
@@ -703,7 +700,7 @@ function createLittleContents(){
 	 */
 	this.setDoubleClickMyPhotoEdit = function(){
 		$ownerClass = this;	//自分自身の暮らすインスタンスを変数に保存
-		$('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication').on(function(){
+		$(SEL_DBCLIK_DBTAP,SEL_MYPHOTO_CONTENTS).on(function(){
 			//タイトルを編集モードにする。
 			$ownerClass.startEditText(this);
 		});
@@ -718,10 +715,10 @@ function createLittleContents(){
 	 * 作成者:T.Masuda
 	 */
 	this.bindClickTarget = function(selector, target){
-		$(selector).on('click', function(){	//クリックイベントを登録する。
+		$(selector).on(CLICK, function(){	//クリックイベントを登録する。
 			var $target = $(target);	//ターゲットのjQueryオブジェクトを取得する。
 			//ターゲットをクリックする。
-			$target.trigger('click');
+			$target.trigger(CLICK);
 		});
 	}
 	
@@ -746,11 +743,11 @@ function createLittleContents(){
 	 */
 	this.setMyGalleryChangeEvent = function (selector, imgWidth, imgHeight){
 		var thisElem = this;
-		$(selector).on('change', function(event){
+		$(selector).on(CHANGE, function(event){
 			//拡張子チェックを行う。画像の拡張子でなければはじく。
 			if(!checkIdentifier($(this).val())){
 				//有効なファイルを選んでもらうように警告を出す。
-				alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
+				alert(TEXT_ERROR_UPLOAD_FILE);
 				return;	//処理を終える。
 			}
 			
@@ -760,7 +757,7 @@ function createLittleContents(){
     			width:imgWidth !== void(0)? imgWidth: DEFAULT_WIDTH,
     			//縦サイズを設定
     			height:imgHeight !== void(0)? imgHeight: DEFAULT_HEIGHT,
-    			crop: false,	//画像を切り取るかを選択する
+    			crop: FALSE,	//画像を切り取るかを選択する
     			quality: IMG_QUALITY,	//画像の品質
     			//コールバック関数。画像パスを引数として受け取る。
     			callback: function(data) {
@@ -782,23 +779,23 @@ function createLittleContents(){
 		var thisElem = this;						//クラスインスタンスを変数に入れる
 		//PHPへはフォームデータを作って送信する
 		var fd = new FormData();					//フォームデータを作る
-		fd.append('photo', toBlob(data), 'userPhoto');	//フォームデータにBLOB化した写真を登録する
-		fd.append('postedName', 'photo');			//フォームデータに投稿名を登録する
-		fd.append('userId', this.getUserId());		//フォームデータにユーザIDを登録する
+		fd.append(POST_PHOTO_KEY, toBlob(data), POST_PHOTO_USER);	//フォームデータにBLOB化した写真を登録する
+		fd.append(POST_PHOTO_NAME, POST_PHOTO_KEY);			//フォームデータに投稿名を登録する
+		fd.append(KEY_USER_ID, this.getUserId());		//フォームデータにユーザIDを登録する
 		
         $.ajax({	//Ajax通信でサーバにデータを送る
             url: USER_IMAGE_UPLOADER,	//画像アップローダーのURLを指定する	
-            type: 'post',				//HTTP通信のPOSTメソッドを使う
-            async:false,				//同期通信
+            type: POST,				//HTTP通信のPOSTメソッドを使う
+            async:FALSE,				//同期通信
             data: fd,					//フォームデータを送信する
-            dataType: 'xml',			//XMLデータを返してもらう
+            dataType: XML,			//XMLデータを返してもらう
             //以下2点、よくわかっていません
-            contentType: false,
-            processData: false,
+            contentType: FALSE,
+            processData: FALSE,
             //通信成功時の処理
             success: function(xml){
             	thisElem.saveImgIntoDB(xml);	//アップロードした画像を保存する
-            	thisElem.setNewPhoto($(xml).find('src').text());	//アップロードした画像を基に新たな記事を作る
+            	thisElem.setNewPhoto($(xml).find(ATTR_SRC).text());	//アップロードした画像を基に新たな記事を作る
             },
             //通信失敗時の処理
             error: function(xhr, status, error){
@@ -820,9 +817,9 @@ function createLittleContents(){
 		//アップロード画像の情報をDBに入れて送るための連想配列を作る
 		var sendReplaceArray = {};
 		//DBに画像タイトルを追加するためにアップロードされた画像のタイトルを取得する
-		sendReplaceArray['photo_title'] = $('filename', xml).text();
+		sendReplaceArray[KEY_SEND_PHOTO_TITLE] = $(POST_FILE_NAME, xml).text();
 		//会員番号を更新情報のクエリに入れる
-		sendReplaceArray['user_key'] = this.getUserId();
+		sendReplaceArray[KEY_SEND_PHOTO_USERKEY] = this.getUserId();
 		//画像情報をDBに新規登録する
 		this.setDBdata(this.json.insertMyGalleryPhoto, sendReplaceArray, EMPTY_STRING);
 	}
@@ -837,79 +834,9 @@ function createLittleContents(){
 	 */
 	this.setNewPhoto = function(imgPath){
 		//createTagで新たな写真を作成する。
-		this.outputTag('blankPhoto', 'myPhoto', '.myGallery');
+		this.outputTag(CLASS_BLANK_PHOTO, CLASS_MYPHOTO, SEL_MY_GALLERY);
 		//新たな記事を追加する。
-		$('.myGalleryTable tbody').append(this.createNewPhoto(imgPath));
-	}
-	
-	
-	/*
-	 * 関数名:function uploadImage(uploader, parent, srcReturn)
-	 * 引数  :element uploader:input type="file"の要素
-	 * 		:element parent: 画像パスの追加を行う要素の親要素。
-	 * 　　　:String srcReturn:取得した画像パスを追加する要素のセレクタ。
-	 * 戻り値:なし
-	 * 概要  :画像をアップロードし、指定した要素に画像パスを追加する。
-	 * 作成日:2015.04.14
-	 * 作成者:T.Masuda
-	 */
-	//アップロードボタンの値が変わったときのイベント(=アップロードを行った後のイベント)
-	this.uploadImage = function(uploader, parent, srcReturn){
-		$uploader = $(uploader);	//アップローダーの要素をjQueryオブジェクトにして変数に格納する。
-		//保存先を指定して画像のアップロードを行う。
-		$uploader.upload('source/dummy.xml',{"dir":init['photoDirectory']}, function(html) {
-	//		$uploader.upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(html) {
-			//返ってきたデータから成否判定の値を取り出す。
-	//		var issuccess = parseInt($(xml).find('issuccess').text());
-			var issuccess = "true";
-			if(issuccess == "true"){	//保存に成功していたら
-			
-				//IE6~9でなければ
-	    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
-		    		//ファイルのオブジェクトをを取得する。
-		    		var file = uploader.files[0];
-		    		var filetmp = '';	//画像パスの一時保存場所のパス用の変数を用意する。
-		    		//画像の縮小を行う。
-		    		canvasResize(file, {
-		    			crop: false,	//画像を切り取るかを選択する
-		    			quality: 80,	//画像の品質
-		    			//コールバック関数。画像パスを引数として受け取る。
-		    			callback: function(data) {
-		    				filetmp = data;				//filetmpにdataを一時保存する。
-		    				//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
-		    				var src = filetmp;								//画像の保存先を取得する。
-		    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
-		    					//画像タグであれば
-		    					if($(this)[0].tagName == 'IMG'){
-		    						$(this).attr('src', filetmp);	//ソースパスを設定する。
-		//					$(this).attr('src', src);	//ソースパスを設定する。
-		    						//特別処理の指定がないタグなら
-		    					} else {
-		    						$(this).val(src);	//画像パスをvalue属性にセットする。
-		    					}
-		    				});
-		    			}
-		    		},'xml');
-		    	//IE6~9なら
-	    		}else{
-		    		//サムネイルが出ないことを伝える。
-		    		alert('サーバへの画像の保存の処理ができるまでIE6~9はサムネイルを使えません。');
-					var src = "photo/general/web/DSC_0064.jpg";	//画像の保存先を取得する。
-					$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
-						//画像タグであれば
-						if($(this)[0].tagName == 'IMG'){
-							$(this).attr('src', src);	//ソースパスを設定する。
-							//特別処理の指定がないタグなら
-						} else {
-							$(this).val(src);	//画像パスをvalue属性にセットする。
-						}
-					});
-	    		}
-			} else {
-				alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
-			}
-			//サーバから返されたデータをXMLとして扱う。
-		},"xml");
+		$(SEL_MY_GALLERY_TABLE).append(this.createNewPhoto(imgPath));
 	}
 	
 	/*
@@ -922,7 +849,7 @@ function createLittleContents(){
 	 */
 	this.replaceClone = function (elem){
 		var $target = $(elem);				//処理対象の要素のjQueryオブジェクトを作る。
-		var $clone = $(elem).clone(false);	//クローンを作る。
+		var $clone = $(elem).clone(FALSE);	//クローンを作る。
 		$(elem).after($clone);				//クローンを処理対象の要素の後ろに配置する。
 		$(elem).remove();					//処理対象の要素を消し、置き換えを終える。
 	}
@@ -941,15 +868,15 @@ function createLittleContents(){
 		var $siblings = $(button).siblings(targets);	//指定した兄弟要素を取得する。
 		$($siblings).each(function(){					//画像パスを削除する要素を走査する。
 			//画像タグであれば
-			if($(this)[0].tagName == 'IMG' || $(this).filter('[src]').length){
-				$(this).attr('src', "");	//ソースパスを空にする。
+			if($(this)[0].tagName == TAG_NAME_IMG || $(this).filter(SEL_ATTR_SRC).length){
+				$(this).attr(ATTR_SRC, EMPTY);	//ソースパスを空にする。
 				//IOSのデバイスなら、DOMそのものを生成し直して画像を空にする。
-				if(uaName == 'iphone' ||uaName == 'ipad' ||uaName == 'ipad'){
+				if(uaName == IPHONE ||uaName == IPAD ||uaName == IPAD){
 					$this.replaceClone(this);	//タグを置き換える。
 				}
 			//特別処理の指定がないタグなら
 			} else {
-				$(this).val("");	//value属性を空にする。
+				$(this).val(EMPTY);	//value属性を空にする。
 			}
 		});
 	}
@@ -988,19 +915,19 @@ function createLittleContents(){
 		
 		//Ajax通信でサーバに写真のデータを送信する。
 		$.ajax({
-			url:init['postJSON'],	//初期化データの連想配列にあるURLに送信する
-			method:"POST",			//POSTメソッドで送信量を気にせず送信できるようにする。
-			dataType:'text',		//JSONで返してもらう。	//サーバ側の処理を実装するまでダミーの処理を使う。
+			url:init[POST_JSON_KEY],	//初期化データの連想配列にあるURLに送信する
+			method:POST,			//POSTメソッドで送信量を気にせず送信できるようにする。
+			dataType:TEXT,		//JSONで返してもらう。	//サーバ側の処理を実装するまでダミーの処理を使う。
 			//dataType:'json',		//JSONで返してもらう。
 			data:{json:settingData, contentNum:"2"},	//作成した設定を送信する。
 			//通信が成功したら
 			success:function(json){
 				var success = 1;	//成功したかどうかのデータを取得する。//ダミーの処理を用意する。
 				//var success = parseInt(json['issuccess']);	//成功したかどうかのデータを取得する。返ってきた数値で判定する。
-				var message = "更新に失敗しました。時間をおいてお試しください。";	//メッセージを格納する変数を宣言する。
+				var message = TEXT_ERROR_SAVE_OPTION;	//メッセージを格納する変数を宣言する。
 				//取得したデータが成功のものなら
 				if(success){
-					message = "更新が完了しました。";	//成功メッセージを用意する。
+					message = TEXT_SUCCESS_SAVE_OPTION;	//成功メッセージを用意する。
 				}
 	
 				alert(message);	//結果をダイアログで表示する。
@@ -1008,7 +935,7 @@ function createLittleContents(){
 			//通信が失敗したら
 			error:function(){
 				//保存失敗の旨を伝える。
-				alert('通信に失敗しました。時間をおいてお試しください。');
+				alert(TEXT_ERROR_CONNECT);
 			}
 		});
 	}
@@ -1023,9 +950,9 @@ function createLittleContents(){
 	 */
 	this.createOptionData = function (){
 		//フォームデータを作る。
-		var retMap = createFormData($('.optionForm'));
+		var retMap = createFormData($(SEL_OPTION_FORM));
 		//ユーザIDを格納する。
-		retMap['userId'] = this.getUserId();
+		retMap[KEY_USER_ID] = this.getUserId();
 	
 		return retMap;	//作成したデータを返す。
 	}
@@ -1042,25 +969,25 @@ function createLittleContents(){
 		//settingsを走査する
 		for(key in settings){
 			//キーからname属性で対象の要素を取得する。
-			var $elem = $('[name="' + key + '"]');
+			var $elem = $(SEL_NAME_FRONT + key + SEL_CLOSE_ATTRIBUTE);
 			//elemのタイプを取得する。
-			var type = $elem.attr('type');
+			var type = $elem.attr(TYPE);
 			//値を取得する。
-			var value = settings[key]['value'];
+			var value = settings[key][VALUE];
 			
 			//ラジオボタンであれば
-			if(type == "radio"){
+			if(type == ATTR_RADIO){
 				//値に該当する要素をチェックする。
-				$elem.filter('[value="' + settings[key]['value'] + '"]').prop('checked', true);
+				$elem.filter(SEL_VALUE_FRONT + settings[key][VALUE] + SEL_CLOSE_ATTRIBUTE).prop(ATTR_CHECKED, TRUE);
 			//チェックボックスであれば
-			} else if(type == "checkbox"){
+			} else if(type == ATTR_CHECKBOX){
 				//チェックが入っているチェックボックスの値の配列の長さを取得する。
 				var valueLength = value.length;
 				
 				//チェックボックスの配列を走査する。
 				for(var i = 0; i < valueLength; i++){
 					//チェックが入っていることになる要素であれば
-					$elem.filter('[value="' + value[i] + '"]').prop('checked', true);
+					$elem.filter(SEL_VALUE_FRONT + value[i] + SEL_CLOSE_ATTRIBUTE).prop(ATTR_CHECKED, TRUE);
 				}
 			//それ以外であれば
 			} else {
@@ -1080,12 +1007,12 @@ function createLittleContents(){
 	 */
 	function useFileReader(selector){
 		$(selector).fileReader({		//fileReader.jsの関数をコールする
-			id: 'fileReaderSWFObject',	//fileReaderSWFObjectのIDを指定する
+			id: FILE_READER_ID,	//fileReaderSWFObjectのIDを指定する
 			//filereader.swf へのパス
-			filereader: 'js/source/filereader.swf',
+			filereader: PATH_FILE_READER,
 			//expressInstall.swf へのパス
-			expressInstall: 'js/source/expressInstall.swf',
-			debugMode: true			//デバッグモードをオンにする。
+			expressInstall: PATH_EXPRESS_INSTALL,
+			debugMode: TRUE			//デバッグモードをオンにする。
 		});
 	}
 	
@@ -1103,13 +1030,13 @@ function createLittleContents(){
 	this.createNewArticleList = function(){
 		var thisElem = this;
 		//各項目を走査する
-		$('.currentArticleList li').each(function(i){
-			var $elem = $('a:first',this);	//リンク部分を取得する
+		$(SEL_CUR_ARTICLE).each(function(i){
+			var $elem = $(SEL_A_FIRST,this);	//リンク部分を取得する
 			//クリックしたらブログの記事を作るコードを追加する
-			$elem.attr('onclick', 
+			$elem.attr(ONCLICK, 
 						'$(".numberingOuter,.blog").empty();$(".blog").append(creator.createTag(creator.json.blogArticle.table["' + i + '"], creator.getDomNode("blogArticle")));');
 				
-			var $elems = $('*',$elem);	//項目を取得する
+			var $elems = $(WILD_CARD,$elem);	//項目を取得する
 			//ブログ記事のオブジェクトを取得する
 			var articleNode = thisElem.json.blogArticle.table[String(i)];
 			//オブジェクトが取得できていなければ
@@ -1138,15 +1065,15 @@ function createLittleContents(){
 			var tagName = elems[j].tagName;
 			//タグ名でデータを取得するJSONノードを決める
 			//タイトル
-			if(tagName == 'P'){
+			if(tagName == TAG_NAME_P){
 				//値を入れる
 				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleTitleText.text);
 				//日時
-			} else if(tagName == 'TIME'){
+			} else if(tagName == TAG_NAME_TIME){
 				//値を入れる
 				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleDate.text);
 				//投稿者
-			} else if(tagName == 'SMALL'){
+			} else if(tagName == TAG_NAME_SMALL){
 				//値を入れる
 				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleUserName.text);
 			}
@@ -1168,11 +1095,11 @@ function createLittleContents(){
 		for(var i = 0; i < articleLength && elems[i] != void(0); i++){
 			for(key in articleNodes[i]){
 				//タイトルを作成する
-				$('p',elems[i]).text(articleNodes[i].title);
+				$(TAG_P,elems[i]).text(articleNodes[i].title);
 				//日付を作成する
-				$('time',elems[i]).text(articleNodes[i].date);
+				$(TAG_TIME,elems[i]).text(articleNodes[i].date);
 				//ユーザ名を作成する
-				$('small',elems[i]).text(articleNodes[i].user);
+				$(TAG_SMALL,elems[i]).text(articleNodes[i].user);
 			}
 		}
 	}
@@ -1217,7 +1144,7 @@ function createLittleContents(){
 	　*/
 	this.setSelectboxValue = function(selector) {
 		// optionタグをループで全て操作する
-		$(selector + ' option').each(function(i){
+		$(selector + SPACE + OPTION).each(function(i){
 			// optionタグの文字列を変数に入れる
 			var selectValue = $(this).text();
 			// 取得した文字列をvalue属性に入れる
@@ -1236,31 +1163,31 @@ function createLittleContents(){
 	this.saveCustomizeTabJsonFile = function(creator){
 		var $creator = $(creator);	//createTagのインスタンスをjQueryオブジェクトに入れる
 		//管理画面カスタマイズタブの保存ボタンを押したときのイベントを登録する
-		$(document).on('click', '#customize .saveButton', function(){
+		$(document).on(CLICK, SEL_CUTOMISE_SAVE_BUTTON, function(){
 			//更新ボタンのtarget属性に仕込まれた更新対象のJSONのトップノード名を取得する。
-			var topNodeName = $(this).attr('target'); 
+			var topNodeName = $(this).attr(ATTR_TARGET); 
 			//トップノード名からDOMのトップのIDを指定し、JSONを更新する。
 			//thisの中身がボタンなので、ownに保存したクラスのインスタンスで関数を呼び出す。
-			$updateElementJson($json[topNodeName], $('#'+topNodeName));
+			$updateElementJson($json[topNodeName], $(SHARP+topNodeName));
 			//JSONを保存用に文字列に変換する。
 			var jsonString = JSON.stringify($json[topNodeName]);
 			
 			//Ajax通信でJSONをファイルに保存する。
 			$.ajax({
-				url:'savetextfile.php',	//保存するプログラムのパスを指定する。
-				method:'POST',			//POSTメソッドで送信する。
+				url:PATH_SAVE_TEXT_FILE_PHP,	//保存するプログラムのパスを指定する。
+				method:POST,			//POSTメソッドで送信する。
 				//送信するデータを設定する。ファイルのパスとJSON文字列を送信する。
-				data:{text:jsonString, path:'source/' + topNodeName + '.json'},
-				dataType:'text',		//テキストデータを返してもらう。
+				data:{text:jsonString, path:DIR_JSON + topNodeName + '.json'},
+				dataType:TEXT,		//テキストデータを返してもらう。
 				//キャッシュを無効にする。
-				cache:false,
-				async:false,	//同期通信
+				cache:FALSE,
+				async:FALSE,	//同期通信
 				success:function(text){	//通信成功時
 					alert(text);	//保存結果のログを出す。
 				},
 				error:function(){		//通信失敗時
 					//通信失敗のログを出す。
-					alert('通信に失敗しました。時間をおいて試してください。');
+					alert(TEXT_ERROR_CONNECT);
 				}
 			});
 		});
@@ -2707,7 +2634,7 @@ function createLittleContents(){
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
 			sendObject[KEY_LESSON_DATE] = argObj.data.lessonDate.replace(/\//g,"-");
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-			sendObject[KEY_TABLE_DATA] = thisElem.json.[KEY_LESSON_TABLE][KEY_TABLE_DATA];
+			sendObject[KEY_TABLE_DATA] = thisElem.json[KEY_LESSON_TABLE][KEY_TABLE_DATA];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する

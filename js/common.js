@@ -7,47 +7,47 @@
 
 //授業状況
 var classworkStatuses = {
-		0:"予約可能"
-		,1:"開催済み"
-		,2:"中止"
-		,3:"中止"
-		,4:"予約不可"
+		0:CAN_RESERVED
+		,1:HELD_ALREADY
+		,2:STOP_RESERVED
+		,3:STOP_RESERVED
+		,4:CANNOT_RESERVED
 };
 
 //授業情報補足
-var noLongerBookable = "予約締切";
-var fullHouse = "満席";
+var noLongerBookable = CLOSING_RESERVED;
+var fullHouse = FULL_RESERVED;
 
 //ユーザ授業状況
 var userClassworkStatuses = {
-	0:"予約済み"
-	,1:"予約済み"
-	,2:"受付"
-	,3:"受講済み"
-	,10:"キャンセル(本人)"
-	,11:"キャンセル(管理者)"
-	,12:"中止"
+	0:HAS_RESERVED
+	,1:HAS_RESERVED
+	,2:RECEIPT
+	,3:HAS_LECTURES
+	,10:CANCEL_CUSTOMER
+	,11:CANCEL_ADMIN
+	,12:STOP_LESSON
 };
 
 //授業残席
 var restMarks = {
-	0:"✕"
-	,1:"△"
-	,4:"◯"
-	,7:"◎"
+	0:MARK_CROSS
+	,1:MARK_TRIANGLE
+	,4:MARK_CIRCLE
+	,7:MARK_DOUBLE_CIRCLE
 };
 
 var classworkCostColumns = [
-	'user_classwork_cost'
-	,'user_classwork_cost_aj'
-	,'flower_cost'
-	,'flower_cost_aj'
-	,'extension_cost'
+	COLUMN_USER_CLASSWORK_COST
+	,COLUMN_USER_CLASSWORK_COST_AJ
+	,COLUMN_FLOWER_COST
+	,COLUMN_FLOWER_COST_AJ
+	,COLUMN_EXTENTION_COST
 ];
 
 var defaultClassworkCostColumns = [
-	'default_user_classwork_cost'
-	,'default_flower_cost'
+	COLUMN_DEFAULT_USER_CLASSWORK_COST
+	,COLUMN_DEFAULT_FLOWER_COST
 ];
 
 /** クラス名:common
@@ -147,7 +147,7 @@ function common(){
 	this.isExist = function(rowData, target) {
 		// 連想配列にtargetのkeyがなければ例外を投げる
 		if(!target in rowData) {
-			throw new Error("can't select status. no " + target);
+			throw new Error(ERROR_COLUMN + target);
 		}
 	}
 
@@ -472,7 +472,7 @@ function common(){
 		//残席がバツのときにはクリックできないことを分かりやすくするために行の背景をグレーにする
 		if(rest == restMarks[0]) {
 			//行の色をグレーっぽくする
-			$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
+			$(tableName + ' tr:eq(' + rowNumber + ')').css(CSS_BACKGROUND, CSS_GRAY_COLOR);
 		}
 		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);

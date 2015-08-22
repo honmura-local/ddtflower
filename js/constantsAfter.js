@@ -34,6 +34,7 @@ AUTO											= 'auto';
 EVENT											= 'event';
 SLASH											= '/';					//スラッシュ記号
 DOT												= '.';					//ドット
+SHARP											= '#';
 EMPTY											= '';					//空文字
 DESTROY											= 'destroy';			//破棄命令の文字列
 BUTTONS											= 'buttons';
@@ -44,6 +45,47 @@ STR_ARROW_LEFT_DOUBLE							= '<<';
 SYMBOL_UNIT										= ' 〜 ';
 NONE											= 'none';					//noneの文字列
 HASH											= '#';			//ハッシュの文字
+UNKNOWN 										= 'unknown';
+MSIE 											= 'msie';
+MISE_6 											= 'msie 6.';
+MISE_7 											= 'msie 7.';
+MISE_8 											= 'msie 8.';
+MISE_9 											= 'msie 9.';
+MISE_10 										= 'msie 10.';
+IE 												= 'ie';
+IE_6											= 'ie6';
+IE_7											= 'ie7';
+IE_8											= 'ie8';
+IE_9											= 'ie9';
+IE_10											= 'ie10';
+ANDROID											= 'android';
+IPAD 											= 'ipad';
+IPOD 											= 'ipod';
+IPHONE 											= 'iphone';
+MOBILE 											= 'mobile';
+CHROME 											= 'chrome';
+SAFARI 											= 'safari';
+GECKO 											= 'gecko';
+OPERA 											= 'opera';
+LINUX_U 										= 'linux; u;';
+TRUE 											= true;
+FALSE 											= false;
+XML 											= 'xml';
+POST 											= 'POST';
+ONCLICK 										= 'onclick';
+WILD_CARD 										= '*';
+
+PUBLIFICATIONS 									= 'publifications';
+ZERO 											= '0';
+ONE 											= '1';
+TWO 											= '2';
+
+//公開範囲
+ALL_PUBLIFICATIONS 								= "全体";
+LIMIT_PUBLIFICATIONS 							= "友達のみ";
+NO_PUBLIFICATIONS 								= "非公開";
+
+ALL_PUBLIFICATIONS_VALUE 						= '0';
 
 //htmlタグ名
 TAG_TABLE										= 'table';						//tableタグ
@@ -53,17 +95,55 @@ TAG_TD											= 'td';
 TAG_P											= 'p';							//pタグ
 TAG_INPUT										= 'input';
 TAG_SELECT 										= 'select';
+TAG_A 											= 'a';
+TAG_IMG 										= 'img';
+TAG_DIV 										= 'div';
+TAG_TIME 										= 'time';
+TAG_SMALL 										= 'small';
+
+TAG_NAME_SELECT 								= 'SELECT';
+TAG_NAME_IMG 									= 'IMG';
+TAG_NAME_P 										= 'P';
+TAG_NAME_TIME 									= 'TIME';
+TAG_NAME_SMALL 									= 'SMALL';
 
 //タグ領域
 TAG_AREA_DIV									= '<div></div>';
 TAG_AREA_SPAN									= '<span></span>'; 
 TAG_AREA_LABEL									= '<label></label>';
 TAG_AREA_TEXTAREA								= '<textarea></textarea>'; 
+TAG_AREA_TIP 									= '<div class="tip"></div>';
+TAG_AREA_TR 									= '<tr></tr>';
+TAG_AREA_TD 									= '<td></td>';
+TAG_AREA_A 										= '<a></a>';
+TAG_AREA_INPUT 									= '<input>';
+TAG_AREA_OPTION 								= '<option></option>';
+TAG_AREA_SELECT 								= '<select></select>';
+TAG_AREA_P 										= '<p></p>';
+
+TAG_FRONT_TEXTAREA 								= '<textarea>';
+
 
 //html属性名
 ATTR_RADIO										= 'radio';
 ATTR_CHECKBOX									= 'checkbox';
 ATTR_COLSPAN									= 'colspan';
+ATTR_TIPS 										= 'tips';
+ATTR_HREF 										= 'href';
+ATTR_BLUR 										= 'blur';
+ATTR_SRC 										= 'src';
+ATTR_CHECKED 									= 'checked';
+ATTR_TARGET 									= 'target';
+
+CLASS_MYPHOTO 									= 'myPhoto';
+CLASS_MYPHOTOIMAGE 								= 'myPhotoImage';
+CLASS_MYPHOTODATE 								= 'myPhotoDate';
+CLASS_MYPHOTOTITLE 								= 'myPhotoTitle';
+CLASS_MYPHOTOUSER 								= 'myPhotoUser';
+CLASS_MYPHOTOCOMMENT 							= 'myPhotoComment';
+CLASS_MYPHOTOPUBLIATION							= 'myPhotoPublication';
+CLASS_MYPHOTOCHECK 								= 'myPhotoCheck';
+CLASS_BLANK_PHOTO 								= 'blankPhoto';
 
 //ディレクトリ
 DIR_JSON										= 'source/';				//jsonファイルが入っているディレクトリ
@@ -144,38 +224,79 @@ PATH_SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';					//目安箱 �
 PATH_MAIL_SEND_ENTRY_ADMIN_MAIL_PHP				= 'php/mailSendEntryAdminMail.php';					//管理者 メール送信用php
 PATH_LOGIN_DIALOG_TEMPLATE						= 'dialog/template/loginDialog.html';				//ログインダイアログのテンプレートHTLMパス
 PATH_LOGIN_DIALOG_JSON							= 'dialog/source/loginDialog.json';					//ログインダイアログのJSONパス
+PATH_FILE_READER 								= 'js/source/filereader.swf';		//filereader.swf へのパス
+PATH_EXPRESS_INSTALL 							= 'js/source/expressInstall.swf';	//expressInstall.swf へのパス
+
+PATH_SAVE_TEXT_FILE_PHP 						= 'savetextfile.php';
 
 //セレクタ
-SELECTOR_HEADER									= '.header';						//ヘッダーのクラス
-SELECTOR_LOGOUT_LINK							= '.logoutLink';					//ログアウトボタンのクラス
-SELECTOR_LOGIN_DIALOG							= '.loginDialog';					//ログインダイアログのクラスのセレクタ
-SELECTOR_LOGIN									= '.login';							//ログインボタンのクラスのセレクタ
-SELECTOR_MAIN									= '.main';									//メインのタグのセレクタ
-SELECTOR_HEADERS								= '.memberHeader, .adminHeader';	//会員ページ、管理者ページのヘッダーのクラス
-SELECTOR_NORMAL_HEADER							= 'header.header';							//通常のヘッダー
-SELECTOR_HEADER_VISIBLE							= 'header.header:visible';					//隠してないヘッダー
-SELECTOR_HEADER_HIDDEN							= 'header.header:hidden';					//隠してあるヘッダー
-SELECTOR_ADMIN_LESSON_LIST_DIALOG_TR 			= '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
-SELECTOR_ADMIN_LESSON_LIST_DIALOG_TD 			= '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
-SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
-SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
-SELECTOR_CLOSE_ATTRIBUTE						= '"]';
-SELECTOR_CONTAINS_FRONT							= 'contains(';
-SELECOTR_CLOSE_PARENTHESES						= ')';
-SELECTOR_KEYS									= '.keys'; 
-SELECTOR_MAIN									= '.main';
-SELECTOR_NUMBERING_OUGHTER						= '.numberingOuter';
-SELECTOR_VALUES									= '.values';
-SELECTOR_CURRENT_DIALOG							= '.dialog:last';			//カレントのダイアログのセレクタ
-SELECTOR_DIALOG_TABLE_RECORD					= SELECTOR_CURRENT_DIALOG + ' table tr';
-SELECTOR_DIALOG_TABLE_DATA						= SELECTOR_CURRENT_DIALOG + ' table tr td';
-SELECTOR_SP_SELECTOR_REPLACE_TABLE				= ' .replaceTable';
-SELECTOR_HEAD_LAST								= 'head link:last';					//headタグの最後のタグ
-SELECTOR_LOADING_SCREEN							= '.loading';				//ローディング画面のセレクタ
-SELECTOR_USERNAME_SELECTOR						= '.userName';				//ユーザ名
-SELECTOR_LESSON_TABLE							= DOT + 'lessonTable';		//授業テーブルのセレクタ
-SELECTOR_TABLE_AREA								= DOT + 'tableArea';
-SELECTOR_LESSON_TABLE_RECORD					= '.targetLessonTable';		//ターゲットの授業テーブル
+SEL_HEADER									= '.header';						//ヘッダーのクラス
+SEL_LOGOUT_LINK								= '.logoutLink';					//ログアウトボタンのクラス
+SEL_LOGIN_DIALOG							= '.loginDialog';					//ログインダイアログのクラスのセレクタ
+SEL_LOGIN									= '.login';							//ログインボタンのクラスのセレクタ
+SEL_MAIN									= '.main';									//メインのタグのセレクタ
+SEL_HEADERS									= '.memberHeader, .adminHeader';	//会員ページ、管理者ページのヘッダーのクラス
+SEL_NORMAL_HEADER							= 'header.header';							//通常のヘッダー
+SEL_HEADER_VISIBLE							= 'header.header:visible';					//隠してないヘッダー
+SEL_HEADER_HIDDEN							= 'header.header:hidden';					//隠してあるヘッダー
+SEL_ADMIN_LESSON_LIST_DIALOG_TR 			= '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
+SEL_ADMIN_LESSON_LIST_DIALOG_TD 			= '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
+SEL_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
+SEL_ALLCHILD_CLASS_FRONT					= ' > *[class="';
+SEL_NAME_FRONT								= '[name="';		//name属性を指定して取得するinputタグのセレクタの前部
+SEL_CLOSE_ATTRIBUTE							= '"]';
+SEL_CONTAINS_FRONT							= 'contains(';
+SEL_CLOSE_PARENTHESES						= ')';
+SEL_KEYS									= '.keys'; 
+SEL_MAIN									= '.main';
+SEL_NUMBERING_OUGHTER						= '.numberingOuter';
+SEL_VALUES									= '.values';
+SEL_CURRENT_DIALOG							= '.dialog:last';			//カレントのダイアログのセレクタ
+SEL_DIALOG_TABLE_RECORD						= SELECTOR_CURRENT_DIALOG + ' table tr';
+SEL_DIALOG_TABLE_DATA						= SELECTOR_CURRENT_DIALOG + ' table tr td';
+SEL_SP_SELECTOR_REPLACE_TABLE				= ' .replaceTable';
+SEL_HEAD_LAST								= 'head link:last';					//headタグの最後のタグ
+SEL_LOADING_SCREEN							= '.loading';				//ローディング画面のセレクタ
+SEL_USERNAME_SELECTOR						= '.userName';				//ユーザ名
+SEL_LESSON_TABLE							= DOT + 'lessonTable';		//授業テーブルのセレクタ
+SEL_TABLE_AREA								= DOT + 'tableArea';
+SEL_LESSON_TABLE_RECORD						= '.targetLessonTable';		//ターゲットの授業テーブル
+SEL_TIP										= '.tip';
+SEL_TIPLINK 								= '.tiplink';
+SEL_TIP_NOT_ANIMATED 						= '.tip:not(:animated)';
+SEL_IMITATE_FORM 							= '.imitateForm input:hidden';
+SEL_LAST_MY_PHOTO_LINK 						= '.myPhotoLink:last';
+SEL_LAST_MY_PHOTO_IMAGE 					= '.myPhotoImage:last';
+SEL_LAST_MY_PHOTO 							= '.myPhoto:last';
+SEL_MY_PHOTO_CHECK_CHECKED 					= '.myPhotoCheck:checked';
+SEL_MY_PHOTO 								= '.myPhoto';
+SEL_MY_PHOTO_DATE 							= '.myPhotoDate';
+SEL_MY_PHOTO_USER 							= '.myPhotoUser';
+SEL_MY_PHOTO_TITLE 							= '.myPhotoTitle';
+SEL_MY_PHOTO_COMMENT 						= '.myPhotoComment';
+SEL_MY_PHOTO_PUBLOCATION 					= '.myPhotoPublication';
+SEL_PHOTO_EDIT 								= '.myPhotoTitleEdit,.myPhotoCommentEdit,.myPhotoPublicationEdit';	//写真情報編集セレクタ
+SEL_CLICK_EDIT_SELECT 						= 'click.editSelect';
+SEL_MY_PHOTO_PUBLOCATION_EDIT 				= '.myPhotoPublicationEdit';
+SEL_OPTION_VALUE_FRONT 						= 'option[value="';
+SEL_OPTION_VALUE_BACK 						= '"]'
+SEL_DBCLIK_DBTAP 							= 'dblclick doubletap';
+SEL_MYPHOTO_CONTENTS 						= '.myPhotoTitle,.myPhotoComment,.myPhotoPublication';
+SEL_ATTR_SRC 								= '[src]';
+SEL_MY_GALLERY 								= '.myGallery';
+SEL_MY_GALLERY_TABLE 						= '.myGalleryTable tbody';
+SEL_OPTION_FORM 							= '.optionForm';
+SEL_PERSON_MAIL								= '.personEmail input';
+SEL_PERSON_MAIL_CHECK						= '.personEmailCheck input';
+SEL_COUNT									= '.count';
+SEL_NAME_FRONT								= '[name="';		//name属性を指定して取得するinputタグのセレクタの前部
+SEL_VALUE_FRONT 							= '[value="';
+SEL_INPUT_NAME_FRONT						= 'input[name="';	//name属性を指定して取得するinputタグのセレクタの前部
+SEL_ATTR_REAR_AND_CHECKED					= '"]:checked';		//属性を指定するセレクタの閉じ括弧＋チェックが入った要素の疑似セレクタの文字列
+SEL_CUR_ARTICLE 							= '.currentArticleList li';//ブログ記事項目
+SEL_A_FIRST 								= 'a:first';
+SEL_CUTOMISE_SAVE_BUTTON 					= '#customize .saveButton';
+
 
 //css属性名
 CSS_FONT_SIZE									= 'font-size';
@@ -187,6 +308,20 @@ CSS_PX_5 										= '5px';																	//5PX
 CSS_PX_115 										= '115px';																//115PX
 CSS_BACKGROUND									= 'background';
 CSS_GRAY_COLOR									= '#EDEDED';
+CSS_BORDER 										= 'border';
+CSS_BORDER_BLACK 								= '1px solid Black';
+CSS_YELLOW_COLOR 								= '#ffc';
+CSS_PX_2 										= '2px'
+CSS_FONT_SMALLER								= 'smaller';
+CSS_PADDING 									= 'padding';
+CSS_ABSOLUTE 									= 'absolute';
+CSS_BACKGROUND_COLOR 							= 'backgroundColor';
+CSS_BG_IMAGE_FRONT 								= 'background-image:url("';
+CSS_ATTR_CLOSE 									= '")';
+CSS_BG_IMAGE 									= 'background-image';
+CSS_URL_FRONT 									= 'url(';
+CSS_URL_BACK 									= ')';
+
 
 //jsonの固定key名
 KEY_TABLE_DATA									= 'tableData';	//DBから取り出した値全体のkey
@@ -274,12 +409,19 @@ COLUMN_SCHOOL_NAME								= 'school_name';				// 店舗名
 COLUMN_LESSON_NAME								= 'lesson_name';				//授業テーマ名
 COLUMN_TODAY									= 'today';						// 今日の日付
 COLUMN_LESSON_KEY								= 'lesson_key';					// 授業(classwork)のid
-COLUMN_DEFAULT_USER_CLASSWORK_COST				= 'default_user_classwork_cost';// デフォルト授業料
+COLUMN_DEFAULT_USER_CLASSWORK_COST				= 'default_user_classwork_cost';// デフォルト授業料、この列の値があれば予約可になる。
 COLUMN_USER_CLASSWORK_COST						= 'user_classwork_cost';		// 授業料
+COLUMN_USER_CLASSWORK_COST_AJ 					= 'user_classwork_cost_aj';
+COLUMN_FLOWER_COST 								= 'flower_cost';
+COLUMN_FLOWER_COST_AJ 							= 'flower_cost_aj';
+COLUMN_EXTENTION_COST 							= 'extension_cost';
 COLUMN_TIME_TABLE_DAY_KEY 						= 'time_table_day_key';			//授業の時限データのキー名
 COLUMN_TIMETABLE_KEY 							= 'timetable_key';				//スクールの時限ごとのキー名
-COLUMN_DEFAULT_USER_CLASSWORK_COST 				= 'default_user_classwork_cost';//DBのカラム名、この列の値があれば予約可になる。
+COLUMN_DEFAULT_FLOWER_COST 						= 'default_flower_cost';
 COLUMN_TIME_SCHEDULE 							= 'time_schedule';				//時間割の列名
+ERROR_COLUMN 									= "can't select status. no ";	//指定したカラムがなかった時に表示されるテキスト
+
+
 //新規追加カラム(加工後のデータが入るカラム)
 COLUMN_START_END_TIME 							= 'startEndTime';				//開始時間と終了時間を合わせたもの
 COLUMN_LESSON_DATE_TIME 						= 'lessonDateTime';				//年月日を含んだ開始時間と終了時間を合わせたもの
@@ -321,6 +463,16 @@ TEXT_INVALIDATE									= '✕';
 TEXT_CLOSE_JP									= '閉じる';
 TEXT_SEND_JP									= '送信';
 TEXT_SEND_TO_SERVER_MESSAGE 					= 'サーバへデータの送信を行いました。';
+TEXT_NEW 										= '新規'
+TEXT_IMAGE_COMMENT 								= '一言お願いします';		//写真アップロード時にデフォルトで表示されるコメント
+TEXT_DEF_PUBLIATION 							= '全体';				//写真公開設定デフォルト
+TEXT_ALERT_DELETE_PHOTO 						= '削除する写真を選んでください。';
+TEXT_ERROR_PHOTO_SAVE 							= '写真の保存に失敗しました。';
+TEXT_ERROR_UPLOAD_FILE 							= '無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG';
+TEXT_ERROR_SAVE_OPTION 							= '更新に失敗しました。時間をおいてお試しください。';
+TEXT_SUCCESS_SAVE_OPTION						= '更新が完了しました。';
+TEXT_ERROR_CONNECT								= '通信に失敗しました。時間をおいてお試しください。';
+
 
 //トップページのファイル名の定数
 FILE_PHP_TOPPAGE							 	= 'top.php';
@@ -396,7 +548,6 @@ SUGGESTION_BOX_CONFIRM_DIALOG					= 'suggestionBoxConfirmDialog';					//目安�
 MY_BLOG_CONFIRM_DIALOG							= 'myBlogConfirmDialog';						//マイブログ更新確認ダイアログ
 MAIL_MAGAZINE_CONFIRM_DIALOG					= 'mailmagazineConfirmDialog';					//メルマガ送信確認ダイアログ
 
-
 MEMBER_MAIL										= 0;											//目安箱 会員メールを示す数値
 SUGGESTION_MAIL									= 1;											//目安箱 目安箱メールを示す数値
 
@@ -432,7 +583,7 @@ EQ_FRONT										= ':eq(';
 CLOSE_AND_TD_TAG 								= ') td';
 
 //createTagクラスインスタンス用変数orキー名
-INSTANCE_CREATE_TAG									= 'create_tag';
+INSTANCE_CREATE_TAG								= 'create_tag';
 //クラスインスタンスを表すinstanceの文字列
 INSTANCE										= 'instance';
 //各ダイアログ専用クラスインスタンス用の変数orキー名
@@ -500,18 +651,85 @@ EMAIL_CHECK									= 'emailCheck';
 NUMBER_LIST									= 'numberList';
 //体験レッスン予約希望ダイアログ 英数字入力チェック対象のセレクタ
 IS_ALPHABET_CHECK_ELEMS_RESERVED_DIALOG		= 'input[name="personPhoneNumber"], input[name="email"], input[name="personCount"]';
-SELECTOR_PERSON_MAIL						= '.personEmail input';
-SELECTOR_PERSON_MAIL_CHECK					= '.personEmailCheck input';
-SELECTOR_COUNT								= '.count';
+
 ESCAPE_KAIGYOU								= "\n";				//改行のエスケープ文字
 DISABLED									= 'disabled';
 FORM_ELEMS									= 'input,button,textarea';	//フォームで使うタグ
 FORM_DATA									= 'formData';
-SELECTOR_NAME_FRONT							= '[name="';		//name属性を指定して取得するinputタグのセレクタの前部
-SELECTOR_INPUT_NAME_FRONT					= 'input[name="';	//name属性を指定して取得するinputタグのセレクタの前部
-SELECTOR_ATTR_REAR_AND_CHECKED				= '"]:checked';		//属性を指定するセレクタの閉じ括弧＋チェックが入った要素の疑似セレクタの文字列
-
 
 
 FORM_VALIE_INPUTS							= 'input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]';
 ATTR_DISABLED								= '[disabled]';
+
+
+
+//定数定義
+//レッスン予約数ステータス
+CAN_RESERVED								= '予約可能';
+HELD_ALREADY								= "開催済み";
+STOP_RESERVED 								= '中止';
+CANNOT_RESERVED 							= '予約不可';
+CLOSING_RESERVED 							= '予約締切';
+FULL_RESERVED								= '満席';
+
+//ユーザがレッスンを予約したステータス
+HAS_RESERVED 								= '予約済み';
+RECEIPT 									= '受付';
+HAS_LECTURES								= "受講済み";
+CANCEL_CUSTOMER 							= "キャンセル(本人)";
+CANCEL_ADMIN								= "キャンセル(管理者)";
+STOP_LESSON 								= "中止";
+
+//残席のマーク
+MARK_DOUBLE_CIRCLE							= "◎";
+MARK_CIRCLE									= "◯";
+MARK_TRIANGLE								= "△";
+MARK_CROSS									= "✕";
+
+//ツールチップ
+TIPS_DISPLAY_TIME 								= 300;	//300ミリ秒かけて表示する
+TIPS_FADEOUT_TIME 								= 500;	//500ミリ秒かけて非表示にする
+TIPS_Z_INDEX 									= 2
+
+
+CUT_START 										= 0;	//文字切り取り開始位置
+RESERVED 										= 'Reserved';
+HIDE_ON_CONTENT_CLICK							= 'hideOnContentClick';
+
+ALWAYS 											= "always";
+
+GALLERY_DISPLAY_TIME 							= 1000;
+
+EASYTABS_AJAX_XOMPLATE 							= 'easytabs:ajax:complete';
+SCRIPT_LINK 									= 'script, link';
+GALLERY 										= 'gallery';
+GUEST 											= "Guest";
+
+POST_PHOTO_URL_KEY 								= 'photoPost';
+
+//写真のデータのkey
+PHOTO_KEY_DATE 									= 'date';
+PHOTO_KEY_USER 									= 'user';
+PHOTO_KEY_TITLE 								= 'title';
+PHOTO_KEY_COMMENT								= 'comment';
+PHOTO_KEY_PUBLICATION 							= 'publication';
+
+POST_PHOTO_KEY 									= 'photo';
+POST_PHOTO_USER 								= 'userPhoto';
+POST_PHOTO_NAME 								= 'postedName';
+
+POST_JSON_KEY 									= 'postJSON';
+
+EDIT 											= 'Edit';
+
+KEY_SEND_PHOTO_TITLE 							= 'photo_title';
+KEY_SEND_PHOTO_USERKEY 							= 'user_key';
+POST_FILE_NAME 									= 'filename';
+
+
+FILE_READER_ID 									= 'fileReaderSWFObject'; 			//fileReaderSWFObjectのIDを指定する
+
+
+
+
+
