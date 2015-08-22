@@ -493,3 +493,13 @@ CHECKBOX									= 'checkbox';
 TYPE										= 'type';
 FORM_VALIE_INPUTS							= 'input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]';
 ATTR_DISABLED								= '[disabled]';
+//jQuery UI Positionの設定。X座標は中心 Y座標は画面上部に配置される様にする
+POSITION_CENTER_TOP							= {my:'center top',at:'center top', of:window};
+EXPERIENCE_RESERVED_COMPLETE_MESSAGE		= '以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。';
+EXPERIENCE_RESERVED_FAILED_MESSAGE			= 'メールの送信に失敗しました。時間を置いてお試しください。';
+SUBMIT										= 'submit';
+FORM										= 'form';
+ACTION										= 'action';
+MAIL_SEND_COMPLETE_CGI						= '.mailSendComplete';
+SEELCTOR_CONF_BACK_BUTTON					= '.confBackButton';
+SEND_COMPLETE								= 'sendComplete';

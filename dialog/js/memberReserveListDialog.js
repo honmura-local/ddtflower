@@ -37,8 +37,6 @@ function memberReserveListDialog(dialog){
 		this.dispContentsHeader();	//ダイアログ上部
 		this.dispContentsMain();		//ダイアログ中部
 		this.dispContentsFooter();	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
 	}
 
 	/* 関数名:constructionContent
@@ -183,6 +181,8 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContentsFooter = function(){
 		this.insertFooterContents();	//フッターのコンテンツを作る
+		//ダイアログの位置を修正する
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
 	
 	/* 関数名:insertFooterContents
