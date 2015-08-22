@@ -108,6 +108,7 @@ IMG_QUALITY									= 80;										//画像圧縮時の品質
 USER_IMAGE_UPLOADER							= 'uploadImage/imageUpload.php';			//画像アップローダーのパス
 
 CHAR_DOT										= '.';
+CHAR_COMMA										= '.';
 CHAR_HYPHEN										= '-';
 CHAR_RIGHT_ARROW								= '>';
 MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
@@ -503,3 +504,15 @@ ACTION										= 'action';
 MAIL_SEND_COMPLETE_CGI						= '.mailSendComplete';
 SEELCTOR_CONF_BACK_BUTTON					= '.confBackButton';
 SEND_COMPLETE								= 'sendComplete';
+
+//管理者ページ 授業一覧ダイアログのボタン判別定数
+CREATE_NEW_LESSON							= 0;	//新規作成ボタン
+EDIT_LESSON									= 1;	//行クリック(授業詳細ダイアログを開く)
+//管理者ページ 授業新規作成ダイアログのURL
+URL_ADMIN_NEW_LESSON_DIALOG					= 'dialog/adminNewLessonDialog.html';
+//管理者ページ 授業詳細ダイアログのURL
+URL_ADMIN_LESSON_DETAIL_DIALOG				= 'dialog/adminLessonDetailDialog.html';
+//クリックした行という意味合いのキー用文字列
+CLICKED_ROW									= 'clickedRow';
+//確認ダイアログのURL
+URL_CONFIRM_DIALOG							= 'dialog/confirmDialog.html';
