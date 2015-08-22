@@ -74,7 +74,7 @@ function common(){
 	/* 
 	 * 関数名:getTotalStudentsOfTimeTable
 	 * 概要  :時間割ごとの生徒の合計人数を求める
-	 * 引数  :rowData:テーブル1行のデータ
+	 * 引数  :rowData:テーブルのデータ配列
 	 * 返却値:時間ごとの合計人数が入った連想配列
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.23
@@ -116,7 +116,7 @@ function common(){
 	 */ 
 	this.isCanceled = function(classworkStatus) {
 		// 授業が中止するかどうかを見るための配列を作る
-		var classworkCancelStatus = new Array(3,2)
+		var classworkCancelStatus = new Array(3,2);
 		// 授業ステータスがキャンセルならtrueを返す
 		 if($.inArray(classworkStatus, classworkCancelStatus) >= 0) {
 			// if(classworkCancelStatus.indexOf(classworkStatus == -1)) {
@@ -906,7 +906,7 @@ function common(){
 				//配列にこの要素のname属性を格納する。
 				returns.push($(this).attr('name'));
 			}
-		})
+		});
 		
 		//チェックに引っかかった要素があれば配列を返し、なければnullを返す。
 		return returns.length > 0? returns: null;
@@ -1129,6 +1129,52 @@ function common(){
 		$(FORM_ELEMS, area).attr(DISABLED, DISABLED);
 	}
 
+	/* 関数名:setLessonDataToJSON
+	 * 概要　:授業のデータをcerateTagのJSONにセットする
+	 * 引数　:dialogEx dialog:ダイアログのクラスインスタンス
+	 * 		:createLittleContents create_tag:createLittleContentsクラスインスタンス
+	 * 返却値:なし
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 * 修正日　:2015.0822
+	 * 修正者　:T.Masuda
+	 * 内容	　:共通で使えるためcommon.jsに移動しました
+	 */
+	this.setLessonDataToJSON = function(dialog, create_tag){
+		//ダイアログのdataオブジェクトを取得する
+		var data = dialog.getArgumentDataObject();
+		//dbに接続する前に日付をクエリの置換連想配列に挿入する
+		create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
+		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
+		create_tag.json.lessonTable.user_key.value = data.userId;
+	}
+	
+	
+	/* 関数名:getTableJsonLength
+	 * 概要　:createTag(createLittleContents)クラスインスタンスのテーブル用JSONの行数を取得する
+	 * 引数　:createLittleContents create_tag:createLittleContentsクラスインスタンス
+	 * 		:String tableName:テーブルのJSONのキー
+	 * 返却値:int:テーブルの行数を返す
+	 * 作成日　:2015.0814
+	 * 作成者　:T.Masuda
+	 */
+	this.getTableJsonLength(create_tag, tableName){
+		//指定したキーのテーブルの行数を返す
+		return create_tag.json[tableName][TABLE_DATA_KEY].length;
+	}
+	
+	/* 関数名:createCloneObject
+	 * 概要　:オブジェクトのクローンを作成する
+	 * 引数　:Object object:クローン作成元のオブジェクト
+	 * 返却値:object:引数のオブジェクトのクローンを返す
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.createCloneObject(object){
+		//オブジェクトのクローンを作成して返す
+		return $.extend(true, {}, object);
+	}
+	
 	
 //ここまでクラス定義領域
 }

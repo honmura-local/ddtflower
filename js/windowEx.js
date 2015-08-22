@@ -209,7 +209,7 @@ function windowEx(url, argumentObj, returnObj){
 	 * 作成日　:015.08.17
 	 * 作成者　:T.Masuda
 	 */
-	this.getReturnStatusObject = function(statusObj) {
+	this.setReturnStatusObject = function(statusObj) {
 		//statusObjをセットする
 		this.returnObj.statusObj = statusObj;
 	}
