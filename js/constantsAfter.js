@@ -256,8 +256,8 @@ KEY_INSERT_MYBLOG_QUERY 						= 'insertMyBlog';
 KEY_UPDATE_MYBLOG_QUERY							= 'updateMyBlog';
 
 //ダイアログオプション名
-KEY_ADMIN_LESSON_DETAIL_DIALOG 					= 'adminLessonDtailDialog';
-
+KEY_ADMIN_LESSON_DETAIL 						= 'adminLessonDtailDialog';
+KEY_ADMIN_NEW_LESSON_CREATE 					= 'adminLessonCreate';
 //DBカラム名
 COLUMN_USER_KEY									= 'user_key';					//ユーザキー
 COLUMN_MAX_NUM									= 'max_num';					// １限に予約できる最大の数

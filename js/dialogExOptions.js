@@ -194,7 +194,7 @@ dialogExOption[ADMIN_LESSONLIST_DIALOG] = {
 };
 
 //管理者、授業詳細ダイアログ
-dialogExOption[KEY_ADMIN_LESSON_DETAIL_DIALOG] = {
+dialogExOption[KEY_ADMIN_LESSON_DETAIL] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。
@@ -231,7 +231,7 @@ dialogExOption[KEY_ADMIN_LESSON_DETAIL_DIALOG] = {
 }
 
 //管理者、授業追加ダイアログ
-dialogExOption[ADMIN_NEW_LESSON_CREATE] = {
+dialogExOption[KEY_ADMIN_NEW_LESSON_CREATE] = {
 		argumentObj:{
 			config:{
 				//幅を自動設定する。

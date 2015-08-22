@@ -2658,28 +2658,17 @@ function createLittleContents(){
 		//※このあたりはセレクタ関連に無駄が多かったです。
 		$(SELECTOR_CURRENT_DIALOG).on(CLICK, SELECTOR_CURRENT_DIALOG + SPACE + TAG_TR, function(){
 			//インプット用データオブジェクトを取得する
-			var argObj = dialogExOption[KEY_ADMIN_LESSON_DETAIL_DIALOG].argumentObj;
-			
+			var argObj = $.extend(true, {}, dialogExOption[KEY_ADMIN_LESSON_DETAIL]);
 			//クリックしたセルの行番号を取得する
-			var rowNum = $('.adminLessonListContent ' + TAG_TR).index(this) - 1;
+			var rowNum = $(SELECTOR_CURRENT_DIALOG + SAPCE + TAG_TR).index(this) - 1;
 			//次のダイアログに渡すデータを変数に入れる
-			var sendObject = thisElem.json['adminLessonDetailTable'][KEY_TABLE_DATA][rowNum];
-			
-			//次のダイアログに時間割を渡すためにテーブルに表示されている時間割の値を取得する
-			var timeSchedule = $(TAG_TD, this).eq(0).text();
+			var sendObject = thisElem.json[KEY_ADMIN_LESSON_DETAIL_TABLE][KEY_TABLE_DATA][rowNum];
 			//時間割を次のダイアログに入れるためのデータに入れる
-			sendObject['time_schedule'] = timeSchedule;
-			
-			//日付のハイフンを置換前のスラッシュ区切りにする
-			var date = sendObject.lesson_date.replace(/-/g,"/");
-			// 日付を日本語表示にする
-			var titleDate = changeJapaneseDate(date);
-			//ダイアログ用オブジェクトのコピーを用意して使う。
-			var dialogObj = $.extend(true, {}, dialogExOption[LESSON_DETAIL_DIALOG]);
+			sendObject[COLUMN_TIME_SCHEDULE] = thisElem.json[KEY_ADMIN_LESSON_DETAIL_TABLE][KEY_TABLE_DATA][rowNum][COLUMN_START_END_TIME];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
-			dialogObj.argumentObj.config[TITLE] = titleDate;
+			argObj.config[TITLE] = this.dialogClass.getArgumentObject().config[TITLE];
 			//インプット用データオブジェクトに授業データを追加する
-			$.extend(true, dialogObj.argumentObj.data, sendObject, {creator:thisElem});
+			$.extend(true, argObj.data, sendObject, {creator:thisElem});
 			
 			//授業詳細ダイアログを作る
 			var lessonDetailDialog = new dialogEx(	
@@ -2709,29 +2698,26 @@ function createLittleContents(){
 	 this.openAdminNewLessonCreateDialog = function() {
 		var thisElem = this;			//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
 		//レコードをクリックして新規授業追加ダイアログを開くイベントを登録する
-		$('.adminLessonListContent').on(CLICK, '.lessonAddButton', function(){
+		$(SELECTOR_CURRENT_DIALOG).on(CLICK, SELECTOR_CURRENT_DIALOG + SPACE + SELECTOR_CURRENT_DIALOG, function(){
 			//ダイアログのクラスインスタンスを取得する
-			var dialogClass = $('.adminLessonListContent')[0].instance;
-			var argObj = dialogClass.getArgumentObject();	//argumentObjを取得する
+			var argObj = this.dialogClass.getArgumentObject();	//argumentObjを取得する
 			
 			//新規授業追加ダイアログに渡す変数を宣言しておく
 			var sendObject = {};
 			//日本語名の日付を渡すデータを入れる(DBの形式をそろえるためスラッシュはハイフンに置き換える)
-			sendObject['lessonDate'] = argObj.data.lessonDate.replace(/\//g,"-");
+			sendObject[KEY_LESSON_DATE] = argObj.data.lessonDate.replace(/\//g,"-");
 			//取得したテーブルの情報があればそれを新規作成ダイアログに渡す
-			sendObject[KEY_TABLE_DATA] = thisElem.json.adminLessonDetailTable[KEY_TABLE_DATA];
+			sendObject[KEY_TABLE_DATA] = thisElem.json.[KEY_LESSON_TABLE][KEY_TABLE_DATA];
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
-			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
+			$.extend(true, dialogExOption[KEY_ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
 			
 			//新規授業追加ダイアログを作る
 			var newLessonCreateDialog = new dialogEx(
-					PATH_ADMIN_NEWLESSON_CREATE_DIALOG, 
-					dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj, 
-					dialogExOption[ADMIN_NEW_LESSON_CREATE].returnObj);
+					PATH_ADMIN_LESSON_CREATE_DIALOG, 
+					dialogExOption[KEY_ADMIN_LESSON_CREATE].argumentObj);
 			//ダイアログを開くときのテーブルの値を編集して表示する
-			//memberReservedConfirmDialog.setCallbackOpen(reservedLessonListDialogOpenFunc);
 			newLessonCreateDialog.setCallbackClose(newLessonEntry);	//閉じるときのイベントを登録
 			newLessonCreateDialog.run();	//主処理を走らせる。
 		});

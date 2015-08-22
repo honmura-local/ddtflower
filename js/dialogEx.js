@@ -632,19 +632,15 @@ function newLessonEntry() {
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
 		var loopEndCount = data[KEY_TABLE_DATA].length;
 		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
-		var newLesoonData = getInputData('lessonData');
+		var newLesoonData = getInputData(KEY_LESSON_DATA);
 		
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-			//time_table_day_keyが空白のものはループを飛ばす
-			if(data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'] == "") {
-				//次のループに行く
-				continue;
-			}
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData['timetable_key'] == data[KEY_TABLE_DATA][loopStartCount]['timetable_key'] && data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'] != "") {
+			if(newLesoonData[COLUMN_TIMETABLE_KEY] == data[KEY_TABLE_DATA][loopStartCount][COLUMN_TIMETABLE_KEY] 
+				&& data[KEY_TABLE_DATA][loopStartCount][COLUMN_TIME_TABLE_DAY_KEY] != "") {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data[KEY_TABLE_DATA][loopStartCount]['time_table_day_key'];
+				timeTableDayKey = data[KEY_TABLE_DATA][loopStartCount][COLUMN_TIME_TABLE_DAY_KEY];
 				//ループを終わらせる
 				break;
 			}
