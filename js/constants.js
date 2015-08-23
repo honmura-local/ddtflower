@@ -393,7 +393,6 @@ DATE_JAPANESE								= 'dateJapanese';
 //jQuery UI Position用文字列。ダイアログの座標指定に使う
 POSITION									= 'position';
 DIALOG_POSITION 							= 'center top';				//ダイアログのポジション
-LESSON_STATUS								= 'lessonStatus';
 //テーブルの領域名とセレクタ
 TABLE_AREA									= 'tableArea';
 SELECTOR_TABLE_AREA							= DOT + TABLE_AREA;
@@ -607,5 +606,22 @@ CLASS_LESSON_MEMO 							= 'memoArea';				//授業メモ設定領域クラス名
 //管理者、メール・お知らせダイアログ
 UNSELECTED_USER 							= 0;	//会員が一人も選択されていないときの数値
 
+//dialogEx.js
+WINDOW_EX_PATH 								= 'js/windowEx.js';		//windowEx.jsのパス
 
+//dialog/js/experienceReservedDialog.js
+EXPERIENCE_RESERVED_DIALOG_HTML 			= 'template/reserved.html';
+EXPERIENCE_CONFIRM_TEXT 					= '入力した内容で体験レッスンの予約希望を送信します。';
+SEL_FORM_DIALDOG 							= 'form.dialog';
+EXPERIENCE_MAIL_SEND_PHP 					= 'php/mailSendEntryExperienceReserved.php';
+
+//loginDialog.js
+KEY_LOGIN 									= 'login';		
+KEY_LOGIN_ID 								= 'userName';
+KEY_LOGIN_PASSWORD							= 'password';
+
+//adminLessonListDialog.js
+TMP_CREATE_TABLE 							= 'template/createTable.html';	//テーブルテンプレート
+TMP＿TABLE_AREA 								= 'template/tableArea.html';	//テーブルを囲むdivタグテンプレート
+TMP_LESSON_STATUS 							= 'template/lessonStatus.html';	//授業ステータステンプレ―ト
 

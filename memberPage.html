@@ -140,7 +140,7 @@
 						cancelDialogOpenFromReservedTable(memberInfo, creator);
 					}
 					//キャンセル料率のレートをアコーディオン形式で表示する
-					creator.accordionSetting('.lessonAccordion', '.attention');
+					creator.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
 					//予約中授業テーブル絞り込みボタン機能を実装する
 					creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

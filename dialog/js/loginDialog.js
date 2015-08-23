@@ -157,9 +157,9 @@ function loginDialog(dialog){
 	
 	this.setLoginInformation = function(userId, password){
 		//JsonDBManagerに接続するために送信するjsonにidをセットする
-		this[VAR_CREATE_TAG].json.login.userName.value = userId;
+		this[VAR_CREATE_TAG].json[KEY_LOGIN][KEY_LOGIN_ID][VALUE] = userId;
 	    //JsonDBManagerに接続するために送信するjsonにパスワードをセットする
-	   	this[VAR_CREATE_TAG].json.login.password.value = password;
+	   	this[VAR_CREATE_TAG].json[KEY_LOGIN][KEY_LOGIN_PASSWORD][VALUE] = password;
 	}
 
 	/* 関数名:getLoginInformation
