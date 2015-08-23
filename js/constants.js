@@ -268,9 +268,12 @@ UI_DIALOG_BUTTON_PANEL						= '.ui-dialog-buttonpane';						//jQuery UI Dialog�
 
 //選択されたボタンを表す値。
 UNSELECTED 									= -1;											//ボタン未選択の値
-NO											= 0;											//「はい」ボタンの値
-YES											= 1;											//「いいえ」ボタンの値
-CANCEL										= 2;											//「キャンセル」ボタンの値
+NO											= 0;	//いいえ										//「はい」ボタンの値
+YES											= 1;	//はい								//「いいえ」ボタンの値
+CANCEL										= 2;	//キャンセル
+CREATE_NEW									= 3;	//新規作成
+CONFIRM										= 4;	//確認
+CLOSE_BUTTON								= 5;	//閉じる
 
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名

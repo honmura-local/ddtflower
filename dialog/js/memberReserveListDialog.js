@@ -13,7 +13,9 @@
  */
 function memberReserveListDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
-
+	//予約・キャンセルの操作分岐のための数値
+	this.manipulation = 0;
+	
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
@@ -123,10 +125,10 @@ function memberReserveListDialog(dialog){
 	 */
 	this.customizeJson = function(){
 		//テーブル置換用の時限データを取得する
-//		this.getReplacedTableData(tableName);
+		this.getReplacedTableData(tableName);
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//授業一覧のJSON配列に授業開始~終了時間の列を追加する
-//		this.setStartAndEndTimeColumn(LESSON_TABLE, START_AND_END_TIME, START_TIME, END_TIME, ' ~ ');
+		this.setStartAndEndTimeColumn(LESSON_TABLE, START_AND_END_TIME, START_TIME, END_TIME, ' ~ ');
 	};
 
 	
@@ -166,36 +168,18 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		//ダイアログのコンテンツを挿入する
-		this.insertDialogContents();
-	}
-
-	/* 関数名:dispContentsFooter
-	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsFooter = function(){
-		this.insertFooterContents();	//フッターのコンテンツを作る
-		//ダイアログの位置を修正する
-		this.setDialogPosition(POSITION_CENTER_TOP);
-	}
-	
-	/* 関数名:insertFooterContents
-	 * 概要　:フッターのコンテンツを作る
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0815
-	 * 作成者　:T.Masuda
-	 */
-	this.insertFooterContents = function(){
+		//予約可能授業一覧テーブルの外側の領域を作る
+		this.create_tag.outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
+		//予約できる授業のデータ一覧テーブルを作る
+		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
+		//テーブルの値を置換する
+		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
+		//テーブルの値をクライアント側で編集して画面に表示する
+		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
 		this.create_tag.outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
 	}
-	
+
 	/* 関数名:setCallback
 	 * 概要　:ダイアログのイベントコールバックを設定する
 	 * 引数　:なし
@@ -208,27 +192,10 @@ function memberReserveListDialog(dialog){
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 		//予約確認ダイアログを出すイベントを登録する
 		this.whenRecordSelectEvent(SELECTOR_LESSON_TABLE);
+		//テーブルの行クリックイベントを登録する
+		this.setCallbackRowClick();	
 	}
 	
-	/* 関数名:insertDialogContents
-	 * 概要　:ダイアログのメインのコンテンツを作る
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日:2015.0815
-	 * 作成者:T.Masuda
-	 */
-	this.insertDialogContents = function(){
-		//予約可能授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
-		//予約できる授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
-		//テーブルの値を置換する
-		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
-
-		//テーブルの値をクライアント側で編集して画面に表示する
-//		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
-	}
-
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -252,6 +219,21 @@ function memberReserveListDialog(dialog){
 		return argumentObj;	//生成したオブジェクトを返す
 	}
 
+	/* 関数名:updateTable
+	 * 概要　:テーブルを更新する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:015.08.23
+	 * 作成者　:T.Masuda
+	 */
+	this.showAlertNoReserve = function(){
+		//ダイアログの専用のクラスインスタンスを取得する
+		var dialogBuilder = this.dialogBuilder;
+		$(CURRENT_DIALOG).empty;	//ダイアログを空にする
+		//ダイアログの内容を作り直す
+		dialogBuilder.dispContents();
+	}
+	
 	/* 関数名:showAlertNoReserve
 	 * 概要　:予約なしのアラートダイアログを作る
 	 * 引数　:なし
@@ -265,41 +247,41 @@ function memberReserveListDialog(dialog){
 		//ダイアログを閉じるときは破棄するように設定する
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 	}
-
-	/* 関数名:whenRecordSelectEvent
-	 * 概要　:テーブルのレコードを渡して処理させるダイアログを開くイベントを登録する
-	 * 引数　:String target:データ取得元のテーブルのセレクタ
+	
+	/* 関数名:callbackRowClick
+	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数(内容はオーバーライドして定義されたし)
+	 * 引数　:baseDialog thisElem:イベントを登録したクラスインスタンス
 	 * 返却値:なし
-	 * 作成日　:2015.08.15
-	 * 作成者　:T.Masuda 
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
 	 */
-	this.whenRecordSelectEvent = function(target) {
-		var thisElem = this;							//イベント内でのクラスインスタンス参照のため、変数にthisを格納する
-		//予約一覧の行を選択して、予約確認ダイアログを表示する処理
-		$dialog.on(CLICK + TAG_CHILD_TR, target, function(){
-			//クリックした行の番号とデータを取得する
-			this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
-			//残席の記号を取得する
-			var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(INT_4).text();
-			
-			//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-			if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
-				&& restMarkNow != CHAR_INVALIDATE) {
-				var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
-				//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-				if(thisElem.create_tag.json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
-					//予約確認ダイアログのURLをセットする
-					dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
-				//予約済みであれば
-				} else {
-					//予約キャンセルダイアログのURLをセットする
-					dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
-				}
-				
-				this.openDialog(dialogUrl);	//ダイアログを開く
+	this.callbackRowClick = function(thisElem) {
+		//クリックした行の番号とデータを取得する
+		this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
+		//残席の記号を取得する
+		var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(INT_4).text();
+		
+		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+		if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+			&& restMarkNow != CHAR_INVALIDATE) {
+			var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
+			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
+			if(thisElem.create_tag.json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
+				//予約確認ダイアログのURLをセットする
+				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
+				//予約操作を行う
+				this.manipulation = 0;
+			//予約済みであれば
+			} else {
+				//予約キャンセルダイアログのURLをセットする
+				dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
+				//キャンセル操作を行う
+				this.manipulation = 2;
 			}
-		});
-	}
+			
+			this.openDialog(dialogUrl);	//ダイアログを開く
+		}
+	};
 
 	/*
 	 * 関数名:getClickTableRecordData
@@ -325,6 +307,63 @@ function memberReserveListDialog(dialog){
 		//取得した行の番号とデータを返す
 		return returnObject;
 	}
+	
+	/* 関数名:updateJson
+	 * 概要　:サーバへクエリを投げる前に、送信するJSONデータを加工する
+	 * 引数　:baseDialog dialogBuilder:ダイアログ専用クラスインスタンス
+	 * 返却値:Object:DB更新用データをまとめたオブジェクトを返す
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.updateJson = function(dialogBuilder){
+		//インプット用データオブジェクトを取り出す
+		var retObj = commonFuncs.createCloneObject(dialogBuilder.dialogClass.getArgumentDataObject());
+		//DB操作によってクエリを切り替える
+		switch(this.manipulation){
+		//通常の予約
+		case 0:retObj.db_setQuery = this[VAR_CREATE_TAG].sendReservedData;
+			break;
+		//再予約
+		case 1:retObj.db_setQuery = this[VAR_CREATE_TAG].updateReservedData;
+			break;
+		//キャンセル
+		case 2:retObj.db_setQuery = this[VAR_CREATE_TAG].cancelReservedData;
+			break;
+		default:break;
+		}
+		retObj.db_setQuery = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
+		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
+		return retObj;
+	};
+	
+	/* 関数名:registerReserved
+	 * 概要　:DBにデータを送信して授業の予約を行う
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.registerReserved = function(){
+		//押されたボタンで処理を分岐させる
+		switch(this.dialogClass.getPushedButtonState()){
+		//はいボタンが押されたパターン
+		case YES:
+				//親のダイアログ専用クラスインスタンスを取得する
+				var parentDialogBuilder = parentDialog.dom.dialogBuilder;
+				//親ダイアログでDB更新用JSONをまとめる
+				var sendObject = parentDialogBuilder.updateJson();
+				//クエリを発行してキャンセル処理を行う
+				this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+				parentDialogBuilder.dispContents();	//予約一覧ダイアログの中身を更新する
+				break;	//switchを抜ける
+		default:break;	//switchを抜ける
+		}
+	}
+
+	//ダイアログを閉じるときは破棄するように設定する
+	this.dialogClass.destroy();
+
 }
 
 //継承の記述
