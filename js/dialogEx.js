@@ -608,6 +608,41 @@ function cancelLessonDialogClose() {
 	}
 }
 
+
+/* 
+ * 関数名:getNewLessonData
+ * 概要  :管理者、授業詳細タブで新規に授業を授業を登録するときに必要となる、授業日と時限idを取得する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.23
+ */
+
+function getNewLessonData() {
+	var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
+	var timeTableDayKey = "";
+	//授業一覧のデータを長さを取得し、ループが終わる回数として使う
+	var loopEndCount = data[TABLE_DATA_KEY].length;
+	//受け取った授業一覧データから時限データを探す
+	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
+		//新規授業作成データの時限データが見つかった時の処理
+		if(newLesoonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
+			//時限データを取得し、ループを終える
+			timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
+			//ループを終わらせる
+			break;
+		}
+	}
+	
+	//新しく授業データを作るために授業日を連想配列に入れる
+	var lessonData = {
+		lessonDate:data.lessonDate,				//受講日
+		time_table_day_key:timeTableDayKey 	//授業時限キー
+	};
+	return lessonData;
+}
+
 /* 
  * 関数名:newLessonEntry
  * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理
@@ -625,31 +660,12 @@ function newLessonEntry() {
 
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
-		var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-	
-		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
-		var timeTableDayKey = "";
-		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-		var loopEndCount = data[TABLE_DATA_KEY].length;
-		//新規授業追加ダイアログで入力された値を取得し、DBに値をinsertする時に使う
-		var newLesoonData = getInputData(CLASS_NEW_LESSON_DATA_P);
-		
-		//受け取った授業一覧データから時限データを探す
-		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
-				//時限データを取得し、ループを終える
-				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
-				//ループを終わらせる
-				break;
-			}
-		}
-		
 		//新しく授業データを作るために授業日を連想配列に入れる
-		var lessonData = {lessonDate:data.lessonDate,
-						time_table_day_key:timeTableDayKey}
+		var lessonData = getNewLessonData();
+		//授業の設定内容を首都kする
+		var lessonConfig = getInputData(CLASS_LESSON_DATA);
 		//新しく授業データを挿入するために日付データを含めて送信する
-		var sendReplaceQuery = $.extend(true, {}, newLesoonData, lessonData);
+		var sendReplaceQuery = $.extend(true, {}, lessonData, lessonConfig);
 		
 		//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
 		if(timeTableDayKey == EMPTY_STRING) {
@@ -665,8 +681,6 @@ function newLessonEntry() {
 			//すでにある時限データを使って授業データを作る
 			dialogClass.creator.setDBdata(dialogClass.creator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
 		}
-		//授業詳細一覧テーブルを更新する
-		data.creator.tableReload('adminLessonDetailTable');
 	}
 }
 
