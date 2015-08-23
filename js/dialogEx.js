@@ -6,8 +6,6 @@
  * 場所　　:js/dialogEx.js
  */
 
-WINDOW_EX_PATH = 'js/windowEx.js';		//windowEx.jsのパス
-
 /* クラス名:dialogEx
  * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
  * 引数　　:String url:ダイアログのクラス名
@@ -32,7 +30,7 @@ function dialogEx(url, argumentObj, returnObj){
 	this.defaultArgumentObj = {
 		//ダイアログの設定データオブジェクト
 		config:{
-			width: 'auto',		//幅を自動調整する
+			width: STR_AUTO,		//幅を自動調整する
 			autoOpen : true,	//作成時の自動オープンを無効にする
 			modal : true,		//モーダル表示
 			resizable : false,	//ドラッグでのリサイズ可否
@@ -205,7 +203,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 */
 	this.setCallbackClose = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.argumentObj.config['close'] = func: console.log('setCallBackClose recieved enythingeles function');
+		func instanceof Function? this.argumentObj.config[CLOSE] = func: console.log('setCallBackClose recieved enythingeles function');
 	}
 
 	/* 関数名:setCallbackCloseOnAfterOpen
@@ -238,7 +236,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 */
 	this.setCallbackOpen = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.argumentObj.config['open'] = func: console.log('setCallBackOpen recieved enythingeles function');
+		func instanceof Function?  this.argumentObj.config[STR_OPEN] = func: console.log('setCallBackOpen recieved enythingeles function');
 	}
 
 	/* 関数名:setCallbackCreate
@@ -438,34 +436,6 @@ function disappear(){
 
 
 
-
-
-/* 
- * 関数名:insertConfirmReserveJsonDialogValueEx
- * 概要  :授業一覧レコードの値を予約確定ダイアログのJSONに渡す。
- * 引数  :Object targetJson:値を渡す元となるオブジェクト
- 		String:dialogJsonKey:ダイアログのkey名
- 		:Object creator:　creatorクラスオブジェクト
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.31
- */
-function insertConfirmReserveJsonDialogValueEx(targetJson, dialogJsonKey, creator){
-	//値を格納するオブジェクトの、可能なまで深い参照を変数に格納する
-	var object = creator.json[targetJson];
-	//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
-	var receivedObject = $(DOT + dialogJsonKey)[0].instance.getArgumentDataObject();
-	//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-	object.lessonConfirm.lessonInfo.timeSchedule.text = buildHourFromTo(receivedObject);	//受講時間
-	object.lessonConfirm.lessonInfo.store.text = receivedObject.school_name;				//店舗名
-	object.lessonConfirm.lessonInfo.course.text = receivedObject.lesson_name;				//授業テーマ
-	object.lessonConfirm.lessonInfo.price.text = sumCost(receivedObject);					//受講料
-	object.attention.cancelRateValue.lesson_key.value = receivedObject.lesson_key;			//受講授業id(キャンセル)
-	object.attention.addPointValue.lesson_key.value = receivedObject.lesson_key;			//受講授業id(加算ポイント)
-}
-
-
-
 /*
  * 関数名:getDialogTitleDate
  * 概要　:ハイフン形式の日付から日付を日本語表記にしたものを取得する
@@ -655,9 +625,7 @@ function getNewLessonData() {
  * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
  */
 function newLessonEntry() {
-	
 	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
-
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
 		//新しく授業データを作るために授業日を連想配列に入れる
@@ -695,7 +663,7 @@ function onCloseLessonDetailDialog(){
 	//createLittleContentsクラスインスタンスを取り出すため、argumentObjectのdataを取り出す
 	var data = this.instance.getArgumentDataObject();	
 	//更新に合わせ、対象のテーブルの値を更新する
-	data.creator.tableReload('adminLessonDetailTable');
+	data.creator.tableReload(ADMIN_LESSON_DETAIL_TABLE);
 	this.instance.destroy();		//ダイアログを完全に破棄する
 }
 

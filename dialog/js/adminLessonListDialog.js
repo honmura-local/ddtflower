@@ -62,7 +62,7 @@ function adminLessonListDialog(dialog){
 		//管理者ページ 授業一覧ダイアログのjsonデータを取得する
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_LIST_DIALOG_HTML);
 		//授業データを取得する
-		commonFuncs.setLessonDataToJSON(this[DIALOG_CLASS], this[VAR_CREATE_TAG]);	
+		commonFuncs.setLessonDataToJSON(this[DIALOG_CLASS], this[VAR_CREATE_TAG]);
 	}
 
 	/* 関数名:getDom
@@ -75,9 +75,9 @@ function adminLessonListDialog(dialog){
 	 */
 	this.getDom = function(){
 		//授業データ一覧ダイアログのテンプレートを取得する
-		this[VAR_CREATE_TAG].getDomFile('template/createTable.html');
-		this[VAR_CREATE_TAG].getDomFile('template/tableArea.html');
-		this[VAR_CREATE_TAG].getDomFile('template/lessonStatus.html');
+		this[VAR_CREATE_TAG].getDomFile(TMP_CREATE_TABLE);
+		this[VAR_CREATE_TAG].getDomFile(TMP＿TABLE_AREA);
+		this[VAR_CREATE_TAG].getDomFile(TMP_LESSON_STATUS);
 	};
 
 	/* 関数名:customizeJson
@@ -113,7 +113,7 @@ function adminLessonListDialog(dialog){
 		//授業一覧のテーブルを作る
 		this.createTable();
 		//レッスンのステータス領域を作る
-		this[VAR_CREATE_TAG].outputTag('lessonStatus', 'lessonStatus', CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(LESSON_STATUS, LESSON_STATUS, CURRENT_DIALOG_SELECTOR);
 	}
 
 	/* 関数名:createTable
@@ -130,9 +130,9 @@ function adminLessonListDialog(dialog){
 		//データがなければテーブルは作らない
 		if(commonFuncs.getTableJsonLength(this[VAR_CREATE_TAG], LESSON_TABLE) != 0) {
 			//授業一覧テーブルの外側の領域を作る
-			this[VAR_CREATE_TAG].outputTag('tableArea', 'tableArea', CURRENT_DIALOG_SELECTOR);
+			this[VAR_CREATE_TAG].outputTag(TABLE_OUTER, TABLE_OUTER, CURRENT_DIALOG_SELECTOR);
 			//授業のデータ一覧テーブルを作る
-			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, '.tableArea');
+			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, DOT+TABLE_OUTER);
 		}
 	}
 
@@ -256,7 +256,7 @@ function adminLessonListDialog(dialog){
 		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
 		var recordData = tableData[counter];
 		//レッスンテーマ名または店舗名が空であるならばその行を飛ばす
-		if(recordData[COLUMN_NAME_LESSON_NAME] !="" && recordData[COLUMN_NAME_SCHOOL_NAME] != "") {
+		if(recordData[COLUMN_NAME_LESSON_NAME] !=EMPTY_STRING && recordData[COLUMN_NAME_SCHOOL_NAME] != EMPTY_STRING) {
 			// 開始日時と終了時刻を組み合わせた値を入れる
 			var timeSchedule = buildHourFromTo(recordData);
 			//状況を入れる

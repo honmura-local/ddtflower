@@ -62,7 +62,7 @@ function experienceReservedDialog(dialog){
 	 */
 	this.getDom = function(){
 		//体験レッスン予約希望ダイアログのテンプレートHTMLを取得する
-		this[VAR_CREATE_TAG].getDomFile('template/reserved.html');	//タグを作るためにテンプレートのDOMを取得する。
+		this[VAR_CREATE_TAG].getDomFile(EXPERIENCE_RESERVED_DIALOG_HTML);	//タグを作るためにテンプレートのDOMを取得する。
 	};
 	
 	
@@ -102,19 +102,19 @@ function experienceReservedDialog(dialog){
 	this.insertDialogContents = function(){
 		//createTagでダイアログに必要なタグを生成する。
 		//予約日時の隠しフォーム
-		this.create_tag.outputTag(RESERVED_DATE, RESERVED_DATE, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(RESERVED_DATE, RESERVED_DATE, CURRENT_DIALOG);
 		//注意書き
-		this.create_tag.outputTag(RESERVED_SUMMARY, RESERVED_SUMMARY, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(RESERVED_SUMMARY, RESERVED_SUMMARY, CURRENT_DIALOG);
 		//作品選択
-		this.create_tag.outputTag(SPECIAL_CONTRUCT, SPECIAL_CONTRUCT, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SPECIAL_CONTRUCT, SPECIAL_CONTRUCT, CURRENT_DIALOG);
 		//時限選択
-		this.create_tag.outputTag(SPECIAL_SCHEDULE, SPECIAL_SCHEDULE, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SPECIAL_SCHEDULE, SPECIAL_SCHEDULE, CURRENT_DIALOG);
 		//予約の予備情報
-		this.create_tag.outputTag(SUBINFO, SUBINFO, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SUBINFO, SUBINFO, CURRENT_DIALOG);
 		//お客様の情報入力欄
-		this.create_tag.outputTag(PERSON_INFORMATION, PERSON_INFORMATION, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(PERSON_INFORMATION, PERSON_INFORMATION, CURRENT_DIALOG);
 		//メールの件名の値を格納する隠しフォーム
-		this.create_tag.outputTag(MAIL_SUBJECT, MAIL_SUBJECT, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(MAIL_SUBJECT, MAIL_SUBJECT, CURRENT_DIALOG);
 	}
 
 	/* 関数名:setConfig
@@ -195,7 +195,7 @@ function experienceReservedDialog(dialog){
 		    		{
 		    			parentDialog:this.dialogClass.dom,			//今のダイアログのDOM
 		    			callback:sendReservedMail,					//予約のメールを送る
-		    			message:'入力した内容で体験レッスンの予約希望を送信します。'
+		    			message:EXPERIENCE_CONFIRM_TEXT
 		    		}			
 		    	);
 		    // このダイアログの入力要素を一時的に無効化する。
@@ -281,13 +281,13 @@ function experienceReservedDialog(dialog){
 		//はいボタンが押されていたら
 			case YES:
 				var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-				var formObj = commonFuncs.createFormObject($('form.dialog'));
+				var formObj = commonFuncs.createFormObject($(SEL_FORM_DIALDOG));
 				//メール本文を作成する
 				var mailContent = this.createExperienceReservedMail(formObj);
 				//送信するデータをまとめたオブジェクトを作る
 				var sendObj = {content:mailContent, subject:formObj.lessonDate, from:formObj.email}
 				//予約希望メールを送信する
-				var isSend = commonFuncs.sendMail('php/mailSendEntryExperienceReserved.php', sendObj, EXPERIENCE_RESERVED_COMPLETE_MESSAGE);
+				var isSend = commonFuncs.sendMail(EXPERIENCE_MAIL_SEND_PHP, sendObj, EXPERIENCE_RESERVED_COMPLETE_MESSAGE);
 				
 				//メールの送信に成功していたら
 				if(isSend){
