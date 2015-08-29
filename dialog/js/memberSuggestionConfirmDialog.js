@@ -42,7 +42,7 @@ function memberSuggestionConfirmDialog(dialog){
 		//主に分岐処理を行うためにtry catchブロックを用意する
 		try{
 			//ブログ確認ダイアログのjsonデータを取得する
-			this.create_tag.getJsonFile(PATH_SUGGESTION_CONFIRM_DIALOG_JSON);
+			this[VAR_CREATE_TAG].getJsonFile(PATH_SUGGESTION_CONFIRM_DIALOG_JSON);
 			//記事更新ステータスを取得する
 		//例外時処理
 		}catch(e){
@@ -92,7 +92,7 @@ function memberSuggestionConfirmDialog(dialog){
 		//ダイアログにボタンをセットする
 		this.setDialogButtons(this.yes_no);
 		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
 	
 	/* 関数名:setDialogEvents

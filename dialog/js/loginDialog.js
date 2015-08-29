@@ -190,7 +190,7 @@ function loginDialog(dialog){
 		//サーバにアクセスし、ログイン処理を行う
  		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[KEY_LOGIN], KEY_LOGIN);
  		//DBから取得したログイン処理の結果をオブジェクトにまとめて返す
- 		return {userId: this[VAR_CREATE_TAG].json.login.id.text, authority: this[VAR_CREATE_TAG].json.login.authority.text};
+ 		return {userId: this[VAR_CREATE_TAG].json.login[ID][STR_TEXT], authority: this[VAR_CREATE_TAG].json.login.authority[STR_TEXT]};
 	}
 	
 	/* 関数名:afterLogin
@@ -264,7 +264,7 @@ function loginDialog(dialog){
 		//ログイン情報の入力を求めるアラートを出す
 		} else {
 			//エラーメッセージをアラートで表示する
-			alert(errorMessages[3]);
+			alert(errorMessages[ERROR_LOGIN_EMPTY]);
 		}
 	};
 

@@ -34,10 +34,13 @@ CLOSE						= 'close';							//closeの文字列
 CLASS_HEADER				= '.header';						//ヘッダーのクラス
 PATH_MEMBERPAGE_JSON		= 'source/memberPage.json';			//会員ページのJSON
 PATH_MEMBERCOMMON_JSON		= 'source/memberCommon.json';		//会員ページ共通のJSON
+PATH_MEMBERPAGE_HTML		= 'template/memberPage.html';		//会員ページテンプレ―ト
 MEMBERPAGE_HTML				= 'memberPage.html';				//会員ページのHTML
 USER_KEY					= 'user_key';						//ユーザキー
 VALUE						= 'value';							//バリュー
 ID							= 'id';								//ID
+MAIL 						= 'mail';							//メール
+BUTTON 						= 'button';							//ボタン
 SELECTOR_HEAD_LAST			= 'head link:last';					//headタグの最後のタグ
 PATH_MEMBERPAGE_CSS			= '<link href="css/memberPage.css" rel="stylesheet" type="text/css">';
 PATH_COURCEGUIDE_CSS		= '<link href="css/courseGuide.css" rel="stylesheet" type="text/css">';
@@ -628,4 +631,40 @@ KEY_LOGIN_PASSWORD							= 'password';
 TMP_CREATE_TABLE 							= 'template/createTable.html';	//テーブルテンプレート
 TMP＿TABLE_AREA 								= 'template/tableArea.html';	//テーブルを囲むdivタグテンプレート
 TMP_LESSON_STATUS 							= 'template/lessonStatus.html';	//授業ステータステンプレ―ト
+
+//adminMailDialog.js
+ADMIN_MAIL_DIALOG_JSON						= 'dialog/source/adminMailDialog.json';	//管理者、メールダイアログ
+ADMIN_MAIL_DIALOG_HTML 						= 'dialog/template/adminMailDialog.html';
+ADMIN_MAIL_DIALOG_JS 						= 'dialog/js/adminMailDialog.js';
+KEY_MAIL_FORM 								= 'mailForm';
+SEL_MAIL_SEND_CONTENT 						= '.mailSendContent';		//メールの内容を入力する親となるセレクター名
+SEL_MESSAGE_TITLE 							= '.message_title';			//メッセージのタイトル
+SEL_MESSEAGE_CONTENT						= '.message_content'		//メッセージ内容
+MAIL_SEND_MEMBER_PHP						= 'php/mailSendEntryMemberMail.php';
+SUCCESS_MESSAGE_MAIL 						= 'メールの送信に成功しました。';
+KEY_MESSAGE 								= 'message';
+
+//baseDialog.js
+TEXT_BUTTON_NEW								= '新規作成';
+TEXT_BUTTON_CONFIRM 						= '確認';
+TEXT_BUTTON_RESET							= 'リセット';
+
+//errrMessaes 配列errorMessagesのエラーメッセージの配列インデックス番号
+ERROR_CONNECT_								= 0;	//接続失敗
+ERROR_LOGIN_CONNENCT 						= 1;	//ログイン認証失敗
+ERROR_SERVER_CONNECT 						= 2;	//サーバー通信失敗
+ERROR_LOGIN_EMPTY 							= 3;	//ログイン、idまたはパスワードが空白
+
+//memberReserveListDialog
+NO_TABLE_DATA								= 0;	//DBから取り出した値が0
+REST_COLUMN_NUM 							= 4;	//残席の列がテーブルの4番目にある
+RESERVED_LESSON_STATUS 						= 1;	//授業予約済みステータス
+//操作ステータス
+PROCESSING_RESERVE 							= 0;	//予約操作を行う
+PROCESSING_RESERVE_AGAIN					= 1;
+PROCESSING_CANCEL							= 2;	//予約キャンセル操作を行う
+
+KEY_DB_SETQUERY 							= 'db_setQuery';
+KEY_DB_GETQUERY 							= 'db_getQuery';
+
 

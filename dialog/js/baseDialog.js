@@ -299,7 +299,7 @@ function baseDialog(dialog){
 	//デフォルトの新規作成ボタン設定用配列
 	this.createNew = [
 	                         {	//新規作成ボタン
-	                        	 text:'新規作成',
+	                        	 text:TEXT_BUTTON_NEW,
 	                        	 //クリック時のコールバック関数を設定する
                         		 click:
                           			 //コールバック関数
@@ -314,7 +314,7 @@ function baseDialog(dialog){
 	this.confirm_reset = [
 	                   {
 	                	   //確認ボタン
-	                	   text:'確認',
+	                	   text:TEXT_BUTTON_CONFIRM,
 	                	   //コールバック関数
                     		 click:
                       			 //コールバック関数
@@ -325,7 +325,7 @@ function baseDialog(dialog){
 	                   },
 	                   {
 	                	   //リセットボタン
-	                	   text:'リセット',
+	                	   text:TEXT_BUTTON_RESET,
 	                	   //コールバック関数
 	                   		 click:
 	                  			 //コールバック関数
@@ -340,7 +340,7 @@ function baseDialog(dialog){
 	this.confirm_cancel = [
 					{	
 						//確認ボタン
-						text:'確認',
+						text:TEXT_BUTTON_CONFIRM,
 						//確認ボタンのコールバック関数をセットする
                    		 click:
                    			 //コールバック関数
