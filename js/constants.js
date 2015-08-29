@@ -274,6 +274,8 @@ CANCEL										= 2;	//キャンセル
 CREATE_NEW									= 3;	//新規作成
 CONFIRM										= 4;	//確認
 CLOSE_BUTTON								= 5;	//閉じる
+LOGIN_BUTTON								= 6;	//ログインボタン
+
 
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名

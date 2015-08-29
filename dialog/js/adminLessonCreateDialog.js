@@ -38,7 +38,7 @@ function adminLessonCreateDialog(dialog){
 	 */
 	this.getDom = function(){
 		//画面パーツ作成に必要なHTMLテンプレートを取得する 
-		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);		//授業詳細、作成ダイアログ共通テンプレート
+		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);			//授業詳細、作成ダイアログ共通テンプレート
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);	//授業作成ダイアログ個別テンプレート
 	};
 	
@@ -53,20 +53,6 @@ function adminLessonCreateDialog(dialog){
 	this.dispContentsHeader = function(){
 		//タイトルを入れ替える
 		this.setDialogTitle(dialogClass.getArgumentDataObject().dateJapanese);
-	}
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(dialogClass){
-		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
 	}
 	
 	/* 関数名:dispContentsMain

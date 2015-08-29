@@ -26,8 +26,6 @@ function adminLessonDetailDialog(dialog){
 		//画面パーツ作成に必要なjsonを取得する
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_BASE_JSON);			//授業詳細、作成ダイアログ共通json
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);	//授業詳細ダイアログ個別json
-		//jsonを取得する
-		this.create_tag.getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);
 	};
 	
 	/* 関数名:getDom
@@ -39,28 +37,25 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getDom = function(){
-		//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
 		//画面パーツ作成に必要なHTMLテンプレートを取得する  
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);			//授業詳細、作成ダイアログ共通テンプレート
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_DETAIL_DIALOG_HTML);	//授業詳細ダイアログ個別テンプレート
 	};
 	
-	
-	/* 関数名:dispContents
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
+	/* 関数名:customizeJson
+	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
+	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContents = function(){
-		this.dispContentsHeader();		//ダイアログ上部
-		this.dispContentsMain();		//ダイアログ中部
-		this.dispContentsFooter();	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
-	}
+	this.customizeJson = function(){
+		//受講する授業のテーマを入れる
+		this[VAR_CREATE_TAG]json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
+		//受講する授業の時間割を入れる
+		this[VAR_CREATE_TAG]json.lessonData.timeTableArea.timeTableText.text = data['time_schedule'];
+	};
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -72,15 +67,8 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsHeader = function(dialogClass){
-		//受け取った値をテキストボックスやセレクトボックスに入れるためにデータを取得する
-		var data = dialogClass.getArgumentDataObject();
 		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
-		//受講する授業のテーマを入れる
-		this.create_tag.json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
-		//受講する授業の時間割を入れる
-		this.create_tag.json.lessonData.timeTableArea.timeTableText.text = data['time_schedule'];
-
+		this.setDialogTitle(this.dialogClass.getArgumentDataObject().dateJapanese);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -112,7 +100,7 @@ function adminLessonDetailDialog(dialog){
 
 	}
 	
-	/* 関数名:callbackYes
+	/* 関数名:callbackUpdate
 	 * 概要　:ダイアログの更新ボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -122,7 +110,7 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.callbackUpdate = function(){
 		//授業の内容を更新する
-		this.lessonDataUpdate();
+		this.dialogBuilder.lessonDataUpdate();
 	};
 
 	/* 関数名:callbackStudents
@@ -134,6 +122,7 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackStudents = function(){
+		//未作成
 	};
 
 	/* 関数名:setConfig
@@ -161,15 +150,15 @@ function adminLessonDetailDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Yamamoto
 	 */
-	this.lessonDataUpdate = function (dialogClass) {
+	this.lessonDataUpdate = function () {
 		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = dialogClass.getArgumentDataObject();
+		var data = this.dialogClass.getArgumentDataObject();
 		//入力した値を取得し、データの更新に用いる
-		var updateData = getInputData(LESSON_DATA);
+		var updateData = commonFuncs.getInputData(LESSON_DATA);
 		//授業idを取得する
 		updateData[COLUMN_CLASSWORK_KEY] = data[COLUMN_CLASSWORK_KEY];
 		//授業詳細テーブルを更新する
-		this.create_tag.setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+		this[VAR_CREATE_TAG]setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
 	}
 
 }

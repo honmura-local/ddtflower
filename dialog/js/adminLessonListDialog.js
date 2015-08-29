@@ -248,17 +248,15 @@ function adminLessonListDialog(dialog){
 		var rowNum = $(CURRENT_DIALOG_SELECTOR + SPACE + STR_TR).index(clickThis) - 1;
 		//次のダイアログに渡すデータを変数に入れる
 		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][rowNum];
-		//セットするargObjectを取得する
-		var returnArgObject = $extend(true, {}, argumentObj, tableData);
-		//取得したデータを返す
-		return returnArgObject;
+		//セットするargObjectを作成して返す
+		return $extend(true, {}, argumentObj, tableData);
 	}
 	
 	/* 関数名:getCreateLessonDialogArgData
 	 * 概要　:新規授業作成ダイアログを開くためのarguObjectを取得する
 	 		新規授業作成ダイアログで必要になる値は授業一覧テーブルにある全ての値
 	 * 引数　::dialogInstance:ダイアログのインスタンス	 		
-	 * 返却値:return returnArgObject
+	 * 返却値:Object:ダイアログの作成に必要なオブジェクト
 	 * 作成日　:2015.08.22
 	 * 作成者　:T.Yamamoto
 	 */
@@ -267,10 +265,8 @@ function adminLessonListDialog(dialog){
 		var argumentObj = dialogInstance.dialogClass.getArgumentObject();
 		//次のダイアログに渡すデータを変数に入れる
 		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
-		//セットするargObjectを取得する
-		var returnArgObject = $extend(true, {}, argumentObj, tableData);
-		//取得したデータを返す
-		return returnArgObject;
+		//ダイアログの作成に必要なオブジェクトを作成して返す
+		return $extend(true, {}, argumentObj, tableData);
 	}
 
 	 /* 
@@ -298,17 +294,16 @@ function adminLessonListDialog(dialog){
 	 		}
 	 	}
 	 	
-	 	//新しく授業データを作るために授業日を連想配列に入れる
-	 	var lessonData = {
+	 	//新しく授業データを作るために授業日を連想配列に入れて返す
+	 	return {
 	 		lessonDate:data.lessonDate,				//受講日
 	 		time_table_day_key:timeTableDayKey 	//授業時限キー
 	 	};
-	 	return lessonData;
 	 }
 
 	 /* 
 	  * 関数名:newLessonEntry
-	  * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理
+	  * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理。新規作成ボタンのコールバック関数となる
 	  * 引数  :
 	  * 返却値  :なし
 	  * 作成者:T.Yamamoto
@@ -319,31 +314,34 @@ function adminLessonListDialog(dialog){
 	  */
 	 this.newLessonEntry = function(){
 	 	var dialogClass = this.instance;			//ダイアログのクラスインスタンスを取得する
+	 	
+	 	//押されたボタンをチェックする
+	 	switch(dialogClass.getPushedButtonState()){
 	 	//はいボタンが押されていたら
-	 	if(dialogClass.getPushedButtonState() == YES){
-	 		//新しく授業データを作るために授業日を連想配列に入れる
-	 		var lessonData = getNewLessonData();
-	 		//授業の設定内容を首都kする
-	 		var lessonConfig = getInputData(CLASS_LESSON_DATA);
-	 		//新しく授業データを挿入するために日付データを含めて送信する
-	 		var sendReplaceQuery = $.extend(true, {}, lessonData, lessonConfig);
-	 		
-	 		//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
-	 		if(timeTableDayKey == EMPTY_STRING) {
-	 			//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
-	 			var errorCount = dialogClass.creator.setDBdata(dialogClass.creator.json.insertTimeTableDay, sendReplaceQuery, EMPTY_STRING);
-	 			//失敗件数が0でないなら授業データを新しく作るクエリを発行する
-	 			if (errorCount != 0) {
-	 				//新規に授業のデータをDBに登録する
-	 				dialogClass.creator.setDBdata(dialogClass.creator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
-	 			}
-	 		//予約する時限があった時にそれを使って新規授業を作成する
-	 		} else {
-	 			//すでにある時限データを使って授業データを作る
-	 			dialogClass.creator.setDBdata(dialogClass.creator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
-	 		}
+	 	case YES:
+		 		//新しく授業データを作るために授業日を連想配列に入れる
+		 		var lessonData = getNewLessonData();
+		 		//授業の設定内容を首都kする
+		 		var lessonConfig = getInputData(CLASS_LESSON_DATA);
+		 		//新しく授業データを挿入するために日付データを含めて送信する
+		 		var sendReplaceQuery = $.extend(true, {}, lessonData, lessonConfig);
+		 		
+		 		//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
+		 		if(timeTableDayKey == EMPTY_STRING) {
+		 			//時限データテーブルに対してinsert処理を行い、次の授業データを新しく作るための準備をする
+		 			var errorCount = dialogClass.creator.setDBdata(dialogClass.creator.json.insertTimeTableDay, sendReplaceQuery, EMPTY_STRING);
+		 			//失敗件数が0でないなら授業データを新しく作るクエリを発行する
+		 			if (errorCount != 0) {
+		 				//新規に授業のデータをDBに登録する
+		 				dialogClass.creator.setDBdata(dialogClass.creator.json.newClassWork, sendReplaceQuery, '新規授業の作成に成功しました。');
+		 			}
+		 			//予約する時限があった時にそれを使って新規授業を作成する
+		 		} else {
+		 			//すでにある時限データを使って授業データを作る
+		 			dialogClass.creator.setDBdata(dialogClass.creator.json.normalInsertClasswork, sendReplaceQuery, '新規授業の作成に成功しました。');
+		 		}
+		 	}
 	 	}
-	 }
 
 }
 

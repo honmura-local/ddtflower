@@ -14,25 +14,6 @@
 function loginDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
-	//ログイン・閉じるボタンの配列
-	this.login_close = [
-					{	
-						//ログインボタン
-						text:LOGIN,
-						//ログインボタンのクラスを付ける
-			        	 class:LOGIN_BUTTON,
-						//ログインボタンのコールバック関数をセットする
-						click:this[DIALOG_BUILDER][VAR_CREATE_TAG].doLogin
-					},
-					//閉じるボタン
-					{
-						//ボタンテキスト
-						text:STR_CLOSE_JP,
-						//閉じるログインボタンのコールバック関数をセットする
-						click:this[DIALOG_BUILDER].closeLoginDialog
-					}
-	           ];
-	
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
 	 * 引数　:なし
@@ -112,49 +93,70 @@ function loginDialog(dialog){
 		this.create_tag.outputTag(INPUT_AREA, INPUT_AREA, CURRENT_DIALOG);
 	}
 	
-	/* 関数名:dispContentsFooter
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のフッター部分作成担当関数
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
+	 * 作成日　:2015.0823
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContentsFooter = function(){
+	this.setConfig = function(){
 		//ログイン・閉じるボタンを配置する
 		this.setDialogButtons(this.login_close);		
 	}
 
-	/* 関数名:setDialogEvents
-	 * 概要　:ダイアログのイベントを設定する
-	 * 引数　:なし(オーバーライド時に定義する)
+	/* 関数名:callbackClose
+	 * 概要　:デフォルトのcloseイベントコールバック用関数
+	 * 引数　:なし
 	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackClose = function(){
+		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
+		switch(this.dialogClass.getPushedButtonState()){
+			//ログインボタンが押されていたら
+			case LOGIN_BUTTON:
+				//ログインボタンのコールバックで処理が終わっているので何もしない
+				break;
+			//閉じるボタンが押されていたら
+			case CLOSE_BUTTON:
+				//トップページに戻る
+				callPage(TOP_LOCATION);
+				break;
+			//何も押されてないなら
+			default:break;
+		}
+		//ダイアログを完全に消す
+		dialogClass.destroy();
+		//画面をリロードする
+		location.reload();
+	};
+	
+	/* 関数名:setCallback
+	 * 概要　:ダイアログのコールバック関数を登録する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.setDialogEvents = function(){
-		//ダイアログを閉じるときは破棄する
-		this.dialog[0].instance.setCallbackCloseOnAfterOpen(dialog[0].instance.destroy);
+	this.setCallback = function(){
 		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
 		commonFuncs.enterKeyButtonClick(SELECTOR_USERNAME_PASSWORD, SELECTOR_LOGIN_BUTTON);
 	}
 
-	/* 関数名:closeLoginDialog
-	 * 概要　:ログインダイアログをキャンセルボタンで閉じる関数
-	 * 引数　:なし
+	/* 関数名:setLoginInformation
+	 * 概要　:createTagのJSONにログイン情報をセットする
+	 * 引数　:String userId:ユーザID
+	 * 		:String password:パスワード
 	 * 返却値:なし
+	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.closeLoginDialog = function(){
-		//ダイアログを破棄する
-		this.dialogClass.destroy();
-		//トップページに戻る
-		callPage(TOP_LOCATION);
-		//画面をリロードする
-		location.reload();
-	}
-	
 	this.setLoginInformation = function(userId, password){
 		//JsonDBManagerに接続するために送信するjsonにidをセットする
 		this[VAR_CREATE_TAG].json[KEY_LOGIN][KEY_LOGIN_ID][VALUE] = userId;
@@ -191,17 +193,16 @@ function loginDialog(dialog){
 	
 	/* 関数名:afterLogin
 	 * 概要　:ログイン成功後の処理
-	 * 引数　:なし
+	 * 引数　:Object loginResult:ログイン処理で取得したユーザIDと権限のオブジェクト
 	 * 返却値:なし
 	 * 作成日　:2015.0816
 	 * 作成者　:T.Masuda
 	 */
-	this.afterLogin = function(){
-		//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-		$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
-		var data = this.instance.getArgumentDataObject();	//インプット用データオブジェクトを取得する
+	this.afterLogin = function(loginResult){
+		var data = this.dialogClass.getArgumentDataObject();	//インプット用データオブジェクトを取得する
+		
 		//通常ログインかつ、管理者のIDならば
-		if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
+		if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority == ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//管理者ページの画面遷移の履歴を追加する。
@@ -212,7 +213,7 @@ function loginDialog(dialog){
 				location.href = URL_ADMIN_PAGE; 
 			}
 		//通常ログインかつ、管理者のIDでなければ
-		} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
+		} else if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority != ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//会員トップページの画面遷移の履歴を追加する。
@@ -223,9 +224,8 @@ function loginDialog(dialog){
 				location.href = URL_MEMBER_PAGE; 
 			}
 		}
-		
-		//画面をリロードする。
-		location.reload();
+
+		this.dialogClass.destroy();	//ログイン成功につきダイアログを閉じる
 	}
 	
 	/* 関数名:doLogin
@@ -254,14 +254,49 @@ function loginDialog(dialog){
 		    	alert(MESSAGE_LOGIN_ERROR);
 		    //会員IDが取得できていればログイン成功
 		    } else {
-		    	this.afterLogin();	//ログイン後の処理を行う
+		    	this.afterLogin(loginResult);	//ログイン後の処理を行う
 		    }
 		//ログイン情報の入力を求めるアラートを出す
 		} else {
 			alert(errorMessages[3]);
 		}
 	}
-	
+
+	/* 関数名:callbackLogin
+	 * 概要　:ダイアログのログインボタンを押したときのコールバック関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.23
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackLogin = function(){
+		//入力された値が空白かどうかでログイン処理のエラーチェックを行う
+		if(commonFuncs.checkEmpty(loginInfo[USER_ID]) ||
+				commonFuncs.checkEmpty(loginInfo[PASSWORD])) {
+			//ログイン情報をJSONにセットする
+			this.setLoginInformation(userid, password);
+			
+			//ログイン処理を実行し、結果を取得する
+			var loginResult = this.getLoginProcedureResult();
+			//JSONDBManagerによるログイン処理を行う
+		    //ログイン成否チェックの分岐
+		    //会員IDが取得できていなかった場合
+		    if(loginResult[USER_ID] == EMPTY_STRING) {
+		    	//エラーメッセージを表示して処理をそのまま終了する
+		    	alert(MESSAGE_LOGIN_ERROR);
+		    //会員IDが取得できていればログイン成功
+		    } else {
+		    	this.afterLogin();	//ログイン後の処理を行う
+				//ログインボタンが押されたという状態にする
+				this.dialogClass.setPushedButtonState(LOGIN_BUTTON);
+		    }
+		//ログイン情報の入力を求めるアラートを出す
+		} else {
+			alert(errorMessages[3]);
+		}
+	};
+
 	//ここまでクラス定義
 }
 

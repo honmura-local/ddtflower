@@ -43,9 +43,8 @@ function dialogEx(url, argumentObj, returnObj){
 			open:function(){	//ダイアログが開くときのイベント
 				
 			},
-			close:function(){	//ダイアログが閉じられるときのイベント
-				
-			}
+			//ダイアログ専用クラスのcloseコールバック関数をcloseイベントに設定する
+			close:this.dom.dialogBuilder.callbackClose
 		},
 		//インプット用データオブジェクト
 		data:{
