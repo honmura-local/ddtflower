@@ -24,7 +24,7 @@ function adminMailDialog(dialog){
 	 */
 	this.getJson = function(){
 		//会員にメール送信ダイアログのjsonを取得する
-		this[VAR_CREATE_TAG].getJsonFile('dialog/source/adminMailDialog.json');
+		this[VAR_CREATE_TAG].getJsonFile(ADMIN_MAIL_DIALOG_JSON);
 	};
 	
 	/* 関数名:getDom
@@ -38,7 +38,7 @@ function adminMailDialog(dialog){
 	this.getDom = function(){
 		
 		//会員にメール送信ダイアログのjsonを取得するのテンプレートを取得する
-		this[VAR_CREATE_TAG].getDomFile('dialog/template/adminMailDialog.html');
+		this[VAR_CREATE_TAG].getDomFile(ADMIN_MAIL_DIALOG_HTML);
 		
 	};
 	
@@ -56,9 +56,9 @@ function adminMailDialog(dialog){
 		//表示、送信するデータをまとめる
 		var sendData = this.createSendData(data);
 		//createTag用にcreateLittleContentsクラスインスタンスのJSON連想配列に宛先の名前、メールアドレスを追加する
-		this[VAR_CREATE_TAG].json.mailForm.mailToPersonArea.mailToPersonLabel.text = sendData.name;
-		this[VAR_CREATE_TAG].json.mailForm.mailToArea.mailTo.text = sendData.email;
-		data.idList = sendData.id;	//送信先のIDをセットする
+		this[VAR_CREATE_TAG].json[KEY_MAIL_FORM].mailToPersonArea.mailToPersonLabel[STR_TEXT] = sendData[STR_NAME];
+		this[VAR_CREATE_TAG].json[KEY_MAIL_FORM].mailToArea.mailTo[STR_TEXT] = sendData.email;
+		data.idList = sendData[ID];	//送信先のIDをセットする
 	};
 
 	/* 関数名:createSendData
@@ -70,7 +70,7 @@ function adminMailDialog(dialog){
 	 */
 	this.createSendData = function(data){
 		//送信するメールまたはお知らせの数を取得する
-		var mailNum = data.name.length;
+		var mailNum = data[STR_NAME].length;
 		
 		if(!mailNum){	//データがなければ
 			return {};	//空のオブジェクトを返す
@@ -91,9 +91,9 @@ function adminMailDialog(dialog){
 				idList += CHAR_COMMA;
 			}
 			//各文字列に順次追加を行っていく
-			userNames += data.name[i];
-			eMails += data.mail[i];
-			idList += data.id[i];
+			userNames += data[[STR_NAME]][i];
+			eMails += data[MAIL][i];
+			idList += data[ID][i];
 		}
 		
 		//作成したデータをオブジェクトにまとめて返す
@@ -110,7 +110,7 @@ function adminMailDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//メールフォームを作る
-		this[VAR_CREATE_TAG].outputTag('mailForm', 'mailForm', CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(KEY_MAIL_FORM, KEY_MAIL_FORM, CURRENT_DIALOG);
 	}
 	
 	/* 関数名:dispContentsFooter
@@ -140,7 +140,7 @@ function adminMailDialog(dialog){
 		//次のダイアログに渡すデータをまとめる
 		$.extend(true, 	
 				argumentObj.data,		//送信確認ダイアログのdataオブジェクト 
-				commonFuncs.getInputData('.mailSendContent'),	//このダイアログで編集したデータ 
+				commonFuncs.getInputData(SEL_MAIL_SEND_CONTENT),	//このダイアログで編集したデータ 
 				data, 								//このダイアログに渡されたパラメータのdataオブジェクト
 				{dialog:this[DIALOG_CLASS], callback:this.doSendMail}				//このダイアログのクラスインスタンス
 		);
@@ -166,8 +166,8 @@ function adminMailDialog(dialog){
 		retObj.inf = 
 				{
 					db_setQuery:json.insertMessageInf.db_setQuery,		//クエリを設定する 
-					message_title:{ value : $('.message_title')}, 		//ダイアログからタイトルを取得する
-					message_content:{ value : $('.message_content')}	//ダイアログから本文を取得する
+					message_title:{ value : $(SEL_MESSAGE_TITLE)}, 		//ダイアログからタイトルを取得する
+					message_content:{ value : $(SEL_MESSEAGE_CONTENT)}	//ダイアログから本文を取得する
 				};
 		//お知らせのユーザとコンテンツの紐付けレコードの部分を作る
 		retObj.to = 
@@ -191,7 +191,7 @@ function adminMailDialog(dialog){
 		var isSend = 0;	
 		// メールを送信する処理
 		//メール送信用のデータを取得する
-		var sendMaidData = commonFuncs.getInputData('.mailSendContent');
+		var sendMaidData = commonFuncs.getInputData(SEL_MAIL_SEND_CONTENT);
 		var sendObject = {									//送信するデータのオブジェクト
 				to:data.idList					//送信先(会員IDの羅列)
 				,subject:data.suggest_title		//タイトル
@@ -199,10 +199,10 @@ function adminMailDialog(dialog){
 		};
 		
 		//メール送信であれば
-		if(data.sendType == 'mail'){
+		if(data.sendType == MAIL){
 			var sendUrl = SEND_ADMINMAIL_PHP ;					//管理者メールの送信先PHP
 			//メールを送信する。成否判定を設定する
-			isSend = commonFuncs.sendMail(sendObject, 'php/mailSendEntryMemberMail.php', 'メールの送信に成功しました。');
+			isSend = commonFuncs.sendMail(sendObject, MAIL_SEND_MEMBER_PHP, SUCCESS_MESSAGE_MAIL);
 		//お知らせ更新であれば
 		} else {
 			//DBへクエリを送信するため、ダイアログ専用の処理を行うクラスのインスタンスを取得する
@@ -210,7 +210,7 @@ function adminMailDialog(dialog){
 			//データ追加用JSONを作成する
 			var sendObject = dialogBuilder.updateJson();
 			//DBにお知らせのデータを追加する
-			isSend = parseInt(dialogBuilder.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)['message']) ?
+			isSend = parseInt(dialogBuilder.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)[KEY_MESSAGE]) ?
 					//1つ目のクエリが成功したら、2つ目のクエリを実行する
 					parseInt(dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.to).message) : false;
 		}
@@ -235,7 +235,7 @@ function adminMailDialog(dialog){
 		var isProcess;
 		
 		for(var i = 0; i < idLength; i++){
-			sendObj.user_key.value = id[i];	//順次お知らせをセットする先の会員IDを送信するJSONにセットする
+			sendObj[USER_KEY][VALUE] = id[i];	//順次お知らせをセットする先の会員IDを送信するJSONにセットする
 			//クラス継承元のsendQuery関数で会員IDの分だけクエリを発行する
 			isProcess = this.__proto__.sendQuery(sendUrl, sendObj);
 			//処理に成功していたら

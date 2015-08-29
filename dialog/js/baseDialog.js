@@ -288,7 +288,7 @@ function baseDialog(dialog){
 	//デフォルトの新規作成ボタン設定用配列
 	this.createNew = [
 	                         {	//新規作成ボタン
-	                        	 text:'新規作成',
+	                        	 text:TEXT_BUTTON_NEW,
 	                        	 //クリック時のコールバック関数を設定する
 	                        	 click:this.dialogBuilder.callbackCreateNew
 	                         }
@@ -298,13 +298,13 @@ function baseDialog(dialog){
 	this.confirm_reset = [
 	                   {
 	                	   //確認ボタン
-	                	   text:'確認',
+	                	   text:TEXT_BUTTON_CONFIRM,
 	                	   //コールバック関数
 	                	   click:this.dialogBuilder.callbackConfirm
 	                   },
 	                   {
 	                	   //リセットボタン
-	                	   text:'リセット',
+	                	   text:TEXT_BUTTON_RESET,
 	                	   //コールバック関数
 	                	   click:this.dialogBuilder.callbackReset
 	                   }
@@ -314,7 +314,7 @@ function baseDialog(dialog){
 	this.confirm_cancel = [
 					{	
 						//確認ボタン
-						text:'確認',
+						text:TEXT_BUTTON_CONFIRM,
 						//送信ボタンのコールバック関数をセットする
 						//予約希望情報送信確認ダイアログを開く
 						click:this.dialogBuilder.callbackConfirm
