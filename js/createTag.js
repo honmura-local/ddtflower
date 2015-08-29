@@ -1,6 +1,20 @@
-//JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
+/* 
+ * ファイル名:createTag.js
+ * 概要  :JSONとテンプレート用HTMLから画面パーツを作るクラスを定義したファイル
+ * 設計者:H.Kaneko
+ * 作成者:T.M
+ * 作成日:2015.
+ * パス :/js/createTag.js
+ */
 
-
+/* 
+ * クラス名:createTag
+ * 概要  :JSONとテンプレート用HTMLから画面パーツを作るクラス
+ * 引数	:なし
+ * 設計者:H.Kaneko
+ * 作成者:T.M
+ * 作成日:2015.
+ */
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
 	this.dom = '';				//ひな形のHTMLのDOMを格納する変数。
@@ -1486,126 +1500,22 @@ function createTag(){
 				break;				//switch文を抜ける
 			}
 			
-			//ログインダイアログで利用するパラメータのオブジェクトを作る
-			this.argumentObj = {
-					data:{
-						//ログイン状態
-						createTagState: this.createTagState
-					},config:loginDialogOption
-			};
+			//ダイアログ用のインプットデータオブジェクトを作る
+			var argumentObj = commonFuncs.getDefaultArgumentObject();
+			//インプット用データオブジェクトにエラー内容の値を追加する
+			$.extend(true, argumentObj.data, {createTagState: this.createTagState});
+			//インプット用データオブジェクトにタイトルのデータを追加する
+			$.extend(true, argumentObj.config, {title: this.title});
 			
-			//ログインダイアログを出す。
-			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, {});
-			loginDialog.argumentObj.config[TITLE] = this.title;							//ダイアログのタイトルを変更する
-			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
-			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
+			//ログインダイアログを作る。
+			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, argumentObj, {});
+//			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
+//			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
-			$('.loginDialogMessage', loginDialog.dom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
+			commonFuncs.hideLoadingScreen();	//ローディング画面が出っぱなしになっているので消す
+//			$('.loginDialogMessage', loginDialog.dom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
 		}
 	};
-	
-	//ログインダイアログの設定オブジェクト
-	var loginDialogOption = {
-			// 幅を設定する。
-			width			: '300',
-			// ダイアログを生成と同時に開く。
-			autoOpen		: true,
-			// Escキーを押してもダイアログが閉じないようにする。
-			closeOnEscape	: false,
-			// モーダルダイアログとして生成する。
-			modal			: true,
-			// リサイズしない。
-			resizable		: false, 
-			// 位置を指定する。
-			position:{
-				// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-				my:'center center',
-				// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-				at:'center center',
-				// ウィンドウをダイアログを配置する位置の基準に指定する。
-				of:window
-			},
-			// ボタンの生成と設定を行う。
-			buttons:[
-				         {
-				        	 // OKボタンのテキスト。
-				        	 text:'ログイン',
-				        	 //テキストボックスでエンターキーに対応するためにクラスを付ける
-				        	 class:'loginButton',
-				        	 // ボタン押下時の処理を記述する。
-				        	 click:function(event, ui){
-				        	 	//ログイン処理に使うために入力されたログインidを取得する
-				        	 	var userLoginId = $('.userName').val();
-				        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
-				        	 	var userLoginPassword = $('.password').val();
-				        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
-				        	 	if(userLoginId != EMPTY_STRING || userLoginPassword != EMPTY_STRING) {
-				        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
-				        	 		loginCreator.json.login.userName.value = userLoginId;
-				        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
-				        	 		loginCreator.json.login.password.value = userLoginPassword;
-				        	 		//JSONDBManagerによるログイン処理を行う
-				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
-				        	 		//会員IDをJSONから取得する
-				        	 		var memberInfo = loginCreator.json.login.id.text;
-				        	 		//会員の権限の数値を取得する
-				        	 		var authority =  loginCreator.json.login.authority.text;
-				        	 		//ログイン成否チェックの分岐
-				        	 		//会員IDが取得できていなかった場合
-				        	 		if(memberInfo == EMPTY_STRING) {
-				        	 			//エラーメッセージを表示して処理をそのまま終了する
-				        				alert(MESSAGE_LOGIN_ERROR);
-				        			//会員IDが取得できていれば
-				        	 		} else {
-				        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
-			        					var data = this.instance.getArgumentDataObject();	//インプット用データオブジェクトを取得する
-			        					//通常ログインかつ、管理者のIDならば
-			        					if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
-			        						//pushStateをサポートしているブラウザなら
-			        						if(commonFuncs.isSupportPushState()){
-			        							//管理者ページの画面遷移の履歴を追加する。
-			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
-			        						//URLハッシュを利用する
-			        						} else {
-			        							//管理者ページへ移動する
-			        							location.href = URL_ADMIN_PAGE; 
-			        						}
-			        					//通常ログインかつ、管理者のIDでなければ
-			        					} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
-			        						//pushStateをサポートしているブラウザなら
-			        						if(commonFuncs.isSupportPushState()){
-			        							//会員トップページの画面遷移の履歴を追加する。
-			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
-			        						//URLハッシュを利用する
-			        						} else {
-			        							//会員トップページへ移動する
-			        							location.href = URL_MEMBER_PAGE; 
-			        						}
-			        					}
-										
-										//画面をリロードする。
-										location.reload();
-				        	 		}
-				        	 	//ログイン情報の入力を求めるアラートを出す
-				        	 	} else {
-									alert(errorMessages[3]);
-				        	 	}
-				        	 }
-				         },
-				         {
-				        	 // キャンセルボタンのテキスト。
-				        	 text:'キャンセル',
-				        	 // ボタン押下時の処理を記述する。
-				        	 click:function(event, ui){
-				        		 //トップページに戻る
-				        		 callPage('top.php');
-				        		 // ダイアログを消去する。
-				        		 $(this).dialog('close');
-				        	 }
-				         }
-			         ]
-		};
 	
 	/*
 	 * 関数名:whenLoginDialogCreate

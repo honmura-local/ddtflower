@@ -149,8 +149,6 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <!-- msl指定のタイトル -->
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 <script>
-	//共通関数クラスインスタンスを生成する
-	commonFuncs = new common();
 	//トップページ用ウィンドウを準備する
 	windowElem = new windowEx(TOP_LOCATION);
 	//トップページ用ウィンドウを生成して表示する

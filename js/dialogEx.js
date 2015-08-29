@@ -38,13 +38,14 @@ function dialogEx(url, argumentObj, returnObj){
 			position :POSITION_CENTER_TOP,
 			closeOnEscape : false,	//escキーを押して閉じるか
 			create:function(){	//ダイアログ作成時のイベント
-				
 			},
-			open:function(){	//ダイアログが開くときのイベント
-				
+			open://基本的にopen時はdispContentsが実行されるようにする
+				function(){
+				//dispContentsをコールしてダイアログの内容を作る
+				commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
 			},
-			//ダイアログ専用クラスのcloseコールバック関数をcloseイベントに設定する
-			close:this.dom.dialogBuilder.callbackClose
+			close:function(){
+			}
 		},
 		//インプット用データオブジェクト
 		data:{
@@ -84,6 +85,7 @@ function dialogEx(url, argumentObj, returnObj){
 			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
 			this.returnObj = Object.keys(this.returnObj).length? this.argumentObj: this.defaultReturnObj;
 			
+			console.log(this.argumentObj);
 			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			this.dom = form;			//クラスインスタンスにDOMへの参照を持たせる
