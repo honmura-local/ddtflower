@@ -133,45 +133,11 @@ function createAdminUserListContent() {
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
-		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
-		$(this).toggleClass('selectRecord');
-	});
+	toggleClassClickElement('.userListInfoTable tr', 'selectRecord');
 	//検索ボタンをクリックしたときにテーブルの内容を更新する
-	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-		//ユーザ一覧テーブルを削除する
-		creator.pagingReset('userListInfoTable');
-		//クエリを変数に入れてクエリ発行の準備をする
-		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
-		//クエリのデフォルトを取得する
-		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
-		//会員一覧のデータを取り出す
-		creator.getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
-		//クエリをデフォルトに戻す
-		creator.json.userListInfoTable.db_getQuery = defaultQuery;
-		//取得した値が0の時のテーブルを作らない
-		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
-			//ページング機能付きでユーザ情報一覧テーブルを作る
-			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
-		}
-	});
-
+	userListSearch();
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, '.userDetail', function(){
-		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.selectRecord').length;
-		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
-		if(selected == 0 || selected > 1) {
-			//選択している
-			alert('ユーザを1人だけ選択してください');
-		} else {
-			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.selectRecord').children('.id').text();
-			//クリックした人でなり代わりログインを行う
-			loginInsteadOfMember(memberId);
-		}
-	});
-
+	jumpToMemberPage();
 	//通常メールボタンをクリックしたときに通常メール作成のためのダイアログを開く
 	adminMessageCreate('.createMail', 'mail');
 	//お知らせボタンをクリックしたときにお知らせのためのダイアログを開く
@@ -308,7 +274,25 @@ function createAdminMailMagaAnnounceContent() {
  */
 function clickEvent(clickSelector, clickFunc) {
 	$(clickSelector).click(function() {
+		//コールバック関数の処理を開始する
 		clickfunc(this);
+	});
+}
+
+/* 
+ * 関数名:toggleClassClickElement
+ * 概要  :クリックした要素に対してクラス属性を付ける
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:clickFunc：クリックされたときにコールする関数
+ * 返却値  :なし
+ * 作成者:.Yamamoto
+ * 作成日:2015.08.29
+ */
+function toggleClassClickElement (clickSelector, className) {
+	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+	$(STR_BODY).on(CLICK, clickSelector, function(){
+		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
+		$(this).toggleClass(className);
 	});
 }
 
@@ -675,6 +659,61 @@ function loopUpdatePermitLessonList() {
 			//カウンターをインクリメントする
 			counter++;
 		});
+	});
+}
+
+/* 
+ * 関数名:userListSearch
+ * 概要  :管理者 会員一覧の検索機能を有効にする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function userListSearch() {
+//検索ボタンをクリックしたときにテーブルの内容を更新する
+	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+		//ユーザ一覧テーブルを削除する
+		creator.pagingReset('userListInfoTable');
+		//クエリのデフォルトを取得する
+		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
+		//クエリを変数に入れてクエリ発行の準備をする
+		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
+		//会員一覧のデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
+		//クエリをデフォルトに戻す
+		creator.json.userListInfoTable.db_getQuery = defaultQuery;
+		//取得した値が0の時のテーブルを作らない
+		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+			//ページング機能付きでユーザ情報一覧テーブルを作る
+			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
+		}
+	});
+}
+
+/* 
+ * 関数名:jumpToMemberPage
+ * 概要  :管理者 会員一覧で選択されているユーザの会員ページに接続する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function jumpToMemberPage() {
+	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
+	$(STR_BODY).on(CLICK, '.userDetail', function(){
+		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
+		var selected = $('.selectRecord').length;
+		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
+		if(selected == 0 || selected > 1) {
+			//選択している
+			alert('ユーザを1人だけ選択してください');
+		} else {
+			//クリックした人でログインするために会員番号を取得する
+			var memberId = $('.selectRecord').children('.id').text();
+			//クリックした人でなり代わりログインを行う
+			loginInsteadOfMember(memberId);
+		}
 	});
 }
 
