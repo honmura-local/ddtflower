@@ -1,5 +1,4 @@
 {
-    "memberReservedConfirmDialog": {},
     "lessonConfirmContent": {
         "db_getQuery":"",
         "lessonConfirm": {
@@ -161,24 +160,6 @@
                     }
                 }
             }
-        },
-        "confirmText": {
-            "class":"confirmText textCenter",
-            "html": "上記の授業を予約しますか?"
-        },
-        "canselYesButton":{
-            "text":"はい"
-        },
-        "canselNoButton":{
-            "text":"いいえ"
-        },
-        "reserveYesButton":{
-            "text":"はい",
-            "value":"1"
-        },
-        "reserveNoButton":{
-            "text":"いいえ",
-            "value":"0"
         }
     },
     "sendReservedData":{
