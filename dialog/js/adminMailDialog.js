@@ -25,7 +25,6 @@ function adminMailDialog(dialog){
 	this.getJson = function(){
 		//会員にメール送信ダイアログのjsonを取得する
 		this[VAR_CREATE_TAG].getJsonFile('dialog/source/adminMailDialog.json');
-		
 	};
 	
 	/* 関数名:getDom

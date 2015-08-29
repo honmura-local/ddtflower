@@ -3606,49 +3606,6 @@ function setTableRecordClass (tableClassName, tableRecordClasssName) {
 }
 
 
-/* 
- * 関数名:setValueDBdata()
- * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
- 		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
- 		テキストボックスのname属性値がDBの列名と対応している。
- * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
- 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
- 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.02
- */
-function setValueDBdata(setArray, setDomParent, targetArrayType) {
-	//ループで連想配列を全てループする
-	for (var key in setArray) {
-		//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
-		if (targetArrayType == 'keyTable') {
-			//テーブルから取り出した値をキーにして値を取得する
-			var resultValue = setArray[key]
-		//テーブルの置換済みの値からデータを読み込む場合の処理
-		} else if (targetArrayType == 'keyValue') {
-			//テーブルの置換済みの値を読み込む
-			var resultValue = setArray[key].value;
-		//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
-		} else {
-			//値を挿入する結果のvalueを変数に入れる
-			var resultValue = setArray[key]['text'];
-		}
-		//対象の要素がテキストエリアのときにtextで値を入れる
-		if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
-			//name属性がkeyのものに対して属性をDBから読み出した値にする
-			$(setDomParent + ' [name=' + key + ']').text(resultValue);
-		//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
-		} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
-			//値が当てはまるチェックボックスに対してチェックを入れる
-			$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
-		//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
-		} else {
-			//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
-			$(setDomParent + ' [name=' + key + ']').val(resultValue);
-		}
-	}
-}
 
 
 /* 

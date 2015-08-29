@@ -249,6 +249,7 @@ function baseDialog(dialog){
 			//JSON解析エラー例外を投げる
 			throw new jsonFailedToParseException(sendObj);
 		}
+		
 		var retObj = {};	//返却用の変数を宣言する
 		$.ajax({
 			url:sendUrl			//PHPのURLを設定する
@@ -265,22 +266,22 @@ function baseDialog(dialog){
 				throw new connectErrorException(xhr, status, error);
 			}
 		});
-		
+
 		return retObj;
 	};
 	
 	//デフォルトのはい:いいえボタン設定用配列
-	this.yesNoButtonArray = [
+	this.yes_no = [
 	                         	{
 	                         		//はいボタン
 		                        	 text:YES,
 		                        	 //クリック時のコールバック関数を設定する
-		                        	 click:this.callBackYes
+		                        	 click:this.dialogBuilder.callBackYes
 	                         	},
 		                         {	//いいえボタン
 		                        	 text:NO,
 		                        	//クリック時のコールバック関数を設定する
-		                        	 click:this.callBackNo
+		                        	 click:this.dialogBuilder.callBackNo
 		                         }
 	                         ];
 	
@@ -289,7 +290,7 @@ function baseDialog(dialog){
 	                         {	//新規作成ボタン
 	                        	 text:'新規作成',
 	                        	 //クリック時のコールバック関数を設定する
-	                        	 click:this.callbackCreateNew
+	                        	 click:this.dialogBuilder.callbackCreateNew
 	                         }
 	                 ];
 	
@@ -299,13 +300,13 @@ function baseDialog(dialog){
 	                	   //確認ボタン
 	                	   text:'確認',
 	                	   //コールバック関数
-	                	   click:this.callbackConfirm
+	                	   click:this.dialogBuilder.callbackConfirm
 	                   },
 	                   {
 	                	   //リセットボタン
 	                	   text:'リセット',
 	                	   //コールバック関数
-	                	   click:this.callbackReset
+	                	   click:this.dialogBuilder.callbackReset
 	                   }
 	             ];
 	
@@ -316,17 +317,53 @@ function baseDialog(dialog){
 						text:'確認',
 						//送信ボタンのコールバック関数をセットする
 						//予約希望情報送信確認ダイアログを開く
-						click:callbackConfirm
+						click:this.dialogBuilder.callbackConfirm
 					},
 					{
 						//閉じるボタン
 						text:STR_CLOSE_JP,
 						//閉じるボタンのコールバック関数をセットする
-						click:callbackCloseButton
+						click:this.dialogBuilder.callbackCloseButton
 					}
 	           ];
 	
+	//更新ボタンと受講者一覧ボタン
+	this.update_students = [
+					{	//更新ボタン
+						text : TEXT_LESSON_UPDATE_BUTTON,
+						//クリック時のコールバック関数
+						click : this.dialogBuilder.callbackUpdate
+							//親のダイアログに更新の返り値を返す
+							//setReturnObj(更新の返り値);
+							//ダイアログを閉じる処理
+					},
+					{	//受講者一覧ボタン
+						text : TEXT_LESSON_STUDENTS_BUTTON,
+						//クリック時のコールバック関数
+						click : this.dialogBuilder.callbackUpdate
+							//受講者一覧ダイアログを開く処理
+							//ここに処理を書く
+					}
+	];
 	
+	//ログイン・閉じるボタンの配列
+	this.login_close = [
+					{	
+						//ログインボタン
+						text:LOGIN,
+						//ログインボタンのクラスを付ける
+			        	 class:LOGIN_BUTTON,
+			        	 //クリック時にログイン処理を行う
+			        	 click:this.dialogBuilder.callbackLogin
+					},
+					//閉じるボタン
+					{
+						//ボタンテキスト
+						text:STR_CLOSE_JP,
+						//ダイアログを閉じるボタンのイベントコールバック関数
+			        	click:this.dialogBuilder.callbackCloseButton
+					}
+	           ];
 	
 	/* 関数名:callbackYes
 	 * 概要　:ダイアログのはいボタンを押したときのコールバック関数用関数
@@ -337,6 +374,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackYes = function(){
+		this.dialogClass.setPushedButtonState(YES);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -349,6 +387,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackNo = function(){
+		this.dialogClass.setPushedButtonState(NO);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -361,6 +400,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCancel = function(){
+		this.dialogClass.setPushedButtonState(CANCEL);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 
@@ -372,6 +412,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCreateNew = function(){
+		this.dialogClass.setPushedButtonState(CREATE_NEW);
 	}
 	
 	/* 関数名:setCallbackRowClick
@@ -383,7 +424,7 @@ function baseDialog(dialog){
 	 */
 	this.setCallbackRowClick = function() {
 		//ダイアログの内のテーブルの行をクリックしたときのコールバック関数をセットする
-		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, this.callbackRowClick());
+		$(this[DIALOG_CLASS].dom).on(CLICK, STR_TR, this.callbackRowClick(this));
 	};
 	
 	/* 関数名:callbackRowClick
@@ -396,6 +437,30 @@ function baseDialog(dialog){
 	this.callbackRowClick = function() {
 	};
 	
+	/* 関数名:callbackLogin
+	 * 概要　:ダイアログのログインボタンを押したときのコールバック関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.23
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackLogin = function(){
+		//ログインボタンが押されたという状態にする
+		this.dialogClass.setPushedButtonState(LOGIN_BUTTON);
+	};
+	
+	/* 関数名:callbackCreateNew
+	 * 概要　:ダイアログの新規作成ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackCreateNew = function(){
+	};
+	
 	/* 関数名:callbackConfirm
 	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
@@ -405,6 +470,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
+		this.dialogClass.setPushedButtonState(CONFIRM);
 	};
 	
 	/* 関数名:callbackCloseButton
@@ -416,6 +482,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCloseButton = function(){
+		this.dialogClass.setPushedButtonState(CLOSE_BUTTON);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -430,6 +497,28 @@ function baseDialog(dialog){
 	this.callbackReset = function(){
 	};
 
+	/* 関数名:callbackYes
+	 * 概要　:ダイアログの更新ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackUpdate = function(){
+	};
+
+	/* 関数名:callbackStudents
+	 * 概要　:ダイアログの受講者一覧ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackStudents = function(){
+	};
+	
 	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する。暫定的に安全性を考えてreturnするようにしました。
@@ -469,6 +558,19 @@ function baseDialog(dialog){
 	this.insertFooterContents = function(){
 	}
 	
+	/* 関数名:callbackClose
+	 * 概要　:デフォルトのcloseイベントコールバック用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0823
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackClose = function(){
+		//ダイアログを完全に消す
+		this.dialogClass.destroy();
+	};
+
 }
 
 /* クラス名:connectErrorException

@@ -14,31 +14,34 @@
 function adminLessonCreateDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 
-	/* 関数名:constructionContent
-	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
+	/* 関数名:getJson
+	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Masuda
 	 */
-	this.constructionContent = function(){
-		//主に分岐処理を行うためにtry catchブロックを用意する
-		try{
-			//授業データを取得するのに必要なデータをargumentObjから取得してcreateLittleContetnsのJSONにセットする
-			//画面パーツ作成に必要なHTMLテンプレートを取得する 
-			this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);		//授業詳細、作成ダイアログ共通テンプレート
-			this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);	//授業作成ダイアログ個別テンプレート
-			//画面パーツ作成に必要なjsonを取得する
-			this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_BASE_JSON);			//授業詳細、作成ダイアログ共通json
-			this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_CREATE_DIALOG_JSON);	//授業作成ダイアログ個別json
-		//例外時処理
-		}catch(e){
-			//ダイアログ生成エラー
-			throw new failedToDisplayException();
-		}
+	this.getJson = function(){
+		//画面パーツ作成に必要なjsonを取得する
+		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_BASE_JSON);			//授業詳細、作成ダイアログ共通json
+		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_CREATE_DIALOG_JSON);	//授業作成ダイアログ個別json
 	};
-
+	
+	/* 関数名:getDom
+	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.getDom = function(){
+		//画面パーツ作成に必要なHTMLテンプレートを取得する 
+		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);			//授業詳細、作成ダイアログ共通テンプレート
+		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);	//授業作成ダイアログ個別テンプレート
+	};
+	
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
 	 * 引数　:なし
@@ -47,30 +50,9 @@ function adminLessonCreateDialog(dialog){
 	 * 作成日　:2015.0813
 	 * 作成者　:T.Masuda
 	 */
-	this.dispContents = function(){
-		var dialogClass = this.dialog[0].instance;		//ダイアログのクラスインスタンスを取得する
-
-		//画面パーツ作成に必要なHTMLテンプレートを取得する
-		this.create_tag.getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);
-		this.create_tag.getJsonFile(ADMIN_LESSON_CREATE_DIALOG_JSON);
-		this.dispContentsMain();		//ダイアログ中部
-		this.dispContentsFooter();	//ダイアログ下部
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
-	}
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(dialogClass){
-		//ダイアログのタイトルを変更する
-		this.setDialogTitle(dialogClass);
+	this.dispContentsHeader = function(){
+		//タイトルを入れ替える
+		this.setDialogTitle(dialogClass.getArgumentDataObject().dateJapanese);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -100,58 +82,21 @@ function adminLessonCreateDialog(dialog){
 		//授業のメモを設定する領域を出力する
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, LESSON_DATA);
 	}
-	
-	/* 関数名:dispContentsFooter
-	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsFooter = function(){
-		this.button= [
-			{	//はいボタン
-				text:TEXT_LESSON_CREATE_BUTTON,
-				//クリック時のコールバック関数
-				click:function(){
-					//returnObjに返す値をセットする
-					//setReturnObj(xxxx);
-					//ダイアログを閉じ、授業作成処理を開始する
-					$(this).dialog(CLOSE);
-				}
-			}
-		];
-		this.setDialogButtons(this.button);		//授業作成ボタンを配置する
-		//ダイアログを閉じるときは破棄するように設定する
-		dialogClass.setCallbackCloseOnAfterOpen(dialogClass.destroy);
-	}
-	
 
-	/* 関数名:setDialogTitle
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 作成日　:2015.0815
-	 * 作成者　:T.Masuda
-	 */
-	this.setDialogTitle = function(dialogClass){
-		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = dialogClass.getArgumentDataObject();
-		//タイトルを入れ替える
-		this.setDialogTitle(data.dateJapanese);
-	}
-	
-	/* 関数名:setArgumentObj
-	 * 概要　:ダイアログに渡すオブジェクトを生成する
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:015.08.14
+	 * 作成日　:2015.0822
 	 * 作成者　:T.Masuda
 	 */
-	this.setArgumentObj = function() {
+	this.setConfig = function(){
+		//新規作成ボタンを使う
+		this.setButtons(this.createNew);
+		//ダイアログの位置調整を行う
+		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
+
 }
 
 //継承の記述

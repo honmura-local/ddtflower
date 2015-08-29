@@ -1365,6 +1365,25 @@ this.defaultClassworkCostColumns = [
 		arrayName.push($(parent).children(pushText).text());
 	}
 	
+	/* 
+	 * 関数名:setObjectValue()
+	 * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
+	 * 引数  :object object:テキストボックスに値を挿入するための値が入った連想配列名
+	 * 		:String formParent:フォーム要素の親の要素
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.02
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.23
+	 * 内容	:commonクラスに移動しました。また、大幅改修しました
+	 */
+	this.setObjectValue(object, formParent) {
+		//対象となるオブジェクトを走査する
+		for (var key in object) {
+			//name属性が一致するフォーム要素に、対応する値を追加する
+			$(FORM_ELEMS, $formParent).filter('name=[' + key + ']').val(setArray[key]);
+		}
+	}
 	
 	
 //ここまでクラス定義領域

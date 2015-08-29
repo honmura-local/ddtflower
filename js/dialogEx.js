@@ -43,9 +43,8 @@ function dialogEx(url, argumentObj, returnObj){
 			open:function(){	//ダイアログが開くときのイベント
 				
 			},
-			close:function(){	//ダイアログが閉じられるときのイベント
-				
-			}
+			//ダイアログ専用クラスのcloseコールバック関数をcloseイベントに設定する
+			close:this.dom.dialogBuilder.callbackClose
 		},
 		//インプット用データオブジェクト
 		data:{
@@ -159,12 +158,11 @@ function dialogEx(url, argumentObj, returnObj){
 		//アラートで表示するdomをセレクタとして変数に入れる
 		var confirm = $(this.dom)[0];
 		//domをダイアログにセットする
-		$(DOT + UI_DIALOG_CONTENT).filter(SELECTOR_LAST).append(confirm);
+		$(CURRENT_DIALOG).filter(SELECTOR_LAST).append(confirm);
 		//メッセージを表示する
-		$(DOT + UI_DIALOG_CONTENT + TAG_P).filter(SELECTOR_LAST).text(message);
-		//タイマー関数のコールバックでthisが変わるため、変数にthisを格納しておく
-		var thisElem = this;
+		$(CURRENT_DIALOG + TAG_P).filter(SELECTOR_LAST).text(message);
 		this.dom = domtmp;	//退避していたDOMの参照を戻す
+		//ダイアログを閉じる時のクローズバック関数を登録する
 		this.setCallbackCloseOnAfterOpen(func);
 	}
 

@@ -23,6 +23,25 @@ function confirmDialog(dialog){
 	 */
 	this.setArgumentObj = function() {
 	}
+
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。任意でオーバーライドして定義する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.0822
+	 * 作成者　:T.Masuda
+	 */
+	this.setConfig = function(){
+		//ダイアログのインプット用データのオブジェクトを取得する
+		var data = this.dialogClass.getArgumentDataObject();
+		//はい・いいえボタンを使う
+		this.setButtons(this.yes_no);
+		this.dialogClass.setConfirmContents(data.message, data.callback);
+		//デフォルトではダイアログの位置調整のみ行う
+		this.setDialogPosition(POSITION_CENTER_TOP);
+	}
+
+
 }
 
 //継承の記述
