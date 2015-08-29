@@ -1587,7 +1587,7 @@ function createLittleContents(){
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.03
 	 */
-	this.reloadTableTriggerEvent = function(eventSelector, eventName, reloadTableClassName, inputDataParent) {
+	this.reloadTableTriggerEvent = function(eventSelector, eventName, reloadTableClassName) {
 		var thisElem = this;
 		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
 		$(STR_BODY).on(eventName, eventSelector, function(){
@@ -1606,7 +1606,7 @@ function createLittleContents(){
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.03
 	 */
-	this.eventTableReload = function(reloadTableClassName, inputDataParent) {
+	this.eventTableReload = function(reloadTableClassName) {
 		//クエリ初期状態を保存する
 		var queryDefault = this.json[reloadTableClassName].db_getQuery;
 		//クエリの置換を行う関数を実行する
@@ -1876,7 +1876,7 @@ function createLittleContents(){
 		//可変テーブルから連想配列を取得する
 		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
 		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
-		var inputDataArray = getInputData(inputDataSelector);
+		var inputDataArray = commonFuncs.getInputData(inputDataSelector);
 		//取得した連想配列を結合する
 		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
 		//結合した結果の連想配列を返す

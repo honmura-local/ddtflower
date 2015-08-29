@@ -36,7 +36,6 @@ function createAdminPermitLessonContent () {
 	//タブを作る
 	creator.createTab('.lecturePermitTab');
 
-
 	//受講承認のテーブルにチェックボックスを追加する
 	creator.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
@@ -58,7 +57,7 @@ function createAdminPermitLessonContent () {
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
 	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	creator.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 	//受講承認の備品名セレクトボックスにvalueを入れる
 	creator.setSelectboxValue('.contentSelect');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
@@ -299,6 +298,95 @@ function createAdminMailMagaAnnounceContent() {
 }
 
 /* 
+ * 関数名:clickEvent
+ * 概要  :クリックイベントを登録する
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:clickFunc：クリックされたときにコールする関数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function clickEvent(clickSelector, clickFunc) {
+	$(clickSelector).click(function() {
+		clickfunc(this);
+	});
+}
+
+/* 
+ * 関数名:dateMovement
+ * 概要  :日付の進退を求めて返す。管理者日ごと授業者一覧の日付の進退の表示で使う
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:nowDateObject：進退の対象となる日付オブジェクトのデータ
+ * 返却値  :nowDateString:進退した日付の結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function dateMovement(clickSelector, nowDateObject) {
+	//クリックされたクラス名を取得する
+	var className = $(clickSelector).attr('class');
+	//取得したクラスの名前によって処理を分ける
+	switch(className) {
+		//クリックされたのが2日前の時、日付を2日前にする
+		case 'twoDaysBefore':
+		nowDateObject.setDate(nowDateObject.getDate() - 2);
+		break;
+		//クリックされたのが1日前の時、日付を1日前にする
+		case 'oneDayBefore':
+		nowDateObject.setDate(nowDateObject.getDate() - 1);
+		break;
+		//クリックされたのが1日後の時、日付を1日後にする
+		case 'oneDayAfter':
+		nowDateObject.setDate(nowDateObject.getDate() + 1);
+		break;
+		//クリックされたのが2日後の時、日付を2日後にする
+		case 'twoDayAfter':
+		nowDateObject.setDate(nowDateObject.getDate() + 2);
+		break;
+	}
+	//日付が進退した結果を取り出す
+	var nowDateString = creator.getDateFormatDB(nowDateObject);
+	return nowDateString;
+}
+
+/* 
+ * 関数名:updateDateMovement
+ * 概要  :進退の領域をクリックしたときに日付を更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+var updateDateMovement = function(clickSelector) {
+	//日付を更新する
+	nowDateString = dateMovement(clickSelector, nowDateObject);
+	//jsonに日付の値を入れる
+	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//テーブルをリロードする
+	creator.tableReload('eachDayReservedInfoTable');
+	//日付をタイトルに入れる
+	$(DOT + clickSelectorParent + ' p').text(nowDateString);
+}
+
+/* 
+ * 関数名:updateDateSearch
+ * 概要  :日付検索をクリックした時の処理
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+var updateDateSearch = function () {
+	//表示されている日付を更新するために検索する日付のデータを取得する。
+	var changeDate = $('.dateInput').val();
+	//現在表示されている日付を入力された日付で更新する
+	$(DOT + clickSelectorParent + ' p').text(changeDate)
+	//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
+	nowDateObject = new Date(changeDate);
+	//日ごと授業者一覧テーブルをリロードする
+	creator.eventTableReload('eachDayReservedInfoTable');
+}
+
+/* 
  * 関数名:nowDatePaging
  * 概要  :現在の日付からページング機能を実装する
  * 引数  :clickSelectorParent:クリックボタンのセレクター
@@ -314,48 +402,11 @@ function nowDatePaging(clickSelectorParent, creator) {
 	//日付をタイトルに入れる
 	$(DOT + clickSelectorParent + ' p').text(nowDateString);
 	//jsonに日付の値を入れる
-	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
 	//対象の要素がクリックされたときに日付を進退する
-	$(DOT + clickSelectorParent + ' a').click(function(){
-		//クリックされた番号を取得する
-		var className = $(this).attr('class');
-		//取得したクラスの名前によって処理を分ける
-		switch(className) {
-			//クリックされたのが2日前の時、日付を2日前にする
-			case 'twoDaysBefore':
-			nowDateObject.setDate(nowDateObject.getDate() - 2);
-			break;
-			//クリックされたのが1日前の時、日付を1日前にする
-			case 'oneDayBefore':
-			nowDateObject.setDate(nowDateObject.getDate() - 1);
-			break;
-			//クリックされたのが1日後の時、日付を1日後にする
-			case 'oneDayAfter':
-			nowDateObject.setDate(nowDateObject.getDate() + 1);
-			break;
-			//クリックされたのが2日後の時、日付を2日後にする
-			case 'twoDayAfter':
-			nowDateObject.setDate(nowDateObject.getDate() + 2);
-			break;
-		}
-		//日付を更新する
-		nowDateString = creator.getDateFormatDB(nowDateObject);
-		//jsonに日付の値を入れる
-		creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
-		//テーブルをリロードする
-		creator.tableReload('eachDayReservedInfoTable');
-		//日付をタイトルに入れる
-		$(DOT + clickSelectorParent + ' p').text(nowDateString);
-	});
-	//検索ボタンがクリックされた時の処理
-	$(DOT + 'dateSelect .searchButton').click(function(){
-		//表示されている日付を更新するために検索する日付のデータを取得する。
-		var changeDate = $('.dateInput').val();
-		//現在表示されている日付を入力された日付で更新する
-		$(DOT + clickSelectorParent + ' p').text(changeDate)
-		//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
-		nowDateObject = new Date(changeDate);
-	});
+	clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
+	//検索ボタンがクリックされた時に日付を更新する
+	clickEvent(DOT + 'dateSelect .searchButton', updateDateSearch);
 }
 
 /* 
@@ -412,7 +463,6 @@ function searchPermitListInfoTable() {
 		creator.tableReload('lecturePermitListInfoTable');
 	});
 }
-
 
 /* 
  * 関数名:getCommodityCostPrice
@@ -764,10 +814,4 @@ function adminMessageCreate(buttonSelector, sendType) {
 		}
 	});
 }
-
-
-
-
-
-
 
