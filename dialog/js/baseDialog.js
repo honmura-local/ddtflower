@@ -425,7 +425,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackYes = function(){
 		this.instance.setPushedButtonState(YES);
-		$(this).dialog(CLOSE);		//ダイアログを閉じる
+		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
 	/* 関数名:callbackNo
@@ -438,7 +438,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackNo = function(){
 		this.instance.setPushedButtonState(NO);
-		$(this).dialog(CLOSE);		//ダイアログを閉じる
+		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
 	/* 関数名:callbackCancel
@@ -451,7 +451,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackCancel = function(){
 		this.instance.setPushedButtonState(CANCEL);
-		$(this).dialog(CLOSE);		//ダイアログを閉じる
+		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 
 	/* 関数名:callbackCreateNew
@@ -462,7 +462,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCreateNew = function(){
-		this.instance.setPushedButtonState(CREATE_NEW);
+		this.dialogClass.setPushedButtonState(CREATE_NEW);
 	}
 	
 	/* 関数名:setCallbackRowClick
@@ -497,7 +497,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackLogin = function(){
 		//ログインボタンが押されたという状態にする
-		this.instance.setPushedButtonState(LOGIN_NUM);
+		this.dialogClass.setPushedButtonState(LOGIN_NUM);
 	};
 	
 	/* 関数名:callbackCreateNew
@@ -520,7 +520,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
-		this.instance.setPushedButtonState(CONFIRM);
+		this.dialogClass.setPushedButtonState(CONFIRM);
 	};
 	
 	/* 関数名:callbackCloseButton
@@ -532,10 +532,10 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCloseButton = function(){
-		this.instance.setPushedButtonState(CLOSE_BUTTON);
-		$(this).dialog(CLOSE);		//ダイアログを閉じる
+		this.dialogClass.setPushedButtonState(CLOSE_BUTTON);
+		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
-	
+
 	/* 関数名:callbackReset
 	 * 概要　:ダイアログのリセットボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
