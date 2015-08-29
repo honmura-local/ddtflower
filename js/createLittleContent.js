@@ -1354,8 +1354,8 @@ function createLittleContents(){
 			changeMonth: true,
 			// 年をセレクトボックスで選択できるようにする
 			changeYear: true,
-			// 選択できる年は1910年から2100年の範囲にする
-			yearRange: '1910:2100',
+			// 選択できる年は1900年から2200年の範囲にする
+			yearRange: '1900:2200',
 		});
 	}
 	
@@ -1388,7 +1388,7 @@ function createLittleContents(){
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.11
 	 */
-	this.setInputValueToLecturePermitListInfoTable = function() {
+	this.setInputValueToLecturePermitListInfoTable = function(recordData) {
 		//DBから取得した料金の値を取得する
 		resultValueCost = recordData['cost'];
 		//DBから取得した使用ptの値を取得する
@@ -1397,7 +1397,7 @@ function createLittleContents(){
 		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
 		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
 		$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr('value', resultValueUsePoint);
-		//データが授業でーたでなく備品データのとき備品データをデフォルトでセットする
+		//授業データでなく備品データのとき備品データをデフォルトでセットする
 		if(recordData['lesson_name'] == "" && recordData['content'] != "") {
 			//DBから取得した日備品の値を取得する
 			resultValueCommodityName = recordData['content'];
@@ -1425,7 +1425,7 @@ function createLittleContents(){
 			//DBから読込んだ値を取り出すためにループのカウンターに対応した行の値を指定する
 			recordData = tableArray[counter];
 			//テキストボックスにDBから読込んだ値を入れる
-			setTablefunc();
+			setTablefunc(recordData);
 			//行番号をインクリメントする
 			rowNumber++;
 			//カウンタ変数をインクリメントする
@@ -1450,7 +1450,7 @@ function createLittleContents(){
 	var replaceTableOption = {};
 	//会員、予約可能授業一覧テーブル
 	replaceTableOption['lessonTable']  = {
-		//テーブルのafterでの追加先
+		//テーブルの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
 		afterReloadFunc:'tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD)',
@@ -1459,9 +1459,7 @@ function createLittleContents(){
 	};
 	//予約中授業テーブル
 	replaceTableOption['reservedLessonTable'] = {
-		//クエリを置換する置換フラグ、クエリを置換する
-		replaceFlag:'replace',
-		//テーブルの追加先dom名
+		//テーブルの追加先
 		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
 		afterReloadFunc:'tableReplaceAndSetClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, this, RESERVED_LESSON_TABLE_RECORD)',
@@ -1483,8 +1481,6 @@ function createLittleContents(){
 	}
 	//管理者画面、日ごと授業一覧
 	replaceTableOption['eachDayReservedInfoTable'] = {
-		//クエリを置換する置換フラグ、クエリを置換する
-		replaceFlag:'replace',
 		//テーブルのafterでの追加先
 		addDomPlace:'.eachDayReservedInfoTableOutsideArea',
 		//置換のvalueが入ったdom名
@@ -1561,14 +1557,14 @@ function createLittleContents(){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.replaceTableQuery = function(queryArrayKey) {
-		//置換するための値を取得する
+		//テーブルのクエリを置換するための値をセレクタから取得する
 		var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
-		//置換するものが「全て以外であれば置換する」
+		//置換するものが「全て」以外であれば置換する
 		if (replaceValue != '全て') {
-			//置換するためのkey名を取得する
+			//テーブルのクエリを置換するためのkey名を取得する
 			var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
 			//取得した値をjsonの反映させる
-			this.json[queryArrayKey][replaceKey]['value'] = replaceValue;
+			this.json[queryArrayKey][replaceKey][VALUE] = replaceValue;
 			//クエリをテーマ検索用のものと入れ替える
 			this.json[queryArrayKey].db_getQuery = this.json[queryArrayKey].replace_query;
 		//絞込ボタンで「全て」が選択されたときに全ての値を検索するためのクエリを入れる
@@ -1592,12 +1588,12 @@ function createLittleContents(){
 	 * 作成日:2015.07.03
 	 */
 	this.reloadTableTriggerEvent = function(eventSelector, eventName, reloadTableClassName, inputDataParent) {
-			var thisElem = this;
-			//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
-			$(STR_BODY).on(eventName, eventSelector, function(){
-				//テーブルをリロードして最新のデータを表示する
-				thisElem.eventTableReload(reloadTableClassName, inputDataParent);
-			});
+		var thisElem = this;
+		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
+		$(STR_BODY).on(eventName, eventSelector, function(){
+			//テーブルをリロードして最新のデータを表示する
+			thisElem.eventTableReload(reloadTableClassName, inputDataParent);
+		});
 	}
 	
 	/* 
@@ -1613,15 +1609,8 @@ function createLittleContents(){
 	this.eventTableReload = function(reloadTableClassName, inputDataParent) {
 		//クエリ初期状態を保存する
 		var queryDefault = this.json[reloadTableClassName].db_getQuery;
-		//クエリの置換フラグが追記のとき
-		if (replaceTableOption[reloadTableClassName].replaceFlag == 'add') {
-			//クエリに追記を行う関数を実行する
-			this.addQueryExtractionCondition(inputDataParent, reloadTableClassName);
-		//置換フラグが置換のとき
-		} else if (replaceTableOption[reloadTableClassName].replaceFlag == 'replace') {
-			//クエリの置換を行う関数を実行する
-			this.replaceTableQuery(reloadTableClassName);
-		}
+		//クエリの置換を行う関数を実行する
+		this.replaceTableQuery(reloadTableClassName);
 		//テーブルをリロードする
 		this.tableReload(reloadTableClassName);
 		// クエリを最初の状態に戻す
@@ -1701,7 +1690,6 @@ function createLittleContents(){
 		//現在日付を返す。
 		return nowDate;
 	}
-	
 
 	/* 
 	 * 関数名:setTableReloadExecute
@@ -1761,7 +1749,6 @@ function createLittleContents(){
 		});
 	}
 	
-	
 	/* 
 	 * 関数名:checkInputName
 	 * 概要  :テキストボックスに入力された値が文字列のときはtrue、違うならfalseを返し、データ送信の入力チェックに使う
@@ -1781,7 +1768,6 @@ function createLittleContents(){
 		//名前の入力に適していたかどうかの結果を返す
 		return resultbool;
 	}
-	
 	
 	/* 
 	 * 関数名:checkInputPhone
@@ -1875,7 +1861,6 @@ function createLittleContents(){
 		creator.json.numbering = {};
 	}
 
-	
 	/* 
 	 * 関数名:getSendReplaceArray
 	 * 概要  :可変テーブルで取得した連想配列とユーザがテキストボックスで入力した値の連想配列を結合する。

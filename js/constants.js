@@ -460,6 +460,10 @@ EXPERIENCE_RESERVED_CONFIRM_DIALOG_URL		 = 'dialog/experienceReservedConfirmDial
 EXPERIENCE_RESERVED_CONFIRM_DIALOG_JS		 = 'dialog/js/experienceReservedConfirmDialog.js';	
 EXPERIENCE_RESERVED_CONFIRM_DIALOG_JSON		 = 'dialog/source/experienceReservedConfirmDialog.json';	
 EXPERIENCE_RESERVED_CONFIRM_DIALOG_HTML		 = 'dialog/template/experienceReservedConfirmDialog.html';	
+
+//確認ダイアログjs
+CONFIRM_DIALOG_JS 							= 'dialog/js/confirmDialog.js';
+
 //体験レッスン予約希望ダイアログの入力チェック用の定数群
 //必須入力を行う入力フォームのname属性を配列に入れる。
 EXPERIENCE_CHECK_FORMS = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
@@ -667,5 +671,12 @@ PROCESSING_CANCEL							= 2;	//予約キャンセル操作を行う
 
 KEY_DB_SETQUERY 							= 'db_setQuery';
 KEY_DB_GETQUERY 							= 'db_getQuery';
+
+NUMBERING_START 								= 1; 	//ページングの最初の表示する値。1つ目のコンテンツからから表示
+NUMBERING_PAGE 									= 4; 	//ページング化される数。5ページ目から＞＞の記号になる
+NUMBERING_DEFAULT 								= 1;	//ページングは1ページ目から表示する
+NUMBERING_DISPLAY 								= 10;	//ページングの1つのページにつき、10件を表示するようにする
+
+//会員ページ トップ 受講済み授業一覧テーブル
 
 

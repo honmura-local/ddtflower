@@ -306,7 +306,7 @@ function createAdminMailMagaAnnounceContent() {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.06
  */
-function nowDatePaging(clickSelectorParent) {
+function nowDatePaging(clickSelectorParent, creator) {
 	//現在時刻のオブジェクトを作る
 	var nowDateObject = new Date();
 	//日付の文字列を取得する

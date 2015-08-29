@@ -5,11 +5,11 @@
 	//当該ダイアログのDOMを取得する
 	var thisDialog = $(CURRENT_DIALOG);
 	//このダイアログのクラスを定義したJSファイルを読み込む
-	commonFuncs.getScriptFile(URL_LOGIN_DIALOG_JS);
-	
+	commonFuncs.getScriptFile("dialog/js/confirmDialog.js");
 	//当該ダイアログ用関数クラスインスタンスを生成する
 	var dialogBuilder = new confirmDialog(thisDialog);
 	//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
 	thisDialog[0].dialogBuilder = dialogBuilder;
+
 	</script>
 </div>
