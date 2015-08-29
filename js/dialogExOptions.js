@@ -268,64 +268,6 @@ dialogExOption[ADMIN_NEW_LESSON_CREATE] = {
 		}
 }
 
-//管理者、メール送信ダイアログ
-dialogExOption[ADMIN_MAIL_SEND_DIALOG] = {
-		argumentObj:{
-			config:{
-				//幅を自動設定する。
-				width			: 300,
-				//ダイアログを生成と同時に開く。
-				autoOpen		: true,
-				//リサイズ不可にする
-				resizable:false,
-				//Escキーを押してもダイアログが閉じないようにする。
-				closeOnEscape	: false,
-				//モーダル化する
-				modal:true,
-				//ダイアログタイトルをメッセージ作成にする
-				title:'メッセージ作成',
-				//画面上部にダイアログを表示する
-				position :{my:'center top',at:'center top', of:window},
-				//以下、ダイアログの状態に合わせて発生するイベントとコールバック関数。
-				//dialogExクラスのsetCallback~関数でコールバック関数をセットします
-				create:function(){	//ダイアログが作られたときのイベントとコールバック関数
-					
-				},
-				open:function(){	//ダイアログが開いたときのイベントとコールバック関数
-					
-				},
-				close:function(){	//ダイアログが閉じたのイベントとコールバック関数
-					
-				}
-			},
-			//アウトプット用データオブジェクト
-			data:{
-				//送信タイプ。ここに入った値で確認ダイアログを閉じたときのコールバック関数を分岐させる
-				sendType:""
-			}
-		},
-		//アウトプット用データを格納するオブジェクト
-		returnObj:{
-			//ダイアログの状態を表すオブジェクト
-			statusObj:{
-				buttonState:UNSELECTED,	//押されたボタンの値。1→未選択 0→いいえ 1→はい
-			},
-			//関数オブジェクト
-			funcObj:{
-				//管理者メール送信用関数
-				mail:doSendMail,
-				//お知らせ送信用関数
-				announce:announceInsert
-			},
-			data:{
-				messages:{
-					mail:"メールを送信します。",
-					announce:"お知らせを配信します。"
-				}
-			}
-		}
-}
-
 //マイブログ確認ダイアログ
 dialogExOption[MY_BLOG_CONFIRM_DIALOG] = {
 		argumentObj:{

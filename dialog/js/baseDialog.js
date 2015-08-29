@@ -9,7 +9,7 @@
 //ひとまずクラスインスタンス用変数名はdialogBuilderに統一します。
 /** クラス名:baseDialog
  * 概要　:ダイアログ内コンテンツ作成、要素操作のためのクラスのための基底クラス
- * 引数	:Element dialog:コンテンツを作る対象となるダイアログのDOM
+ * 引数	:Element dialog:コンテンツを作る対象となるダイアログのDOM。jQueryオブジェクトとして渡す
  * 設計者:H.Kaneko
  * 作成日:2015.0813
  * 作成者:T.Masuda
@@ -19,8 +19,8 @@ function baseDialog(dialog){
 	
 	//各コンストラクタ引数をメンバに格納する
 	this.dialog = dialog;		//ダイアログのDOM
-	//dialogExクラスインスタンス
-	this.dialogClass = dialog[0].instance;	
+	//dialogExクラスインスタンス。初期展開時のエラー対策のため、dialogが空かどうかの判定をしています。
+	this.dialogClass = commonFuncs.checkEmpty(dialog) ? dialog[0].instance : void(0);
 	//ダイアログの生成と操作に使うcreateLittleContentsインスタンスを用意する
 	this.create_tag = new createLittleContents();
 	
@@ -152,7 +152,8 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
-		
+		//デフォルトのコールバック関数をセットする
+		this[DIALOG_CLASS].setCallbackCloseOnAfterOpen(this.callbackClose);
 	}
 	
 	/* 関数名:setConfig
@@ -276,12 +277,22 @@ function baseDialog(dialog){
 	                         		//はいボタン
 		                        	 text:YES,
 		                        	 //クリック時のコールバック関数を設定する
-		                        	 click:this.dialogBuilder.callBackYes
+                            		 click:
+                              			 //コールバック関数
+                              			 function(){
+                              			 //更新ボタンの処理を行う
+                              			 this.dialogBuilder.callbackYes();
+                              		 }
 	                         	},
 		                         {	//いいえボタン
 		                        	 text:NO,
 		                        	//クリック時のコールバック関数を設定する
-		                        	 click:this.dialogBuilder.callBackNo
+                            		 click:
+                              			 //コールバック関数
+                              			 function(){
+                              			 //更新ボタンの処理を行う
+                              			 this.dialogBuilder.callBackNo();
+                              		 }
 		                         }
 	                         ];
 	
@@ -290,7 +301,12 @@ function baseDialog(dialog){
 	                         {	//新規作成ボタン
 	                        	 text:TEXT_BUTTON_NEW,
 	                        	 //クリック時のコールバック関数を設定する
-	                        	 click:this.dialogBuilder.callbackCreateNew
+                        		 click:
+                          			 //コールバック関数
+                          			 function(){
+                          			 //更新ボタンの処理を行う
+                          			 this.dialogBuilder.callbackCreateNew();
+                          		 }
 	                         }
 	                 ];
 	
@@ -300,13 +316,23 @@ function baseDialog(dialog){
 	                	   //確認ボタン
 	                	   text:TEXT_BUTTON_CONFIRM,
 	                	   //コールバック関数
-	                	   click:this.dialogBuilder.callbackConfirm
+                    		 click:
+                      			 //コールバック関数
+                      			 function(){
+                      			 //更新ボタンの処理を行う
+                      			 this.dialogBuilder.callbackConfirm();
+                      		 }
 	                   },
 	                   {
 	                	   //リセットボタン
 	                	   text:TEXT_BUTTON_RESET,
 	                	   //コールバック関数
-	                	   click:this.dialogBuilder.callbackReset
+	                   		 click:
+	                  			 //コールバック関数
+	                  			 function(){
+	                  			 //更新ボタンの処理を行う
+	                  			 this.dialogBuilder.callbackReset();
+	                  		 }
 	                   }
 	             ];
 	
@@ -315,15 +341,24 @@ function baseDialog(dialog){
 					{	
 						//確認ボタン
 						text:TEXT_BUTTON_CONFIRM,
-						//送信ボタンのコールバック関数をセットする
-						//予約希望情報送信確認ダイアログを開く
-						click:this.dialogBuilder.callbackConfirm
+						//確認ボタンのコールバック関数をセットする
+                   		 click:
+                   			 //コールバック関数
+                   			 function(){
+                   			 //更新ボタンの処理を行う
+                   			 this.dialogBuilder.callbackConfirm();
+                   		 }
 					},
 					{
 						//閉じるボタン
 						text:STR_CLOSE_JP,
 						//閉じるボタンのコールバック関数をセットする
-						click:this.dialogBuilder.callbackCloseButton
+                  		 click:
+                  			 //コールバック関数
+                  			 function(){
+                  			 //更新ボタンの処理を行う
+                  			 this.dialogBuilder.callbackCloseButton();
+                  		 }
 					}
 	           ];
 	
@@ -332,17 +367,22 @@ function baseDialog(dialog){
 					{	//更新ボタン
 						text : TEXT_LESSON_UPDATE_BUTTON,
 						//クリック時のコールバック関数
-						click : this.dialogBuilder.callbackUpdate
-							//親のダイアログに更新の返り値を返す
-							//setReturnObj(更新の返り値);
-							//ダイアログを閉じる処理
+                		 click:
+                			 //コールバック関数
+                			 function(){
+                			 //更新ボタンの処理を行う
+                			 this.dialogBuilder.callbackUpdate();
+                		 }
 					},
 					{	//受講者一覧ボタン
 						text : TEXT_LESSON_STUDENTS_BUTTON,
 						//クリック時のコールバック関数
-						click : this.dialogBuilder.callbackUpdate
-							//受講者一覧ダイアログを開く処理
-							//ここに処理を書く
+	               		 click:
+	               			 //コールバック関数
+	               			 function(){
+	               			 //受講者一覧ボタンの処理を行う
+	               			 this.dialogBuilder.callbackStudents();
+	               		 }
 					}
 	];
 	
@@ -354,14 +394,24 @@ function baseDialog(dialog){
 						//ログインボタンのクラスを付ける
 			        	 class:LOGIN_BUTTON,
 			        	 //クリック時にログイン処理を行う
-			        	 click:this.dialogBuilder.callbackLogin
+		                		 click:
+		                			 //コールバック関数
+		                			 function(){
+		                			 //ログインボタンの処理を行う
+		                			 this.dialogBuilder.callbackLogin();
+		                		 }
 					},
 					//閉じるボタン
 					{
 						//ボタンテキスト
 						text:STR_CLOSE_JP,
 						//ダイアログを閉じるボタンのイベントコールバック関数
-			        	click:this.dialogBuilder.callbackCloseButton
+		                click:
+               			 //コールバック関数
+               			 function(){
+		                	//閉じるボタンの処理を行う
+		                	this.dialogBuilder.callbackCloseButton();
+		                }
 					}
 	           ];
 	
@@ -374,7 +424,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackYes = function(){
-		this.dialogClass.setPushedButtonState(YES);
+		this.instance.setPushedButtonState(YES);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -387,7 +437,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackNo = function(){
-		this.dialogClass.setPushedButtonState(NO);
+		this.instance.setPushedButtonState(NO);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -400,7 +450,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCancel = function(){
-		this.dialogClass.setPushedButtonState(CANCEL);
+		this.instance.setPushedButtonState(CANCEL);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 
@@ -412,7 +462,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCreateNew = function(){
-		this.dialogClass.setPushedButtonState(CREATE_NEW);
+		this.instance.setPushedButtonState(CREATE_NEW);
 	}
 	
 	/* 関数名:setCallbackRowClick
@@ -447,7 +497,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackLogin = function(){
 		//ログインボタンが押されたという状態にする
-		this.dialogClass.setPushedButtonState(LOGIN_BUTTON);
+		this.instance.setPushedButtonState(LOGIN_NUM);
 	};
 	
 	/* 関数名:callbackCreateNew
@@ -470,7 +520,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
-		this.dialogClass.setPushedButtonState(CONFIRM);
+		this.instance.setPushedButtonState(CONFIRM);
 	};
 	
 	/* 関数名:callbackCloseButton
@@ -482,7 +532,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCloseButton = function(){
-		this.dialogClass.setPushedButtonState(CLOSE_BUTTON);
+		this.instance.setPushedButtonState(CLOSE_BUTTON);
 		$(this).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -497,7 +547,7 @@ function baseDialog(dialog){
 	this.callbackReset = function(){
 	};
 
-	/* 関数名:callbackYes
+	/* 関数名:callbackUpdate
 	 * 概要　:ダイアログの更新ボタンを押したときのコールバック関数用関数
 	 * 引数　:なし
 	 * 返却値:なし
@@ -568,7 +618,7 @@ function baseDialog(dialog){
 	 */
 	this.callbackClose = function(){
 		//ダイアログを完全に消す
-		this.dialogClass.destroy();
+		this.instance.destroy();
 	};
 
 }

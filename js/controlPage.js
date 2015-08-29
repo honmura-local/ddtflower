@@ -151,31 +151,6 @@ function callPage(url, state){
 	});
 }
 
-/*
- * 関数名:callLoadingScreen()
- * 引数  :なし
- * 戻り値:なし
- * 概要  :ローディング画面を表示する。
- * 作成日:2015.03.02
- * 作成者:T.Masuda
- */
-function callLoadingScreen(){
-		//ローディング画面を出す。
-		$('.loading').css('display','block');
-}
-
-/*
- * 関数名:hideLoadingScreen()
- * 引数  :なし
- * 戻り値:なし
- * 概要  :ローディング画面を隠す。
- * 作成日:2015.03.05
- * 作成者:T.Masuda
- */
-function hideLoadingScreen(){
-	//ローディング画面を隠す。
-	$('.loading').css('display','none');
-}
 
 /*
  * イベント:ready
@@ -477,7 +452,7 @@ function changeSelectedButtonColor(filterTarget){
 //Ajax通信が始まったら
 $(document).ajaxStart( function(){
 	//ローディング画面を出す。
-	callLoadingScreen();
+	commonFuncs.callLoadingScreen();
 });
 
 
@@ -492,7 +467,7 @@ $(document).ajaxStart( function(){
 //Ajax通信が全て終了したら
 $(document).ajaxStop( function(){
 	//ローディング画面を隠す。
-	hideLoadingScreen();
+	commonFuncs.hideLoadingScreen();
 	//選択されたトップメニューの色を変える。
 	changeSelectedButtonColor('.topMenu li');
 });

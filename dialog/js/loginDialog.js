@@ -89,7 +89,7 @@ function loginDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		//以下、createTagによる画面パーツの配置。
+		//ログインに必要なテキストボックス、案内のラベルを出す
 		this.create_tag.outputTag(INPUT_AREA, INPUT_AREA, CURRENT_DIALOG);
 	}
 	
@@ -115,22 +115,21 @@ function loginDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackClose = function(){
+		
 		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
-		switch(this.dialogClass.getPushedButtonState()){
+		switch(this.dialogBuilder.dialogClass.getPushedButtonState()){
 			//ログインボタンが押されていたら
-			case LOGIN_BUTTON:
+			case LOGIN_NUM:
 				//ログインボタンのコールバックで処理が終わっているので何もしない
 				break;
-			//閉じるボタンが押されていたら
-			case CLOSE_BUTTON:
+			//閉じるボタン、クローズボックスが押されていたら
+			default:
 				//トップページに戻る
 				callPage(TOP_LOCATION);
 				break;
-			//何も押されてないなら
-			default:break;
 		}
 		//ダイアログを完全に消す
-		dialogClass.destroy();
+		this.dialogBuilder.dialogClass.destroy();
 		//画面をリロードする
 		location.reload();
 	};
@@ -144,6 +143,8 @@ function loginDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
+		//ダイアログを完全に消す
+		this.dialogClass.setCallbackCloseOnAfterOpen(this.callbackClose);
 		//ログインダイアログの中にあるテキストボックスにフォーカスしているときにエンターキー押下でログインボタンを自動でクリックする
 		commonFuncs.enterKeyButtonClick(SELECTOR_USERNAME_PASSWORD, SELECTOR_LOGIN_BUTTON);
 	}
@@ -171,22 +172,23 @@ function loginDialog(dialog){
 	 * 作成日　:2015.0816
 	 * 作成者　:T.Masuda
 	 */
-	this.getLoginInformation(){
+	this.getLoginInformation = function(){
 		//入力されたユーザID、パスワードをオブジェクトにまとめて返す
 		return {userId: $(USERNAME_SELECTOR).val(), password:$(PASSWORD_SELECTOR).val()}
 	}
 	
-	/* 関数名:getLoginInformation
+	/* 関数名:getLoginProcedureResult
 	 * 概要　:ログイン処理を行い、その結果をオブジェクトで返す
 	 * 引数　:なし
 	 * 返却値:Object:ユーザIDと権限の値を格納したオブジェクトを返す
 	 * 作成日　:2015.0816
 	 * 作成者　:T.Masuda
 	 */
-	this.getLoginProcedureResult(){
+	this.getLoginProcedureResult = function(){
 		//※ログインダイアログ表示時に引数のJSONは取得されている
+		console.log(this[VAR_CREATE_TAG].json);
 		//サーバにアクセスし、ログイン処理を行う
- 		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[login], LOGIN);
+ 		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[KEY_LOGIN], KEY_LOGIN);
  		//DBから取得したログイン処理の結果をオブジェクトにまとめて返す
  		return {userId: this[VAR_CREATE_TAG].json.login[ID][STR_TEXT], authority: this[VAR_CREATE_TAG].json.login.authority[STR_TEXT]};
 	}
@@ -224,25 +226,28 @@ function loginDialog(dialog){
 				location.href = URL_MEMBER_PAGE; 
 			}
 		}
-
-		this.dialogClass.destroy();	//ログイン成功につきダイアログを閉じる
+		
+		//ログインボタンが押されたという状態にする
+		this.dialogClass.setPushedButtonState(LOGIN_NUM);
+		$(this.dialogClass.dom).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
 	}
 	
-	/* 関数名:doLogin
-	 * 概要　:ログイン処理
+	/* 関数名:callbackLogin
+	 * 概要　:ダイアログのログインボタンを押したときのコールバック関数
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:2015.0816
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.23
 	 * 作成者　:T.Masuda
 	 */
-	this.doLogin = function(){
-		var loginInfo =  this.getLoginInformation();
-		
+	this.callbackLogin = function(){
+		//入力されたログイン情報を取得する
+		var loginInfo = this.getLoginInformation();
 		//入力された値が空白かどうかでログイン処理のエラーチェックを行う
 		if(commonFuncs.checkEmpty(loginInfo[USER_ID]) ||
-				commonFuncs.checkEmpty(loginInfo[PASSWORD])) {
+				commonFuncs.checkEmpty(loginInfo[KEY_LOGIN_PASSWORD])) {
 			//ログイン情報をJSONにセットする
-			this.setLoginInformation(userid, password);
+			this.setLoginInformation(loginInfo[USER_ID], loginInfo[KEY_LOGIN_PASSWORD]);
 			
 			//ログイン処理を実行し、結果を取得する
 			var loginResult = this.getLoginProcedureResult();
@@ -258,41 +263,7 @@ function loginDialog(dialog){
 		    }
 		//ログイン情報の入力を求めるアラートを出す
 		} else {
-			alert(errorMessages[ERROR_LOGIN_EMPTY]);
-		}
-	}
-
-	/* 関数名:callbackLogin
-	 * 概要　:ダイアログのログインボタンを押したときのコールバック関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:015.08.23
-	 * 作成者　:T.Masuda
-	 */
-	this.callbackLogin = function(){
-		//入力された値が空白かどうかでログイン処理のエラーチェックを行う
-		if(commonFuncs.checkEmpty(loginInfo[USER_ID]) ||
-				commonFuncs.checkEmpty(loginInfo[PASSWORD])) {
-			//ログイン情報をJSONにセットする
-			this.setLoginInformation(userid, password);
-			
-			//ログイン処理を実行し、結果を取得する
-			var loginResult = this.getLoginProcedureResult();
-			//JSONDBManagerによるログイン処理を行う
-		    //ログイン成否チェックの分岐
-		    //会員IDが取得できていなかった場合
-		    if(loginResult[USER_ID] == EMPTY_STRING) {
-		    	//エラーメッセージを表示して処理をそのまま終了する
-		    	alert(MESSAGE_LOGIN_ERROR);
-		    //会員IDが取得できていればログイン成功
-		    } else {
-		    	this.afterLogin();	//ログイン後の処理を行う
-				//ログインボタンが押されたという状態にする
-				this.dialogClass.setPushedButtonState(LOGIN_BUTTON);
-		    }
-		//ログイン情報の入力を求めるアラートを出す
-		} else {
+			//エラーメッセージをアラートで表示する
 			alert(errorMessages[ERROR_LOGIN_EMPTY]);
 		}
 	};
