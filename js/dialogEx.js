@@ -83,9 +83,8 @@ function dialogEx(url, argumentObj, returnObj){
 			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
 			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
 			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
-			this.returnObj = Object.keys(this.returnObj).length? this.argumentObj: this.defaultReturnObj;
+			this.returnObj = Object.keys(this.returnObj).length? this.defaultReturnObj: this.defaultReturnObj;
 			
-			console.log(this.argumentObj);
 			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			this.dom = form;			//クラスインスタンスにDOMへの参照を持たせる
@@ -159,8 +158,6 @@ function dialogEx(url, argumentObj, returnObj){
 		this.load(CONFIRM_DIALOG_PATH);
 		//アラートで表示するdomをセレクタとして変数に入れる
 		var confirm = $(this.dom)[0];
-		//domをダイアログにセットする
-		$(CURRENT_DIALOG).filter(SELECTOR_LAST).append(confirm);
 		//メッセージを表示する
 		$(CURRENT_DIALOG + TAG_P).filter(SELECTOR_LAST).text(message);
 		this.dom = domtmp;	//退避していたDOMの参照を戻す

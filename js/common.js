@@ -836,7 +836,7 @@ this.defaultClassworkCostColumns = [
 	 */
 	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator) {
 		//テーブルを置換が終えるまで画面に表示しなくする
-		$(DOT + tableName).hide();
+		//$(DOT + tableName).hide();
 		//時間差で表現するためにsetTimeOutを使う
 	//	setTimeout(function(){
 			//置換を行うテーブルのデータを取得する
