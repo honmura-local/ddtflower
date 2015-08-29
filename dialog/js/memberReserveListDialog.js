@@ -110,9 +110,9 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getTableData = function(tableName){
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
-		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json[tableName], tableName);
+		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_ARRAY_PHP, this[VAR_CREATE_TAG].json[tableName], tableName);
 		//予約データが取得できていたらtrue、そうでなければfalseを返す
-		return this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY].length != 0? true: false;
+		return this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY].length != NO_TABLE_DATA ? true: false;
 	}
 	
 	/* 関数名:customizeJson
@@ -169,15 +169,15 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContentsMain = function(){
 		//予約可能授業一覧テーブルの外側の領域を作る
-		this.create_tag.outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(TABLE_AREA, TABLE_AREA, CURRENT_DIALOG_SELECTOR);
 		//予約できる授業のデータ一覧テーブルを作る
-		this.create_tag.outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
+		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, SELECTOR_TABLE_AREA);
 		//テーブルの値を置換する
-		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this.create_tag.json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
+		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
 		//テーブルの値をクライアント側で編集して画面に表示する
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
-		this.create_tag.outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(EXPLAIN + 1, EXPLAIN + 1, CURRENT_DIALOG_SELECTOR);
 	}
 
 	/* 関数名:setCallback
@@ -257,26 +257,26 @@ function memberReserveListDialog(dialog){
 	 */
 	this.callbackRowClick = function(thisElem) {
 		//クリックした行の番号とデータを取得する
-		this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem.create_tag);
+		this.recordData = this.getClickTableRecordData(this, LESSON_TABLE, LESSON_TABLE_RECORD, thisElem[VAR_CREATE_TAG]);
 		//残席の記号を取得する
-		var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(INT_4).text();
+		var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(REST_COLUMN_NUM).text();
 		
 		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-		if (thisElem.create_tag.json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+		if (thisElem[VAR_CREATE_TAG].json[LESSON_TABLE][TAG_TABLE][recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
 			&& restMarkNow != CHAR_INVALIDATE) {
 			var dialogUrl = '';	//ダイアログのURLを格納する変数を用意する
 			//予約が初めてのときに予約ダイアログを開く(予約履歴がない、またはキャンセルの人の処理)
-			if(thisElem.create_tag.json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != 1) {
+			if(thisElem[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATE_KEY][recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS) {
 				//予約確認ダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
 				//予約操作を行う
-				this.manipulation = 0;
+				this.manipulation = PROCESSING_RESERVE;
 			//予約済みであれば
 			} else {
 				//予約キャンセルダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
 				//キャンセル操作を行う
-				this.manipulation = 2;
+				this.manipulation = PROCESSING_CANCEL;
 			}
 			
 			this.openDialog(dialogUrl);	//ダイアログを開く
@@ -322,17 +322,17 @@ function memberReserveListDialog(dialog){
 		//DB操作によってクエリを切り替える
 		switch(this.manipulation){
 		//通常の予約
-		case 0:retObj.db_setQuery = this[VAR_CREATE_TAG].sendReservedData;
+		case PROCESSING_RESERVE:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;
 			break;
 		//再予約
-		case 1:retObj.db_setQuery = this[VAR_CREATE_TAG].updateReservedData;
+		case PROCESSING_RESERVE_AGAIN:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].updateReservedData;
 			break;
 		//キャンセル
-		case 2:retObj.db_setQuery = this[VAR_CREATE_TAG].cancelReservedData;
+		case PROCESSING_CANCEL:retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].cancelReservedData;
 			break;
 		default:break;
 		}
-		retObj.db_setQuery = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
+		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;
 	};

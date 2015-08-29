@@ -101,21 +101,6 @@ function memberReserveCancelDialog(dialog){
 		//確認テキストを作る
 		creator.outputTag(CLASS_MEMBER_CONFIRM, CLASS_MEMBER_CONFIRM, CLASS_LESSON_INFO);
 	}
-	
-	/* 関数名:setConfig
-	 * 概要　:コールバック関数をセットする
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0822
-	 * 作成者　:T.Masuda
-	 */
-	this.setConfig = function(){
-		//ダイアログにボタンをセットする
-		this.setDialogButtons(this.yes_no);
-		//ダイアログの位置を修正する
-		this.setDialogPosition({my:DIALOG_POSITION,at:DIALOG_POSITION, of:window});
-	}
 
 	/* 関数名:setCallback
 	 * 概要　:ダイアログのコールバックを設定する
