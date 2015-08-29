@@ -739,11 +739,15 @@ this.defaultClassworkCostColumns = [
 			dataTYpe:"script",				//JSファイルを取得する設定
 			async:false,					//同期通信
 			success:function(sc){			//通信成功時
-				console.log("got script");	//成功判定を変数に入れる
+				console.log("got script");	//成功判定のログを出すに入れる
 			},
-			error:function(a,b,c){			//通信失敗時
+			error:function(xhr,status,error){			//通信失敗時
 				//失敗のログを出す
 				console.log(GET_SCRIPT_FAIL_MESSAGE_FRONT + scriptUrl + PARENTHESES_REAR);
+				//各エラー内容をログに出す
+				console.log(xhr);		//通信結果のデータ
+				console.log(status);	//通信状態
+				console.log(error);		//エラー内容
 			}
 		});
 	}
@@ -1364,7 +1368,7 @@ this.defaultClassworkCostColumns = [
 		//配列に引数で指定した値を追加していく
 		arrayName.push($(parent).children(pushText).text());
 	}
-	
+
 	/* 
 	 * 関数名:setObjectValue()
 	 * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
@@ -1377,7 +1381,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成日:2015.08.23
 	 * 内容	:commonクラスに移動しました。また、大幅改修しました
 	 */
-	this.setObjectValue(object, formParent) {
+	this.setObjectValue = function(object, formParent){
 		//対象となるオブジェクトを走査する
 		for (var key in object) {
 			//name属性が一致するフォーム要素に、対応する値を追加する
@@ -1385,6 +1389,138 @@ this.defaultClassworkCostColumns = [
 		}
 	}
 	
+	/* 
+	 * 関数名:getDefaultArgumentObject
+	 * 概要  :dialogExと同様のデフォルトのargumentObjを返す
+	 * 引数  :なし
+	 * 返却値 :デフォルトのargumentObjを返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.29
+	 */
+	this.getDefaultArgumentObject = function(){
+		//dialogExと同様のデフォルトのargumentObjを返す
+		return {
+			//ダイアログの設定データオブジェクト
+			config:{
+				width: STR_AUTO,		//幅を自動調整する
+				autoOpen : true,	//作成時の自動オープンを無効にする
+				modal : true,		//モーダル表示
+				resizable : false,	//ドラッグでのリサイズ可否
+				//表示位置の指定。
+				position :POSITION_CENTER_TOP,
+				closeOnEscape : false,	//escキーを押して閉じるか
+				create:function(){	//ダイアログ作成時のイベント
+				},
+				open://基本的にopen時はdispContentsが実行されるようにする
+					function(){
+					//dispContentsをコールしてダイアログの内容を作る
+					commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
+				},
+				close:function(){	//ダイアログが閉じるときのイベント
+				}
+			},
+			//インプット用データオブジェクト
+			data:{
+			}
+		};
+	}
+	
+	/* 
+	 * 関数名:getDefaultReturnObject
+	 * 概要  :dialogExと同様のデフォルトのreturnObjを返す
+	 * 引数  :なし
+	 * 返却値 :Object:デフォルトのreturnObjを返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.29
+	 */
+	this.getDefaultReturnObject = function(){
+		//dialogExと同様のデフォルトのreturnObjを返す
+		return {
+				//ダイアログのステータスオブジェクト
+				statusObj:{
+					buttonState:UNSELECTED	//押されたボタンの値。1→未選択 0→いいえ 1→はい 
+				},
+				//アウトプット用データのオブジェクト
+				data:{
+				}
+		};
+	}
+	
+	/* 
+	 * 関数名:setCallbackToEventObject
+	 * 概要  :オブジェクト定義時にコールバック関数を登録する
+	 * 引数  :Element elem:関数を実行する要素、または関数を実行する要素を持つDOM
+	 * 		:String targetKey:関数を実行する要素(変数)名
+	 * 		:String callback:コールする関数名
+	 * 返却値 :Function:コールする関数を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.08.29
+	 */
+	 this.setCallbackToEventObject = function(elem, targetKey, callback){
+		 //コールバック関数を実行する
+		 this.checkEmpty(elem[targetKey])? elem[targetKey][callback]():elem[callback]();
+	 }
+
+	 /* 
+	  * 関数名:enterKeyButtonClick
+	  * 概要  :エンターが押された時に第二引数のボタンをクリックしたイベントを発生させる
+	 		ログインダイアログのテキストボックスでエンターキーを押してログイン処理を開始するときや
+	 		ユーザ一覧の検索でテキストボックスからエンターキーで検索処理を開始するときなどに使う
+	  * 引数  :enterTarget:エンターキーを押したときに対象となるセレクター名
+	  *       buttonText:クリックイベントを起こすボタンに表示されているテキスト
+	  * 返却値  :なし
+	  * 作成者:T.Yamamoto
+	  * 作成日:2015.07.10
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.29
+	 * 内容	:commonクラスに移動しました。
+	  */
+	 this.enterKeyButtonClick = function(enterTarget, buttonSelector) {
+	 	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
+	 	$(enterTarget).keypress(function (e) {
+	 		//エンターボタンが押された時の処理
+	 		if (e.which == 13) {
+	 			//ボタンを自動でクリックし、クリックイベントを起こす
+	 			$(buttonSelector).click();
+	 		}
+	 	});
+	 }
+
+	 /*
+	  * 関数名:callLoadingScreen
+	  * 引数  :なし
+	  * 戻り値:なし
+	  * 概要  :ローディング画面を表示する。
+	  * 作成日:2015.03.02
+	  * 作成者:T.Masuda
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.29
+	 * 内容	:commonクラスに移動しました。
+	  */
+	 this.callLoadingScreen = function(){
+	 		//ローディング画面を出す。
+	 		$('.loading').css('display','block');
+	 }
+
+	 /*
+	  * 関数名:hideLoadingScreen
+	  * 引数  :なし
+	  * 戻り値:なし
+	  * 概要  :ローディング画面を隠す。
+	  * 作成日:2015.03.05
+	  * 作成者:T.Masuda
+	 * 変更者:T.Masuda
+	 * 変更日:2015.08.29
+	 * 内容	:commonクラスに移動しました。
+	  */
+	 this.hideLoadingScreen = function(){
+	 	//ローディング画面を隠す。
+	 	$('.loading').css('display','none');
+	 }
+	
 	
 //ここまでクラス定義領域
 }
+
+//どこでも当暮らすインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する
+commonFuncs = new common();

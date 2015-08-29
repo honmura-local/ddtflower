@@ -3552,27 +3552,6 @@ var optionSubmitHandler = {
 }
 
 
-/* 
- * 関数名:enterKeyButtonClick
- * 概要  :エンターが押された時に第二引数のボタンをクリックしたイベントを発生させる
-		ログインダイアログのテキストボックスでエンターキーを押してログイン処理を開始するときや
-		ユーザ一覧の検索でテキストボックスからエンターキーで検索処理を開始するときなどに使う
- * 引数  :enterTarget:エンターキーを押したときに対象となるセレクター名
- *       buttonText:クリックイベントを起こすボタンに表示されているテキスト
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.10
- */
-enterKeyButtonClick = function(enterTarget, buttonSelector) {
-	//第一引数の要素にフォーカスしているときにエンターボタンを押すとクリックイベントを発生する
-	$(enterTarget).keypress(function (e) {
-		//エンターボタンが押された時の処理
-		if (e.which == 13) {
-			//ボタンを自動でクリックし、クリックイベントを起こす
-			$(buttonSelector).click();
-		}
-	});
-}
 
 /*
  * scriptタグで外部ファイルjsを読み込む関数
