@@ -224,7 +224,7 @@ DIALOG_CONTENT_MEMBER_RESERVED_CONFIRM 		 = 'memberReservedConfirmDialogContent'
 DIALOG_CONTENT_CANCEL_LESSON				 = 'cancelLessonDialogContent';					//会員、予約キャンセルダイアログコンテンツ部分
 UI_DIALOG 									 = 'ui-dialog';									//ダイアログクラス名
 CLOSE 										 = 'close';										//クローズ処理に使う
-DIALOG_CLOSE_BUTTON 						 = 'dailogCloseButton';							//閉じるボタンクラス名
+DIALOG_CLOSE_BUTTON 						 = 'dialogCloseButton';							//閉じるボタンクラス名
 DEFAULT_ALERT_CONTENTS 						 = 'defaultAlertContents';						//アラートダイアログの外側divのクラス名
 TAG_P										 = ' p';										//pタグ
 LESSON_TABLE 								 = 'lessonTable';								//会員画面予約授業一覧テーブル
@@ -409,9 +409,9 @@ TAG_CHILD_TR								= ' tr';	//子セレクタとしてのtr
 TEXT_YES									= 'はい';	//「はい」の文字列
 TEXT_NO										= 'いいえ';	//「いいえ」の文字列
 //予約キャンセルダイアログ
-HTML_MEMBER_RESERVE_CANCEL_DIALOG			= 'memberReserveCancelDialog.html';
+HTML_MEMBER_RESERVE_CANCEL_DIALOG			= 'dialog/memberReserveCancelDialog.html';
 //予約確認ダイアログ
-HTML_MEMBER_RESERVE_CONFIRM_DIALOG			= 'memberReserveConfirmDialog.html';
+HTML_MEMBER_RESERVE_CONFIRM_DIALOG			= 'dialog/memberReserveConfirmDialog.html';
 //整数の4
 INT_4										= 4;
 //ターゲットの授業テーブル
