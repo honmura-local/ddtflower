@@ -275,7 +275,7 @@ function baseDialog(dialog){
 	this.yes_no = [
 	                         	{
 	                         		//はいボタン
-		                        	 text:YES,
+		                        	 text:TEXT_YES,
 		                        	 //クリック時のコールバック関数を設定する
                             		 click:
                               			 //コールバック関数
@@ -285,13 +285,13 @@ function baseDialog(dialog){
                               		 }
 	                         	},
 		                         {	//いいえボタン
-		                        	 text:NO,
+		                        	 text:TEXT_NO,
 		                        	//クリック時のコールバック関数を設定する
                             		 click:
                               			 //コールバック関数
                               			 function(){
                               			 //更新ボタンの処理を行う
-                              			 this.dialogBuilder.callBackNo();
+                              			 this.dialogBuilder.callbackNo();
                               		 }
 		                         }
 	                         ];
@@ -424,7 +424,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackYes = function(){
-		this.instance.setPushedButtonState(YES);
+		this.dialogClass.setPushedButtonState(YES);
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	
@@ -437,7 +437,7 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackNo = function(){
-		this.instance.setPushedButtonState(NO);
+		this.dialogClass.setPushedButtonState(NO);
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 	

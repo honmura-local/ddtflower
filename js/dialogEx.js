@@ -83,13 +83,10 @@ function dialogEx(url, argumentObj, returnObj){
 			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
 			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
 			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
-			this.returnObj = Object.keys(this.returnObj).length? this.argumentObj: this.defaultReturnObj;
-			
-			console.log(this.argumentObj);
+			this.returnObj = Object.keys(this.returnObj).length? this.returnObj: this.defaultReturnObj;
 			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
 			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
 			this.dom = form;			//クラスインスタンスにDOMへの参照を持たせる
-			
 			$(form).dialog(this.argumentObj.config);	//configの設定を使ってダイアログを作成、表示する
 		//例外をキャッチしたら
 		} catch(e){
@@ -160,7 +157,8 @@ function dialogEx(url, argumentObj, returnObj){
 		//アラートで表示するdomをセレクタとして変数に入れる
 		var confirm = $(this.dom)[0];
 		//domをダイアログにセットする
-		$(CURRENT_DIALOG).filter(SELECTOR_LAST).append(confirm);
+		//変更者:T.Yamamoto 変更日:2015．08.29 内容：domが重複してセットされるため、コメント化しました
+		// $(CURRENT_DIALOG).filter(SELECTOR_LAST).append(confirm);
 		//メッセージを表示する
 		$(CURRENT_DIALOG + TAG_P).filter(SELECTOR_LAST).text(message);
 		this.dom = domtmp;	//退避していたDOMの参照を戻す
@@ -483,6 +481,7 @@ function cancelDialogOpen(dialogData, dialogTitleDate) {
 		);
 	cancelLessonDialog.setCallbackClose(cancelLessonDialogClose);	//閉じるときのイベントを登録
 	cancelLessonDialog.run();	//主処理を走らせる。
+
 }
 
 /* 
