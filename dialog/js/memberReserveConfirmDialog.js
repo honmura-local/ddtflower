@@ -11,29 +11,9 @@
  * 作成者　:T.Masuda
  * 場所　　:dialog/js/memberReserveConfirmDialog.js
  */
-function memberReserveCancelDialog(dialog){
+function memberReserveConfirmDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
-	/* 関数名:constructionContent
-	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0815
-	 * 作成者　:T.Masuda
-	 */
-	this.constructionContent = function(){
-		//主に分岐処理を行うためにtry catchブロックを用意する
-		try{
-			this.getDom()		//テンプレートHTMLを取得する
-			this.getJson();		//JSONを取得する
-		//例外時処理
-		}catch(e){
-			//もう一度例外を投げ、dispContents内で処理する
-			throw e;
-		}
-	}
-
 	/* 関数名:getJson
 	 * 概要　:create_tagのインスタンスにデータのjsonをまとめるための処理
 	 * 引数　:なし
@@ -48,7 +28,7 @@ function memberReserveCancelDialog(dialog){
 		//データとなるjsonを読み込む
 		this[VAR_CREATE_TAG].getJsonFile(MEMBER_RESERVE_CONFIRM_DIALOG_JSON);
 		//DBから値を読み込むためにデータをセットする
-		setJsonDataFromArgumentObj();
+		commonFuncs.setJsonDataFromArgumentObj(this[VAR_CREATE_TAG], this.dialogClass);
 		//DBからデータを読み込む
 		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[CLASS_LESSON_ACCORDION], CLASS_LESSON_ACCORDION);
 	}
@@ -66,20 +46,6 @@ function memberReserveCancelDialog(dialog){
 		this[VAR_CREATE_TAG].getDomFile(MEMBER_LESSON_CONFIRM_DIALOG_HTML);
 		//予約確認ダイアログ個別テンプレートを取得する
 		this[VAR_CREATE_TAG].getDomFile(MEMBER_RESERVE_CONFIRM_DIALOG_HTML);
-	}
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(){
-		//ダイアログのタイトルを変更する。日本語の日付を表示する
-		this.setDialogTitle(this.dialogClass.argumentObj.data.dateJapanese);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -112,28 +78,6 @@ function memberReserveCancelDialog(dialog){
 	this.setCallback = function(){
 		//親ダイアログから渡されたクローズ用コールバック関数をセットする
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.getArgumentDataObject().callback);
-	}
-
-	/* 
-	 * 関数名:customizeJson
-	 * 概要  :表示する前にJSONを操作する
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.Masuda
-	 * 作成日:2015.08.22
-	 */
-	this.customizeJson = function(){
-		//createTagのメンバJSONを取得し、これを加工する
-		var thisJson = this[VAR_CREATE_TAG].json;
-		//ダイアログを作るクラスで受け取った値を扱いやすくするため変数に入れる
-		var argumentObj = this.dialogClass.getArgumentDataObject();
-		//順次オブジェクトから取り出したデータをJSONのしかるべき場所にセットしていく
-		thisJson.lessonConfirm.lessonInfo.timeSchedule[STR_TEXT] 			= buildHourFromTo(argumentObj);	//受講時間
-		thisJson.lessonConfirm.lessonInfo.store[STR_TEXT] 					= argumentObj[COLUMN_NAME_SCHOOL_NAME];				//店舗名
-		thisJson.lessonConfirm.lessonInfo.course[STR_TEXT]					= argumentObj[COLUMN_NAME_LESSON_NAME];				//授業テーマ
-		thisJson.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
-		thisJson.attention.cancelRateValue[COLUMN_NAME_LESSON_KEY][VALUE] 	= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(キャンセル)
-		thisJson.attention.addPointValue[COLUMN_NAME_LESSON_KEY][VALUE] 		= argumentObj[COLUMN_NAME_LESSON_KEY];			//受講授業id(加算ポイント)
 	}
 
 	/* 関数名:setConfig

@@ -343,7 +343,7 @@ function memberReserveListDialog(dialog){
 		default:
 			break;
 		}
-		
+
 		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;
