@@ -198,6 +198,9 @@ EMPTY											= '';								//空文字
 SLASH											= '/';								//スラッシュ記号
 DOT												= '.';								//ドット
 
+//ダイアログ固定幅
+DIALOG_FIXED_WIDTH								= 300;
+
 //ログインエラー時の状態の整数値定数
 TITLE = 'title';		//タイトルの文字列
 STATE_NOT_LOGIN	= 0;	//非ログイン時
