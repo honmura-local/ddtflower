@@ -22,7 +22,7 @@
                     "columnName": "残席"
                 },
                 "end_time": {
-                    "columnName":"予約可否"
+                    "columnName":"状況"
                 },
                 "lesson_key": {
                     "style":"display:none;"

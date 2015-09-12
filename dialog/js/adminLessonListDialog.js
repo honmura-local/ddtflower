@@ -58,21 +58,20 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Yamamoto
 	 */
 	this.customizeJson = function(){
-//		//テーブルのデータを連想配列に入れる
-//		var tableData = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
-//		
-//		//時限ごとの人数を取り出す
-//		var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
-//		//jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
-//		commonFuncs.customizeTableData(tableData, this.customizeAdminLessonTable, timeTableStudents);
+		// //テーブルのデータを連想配列に入れる
+		// var tableData = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
+		// //時限ごとの人数を取り出す
+		// var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
+		// //jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
+		// commonFuncs.customizeTableData(tableData, this.customizeAdminLessonTable, timeTableStudents);
 		
 		//テーブル置換用の時限データを取得する
-		this.getReplacedTableData(LESSON_TABLE);
-		var tableData = this.create_tag.json.lessonTable.tableData;
-		var tableDataLength = tableData.length;
-		for(var i = 0; i < tableDataLength; i++){
-			this.customizeAdminLessonTable(this.create_tag.json.lessonTable.tableData, i, this.timeStudentsCount);
-		}
+		// this.getReplacedTableData(LESSON_TABLE);
+		// var tableData = this.create_tag.json.lessonTable.tableData;
+		// var tableDataLength = tableData.length;
+		// for(var i = 0; i < tableDataLength; i++){
+		// 	this.customizeAdminLessonTable(this.create_tag.json.lessonTable.tableData, i, this.timeStudentsCount);
+		// }
 	};
 
 	/* 関数名:getReplacedTableData
@@ -124,10 +123,8 @@ function adminLessonListDialog(dialog){
 			this[VAR_CREATE_TAG].outputTag(TABLE_OUTER, TABLE_OUTER, $(this.dialog));
 			//授業のデータ一覧テーブルを作る
 			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(DOT+TABLE_OUTER, this.dialog));
-			//テーブルの値を置換する
-			//commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], "callAdminReservedLessonValue", this.timeStudentsCount);
 			//テーブルの値をクライアント側で編集して画面に表示する
-			//commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, "callAdminReservedLessonValue", true, this.create_tag, LESSON_TABLE_RECORD);
+			commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, "callAdminReservedLessonValue", true, this.create_tag, LESSON_TABLE_RECORD);
 		}
 	}
 
@@ -338,9 +335,8 @@ function adminLessonListDialog(dialog){
 	this.customizeAdminLessonTable = function(tableData, counter, timeTableStudents) {
 		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
 		var recordData = tableData[counter];
-		//console.log(recordData);
 		//レッスンテーマ名または店舗名が空であるならばその行を飛ばす
-		if(recordData[COLUMN_NAME_LESSON_NAME] !=EMPTY_STRING && recordData[COLUMN_NAME_SCHOOL_NAME] != EMPTY_STRING) {
+		if(recordData[COLUMN_NAME_LESSON_NAME] && recordData[COLUMN_NAME_SCHOOL_NAME]) {
 			// 開始日時と終了時刻を組み合わせた値を入れる
 			var timeSchedule = commonFuncs.buildHourFromTo(recordData);
 			//状況を入れる
