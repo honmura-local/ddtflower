@@ -20,9 +20,9 @@ function memberReserveListDialog(dialog){
 	
 	//予約、キャンセルを行ったときのお知らせのテキストの配列
 	this.noticeMessages = [
-	                       	'ご希望の授業の予約が完了しました。',
-	                       	'ご希望の授業の予約が完了しました。',
-	                       	'選択した授業の予約をキャンセルしました。'
+	                       	LESSON_RESERVE_TEXT,
+	                       	LESSON_RESERVE_TEXT,
+	                       	LESSON_CANCEL_TEXT
 	                       ];
 	
 
@@ -307,7 +307,7 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName) {
 		//クリックされた行番号を取得する。見出しの行は除外する
-		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(':not(:first)').index(clickTarget);
+		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(SEL_NO_TABLE_FIRST_ROW).index(clickTarget);
 		//次のダイアログに渡すデータを変数に入れる
 		var recordObject = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する

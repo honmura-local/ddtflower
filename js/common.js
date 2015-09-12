@@ -1606,7 +1606,7 @@ this.defaultClassworkCostColumns = [
 	 */
 	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName, create_tag) {
 		//クリックされた行番号を取得する。見出しの行は除外する
-		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(':not(:first)').index(clickTarget);
+		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(SEL_NO_TABLE_FIRST_ROW).index(clickTarget);
 		//次イアログに渡すデータを変数に入れる
 		var recordObject = create_tag.json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する
