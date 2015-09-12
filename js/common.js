@@ -256,11 +256,11 @@ this.defaultClassworkCostColumns = [
 			if(userClassworkStatus) {
 				return this.userClassworkStatuses[userClassworkStatus];
 			}
-			return thid.classworkStatuses[classworkStatus];
+			return this.classworkStatuses[classworkStatus];
 		}
 		
 		if(this.isFull(rowData, timeTableStudents)) {
-			return fullHouse;
+			return this.fullHouse;
 		}
 		
 		// 締め切られてないかの判断
@@ -283,23 +283,19 @@ this.defaultClassworkCostColumns = [
 	this.getRestMark = function(rowData, timeTableStudents) {
 		var rest = this.getRestOfSheets(rowData, timeTableStudents);
 		var restMark = "";
-		if (lessonStatus == '予約締切' || 
-			rowData[COLUMN_NAME_MAX_NUM] == 0 ||
+		if (rowData[COLUMN_NAME_MAX_NUM] == 0 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_RESERVED_1 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == RECEIPT ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_LECTURES) {
-			console.log("d");
 			restMark = this.restMarks[MARK_CROSS];
 		} else {
-			console.log("e");
-			for(var key in restMarks) {
+			for(var key in this.restMarks) {
 				if(key > rest) {
 					break;
 				}
 				restMark = this.restMarks[key];
 			}
 		}
-		console.log("f");
 		return restMark;
 	};
 
@@ -338,7 +334,7 @@ this.defaultClassworkCostColumns = [
 		var result = 0;
 		for (var i = 0; i < this.classworkCostColumns.length; i ++) {
 			this.isExist(rowData, this.classworkCostColumns[i]);
-			result += Number(rowData[classworkCostColumns[i]]);
+			result += Number(rowData[this.classworkCostColumns[i]]);
 			
 		}
 		return result;
@@ -353,7 +349,7 @@ this.defaultClassworkCostColumns = [
 		var result = 0;
 		for (var i = 0; i < this.defaultClassworkCostColumns.length; i ++) {
 			this.isExist(rowData, this.defaultClassworkCostColumns[i]);
-			result += Number(rowData[defaultClassworkCostColumns[i]]);
+			result += Number(rowData[this.defaultClassworkCostColumns[i]]);
 		}
 		return result;
 	}

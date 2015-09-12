@@ -515,9 +515,9 @@ var callMemberLessonValue = function(tableName, loopData, counter, rowNumber) {
 	// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
 	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(allDay);
 	// 料金の表示を正規の表示にする
-	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(cost);
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(cost);
 	// ポイントの表示を正規の表示にする
-	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(5).text(point);
+	$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(point);
 };
 
 /* 
