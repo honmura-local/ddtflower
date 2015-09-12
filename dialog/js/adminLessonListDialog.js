@@ -203,18 +203,22 @@ function adminLessonListDialog(dialog){
 		//ボタンが押されたときの状態の値を設定する。
 		this[DIALOG_CLASS].setPushedButtonState(EDIT_LESSON);
 		
+		
 		this.openDialog(URL_ADMIN_LESSON_DETAIL_DIALOG);	//授業詳細ダイアログを開く
 	};
 
 	/* 
 	 * 関数名:getNewLessonData
 	 * 概要  :管理者、授業詳細タブで新規に授業を授業を登録するときに必要となる、授業日と時限idを取得する
-	 * 引数  :なし
-	 * 返却値  :なし
+	 * 引数  :Object newLessonData:新規授業データ
+	 * 返却値  :Object:授業の登録に必要となる日付、時限の情報を持ったオブジェクト
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.08.23
+	 * 変更者:T.Masuda
+	 * 変更日:2015.09.12
+	 * 内容	:新規授業データを引数から取るようにしました。
 	 */
-	this.getNewLessonData = function() {
+	this.getNewLessonData = function(newLessonData) {
 		var data = this.dialog.instance.getArgumentDataObject();	//argumentObjのdataを取得する
 		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 		var timeTableDayKey = "";
@@ -223,7 +227,7 @@ function adminLessonListDialog(dialog){
 		//受け取った授業一覧データから時限データを探す
 		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLesoonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
+			if(newLessonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
 				//時限データを取得し、ループを終える
 				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
 				//ループを終わらせる
@@ -255,7 +259,7 @@ function adminLessonListDialog(dialog){
 		//はいボタンが押されていたら
 		if(dialogClass.getPushedButtonState() == YES){
 			//新しく授業データを作るために授業日を連想配列に入れる
-			var lessonData = getNewLessonData();
+			var lessonData = this.updateJson();
 			//授業の設定内容を首都kする
 			var lessonConfig = getInputData(CLASS_LESSON_DATA);
 			//新しく授業データを挿入するために日付データを含めて送信する
@@ -278,22 +282,6 @@ function adminLessonListDialog(dialog){
 		}
 	}
 
-	/* 関数名:onCloseLessonDetailDialog
-	 * 概要　:管理者画面 授業詳細ダイアログが閉じたときのためのイベント。
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.08.09
-	 * 作成者　:T.Masuda
-	 */
-	function onCloseLessonDetailDialog(){
-		//createLittleContentsクラスインスタンスを取り出すため、argumentObjectのdataを取り出す
-		var data = this.instance.getArgumentDataObject();	
-		//更新に合わせ、対象のテーブルの値を更新する
-		data.creator.tableReload(ADMIN_LESSON_DETAIL_TABLE);
-		this.instance.destroy();		//ダイアログを完全に破棄する
-	}
-
-	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -307,18 +295,33 @@ function adminLessonListDialog(dialog){
 		//returnObjに格納された押されたボタンの値を取得する
 		var pushedButtonState = this[DIALOG_CLASS].getPushedButtonState();
 		
-		//授業が新規で作成されるなら
-		if(pushedButtonState == CREATE_NEW){
-			//新規作成用のデータを取得してまとめる
-			$.extend(argumentObj, this.getNewLessonData(), {callback:newLessonEntry});
-		//既存の授業を編集する場合は
-		} else {
-			//クリックした行番号を取得するため、returnObjを取得する
-			var returnObj = this[DIALOG_CLASS].getReturnStatusObject();
-			//既存の授業のデータを取得してまとめる
-			$.extend(argumentObj, this.getEditLessonObject(returnObj[CLICKED_ROW]), {lessonData:this.getDetailLessonDialogArgData()});
+		//イベントコールバックの起点となったものを判別する
+		switch(pushedButtonState){
+			//新規作成ボタンが押された
+			case CREATE_NEW:
+				//新規作成用のデータを取得してまとめる。また、close時のコールバック関数のポインタを渡す
+				$.extend(true, 
+						argumentObj.data, //このダイアログに渡されたインプット用データ
+						this.create_tag.json.lessonTable.tableData, //授業一覧テーブルの全行データ
+						//当クラスインスタンスと新規作成ダイアログのclose時コールバック関数
+						{parentDialogBuilder:this, callback:this.newLessonEntry}
+				);
+				break;	//switchを抜ける
+			//授業一覧テーブルの行がクリックされた
+			default:
+				//クリックした行番号を取得するため、returnObjのreturnStatusObjを取得する
+				var returnStatusObj = this[DIALOG_CLASS].getReturnStatusObject();
+				
+				//既存の授業のデータを取得してまとめる
+				$.extend(true, 
+							argumentObj.data, //このダイアログに渡されたインプット用データ
+							//行データ
+							this.create_tag.json.lessonTable.tableData[returnStatusObj[CLICKED_ROW]], 
+							{parentDialogBuilder:this}	//当クラスインスタンス
+				);
+				break;	//switchを抜ける
 		}
-		
+
 		return argumentObj;	//生成したオブジェクトを返す
 	}
 
@@ -353,73 +356,40 @@ function adminLessonListDialog(dialog){
 		return tableData;
 	};
 
-	/* 関数名:getDetailLessonDialogArgData
-	 * 概要　:授業詳細ダイアログを開くためのarguObjectを取得する。
-	 		授業詳細ダイアログで必要になるのはクリックされた行のデータ。
-	 * 引数　:clickThis:テーブルに行をクリックしたときのイベントのthis
-	 		:dialogInstance:ダイアログのインスタンス
-	 * 返却値:return returnArgObject
-	 * 作成日　:2015.08.22
-	 * 作成者　:T.Yamamoto
-	 */
-	this.getDetailLessonDialogArgData = function(clickThis, dialogInstance) {
-		//授業一覧のダイアログのデータを取得し、次のダイアログを渡すのに使う
-		var argumentObj = dialogInstance.dialogClass.getArgumentObject();
-		//クリックしたセルの行番号を取得する
-		var rowNum = $(CURRENT_DIALOG_SELECTOR + SPACE + STR_TR, this.dialog).index(clickThis) - 1;
-		//次のダイアログに渡すデータを変数に入れる
-		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][rowNum];
-		//セットするargObjectを作成して返す
-		return $extend(true, {}, argumentObj, tableData);
-	}
-	
-	/* 関数名:getCreateLessonDialogArgData
-	 * 概要　:新規授業作成ダイアログを開くためのarguObjectを取得する
-	 		新規授業作成ダイアログで必要になる値は授業一覧テーブルにある全ての値
-	 * 引数　::dialogInstance:ダイアログのインスタンス	 		
-	 * 返却値:Object:ダイアログの作成に必要なオブジェクト
-	 * 作成日　:2015.08.22
-	 * 作成者　:T.Yamamoto
-	 */
-	 this.getCreateLessonDialogArgData = function(dialogInstance) {
-	 	//授業一覧のダイアログのデータを取得し、次のダイアログを渡すのに使う
-		var argumentObj = dialogInstance.dialogClass.getArgumentObject();
-		//次のダイアログに渡すデータを変数に入れる
-		var tableData = dialogInstance[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
-		//ダイアログの作成に必要なオブジェクトを作成して返す
-		return $extend(true, {}, argumentObj, tableData);
-	}
-
 	 /* 
 	  * 関数名:getNewLessonData
 	  * 概要  :管理者、授業詳細タブで新規に授業を授業を登録するときに必要となる、授業日と時限idを取得する
 	  * 引数  :なし
-	  * 返却値  :なし
+	  * 返却値  :Object:授業日と時限IDのオブジェクトを返す。授業が新規作成できないなら空オブジェクトを返す
 	  * 作成者:T.Yamamoto
 	  * 作成日:2015.08.23
 	  */
 	 this.getNewLessonData = function() {
-	 	var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
+	 	var data = this.dialog.instance.getArgumentDataObject();	//argumentObjのdataを取得する
 	 	//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 	 	var timeTableDayKey = "";
+	 	//テーブルのデータを取得する
+	 	var tableData = this.create_tag.json.lessonTable[TABLE_DATA_KEY];
 	 	//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-	 	var loopEndCount = data[TABLE_DATA_KEY].length;
+	 	var loopEndCount = tableData.length;
 	 	//受け取った授業一覧データから時限データを探す
 	 	for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
 	 		//新規授業作成データの時限データが見つかった時の処理
-	 		if(newLesoonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
+	 		if(newLessonData[COL_TIMETABLE_KEY] == tableData[loopStartCount][COL_TIMETABLE_KEY] && tableData[loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
 	 			//時限データを取得し、ループを終える
-	 			timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
+	 			timeTableDayKey = tableData[loopStartCount][COL_TIME_TABLE_DAY_KEY];
 	 			//ループを終わらせる
 	 			break;
 	 		}
 	 	}
 
 	 	//新しく授業データを作るために授業日を連想配列に入れて返す
-	 	return {
+	 	return commonFuncs.checkEmpty(timeTableDayKey)?{
 	 		lessonDate:data.lessonDate,				//受講日
 	 		time_table_day_key:timeTableDayKey 	//授業時限キー
-	 	};
+	 	}
+	 	:{}	//新規作成できる枠がなければ空オブジェクトを返す
+	 	;
 	 }
 
 	 /* 

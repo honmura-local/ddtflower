@@ -26,7 +26,7 @@ function adminLessonDetailDialog(dialog){
 		//画面パーツ作成に必要なjsonを取得する
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_BASE_JSON);			//授業詳細、作成ダイアログ共通json
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_DETAIL_DIALOG_JSON);	//授業詳細ダイアログ個別json
-	};
+	}
 	
 	/* 関数名:getDom
 	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
@@ -40,7 +40,7 @@ function adminLessonDetailDialog(dialog){
 		//画面パーツ作成に必要なHTMLテンプレートを取得する  
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_BASE_HTML);			//授業詳細、作成ダイアログ共通テンプレート
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_DETAIL_DIALOG_HTML);	//授業詳細ダイアログ個別テンプレート
-	};
+	}
 	
 	/* 関数名:customizeJson
 	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
@@ -52,10 +52,10 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.customizeJson = function(){
 		//受講する授業のテーマを入れる
-		this[VAR_CREATE_TAG]json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
+		this[VAR_CREATE_TAG].json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
 		//受講する授業の時間割を入れる
-		this[VAR_CREATE_TAG]json.lessonData.timeTableArea.timeTableText.text = data['time_schedule'];
-	};
+		this[VAR_CREATE_TAG].json.lessonData.timeTableArea.timeTableText.text = data['time_schedule'];
+	}
 	
 	/* 関数名:dispContentsHeader
 	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
@@ -111,7 +111,7 @@ function adminLessonDetailDialog(dialog){
 	this.callbackUpdate = function(){
 		//授業の内容を更新する
 		this.dialogBuilder.lessonDataUpdate();
-	};
+	}
 
 	/* 関数名:callbackStudents
 	 * 概要　:ダイアログの受講者一覧ボタンを押したときのコールバック関数用関数
@@ -123,7 +123,7 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.callbackStudents = function(){
 		//未作成
-	};
+	}
 
 	/* 関数名:setConfig
 	 * 概要　:ダイアログの設定を行う。
@@ -158,7 +158,7 @@ function adminLessonDetailDialog(dialog){
 		//授業idを取得する
 		updateData[COLUMN_CLASSWORK_KEY] = data[COLUMN_CLASSWORK_KEY];
 		//授業詳細テーブルを更新する
-		this[VAR_CREATE_TAG]setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+		this[VAR_CREATE_TAG].setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
 	}
 
 }
