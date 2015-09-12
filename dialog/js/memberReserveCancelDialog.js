@@ -23,14 +23,12 @@ function memberReserveCancelDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getJson = function(){
-		//確認とキャンセルの共通jsonを読み込む
-		this[VAR_CREATE_TAG].getJsonFile(MEMBER_LESSON_CONFIRM_DIALOG_JSON);
 		//データとなるjsonを読み込む
 		this[VAR_CREATE_TAG].getJsonFile(MEMBER_RESERVE_CANCEL_DIALOG_JSON);
 		//DBから値を読み込むためにデータをセットする
 		commonFuncs.setJsonDataFromArgumentObj(this[VAR_CREATE_TAG], this.dialogClass);
 		//DBからデータを読み込む
-		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[CLASS_LESSON_ACCORDION], CLASS_LESSON_ACCORDION);
+		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[CLASS_LESSON_CONFIRM_CONTENT], CLASS_LESSON_CONFIRM_CONTENT);
 	}
 
 	/* 関数名:getDom
@@ -42,8 +40,6 @@ function memberReserveCancelDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getDom = function(){
-		//予約確認とキャンセルダイアログの共通テンプレートを読み込む
-		this[VAR_CREATE_TAG].getDomFile(MEMBER_LESSON_CONFIRM_DIALOG_HTML);
 		//予約キャンセルダイアログ個別テンプレートを取得する
 		this[VAR_CREATE_TAG].getDomFile(MEMBER_RESERVE_CANCEL_DIALOG_HTML);
 	};
@@ -58,14 +54,8 @@ function memberReserveCancelDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		//ダイアログの中身のコンテンツを作る
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_INFO, CLASS_LESSON_INFO, CURRENT_DIALOG_SELECTOR);
-		//アコーディオンの表示のきっかけとなるキャンセル料率と加算ポイントについてのテキストを作る
-		this[VAR_CREATE_TAG].outputTag(CLASS_INFO_ACCORDION, CLASS_INFO_ACCORDION, CLASS_LESSON_INFO);
-		//アコーディオンの中身を作る
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_ACCORDION, CLASS_LESSON_ACCORDION, CLASS_LESSON_INFO);
-		//確認テキストを作る
-		this[VAR_CREATE_TAG].outputTag(CLASS_MEMBER_CONFIRM, CLASS_MEMBER_CONFIRM, CLASS_LESSON_INFO);
+		//ダイアログのコンテンツを作る
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CONFIRM_CONTENT, CLASS_LESSON_CONFIRM_CONTENT, CURRENT_DIALOG_SELECTOR);
 	}
 	
 	/* 関数名:setCallback
@@ -79,8 +69,6 @@ function memberReserveCancelDialog(dialog){
 		//親ダイアログから渡されたクローズ用コールバック関数をセットする
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.getArgumentDataObject().callback);
 	}
-
-
 
 	/* 関数名:setConfig
 	 * 概要　:ダイアログの設定を行う。任意でオーバーライドして定義する

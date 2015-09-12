@@ -1502,6 +1502,8 @@ function createTag(){
 			
 			//ダイアログ用のインプットデータオブジェクトを作る
 			var argumentObj = commonFuncs.getDefaultArgumentObject();
+			//ダイアログの幅を固定幅にする
+			argumentObj.config.width = DIALOG_FIXED_WIDTH;
 			//インプット用データオブジェクトにエラー内容の値を追加する
 			$.extend(true, argumentObj.data, {createTagState: this.createTagState});
 			//インプット用データオブジェクトにタイトルのデータを追加する
