@@ -27,7 +27,21 @@ function createMemberFinishedLessonContent() {
 	//受講済み授業一覧のデータを取り出す
 	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+	creator.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+	//授業の絞り込み機能を実装する
+	setConfigFinishedLesson()
+}
+
+/* 
+ * 関数名:setConfigFinishedLesson
+ * 概要  :受講済み授業タブの設定を行う。
+ 		設定内容は授業の絞り込み機能
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function setConfigFinishedLesson() {
 	//セレクトボックスのvalueを画面に表示されている値にする
 	creator.setSelectboxValue('.selectThemebox');
 	//絞り込み機能を実装する
@@ -36,7 +50,8 @@ function createMemberFinishedLessonContent() {
 
 /*
  * 関数名:finshedLessonTableAfterPaging
- * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時にテーブルの値を置換する処理を行う
+ * 概要  :会員トップ、受講済みテーブルでページングボタンがクリックされた時や
+ 		テーマでの絞り込み機能でテーブルをリロードした後にテーブルの値を置換する処理を行う
  * 引数  :なし
  * 返却値  :なし
  * 作成者:T.Yamamoto
@@ -82,8 +97,6 @@ function finshedLessonTableAfterPaging() {
 function finshedLessonTableThemeSelect() {
 	//ページングがクリックされた時のイベントを登録する
 	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
-		//デフォルトのクエリを保存して変化後のクエリを基に戻せるようにする
-		var defaultQuery = creator.json.finishedLessonTable.db_getQuery;
 		//テーブルを作るためのクエリを置換する
 		creator.replaceTableQuery('finishedLessonTable');
 		//ページングに使うものを初期化し、ページングを作り直すために備える
@@ -91,7 +104,7 @@ function finshedLessonTableThemeSelect() {
 		//クエリを発行してDBから対象のデータの受講済み授業一覧のデータを取り出す
 		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
 		//ページング機能付きで受講済みテーブルを作り直す
-		creator.outputNumberingTag('finishedLessonTable', 1, 4, 1, 10, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+		creator.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	});
 }
 

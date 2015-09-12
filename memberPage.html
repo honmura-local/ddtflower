@@ -64,11 +64,8 @@
 					creator.getDomFile('template/memberCommon.html');
 					// 会員ページのjsonを読み込む
 					creator.getDomFile('template/memberPage.html');
-					//告知領域をDBから取得するために会員番号をクエリの置換部分にセットする
-					creator.json.advertise.user_key.value = memberInfo;
 					//ユーザ情報のテキストをDBから取得する
 					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
-	
 					//accountHeaderから会員IDを取得する。
 					var memberInfo = creator.json.accountHeader !== void(0) ? creator.json.accountHeader.user_key.value : '';
 					
@@ -138,11 +135,11 @@
 						commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 						//キャンセルダイアログを予約中授業テーブルから開く処理
 						cancelDialogOpenFromReservedTable(memberInfo, creator);
+						//予約中授業テーブル絞り込みボタン機能を実装する
+						creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					}
-					//キャンセル料率のレートをアコーディオン形式で表示する
+					//キャンセル料率,加算ポイントのレートをアコーディオン形式で表示する
 					creator.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
-					//予約中授業テーブル絞り込みボタン機能を実装する
-					creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				}catch(e){
 					console.log(e);
