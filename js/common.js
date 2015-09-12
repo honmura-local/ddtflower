@@ -1,4 +1,4 @@
-/** ファイル名:common.js
+﻿/** ファイル名:common.js
  * 概要　　　:汎用関数クラス定義のファイル
  * 作成日　:2015.0813
  * 作成者　:T.Masuda
@@ -1381,7 +1381,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成日:2015.08.23
 	 * 内容	:commonクラスに移動しました。また、大幅改修しました
 	 */
-	this.setObjectValue = function(object, formParent){
+	this.setObjectValue = function(object, formParent) {	
 		//対象となるオブジェクトを走査する
 		for (var key in object) {
 			//name属性が一致するフォーム要素に、対応する値を追加する

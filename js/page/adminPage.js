@@ -36,7 +36,6 @@ function createAdminPermitLessonContent () {
 	//タブを作る
 	creator.createTab('.lecturePermitTab');
 
-
 	//受講承認のテーブルにチェックボックスを追加する
 	creator.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
@@ -58,7 +57,7 @@ function createAdminPermitLessonContent () {
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
 	creator.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
 	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	creator.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 	//受講承認の備品名セレクトボックスにvalueを入れる
 	creator.setSelectboxValue('.contentSelect');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
@@ -134,45 +133,11 @@ function createAdminUserListContent() {
 	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 	enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-	$(STR_BODY).on(CLICK, '.userListInfoTable tr', function(){
-		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
-		$(this).toggleClass('selectRecord');
-	});
+	toggleClassClickElement('.userListInfoTable tr', 'selectRecord');
 	//検索ボタンをクリックしたときにテーブルの内容を更新する
-	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-		//ユーザ一覧テーブルを削除する
-		creator.pagingReset('userListInfoTable');
-		//クエリを変数に入れてクエリ発行の準備をする
-		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
-		//クエリのデフォルトを取得する
-		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
-		//会員一覧のデータを取り出す
-		creator.getJsonFile('php/GetJSONArray.php', sendQuery, 'userListInfoTable');
-		//クエリをデフォルトに戻す
-		creator.json.userListInfoTable.db_getQuery = defaultQuery;
-		//取得した値が0の時のテーブルを作らない
-		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
-			//ページング機能付きでユーザ情報一覧テーブルを作る
-			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
-		}
-	});
-
+	userListSearch();
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, '.userDetail', function(){
-		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.selectRecord').length;
-		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
-		if(selected == 0 || selected > 1) {
-			//選択している
-			alert('ユーザを1人だけ選択してください');
-		} else {
-			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.selectRecord').children('.id').text();
-			//クリックした人でなり代わりログインを行う
-			loginInsteadOfMember(memberId);
-		}
-	});
-
+	jumpToMemberPage();
 	//通常メールボタンをクリックしたときに通常メール作成のためのダイアログを開く
 	adminMessageCreate('.createMail', 'mail');
 	//お知らせボタンをクリックしたときにお知らせのためのダイアログを開く
@@ -299,6 +264,113 @@ function createAdminMailMagaAnnounceContent() {
 }
 
 /* 
+ * 関数名:clickEvent
+ * 概要  :クリックイベントを登録する
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:clickFunc：クリックされたときにコールする関数
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function clickEvent(clickSelector, clickFunc) {
+	$(clickSelector).click(function() {
+		//コールバック関数の処理を開始する
+		clickfunc(this);
+	});
+}
+
+/* 
+ * 関数名:toggleClassClickElement
+ * 概要  :クリックした要素に対してクラス属性を付ける
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:clickFunc：クリックされたときにコールする関数
+ * 返却値  :なし
+ * 作成者:.Yamamoto
+ * 作成日:2015.08.29
+ */
+function toggleClassClickElement (clickSelector, className) {
+	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+	$(STR_BODY).on(CLICK, clickSelector, function(){
+		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
+		$(this).toggleClass(className);
+	});
+}
+
+/* 
+ * 関数名:dateMovement
+ * 概要  :日付の進退を求めて返す。管理者日ごと授業者一覧の日付の進退の表示で使う
+ * 引数  :clickSelector:クリックされた要素のセレクター。
+ 		:nowDateObject：進退の対象となる日付オブジェクトのデータ
+ * 返却値  :nowDateString:進退した日付の結果
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function dateMovement(clickSelector, nowDateObject) {
+	//クリックされたクラス名を取得する
+	var className = $(clickSelector).attr('class');
+	//取得したクラスの名前によって処理を分ける
+	switch(className) {
+		//クリックされたのが2日前の時、日付を2日前にする
+		case 'twoDaysBefore':
+		nowDateObject.setDate(nowDateObject.getDate() - 2);
+		break;
+		//クリックされたのが1日前の時、日付を1日前にする
+		case 'oneDayBefore':
+		nowDateObject.setDate(nowDateObject.getDate() - 1);
+		break;
+		//クリックされたのが1日後の時、日付を1日後にする
+		case 'oneDayAfter':
+		nowDateObject.setDate(nowDateObject.getDate() + 1);
+		break;
+		//クリックされたのが2日後の時、日付を2日後にする
+		case 'twoDayAfter':
+		nowDateObject.setDate(nowDateObject.getDate() + 2);
+		break;
+	}
+	//日付が進退した結果を取り出す
+	var nowDateString = creator.getDateFormatDB(nowDateObject);
+	return nowDateString;
+}
+
+/* 
+ * 関数名:updateDateMovement
+ * 概要  :進退の領域をクリックしたときに日付を更新する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+var updateDateMovement = function(clickSelector) {
+	//日付を更新する
+	nowDateString = dateMovement(clickSelector, nowDateObject);
+	//jsonに日付の値を入れる
+	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//テーブルをリロードする
+	creator.tableReload('eachDayReservedInfoTable');
+	//日付をタイトルに入れる
+	$(DOT + clickSelectorParent + ' p').text(nowDateString);
+}
+
+/* 
+ * 関数名:updateDateSearch
+ * 概要  :日付検索をクリックした時の処理
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+var updateDateSearch = function () {
+	//表示されている日付を更新するために検索する日付のデータを取得する。
+	var changeDate = $('.dateInput').val();
+	//現在表示されている日付を入力された日付で更新する
+	$(DOT + clickSelectorParent + ' p').text(changeDate)
+	//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
+	nowDateObject = new Date(changeDate);
+	//日ごと授業者一覧テーブルをリロードする
+	creator.eventTableReload('eachDayReservedInfoTable');
+}
+
+/* 
  * 関数名:nowDatePaging
  * 概要  :現在の日付からページング機能を実装する
  * 引数  :clickSelectorParent:クリックボタンのセレクター
@@ -306,7 +378,7 @@ function createAdminMailMagaAnnounceContent() {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.06
  */
-function nowDatePaging(clickSelectorParent) {
+function nowDatePaging(clickSelectorParent, creator) {
 	//現在時刻のオブジェクトを作る
 	var nowDateObject = new Date();
 	//日付の文字列を取得する
@@ -314,48 +386,11 @@ function nowDatePaging(clickSelectorParent) {
 	//日付をタイトルに入れる
 	$(DOT + clickSelectorParent + ' p').text(nowDateString);
 	//jsonに日付の値を入れる
-	creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
+	//creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
 	//対象の要素がクリックされたときに日付を進退する
-	$(DOT + clickSelectorParent + ' a').click(function(){
-		//クリックされた番号を取得する
-		var className = $(this).attr('class');
-		//取得したクラスの名前によって処理を分ける
-		switch(className) {
-			//クリックされたのが2日前の時、日付を2日前にする
-			case 'twoDaysBefore':
-			nowDateObject.setDate(nowDateObject.getDate() - 2);
-			break;
-			//クリックされたのが1日前の時、日付を1日前にする
-			case 'oneDayBefore':
-			nowDateObject.setDate(nowDateObject.getDate() - 1);
-			break;
-			//クリックされたのが1日後の時、日付を1日後にする
-			case 'oneDayAfter':
-			nowDateObject.setDate(nowDateObject.getDate() + 1);
-			break;
-			//クリックされたのが2日後の時、日付を2日後にする
-			case 'twoDayAfter':
-			nowDateObject.setDate(nowDateObject.getDate() + 2);
-			break;
-		}
-		//日付を更新する
-		nowDateString = creator.getDateFormatDB(nowDateObject);
-		//jsonに日付の値を入れる
-		creator.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
-		//テーブルをリロードする
-		creator.tableReload('eachDayReservedInfoTable');
-		//日付をタイトルに入れる
-		$(DOT + clickSelectorParent + ' p').text(nowDateString);
-	});
-	//検索ボタンがクリックされた時の処理
-	$(DOT + 'dateSelect .searchButton').click(function(){
-		//表示されている日付を更新するために検索する日付のデータを取得する。
-		var changeDate = $('.dateInput').val();
-		//現在表示されている日付を入力された日付で更新する
-		$(DOT + clickSelectorParent + ' p').text(changeDate)
-		//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
-		nowDateObject = new Date(changeDate);
-	});
+	clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
+	//検索ボタンがクリックされた時に日付を更新する
+	clickEvent(DOT + 'dateSelect .searchButton', updateDateSearch);
 }
 
 /* 
@@ -412,7 +447,6 @@ function searchPermitListInfoTable() {
 		creator.tableReload('lecturePermitListInfoTable');
 	});
 }
-
 
 /* 
  * 関数名:getCommodityCostPrice
@@ -629,6 +663,61 @@ function loopUpdatePermitLessonList() {
 }
 
 /* 
+ * 関数名:userListSearch
+ * 概要  :管理者 会員一覧の検索機能を有効にする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function userListSearch() {
+//検索ボタンをクリックしたときにテーブルの内容を更新する
+	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+		//ユーザ一覧テーブルを削除する
+		creator.pagingReset('userListInfoTable');
+		//クエリのデフォルトを取得する
+		var defaultQuery = creator.json.userListInfoTable.db_getQuery;
+		//クエリを変数に入れてクエリ発行の準備をする
+		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
+		//会員一覧のデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
+		//クエリをデフォルトに戻す
+		creator.json.userListInfoTable.db_getQuery = defaultQuery;
+		//取得した値が0の時のテーブルを作らない
+		if(creator.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+			//ページング機能付きでユーザ情報一覧テーブルを作る
+			creator.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
+		}
+	});
+}
+
+/* 
+ * 関数名:jumpToMemberPage
+ * 概要  :管理者 会員一覧で選択されているユーザの会員ページに接続する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.08.29
+ */
+function jumpToMemberPage() {
+	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
+	$(STR_BODY).on(CLICK, '.userDetail', function(){
+		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
+		var selected = $('.selectRecord').length;
+		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
+		if(selected == 0 || selected > 1) {
+			//選択している
+			alert('ユーザを1人だけ選択してください');
+		} else {
+			//クリックした人でログインするために会員番号を取得する
+			var memberId = $('.selectRecord').children('.id').text();
+			//クリックした人でなり代わりログインを行う
+			loginInsteadOfMember(memberId);
+		}
+	});
+}
+
+/* 
  * 関数名:loginInsteadOfMember
  * 概要  :管理者ページから会員に為り変わって会員ページにログインする
  * 引数  :memberId: なり代わりを行うための会員番号
@@ -764,10 +853,4 @@ function adminMessageCreate(buttonSelector, sendType) {
 		}
 	});
 }
-
-
-
-
-
-
 
