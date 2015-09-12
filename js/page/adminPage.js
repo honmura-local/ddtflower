@@ -199,66 +199,16 @@ function createAdminMailMagaAnnounceContent() {
 	//ページング機能付きでメルマガテーブルを作る
 	creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 
-	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
-	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
-		//ページングの設定を初期化し、作り直しに備える
-		creator.pagingReset('mailMagaTable');
-		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
-		var queryDefault = creator.json.mailMagaTable.db_getQuery;
-		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
-		var queryStringLength = creator.json.mailMagaTable.db_getQuery.length;
-		//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
-		var cutString = creator.json.mailMagaTable.db_getQuery.substring(creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
-		//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
-		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"));
-		//検索の条件をクエリに入れる
-		creator.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
-		//クエリに切り取ったORDER BYを付け足す
-		creator.json.mailMagaTable.db_getQuery += cutString;
-		//メルマガのデータを取り出す
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
-		//ページング機能付きでメルマガテーブルを作る
-		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
-		//クエリをデフォルトに戻す
-		creator.json.mailMagaTable.db_getQuery = queryDefault;
-	});
-
-	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
-	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
-		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
-		var targetNumber = $('.targetMailMagazine').index(this);
-		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = creator.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
-		//取得した連想配列をテキストボックスにセットする
-		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
-	});
-
+	//メルマガ検索機能を実装する
+	mailMagaSearch();
+	//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる
+	setMailMagaSendContent();
 	//メルマガ・アナウンス入力領域を作る
 	creator.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
-
-	//送信ボタンがクリックされたときにメール送信イベントを開始する
-	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
-			//メルマガ送信にチェックが入っていたらメルマガを送信する
-			if($('[name="messegeType"]').val() == "0") {
-				//メルマガを送信するための値をテキストボックスから取得する
-				var sendData = getInputData('mailMagaAndAnnounceArea');
-				//ダイアログ用オブジェクトを作る
-				var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
-				//送信するデータをオブジェクトに統合する
-				$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
-				//メルマガ送信ダイアログを作る
-				var mailmagazineSendDialog = new dialogEx('dialog/mailMagazineSendConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
-				mailmagazineSendDialog.setCallbackClose(mailmagazineSendDialog.sendMailmagazine);	//閉じるときのイベントを登録
-				mailmagazineSendDialog.run();	//主処理を走らせる
-			}
-	});
-
+	//メルマガ送信処理を行う、メルマガ送信確認ダイアログを作る
+	mailMagaSendConfirm();
 	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
-	$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
-		//メッセージ内容テキストエリアの中身を空にする
-		$('.mailMagaAndAnnounceArea textarea').text('');
-	});
-
+	resetMailMageSendContent();
 	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
 	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
 }
@@ -733,7 +683,6 @@ function loginInsteadOfMember (memberId) {
 	callPage('memberPage.html');
 }
 
-
 /* 
  * 関数名:afterReloadPermitListInfoTable
  * 概要  :受講承認一覧がリロードした際にテーブルに対して処理をする関数をコールするための関数
@@ -854,3 +803,100 @@ function adminMessageCreate(buttonSelector, sendType) {
 	});
 }
 
+/* 
+ * 関数名:mailMagaSearch
+ * 概要  :管理者、メルマガタブの検索機能
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.09.12
+ */
+function mailMagaSearch() {
+	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
+	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		//ページングの設定を初期化し、作り直しに備える
+		creator.pagingReset('mailMagaTable');
+		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
+		var queryDefault = creator.json.mailMagaTable.db_getQuery;
+		//クエリの文字列の長さを取得してORDER以降の文字列の取得に使う
+		var queryStringLength = creator.json.mailMagaTable.db_getQuery.length;
+		//ORDER BY以降の文字列を取得するため、ORDER 以降の文字列を取得する
+		var cutString = creator.json.mailMagaTable.db_getQuery.substring(creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"),queryStringLength);
+		//現在のクエリからORDER BYを取り除き、検索の条件を入れることができるようにする
+		creator.json.mailMagaTable.db_getQuery = creator.json.mailMagaTable.db_getQuery.substring(0,creator.json.mailMagaTable.db_getQuery.indexOf("ORDER"));
+		//検索の条件をクエリに入れる
+		creator.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
+		//クエリに切り取ったORDER BYを付け足す
+		creator.json.mailMagaTable.db_getQuery += cutString;
+		//メルマガのデータを取り出す
+		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['mailMagaTable'], 'mailMagaTable');
+		//ページング機能付きでメルマガテーブルを作る
+		creator.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+		//クエリをデフォルトに戻す
+		creator.json.mailMagaTable.db_getQuery = queryDefault;
+	});
+}
+
+/* 
+ * 関数名:setMailMagaSendContent
+ * 概要  :メルマガのテーブルをクリックしたときにクリックされた行の内容を
+ 		メルマガ送信のテキストボックスに入れる
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.09.12
+ */
+function setMailMagaSendContent() {
+	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
+	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
+		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
+		var targetNumber = $('.targetMailMagazine').index(this);
+		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
+		var targetInf = creator.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
+		//取得した連想配列をテキストボックスにセットする
+		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
+	});
+}
+
+/* 
+ * 関数名:mailMagaSendConfirm
+ * 概要  :メルマガ送信の内容を取得して、メルマガ送信ダイアログを作る
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.09.12
+ */
+function mailMagaSendConfirm() {
+	//送信ボタンがクリックされたときにメール送信イベントを開始する
+	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
+		//メルマガ送信にチェックが入っていたらメルマガを送信する
+		if($('[name="messegeType"]').val() == "0") {
+			//メルマガを送信するための値をテキストボックスから取得する
+			var sendData = getInputData('mailMagaAndAnnounceArea');
+			//ダイアログ用オブジェクトを作る
+			var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
+			//送信するデータをオブジェクトに統合する
+			$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
+			//メルマガ送信ダイアログを作る
+			var mailmagazineSendDialog = new dialogEx('dialog/mailMagazineSendConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+			mailmagazineSendDialog.setCallbackClose(mailmagazineSendDialog.sendMailmagazine);	//閉じるときのイベントを登録
+			mailmagazineSendDialog.run();	//主処理を走らせる
+		}
+	});
+}
+
+/* 
+ * 関数名:resetMailMageSendContent
+ * 概要  :削除ボタンがクリックされた時にメルマガの送信内容のテキストボックスの中身を削除する
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Yamamoto
+ * 作成日:2015.09.12
+ */
+function resetMailMageSendContent() {
+//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
+	$(STR_BODY).on(CLICK, ".messageButtonArea .deleteButton", function(){
+		//メッセージ内容テキストエリアの中身を空にする
+		$('.mailMagaAndAnnounceArea textarea').text('');
+	});
+}
