@@ -545,7 +545,7 @@ label,
 
 /* 予約確認ダイアログ領域 */
 /* 
- * セレクタ :.lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
+ * セレクタ : .lessonTable, .lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
  * 概要   :予約一覧ダイアログ、予約確認ダイアログの幅
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.26
@@ -572,13 +572,12 @@ label,
 }
 
 /* 
- * セレクタ :.memberReservedConfirmDialog,.keepMoney,.hasPoint
+ * セレクタ :.lessonConfirmContent,,.keepMoney,.hasPoint
  * 概要   :予約情報の内側の領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.11
  */
-.memberReservedConfirmDialog,
-.cancelLessonDialog,
+.lessonConfirmContent,
 .keepMoney,
 .hasPoint {
 	font-size: 16px;		/* フォントサイズを16pxにする */
