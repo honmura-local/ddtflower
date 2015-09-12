@@ -10,9 +10,6 @@
          "config": {
             "columns": {
                 "start_time": {
-                    "style":"display:none;"
-                },
-                "start_and_end_time": {
                     "columnName": "時間割"
                 },
                 "school_name": {
@@ -25,7 +22,7 @@
                     "columnName": "残席"
                 },
                 "end_time": {
-                    "style":"display:none;"
+                    "columnName":"予約可否"
                 },
                 "lesson_key": {
                     "style":"display:none;"

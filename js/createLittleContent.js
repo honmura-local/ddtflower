@@ -2064,13 +2064,17 @@ function createLittleContents(){
 	/* 
 	 * 関数名:createContentTriggerClick
 	 * 概要  :管理者ページでタブがクリックされたときにコンテンツを呼び出すための関数。
-	 * 引数  :clickSelector:クリックされたときにイベントを開始する対象のセレクター名
-	 		callContentFunc:タブがクリックされたときにcreateTagによって要素を作るための関数をコールするための関数名
+	 * 引数  :String clickSelector:クリックされたときにイベントを開始する対象のセレクター名
+	 		function callContentFunc:タブがクリックされたときにcreateTagによって要素を作るための関数をコールするための関数名
+	 		? arg:callContentFuncの引数
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.20
+	 * 変更者:T.Masuda
+	 * 変更日:2015.09.12
+	 * 内容	:第3引数を追加し、callContentFuncに引数を1つ使えるようにしました。
 	 */
-	this.createContentTriggerClick = function(clickSelector, callContentFunc) {
+	this.createContentTriggerClick = function(clickSelector, callContentFunc, arg) {
 		var thisElem = this;
 		//イベントを重複して登録しないためにイベントフラグ属性を作る
 		$(clickSelector).attr('data-eventFlag', 0);
@@ -2078,8 +2082,8 @@ function createLittleContents(){
 		$(clickSelector).on(CLICK, function(){
 			//イベントフラグが初期状態のときのみ関数を実行するようにして重複した実行を行わないようにする
 			if ($(clickSelector).attr('data-eventFlag') == 0) {
-				//関数をコールしてdom要素を作る
-				callContentFunc();
+				//引数の関数をコールする
+				callContentFunc(arg);
 				// ボタンの見た目をjqueryuiのものにしてデザインを整える
 				$('button, .searchButton, input[type="button"],[type="reset"]').button();
 				//イベントフラグ属性を変更することで重複してdomを作る処理をなくす
@@ -2843,19 +2847,21 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	onSelect: function(dateText, inst){
 		//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
 		var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
-		//授業一覧ダイアログ用オブジェクトをコピーする
-		var sendObject = $.extend(true, {}, dialogExOption[ADMIN_LESSONLIST_DIALOG]);
+		//デフォルト設定のダイアログ用インプットデータのオブジェクトをコピーする
+		var sendObject = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
 		//授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
 		var dataObject = instance.lessonListDialogSendObject(dateText);
 		//ページ内にある管理者の予約状況のテーブルをダイアログから更新するため、
 		//dataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
-		dataObject.creator = instance.creator;
+		dataObject[VAR_CREATE_TAG] = instance[VAR_CREATE_TAG];
 		//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
-		$.extend(true, sendObject.argumentObj.data, dataObject);
+		$.extend(true, sendObject.data, dataObject);
+		//@mod 20150829 T.Masuda ダイアログのタイトルをここでセットするように変更しました
+		//ダイアログのタイトルをセットする
+		sendObject.config.title = sendObject.data.dateJapanese;
 
-		//予約授業一覧ダイアログを作る
-
-		var lessonListDialog = new dialogEx(ADMIN_LESSON_LIST_DIALOG, sendObject.argumentObj);
+		//授業一覧ダイアログを作る
+		var lessonListDialog = new dialogEx(ADMIN_LESSON_LIST_DIALOG, sendObject);
 		//ダイアログが開いたときのコールバック関数を指定する。
 		//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
 		lessonListDialog.setCallbackOpen(commonFuncs.callOpenDialog);
@@ -3177,12 +3183,16 @@ function memberCalendar(selector, dateRange, userId, creator) {
  * クラス名:adminCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :element dialog:ダイアログへの参照
+ *     :createTag create_tag:createTag、またはcreateTagのサブクラスのインスタンス
  * 戻り値:なし
  * 概要  :管理者のカレンダー
  * 作成日:2015.07.01
  * 作成者:T.Yamamoto
+ * 修正日:2015.09.12
+ * 修正者:T.Masuda
+ * 概要	:第3引数(createTag)を追加しました
  */
-function adminCalendar(selector, dialog) {
+function adminCalendar(selector, dialog, create_tag) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'admin';	//カレンダー名をセットする
 	
@@ -3191,7 +3201,7 @@ function adminCalendar(selector, dialog) {
 	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
-	this.creator = creator;			//createLittleContentsクラスのインスタンスを利用する
+	this.creator = create_tag;			//createLittleContentsクラスのインスタンスを利用する
 	
 	//@mod 2015.0704 T.Masuda 引数にない変数を使おうとしているのでコメントアウトしました。
 	//this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する

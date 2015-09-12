@@ -288,8 +288,10 @@ this.defaultClassworkCostColumns = [
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_RESERVED_1 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == RECEIPT ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_LECTURES) {
+			console.log("d");
 			restMark = this.restMarks[MARK_CROSS];
 		} else {
+			console.log("e");
 			for(var key in restMarks) {
 				if(key > rest) {
 					break;
@@ -297,6 +299,7 @@ this.defaultClassworkCostColumns = [
 				restMark = this.restMarks[key];
 			}
 		}
+		console.log("f");
 		return restMark;
 	};
 
@@ -547,7 +550,7 @@ this.defaultClassworkCostColumns = [
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
 			// 残席の表示を正規の表示にする
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(rest);
-			// 残席の表示を正規の表示にする
+			// 予約状態の表示を正規の表示にする
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
 		}
 	};
@@ -891,7 +894,7 @@ this.defaultClassworkCostColumns = [
 			counter++;
 		});
 	}
-	
+
 	/* 
 	 * 関数名:setTableRecordClass
 	 * 概要  :テーブルの最初の行を除くtrタグに対してクラス属性を付ける
@@ -1235,14 +1238,20 @@ this.defaultClassworkCostColumns = [
 	 * 修正日　:2015.0822
 	 * 修正者　:T.Masuda
 	 * 内容	　:共通で使えるためcommon.jsに移動しました
+	 * 修正日　:2015.0912
+	 * 修正者　:T.Masuda
+	 * 内容	　:ユーザIDの取得はdataの中にユーザIDがある場合のみにしました
 	 */
 	this.setLessonDataToJSON = function(dialog, create_tag){
 		//ダイアログのdataオブジェクトを取得する
 		var data = dialog.getArgumentDataObject();
 		//dbに接続する前に日付をクエリの置換連想配列に挿入する
 		create_tag.json.lessonTable.lessonDate.value = data.lessonDate;
-		//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
-		create_tag.json.lessonTable.user_key.value = data.userId;
+		//ユーザIDがdataの中に入っていれば(=予約ダイアログの場合)
+		if('userId' in data){
+			//dbに接続する前に会員番号をクエリの置換連想配列に挿入する
+			create_tag.json.lessonTable.user_key.value = data.userId;
+		}
 	}
 	
 	

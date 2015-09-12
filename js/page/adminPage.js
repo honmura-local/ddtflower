@@ -147,16 +147,16 @@ function createAdminUserListContent() {
 /* 
  * 関数名:createAdminLessonDetailContent
  * 概要  :管理者ページの授業詳細タブの内容を作る
- * 引数  :なし
+ * 引数  :createTag create_tag:createTag、またはcreateTagのサブクラスのインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.20
  */
-function createAdminLessonDetailContent() {
+function createAdminLessonDetailContent(create_tag) {
 	//授業詳細タブ内にカレンダ-作る
-	creator.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
+	create_tag.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
 	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
-	var lessonCalendar = new adminCalendar('.adminCalendar');
+	var lessonCalendar = new adminCalendar('.adminCalendar', create_tag);
 	lessonCalendar.create();	//カレンダーを実際に作成する
 }
 

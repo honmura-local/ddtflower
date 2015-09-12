@@ -6,7 +6,7 @@
 		commonFuncs.getScriptFile(ADMIN_LESSON_LIST_DIALOG_JS);
 		
 		//当該ダイアログ用関数クラスインスタンスを生成する
-		var dialogBuilder = new adminLessonListDialog(thisDialog);
+		var dialogBuilder = new adminLessonListDialog(thisDialog[0]);
 		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
 		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>

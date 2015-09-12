@@ -69,7 +69,7 @@ function memberReserveListDialog(dialog){
 	this.getJson = function(){
 		//このダイアログ用のJSONファイルを取得する
 		this[VAR_CREATE_TAG].getJsonFile(RESERVE_LIST_JSON);
-		//授業データを取得する
+		//JSONに授業データをセットする
 		commonFuncs.setLessonDataToJSON(this[DIALOG_CLASS], this[VAR_CREATE_TAG]);	
 	};
 
@@ -113,9 +113,6 @@ function memberReserveListDialog(dialog){
 	this.customizeJson = function(){
 		//テーブル置換用の時限データを取得する
 		this.getReplacedTableData(LESSON_TABLE);
-		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
-		//授業一覧のJSON配列に授業開始~終了時間の列を追加する
-		this.setStartAndEndTimeColumn(LESSON_TABLE, START_AND_END_TIME, START_TIME, END_TIME, ' ~ ');
 	};
 
 	
@@ -130,7 +127,7 @@ function memberReserveListDialog(dialog){
 		//授業のデータを取得する
 		var tableData = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY];
 		//授業のデータから、その日の存在する時限一覧を取得する。
-		this.timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
+		this.timeStudentsCount = commonFuncs.getTotalStudentsOfTimeTable(tableData);
 	}
 
 	/* 関数名:dispContents
