@@ -94,7 +94,6 @@ function adminLessonCreateDialog(dialog){
 	this.callbackCreateNew = function(){
 		//ダイアログ生成時に渡されたインプット用データを取得する
 		var data = this.dialogClass.getArgumentDataObject();
-		console.log(data);
 		//入力した値を取得し、授業の新規作成に用いる
 		var newLessonData = commonFuncs.getInputData(DOT + LESSON_DATA);
 		
@@ -187,7 +186,6 @@ function adminLessonCreateDialog(dialog){
 		
 		//授業作成失敗時の処理を一元化するため、try-catch構文を使う
 		try{
-			alert(sendData.time_table_day_key);
 			//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
 			if(sendData.time_table_day_key == EMPTY_STRING) {
 				//時限データ作成用クエリを送信用オブジェクトにセットする
@@ -254,9 +252,3 @@ function adminLessonCreateDialog(dialog){
 adminLessonCreateDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
 adminLessonCreateDialog.prototype.constructor = baseDialog;
-
-
-
-
-
-

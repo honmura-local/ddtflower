@@ -128,15 +128,15 @@ function memberSuggestionConfirmDialog(dialog){
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Yamamoto
 	 */
-	this.updateJson = function() {
-		var data = commonFuncs.getInputData(SUGGESTION_DATA_DOM_PARENT);		//domからデータを取得する
-		var resultwork = null;								//
-		var sendUrl = PATH_SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
-		var sendObject = {									//送信するデータのオブジェクト
-				from:data.user_key				//送信元
-				,subject:data.suggest_title		//タイトル
-				,content:data.suggest_content	//本文
-		}
+//	this.updateJson = function() {
+//		var data = commonFuncs.getInputData(SUGGESTION_DATA_DOM_PARENT);		//domからデータを取得する
+//		var resultwork = null;								//
+//		var sendUrl = PATH_SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+//		var sendObject = {									//送信するデータのオブジェクト
+//				from:data.user_key				//送信元
+//				,subject:data.suggest_title		//タイトル
+//				,content:data.suggest_content	//本文
+//		}
 		//送信するデータを更新する
 		var sendObject = $.extend(true, {}, sendObject, data);
 		return sendObject;

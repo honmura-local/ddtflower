@@ -25,8 +25,9 @@ function adminMailDialog(dialog){
 	this.getJson = function(){
 		//会員にメール送信ダイアログのjsonを取得する
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_MAIL_DIALOG_JSON);
+		this[VAR_CREATE_TAG].getJsonFile('dialog/source/adminMailSend.json');
 	};
-	
+
 	/* 関数名:getDom
 	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
@@ -79,7 +80,8 @@ function adminMailDialog(dialog){
 		//各配列をまとめるための文字列を格納する変数を宣言する
 		var userNames = EMPTY_STRING;		//ユーザ名
 		var eMails = EMPTY_STRING;			//メールアドレス
-		var idList = EMPTY_STRING;			//IDの一覧
+	//	var idList = EMPTY_STRING;			//IDの一覧
+		var idList = [];					//IDの一覧
 		
 		//ループで情報をまとめる
 		for(var i = 0 ;i < mailNum; i++) {
@@ -88,13 +90,15 @@ function adminMailDialog(dialog){
 				//各文字列をカンマで区切る
 				userNames += CHAR_COMMA;
 				eMails += CHAR_COMMA;
-				idList += CHAR_COMMA;
 			}
+			
 			//各文字列に順次追加を行っていく
-			userNames += data[[STR_NAME]][i];
+			userNames += data[STR_NAME][i];
 			eMails += data[MAIL][i];
-			idList += data[ID][i];
+			idList.push(data[KEY_MEMBER_NUMBER][i]);
 		}
+		
+		idList = JSON.stringify(idList);
 		
 		//作成したデータをオブジェクトにまとめて返す
 		return {name : userNames, email : eMails, id : idList};
@@ -113,17 +117,17 @@ function adminMailDialog(dialog){
 		this[VAR_CREATE_TAG].outputTag(KEY_MAIL_FORM, KEY_MAIL_FORM, CURRENT_DIALOG);
 	}
 	
-	/* 関数名:dispContentsFooter
-	 * 概要　:画面パーツ設定用関数のフッター部分作成担当関数
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。任意でオーバーライドして定義する
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
 	 * 作成者　:T.Masuda
+	 * 作成日　:2015.0822
 	 */
-	this.dispContentsFooter = function(){
+	this.setConfig = function(){
 		//送信の確認ボタン、リセットボタンを配置する
-		this.setButtons(this.confirm_reset);
+		this.setDialogButtons(this.confirm_reset);
 	}
 	
 	/* 関数名:setArgumentObj
@@ -135,16 +139,22 @@ function adminMailDialog(dialog){
 	 */
 	this.setArgumentObj = function() {
 		//インプット用オブジェクトのコピーを作る
-		var argumentObj = commonFunc.createCloneObject(this[DIALOG_CLASS].getArgumentObject());
+		var argumentObj = commonFuncs.createCloneObject(this[DIALOG_CLASS].getArgumentObject());
 		var data = this[DIALOG_CLASS].getArgumentDataObject();
 		//次のダイアログに渡すデータをまとめる
 		$.extend(true, 	
 				argumentObj.data,		//送信確認ダイアログのdataオブジェクト 
 				commonFuncs.getInputData(SEL_MAIL_SEND_CONTENT),	//このダイアログで編集したデータ 
 				data, 								//このダイアログに渡されたパラメータのdataオブジェクト
-				{dialog:this[DIALOG_CLASS], callback:this.doSendMail}				//このダイアログのクラスインスタンス
+				{
+					dialog:this[DIALOG_CLASS],	//このダイアログのクラスインスタンス(dialogEx)
+					parentDialogBuilder:this, 	//当該クラス
+					message:'送信を確定します。' ,	//ダイアログのメッセージ
+					callback:this.doSendMail}	//コールバック関数
 		);
 		
+		//タイトルをセットする
+		argumentObj.config.title = '送信確認'; 
 		return argumentObj;	//作成したオブジェクトを返す
 	}
 
@@ -161,7 +171,7 @@ function adminMailDialog(dialog){
 		//返却するためのオブジェクトを作成する。2つのクエリを投げるので、それに対応した2つのキーとオブジェクトを用意する
 		var retObj = {inf:{}, to:{}};
 		//createTagのJSONを取得する
-		var json = this[VAR_CREATE_TAG];
+		var json = this[VAR_CREATE_TAG].json;
 		//お知らせのコンテンツ部分を作る
 		retObj.inf = 
 				{
@@ -191,30 +201,38 @@ function adminMailDialog(dialog){
 		var isSend = 0;	
 		// メールを送信する処理
 		//メール送信用のデータを取得する
-		var sendMaidData = commonFuncs.getInputData(SEL_MAIL_SEND_CONTENT);
+		var sendMaildData = commonFuncs.getInputData(SEL_MAIL_SEND_CONTENT);
 		var sendObject = {									//送信するデータのオブジェクト
 				to:data.idList					//送信先(会員IDの羅列)
-				,subject:data.suggest_title		//タイトル
-				,content:data.suggest_content	//本文
+				,subject:sendMaildData.message_title		//タイトル
+				,content:sendMaildData.message_content	//本文
 		};
 		
 		//メール送信であれば
 		if(data.sendType == MAIL){
 			var sendUrl = SEND_ADMINMAIL_PHP ;					//管理者メールの送信先PHP
 			//メールを送信する。成否判定を設定する
-			isSend = commonFuncs.sendMail(sendObject, MAIL_SEND_MEMBER_PHP, SUCCESS_MESSAGE_MAIL);
+			isSend = commonFuncs.sendMail(sendObject, sendUrl, SUCCESS_MESSAGE_MAIL);
 		//お知らせ更新であれば
 		} else {
-			//DBへクエリを送信するため、ダイアログ専用の処理を行うクラスのインスタンスを取得する
-			var dialogBuilder = this[DIALOG_BUILDER];
+			//結果のメッセージを変数に格納する。最初は成功時のメッセージを格納する
+			var resultMessage = 'お知らせの登録が完了しました。';
 			//データ追加用JSONを作成する
-			var sendObject = dialogBuilder.updateJson();
+			var sendObject = this.updateJson();
 			//DBにお知らせのデータを追加する
-			isSend = parseInt(dialogBuilder.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)[KEY_MESSAGE]) ?
+			isSend = parseInt(this.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)[KEY_MESSAGE]) ?
 					//1つ目のクエリが成功したら、2つ目のクエリを実行する
 					parseInt(dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.to).message) : false;
+			//送信に失敗していれば
+			if(!isSend){
+				//失敗のメッセージを結果メッセージの変数にセットする
+				resultMessage = 'お知らせの登録に失敗しました。時間をおいてお試しください。';
+			}
+			
+			//処理結果のメッセージを出す
+			alert(resultMessage);
 		}
-	
+
 		return isSend;	//送信の成否判定を返す
 	}
 	
@@ -257,16 +275,15 @@ function adminMailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.doSendMail = function(){
-		//親のダイアログのクラスインスタンスを取得する
-		var dialogClass = this.instance.getArgumentDataObject().dialog;
-		
 		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
-		switch(dialogClass.getPushedButtonState()){
+		switch(this.instance.getPushedButtonState()){
 		//はいボタンが押されていたら
 			case YES:
+				//親のダイアログのクラスインスタンスを取得する
+				var dialogClass = this.instance.getArgumentDataObject().dialog;
 				var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
 				//メール、またはお知らせを送信する
-				var isSend = this.sendMailOrAnnounce(data);
+				var isSend = this.instance.getArgumentDataObject().parentDialogBuilder.sendMailOrAnnounce(data);
 				
 				//メールの送信に成功していたら
 				if(isSend){
@@ -289,9 +306,21 @@ function adminMailDialog(dialog){
 	 */
 	this.callbackConfirm = function(){
 		//確認ダイアログを開く
-		this.createDialog(URL_CONFIRM_DIALOG);
+		this.openDialog(URL_CONFIRM_DIALOG);
 	};
 
+	/* 関数名:callbackSend
+	 * 概要　:ダイアログのリセットボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackReset = function(){
+		//フォームの内容をリセットする
+		$('.mailSendContent ' + FORM_ELEMS).val(EMPTY_STRING);
+	};
 	
 //ここまでクラスの記述
 }
@@ -300,7 +329,3 @@ function adminMailDialog(dialog){
 adminMailDialog.prototype = new baseDialog();
 //サブクラスのコンストラクタを有効にする
 adminMailDialog.prototype.constructor = baseDialog;
-
-
-
-
