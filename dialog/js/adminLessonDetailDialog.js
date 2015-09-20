@@ -51,24 +51,13 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.customizeJson = function(){
+		//親ダイアログから受け取ったデータを取得する
+		var data = this.dialogClass.getArgumentDataObject();
 		//受講する授業のテーマを入れる
-		this[VAR_CREATE_TAG].json.lessonData.themeArea.themeDetailText.text = data['lesson_name'];
+		this[VAR_CREATE_TAG].json.themeArea.themeDetailText.text = data['lesson_name'];
+		console.log(data);
 		//受講する授業の時間割を入れる
-		this[VAR_CREATE_TAG].json.lessonData.timeTableArea.timeTableText.text = data['time_schedule'];
-	}
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
-	 * 		:dialogEx dialogClass:このダイアログのdialogExクラスのインスタンス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(dialogClass){
-		//ダイアログのタイトルを変更する
-		this.setDialogTitle(this.dialogClass.getArgumentDataObject().dateJapanese);
+		this[VAR_CREATE_TAG].json.timeTableArea.timeTableText.text = data['start_time'].substr(0, 5) + ' 〜 ' + data['end_time'].substr(0, 5);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -82,21 +71,21 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.dispContentsMain = function(dialogClass){
 		//授業データ入力領域を作る
-		this[VAR_CREATE_TAG].outputTag(LESSON_DATA, LESSON_DATA, CURRENT_DIALOG_SELECTOR);
+		this[VAR_CREATE_TAG].outputTag(LESSON_DATA, LESSON_DATA, this.dialog);
 		//授業のテーマを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の時間割を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_TIMETABLE, CLASS_LESSON_TIMETABLE, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_TIMETABLE, CLASS_LESSON_TIMETABLE, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の最少人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MIN_STUDENTS, CLASS_LESSON_MIN_STUDENTS, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MIN_STUDENTS, CLASS_LESSON_MIN_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の最大人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MAX_STUDENTS, CLASS_LESSON_MAX_STUDENTS, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MAX_STUDENTS, CLASS_LESSON_MAX_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業のステータスを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_STATUS, CLASS_LESSON_STATUS, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_STATUS, CLASS_LESSON_STATUS, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の教室を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CLASSROOM, CLASS_LESSON_CLASSROOM, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CLASSROOM, CLASS_LESSON_CLASSROOM, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業のメモを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, LESSON_DATA);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, DOT + LESSON_DATA + SELECTOR_LAST);
 
 	}
 	
@@ -110,7 +99,7 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.callbackUpdate = function(){
 		//授業の内容を更新する
-		this.dialogBuilder.lessonDataUpdate();
+		this.lessonDataUpdate();
 	}
 
 	/* 関数名:callbackStudents
@@ -134,14 +123,37 @@ function adminLessonDetailDialog(dialog){
 	 */
 	this.setConfig = function(){
 		//更新・受講者一覧ボタンを使う
-		this.setButtons(this.update_students);
+		this.setDialogButtons(this.update_students);
 		//ダイアログの位置調整を行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//受け取った値をテキストボックスやセレクトボックスに入れるためにデータを取得する
-		var data = dialogClass.getArgumentDataObject();
+		var data = this.dialogClass.getArgumentDataObject();
 		//連想配列のデータをダイアログの各要素に配置していく
-		commonFuncs.setObjectValue(data, DOT + LESSON_DATA);
+		commonFuncs.setObjectValue(data, this.dialog);
 	}
+
+	/* 関数名:updateJson
+	 * 概要　:サーバへクエリを投げる前に、送信するJSONデータを加工する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.updateJson = function(){
+		//ダイアログ生成時に渡されたインプット用データを取得する
+		var data = this.dialogClass.getArgumentDataObject();
+		//入力した値を取得し、データの更新に用いる
+		var updateData = commonFuncs.getInputData(DOT + LESSON_DATA);
+		//送信するデータをまとめたオブジェクトを作って返す
+		return $.extend(true, 
+				{},				//オブジェクトを新たに作る 
+				data, 			//親ダイアログからのデータ
+				updateData, 	//このダイアログ内の入力データ
+				//レコード更新クエリ
+				{db_setQuery:this.create_tag.json.updateLessonQuery.db_setQuery}
+			);
+	};
 	
 	/* 関数名:lessonDataUpdate
 	 * 概要　:授業データを入力された値で更新する
@@ -149,16 +161,35 @@ function adminLessonDetailDialog(dialog){
 	 * 返却値:なし
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.0912
+	 * 変更者　:T.Masuda
+	 * 内容	　:現行のクラスの形式に合わせました。
 	 */
 	this.lessonDataUpdate = function () {
-		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = this.dialogClass.getArgumentDataObject();
-		//入力した値を取得し、データの更新に用いる
-		var updateData = commonFuncs.getInputData(LESSON_DATA);
-		//授業idを取得する
-		updateData[COLUMN_CLASSWORK_KEY] = data[COLUMN_CLASSWORK_KEY];
+		//送信するJSONを作成する
+		var sendObject = this.updateJson();
 		//授業詳細テーブルを更新する
-		this[VAR_CREATE_TAG].setDBdata(this.create_tag.json.lessonDetailUpdate, updateData, '授業情報の更新に成功しました。');
+		var result = this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+		//DBレコードの更新に成功したかを判定する
+		switch(parseInt(result.message)){
+			//失敗時
+			case SETQUERY_FAILED:
+				//失敗のアラートを出す
+				alert('授業内容の更新に失敗しました。時間を置いて試してください。');
+				break;
+			//成功時
+			default:
+				//成功のお知らせを出す
+				alert('授業内容の更新に成功しました。');
+				//親ダイアログの授業一覧を更新するため、ダイアログ操作用クラスを取得する
+				var parentDialogBuilder = this.dialogClass.getArgumentDataObject().parentDialogBuilder;
+				//親ダイアログを一旦からにする
+				$(parentDialogBuilder.dialog).empty();
+				console.log(parentDialogBuilder.dialog);
+				//親ダイアログの中身を作り直す
+				parentDialogBuilder.dispContents();
+				break;
+		}
 	}
 
 }

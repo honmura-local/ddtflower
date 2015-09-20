@@ -14,5 +14,8 @@
         "timeTableText":{
             "text":""
         }
+    },
+    "updateLessonQuery":{
+    	"db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';"
     }
 }

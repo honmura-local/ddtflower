@@ -1294,7 +1294,7 @@ this.defaultClassworkCostColumns = [
 		//inputタグ、セレクトタグ、テキストエリアタグの数だけループする
 		$(SEL_INPUT_DATA , $form).each(function() {
 			//入力データのname属性を取得する
-			var name = $(this).attr(NAME);
+			var name = $(this).attr(STR_NAME);
 			//入力データの値を取得する
 			var value = $(this).val();
 			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
@@ -1308,7 +1308,7 @@ this.defaultClassworkCostColumns = [
 				}
 			} else {
 				//入力データを結果の変数に、key名をクラス名にして保存する
-				retMap[name] = valueData;
+				retMap[name] = value;
 			}
 		});
 		//結果を返す
@@ -1387,9 +1387,9 @@ this.defaultClassworkCostColumns = [
 	 */
 	this.setObjectValue = function(object, formParent) {	
 		//対象となるオブジェクトを走査する
-		for (var key in object) {
+		for (key in object) {
 			//name属性が一致するフォーム要素に、対応する値を追加する
-			$(FORM_ELEMS, $formParent).filter('name=[' + key + ']').val(setArray[key]);
+			$(FORM_ELEMS, formParent).filter('[name="' + key + '"]').val(object[key]);
 		}
 	}
 	

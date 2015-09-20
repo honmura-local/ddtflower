@@ -161,8 +161,11 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
-		//デフォルトのコールバック関数をセットする
-		this[DIALOG_CLASS].setCallbackCloseOnAfterOpen(this.callbackClose);
+		//dialogExクラスインスタンスがあれば
+		if(commonFuncs.checkEmpty(this[DIALOG_CLASS])){
+			//デフォルトのコールバック関数をセットする
+			this[DIALOG_CLASS].setCallbackCloseOnAfterOpen(this.callbackClose);
+		}
 	}
 	
 	/* 関数名:setConfig
@@ -252,8 +255,9 @@ function baseDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.sendQuery = function(sendUrl, sendObj){
-		
 		var send = this.create_tag.checkBeforeConvertJsonString(this.create_tag.replaceValueNode(sendObj));
+		console.log(sendObj);
+		console.log(send);
 		//引数のオブジェクトをパースしてJSON文字列にする
 		var jsonString = JSON.stringify(send);
 		//JSONが無効なものであれば

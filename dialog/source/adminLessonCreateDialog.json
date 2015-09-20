@@ -62,5 +62,14 @@
                 "value":"11"
             }
         }
+    },
+        "insertTimeTableDay":{
+        "db_setQuery":"INSERT INTO time_table_day( timetable_key ,lesson_date ,create_datetime ,update_datetime ) VALUES( 'timetable_key' ,'lessonDate' ,NOW() ,NOW() );"
+    },
+    "newClassWork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students ) VALUES( 'max_students' ,'min_students' ,'classwork_status' ,'classroom' ,'classwork_note' ,(select id from user_inf where authority = 10 limit 1) ,(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key') ,'lesson_key' ,(SELECT id FROM time_table_day WHERE timetable_key = 'timetable_key' order by create_datetime DESC LIMIT 1) ,NOW() ,NOW(), 0 );"
+    },
+    "normalInsertClasswork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students) VALUES('max_students' ,'min_students','classwork_status','classroom','classwork_note',(select id from user_inf where authority = 10 limit 1),(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key'),'lesson_key','time_table_day_key',NOW(),NOW(), 0)"
     }
 }

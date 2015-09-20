@@ -58,7 +58,7 @@
         "classRoomTextbox":{
             "type":"text",
             "name":"classroom",
-            "value":"A"
+            "value":""
         }
     },
     "memoArea":{

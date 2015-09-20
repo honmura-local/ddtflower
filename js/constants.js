@@ -509,7 +509,7 @@ SELECTOR_PERSON_MAIL_CHECK					= '.personEmailCheck input';
 SELECTOR_COUNT								= '.count';
 ESCAPE_KAIGYOU								= "\n";				//改行のエスケープ文字
 DISABLED									= 'disabled';
-FORM_ELEMS									= 'input,button,textarea';	//フォームで使うタグ
+FORM_ELEMS									= 'input,button,textarea,select';	//フォームで使うタグ
 FORM_DATA									= 'formData';
 SELECTOR_NAME_FRONT							= '[name="';		//name属性を指定して取得するinputタグのセレクタの前部
 SELECTOR_INPUT_NAME_FRONT					= 'input[name="';	//name属性を指定して取得するinputタグのセレクタの前部
@@ -534,7 +534,7 @@ SEND_COMPLETE								= 'sendComplete';
 CREATE_NEW_LESSON							= 0;	//新規作成ボタン
 EDIT_LESSON									= 1;	//行クリック(授業詳細ダイアログを開く)
 //管理者ページ 授業新規作成ダイアログのURL
-URL_ADMIN_NEW_LESSON_DIALOG					= 'dialog/adminNewLessonDialog.html';
+URL_ADMIN_LESSON_CREATE_DIALOG					= 'dialog/adminLessonCreateDialog.html';
 //管理者ページ 授業詳細ダイアログのURL
 URL_ADMIN_LESSON_DETAIL_DIALOG				= 'dialog/adminLessonDetailDialog.html';
 //クリックした行という意味合いのキー用文字列
@@ -683,4 +683,5 @@ NUMBERING_DISPLAY 								= 10;	//ページングの1つのページにつき、
 
 //会員ページ トップ 受講済み授業一覧テーブル
 
-
+//DBデータの更新に成功したときに帰ってくる値
+SETQUERY_FAILED								= 0;
