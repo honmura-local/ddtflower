@@ -141,15 +141,14 @@ function adminLessonCreateDialog(dialog){
 		//時限データを入れる変数を作り、すでにある時限についてはこの変数を使うようにする
 		var timeTableDayKey = EMPTY_STRING;
 		//授業一覧のデータを長さを取得し、ループが終わる回数として使う
-		var loopEndCount = data[TABLE_DATA_KEY].length;
+		var tableLength = data[TABLE_DATA_KEY].length;
 		//受け取った授業一覧データから時限データを探す
-		for(var loopStartCount = 0; loopStartCount < loopEndCount; loopStartCount++) {
-			console.log('roop count:'+loopStartCount);
+		for(var i = 0; i < tableLength; i++) {
 			//新規授業作成データの時限データが見つかった時の処理
-			if(newLessonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][loopStartCount][COL_TIMETABLE_KEY] && data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY] != "") {
-				console.log("found tableDataKey:"+data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY]);
+			if(newLessonData[COL_TIMETABLE_KEY] == data[TABLE_DATA_KEY][i][COL_TIMETABLE_KEY] 
+				&& data[TABLE_DATA_KEY][i][COL_TIME_TABLE_DAY_KEY] != EMPTY_STRING) {
 				//時限データを取得し、ループを終える
-				timeTableDayKey = data[TABLE_DATA_KEY][loopStartCount][COL_TIME_TABLE_DAY_KEY];
+				timeTableDayKey = data[TABLE_DATA_KEY][i][COL_TIME_TABLE_DAY_KEY];
 				//ループを終わらせる
 				break;
 			}
@@ -175,17 +174,22 @@ function adminLessonCreateDialog(dialog){
 	 * 修正日　:2015.08.09
 	 * 修正者　:T.Masuda
 	 * 内容	　:改修したdialogExクラスに対応しました。また、改名しました
+	 * 修正日　:2015.09.20
+	 * 修正者　:T.Masuda
+	 * 内容	　:adminLessonCreateDialogクラスに対応しました
 	 */
 	this.newLessonEntry = function(lessonData){
+		//処理結果の通知の文字列を変数にセットする。成功時のメッセージで初期化する
+		var alertNotice = '新規授業の作成に成功しました。';	
 		var dialogClass = this.dialogClass;			//ダイアログのクラスインスタンスを取得する
 		//当該関数の引数のデータから送信用データを作る。
 		var sendData = $.extend(true, {}, lessonData);
 		
 		//授業作成失敗時の処理を一元化するため、try-catch構文を使う
 		try{
+			alert(sendData.time_table_day_key);
 			//時限データが空のときは新規時限データを作成し、そのあとに授業データを作成する
-			if(lessonData.timeTableDayKey == EMPTY_STRING) {
-				console.log("create New Period");
+			if(sendData.time_table_day_key == EMPTY_STRING) {
 				//時限データ作成用クエリを送信用オブジェクトにセットする
 				sendData.db_setQuery = this.create_tag.json.insertTimeTableDay.db_setQuery;
 				
@@ -196,33 +200,54 @@ function adminLessonCreateDialog(dialog){
 					sendData.db_setQuery = this.create_tag.json.newClassWork.db_setQuery;
 					//授業作成に失敗したら
 					if(!(this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendData).message)){
-						throw new Error();	//例外を投げて失敗処理に入る
+						//例外を投げて失敗処理に入る
+						throw '授業の新規作成に失敗しました。時間を置いて試してください。';	
 					}
 				//失敗であれば
 				} else {
-					throw new Error();	//例外を投げて失敗処理に入る
+					//例外を投げて失敗処理に入る
+					throw '授業の新規作成に失敗しました。時間を置いて試してください。';	
 				}
 			//予約する時限があった時にそれを使って新規授業を作成する
 			} else {
-				console.log("create Lesson Using Existing Period");
 				//単純なinsert用クエリを送信用JSONにセットする
 				sendData.db_setQuery = this.create_tag.json.normalInsertClasswork.db_setQuery;
 				//すでにある時限データを使って授業データを作る。
 				//授業作成に失敗したら
 				if(!parseInt(this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendData).message)){
-					throw new Error();	//例外を投げて失敗処理に入る
+					//例外を投げて失敗処理に入る
+					throw '授業の新規作成に失敗しました。時間を置いて試してください。';	
 				}
-				
 			}
-			
-			//成功のメッセージを出す
-			alert('新規授業の作成に成功しました。');
 		//授業作成に失敗したら
 		} catch(e){
-			alert('授業の新規作成に失敗しました。時間を置いて試してください。');
+			//アラートに出すメッセージに失敗時のものをセットする
+			alertNotice = e;	//文字列はthrow時に用意する
+			return;		//処理をここで終える
 		}
+		
+		//処理結果のメッセージを出す
+		alert(alertNotice);
+		$(this.dialog).dialog(CLOSE);	//ダイアログを閉じる
+		this.afterCreateNewLesson();	//授業作成後の処理を行う
 	}
 	
+	/* 
+	 * 関数名:afterCreateNewLesson
+	 * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理
+	 * 引数  :授業の新規作成を終えた後の処理
+	 * 返却値  :なし
+	 * 作成日　:2015.09.20
+	 * 作成者:T.Masuda
+	 */
+	this.afterCreateNewLesson = function(){
+		//親ダイアログから渡された親ダイアログ操作用クラスインスタンスを取得し、親ダイアログのテーブルの内容を更新する
+		var parentDialogBuilder = this.dialogClass.getArgumentDataObject().parentDialogBuilder;
+		//親ダイアログの内容を一旦消去する
+		$(parentDialogBuilder.dialog).empty();
+		//親ダイアログの中身を更新する
+		parentDialogBuilder.dispContents();
+	}
 }
 
 //継承の記述
