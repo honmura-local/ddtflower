@@ -134,7 +134,7 @@
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 						commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
 						//キャンセルダイアログを予約中授業テーブルから開く処理
-						commonFuncs.cancelDialogOpenFromReservedTable(memberInfo, creator);
+						memberPageFuncs.cancelDialogOpenFromReservedTable(memberInfo, creator);
 						//予約中授業テーブル絞り込みボタン機能を実装する
 						creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					}
