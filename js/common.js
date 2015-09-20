@@ -1547,7 +1547,8 @@ this.defaultClassworkCostColumns = [
 		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_LESSON_LEY][VALUE] 	= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(キャンセル)
 		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_LESSON_LEY][VALUE] 		= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(加算ポイント)
 	}	 
-	 
+
+
 	
 //ここまでクラス定義領域
 }
