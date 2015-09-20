@@ -15,6 +15,8 @@
  * 作成日:2015.09.20
  */
 function reservedLessonTable() {
+	//インスタンスを保存して「this」の意味が変わっても使えるようにする
+	var thisClass = this;
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -125,9 +127,6 @@ function reservedLessonTable() {
 		}
 	}
 
-	//インスタンスを保存して「this」の意味が変わっても使えるようにする
-	var tableInstance = this;
-
 	/* 関数名:cancelExecute
 	 * 概要　:予約キャンセル処理を実行する
 	 * 引数　:なし
@@ -137,7 +136,7 @@ function reservedLessonTable() {
 	 */
 	this.cancelExecute = function() {
 		//キャンセル処理を実装する
-		tableInstance.registerReserved(this.instance, this.instance.argumentObj.data.create_tag, this.dialogBuilder);
+		thisClass.registerReserved(this.instance, this.instance.argumentObj.data.create_tag, this.dialogBuilder);
 	}
 
 	/* 
