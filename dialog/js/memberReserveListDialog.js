@@ -20,9 +20,9 @@ function memberReserveListDialog(dialog){
 	
 	//予約、キャンセルを行ったときのお知らせのテキストの配列
 	this.noticeMessages = [
-	                       	'ご希望の授業の予約が完了しました。',
-	                       	'ご希望の授業の予約が完了しました。',
-	                       	'選択した授業の予約をキャンセルしました。'
+	                       	LESSON_RESERVE_TEXT,
+	                       	LESSON_RESERVE_TEXT,
+	                       	LESSON_CANCEL_TEXT
 	                       ];
 	
 
@@ -172,7 +172,7 @@ function memberReserveListDialog(dialog){
 		//予約できる授業のデータ一覧テーブルを作る
 		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(SELECTOR_TABLE_AREA, this.dialog));
 		//テーブルの値を置換する
-		commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
+		//commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
 		//テーブルの値をクライアント側で編集して画面に表示する
 		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
@@ -307,7 +307,7 @@ function memberReserveListDialog(dialog){
 	 */
 	this.getClickTableRecordData = function(clickTarget, tableName, clickRecordClassName) {
 		//クリックされた行番号を取得する。見出しの行は除外する
-		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(':not(:first)').index(clickTarget);
+		var rowNum = $(DOT + tableName + TAG_CHILD_TR).filter(SEL_NO_TABLE_FIRST_ROW).index(clickTarget);
 		//次のダイアログに渡すデータを変数に入れる
 		var recordObject = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY][rowNum];
 		//取得したデータを返却する
@@ -376,6 +376,8 @@ function memberReserveListDialog(dialog){
 				parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 				$(parentDialogBuilder.dialog).empty();
 				parentDialogBuilder.dispContents();	//予約一覧ダイアログの中身を更新する
+				//予約中授業テーブルをリロードして予約状況を最新にする
+				data.creator.tableReload(RESERVED_LESSON_TABLE);
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
 				break;	//switchを抜ける

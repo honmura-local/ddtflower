@@ -484,33 +484,6 @@ function cancelDialogOpen(dialogData, dialogTitleDate) {
 	cancelLessonDialog.run();	//主処理を走らせる。
 }
 
-/* 
- * 関数名:cancelDialogOpenFromReservedTable
- * 概要  :予約キャンセルダイアログを予約済み授業から開くための関数
- * 引数  :int memberNumber:会員番号
- * 　　  :createLittleContents creator:createLittleContentsクラスインスタンス
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.07.31
- * 変更者:T.Masuda
- * 変更日:2015.08.09
- * 内容	:改修したdialogExクラスに対応しました。
- */
-function cancelDialogOpenFromReservedTable (memberNumber, creator) {
-	//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
-	$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
-		var recordData = getClickTableRecordData(this, RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD , creator);
-		//ダイアログに送信するデータ(クリックしたテーブルのデータとユーザの会員番号を合わせた連想配列)を連想配列型変数に入れる
-		//@mod 2015.0809 T.Masuda creatorもsendObjectに含む様にしました
-		var sendObject = $.extend(true, {userId:memberNumber}, {'creator':creator}, recordData.data);
-		//日付を日本語表示にする
-		var titleDate = getDialogTitleDate(sendObject.lesson_date);
-		//キャンセルダイアログを開く
-		cancelDialogOpen(sendObject, titleDate);
-	});
-}
-
-
 /* 関数名:memberReservedConfirmDialogClose
  * 概要　:会員top、予約確認ダイアログでokボタンが押された時の処理を登録する
  * 引数　:なし

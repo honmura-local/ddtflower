@@ -128,13 +128,20 @@
 					if(creator.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 						// 予約中授業のテーブルを作る
 						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
+
 						// 予約中テーブルのテーブルの値を置換する
 						commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
 						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 						commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						//テーブルからキャンセルダイアログを開くクラスをインクルードする
+						commonFuncs.getScriptFile('js/reservedLessonTable.js');
+
+						//予約済み授業一覧テーブルのインスタンスを作り、テーブルの操作処理を使えるようにする
+						var reservedLessonTableFuncs = new reservedLessonTable();
+
 						//キャンセルダイアログを予約中授業テーブルから開く処理
-						cancelDialogOpenFromReservedTable(memberInfo, creator);
+						reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, creator);
 						//予約中授業テーブル絞り込みボタン機能を実装する
 						creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					}
