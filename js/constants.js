@@ -112,7 +112,7 @@ IMG_QUALITY									= 80;										//画像圧縮時の品質
 USER_IMAGE_UPLOADER							= 'uploadImage/imageUpload.php';			//画像アップローダーのパス
 
 CHAR_DOT										= '.';
-CHAR_COMMA										= '.';
+CHAR_COMMA										= ',';
 CHAR_HYPHEN										= '-';
 CHAR_RIGHT_ARROW								= '>';
 MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
@@ -690,3 +690,17 @@ SEL_NO_TABLE_FIRST_ROW 							= ':not(:first)';
 
 //DBデータの更新に成功したときに帰ってくる値
 SETQUERY_FAILED								= 0;
+
+//管理者画面 ユーザ一覧 会員IDのJSONのキー
+KEY_MEMBER_NUMBER = 'memberNumber';
+//ユーザの会員番号のセレクタ
+SEL_ID 										= '.id';
+//お知らせ
+ANNOUNCE									= 'announce';
+
+//日本語の「メール」文字列
+STR_JP_MAIL									= 'メール';
+//日本語の「お知らせ」文字列
+STR_JP_ANNOUNCE								= 'お知らせ';
+//管理者画面 メール送信のPHP
+SEND_ADMINMAIL_PHP							= 'php/mailSendEntryAdminMail.php';

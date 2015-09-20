@@ -1356,7 +1356,7 @@ this.defaultClassworkCostColumns = [
 	}
 	
 	/* 
-	 * 関数名:textPustArray
+	 * 関数名:textPushArray
 	 * 概要  :配列に対して文字列を追加する
 	 * 引数  :String parent:追加する文字列がある親のセレクタ
 	 *		Array array:文字列を追加する配列の名前
@@ -1368,9 +1368,9 @@ this.defaultClassworkCostColumns = [
 	 * 修正者　:T.Masuda
 	 * 内容	　:共通で使えるためcommon.jsに移動しました。
 	 */
-	this.textPustArray = function(parent, array, pushText) {
+	this.textPushArray = function(parent, array, pushText) {
 		//配列に引数で指定した値を追加していく
-		arrayName.push($(parent).children(pushText).text());
+		array.push($(parent).children(pushText).text());
 	}
 
 	/* 
@@ -1547,7 +1547,6 @@ this.defaultClassworkCostColumns = [
 		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_LESSON_LEY][VALUE] 	= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(キャンセル)
 		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_LESSON_LEY][VALUE] 		= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(加算ポイント)
 	}	 
-
 
 	
 //ここまでクラス定義領域
