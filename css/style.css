@@ -600,7 +600,7 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.02.19
  */
-.loginDialog {
+.dialog .inputArea {
 	font-size: 14px;					/* フォントサイズを指定する。 */
 }
 
@@ -610,7 +610,7 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.02.19
  */
-.loginDialog > * {
+.dialog .inputArea > * {
 	margin-bottom: 3px;	/* 行間を取る。 */
 	line-height: 16px;	/* 1行の高さを指定する。 */
 }
@@ -622,7 +622,7 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.02.19
  */
-.loginDialog label {
+.dialog .inputArea label {
 	display: inline-block;	/* インラインブロック要素に指定してテキストボックスと並べる。 */
 	width: 100px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
 }
@@ -633,7 +633,7 @@ footer{
  * 作成者 :T.Masuda
  * 作成日 :2015.04.07
  */
-.loginDialog .userName, .loginDialog .password {
+.dialog .inputArea .userName, .dialog .inputArea .password {
 	width: 150px;			/* どの環境でも幅を一定にするため、幅を指定する。 */
 }
 

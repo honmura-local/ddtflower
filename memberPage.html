@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <!-- 画面の幅を使用している端末に依存する。加えてズームを許可しない。 -->
@@ -64,11 +64,8 @@
 					creator.getDomFile('template/memberCommon.html');
 					// 会員ページのjsonを読み込む
 					creator.getDomFile('template/memberPage.html');
-					//告知領域をDBから取得するために会員番号をクエリの置換部分にセットする
-					creator.json.advertise.user_key.value = memberInfo;
 					//ユーザ情報のテキストをDBから取得する
 					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
-	
 					//accountHeaderから会員IDを取得する。
 					var memberInfo = creator.json.accountHeader !== void(0) ? creator.json.accountHeader.user_key.value : '';
 					
@@ -109,7 +106,7 @@
 					//予約できる授業のテーマにをDBから取り出す
 					creator.getJsonFile('php/GetJSONArray.php', creator.json['memberCanReserveLesson'], 'memberCanReserveLesson');
 					//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-					creator.setSelectboxText(creator.json.memberCanReserveLesson.table, creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
+					creator.setSelectboxText(creator.json.memberCanReserveLesson[TABLE_DATA_KEY], creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
 					// 予約済み授業のタブ内コンテンツを作る
 					creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 					// 受講済み授業のタブ内コンテンツを作る
@@ -128,21 +125,28 @@
 					//予約中授業の外枠領域を作る
 					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
-					if(creator.json['reservedLessonTable']['table'][0]) {
+					if(creator.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 						// 予約中授業のテーブルを作る
 						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
+
 						// 予約中テーブルのテーブルの値を置換する
-						dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
+						commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);
 						//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 						//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
-						setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
+						//テーブルからキャンセルダイアログを開くクラスをインクルードする
+						commonFuncs.getScriptFile('js/reservedLessonTable.js');
+
+						//予約済み授業一覧テーブルのインスタンスを作り、テーブルの操作処理を使えるようにする
+						var reservedLessonTableFuncs = new reservedLessonTable();
+
 						//キャンセルダイアログを予約中授業テーブルから開く処理
-						cancelDialogOpenFromReservedTable(memberInfo, creator);
+						reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, creator);
+						//予約中授業テーブル絞り込みボタン機能を実装する
+						creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 					}
-					//キャンセル料率のレートをアコーディオン形式で表示する
-					creator.accordionSetting('.lessonAccordion', '.attention');
-					//予約中授業テーブル絞り込みボタン機能を実装する
-					creator.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
+					//キャンセル料率,加算ポイントのレートをアコーディオン形式で表示する
+					creator.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				}catch(e){
 					console.log(e);

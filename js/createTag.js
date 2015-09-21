@@ -1,108 +1,20 @@
-//JSONとHTMLのパーツのひな形から、HTMLのパーツを作り上げる関数群。
+/* 
+ * ファイル名:createTag.js
+ * 概要  :JSONとテンプレート用HTMLから画面パーツを作るクラスを定義したファイル
+ * 設計者:H.Kaneko
+ * 作成者:T.M
+ * 作成日:2015.
+ * パス :/js/createTag.js
+ */
 
-//createTagコール時の引数として使う定数。
-CREATETAG_FIRST 				= -1;
-//@add 2015.0610 T,Masuda「JSON」と「DOM」の文字列の定数を追加しました
-//固定の文字列の定数を定義していく
-CHAR_DOT										= '.';
-CHAR_HYPHEN										= '-';
-CHAR_RIGHT_ARROW								= '>';
-MESSAGE_SUCCESS_RESERVED						= '予約を承りました。';
-MESSAGE_SUCCESS_CANCELED						= '予約をキャンセルしました。';
-MESSAGE_SUCCESS_PROFILE_UPDATE					= 'プロフィールを変更しました。';
-MESSAGE_SUCCESS_PASSWORD_UPDATE					= 'パスワードを変更しました。';
-MESSAGE_FAILED_RESERVED							= '予約の処理に失敗しました。時間をおいてもう一度お試しください。';
-MESSAGE_FAILED_CONNECT							= '通信に失敗しました。時間をおいてもう一度お試しください。';
-MESSAGE_LOGIN_ERROR								= 'idまたはパスワードが間違っています';
-SELECTOR_ALL_CHILD								= '> *';				//全ての子要素のセレクタ
-SELECTOR_ALLCHILD_CLASS_FRONT					= ' > *[class="';
-SELECTOR_CLOSE_ATTRIBUTE						= '"]';
-SELECTOR_KEYS									= '.keys'; 
-SELECTOR_MAIN									= '.main';
-SELECTOR_NUMBERING_OUGHTER						= '.numberingOuter';
-SELECTOR_VALUES									= '.values';
-SELECTOR_LESSON_TABLE							= '.lessonTable';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG_TR			= '.reserveLessonListDialog table tr';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG_TD			= '.reserveLessonListDialog table tr td';
-SELECTOR_RESERVE_LESSON_LIST_DIALOG				= '.reserveLessonListDialog';
-SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG			= '.memberReservedConfirmDialog';
-SELECTOR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT	= '.memberReservedConfirmDialogContent';
-STR_FAILD_TO_CREATE								= 'の作成に失敗しました。';	//outputTagでパーツの作成を失敗したときのメッセージ
-STR_ARROW_LEFT_DOUBLE							= '<<';
-STR_TEXT										= 'text';
-STR_HTML										= 'html';
-STR_BODY										= 'body';
-STR_NUMBERING									= 'numbering';
-STR_PRE											= 'pre';
-STR_KEY_AND_VALUE								= 'keyAndValue';
-STR_VALUELABEL									= 'valueLabel';
-STR_VALUES										= 'values';
-STR_KEYS										= 'keys';
-STR_EDITVALUE									= 'editValue';
-STR_NAME										= 'name';
-STR_CLICK										= 'click';
-STR_STYLE										= 'style';
-STR_OPEN										= 'open';
-STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
-STR_LESSON_TABLE_AREA							= 'lessonTableArea';
-STR_DIALOG										= 'dialog';
-STR_TR											= 'tr';
-STR_TD											= 'td';
-STR_TH											= 'th';
-STR_JSON  										= 'json';				//json
-STR_DOM  										= 'dom';				//dom
-STR_OBJECT 										= 'object';				//objectかどうかの判定に使う
-STR_TRANSPORT_FAILD_MESSAGE						= '通信に失敗しました。';	//通信失敗のメッセージ
-STR_POST										= 'POST';				//リクエストのPOSTメソッド設定
-STR_HTML										= 'HTML';				//AJAXのレスポンスの指定をHTMLにする時に使う
-STR_AUTO										= 'auto';
-STR_FONT_SIZE									= 'font-size';
-STR_TAG_TABLE									= 'tagTable';
-STR_LESSON_TABLE								= 'lessonTable';
-STR_MEMBER_RESERVED_CONFIRM_DIALOG_CONTENT		= 'memberReservedConfirmDialogContent';
-SYMBOL_UNIT										= ' 〜 ';
-TAG_DIV											= '<div></div>';
-TAG_SPAN										= '<span></span>'; 
-TAG_LABEL										= '<label></label>';
-TAG_TEXTAREA									= '<textarea></textarea>'; 
-URL_GET_JSON_STRING_PHP							= 'php/GetJSONString.php';
-URL_GET_JSON_ARRAY_PHP							= 'php/GetJSONArray.php';
-URL_GET_JSON_ARRAY_FOR_JQGRID_PHP				= 'php/GetJSONArrayForJqGrid.php';
-URL_SAVE_JSON_DATA_PHP							= 'php/SaveJSONRecord.php';
-STR_LESSON_TABLE								= 'lessonTable';
-STR_RESERVE_LESSON_LIST_DIALOG					= 'reserveLessonListDialog';
-STR_CENTER_CENTER								= 'center center';
-STR_MEMBER_RESERVED_CONFIRM_DIALOG				= 'memberReservedConfirmDialog';
-STR_EVENT										= 'event';
-STR_COLSPAN										= 'colspan';
-VALUE_0_5EM										= '0.5em';
-STR_MEMBER_INFORMATION							= 'memberInfomation';
-STR_REPLACE_TABLE								= 'replaceTable';
-SP_SELECTOR_REPLACE_TABLE						= ' .replaceTable';
-//処理の分岐のフラグの数値
-PATTERN_ADD = 0;
-PATTERN_REPLACE = 1;
-//outputNumberingTagで用いる記事のオブジェクトの親のキー。
-ARTICLE_OBJECT_KEY								= 'table';
-USER_ID											= 'userId';
-ADMIN_AUTHORITY									= '80';	//管理者権限のIDの定数							
-ACCOUNT_HEADER									= 'accountHeader';	//アカウント管理のJSONのキー
-EMPTY											= '';								//空文字
-SLASH											= '/';								//スラッシュ記号
-DOT												= '.';								//ドット
-
-//ログインエラー時の状態の整数値定数
-TITLE = 'title';		//タイトルの文字列
-STATE_NOT_LOGIN	= 0;	//非ログイン時
-STATE_TIMEOUT	= 1;	//タイムアウト時
-LOGIN = 'ログイン';		//ログインダイアログのタイトル「ログイン」
-RE_LOGIN = '再ログイン';	//再ログインダイアログのタイトル「再ログイン」
-LOGIN_MESSAGE = '';		//ログインダイアログのメッセージ
-RE_LOGIN_MESSAGE = '';	//再ログインダイアログのメッセージ
-URL_LOGIN_DIALOG = 'dialog/loginDialog.html';	//ログインダイアログのHTMLファイルのURL
-URL_ADMIN_PAGE = 'adminPage.html'; //管理者ページのURL
-URL_MEMBER_PAGE = 'memberPage.html'; //管理者ページのURL
-
+/* 
+ * クラス名:createTag
+ * 概要  :JSONとテンプレート用HTMLから画面パーツを作るクラス
+ * 引数	:なし
+ * 設計者:H.Kaneko
+ * 作成者:T.M
+ * 作成日:2015.
+ */
 function createTag(){
 	this.json = null;			//JSONデータを格納する変数。
 	this.dom = '';				//ひな形のHTMLのDOMを格納する変数。
@@ -502,7 +414,7 @@ function createTag(){
 
 		
 		//JSONが配列形式であれば
-		if($.isArray(articles.table)){
+		if($.isArray(articles[TABLE_DATA_KEY])){
 			//コンテンツ表示
 			$(targetArea).append(this.createTagTable(articles, this.getDomNode(jsonName) , pageNum, displayPage));
 		//JSONが連想配列形式であれば
@@ -676,8 +588,8 @@ function createTag(){
 		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
-		$searchObject = articles !== void(0)? articles[ARTICLE_OBJECT_KEY]: this.json[jsonName][ARTICLE_OBJECT_KEY];
-		
+		$searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
+
 		//配列であれば
 		if($.isArray($searchObject)){
 			retNum = $searchObject.length;	//要素数を取り出す
@@ -1069,7 +981,7 @@ function createTag(){
 	 */
 	this.createTagTable = function(mapNode, domNode , pageNum, displayPage){
 		//mapNodeからテーブル用のデータを取り出す
-		var mapNodeArray = mapNode.table;
+		var mapNodeArray = mapNode[TABLE_DATA_KEY];
 		//見出し行用のDOMを格納する変数を宣言する
 		var colNameNode = null;
 		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
@@ -1432,7 +1344,7 @@ function createTag(){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
 				//絞り込み対象のJSONの記事タイプが配列形式であれば
-				if($.isArray(this.json[jsonName].table)){
+				if($.isArray(this.json[jsonName][TABLE_DATA_KEY])){
 					retObj = this.filterArticleDateForArray(jsonName, this.dateText);	//配列形式の記事絞り込みを行う
 				}else{
 					retObj = this.filterArticleDateForObject(jsonName, this.dateText);	//オブジェクト形式の記事絞り込みを行う
@@ -1456,17 +1368,17 @@ function createTag(){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
 		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
-		var tableLength = retObj.table.length;	//走査対象のテーブルのサイズを取得する
+		var tableLength = retObj[TABLE_DATA_KEY].length;	//走査対象のテーブルのサイズを取得する
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
 		for(var i = 0; i < tableLength; i++){
 			//日付が合わなければ
-			if(retObj.table[i].blogArticleDate != dateText){
-				retObj.table.splice(i);	//該当する記事を削除する
+			if(retObj[TABLE_DATA_KEY][i].blogArticleDate != dateText){
+				retObj[TABLE_DATA_KEY].splice(i);	//該当する記事を削除する
 			}
 		}
 		
-		retObj.table = retObj.table.concat();	//配列をコピーしてインデックスの乱れを直す
+		retObj[TABLE_DATA_KEY] = retObj[TABLE_DATA_KEY].concat();	//配列をコピーしてインデックスの乱れを直す
 		
 		return retObj;	//作成したオブジェクトを返す
 	}
@@ -1483,7 +1395,7 @@ function createTag(){
 	this.filterArticleDateForObject = function(jsonName, dateText){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
-		var table = retObj.table;				//tableキーのオブジェクトを取得する
+		var table = retObj[TABLE_DATA_KEY];				//tableキーのオブジェクトを取得する
 		var tableLength = table.length;	//走査対象のテーブルのサイズを取得する
 		var tmpObj = {};						//絞り込んだ記事を一時的に格納するオブジェクトを作る
 		var i = 0;								//記事番号を振るためのカウンター変数を宣言する
@@ -1497,7 +1409,7 @@ function createTag(){
 			}
 		}
 		
-		retObj.table = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
+		retObj[TABLE_DATA_KEY] = tmpObj;	//作成したオブジェクトを返却するオブジェクトに代入する
 		
 		return retObj;	//作成したオブジェクトを返す
 	}
@@ -1588,126 +1500,24 @@ function createTag(){
 				break;				//switch文を抜ける
 			}
 			
-			//ログインダイアログで利用するパラメータのオブジェクトを作る
-			this.argumentObj = {
-					data:{
-						//ログイン状態
-						createTagState: this.createTagState
-					},config:loginDialogOption
-			};
+			//ダイアログ用のインプットデータオブジェクトを作る
+			var argumentObj = commonFuncs.getDefaultArgumentObject();
+			//ダイアログの幅を固定幅にする
+			argumentObj.config.width = DIALOG_FIXED_WIDTH;
+			//インプット用データオブジェクトにエラー内容の値を追加する
+			$.extend(true, argumentObj.data, {createTagState: this.createTagState});
+			//インプット用データオブジェクトにタイトルのデータを追加する
+			$.extend(true, argumentObj.config, {title: this.title});
 			
-			//ログインダイアログを出す。
-			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, this.argumentObj, {});
-			loginDialog.argumentObj.config[TITLE] = this.title;							//ダイアログのタイトルを変更する
-			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
-			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
+			//ログインダイアログを作る。
+			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, argumentObj, {});
+//			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
+//			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
-			$('.loginDialogMessage', loginDialog.formDom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
+			commonFuncs.hideLoadingScreen();	//ローディング画面が出っぱなしになっているので消す
+//			$('.loginDialogMessage', loginDialog.dom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
 		}
 	};
-	
-	//ログインダイアログの設定オブジェクト
-	var loginDialogOption = {
-			// 幅を設定する。
-			width			: '300',
-			// ダイアログを生成と同時に開く。
-			autoOpen		: true,
-			// Escキーを押してもダイアログが閉じないようにする。
-			closeOnEscape	: false,
-			// モーダルダイアログとして生成する。
-			modal			: true,
-			// リサイズしない。
-			resizable		: false, 
-			// 位置を指定する。
-			position:{
-				// ダイアログ自身の位置合わせの基準を、X座標をダイアログ中央、Y座標をダイアログ上部に設定する。
-				my:'center center',
-				// 位置の基準となる要素(ウィンドウ)の中心部分に配置する。
-				at:'center center',
-				// ウィンドウをダイアログを配置する位置の基準に指定する。
-				of:window
-			},
-			// ボタンの生成と設定を行う。
-			buttons:[
-				         {
-				        	 // OKボタンのテキスト。
-				        	 text:'ログイン',
-				        	 //テキストボックスでエンターキーに対応するためにクラスを付ける
-				        	 class:'loginButton',
-				        	 // ボタン押下時の処理を記述する。
-				        	 click:function(event, ui){
-				        	 	//ログイン処理に使うために入力されたログインidを取得する
-				        	 	var userLoginId = $('.userName').val();
-				        	 	//ログイン処理に使うために入力されたログインパスワードを取得する
-				        	 	var userLoginPassword = $('.password').val();
-				        	 	//入力された値が空白かどうかでログイン処理のエラーチェックを行う
-				        	 	if(userLoginId != EMPTY_STRING || userLoginPassword != EMPTY_STRING) {
-				        	 		//JsonDBManagerに接続するために送信するjsonにidをセットする
-				        	 		loginCreator.json.login.userName.value = userLoginId;
-				        	 		//JsonDBManagerに接続するために送信するjsonにパスワードをセットする
-				        	 		loginCreator.json.login.password.value = userLoginPassword;
-				        	 		//JSONDBManagerによるログイン処理を行う
-				        	 		loginCreator.getJsonFile(URL_GET_JSON_STRING_PHP, loginCreator.json.login, 'login');
-				        	 		//会員IDをJSONから取得する
-				        	 		var memberInfo = loginCreator.json.login.id.text;
-				        	 		//会員の権限の数値を取得する
-				        	 		var authority =  loginCreator.json.login.authority.text;
-				        	 		//ログイン成否チェックの分岐
-				        	 		//会員IDが取得できていなかった場合
-				        	 		if(memberInfo == EMPTY_STRING) {
-				        	 			//エラーメッセージを表示して処理をそのまま終了する
-				        				alert(MESSAGE_LOGIN_ERROR);
-				        			//会員IDが取得できていれば
-				        	 		} else {
-				        	 			//@mod 2015.0627 T.Masuda 既存のコンテンツを消去するコードを修正しました
-			        					$(this).dialog(CLOSE);	//ログイン成功につきダイアログを閉じる
-			        					var data = this.instance.getArgumentDataObject();	//インプット用データオブジェクトを取得する
-			        					//通常ログインかつ、管理者のIDならば
-			        					if(data.createTagState == STATE_NOT_LOGIN && authority == ADMIN_AUTHORITY){
-			        						//pushStateをサポートしているブラウザなら
-			        						if(isSupportPushState()){
-			        							//管理者ページの画面遷移の履歴を追加する。
-			        							history.pushState({'url':'#' + URL_ADMIN_PAGE}, '', location.href);
-			        						//URLハッシュを利用する
-			        						} else {
-			        							//管理者ページへ移動する
-			        							location.href = URL_ADMIN_PAGE; 
-			        						}
-			        					//通常ログインかつ、管理者のIDでなければ
-			        					} else if(data.createTagState == STATE_NOT_LOGIN && authority != ADMIN_AUTHORITY){
-			        						//pushStateをサポートしているブラウザなら
-			        						if(isSupportPushState()){
-			        							//会員トップページの画面遷移の履歴を追加する。
-			        							history.pushState({'url':'#' + URL_MEMBER_PAGE}, '', location.href);
-			        						//URLハッシュを利用する
-			        						} else {
-			        							//会員トップページへ移動する
-			        							location.href = URL_MEMBER_PAGE; 
-			        						}
-			        					}
-										
-										//画面をリロードする。
-										location.reload();
-				        	 		}
-				        	 	//ログイン情報の入力を求めるアラートを出す
-				        	 	} else {
-									alert(errorMessages[3]);
-				        	 	}
-				        	 }
-				         },
-				         {
-				        	 // キャンセルボタンのテキスト。
-				        	 text:'キャンセル',
-				        	 // ボタン押下時の処理を記述する。
-				        	 click:function(event, ui){
-				        		 //トップページに戻る
-				        		 callPage('index.php');
-				        		 // ダイアログを消去する。
-				        		 $(this).dialog('close');
-				        	 }
-				         }
-			         ]
-		};
 	
 	/*
 	 * 関数名:whenLoginDialogCreate

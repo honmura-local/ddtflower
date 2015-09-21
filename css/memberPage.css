@@ -54,7 +54,7 @@ label,
 #container .lessonCalendar,
 .topLogoArea,
 .memberHeader p:nth-of-type(1),
-.lessonStatusText:nth-of-type(1),
+.explainContent:nth-of-type(1),
 .fLeft {
 	float: left;
 }
@@ -261,15 +261,13 @@ label,
 
 /* DBから読込んだテーブル領域 */
 
-/* 
- * セレクタ :.lessonTable
- * 概要   :授業についてのテーブル領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.07.01
+ /* セレクタ :.displayNone
+ * 概要   :表示しない要素
+ * 作成者 :T.Masuda
+ * 作成日 :2015.09.12
  */
-.lessonTable,
 .displayNone {
-	display: none;			/* 最初は表示しない */
+	display: none;			/* 表示しない */
 }
 
 /* 
@@ -542,17 +540,18 @@ label,
 
 /* 予約確認ダイアログ領域 */
 /* 
- * セレクタ :.lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
+ * セレクタ : .lessonTable, .lessonConfirm,.lessonInfo,.attention,.confirmText,.memberInfomation 
  * 概要   :予約一覧ダイアログ、予約確認ダイアログの幅
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.26
  */
+.lessonTable,
 .lessonConfirm,
 .lessonInfo,
 .attention,
 .confirmText,
 .memberInfomation,
-.lessonStatus,
+.explain1,
 .adminLessonDetailStatus {
 	width: 430px;		/* ダイアログの幅を430pxにする */
 }
@@ -568,13 +567,12 @@ label,
 }
 
 /* 
- * セレクタ :.memberReservedConfirmDialog,.keepMoney,.hasPoint
+ * セレクタ :.lessonConfirmContent,,.keepMoney,.hasPoint
  * 概要   :予約情報の内側の領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.11
  */
-.memberReservedConfirmDialog,
-.cancelLessonDialog,
+.lessonConfirmContent,
 .keepMoney,
 .hasPoint {
 	font-size: 16px;		/* フォントサイズを16pxにする */
@@ -860,25 +858,25 @@ label,
 
 /* 授業状態注釈領域 */
 /* 
- * セレクタ :.lessonStatusText:nth-of-type(1)
+ * セレクタ :.explainContent:nth-of-type(1)
  * 概要   :残席領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.09
  */
-.lessonStatusText:nth-of-type(1) {
+.explainContent:nth-of-type(1) {
 	display: block;			/* ブロック要素として扱う */
 	height: 27px;			/* 高さを27pxにする */
 	line-height: 27px;		/* 行間を27pxにする */
-	/*width: 10%;				/* 幅を20%にする */*/
+	width: 10%;				/* 幅を20%にする */
 }
 
 /* 
- * セレクタ :.lessonStatusText
+ * セレクタ :.explainContent
  * 概要   :残席の記号説明領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.09
  */
-.lessonStatusText {
+.explainContent {
 	font-size: 12px;
 	padding-right: 1em;		/*　要素の幅を1文字分広げる　*/
 }
@@ -1044,12 +1042,12 @@ label,
 	 }
 
 	 /*
-	 * セレクタ :.lessonStatusText:nth-of-type(1)
+	 * セレクタ :.explainContent:nth-of-type(1)
 	 * 概要   :残席領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.30
 	 */
-	.lessonStatusText:nth-of-type(1) {
+	.explainContent:nth-of-type(1) {
 		height: 50px;			/* 高さを50pxにする */
 		line-height: 50px;		/* 行間を50pxにする */
 		width: 21%;				/* 幅を21%にする */
@@ -1072,12 +1070,13 @@ label,
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.06.26
 	 */
+	.lessonTable,
 	.lessonConfirm,
 	.lessonInfo,
 	.attention,
 	.confirmText,
 	.memberInfomation,
-	.lessonStatus,
+	.explain1,
 	.adminLessonDetailStatus {
 		width: 280px;		/* ダイアログの幅を430pxにする */
 	}

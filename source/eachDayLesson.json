@@ -1,6 +1,6 @@
 {
-    "reserveLessonListDialog": {
-        "class": "reserveLessonListDialog"
+    "memberReserveListDialog": {
+        "class": "memberReserveListDialog"
     },
     "memberInfomation": {},
     "lessonTableOutsideArea":{},

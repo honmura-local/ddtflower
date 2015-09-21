@@ -47,76 +47,73 @@
 			<script>
 				//ログインチェック用try-catch
 				try{
-					var creator = new createLittleContents();	//管理者ページ用のcreateTagクラスインスタンスを生成する
-					creator.hideNormalHeader();	//通常ページのヘッダーを隠す
+					var create_tag = new createLittleContents();	//管理者ページ用のcreateTagクラスインスタンスを生成する
+					create_tag.hideNormalHeader();	//通常ページのヘッダーを隠す
 
-					// creator = new createTag();
 					// ユーザーページのパーツのテンプレートのJSONを取得する。
-					creator.getJsonFile('source/commonUser.json');
+					create_tag.getJsonFile('source/commonUser.json');
 					// 管理者ページ共通のパーツのJSONを取得する。
-					creator.getJsonFile('source/adminCommon.json');
+					create_tag.getJsonFile('source/adminCommon.json');
 					//共通のjsonを取得する
-					creator.getJsonFile('source/commonJson.json');
+					create_tag.getJsonFile('source/commonJson.json');
 	
 					// ユーザーページのパーツのテンプレートのDOMを取得する。
-					creator.getDomFile('template/commonUser.html');
+					create_tag.getDomFile('template/commonUser.html');
 					// 管理者ページ共通のパーツのJSONを取得する。
-					creator.getDomFile('template/adminCommon.html');
+					create_tag.getDomFile('template/adminCommon.html');
 					// 共通パーツのDOMを取得する
-					creator.getDomFile('template/common.html');
+					create_tag.getDomFile('template/common.html');
 					
 					//パーツのHTMLを順次作成し、画面に追加していく
 					//ユーザ情報のテキストをDBから取得する
-					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
+					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
 					//ヘッダー
-					creator.outputTag('accountHeader', 'adminHeader');
+					create_tag.outputTag('accountHeader', 'adminHeader');
 					
 					//タブ領域
-					creator.outputTag('adminTab', 'tabContainer');
+					create_tag.outputTag('adminTab', 'tabContainer');
 					//タブコンテンツ5個
-					creator.outputTag('dayReserver','tabInContent', '.tabContentArea');
-					creator.outputTag('lecturePermit','tabInContent', '.tabContentArea');
-					creator.outputTag('userList','tabInContent', '.tabContentArea');
-					creator.outputTag('lessonDetail','tabInContent', '.tabContentArea');
-					creator.outputTag('mailMagaAndAnnounce','tabInContent', '.tabContentArea');
+					create_tag.outputTag('dayReserver','tabInContent', '.tabContentArea');
+					create_tag.outputTag('lecturePermit','tabInContent', '.tabContentArea');
+					create_tag.outputTag('userList','tabInContent', '.tabContentArea');
+					create_tag.outputTag('lessonDetail','tabInContent', '.tabContentArea');
+					create_tag.outputTag('mailMagaAndAnnounce','tabInContent', '.tabContentArea');
 					
 					//日ごと予約者一覧タブのコンテンツ
 					//選択された日付を表示する領域
-					creator.outputTag('dateBelt', 'dateBelt', '#dayReserver');
+					create_tag.outputTag('dateBelt', 'dateBelt', '#dayReserver');
 					//日付選択パーツのセット
-					creator.outputTag('dateSelect', 'dateSelect', '#dayReserver');
+					create_tag.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 					//日付ページングを実装する
-					nowDatePaging('dateBelt', creator);
+					nowDatePaging('dateBelt', create_tag);
 					//日ごと授業テーブルの外枠領域を作る
-					creator.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
+					create_tag.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
 					// 日ごと予約者一覧テーブル用のJSON配列を取得する
-					creator.getJsonFile('php/GetJSONArray.php', creator.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
+					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
 					//日ごと予約者の情報がないときにテーブルを作らない
-					if(creator.json.eachDayReservedInfoTable.table[0]) {
+					if(create_tag.json.eachDayReservedInfoTable[TABLE_DATA_KEY][0]) {
 						//日ごと予約者一覧テーブルを作る
-						creator.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
+						create_tag.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
 						//管理者日ごと予約者一覧テーブルを置換する
-						dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, creator);
+						dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag);
 
 					}
 					//画面の先頭にスクロールを戻すボタン
-					creator.outputTag('returnTopPosition');
+					create_tag.outputTag('returnTopPosition');
 					
 					//タブを作る
-					creator.createTab('.adminTab');
+					create_tag.createTab('.adminTab');
 					//クリックでテキストボックスにカレンダーを表示する
 					// clickCalendar('lesson_date');
-					//管理者日ごと授業の検索機能を実装する
-					creator.reloadTableTriggerEvent('.dateSelect .searchButton', CLICK, 'eachDayReservedInfoTable');
 	
 					//受講承認タブをクリックしたときに受講承認の内容を表示する
-					creator.createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
+					create_tag.createContentTriggerClick('.tabLink[href="#lecturePermit"]', createAdminPermitLessonContent);
 					//ユーザ一覧タブをクリックしたときにユーザ一覧の内容を表示する
-					creator.createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent);
+					create_tag.createContentTriggerClick('.tabLink[href="#userList"]', createAdminUserListContent);
 					//授業詳細タブをクリックしたときに授業詳細の内容を表示する
-					creator.createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent);
+					create_tag.createContentTriggerClick('.tabLink[href="#lessonDetail"]', createAdminLessonDetailContent, create_tag);
 					//メルマガタブをクリックしたときにメルマガの内容を表示する
-					creator.createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent);
+					create_tag.createContentTriggerClick('.tabLink[href="#mailMagaAndAnnounce"]', createAdminMailMagaAnnounceContent);
 					// ボタンの見た目をjqueryuiのものにしてデザインを整える
 					$('button, .searchButton, input[type="button"]').button();
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

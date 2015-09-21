@@ -9,27 +9,6 @@ PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
 SEND_TO_SERVER_MESSAGE = 'サーバへデータの送信を行いました。';
 
 /*
- * 関数名:isSupportPushState()
- * 引数  :なし
- * 戻り値:boolean
- * 概要  :ブラウザがpushStateに対応しているかをbooleanで返す。
- * 作成日:2015.03.10
- * 作成者:T.M
- */
-function isSupportPushState(){
-	// 返却値を格納する変数returnsを宣言し、falseで初期化する。
-	var returns = false;
-	//ブラウザがpushStateに対応していれば
-	if(window.history && window.history.pushState){
-		//trueを返す様にする。
-		returns = true;
-	}
-	
-	//returnsを返す。
-	return returns;
-}
-
-/*
  * イベント:ready
  * 引数   :なし
  * 戻り値 :なし
@@ -42,7 +21,7 @@ function isSupportPushState(){
 		//pushState対応ブラウザであれば
 			//URLを引数にしてページを切り替える関数をコールする。
 			callPage($(this).attr('href'));
-		if(isSupportPushState()){
+		if(commonFuncs.isSupportPushState()){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
@@ -62,7 +41,7 @@ function isSupportPushState(){
 		//pushState対応ブラウザであれば
 		//URLを引数にしてページを切り替える関数をコールする。
 		callPage($(this).attr('href'));
-		if(isSupportPushState()){
+		if(commonFuncs.isSupportPushState()){
 			//通常の画面遷移をキャンセルする。		
 			event.preventDefault();
 		}
@@ -167,7 +146,7 @@ function callPage(url, state){
 
 			//第二引数が入力されていなければ、また、pushStateに対応していれば
 			//@mod 2015.0604 T.Masuda 1つ目の条件式のtrue条件に || state == null を追加しました
-			if((state === void(0) || state == null) && isSupportPushState()){
+			if((state === void(0) || state == null) && commonFuncs.isSupportPushState()){
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + currentLocation}, '', location.href);
 			}
@@ -178,31 +157,6 @@ function callPage(url, state){
 	});
 }
 
-/*
- * 関数名:callLoadingScreen()
- * 引数  :なし
- * 戻り値:なし
- * 概要  :ローディング画面を表示する。
- * 作成日:2015.03.02
- * 作成者:T.Masuda
- */
-function callLoadingScreen(){
-		//ローディング画面を出す。
-		$('.loading').css('display','block');
-}
-
-/*
- * 関数名:hideLoadingScreen()
- * 引数  :なし
- * 戻り値:なし
- * 概要  :ローディング画面を隠す。
- * 作成日:2015.03.05
- * 作成者:T.Masuda
- */
-function hideLoadingScreen(){
-	//ローディング画面を隠す。
-	$('.loading').css('display','none');
-}
 
 /*
  * イベント:ready
@@ -229,54 +183,6 @@ $(document).ready(function(){
 	);
 });
 
-/*
- * 関数名:createFormData(form)
- * 引数  :jQuery form
- * 戻り値:Object
- * 概要  :フォームの投稿データを作る。
- * 作成日:2015.03.09
- * 作成者:T.Masuda
- */
-function createFormData(form){
-	//返却するデータを格納する変数を宣言する。
-	var formDataReturn = {};
-	
-	//フォーム内の入力要素を走査する。無効化されている要素は走査対象から外す。
-	$('input:text, input[type="email"], textarea, input:radio:checked, input:checkbox:checked, input:hidden,input[type="number"], input[type="search"], input[type="tel"], input[type="password"]', form)
-		.not('[disabled]').each(function(){
-		var val = this.value;	//入力フォームから値を取得する
-		//name属性の値を取得する。
-		var name = $(this).attr('name');
-		//type属性の値を取得する。
-		var type = $(this).attr('type');
-		
-		//nameが空でなければ
-		if(name != "" && name !== void(0)){
-			//チェックボックスか、ラジオボタンなら
-			if(type == 'checkbox' || type=='radio'){
-				if($(this).index('[name="' + name + '"]:checked') == 0){
-					val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
-					//name属性で括られたチェックボックスを走査していく。
-					$('input[name="' + name + '"]:checked').each(function(){
-						//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-						val.push(this.getAttribute('value'));
-					});
-					//formDataを連想配列として扱い、keyとvalueを追加していく。
-					formDataReturn[name] = val;
-				}
-			//それ以外であれば
-			} else {
-				//formDataを連想配列として扱い、keyとvalueを追加していく。
-				formDataReturn[name] = val;
-			}
-		}
-	});
-
-	
-	
-	//フォームデータを返す。
-	return formDataReturn;
-}
 
 /*
  * イベント:submit
@@ -440,7 +346,7 @@ function postForm(form){
 					//カレントのURLを更新する。
 					currentLocation = url;
 					//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
-					if(!(isCgiHistory) && isSupportPushState()){
+					if(!(isCgiHistory) && commonFuncs.isSupportPushState()){
 						//画面遷移の履歴を追加する。
 						history.pushState({'url':'#' + currentLocation}, '', location.href);
 					}
@@ -552,7 +458,7 @@ function changeSelectedButtonColor(filterTarget){
 //Ajax通信が始まったら
 $(document).ajaxStart( function(){
 	//ローディング画面を出す。
-	callLoadingScreen();
+	commonFuncs.callLoadingScreen();
 });
 
 
@@ -567,7 +473,7 @@ $(document).ajaxStart( function(){
 //Ajax通信が全て終了したら
 $(document).ajaxStop( function(){
 	//ローディング画面を隠す。
-	hideLoadingScreen();
+	commonFuncs.hideLoadingScreen();
 	//選択されたトップメニューの色を変える。
 	changeSelectedButtonColor('.topMenu li');
 });
@@ -582,7 +488,7 @@ $(document).ajaxStop( function(){
  * 作成者:T.Masuda
  */
 //popStateに対応できているブラウザであれば
-if (isSupportPushState()){
+if (commonFuncs.isSupportPushState()){
 	//popStateのイベントを定義する。
     $(window).on("popstate",function(event){
         //初回アクセスであれば何もしない。
@@ -608,7 +514,7 @@ if (isSupportPushState()){
  */
 $(window).on('load', function(){
 	//pushStateに対応していれば、pushStateで更新のイベント
-	if (isSupportPushState()){
+	if (commonFuncs.isSupportPushState()){
 		//@mod 2015.0604 T.Masuda コードの重複を減らしました
 		var state = null;		//pushstateで保存されているstateを格納する変数を用意する
 		var currentUrl = null;	//URLを格納する変数を用意する
@@ -753,67 +659,7 @@ function sendImitateForm(form){
 	callPage($form.attr('action'));
 };
 
-/*
- * イベント:$(document).on('submit', 'form.specialReservedDialog')
- * 引数   :String 'submit':submitイベントに対する処理
- * 　　　　:String 'form.specialReservedDialog':体験予約ダイアログのセレクタ。
- * 戻り値 :なし
- * 概要   :予約ダイアログのフォームがsubmitされたときのイベント。
- * 作成日 :2015.03.31
- * 作成者 :T.M
- */
-$(document).on('submit', 'form.specialReservedDialog', function(event){
-	//submitイベントをキャンセルする。
-	event.preventDefault();
-	//フォームのaction属性から送信URLを取得する。
-	var url = $(this).attr('action');
-	
-	//送信するデータを格納する連想配列を作成する。
-	var formData = createFormData($(this));
-	
-	//postメソッドでフォームの送信を行う。
-	$.post(url, formData,
-	// 成功時の処理を記述する。
-	 function(data){
-		//フォーム部分を切り出す。
-		var $block = $(data).find('blockquote');
-		$('link,script', data).remove();
-		//取得したページのmainタグ直下の要素をを取得し、mainのタグに格納する。
-		$('.specialReservedConfirmDialog').append($block);
-		//ページのタイトル部分が不適切なので消しておく。
-		$('strong.ttl').remove();
-	});
-});
 
-/*
- * イベント:$(document).on('submit', '.specialReservedConfirmDialog form')
- * 引数   :String 'submit':フォームのsubmitイベントに対する処理。
- * 　　　　:String '.specialReservedConfirmDialog form':体験予約確認ダイアログのフォームのセレクタ。
- * 戻り値 :なし
- * 概要   :予約ダイアログのフォームがsubmitされたときのイベント。
- * 作成日 :2015.03.31
- * 作成者 :T.M
- */
-$(document).on('submit', '.specialReservedConfirmDialog form', function(event){
-	//submitイベントをキャンセルする。
-	event.preventDefault();
-	//フォームのaction属性から送信URLを取得する。
-	var url = $(this).attr('action');
-	
-	//送信するデータを格納する連想配列を作成する。
-	var formData = createFormData($(this));
-	
-	//postメソッドでフォームの送信を行う。
-	$.post(url, formData,
-		// 成功時の処理を記述する。
-		function(){
-			//ダイアログを消す。
-			$('.specialReservedConfirmDialog').dialog('close');
-			$('.specialReservedDialog').dialog('close');
-			//送信完了のダイアログを出す。
-			alert('以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。');
-	});
-});
 
 /*
  * イベント:$(document).on('click', '.main .confBackButton')
@@ -833,21 +679,6 @@ $(document).on('click', '.main .confBackButton', function(){
 		//戻る。
 		history.back();
 	}
-});
-
-/*
- * イベント:$(document).on('click', '.specialReservedConfirmDialog .confBackButton')
- * 引数   :String 'click':クリックイベントを登録する。
- * 		 :String '.specialReservedConfirmDialog .confBackButton'
- * 　　　　:予約確認ダイアログでのPostmailの送信確認ページにおけるバックボタン。
- * 戻り値 :なし
- * 概要   :送信確認ページの戻るボタンがクリックされたときのイベント。
- * 作成日 :2015.03.31
- * 作成者 :T.M
- */
-$(document).on('click', '.specialReservedConfirmDialog .confBackButton', function(){
-	//ダイアログを消す。
-	$('.specialReservedConfirmDialog').dialog('close');
 });
 
 /*

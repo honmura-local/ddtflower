@@ -11,7 +11,7 @@
  */
 
 // JSONのvalueキーの文字列を定数にセットする
-define('STR_TABLE', 'table');
+define('STR_TABLE_DATA', 'tableData');
 //親クラスのファイルを読み込む
 require_once ('procedureBase.php');
 
@@ -60,7 +60,7 @@ class procedureGetList extends procedureBase{
 			//取得したJSON連想配列を走査する
 			if(is_array($this->json) && $this->is_hash($this->json)){
 				//レコードのJSONを作る
-				$retArrayString = $this->getListJSONPlusKey($this->json, STR_TABLE);
+				$retArrayString = $this->getListJSONPlusKey($this->json, STR_TABLE_DATA);
 			}
 			//SQL例外のcatchブロック
 		} catch (PDOException $e) {

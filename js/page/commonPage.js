@@ -15,8 +15,15 @@
  * 作成者:T.M
  */
 function createDateArray(dateText){
-	// 選択した日付を1つの文字列から配列に変換する。
-	var date = dateText.split('/');
+	//スラッシュ区切り
+	if(dateText.indexOf('/') != -1) {
+		// 選択した日付を1つの文字列から配列に変換する。
+		var date = dateText.split('/');
+	//ハイフン区切り
+	} else if (dateText.indexOf('-') != -1) {
+		var date = dateText.split('-');
+	}
+
 	// trueDateを返す。
 	return date;
 }

@@ -10,7 +10,7 @@
         "memberStatus": {
             "topLogoArea": {
                 "topLink": {
-                	"href":"#index.php",
+                	"href":"#top.php",
                     "topLogoImage": {
                         "src": "image/top(logo).png"
                     }
