@@ -176,14 +176,14 @@ function adminMailDialog(dialog){
 		retObj.inf = 
 				{
 					db_setQuery:json.insertMessageInf.db_setQuery,		//クエリを設定する 
-					message_title:{ value : $(SEL_MESSAGE_TITLE)}, 		//ダイアログからタイトルを取得する
-					message_content:{ value : $(SEL_MESSEAGE_CONTENT)}	//ダイアログから本文を取得する
+					message_title:$(SEL_MESSAGE_TITLE).val(), 		//ダイアログからタイトルを取得する
+					message_content:$(SEL_MESSEAGE_CONTENT).val()	//ダイアログから本文を取得する
 				};
 		//お知らせのユーザとコンテンツの紐付けレコードの部分を作る
 		retObj.to = 
 				{
 					db_setQuery : json.insertMessageTo.db_setQuery,	//クエリを設定する 
-					user_key : { value : EMPTY_STRING }				//会員IDをセットするキーとオブジェクトをセットする
+					user_key : EMPTY_STRING							//会員IDをセットするキーをセットする
 				};
 		
 		return retObj;	//作成したオブジェクトを返す
@@ -219,10 +219,11 @@ function adminMailDialog(dialog){
 			var resultMessage = 'お知らせの登録が完了しました。';
 			//データ追加用JSONを作成する
 			var sendObject = this.updateJson();
+			console.log(sendObject);
 			//DBにお知らせのデータを追加する
 			isSend = parseInt(this.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)[KEY_MESSAGE]) ?
 					//1つ目のクエリが成功したら、2つ目のクエリを実行する
-					parseInt(dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.to).message) : false;
+					this.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.to) : false;
 			//送信に失敗していれば
 			if(!isSend){
 				//失敗のメッセージを結果メッセージの変数にセットする
@@ -247,15 +248,16 @@ function adminMailDialog(dialog){
 	 */
 	this.sendQuery = function(sendUrl, sendObj){
 		//会員IDのリストを取り出す
-		var id = this[DIALOG_CLASS].getArgumentDataObject().id;
-		var idLength = id.length;	//会員IDの数を取得する
+		var idList = this[DIALOG_CLASS].getArgumentDataObject().idList.replace(/[\[\]\"]/g, EMPTY_STRING).split(CHAR_COMMA);
+		var idListLength = idList.length;	//会員IDの数を取得する
 		var processCount = 0;
 		var isProcess;
 		
-		for(var i = 0; i < idLength; i++){
-			sendObj[USER_KEY][VALUE] = id[i];	//順次お知らせをセットする先の会員IDを送信するJSONにセットする
+		for(var i = 0; i < idListLength; i++){
+			sendObj[USER_KEY] = idList[i];	//順次お知らせをセットする先の会員IDを送信するJSONにセットする
 			//クラス継承元のsendQuery関数で会員IDの分だけクエリを発行する
-			isProcess = this.__proto__.sendQuery(sendUrl, sendObj);
+			isProcess = parseInt(this.__proto__.sendQuery(sendUrl, sendObj).message);
+			alert(isProcess);
 			//処理に成功していたら
 			if(isProcess){
 				processCount++;	//処理件数をカウントアップする
