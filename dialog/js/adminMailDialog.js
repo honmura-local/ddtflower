@@ -257,7 +257,6 @@ function adminMailDialog(dialog){
 			sendObj[USER_KEY] = idList[i];	//順次お知らせをセットする先の会員IDを送信するJSONにセットする
 			//クラス継承元のsendQuery関数で会員IDの分だけクエリを発行する
 			isProcess = parseInt(this.__proto__.sendQuery(sendUrl, sendObj).message);
-			alert(isProcess);
 			//処理に成功していたら
 			if(isProcess){
 				processCount++;	//処理件数をカウントアップする

@@ -35,6 +35,8 @@ function experienceReservedDialog(dialog){
 			//DB操作エラー例外であれば
 			} else if(e instanceof failedToDBControleException){
 				throw new failedToDBControleException();	//該当する例外クラスを投げる
+			} else {
+				console.log(e);	//コンソールにエラーを出力する
 			}
 		}
 	};
@@ -50,7 +52,6 @@ function experienceReservedDialog(dialog){
 	this.getJson = function(){
 		//体験レッスン予約希望ダイアログのJSONを読み込む
 		this[VAR_CREATE_TAG].getJsonFile(EXPERIENCE_RESERVED_DIALOG_JSON);	//予約ダイアログのJSONを読み込む
-		console.log(this[VAR_CREATE_TAG].json);
 	};
 
 	/* 関数名:customizeJson
@@ -64,8 +65,6 @@ function experienceReservedDialog(dialog){
 	this.customizeJson = function(){
 		//当該ダイアログへインプットされたデータから授業日付を取り出す
 		var date = this.dialogClass.getArgumentDataObject().dateJapanese;
-		//日付を隠しフォームにセットする
-		this[VAR_CREATE_TAG].json.reservedDate.value = date;
 	};
 	
 	/* 関数名:getDom
@@ -90,20 +89,8 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		this.insertDialogContents();	//ダイアログのコンテンツを表示する
-	}
-
-	/* 関数名:insertDialogContents
-	 * 概要　:ダイアログのメインのコンテンツを作る
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日:2015.0815
-	 * 作成者:T.Masuda
-	 */
-	this.insertDialogContents = function(){
-		console.log(this[VAR_CREATE_TAG].dom);
-		console.log(this[VAR_CREATE_TAG].json);
-		var $thisDialog = $(this.dialog);
+		//当該ダイアログへのDOM追加をするため、ダイアログのDOMを取得する
+		var $thisDialog = $(this.dialog)[0];	
 		//createTagでダイアログに必要なタグを生成する。
 		//予約日時の隠しフォーム
 		this[VAR_CREATE_TAG].outputTag(RESERVED_DATE, RESERVED_DATE, $thisDialog);
@@ -150,6 +137,8 @@ function experienceReservedDialog(dialog){
 		commonFuncs.allCheckbox(ALLWEEK_CHECKBOX, CHECKBOX_WEEK);
 		//ダイアログの位置調整のみ行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
+		//日付を隠しフォームにセットする
+		$('.reservedDate').val(this.dialogClass.getArgumentDataObject().dateJapanese);
 	}
 	
 	/* 関数名:validationForm
@@ -182,11 +171,12 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setArgumentObj = function() {
-		var $form = $(CURRENT_DIALOG);	//フォーム(このパターンではダイアログの本体)を取得する
+		var $form = $(this.dialog);	//フォーム(このパターンではダイアログの本体)を取得する
 		var argumentObj = $.extend(true, {}, this[DIALOG_CLASS].getArgumentObject());
 		var checkResult = this.validationForm($form);	//フォームの入力チェックを行う
 	    // 必須入力項目が皆入力済みであり、英数字しか入力してはいけない項目がOKなら
-	    if(commonFuncs.nullCheckInObject(checkResult)) {	//checkResultルートのnull持ちキーがなければOK
+		//checkResultルートのnull持ちキーがなければOK
+	    if(commonFuncs.nullCheckInObject(checkResult) == Object.keys(checkResult).length) {
 	    	
 		    //入力確認のものは送信すべきではないので、送信前に前持って無効化する。
 	        //対象はメールチェックのテキストボックス
@@ -194,11 +184,11 @@ function experienceReservedDialog(dialog){
 		    //子ダイアログ(確認ダイアログ)に渡すオブジェクトのインプット用データ部分を作成する。以下のデータを結合する
 		    $.extend(true, 
 		    		argumentObj[DATA_KEY], 							//今のダイアログのargumentObjのdata
-		    		//子ダイアログのcloseイベント用データを追加する
 		    		{
-		    			parentDialog:this.dialogClass.dom,			//今のダイアログのDOM
-		    			callback:this.sendReservedMail,					//予約のメールを送る
-		    			message:EXPERIENCE_CONFIRM_TEXT
+		    			parentDialogBuilder:this,					//当該クラス
+		    			callback:this.sendReservedMail,				//予約のメールを送る
+		    			message:EXPERIENCE_CONFIRM_TEXT,			//送信確認ダイアログのメッセージ
+		    			formData:commonFuncs.createFormData($form)	//フォームデータ
 		    		}			
 		    	);
 		    // このダイアログの入力要素を一時的に無効化する。
@@ -230,9 +220,9 @@ function experienceReservedDialog(dialog){
 		if(commonFuncs.checkEmpty(argumentObj[DATA_KEY][FORM_DATA])){
 			//ダイアログのクラスインスタンスを生成する。
 			//openイベントはsetArgumentObjでセットしておく
-			this.dialogEx = new dialogEx(url, argumentObj);
+			var confirmDialog = new dialogEx(url, argumentObj);
 			//openイベントのコールバック関数をセットする
-			this.dialogEx.run();	//ダイアログを開く
+			confirmDialog.run();	//ダイアログを開く
 		}
 	}
 
@@ -257,17 +247,52 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.createExperienceReservedMail = function(formObj){
-		var retStr = EMPTY_STRING;	//返却する文字列の変数を宣言する
+		//返却する文字列の変数を宣言する
+		var retStr = EMPTY_STRING;
 		
 		//フォームのオブジェクトを走査する
 		for(key in formObj){
-			//日本語の項目名とデータを追加していく。毎回改行する
-			retStr += EXPERIENCE_CHECK_FORMS_JP_NAME[key] + ':' + formObj[key] + ESCAPE_KAIGYOU;
+			//送信するデータであれば
+			if(key != 'personEmailCheck' && key != 'subject'){
+				//日本語の項目名とデータを追加していく。毎回改行する
+				retStr += EXPERIENCE_CHECK_FORMS_JP_NAME[key] + ':' + formObj[key] + ESCAPE_KAIGYOU;
+			}
 		}
 		
 		return retStr;	//作成した文章を返す
 	};
 
+	
+	/* 関数名:showSendResultMessage
+	 * 概要　:体験レッスン予約希望メール送信判定(メッセージをアラートで出す)
+	 * 引数　:int isSendToCustom:お客様に送信できたかの判定の値
+	 * 　　　:int isSendToAdmin:管理者側に送信できたかの判定の値
+	 * 返却値:なし
+	 * 作成日　:015.09.21
+	 * 作成者　:T.Masuda
+	 */
+	this.showSendResultMessage = function(isSendToCustom, isSendToAdmin){
+		//メール送信の正否判定を行う。成功時のメッセージで初期化する
+		var retMessage = EXPERIENCE_MAIL_SEND_SUCCESS;
+		//メールの送信に失敗していたら
+		if(!isSendToCustom && !isSendToAdmin){
+			//失敗のメッセージを出す
+			retMessage = EXPERIENCE_MAIL_SEND_FAILED;
+			//お客様への返信だけ送信された場合
+		} else if(isSendToCustom && !isSendToAdmin){
+			//失敗のメッセージ(お客様へ間違ってメールが送信されている旨)
+			retMessage = EXPERIENCE_MAIL_SEND_ONLY_CUSTOM;
+			//管理者への通知だけ送信された場合
+		} else if(!isSendToCustom && isSendToAdmin){
+			//成功のメッセージ(返信なしの旨)
+			retMessage = EXPERIENCE_MAIL_SEND_ADMIN;
+		}
+
+		//結果のメッセージをアラートで表示する
+		alert(retMessage);
+	}
+	
+	
 	/* 関数名:sendReservedMail
 	 * 概要　:予約メールの送信を行うコールバック用関数
 	 * 引数　:なし
@@ -278,25 +303,33 @@ function experienceReservedDialog(dialog){
 	this.sendReservedMail = function(){
 		//ダイアログのクラスインスタンスを取得する
 		var dialogClass = this.instance;
+		var data = dialogClass.getArgumentDataObject();			//argumentObjのdataを取得する
+		var $parentDialog = $(data.parentDialogBuilder.dialog);	//ダイアログのDOMを取得する
+		$(FORM_ELEMS, $parentDialog).removeAttr('disabled');				//フォーム要素の無効化を解除する
 		
 		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
 		switch(dialogClass.getPushedButtonState()){
 		//はいボタンが押されていたら
 			case YES:
-				var data = dialogClass.getArgumentDataObject();	//argumentObjのdataを取得する
-				var formObj = commonFuncs.createFormObject($(SEL_FORM_DIALDOG));
+				//フォーム要素からデータを取得する
+				var formObj = commonFuncs.createFormObject($parentDialog);
 				//メール本文を作成する
-				var mailContent = this.createExperienceReservedMail(formObj);
+				var mailContent = data.parentDialogBuilder.createExperienceReservedMail(formObj);
 				//送信するデータをまとめたオブジェクトを作る
-				var sendObj = {content:mailContent, subject:formObj.lessonDate, from:formObj.email}
+				var sendObj	= {
+								//お客様返信用
+								custom:{content : EXPERIENCE_MAIL_INTRODUCTION_CUSTOM + mailContent, subject:EXPERIENCE_MAIL_SUBJECT_CUSTOM, from:EMPTY_STRING, to:formObj.email},
+								//管理者送信用
+								admin:{content : EXPERIENCE_MAIL_INTRODUCTION_ADMIN + mailContent, subject:EXPERIENCE_MAIL_SUBJECT_ADMIN, from:formObj.email, "to[]":1}
+							};
 				//予約希望メールを送信する
-				var isSend = commonFuncs.sendMail(EXPERIENCE_MAIL_SEND_PHP, sendObj, EXPERIENCE_RESERVED_COMPLETE_MESSAGE);
+				var isSendToCustom	= commonFuncs.sendMail(sendObj.custom, EXPERIENCE_MAIL_SEND_PHP);
+				var isSendToAdmin	= commonFuncs.sendMail(sendObj.admin, EXPERIENCE_MAIL_SEND_PHP);
+				console.log(isSendToCustom);
+				console.log(isSendToAdmin);
+				//送信結果をアラートで通知する
+				data.parentDialogBuilder.showSendResultMessage(isSendToCustom, isSendToAdmin);
 				
-				//メールの送信に成功していたら
-				if(isSend){
-					//送信完了と共に入力ダイアログを消す
-					$(dialogClass.dom).dialog(CLOSE);
-				}
 				break;	//switch文を抜ける
 			//処理を行うボタンが押されていなければ
 			default:break;	//そのまま処理を終える
