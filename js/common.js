@@ -1331,24 +1331,25 @@ this.defaultClassworkCostColumns = [
 		$.ajax({				//PHPにメール用データを渡すAjax通信
 			url:sendUrl			//PHPのURLを設定する
 			,data:sendObject	//送信データのオブジェクト
+			,async:false		//同期通信
 			,dataType:"json"	//JSON形式でデータをもらう
 			,type:"POST"		//POSTメソッドでHTTP通信する
 			,success:function(result){		//通信成功時
 				//メール送信が行われていれば
-				if(result == EMPTY_STRING || parseInt(result.sendCount) > 0){
-					//送信完了と共に入力ダイアログを消す
-					alert(message);	//送信完了のメッセージを出す
+				if(result == EMPTY_STRING || parseInt(result.sendCount) > 0 || parseInt(result.message) > 0){
+					//送信完了と共にメッセージを出す。入力されていなかったら何もしない
+					commonFuncs.checkEmpty(message) ? alert(message):console.log(EMPTY_STRING);	
 					retBoo = true;	//成功判定にする
 				//メール送信が失敗していれば
-				} else {
+				} else if(commonFuncs.checkEmpty(message)){
 					//送信失敗のメッセージを出す
-					alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+					alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);
 				}
 			}
 			//通信失敗時
 			,error:function(xhr, status, error){
-				//送信失敗のメッセージを出す
-				alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	
+				//送信失敗のメッセージを出す。当該関数の引数にメッセージがセットされているときのみ出す。
+				commonFuncs.checkEmpty(message) ? alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE):console.log(EMPTY_STRING);	
 			}
 		});
 		

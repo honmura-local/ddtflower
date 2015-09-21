@@ -476,9 +476,13 @@ CONFIRM_DIALOG_JS 							= 'dialog/js/confirmDialog.js';
 EXPERIENCE_CHECK_FORMS = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
 EXPERIENCE_CHECK_FORMS_JP_NAME = {
+			reservedDate:'希望日', 
 			construct:'希望作品', 
 			schedule:'希望時限', 
+			dayOfWeek:'可能曜日', 
+			week:'可能週', 
 			name:'ご氏名', 
+			nameKana:'ご氏名(カタカナ)', 
 			personPhoneNumber:'電話番号', 
 			email:'メールアドレス', 
 			personEmailCheck:'メールアドレス(確認)', 
@@ -710,3 +714,24 @@ STR_JP_ANNOUNCE								= 'お知らせ';
 SEND_ADMINMAIL_PHP							= 'php/mailSendEntryAdminMail.php';
 //整数300
 INT_300										= 300;
+
+//体験レッスン予約希望メールの件名
+//管理者向け
+EXPERIENCE_MAIL_SUBJECT_ADMIN				= "DDTフラワーズ　体験レッスン予約希望メール";
+//お客様向け
+EXPERIENCE_MAIL_SUBJECT_CUSTOM				= "DDTフラワーズ　体験レッスンの予約希望を承りました。";
+//体験レッスン予約希望メールの前置き
+//管理者向け
+EXPERIENCE_MAIL_INTRODUCTION_ADMIN			= '以下の内容で体験レッスンの予約希望を承りました。' + ESCAPE_KAIGYOU + ESCAPE_KAIGYOU;
+//お客様向け
+EXPERIENCE_MAIL_INTRODUCTION_CUSTOM			= 'DDTフラワーズへのご予約のご希望ありがとうございます。\nご予約のご希望の内容は以下の通りになります。\nご確認のほどをよろしくお願いいたします。' + ESCAPE_KAIGYOU + ESCAPE_KAIGYOU;
+
+//体験レッスン予約希望メール送信後のメッセージ
+//送信成功時
+EXPERIENCE_MAIL_SEND_SUCCESS				= "以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。";
+//送信失敗時
+EXPERIENCE_MAIL_SEND_FAILED					= "メールの送信に失敗しました。時間を置いてお試しください。";
+//お客様にだけ送信された場合
+EXPERIENCE_MAIL_SEND_ONLY_CUSTOM			= "メールの送信に失敗しました。時間を置いてお試しください。\nまた、予約を承ったという旨のメールが送信されている可能性がございます。\nお手数ですが、受信された場合は削除をお願いいたします。";
+//管理者側にだけ送信された場合(通常通り予約OK)
+EXPERIENCE_MAIL_SEND_ADMIN					= "以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。";
