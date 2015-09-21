@@ -37,20 +37,13 @@ function baseDialog(dialog){
 		try{
 			//ダイアログ内コンテンツの準備を行う
 			this.constructionContent();
-			console.log('done:constructionContent');
 			//小分けした画面作成用関数をコールする
 			this.dispContentsHeader();	//上部
-			console.log('done:dispContentsHeader');
 			this.dispContentsMain();	//メイン部分
-			console.log('done:dispContentsMain');
 			this.dispContentsFooter();	//下部
-			console.log('done:dispContentsFooter');
 			this.setConfig();			//ダイアログの設定関数をコールする
-			console.log('done:setConfig');
 			this.setCallback();			//イベントのコールバック関数をセットする
-			console.log('done:setCallback');
 		} catch(e){
-			console.log('throwed:Exception in Dialog JS File. see detail.');
 			console.log(e);
 			//ダイアログ生成エラー
 			throw new failedToDisplayException();
@@ -257,8 +250,6 @@ function baseDialog(dialog){
 	 */
 	this.sendQuery = function(sendUrl, sendObj){
 		var send = this.create_tag.checkBeforeConvertJsonString(this.create_tag.replaceValueNode(sendObj));
-		console.log(sendObj);
-		console.log(send);
 		//引数のオブジェクトをパースしてJSON文字列にする
 		var jsonString = JSON.stringify(send);
 		//JSONが無効なものであれば

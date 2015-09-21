@@ -219,7 +219,6 @@ function adminMailDialog(dialog){
 			var resultMessage = 'お知らせの登録が完了しました。';
 			//データ追加用JSONを作成する
 			var sendObject = this.updateJson();
-			console.log(sendObject);
 			//DBにお知らせのデータを追加する
 			isSend = parseInt(this.__proto__.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject.inf)[KEY_MESSAGE]) ?
 					//1つ目のクエリが成功したら、2つ目のクエリを実行する
