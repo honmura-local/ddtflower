@@ -17,8 +17,8 @@ MSL_LIST_PHP					= 'list.php';						//MSLのリスト
 MSL_DETAIL_PHP					= 'detail.php';						//MSLの記事詳細
 INIT_JSON						= 'source/init.json';				//初期化の値のJSONファイル
 //@add 2015.0627 T.Masuda 定数を大量に追加しました。詳細はGitで確認してください。
-PATH_LOGIN_DIALOG_JSON			= 'source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
-PATH_LOGIN_DIALOG_HTML			= 'template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
+PATH_LOGIN_DIALOG_JSON			= 'dialog/source/loginDialog.json';		//ログインダイアログのJSONファイルのパス
+PATH_LOGIN_DIALOG_HTML			= 'dialog/template/loginDialog.html';		//ログインダイアログのテンプレートHTMLファイルのパス
 CLASS_HEADER					= '.header';						//ヘッダーのクラス
 CLASS_LOGOUT_LINK				= '.logoutLink';					//ログアウトボタンのクラス
 

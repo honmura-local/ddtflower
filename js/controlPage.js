@@ -1,12 +1,6 @@
 // 画面遷移を操作する関数を中心にまとめたJSファイル。
 
 currentLocation = '';	//現在選択中のページの変数
-//トップページのファイル名の定数
-TOPPAGE_NAME = 'index.php';
-USER_ID = 'userId';			//ユーザID
-PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
-//サーバへメッセージを送信したという文言
-SEND_TO_SERVER_MESSAGE = 'サーバへデータの送信を行いました。';
 
 /*
  * イベント:ready
