@@ -1,7 +1,8 @@
 {
     "reservedDate": {
         "type": "hidden",
-        "name": "reservedDate"
+        "name": "reservedDate",
+        "value":""
     },
     "reservedSummary": {
         "text": "予約可能の可否につきましては追ってメールにより返信させていただきます。"

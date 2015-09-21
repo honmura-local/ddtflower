@@ -49,9 +49,25 @@ function experienceReservedDialog(dialog){
 	 */
 	this.getJson = function(){
 		//体験レッスン予約希望ダイアログのJSONを読み込む
-		this[VAR_CREATE_TAG].getJsonFile(EXPERIENCE_RESERVED_CONFIRM_DIALOG_JSON);	//予約ダイアログのJSONをい読み込む
+		this[VAR_CREATE_TAG].getJsonFile(EXPERIENCE_RESERVED_DIALOG_JSON);	//予約ダイアログのJSONを読み込む
+		console.log(this[VAR_CREATE_TAG].json);
 	};
 
+	/* 関数名:customizeJson
+	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.customizeJson = function(){
+		//当該ダイアログへインプットされたデータから授業日付を取り出す
+		var date = this.dialogClass.getArgumentDataObject().dateJapanese;
+		//日付を隠しフォームにセットする
+		this[VAR_CREATE_TAG].json.reservedDate.value = date;
+	};
+	
 	/* 関数名:getDom
 	 * 概要　:createTag用テンプレートHTMLを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
@@ -65,21 +81,6 @@ function experienceReservedDialog(dialog){
 		this[VAR_CREATE_TAG].getDomFile(EXPERIENCE_RESERVED_DIALOG_HTML);	//タグを作るためにテンプレートのDOMを取得する。
 	};
 	
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(){
-		//ダイアログのタイトルを変更する。
-		//ログインエラー例外クラス生成時に設定されたタイトルを使う
-		this.setDialogTitle(this.dialogClass.getArgumentDataObject().title);
-	}
-
 	/* 関数名:dispContentsMain
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のメイン部分作成担当関数
 	 * 引数　:なし
@@ -89,7 +90,7 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.dispContentsMain = function(){
-		this.insertDialogContents();
+		this.insertDialogContents();	//ダイアログのコンテンツを表示する
 	}
 
 	/* 関数名:insertDialogContents
@@ -100,38 +101,26 @@ function experienceReservedDialog(dialog){
 	 * 作成者:T.Masuda
 	 */
 	this.insertDialogContents = function(){
+		console.log(this[VAR_CREATE_TAG].dom);
+		console.log(this[VAR_CREATE_TAG].json);
+		var $thisDialog = $(this.dialog);
 		//createTagでダイアログに必要なタグを生成する。
 		//予約日時の隠しフォーム
-		this[VAR_CREATE_TAG].outputTag(RESERVED_DATE, RESERVED_DATE, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(RESERVED_DATE, RESERVED_DATE, $thisDialog);
 		//注意書き
-		this[VAR_CREATE_TAG].outputTag(RESERVED_SUMMARY, RESERVED_SUMMARY, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(RESERVED_SUMMARY, RESERVED_SUMMARY, $thisDialog);
 		//作品選択
-		this[VAR_CREATE_TAG].outputTag(SPECIAL_CONTRUCT, SPECIAL_CONTRUCT, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SPECIAL_CONTRUCT, SPECIAL_CONTRUCT, $thisDialog);
 		//時限選択
-		this[VAR_CREATE_TAG].outputTag(SPECIAL_SCHEDULE, SPECIAL_SCHEDULE, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SPECIAL_SCHEDULE, SPECIAL_SCHEDULE, $thisDialog);
 		//予約の予備情報
-		this[VAR_CREATE_TAG].outputTag(SUBINFO, SUBINFO, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(SUBINFO, SUBINFO, $thisDialog);
 		//お客様の情報入力欄
-		this[VAR_CREATE_TAG].outputTag(PERSON_INFORMATION, PERSON_INFORMATION, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(PERSON_INFORMATION, PERSON_INFORMATION, $thisDialog);
 		//メールの件名の値を格納する隠しフォーム
-		this[VAR_CREATE_TAG].outputTag(MAIL_SUBJECT, MAIL_SUBJECT, CURRENT_DIALOG);
+		this[VAR_CREATE_TAG].outputTag(MAIL_SUBJECT, MAIL_SUBJECT, $thisDialog);
 	}
 
-	/* 関数名:setConfig
-	 * 概要　:ダイアログの設定を行う
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0822
-	 * 作成者　:T.Masuda
-	 */
-	this.setConfig = function(){
-		//確認・キャンセルボタンを配置する
-		this.setDialogButtons(this.confirm_cancel);		
-		//ダイアログの位置を修正する
-		this.setDialogPosition(POSITION_CENTER_TOP);
-	}
-	
-	
 	/* 関数名:setCallback
 	 * 概要　:ダイアログのイベントコールバックを設定する
 	 * 引数　:なし
@@ -140,14 +129,28 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
-		// 全ての曜日のチェックボックスにチェックする
-		commonFuncs.allCheckbox(ALLDAY_CHECKBOX, CHECKBOX_DAYOFWEEK);
-		// 全ての週のチェックボックスにチェックする
-		commonFuncs.allCheckbox(ALLWEEK_CHECKBOX, CHECKBOX_WEEK);
 		//ダイアログを閉じるときは破棄する
 		this.dialogClass.setCallbackCloseOnAfterOpen(this.dialogClass.destroy);
 	}
 
+	/* 関数名:setConfig
+	 * 概要　:ダイアログの設定を行う。任意でオーバーライドして定義する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成者　:T.Masuda
+	 * 作成日　:2015.0822
+	 */
+	this.setConfig = function(){
+		//確認・キャンセルボタンを配置する
+		this.setDialogButtons(this.confirm_cancel);		
+		// 全ての曜日のチェックボックスにチェックする
+		commonFuncs.allCheckbox(ALLDAY_CHECKBOX, CHECKBOX_DAYOFWEEK);
+		// 全ての週のチェックボックスにチェックする
+		commonFuncs.allCheckbox(ALLWEEK_CHECKBOX, CHECKBOX_WEEK);
+		//ダイアログの位置調整のみ行う
+		this.setDialogPosition(POSITION_CENTER_TOP);
+	}
 	
 	/* 関数名:validationForm
 	 * 概要　:入力フォームの入力チェックを行う
@@ -194,7 +197,7 @@ function experienceReservedDialog(dialog){
 		    		//子ダイアログのcloseイベント用データを追加する
 		    		{
 		    			parentDialog:this.dialogClass.dom,			//今のダイアログのDOM
-		    			callback:sendReservedMail,					//予約のメールを送る
+		    			callback:this.sendReservedMail,					//予約のメールを送る
 		    			message:EXPERIENCE_CONFIRM_TEXT
 		    		}			
 		    	);

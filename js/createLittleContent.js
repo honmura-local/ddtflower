@@ -2815,7 +2815,7 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			var sendObject = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
 			
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
-			var dateObject = instance.lessonListDialogSendObject(dateText);
+			var dateObject = commonFuncs.lessonListDialogSendObject(dateText);
 			
 			//会員番号をセットしてどのユーザが予約するのかを識別する
 			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
@@ -2850,7 +2850,7 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		//デフォルト設定のダイアログ用インプットデータのオブジェクトをコピーする
 		var sendObject = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
 		//授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
-		var dataObject = instance.lessonListDialogSendObject(dateText);
+		var dataObject = commonFuncs.lessonListDialogSendObject(dateText);
 		//ページ内にある管理者の予約状況のテーブルをダイアログから更新するため、
 		//dataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
 		dataObject[VAR_CREATE_TAG] = instance[VAR_CREATE_TAG];
@@ -2916,17 +2916,16 @@ function calendar(selector) {
 	this.callReservedDialog = function (dateText, calendar){
 		// カレンダーからコンテンツ名を取得する。
 		var contentName = calendar.attr('name');
-		// 日付配列を取得する。
-		var date = createDateArray(dateText);
+		//日付文字列をオブジェクトにする。同時に日本語のデータにする
+		var dateObject = commonFuncs.lessonListDialogSendObject(dateText)
+		//ダイアログへのデータインプットに使うオブジェクトを生成する
+		var argumentObj = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
+		$.extend(true, argumentObj.data, {contentName: contentName}, dateObject);
+		//幅とタイトルをセットする
+		$.extend(true, argumentObj.config, {width: INT_300, title:dateObject.dateJapanese});
 		
 		// 予約希望ダイアログを作成する。引数のオブジェクトに日付データ配列、コンテンツ名を渡す
-		var reservedDialog = new dialogEx(SPECIAL_RESERVED_DIALOG_URL,
-				$.extend(true, {},
-						{"contentName": contentName, "date":date}, 
-						specialReservedDialogOption.argumentObj
-						), specialReservedDialogOption.returnObj);
-		//予約ダイアログが開いたときのコールバック関数を登録する
-		reservedDialog.setCallbackOpen(beforeOpenSpecialReservedDialog);
+		var reservedDialog = new dialogEx('dialog/experienceReservedDialog.html', argumentObj);
 		//閉じたら完全にダイアログを破棄させる
 		reservedDialog.setCallbackClose(reservedDialog.destroy);
 		reservedDialog.run();	//ダイアログを開く
@@ -3092,23 +3091,6 @@ function calendar(selector) {
 		return retBoo;	//retBooを返す。
 	}
 	
-	/*
-	 * 関数名:lessonListDialogSendObject
-	 * 引数  :string: calendarDate:日付文字列
-	 * 戻り値:object:授業の日付と日付の日本語表示の文字列
-	 * 概要  :日付の文字列を受け取り、値としての日付と日本語文字列としての日付をオブジェクトに格納して返す。
-	 * 作成日:2015.08.06
-	 * 作成者:T.Yamamoto
-	 * 修正日:2015.08.15
-	 * 修正者:T.Masuda
-	 * 内容	:オブジェクトを作って返すだけにしました。$.extendsで統合してください。
-	 */
-	this.lessonListDialogSendObject = function(calendarDate){
-		//ダイアログのタイトルの日付を日本語名にして取得する
-		var dialogTitle = changeJapaneseDate(calendarDate);
-		//ダイアログの日付データと日本語形式にした日付をを連想配列として返す
-		return {lessonDate: calendarDate, dateJapanese:dialogTitle};
-	}
 }
 
 /*
@@ -3625,28 +3607,6 @@ function cutString(cutTargetSelector, cutCount) {
 	});
 }
 
-/*
- * 関数名:allCheckbox
- * 引数  :var checkboxTarget, var allCheckTarget
- * 戻り値:なし
- * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
- * 作成日:2015.02.28
- * 作成者:T.Yamamoto
- */
-this.allCheckbox = function(checkboxTarget, allCheckTarget) {
-	// 第一引数の要素がクリックされたときの処理
-	$(STR_BODY).on(CLICK, checkboxTarget, function() {
-		// 第一引数のチェックボックスにチェックが入った時の処理
-		if($(checkboxTarget + ':checked').val() == 'on') {
-			// 第二引数のチェックボックスにチェックする
-			$(allCheckTarget).prop('checked', true);
-		// 第一引数のチェックボックスのチェックが外れた時の処理
-		} else if ($(checkboxTarget + ':checked').val() == undefined) {
-			// 第二引数のチェックボックスのチェックを外す
-			$(allCheckTarget).prop('checked', false);
-		};
-	});
-}
 
 /*
  * 関数名:createErrorText

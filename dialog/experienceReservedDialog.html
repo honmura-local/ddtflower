@@ -1,4 +1,4 @@
-<form class="dialog" action="postmail/postmail.cgi">
+<form class="dialog">
 	<script>
 		//当該ダイアログのDOMを取得する
 		var thisDialog = $(CURRENT_DIALOG);
@@ -6,7 +6,7 @@
 		commonFuncs.getScriptFile(EXPERIENCE_RESERVED_DIALOG_JS);
 		
 		//当該ダイアログ用関数クラスインスタンスを生成する
-		var dialogBuilder = new experienceReservedDialog(thisDialog);
+		var dialogBuilder = new experienceReservedDialog(thisDialog[0]);
 		//ダイアログのDOMに関数クラスインスタンスの参照を持たせる
 		thisDialog[0].dialogBuilder = dialogBuilder;
 	</script>

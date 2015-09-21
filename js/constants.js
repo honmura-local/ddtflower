@@ -450,8 +450,12 @@ CURRENT_DIALOG								= DOT + DIALOG + SELECTOR_LAST;
 URL_LOGIN_DIALOG_JS							= 'dialog/js/loginDialog.js';
 //入力エリア
 INPUT_AREA									= 'inputArea';
+
 //体験レッスン予約希望ダイアログのJSファイルパス
 EXPERIENCE_RESERVED_DIALOG_JS				= 'dialog/js/experienceReservedDialog.js';
+//同JSONファイルのパス
+EXPERIENCE_RESERVED_DIALOG_JSON				= 'dialog/source/experienceReservedDialog.json';
+
 ALLDAY_CHECKBOX								= '.allDayCheckbox';
 ALLWEEK_CHECKBOX							= '.allWeekCheckbox';
 CHECKBOX_DAYOFWEEK							= 'input[name="dayOfWeek"]';
@@ -704,3 +708,5 @@ STR_JP_MAIL									= 'メール';
 STR_JP_ANNOUNCE								= 'お知らせ';
 //管理者画面 メール送信のPHP
 SEND_ADMINMAIL_PHP							= 'php/mailSendEntryAdminMail.php';
+//整数300
+INT_300										= 300;

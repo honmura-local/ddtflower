@@ -1548,6 +1548,49 @@ this.defaultClassworkCostColumns = [
 		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_LESSON_LEY][VALUE] 		= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(加算ポイント)
 	}	 
 
+	/*
+	 * 関数名:lessonListDialogSendObject
+	 * 引数  :string: calendarDate:日付文字列
+	 * 戻り値:object:授業の日付と日付の日本語表示の文字列
+	 * 概要  :日付の文字列を受け取り、値としての日付と日本語文字列としての日付をオブジェクトに格納して返す。
+	 * 作成日:2015.08.06
+	 * 作成者:T.Yamamoto
+	 * 修正日:2015.08.15
+	 * 修正者:T.Masuda
+	 * 内容	:オブジェクトを作って返すだけにしました。$.extendsで統合してください。
+	 */
+	this.lessonListDialogSendObject = function(calendarDate){
+		//ダイアログのタイトルの日付を日本語名にして取得する
+		var dialogTitle = changeJapaneseDate(calendarDate);
+		//ダイアログの日付データと日本語形式にした日付をを連想配列として返す
+		return {lessonDate: calendarDate, dateJapanese:dialogTitle};
+	}
+
+	/*
+	 * 関数名:allCheckbox
+	 * 引数  :var checkboxTarget, var allCheckTarget
+	 * 戻り値:なし
+	 * 概要  :クリックするとすべてのチェックボックスにチェックを入れる。
+	 * 作成日:2015.02.28
+	 * 作成者:T.Yamamoto
+	 * 変更日:2015.09.20
+	 * 変更者:T.Masuda
+	 * 内容  :common.jsに移動しました。
+	 */
+	this.allCheckbox = function(checkboxTarget, allCheckTarget) {
+		// 第一引数の要素がクリックされたときの処理
+		$(STR_BODY).on(CLICK, checkboxTarget, function() {
+			// 第一引数のチェックボックスにチェックが入った時の処理
+			if($(checkboxTarget + ':checked').val() == 'on') {
+				// 第二引数のチェックボックスにチェックする
+				$(allCheckTarget).prop('checked', true);
+			// 第一引数のチェックボックスのチェックが外れた時の処理
+			} else if ($(checkboxTarget + ':checked').val() == undefined) {
+				// 第二引数のチェックボックスのチェックを外す
+				$(allCheckTarget).prop('checked', false);
+			};
+		});
+	}
 	
 //ここまでクラス定義領域
 }
