@@ -40,13 +40,12 @@ function createAdminPermitLessonContent () {
 	create_tag.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
 	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
-
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
 	setDefaultSellingPrice();
 	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
-	setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+	commonFuncs.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
 	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
 	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionContent');
 	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
@@ -57,7 +56,7 @@ function createAdminPermitLessonContent () {
 	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
 	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
 	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 	//受講承認の備品名セレクトボックスにvalueを入れる
 	create_tag.setSelectboxValue('.contentSelect');
 	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
@@ -124,7 +123,6 @@ function createAdminUserListContent() {
 	create_tag.outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
 	// ナンバリング領域を作る
 	create_tag.outputTag('numberingOuter','numberingOuter','.userListPagingArea');
-	console.log(create_tag.json);
 	//会員一覧のデータを取り出す
 	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['userListInfoTable'], 'userListInfoTable');
 	//ページング機能付きでユーザ情報一覧テーブルを作る
@@ -170,8 +168,6 @@ function createAdminLessonDetailContent(create_tag) {
  * 作成日:2015.07.20
  */
 function createAdminMailMagaAnnounceContent() {
-	var create_tag = new createLittleContents();
-
 	// ユーザーページのパーツのテンプレートのJSONを取得する。
 	create_tag.getJsonFile('source/commonUser.json');
 	// 管理者ページ共通のパーツのJSONを取得する。
@@ -179,13 +175,6 @@ function createAdminMailMagaAnnounceContent() {
 	//共通のjsonを取得する
 	create_tag.getJsonFile('source/commonJson.json');
 
-	// ユーザーページのパーツのテンプレートのDOMを取得する。
-	create_tag.getDomFile('template/commonUser.html');
-	// 管理者ページ共通のパーツのJSONを取得する。
-	create_tag.getDomFile('template/adminCommon.html');
-	// 共通パーツのDOMを取得する
-	create_tag.getDomFile('template/common.html');
-	
 	//メルマガ＆アナウンスタブのコンテンツ
 	//過去のメルマガを検索するための領域を作る
 	create_tag.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
@@ -211,7 +200,7 @@ function createAdminMailMagaAnnounceContent() {
 	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
 	resetMailMageSendContent();
 	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
-	enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
+	commonFuncs.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
 }
 
 /* 
@@ -291,7 +280,7 @@ function dateMovement(clickSelector, nowDateObject) {
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
  */
-var updateDateMovement = function(clickSelector) {
+var updateDateMovement = function(clickSelector, nowDateObject) {
 	//日付を更新する
 	nowDateString = dateMovement(clickSelector, nowDateObject);
 	//jsonに日付の値を入れる
@@ -299,7 +288,7 @@ var updateDateMovement = function(clickSelector) {
 	//テーブルをリロードする
 	create_tag.tableReload('eachDayReservedInfoTable');
 	//日付をタイトルに入れる
-	$(DOT + clickSelectorParent + ' p').text(nowDateString);
+	$(DOT + 'dateBelt' + ' p').text(nowDateString);
 }
 
 /* 
@@ -314,11 +303,13 @@ var updateDateSearch = function () {
 	//表示されている日付を更新するために検索する日付のデータを取得する。
 	var changeDate = $('.dateInput').val();
 	//現在表示されている日付を入力された日付で更新する
-	$(DOT + clickSelectorParent + ' p').text(changeDate)
+	$(DOT + 'dateBelt p').text(changeDate)
 	//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
 	nowDateObject = new Date(changeDate);
 	//日ごと授業者一覧テーブルをリロードする
 	create_tag.eventTableReload('eachDayReservedInfoTable');
+	//日付オブジェクトを更新する
+	return nowDateObject;
 }
 
 /* 
@@ -329,7 +320,7 @@ var updateDateSearch = function () {
  * 作成者:T.Yamamoto
  * 作成日:2015.07.06
  */
-function nowDatePaging(clickSelectorParent, create_tag) {
+function nowDatePaging(clickSelectorParent, creator) {
 	//現在時刻のオブジェクトを作る
 	var nowDateObject = new Date();
 	//日付の文字列を取得する
@@ -339,9 +330,17 @@ function nowDatePaging(clickSelectorParent, create_tag) {
 	//jsonに日付の値を入れる
 	//create_tag.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
 	//対象の要素がクリックされたときに日付を進退する
-	clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
+	//clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
+	$(DOT + clickSelectorParent + ' a').click(function() {
+		//コールバック関数の処理を開始する
+		updateDateMovement(this, nowDateObject);
+	});
 	//検索ボタンがクリックされた時に日付を更新する
-	clickEvent(DOT + 'dateSelect .searchButton', updateDateSearch);
+	$(DOT + 'dateSelect .searchButton').click(function() {
+		//日付オブジェクトを更新する
+		nowDateObject = updateDateSearch(this);
+	});
+	//clickEvent(DOT + 'dateSelect .searchButton', updateDateSearch);
 }
 
 /* 
@@ -723,7 +722,7 @@ function afterReloadMailMagaTable() {
 	//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
 	cutString('.mailMagaContent', '150');
 	//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-	setTableRecordClass('mailMagaTable', 'targetMailMagazine');
+	commonFuncs.setTableRecordClass('mailMagaTable', 'targetMailMagazine');
 }
 
 /* 
@@ -736,7 +735,7 @@ function afterReloadMailMagaTable() {
  */
 function afterReloadUserListInfoTable() {
 	//会員一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
-	setTableRecordClass('userListInfoTable', 'targetUser');
+	commonFuncs.setTableRecordClass('userListInfoTable', 'targetUser');
 }
 
 /* 
@@ -806,7 +805,6 @@ function adminMessageCreate(buttonSelector, sendType) {
 		}
 	});
 }
-
 /* 
  * 関数名:mailMagaSearch
  * 概要  :管理者、メルマガタブの検索機能
@@ -858,7 +856,8 @@ function setMailMagaSendContent() {
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
 		var targetInf = create_tag.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
 		//取得した連想配列をテキストボックスにセットする
-		setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
+		//setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
+		commonFuncs.setObjectValue(targetInf, '.mailMagaAndAnnounceArea');
 	});
 }
 
@@ -880,7 +879,7 @@ function mailMagaSendConfirm() {
 			//ダイアログ用オブジェクトを作る
 			var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
 			//送信するデータをオブジェクトに統合する
-			$.extend(true, dialogObj.argumentObj.data, sendData, {'create_tag':create_tag});
+			$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
 			//メルマガ送信ダイアログを作る
 			var mailmagazineSendDialog = new dialogEx('dialog/mailMagazineSendConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
 			mailmagazineSendDialog.setCallbackClose(mailmagazineSendDialog.sendMailmagazine);	//閉じるときのイベントを登録

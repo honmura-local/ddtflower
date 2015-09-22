@@ -1487,7 +1487,8 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, creator, EACH_DAY_RESERVED_INFO_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, create_tag, EACH_DAY_RESERVED_INFO_TABLE_RECORD)',
+		//検索結果がなかった時のエラーメッセージ
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
 	}
@@ -1591,7 +1592,7 @@ function createLittleContents(){
 		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
 		$(STR_BODY).on(eventName, eventSelector, function(){
 			//テーブルをリロードして最新のデータを表示する
-			thisElem.eventTableReload(reloadTableClassName, inputDataParent);
+			thisElem.eventTableReload(reloadTableClassName);
 		});
 	}
 	
@@ -1828,7 +1829,7 @@ function createLittleContents(){
 	 */
 	this.insertTableRecord = function(tableRecordClasssName, addDomClassName) {
 		//追加するDOMをとりあえずbodyに作る
-		creator.outputTag(addDomClassName, addDomClassName, STR_BODY);
+		this.outputTag(addDomClassName, addDomClassName, STR_BODY);
 		//後でテーブルの中にdomを移動させるために追加するDOMの子要素を全て取得する
 		var addDomChild = $(DOT + addDomClassName).html();
 		//取得したDOMのうち、テーブルのセルに適応させるため「div」を「td」に置換する
