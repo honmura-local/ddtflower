@@ -1022,7 +1022,7 @@ function createLittleContents(){
 	 */
 	this.createOptionData = function (){
 		//フォームデータを作る。
-		var retMap = createFormData($('.optionForm'));
+		var retMap = commonFuncs.createFormData($('.optionForm'));
 		//ユーザIDを格納する。
 		retMap['userId'] = this.getUserId();
 	
@@ -1106,11 +1106,11 @@ function createLittleContents(){
 			var $elem = $('a:first',this);	//リンク部分を取得する
 			//クリックしたらブログの記事を作るコードを追加する
 			$elem.attr('onclick', 
-						'$(".numberingOuter,.blog").empty();$(".blog").append(creator.createTag(creator.json.blogArticle.table["' + i + '"], creator.getDomNode("blogArticle")));');
+						'$(".numberingOuter,.blog").empty();$(".blog").append(create_tag.createTag(create_tag.json.blogArticle.tableData["' + i + '"], create_tag.getDomNode("blogArticle")));');
 				
 			var $elems = $('*',$elem);	//項目を取得する
 			//ブログ記事のオブジェクトを取得する
-			var articleNode = thisElem.json.blogArticle.table[String(i)];
+			var articleNode = thisElem.json.blogArticle[TABLE_DATA_KEY][String(i)];
 			//オブジェクトが取得できていなければ
 			if(articleNode === void(0)){
 				return;	//関数を終える
@@ -1226,14 +1226,14 @@ function createLittleContents(){
 	
 	/*
 	 * 関数名:saveCustomizeTabJsonFile
-	 * 引数  :createTag creator:createTagクラスのインスタンス
+	 * 引数  :createTag create_tag:createTagクラスのインスタンス
 	 * 戻り値:なし
 	 * 概要  :フラワースクール管理画面カスタマイズタブの保存を押したときのイベントを登録する
 	 * 作成日:2015.06.27
 	 * 作成者:T.Masuda
 	 */
-	this.saveCustomizeTabJsonFile = function(creator){
-		var $creator = $(creator);	//createTagのインスタンスをjQueryオブジェクトに入れる
+	this.saveCustomizeTabJsonFile = function(create_tag){
+		var $create_tag = $(create_tag);	//createTagのインスタンスをjQueryオブジェクトに入れる
 		//管理画面カスタマイズタブの保存ボタンを押したときのイベントを登録する
 		$(document).on('click', '#customize .saveButton', function(){
 			//更新ボタンのtarget属性に仕込まれた更新対象のJSONのトップノード名を取得する。
@@ -1268,7 +1268,7 @@ function createLittleContents(){
 	/* 
 	 * 関数名:setDBdata
 	 * 概要  :dbに接続し、データの挿入または更新または削除を行う
-	 * 引数  :object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreatorの連想配列
+	 * 引数  :object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreate_tagの連想配列
 	 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
 	 		:string successMessage: クエリが成功した時のメッセージ
 	 * 返却値  :なし
@@ -1452,7 +1452,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListCreator, LESSON_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListcreate_tag, LESSON_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1508,7 +1508,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListCreator, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListcreate_tag, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
 	}
@@ -1542,7 +1542,7 @@ function createLittleContents(){
 					counter++;
 				}
 				//クエリに文字を付け加える
-				creator.json[queryArrayKey].db_getQuery += addString;
+				create_tag.json[queryArrayKey].db_getQuery += addString;
 			}
 		});
 	}
@@ -1808,10 +1808,11 @@ function createLittleContents(){
 				callPage('adminPage.html');
 			//管理者としてログインしていなければ通常ページのトップページに戻る
 			} else {
-				$(this).closest('.window')[0].destroy();
+				$(this).closest('.window')[0].instance.destroy();
+				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 				//通常ページを使いやすくするためにヘッダーを表示するようにする
 //				$('header').css('display', 'block');
-				//通常ページに遷移する(creatorがリセットされる問題があるかも？)
+				//通常ページに遷移する(create_tagがリセットされる問題があるかも？)
 //				callPage('top.php');
 			}
 		});
@@ -1855,11 +1856,11 @@ function createLittleContents(){
 		//ユーザ一覧テーブルを削除する
 		$(DOT + targetPagingClassName).remove();
 		//会員一覧テーブルをリセットして検索に備える
-		creator.json[targetPagingClassName][TABLE_DATA_KEY] = {};
+		create_tag.json[targetPagingClassName][TABLE_DATA_KEY] = {};
 		//ナンバリングのdomを初期化する
 		$('.numbering').remove();
 		//新しくページングを作り直すためにページングの番号一覧をリセットする
-		creator.json.numbering = {};
+		create_tag.json.numbering = {};
 	}
 
 	/* 
@@ -2106,17 +2107,17 @@ function createLittleContents(){
 	 */
 	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey, number) {
 		//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
-		json[getContentKey].user_key.value = json[userKeyParrentKey].user_key.value;
+		this.json[getContentKey].user_key.value = this.json[userKeyParrentKey].user_key.value;
 		//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
-		json[getContentKey].id.value = number;
+		this.json[getContentKey].id.value = number;
 		//DBからブログ記事を読み込む
-		getJsonFile('php/GetJSONString.php', json[getContentKey], getContentKey);
+		this.getJsonFile('php/GetJSONString.php', json[getContentKey], getContentKey);
 		//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-		$('[name=blogTitle]').val(json[getContentKey].title.text);
+		$('[name=blogTitle]').val(this.json[getContentKey].title.text);
 		//ブログ内容テキストエリアにDBから読込んだデータを入れる
-		$('[name="blogContent"]').text(json[getContentKey].content.text);
+		$('[name="blogContent"]').text(this.json[getContentKey].content.text);
 		//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
-		json[updateQueryKey].id.value = number;
+		this.json[updateQueryKey].id.value = number;
 	}
 	
 	/* 
@@ -2592,11 +2593,11 @@ function createLittleContents(){
 			//ログインボタンのイベントを設定する。
 			$(CLASS_LOGIN).on(CLICK, function(){
 				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
-				//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
+				//グローバルなcreate_tagTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
 				var loginUrl = thisElem.json.accountHeader !== void(0)
 								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :'window/member/page/memberTop.html';
 				// 会員ページ、または管理者ページへリンクする。
-				callPage(loginUrl);
+				$(CURRENT_WINDOW)[0].instance.callPage(loginUrl);
 			});
 //		}
 	}
@@ -2641,7 +2642,7 @@ function createLittleContents(){
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogObj.argumentObj.config[TITLE] = titleDate;
 			//インプット用データオブジェクトに授業データを追加する
-			$.extend(true, dialogObj.argumentObj.data, sendObject, {creator:thisElem});
+			$.extend(true, dialogObj.argumentObj.data, sendObject, {create_tag:thisElem});
 			
 			//授業詳細ダイアログを作る
 			var lessonDetailDialog = new dialogEx(	
@@ -2685,7 +2686,7 @@ function createLittleContents(){
 			//ダイアログのタイトルをセットして予約日を分かりやすくする
 			dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.config[TITLE] = argObj.config[TITLE];
 			//sendObjectとダイアログオプションのオブジェクトとcreateLittleContentsクラスインスタンスを統合する
-			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {creator:thisElem});
+			$.extend(true, dialogExOption[ADMIN_NEW_LESSON_CREATE].argumentObj.data, sendObject, {create_tag:thisElem});
 			
 			//新規授業追加ダイアログを作る
 			var newLessonCreateDialog = new dialogEx(
@@ -2766,9 +2767,9 @@ calendarOptions = {};
 calendarOptions['blog'] = {
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
-			this.instance.creator.dateText = dateText;
+			this.instance.create_tag.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.creator.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
+			this.instance.create_tag.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -2819,11 +2820,11 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			var dateObject = commonFuncs.lessonListDialogSendObject(dateText);
 			
 			//会員番号をセットしてどのユーザが予約するのかを識別する
-			var dialogDataObject = instance.creator.addUserIdToObject(dateObject);
+			var dialogDataObject = instance.create_tag.addUserIdToObject(dateObject);
 			
 			//ページ内にある会員の予約状況のテーブルをダイアログから更新するため、
 			//dialogDataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
-			dialogDataObject.creator = instance.creator;
+			dialogDataObject.create_tag = instance.create_tag;
 			
 			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
 			$.extend(true, sendObject.data, dialogDataObject);
@@ -3136,7 +3137,7 @@ function myPageReservedCalendar (selector, dateRange) {
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :int dateRange:クリック可能な日付の期間
  *     :int userId:ユーザID
- *     :createLittleContents creator:createLittleContentsクラスのインスタンス
+ *     :createLittleContents create_tag:createLittleContentsクラスのインスタンス
  * 戻り値:なし
  * 概要  :マイページのカレンダーを作る
  * 作成日:2015.06.11
@@ -3147,14 +3148,14 @@ function myPageReservedCalendar (selector, dateRange) {
  * 変更者:T.Masuda
  * 内容	:dialogExクラス、createLittleContentsクラスの仕様に対応しました
  */
-function memberCalendar(selector, dateRange, userId, creator) {
+function memberCalendar(selector, dateRange, userId, create_tag) {
 	calendar.call(this, selector);	//スーパークラスのコンストラクタを呼ぶ
 	this.calendarName = 'member';	//カレンダー名をセットする
 	$calendar = $(selector)[0];		//カレンダーの要素を取得する
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.userId = userId;		//ユーザIDを保存する
-	this.creator = creator;			//createLittleContentsクラスのインスタンスを利用する
+	this.create_tag = create_tag;			//createLittleContentsクラスのインスタンスを利用する
 	
 	
 	this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
@@ -3184,7 +3185,7 @@ function adminCalendar(selector, dialog, create_tag) {
 	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
-	this.creator = create_tag;			//createLittleContentsクラスのインスタンスを利用する
+	this.create_tag = create_tag;			//createLittleContentsクラスのインスタンスを利用する
 	
 	//@mod 2015.0704 T.Masuda 引数にない変数を使おうとしているのでコメントアウトしました。
 	//this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する
@@ -3196,20 +3197,20 @@ function adminCalendar(selector, dialog, create_tag) {
 /*
  * クラス名:blogCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
- *     :createLittleContents creator:createLittleContentsクラスインスタンス
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
  * 戻り値:なし
  * 概要  :ブログページのカレンダーを作る
  * 作成日:2015.06.10
  * 作成者:T.Masuda
  */
-function blogCalendar(selector, creator) {
+function blogCalendar(selector, create_tag) {
 	this.calendarName = 'blog';				//カレンダー名をセットする
 	this.dom = $(selector)[0];				//クラスインスタンスにDOMへの参照を持たせる
 	this.dom.instance = this;				//クラスインスタンスへの参照をDOMに持たせる
-	this.creator = creator;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
+	this.create_tag = create_tag;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
-	//creatorが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-	this.dom.dateArray = this.extractDateArray(this.creator.json.blogArticle[TABLE_DATA_KEY]);	
+	//create_tagが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
+	this.dom.dateArray = this.extractDateArray(this.create_tag.json.blogArticle[TABLE_DATA_KEY]);	
 	//オプションを設定する
 	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];
@@ -3423,49 +3424,9 @@ var articleSubmitHandler = {
 						break;
 					}
 					
-					var time = new Date();	//リクエストヘッダーに載せる日付を取得するため、日付型のインスタンスを用意する。
+					//マイブログの記事更新のクエリを使うための準備をする
+					setBlogUpdateQueryReplace('myBlogContent', 'memberHeader', 'updateMyBlog', number);
 					
-					//Ajax通信で該当する記事のJSONを取得する。
-					$.ajax({
-						//ブログ記事を1つだけ取得するサーバのファイルにアクセスする。
-						url:url,
-//					url:init['getSelectedBlog'],
-						method:'post',	//postメソッドで送信する。
-						//ユーザIDと記事番号とコンテンツ番号を送る。
-						data:{'userId':userId, 'number':number, 'contentNum':contentNum},
-						dataType:'JSON',	//JSONを返してもらう。
-						headers: {			//リクエストヘッダを設定する
-							"If-Modified-Since": time.toUTCString()	//ファイルの変更の時間をチェックする
-						},
-						success:function(json){	//通信が成功したら
-							//マイブログの記事更新のクエリを使うための準備をする
-							setBlogUpdateQueryReplace('myBlogContent', 'memberHeader', 'updateMyBlog', number);
-
-							// //実際にはルート直下に各ブログ記事要素のテキストが配置されているという前提です。
-							// //ダミーのJSONでは記事番号をキーとしたオブジェクトの直下に各ブログ記事要素のテキストが配置されています。
-							// json = json[number];
-							// //jsonを走査する。
-							// for(key in json){
-							// 	var dom = $('.' + key);//値をセットする対象となるDOMを取得する。
-							// 	//domが画像タグならば
-							// 	if(dom[0].tagName == 'IMG'){
-							// 		//キーに対応したクラスの要素にテキストを追加していく。
-							// 		dom.attr('src',json[key]);
-							// 	//ラジオボタンなら
-							// 	} else if(dom.attr('type') == 'radio'){
-							// 		//対象となるラジオボタンにチェックを入れる。
-							// 		dom.filter('[value="' + json[key] + '"]').prop('checked', 'true');
-							// 	//日付テキストボックスなら
-							// 	} else if(dom.attr('type') == 'date'){
-							// 		//日付のフォーマットを整えてテキストボックスに値を入れる。
-							// 		dom.val(json[key].replace(/\//g, "-"));
-							// 		//単にテキストを入れるだけであれば
-							// 	} else {
-							// 		dom.val(json[key]);	//キーに対応したクラスの要素にテキストを追加していく。
-							// 	}
-							// }
-						}
-					})
 				}
 			});
 		}
@@ -3476,7 +3437,7 @@ var articleSubmitHandler = {
 var listSearchSubmitHandler = {
 		submitHandler:function(form){	//submitHandlerのコールバック関数
 			//入力された項目がある入力欄のデータを取得する。
-			var formData = createFormData(form);
+			var formData = commonFuncs.createFormData(form);
 			//行のクラス名と同様の文字列をdata-target属性から取得する。
 			var rowName = $(form).attr('data-target');
 			//サーバに送信するデータを作成する。コンテンツ番号、フォームデータを送信する。

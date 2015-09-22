@@ -553,7 +553,7 @@ button.ui-button-text-only span.ui-button-text {
 }
 
 /* 
- * セレクタ:.main
+ * セレクタ:.window:first-child .main
  * 概要   :通常トップページコンテンツ領域。
  * 作成者 :T.Masuda
  * 作成日 :2015.09.22
@@ -1087,6 +1087,7 @@ form[target^="jquery_upload"]{
 .window{
 	position: absolute;
 	top:0px;
+	display:none;
 }
 
 /* スマホ・タブレットレイアウト */

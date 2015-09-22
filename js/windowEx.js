@@ -127,7 +127,10 @@ function windowEx(url, argumentObj, returnObj){
 			this.callPage(this.url);			//URLを読み込む
 		}
 		this.setWindowZIndex();				//ウィンドウの重なりを整理する
+		commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 	}
+	
+	
 	
 	/* 関数名:setWindowZIndex
 	 * 概要　:ウィンドウの重なりを整理する

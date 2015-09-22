@@ -757,6 +757,10 @@ TIME_CUT_S									= 0;	//授業開始時間切り取り開始数字
 TIME_CUT_E									= 5;	//授業終了時間切り取り終わり数字
 MES_LESSON_EDIT_SUCCESS						= '授業内容の更新に成功しました。';//授業内容更新成功メッセージ
 MES_LESSON_EDIT_FAILED						= '授業内容の更新に失敗しました。時間を置いて試してください。';//授業内容更新成功メッセージ
-
-
-
+//記事オブジェクトのキー
+ARTICLE_OBJECT_KEY							= 'tableData';
+CHECKED										= 'checked';	//「チェック済み」の意味合いの文字列
+//目安箱メール入力エリア
+SEL_SUGGESTION_AREA							= '.suggestionArea';
+PATH_SEND_MEMBERMAIL_PHP					= 'php/mailSendEntryMemberMail.php';
+PATH_SEND_SUGGESTION_PHP					= 'php/mailSendEntrySuggest.php';

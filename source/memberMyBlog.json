@@ -1,7 +1,7 @@
 {
     "myPageBlog": {
         "class":"myPageBlog myPageContent",
-        "action": "createarticle.html",
+        "action": "window/member/page/createarticle.html",
         "method": "get",
         "data-role": "4"
     },
@@ -12,15 +12,18 @@
     "myBlogButtonArea":{
         "createArticleButton":{
             "type":"button",
-            "value":"記事作成"
+            "value":"記事作成",
+            "data-role":"0"
         },
         "editArticleButton":{
             "type":"button",
-            "value":"記事編集"
+            "value":"記事編集",
+            "data-role":"1"
         },
         "deleteArticleButton":{
             "type":"button",
-            "value":"記事削除"
+            "value":"記事削除",
+            "data-role":"2"
         }
     },
     "myBlogListTable":{

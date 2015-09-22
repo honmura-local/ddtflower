@@ -17,17 +17,17 @@
  */
 function createMemberFinishedLessonContent() {
 	//受講済み授業の絞り込み領域を作る
-	creator.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
+	create_tag.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
 	//受講済みテーブルページングの一番外側となる領域を作る
-	creator.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
+	create_tag.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
 	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-	creator.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
+	create_tag.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
 	// ナンバリング領域を作る
-	creator.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
+	create_tag.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
 	//受講済み授業一覧のデータを取り出す
-	creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json['finishedLessonTable'], 'finishedLessonTable');
+	create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['finishedLessonTable'], 'finishedLessonTable');
 	//ページング機能付きでメルマガテーブルを作る
-	creator.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+	create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	//授業の絞り込み機能を実装する
 	setConfigFinishedLesson()
 }
@@ -43,7 +43,7 @@ function createMemberFinishedLessonContent() {
  */
 function setConfigFinishedLesson() {
 	//セレクトボックスのvalueを画面に表示されている値にする
-	creator.setSelectboxValue('.selectThemebox');
+	create_tag.setSelectboxValue('.selectThemebox');
 	//絞り込み機能を実装する
 	finshedLessonTableThemeSelect();
 }
@@ -65,7 +65,7 @@ function finshedLessonTableAfterPaging() {
 		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
 		var nowPageNumber = Number($('.select').text() - 1);
 		//テーブルのデータを取得する
-		var tableRow = creator.json.finishedLessonTable[TABLE_DATA_KEY];
+		var tableRow = create_tag.json.finishedLessonTable[TABLE_DATA_KEY];
 		//テーブルの値を編集するループを開始する値を取得する
 		var loopStartCount = nowPageNumber * 10;
 		//テーブルのレコード数を取得する
@@ -98,13 +98,13 @@ function finshedLessonTableThemeSelect() {
 	//ページングがクリックされた時のイベントを登録する
 	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
 		//テーブルを作るためのクエリを置換する
-		creator.replaceTableQuery('finishedLessonTable');
+		create_tag.replaceTableQuery('finishedLessonTable');
 		//ページングに使うものを初期化し、ページングを作り直すために備える
-		creator.pagingReset('finishedLessonTable');
+		create_tag.pagingReset('finishedLessonTable');
 		//クエリを発行してDBから対象のデータの受講済み授業一覧のデータを取り出す
-		creator.getJsonFile(URL_GET_JSON_ARRAY_PHP, creator.json.finishedLessonTable, 'finishedLessonTable');
+		create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json.finishedLessonTable, 'finishedLessonTable');
 		//ページング機能付きで受講済みテーブルを作り直す
-		creator.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+		create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	});
 }
 

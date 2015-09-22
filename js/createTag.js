@@ -497,7 +497,7 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
-			map[indexText]['onclick'] = 'creator.outputNumberingTag("' 
+			map[indexText]['onclick'] = 'create_tag.outputNumberingTag("' 
 				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '","' + callBack +'")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
@@ -558,7 +558,7 @@ function createTag(){
 		keyObj[key]['text'] = numberingString;
 		
 		//関数実行属性をoutputNumberingTagに設定する。
-		keyObj[key]['onclick'] = 'creator.outputNumberingTag("' + jsonName +'",'
+		keyObj[key]['onclick'] = 'create_tag.outputNumberingTag("' + jsonName +'",'
 			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '","' + callBack +'")';
 		
 		//numberingオブジェクトの中に追加する。
