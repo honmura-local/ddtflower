@@ -42,11 +42,11 @@ function dialogEx(url, argumentObj, returnObj){
 			open://基本的にopen時はdispContentsが実行されるようにする
 				function(){
 				//dispContentsをコールしてダイアログの内容を作る
-				commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
+				commonFuncs.setCallbackToEventObject(this, DIALOG_INSTANCE, DIALOG_DISP_MESTHOD);
 			},
 			close:function(){
 				//ダイアログを完全に破棄する
-				commonFuncs.setCallbackToEventObject(this, 'instance', 'destroy');
+				commonFuncs.setCallbackToEventObject(this, INSTANCE, DESTROY);
 			}
 		},
 		//インプット用データオブジェクト
@@ -251,7 +251,7 @@ function dialogEx(url, argumentObj, returnObj){
 	 */
 	this.setCallbackCreate = function(func){
 		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.argumentObj.config['create'] = func: console.log('setCallBackCreate recieved enythingeles function');
+		func instanceof Function?  this.argumentObj.config[EVENT_CREATE] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
 	
 	/* 関数名:setPushedButtonState
@@ -445,7 +445,7 @@ function disappear(){
  */
 function getDialogTitleDate(date) {
 	//日付のハイフンを置換前のスラッシュ区切りにする
-	var date = date.replace(/-/g,"/");
+	var date = date.replace(/-/g,SLASH);
 	// 日付を日本語表示にする
 	var titleDate = changeJapaneseDate(date);
 	//日付を返す
