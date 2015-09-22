@@ -624,6 +624,10 @@ UNSELECTED_USER 							= 0;	//会員が一人も選択されていないとき�
 
 //dialogEx.js
 WINDOW_EX_PATH 								= 'js/windowEx.js';		//windowEx.jsのパス
+DIALOG_INSTANCE 							= 'dialogBuilder';		//ダイアログを作るインスタンス名
+DIALOG_DISP_MESTHOD 						= 'dispContents';		//ダイアログのコンテンツを作るメソッド名
+EVENT_CREATE								= 'create';				//ダイアログを生成したときに発生するイベント名
+
 
 //dialog/js/experienceReservedDialog.js
 EXPERIENCE_RESERVED_DIALOG_HTML 			= 'template/reserved.html';
@@ -637,6 +641,7 @@ KEY_LOGIN_ID 								= 'userName';
 KEY_LOGIN_PASSWORD							= 'password';
 
 //adminLessonListDialog.js
+EXPLAIN_FIRST 								= 'explain1';					//授業一覧ダイアログ記号説明概要
 TMP_CREATE_TABLE 							= 'template/createTable.html';	//テーブルテンプレート
 TMP＿TABLE_AREA 								= 'template/tableArea.html';	//テーブルを囲むdivタグテンプレート
 TMP_LESSON_STATUS 							= 'template/lessonStatus.html';	//授業ステータステンプレ―ト
@@ -690,3 +695,12 @@ SEL_NO_TABLE_FIRST_ROW 							= ':not(:first)';
 
 //DBデータの更新に成功したときに帰ってくる値
 SETQUERY_FAILED								= 0;
+
+//adminLessonDetailDialog
+TIME_CUT_S									= 0;	//授業開始時間切り取り開始数字
+TIME_CUT_E									= 5;	//授業終了時間切り取り終わり数字
+MES_LESSON_EDIT_SUCCESS						= '授業内容の更新に成功しました。';//授業内容更新成功メッセージ
+MES_LESSON_EDIT_FAILED						= '授業内容の更新に失敗しました。時間を置いて試してください。';//授業内容更新成功メッセージ
+
+
+
