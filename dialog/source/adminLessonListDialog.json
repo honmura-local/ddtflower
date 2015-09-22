@@ -72,8 +72,8 @@
             }
         }
     },
-    "lessonStatus": {
-        "lessonStatusText": [
+    "explain1": {
+        "explainContent": [
             "※残席:",
             "◎=余裕あり",
             "◯=4席以上の空席",

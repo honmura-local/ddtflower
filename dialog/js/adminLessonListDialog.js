@@ -45,9 +45,7 @@ function adminLessonListDialog(dialog){
 		//DOMをクリアする
 		this[VAR_CREATE_TAG].dom = EMPTY_STRING;
 		//授業データ一覧ダイアログのテンプレートを取得する
-		this[VAR_CREATE_TAG].getDomFile("template/lessonTable.html");
-		this[VAR_CREATE_TAG].getDomFile(TMP＿TABLE_AREA);
-		this[VAR_CREATE_TAG].getDomFile(TMP_LESSON_STATUS);
+		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_LIST_DIALOG_HTML);
 	};
 
 	/* 関数名:customizeJson
@@ -105,7 +103,7 @@ function adminLessonListDialog(dialog){
 		//授業一覧のテーブルを作る
 		this.createTable();
 		//レッスンのステータス領域を作る
-		this[VAR_CREATE_TAG].outputTag(LESSON_STATUS, LESSON_STATUS, $(this.dialog));
+		this[VAR_CREATE_TAG].outputTag(EXPLAIN_FIRST, EXPLAIN_FIRST, $(this.dialog));
 	}
 
 	/* 関数名:createTable
@@ -126,7 +124,7 @@ function adminLessonListDialog(dialog){
 			//授業のデータ一覧テーブルを作る
 			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(DOT+TABLE_OUTER, this.dialog));
 			//テーブルの値をクライアント側で編集して画面に表示する
-			commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, "callAdminReservedLessonValue", true, this.create_tag, LESSON_TABLE_RECORD);
+			commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		}
 	}
 
