@@ -147,7 +147,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 <script>
 	//トップページ用ウィンドウを準備する
-	windowElem = new windowEx(TOP_LOCATION);
+	windowElem = new windowEx(TOP_LOCATION, {config:{firstExec:true}});	//初回実行フラグオン
 	//トップページ用ウィンドウを生成して表示する
 	windowElem.run();
 </script>

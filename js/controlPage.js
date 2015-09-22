@@ -1,6 +1,6 @@
 // 画面遷移を操作する関数を中心にまとめたJSファイル。
 
-currentLocation = '';	//現在選択中のページの変数
+currentLocation = EMPTY_STRING;	//現在選択中のページの変数
 
 /*
  * イベント:ready
@@ -11,16 +11,16 @@ currentLocation = '';	//現在選択中のページの変数
  * 作成者 :T.M
  */
 	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-			//URLを引数にしてページを切り替える関数をコールする。
-			callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-		
-	});
+//	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//			//URLを引数にしてページを切り替える関数をコールする。
+//			callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//		
+//	});
 
 	/*
 	 * イベント:ready
@@ -31,16 +31,16 @@ currentLocation = '';	//現在選択中のページの変数
 	 * 作成者 :T.M
 	 */
 	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-		//URLを引数にしてページを切り替える関数をコールする。
-		callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-	});
-	
+//	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//		//URLを引数にしてページを切り替える関数をコールする。
+//		callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//	});
+
 /*
  * 関数名:overwrightContent(target, data)
  * 引数  :String target, Object state
@@ -54,10 +54,8 @@ function overwrightContent(target, data){
 	//mainのタグを空にする。
 	$(target).empty();
 	//linkタグを収集する。
-//	var links = $(data).filter('link');
 	var links = $('link', data);
 	//コードが書かれているscriptタグを収集する。
-//	var scripts = $(data).filter('script:not(:empty)');
 	var scripts = $('script:not(:empty)', data);
 
 	//@add 2015.0604 T.Masuda MSL記事一覧があれば見えない状態にして配置するように変更しました。
@@ -109,6 +107,17 @@ function overwriteMSLContent(target, data){
 function callPage(url, state){
 	//urlから#を抜き取り、有効なURLを形成する。
 	url = url.replace(/#/g, '');
+	
+	var splited = url.split('/');	//URLを/区切りで配列にする。
+	
+	//通常ページに重なるページが読み込まれるなら(会員・管理者画面)
+	if(splited.length > 2){
+		//新たなウィンドウのクラスインスタンスを生成する
+		var newWindow = new windowEx(url);
+		newWindow.run();	//新たなウィンドウを表示する
+		return;
+	}
+	
 	//cgiなら
 	if(url.indexOf('.cgi') > -1){
 		//フォーム用の処理を行う。
@@ -125,16 +134,8 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
-			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
-			//list.phpかdetail.phpであれば
-//			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
-//				//MSLのコンテンツで既存のコンテンツを上書きする
-//				overwriteMSLContent('.main', html);
-//			//それ以外であれば
-//			} else {
-				//既存のコンテンツを上書きする。
-				overwrightContent('.main', html);
-//			}
+			//既存のコンテンツを上書きする。
+			overwrightContent('.main', html);
 			//カレントのURLを更新する。
 			currentLocation = url;
 
@@ -528,7 +529,7 @@ $(window).on('load', function(){
 		
 		//URLを取得していてかつ、トップページのURLでなければ
 		if(currentUrl != null && currentUrl != TOPPAGE_NAME){
-			callPage(currentUrl, state);	//画面遷移を行う
+			$('.window:last')[0].instance.callPage(currentUrl, state);	//画面遷移を行う
 		}
 		// 2015.0604の@mod終了
 	//pushStateに対応していなければhashchangeのイベントで更新を行う。
@@ -540,7 +541,7 @@ $(window).on('load', function(){
 				//URLからハッシュを取り出し、変数に格納する。
 				var hash = location.hash;
 				//該当するページを読み込む。
-				callPage(hash);
+				$('.window:last')[0].instance.callPage(hash);
 				//そうでなければ
 			} else {
 				//画面を更新する。
@@ -701,7 +702,7 @@ function addlogoutEvent(selector){
 	$(selector).on('click', function(event){
 		
 		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
-		
+		var clicked = this;
 		//Ajax通信を行い、ログアウト処理を行う。
 		$.ajax({
 			//ログアウト用PHPをコールする
@@ -716,7 +717,9 @@ function addlogoutEvent(selector){
 				//cookieにユーザ情報と期限の日付を格納する。
 				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';		//会員ID削除
 				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除
-				callPage(TOPPAGE_NAME);	//トップページへ遷移する
+				console.log($(clicked).closest('.window'));
+				$(clicked).closest('.window')[0].instance.destroy();
+				//callPage(TOPPAGE_NAME);	//トップページへ遷移する
 			},
 			error:function(xhr,status,error){	//通信エラー時
 				//エラーメッセージを出す

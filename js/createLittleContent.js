@@ -1807,10 +1807,11 @@ function createLittleContents(){
 				callPage('adminPage.html');
 			//管理者としてログインしていなければ通常ページのトップページに戻る
 			} else {
+				$(this).closest('.window')[0].destroy();
 				//通常ページを使いやすくするためにヘッダーを表示するようにする
-				$('header').css('display', 'block');
+//				$('header').css('display', 'block');
 				//通常ページに遷移する(creatorがリセットされる問題があるかも？)
-				callPage('top.php');
+//				callPage('top.php');
 			}
 		});
 	}
@@ -2592,7 +2593,7 @@ function createLittleContents(){
 				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
 				//グローバルなcreatorTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
 				var loginUrl = thisElem.json.accountHeader !== void(0)
-								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :MEMBER_PAGE_URL;
+								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :'window/member/page/memberTop.html';
 				// 会員ページ、または管理者ページへリンクする。
 				callPage(loginUrl);
 			});

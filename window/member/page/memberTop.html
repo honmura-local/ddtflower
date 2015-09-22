@@ -1,19 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-<meta charset="UTF-8">
 <body>
 	<div id="container">
 		<div class="main">
 			<script>
 				try{
-					//カレントのウィンドウのDOMを取得する
-					var $currentWindow = $('.window:last');
-					//カレントのウィンドウのコンテンツ領域を取得する
-					var $currentContent = $('.main', $currentWindow[0])
-					
+					//変更者:T.Yamamoto 指示者H.Kaneko 内容:creatorが重複するため、コメントにしました。
+//					creator = new createTag();
 					//createTag継承クラスのインスタンスを生成する
 					var creator = new createLittleContents();
-
+					
 					creator.getJsonFile('source/memberPage.json');
 					// 会員共通のパーツのJSONを取得する。
 					creator.getJsonFile('source/memberCommon.json');
@@ -25,23 +21,27 @@
 					creator.getDomFile('template/memberCommon.html');
 					// 会員ページのjsonを読み込む
 					creator.getDomFile('template/memberPage.html');
+					//ユーザ情報のテキストをDBから取得する
+					creator.getJsonFile('php/GetJSONString.php', creator.json['accountHeader'], 'accountHeader');
 					//accountHeaderから会員IDを取得する。
 					var memberInfo = creator.json.accountHeader !== void(0) ? creator.json.accountHeader.user_key.value : '';
 					
+					// 会員ページヘッダーを作る
+					creator.outputTag('accountHeader','memberHeader', CURRENT_WINDOW_MAIN);
 					// バナー領域を作る
-					creator.outputTag('userBanner', 'userBanner', $currentContent);
+					creator.outputTag('userBanner', 'userBanner', CURRENT_WINDOW_MAIN);
 					//告知領域のデータをDBから取得するためにクエリで送信する値の置換値をセットする
 					creator.json.advertise.user_key.value = memberInfo;
 					//告知領域のテキストをDBから取得する
 					creator.getJsonFile('php/GetJSONString.php', creator.json['advertise'], 'advertise');
 					// 告知領域を作る
-					creator.outputTag('advertise', 'advertise', $currentContent);
+					creator.outputTag('advertise', 'advertise', CURRENT_WINDOW_MAIN);
 					//通知領域の内容があれば
 					if(creator.json.advertise.message_title.text){
 						$('.advertise').css('display', 'block');		//通知領域を表示する
 					}
 					// 会員ページのカレンダーを作る
-					creator.outputTag('lessonCalendar', 'calendar', $currentContent);
+					creator.outputTag('lessonCalendar', 'calendar', CURRENT_WINDOW_MAIN);
 
 					// 日ごと授業のjsonを読み込む
 					creator.getJsonFile('source/eachDayLesson.json');
@@ -53,7 +53,7 @@
 					memCalendar.create();	//カレンダーを実際に作成する
 	
 					// タブ機能を作る
-					creator.outputTag('lessonTab', 'lessonTab', $currentContent);
+					creator.outputTag('lessonTab', 'lessonTab', CURRENT_WINDOW_MAIN);
 					//予約中授業のデータを取得するために会員番号をクエリの置換値にセットする
 					creator.json.reservedLessonTable.user_key.value = memberInfo;
 					//予約中授業テーブル用のJSON配列を取得する
@@ -65,9 +65,9 @@
 					//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
 					creator.setSelectboxText(creator.json.memberCanReserveLesson[TABLE_DATA_KEY], creator.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
 					// 予約済み授業のタブ内コンテンツを作る
-					creator.outputTag('alreadyReserved', 'tabInContent', $('.tabContentArea', $currentContent));
+					creator.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 					// 受講済み授業のタブ内コンテンツを作る
-					creator.outputTag('finishedLesson', 'tabInContent', $('.tabContentArea', $currentContent));
+					creator.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
 	
 					// 予約済み授業と受講済み授業についてタブを作る
 					creator.createTab('#tab-container');
@@ -76,15 +76,15 @@
 					creator.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
 
 					//予約済み授業の絞り込み領域を作る
-					creator.outputTag('selectTheme', 'selectTheme', $('#alreadyReserved', $currentContent));
+					creator.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
 					//セレクトボックスのvalueを画面に表示されている値にする
 					creator.setSelectboxValue('.selectThemebox');
 					//予約中授業の外枠領域を作る
-					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', $('#alreadyReserved', $currentContent));
+					creator.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 					if(creator.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 						// 予約中授業のテーブルを作る
-						creator.outputTagTable('reservedLessonTable','reservedLessonTable', $('.reservedLessonTableOutsideArea', $currentContent));
+						creator.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 
 						// 予約中テーブルのテーブルの値を置換する
 						commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, creator);

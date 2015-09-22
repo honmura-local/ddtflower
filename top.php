@@ -1,5 +1,5 @@
 <!-- container -->
-<div id="container">
+<div id="container" class="window" name="usuall">
 
 <header class="header">
 </header>
@@ -34,8 +34,6 @@
 			// トップメニューにマウスオーバーのフィルターを配置する。
 			functionFilter('.topMenu li');
 		
-			//テーブルの全レコード選択の処理をオンにする。
-			checkAllRecord();
 			//JSONデータを格納する変数を初期化する。
 			//@add 2015.0604 T.Masuda MSLの記事一覧を最新記事表示ウィンドウに載せる
 			//ブログとギャラリーのお知らせの内容を消す

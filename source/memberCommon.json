@@ -3,49 +3,49 @@
         "bannerArea": {
             "banner1": {
                 "class": "banner inlineBlock",
-                "href": "#memberPage.html",
+                "href": "#window/member/page/memberTop.html",
                 "bannerImage": {
                     "src": "image/icon(myPage).png"
                 }
             },
             "banner2": {
                 "class": "banner inlineBlock",
-                "href": "#memberProfile.html",
+                "href": "#window/member/page/memberProfile.html",
                 "bannerImage": {
                     "src": "image/icon(profile).png"
                 }
             },
             "banner3": {
                 "class": "banner inlineBlock",
-                "href": "#memberSuggestionBox.html",
+                "href": "#window/member/page/memberSuggestionBox.html",
                 "bannerImage": {
                     "src": "image/icon(mail).png"
                 }
             },
             "banner4": {
                 "class": "banner inlineBlock",
-                "href": "#gallery.php",
+                "href": "#window/member/page/gallery.php",
                 "bannerImage": {
                     "src": "image/icon(gallery).png"
                 }
             },
             "banner5": {
                 "class": "banner inlineBlock",
-                "href": "#blog.php",
+                "href": "#window/member/page/blog.php",
                 "bannerImage": {
                     "src": "image/icon(blog).png"
                 }
             },
             "banner6": {
                 "class": "banner inlineBlock",
-                "href": "#memberMyGallery.html",
+                "href": "#window/member/page/memberMyGallery.html",
                 "bannerImage": {
                     "src": "image/icon(myGallery).png"
                 }
             },
             "banner7": {
                 "class": "banner inlineBlock",
-                "href": "#memberMyBlog.html",
+                "href": "#window/member/page/memberMyBlog.html",
                 "bannerImage": {
                     "src": "image/icon(myBlog).png"
                 }
