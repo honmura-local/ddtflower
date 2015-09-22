@@ -54,10 +54,9 @@ function adminLessonDetailDialog(dialog){
 		//親ダイアログから受け取ったデータを取得する
 		var data = this.dialogClass.getArgumentDataObject();
 		//受講する授業のテーマを入れる
-		this[VAR_CREATE_TAG].json.themeArea.themeDetailText.text = data['lesson_name'];
-		console.log(data);
+		this[VAR_CREATE_TAG].json.themeArea.themeDetailText.text = data[COLUMN_NAME_LESSON_NAME];
 		//受講する授業の時間割を入れる
-		this[VAR_CREATE_TAG].json.timeTableArea.timeTableText.text = data['start_time'].substr(0, 5) + ' 〜 ' + data['end_time'].substr(0, 5);
+		this[VAR_CREATE_TAG].json.timeTableArea.timeTableText.text = data[COLUMN_NAME_START_TIME].substr(TIME_CUT_S, TIME_CUT_E) + ' 〜 ' + data[COLUMN_NAME_END_TIME].substr(TIME_CUT_S, TIME_CUT_E);
 	}
 	
 	/* 関数名:dispContentsMain
@@ -86,7 +85,6 @@ function adminLessonDetailDialog(dialog){
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CLASSROOM, CLASS_LESSON_CLASSROOM, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業のメモを設定する領域を出力する
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, DOT + LESSON_DATA + SELECTOR_LAST);
-
 	}
 	
 	/* 関数名:callbackUpdate
@@ -175,17 +173,16 @@ function adminLessonDetailDialog(dialog){
 			//失敗時
 			case SETQUERY_FAILED:
 				//失敗のアラートを出す
-				alert('授業内容の更新に失敗しました。時間を置いて試してください。');
+				alert(MES_LESSON_EDIT_FAILED);
 				break;
 			//成功時
 			default:
 				//成功のお知らせを出す
-				alert('授業内容の更新に成功しました。');
+				alert(MES_LESSON_EDIT_SUCCESS);
 				//親ダイアログの授業一覧を更新するため、ダイアログ操作用クラスを取得する
 				var parentDialogBuilder = this.dialogClass.getArgumentDataObject().parentDialogBuilder;
 				//親ダイアログを一旦からにする
 				$(parentDialogBuilder.dialog).empty();
-				console.log(parentDialogBuilder.dialog);
 				//親ダイアログの中身を作り直す
 				parentDialogBuilder.dispContents();
 				break;
