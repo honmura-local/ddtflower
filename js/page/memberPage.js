@@ -112,6 +112,14 @@ function finshedLessonTableThemeSelect() {
 	});
 }
 
+/*
+ * 関数名:setSuggestionBoxSendEvent
+ * 概要  :目安箱の送信ボタンのコールバック登録関数
+ * 引数  :String selector:ボタンのセレクタ
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.10.03
+ */
 function setSuggestionBoxSendEvent(selector){
 	//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
 	$(selector).on(CLICK, function() {
