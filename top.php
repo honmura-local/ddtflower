@@ -37,11 +37,11 @@
 			//JSONデータを格納する変数を初期化する。
 			//@add 2015.0604 T.Masuda MSLの記事一覧を最新記事表示ウィンドウに載せる
 			//ブログとギャラリーのお知らせの内容を消す
-			$('.topicGallery').empty();
-			$('.topicBlog').empty();
+//			$('.topicGallery').empty();
+//			$('.topicBlog').empty();
 			//MSLのリストをお知らせウィンドウに入れる。非表示になっているので表示する
-			$('.topicGallery').append($('#mslongtail_1985').show());
-			$('.topicBlog').append($('#mslongtail_1984').show());
+//			$('.topicGallery').append($('#mslongtail_1985').show());
+//			$('.topicBlog').append($('#mslongtail_1984').show());
 			
 			//0ミリ秒後にキャンペーンお知らせ表示ボタンをスライド表示する。
 			commonFuncs.moveNoticeWindows();

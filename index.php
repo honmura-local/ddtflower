@@ -123,6 +123,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 
 <!-- ダイアログ作成クラスの基底クラスを定義したJSファイル -->
 <script type="text/javascript" src="dialog/js/baseDialog.js"></script>
+<!-- ウィンドウ作成用クラス、ダイアログ作成用クラスの基底クラスのJSファイル -->
+<script type="text/javascript" src="js/baseWindow.js"></script>
 <!-- ウィンドウ作成用クラス windowExクラスのJSファイル -->
 <script type="text/javascript" src="js/windowEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
