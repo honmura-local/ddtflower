@@ -720,8 +720,6 @@ function addlogoutEvent(selector){
 				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
-
-				//callPage(TOPPAGE_NAME);	//トップページへ遷移する
 			},
 			error:function(xhr,status,error){	//通信エラー時
 				//エラーメッセージを出す
