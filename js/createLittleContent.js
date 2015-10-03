@@ -473,23 +473,13 @@ function createLittleContents(){
 	this.postPhoto = function(photo){
 		//写真のデータを連想配列にして返してもらう。
 		var photoData = this.createPhotoData(photo);
+		$.extend(true, photoData, {db_setQuery:"INSERT INTO user_gallery(user_key,title,content_text,image_id,publication,date) values('user_key', 'title', 'content_text' ,'image_id' ,'publication', 'date');"})
+		var result = new baseDialog().sendQuery(URL_SAVE_JSON_DATA_PHP, photoData);
 		
-		//Ajax通信でサーバに写真のデータを送信する。
-		$.ajax({
-			url:init['photoPost'],	//初期化データの連想配列にあるURLに送信する
-	//		dataType:'json',		//JSONで返してもらう。
-			dataType:'text',		
-			data:photoData,			//作成した写真データを送信する。
-			//通信が成功したら
-			success:function(json){
-				//特に何もせず、静かに更新する。
-			},
-			//通信が失敗したら
-			error:function(){
-				//保存失敗の旨を伝える。
-				alert('写真の保存に失敗しました。');
-			}
-		});
+		if(!parseInt(result.message)){
+			console.log('save photo failer');
+		}
+		
 	}
 	
 	/*
@@ -506,10 +496,11 @@ function createLittleContents(){
 		retMap['date'] = $('.myPhotoDate', photo).text();
 		//ユーザ名を格納する。
 		retMap['user'] = $('.myPhotoUser', photo).text();
+		retMap['user_key'] = this.getUserId();	//ユーザID
 		//タイトルを格納する。
 		retMap['title'] = $('.myPhotoTitle', photo).text();
 		//コメントを格納する。
-		retMap['comment'] = $('.myPhotoComment', photo).text();
+		retMap['content_text'] = $('.myPhotoComment', photo).text();
 		//公開設定を格納する。
 		retMap['publication'] = $('.myPhotoPublication', photo).attr('value');
 		
@@ -593,6 +584,7 @@ function createLittleContents(){
 	
 		//Androidの標準ブラウザでなければ　※Androidの標準ブラウザはfocus()を使わずともセレクトメニューにフォーカスするので
 		if(!this.isAndDefaultBrowser() && !$('.' + className + 'Edit')[0].tagName != 'SELECT'){
+			var self = this;	//自身の要素を取得する
 			//追加した要素にフォーカスする。
 			$('.' + className + 'Edit').focus();
 			//編集終了のイベントを登録する。
@@ -600,9 +592,9 @@ function createLittleContents(){
 				//自身を持つ写真要素のセレクタを取得する。
 				var myphoto = $('.myPhoto').has(this);
 				//編集モードを解除する。
-				this.endEditText(this);
+				self.endEditText(this);
 				//編集したデータを送信する。
-				this.postPhoto(myphoto);
+				self.postPhoto(myphoto);
 			});
 		} else {
 			$('body').on('click.editSelect', function(){
@@ -702,7 +694,7 @@ function createLittleContents(){
 	 */
 	this.setDoubleClickMyPhotoEdit = function(){
 		$ownerClass = this;	//自分自身の暮らすインスタンスを変数に保存
-		$('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication').on(function(){
+		$(document).on('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(){
 			//タイトルを編集モードにする。
 			$ownerClass.startEditText(this);
 		});
@@ -805,8 +797,8 @@ function createLittleContents(){
             }
         });
 	}
-	
-	
+
+
 	/*
 	 * 関数名:saveImgIntoDB
 	 * 引数 	:XMLElement xml:画像のデータ一式が入ったxml
@@ -2595,7 +2587,7 @@ function createLittleContents(){
 				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
 				//グローバルなcreate_tagTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
 				var loginUrl = thisElem.json.accountHeader !== void(0)
-								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? ADMIN_PAGE_URL :'window/member/page/memberTop.html';
+								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? 'window/admin/page/adminTop.html' :'window/member/page/memberTop.html';
 				// 会員ページ、または管理者ページへリンクする。
 				$(CURRENT_WINDOW)[0].instance.callPage(loginUrl);
 			});

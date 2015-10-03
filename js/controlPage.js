@@ -10,36 +10,36 @@ currentLocation = '';	//現在選択中のページの変数
  * 作成日 :2015.03.10
  * 作成者 :T.M
  */
-	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-			//URLを引数にしてページを切り替える関数をコールする。
-			callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-		
-	});
-
-	/*
-	 * イベント:ready
-	 * 引数   :なし
-	 * 戻り値 :なし
-	 * 概要   :ドキュメント読み込み後のイベント。PHP版
-	 * 作成日 :2015.05.13
-	 * 作成者 :T.M
-	 */
-	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-		//URLを引数にしてページを切り替える関数をコールする。
-		callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-	});
+//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
+//	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//			//URLを引数にしてページを切り替える関数をコールする。
+//			callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//		
+//	});
+//
+//	/*
+//	 * イベント:ready
+//	 * 引数   :なし
+//	 * 戻り値 :なし
+//	 * 概要   :ドキュメント読み込み後のイベント。PHP版
+//	 * 作成日 :2015.05.13
+//	 * 作成者 :T.M
+//	 */
+//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
+//	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//		//URLを引数にしてページを切り替える関数をコールする。
+//		callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//	});
 	
 /*
  * 関数名:overwrightContent(target, data)

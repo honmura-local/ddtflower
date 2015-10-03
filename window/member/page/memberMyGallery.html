@@ -71,6 +71,8 @@
 					create_tag.setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
 					//削除ボタンがクリックされた時にギャラリーコンテンツを削除するイベントを登録する
 					create_tag.deleteMyGalleryPhoto();
+					//ダブルクリックで記事の文字を編集できるようにする
+					create_tag.setDoubleClickMyPhotoEdit();
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				//例外処理
 				} catch(e){

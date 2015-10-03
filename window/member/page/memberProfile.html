@@ -41,7 +41,7 @@
 					//会員の情報をDBから読み込む
 					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['getUserInf'], 'getUserInf');
 					// 会員情報を表示する領域を作る
-					create_tag.outputTag('memberInfo');
+					create_tag.outputTag('memberInfo', 'memberInfo', $currentContent);
 					// 「氏名」概要領域を作る
 					create_tag.outputTag('nameSummary', 'inputLabel', '.userInf');
 					// 「氏名」テキストボックス領域を作る
