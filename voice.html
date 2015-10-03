@@ -13,24 +13,24 @@
 			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
 				//createTagクラスのインスタンスを生成する
-				var creator = new createLittleContents();
+				var create_tag = new createLittleContents();
 				
-				creator.getJsonFile('source/voice.json');			// 生徒さんの声のJSONを取得する。
-				creator.getJsonFile('source/voicestudents.json');	// 生徒さんの声の記事のJSONを取得する。
-				creator.getJsonFile('source/commonJson.json');		// 共通のパーツのJSONを取得する。
+				create_tag.getJsonFile('source/voice.json');			// 生徒さんの声のJSONを取得する。
+				create_tag.getJsonFile('source/voicestudents.json');	// 生徒さんの声の記事のJSONを取得する。
+				create_tag.getJsonFile('source/commonJson.json');		// 共通のパーツのJSONを取得する。
 				// ページのパーツのテンプレートhtmlを取得する。
-				creator.getDomFile('template/common.html');			
-				creator.getDomFile('template/blog.html');
+				create_tag.getDomFile('template/common.html');			
+				create_tag.getDomFile('template/blog.html');
 
-				creator.outputTag('headImage', 'createImage');		// 天の画像を作る
-				creator.outputTag('pageTitle');						// タイトル領域を作る
-				creator.outputTag('voices','blog');					// 生徒さんの声領域を作る
-				creator.outputTag('numberingOuter');				//ナンバリング領域を作る
+				create_tag.outputTag('headImage', 'createImage');		// 天の画像を作る
+				create_tag.outputTag('pageTitle');						// タイトル領域を作る
+				create_tag.outputTag('voices','blog');					// 生徒さんの声領域を作る
+				create_tag.outputTag('numberingOuter');				//ナンバリング領域を作る
 				//@mod 2015.03.13 T.Masuda blogコンテンツを作成する記述を追加しました。
-				creator.outputNumberingTag('blogArticle', 1, 4, 1, 4, '.voices');	// 生徒さんの声記事を作る。
-				creator.outputTag('footImage', 'createImage');		// 地の画像を作る
-				creator.outputTag('footer');						// フッターを作る
-				
+				create_tag.outputNumberingTag('blogArticle', 1, 4, 1, 4, '.voices');	// 生徒さんの声記事を作る。
+				create_tag.outputTag('footImage', 'createImage');		// 地の画像を作る
+				create_tag.outputTag('footer');						// フッターを作る
+
 				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
