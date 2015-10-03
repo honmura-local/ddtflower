@@ -18,7 +18,7 @@
  */
 function setProfileUpdate() {
 	//更新ボタンが押された時の処理
-	$(STR_BODY).on(CLICK, '.updateButton', function(){
+	$('.updateButton').on(CLICK, function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = commonFuncs.getInputData('.memberInfo');
 		console.log(queryReplaceData);

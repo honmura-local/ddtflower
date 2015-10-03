@@ -2092,24 +2092,28 @@ function createLittleContents(){
 	 * 引数  :getContentKey:ブログのデータを取得するための連想配列key名
 	 		:userKeyParrentKey:会員番号が入っている親のkey名
 	 		:updateQueryKey:テキストボックスの親のセレクター。クエリを置換するために使う
-	 		:number:更新記事対象のidの値
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.27
 	 */
-	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey, number) {
-		//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
-		this.json[getContentKey].user_key.value = this.json[userKeyParrentKey].user_key.value;
-		//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
-		this.json[getContentKey].id.value = number;
-		//DBからブログ記事を読み込む
-		this.getJsonFile('php/GetJSONString.php', json[getContentKey], getContentKey);
-		//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-		$('[name=blogTitle]').val(this.json[getContentKey].title.text);
-		//ブログ内容テキストエリアにDBから読込んだデータを入れる
-		$('[name="blogContent"]').text(this.json[getContentKey].content.text);
-		//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
-		this.json[updateQueryKey].id.value = number;
+	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey) {
+		var number = location.hash.replace('#', EMPTY_STRING);	//URLハッシュから記事番号を取り出す
+		
+		if(!isNaN(number) && number != EMPTY_STRING){	//記事番号があれば
+			number = parseInt(number);	//番号を整数値に変換する
+			//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
+			this.json[getContentKey].user_key.value = this.json[userKeyParrentKey].user_key.value;
+			//DBから編集する対象となるブログ記事のデータを取得するため記事番号をセットする
+			this.json[getContentKey].id.value = number;
+			//DBからブログ記事を読み込む
+			this.getJsonFile('php/GetJSONString.php', this.json[getContentKey], getContentKey);
+			//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+//			$('[name=blogTitle]').val(this.json[getContentKey].title.text);
+			//ブログ内容テキストエリアにDBから読込んだデータを入れる
+//			$('[name="blogContent"]').text(this.json[getContentKey].content.text);
+			//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
+			this.json[updateQueryKey].id.value = number;
+		}
 	}
 	
 	/* 
@@ -3392,36 +3396,44 @@ var articleSubmitHandler = {
 			alert('編集する記事を1つ選んでください');
 		//以上の条件に引っかからなければ
 		} else {
+			//記事番号を取得する。記事番号でなければ会員IDを取得する。
+			var number = $('tr:has(input:checkbox:checked) .number' ,form).length > 0?
+					$('tr:has(input:checkbox:checked) .number' ,form).text() 
+					: parseInt($('tr:has(input:checkbox:checked) .memberId' ,form).text());
+			
+			//編集であれば
+			if(!isNaN(number) && command == 1){
+				//URLハッシュに記事番号をセットする
+				window.location.href = location.href.substring(0,location.href.indexOf("#")) + '#' +number;
+			//新規作成なら
+			} else {
+				//URLハッシュから記事番号を削除する
+				window.location.href = location.href.substring(0,location.href.indexOf("#")) + '#';
+			}
+			
 			//Ajax通信とそのコールバック関数の実行の順番を制御するため、when関数を利用する。
 			$.when(
 					afterSubmitForm(form)	//フォームをsubmitした後の処理を行う。
 			//whenのコードが終了したら
 			).then(function(){
-				//記事番号を取得する。記事番号でなければ会員IDを取得する。
-				var number = $('tr:has(input:checkbox:checked) .number' ,form).length > 0?
-						$('tr:has(input:checkbox:checked) .number' ,form).text() 
-						: parseInt($('tr:has(input:checkbox:checked) .memberId' ,form).text());
-				//commandが1(編集ボタンで画面遷移をしている)なら
-				if(command == 1){
-					
-					//サーバ側の用意が2015/4/16の時点でできていないので、サンプルのJSONのパスを用意する。
-					var url="";
-					//コンテンツ番号で分岐する。
-					switch(parseInt(contentNum)){
-					case 4:url = 'source/blogeditsample.json';	//ブログ
-						break;
-					case 5:url = 'source/campaigneditsample.json';	//キャンペーン
-						break;
-					case 6:url = 'source/studenteditsample.json';	//生徒さん
-						break;
-					default:	//当てはまらなければそのまま
-						break;
-					}
-					
-					//マイブログの記事更新のクエリを使うための準備をする
-					setBlogUpdateQueryReplace('myBlogContent', 'memberHeader', 'updateMyBlog', number);
-					
-				}
+//				//commandが1(編集ボタンで画面遷移をしている)なら
+//				if(command == 1){
+//					
+//					//サーバ側の用意が2015/4/16の時点でできていないので、サンプルのJSONのパスを用意する。
+//					var url="";
+//					//コンテンツ番号で分岐する。
+//					switch(parseInt(contentNum)){
+//					case 4:url = 'source/blogeditsample.json';	//ブログ
+//						break;
+//					case 5:url = 'source/campaigneditsample.json';	//キャンペーン
+//						break;
+//					case 6:url = 'source/studenteditsample.json';	//生徒さん
+//						break;
+//					default:	//当てはまらなければそのまま
+//						break;
+//					}
+//					
+//				}
 			});
 		}
 	}
