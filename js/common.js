@@ -738,7 +738,7 @@ this.defaultClassworkCostColumns = [
 			dataTYpe:"script",				//JSファイルを取得する設定
 			async:false,					//同期通信
 			success:function(sc){			//通信成功時
-				console.log("got script");	//成功判定のログを出すに入れる
+				//console.log("got script");	//成功判定のログを出す
 			},
 			error:function(xhr,status,error){			//通信失敗時
 				//失敗のログを出す

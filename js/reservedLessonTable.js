@@ -147,11 +147,14 @@ function reservedLessonTable() {
 	 * 返却値  :なし
 	 * 作成日　:2015.0912
 	 * 作成者　:T.Yamamoto	 
+	 * 変更日　:2015.1003
+	 * 変更者　:T.Masuda	 
+	 * 内容　　:コールバック登録対象の要素のセレクタを変更しました
 	 */
 	this.cancelDialogOpenFromReservedTable =  function(memberInfo, create_tag) {
 		var thisElem = this;
 		//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
-		$(STR_BODY).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD , function(){
+		$(RESERVED_LESSON_TABLE_OUTSIDE).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD, function(){
 			//キャンセルダイアログを開く
 			thisElem.openCancelDialog(this, memberInfo, create_tag);
 		});
