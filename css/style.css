@@ -45,6 +45,7 @@ body {
 h2,
 body {
 	font-size: 16px;	/* ベースのフォントサイズ */  /* 2015.03.10 サイズを16pxに変更 */
+	position:	relative;	/* 直下の子となるwindowの位置の基準とする */
 }
 
 article,aside,details,figcaption,figure,
@@ -539,13 +540,26 @@ button.ui-button-text-only span.ui-button-text {
  * 概要   :コンテンツ領域。
  * 作成者 :T.Masuda
  * 作成日 :2015.02.02
+ * 変更者 :T.Masuda
+ * 変更日 :2015.09.22
+ * 内容 :上marginを通常トップページ以外用の値にしました
  */
 .main{
-    width		: 800px;      /* コンテンツ幅を800pxにする。 */
-    margin		: 115px auto 0 auto;   /* 横位置を中心に寄せる。 */
-    background	: inherit;    /* containerの背景色を継承する。 */
-    position	: relative;   /* 相対位置の要素にする。 */
-    z-index		: 0;          /* 重なり順の優先順位を低くする。 */
+    width		: 800px;      		/* コンテンツ幅を800pxにする。 */
+    margin		: 5px auto 0 auto;  /* 横位置を中心に寄せる。 */
+    background	: inherit;    		/* containerの背景色を継承する。 */
+    position	: relative; 		/* 相対位置の要素にする。 */
+    z-index		: 0;				/* 重なり順の優先順位を低くする。 */
+}
+
+/* 
+ * セレクタ:.window:first-child .main
+ * 概要   :通常トップページコンテンツ領域。
+ * 作成者 :T.Masuda
+ * 作成日 :2015.09.22
+ */
+.window:first-child .main{
+    margin-top		: 115px;   /* 固定位置となっているヘッダーに被さる分上marginを取る */
 }
 
 /* 
@@ -1062,6 +1076,18 @@ form[target^="jquery_upload"]{
 .blogLeftContent .calendar{
 	width: 95%;		/* ブログページ用の幅を設定する */
 	float: none;
+}
+
+/* 
+ * セレクタ:.window
+ * 概要   :個々のウィンドウ
+ * 作成者 :T.Masuda
+ * 作成日 :2015.09.21
+ */
+.window{
+	position: absolute;
+	top:0px;
+	display:none;
 }
 
 /* スマホ・タブレットレイアウト */

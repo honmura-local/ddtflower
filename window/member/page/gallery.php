@@ -1,14 +1,8 @@
 <!DOCTYPE html>
-<?php
-include 'article/inc/mslinfo.php';
-$msl_infos = new MSLPageInfo('1197', '1984');
-$msl_infos2 = new MSLPageInfo('1197', '1985');
-?>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>DDTFlowers/プリザーブドフラワー</title>
-<link href="http://ddthink.com/article/css/top.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
@@ -18,6 +12,11 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 			<!-- ギャラリーページのCSSファイルを読み込む。 -->
 			<link href="css/gallery.css" rel="stylesheet" type="text/css">
 			<script>
+				//カレントのウィンドウのDOMを取得する
+				var $currentWindow = $(CURRENT_WINDOW);
+				//カレントのウィンドウのコンテンツ領域を取得する
+				var $currentContent = $(CURRENT_WINDOW_MAIN)
+				
 				//createTagクラスのインスタンスを生成する
 				var create_tag = new createLittleContents();
 				
@@ -27,16 +26,25 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				//テンプレートのDOMを取得する。
 				create_tag.getDomFile('template/common.html');
 				create_tag.getDomFile('template/gallery.html');
+
+				//ユーザ情報のテキストをDBから取得する
+				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+				// パーツのテンプレートのDOMを取得する。
+				create_tag.getDomFile('template/memberCommon.html');
+				// 共通のパーツのJSONを取得する。
+				create_tag.getJsonFile('source/memberCommon.json');
 				
-				//会員ページから読み込まれる場合、会員のページのヘッダーを表示する。
-				create_tag.createMemberPageHeader();
+				// 会員ページヘッダーを作る
+				create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
+				// バナー領域を作る
+				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
 				
-				create_tag.outputTag('headImage', 'createImage');		// 天の画像を作る
-				create_tag.outputTag('pageTitle');						// タイトル領域を作る
-				create_tag.outputTag('gallery');						// ギャラリーページ用のギャラリーを作る。
-				create_tag.outputTag('numberingOuter');				//ナンバリング領域を作る
-				create_tag.outputTag('footImage', 'createImage');		// 地の画像を作る
-				create_tag.outputTag('footer');						// フッターを作る
+				create_tag.outputTag('headImage', 'createImage', $currentContent);			// 天の画像を作る
+				create_tag.outputTag('pageTitle', 'pageTitle', $currentContent);			// タイトル領域を作る
+				create_tag.outputTag('gallery', 'gallery', $currentContent);				// ギャラリーページ用のギャラリーを作る。
+				create_tag.outputTag('numberingOuter', 'numberingOuter', $currentContent);	//ナンバリング領域を作る
+				create_tag.outputTag('footImage', 'createImage', $currentContent);			// 地の画像を作る
+				create_tag.outputTag('footer', 'footer', $currentContent);					// フッターを作る
 
 				create_tag.outputNumberingTag('photo', 1, 4, 1, 8, '.gallery');	// ギャラリーの記事を作る。
 				
@@ -47,12 +55,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				//ギャラリーの画像を拡大できるようにする。
 				create_tag.useZoomImage('photo');
 
-				//@add 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを定義しました
-				//MSLの記事リストをギャラリーの前に配置する
-				//$('.gallery').append($('#mslongtail_1985').show());
 			</script>
-			<!-- MSLの記事を表示する -->
-			<?php echo $msl_infos2->get('html_article'); ?>
 		</div>
 	</div>
 </body>

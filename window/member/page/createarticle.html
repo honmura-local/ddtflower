@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DDTFlowers/記事作成</title>
+</head>
+<body>
+	<div id="container">
+		<div class="main">
+			<!-- コース案内のCSSファイルを読み込む。 -->
+			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
+			<!-- マイページのCSSファイルを読み込む。 -->
+			<link href="css/mypage.css" rel="stylesheet" type="text/css">
+			<script>
+				//カレントのウィンドウのDOMを取得する
+				var $currentWindow = $(CURRENT_WINDOW);
+				//カレントのウィンドウのコンテンツ領域を取得する
+				var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+				//createLittleContentsクラスのインスタンスを生成する
+				var create_tag = new createLittleContents();
+			
+				create_tag.getJsonFile('source/createarticle.json');	// マイページのJSONを取得する。
+				create_tag.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONを取得する。
+				create_tag.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONを取得する。
+				//ユーザ情報のテキストをDBから取得する
+				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+
+				//マイブログの記事更新のクエリを使うための準備をする
+				create_tag.setBlogUpdateQueryReplace('myBlogContent', 'accountHeader', 'updateMyBlog');
+				
+				//ページ描画に必要なDOMがなければ
+				//必要なDOMを取得する。
+				create_tag.getDomFile('template/common.html');				
+				create_tag.getDomFile('template/memberCommon.html');
+				//ブログ編集ページ用のDOMを取得する
+				create_tag.getDomFile('template/createblogarticle.html');
+				
+				// 会員ページヘッダーを作る
+				create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
+				// バナー領域を作る
+				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
+			
+				// create_tag.outputTag('headImage', 'createImage');				// 天の画像を作る
+				create_tag.outputTag('pageTitle', 'pageTitle', $currentContent);	// タイトル領域を作る
+				//画像アップロードのボタンを配置する。
+				create_tag.outputTag('blogEditImageUploader', 'blogEditImageUploader', $currentContent);
+				//ブログ記事タイトル編集領域を作る。
+				create_tag.outputTag('blogEdit', 'blogEdit', $currentContent);
+				create_tag.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');				//ブログ記事タイトル編集領域を作る。
+				create_tag.outputTag('blogEditImages', 'blogEditImages','.blogEdit');				//ブログ記事画像編集領域を作る。
+				//ブログ記事画像編集パーツを3つ作る。
+				create_tag.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditText', 'blogEditText','.blogEdit');					//ブログの本文作成領域を作る。
+				create_tag.outputTag('blogPublication', 'blogPublication','.blogEdit');				//ブログの公開設定のパーツを作る。
+				create_tag.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');				//編集確定か否かを選択するボタン群を作る。
+				
+				// create_tag.outputTag('footImage', 'createImage');		// 地の画像を作る
+				// create_tag.outputTag('footer');						// フッターを作る
+				
+				// メイン領域にヘッダーの高さ分のmarginを設定し、固定スクロール時に埋もれるのを阻止する。
+				// fixYCoordinate('header', '.main');
+				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
+				// fixXCoordinateOnScroll('header');
+				
+				//ブログタイトルテキストボックスにDBから読込んだデータを入れる
+				$('[name=blogTitle]').val(create_tag.json.myBlogContent.title.text);
+				//ブログ内容テキストエリアにDBから読込んだデータを入れる
+				$('[name="blogContent"]').text(create_tag.json.myBlogContent.content.text);
+				
+				//ボタンをjQueryUIのリッチなボタンにする。
+				$('.main button, .main input:submit').button();
+				//ボタンをクリックしてファイルを選択するイベントを設定する。
+				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', create_tag.uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImage');
+				//フォームに入力チェックをかける。
+				$('form').validate(showAlert);
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+			</script>
+		</div>
+	</div>
+</body>
+</html>

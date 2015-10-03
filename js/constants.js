@@ -64,8 +64,8 @@ LESSON_DETAIL_DIALOG		= 'lessonDetailDialog';				//管理者ページ授業詳�
 ADMIN_LESSON_LIST_DIALOG_TR = '.adminLessonListDialog tr';		//管理者の日ごと授業テーブルの行
 ADMIN_LESSON_LIST_DIALOG_TD = '.adminLessonListDialog td';		//管理者の日ごと授業テーブルのセル
 LESSON_DATA					= 'lessonData';						//管理者の授業詳細ダイアログのコンテンツ部分
-ADMIN_PAGE_URL = 'adminPage.html';								//管理者ページURL
-MEMBER_PAGE_URL = 'memberPage.html';							//会員ページURL
+ADMIN_PAGE_URL = 'window/admin/adminPage.html';								//管理者ページURL
+MEMBER_PAGE_URL = 'window/member/memberPage.html';							//会員ページURL
 
 //定数
 EXPERIENCE	= 'experience';
@@ -740,11 +740,27 @@ EXPERIENCE_MAIL_SEND_FAILED					= "メールの送信に失敗しました。時
 EXPERIENCE_MAIL_SEND_ONLY_CUSTOM			= "メールの送信に失敗しました。時間を置いてお試しください。\nまた、予約を承ったという旨のメールが送信されている可能性がございます。\nお手数ですが、受信された場合は削除をお願いいたします。";
 //管理者側にだけ送信された場合(通常通り予約OK)
 EXPERIENCE_MAIL_SEND_ADMIN					= "以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。";
+
+//各トップページのリスト
+TOP_PAGES = {usuall:TOPPAGE_NAME, member:"window/member/memberPage.html", admin:"window/admin/adminPage.html"};
+//カレントのウィンドウ
+CURRENT_WINDOW								= '.window:last';
+CURRENT_WINDOW_MAIN							= CURRENT_WINDOW + ' .main';
+DIR_ADMIN_PAGE								= 'window/admin/page/';
+DIR_MEMBER_PAGE								= 'window/member/page/';
+
+//各トップページHTML
+URL_MEMBER_TOP								= 'memberTop.html';
+URL_ADMIN_TOP								= 'adminTop.html';
 //adminLessonDetailDialog
 TIME_CUT_S									= 0;	//授業開始時間切り取り開始数字
 TIME_CUT_E									= 5;	//授業終了時間切り取り終わり数字
 MES_LESSON_EDIT_SUCCESS						= '授業内容の更新に成功しました。';//授業内容更新成功メッセージ
 MES_LESSON_EDIT_FAILED						= '授業内容の更新に失敗しました。時間を置いて試してください。';//授業内容更新成功メッセージ
-
-
-
+//記事オブジェクトのキー
+ARTICLE_OBJECT_KEY							= 'tableData';
+CHECKED										= 'checked';	//「チェック済み」の意味合いの文字列
+//目安箱メール入力エリア
+SEL_SUGGESTION_AREA							= '.suggestionArea';
+PATH_SEND_MEMBERMAIL_PHP					= 'php/mailSendEntryMemberMail.php';
+PATH_SEND_SUGGESTION_PHP					= 'php/mailSendEntrySuggest.php';

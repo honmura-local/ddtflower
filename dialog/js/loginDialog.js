@@ -208,7 +208,7 @@ function loginDialog(dialog){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//管理者ページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + URL_ADMIN_PAGE}, EMPTY_STRING, location.href);
+				history.pushState({url:CHAR_HASH + DIR_ADMIN_PAGE +URL_ADMIN_TOP}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//管理者ページへ移動する
@@ -219,7 +219,7 @@ function loginDialog(dialog){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
 				//会員トップページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + URL_MEMBER_PAGE}, EMPTY_STRING, location.href);
+				history.pushState({url:CHAR_HASH + DIR_MEMBER_PAGE + URL_MEMBER_TOP}, EMPTY_STRING, location.href);
 			//URLハッシュを利用する
 			} else {
 				//会員トップページへ移動する

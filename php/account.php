@@ -6,7 +6,7 @@
  * 設計者:H.Kaneko
  * 作成者:T.Masuda
  * 作成日:2015.0728
- * パス	:/php/login.php
+ * パス	:/php/account.php
  */
 
 //返却用JSONの文字列 前後

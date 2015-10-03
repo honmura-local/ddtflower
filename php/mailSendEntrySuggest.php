@@ -8,6 +8,7 @@ $content = $_POST['content'];
 $type = $_POST['type'];
 
 try {
+	ModelMysql::connect();
 	$sendResult = ModelMail::sendSuggestion($type, $from, $subject, $content);
 } catch(SendFailException $e) {
 	// ajax的に500返して異常を伝える。

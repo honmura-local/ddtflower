@@ -1,6 +1,6 @@
 {
     "blogArticle": {
-        "table": {
+        "tableData": {
             "0": {
                 "class": "blogArticle cf",
                 "blogArticleTitle": {

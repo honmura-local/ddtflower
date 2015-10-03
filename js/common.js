@@ -1593,6 +1593,127 @@ this.defaultClassworkCostColumns = [
 		});
 	}
 	
+	/*
+	 * 関数名:showCurrentWindow
+	 * 引数  :なし
+	 * 戻り値:なし
+	 * 概要  :カレントのウィンドウだけ表示する
+	 * 作成日:2015.09.22
+	 * 作成者:T.Masuda
+	 */
+	this.showCurrentWindow = function(){
+		$('.window').hide();		//全てのウィンドウを消す
+		$('.window:last').show();	//カレントのウィンドウのみ表示する
+	}
+
+	/* 
+	 * 関数名:setValueDBdata
+	 * 概要  :連想配列から値を読み込んで、テキストボックスのvalue属性に値を入れる。
+	 		会員ページのプロフィール変更で、ユーザの情報をテキストボックスに入れるのに用いる。
+	 		テキストボックスのname属性値がDBの列名と対応している。
+	 * 引数  :object setArray:テキストボックスに値を挿入するための値が入った連想配列名
+	 		setDomParent:取得したvalueをセットするためのdomの親要素セレクター名
+	 		targetArrayType:第一引数の連想配列がテーブルから取り出した値なのか、DBのtextキーに入れた値なのかを区別するための引数
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.02
+	 * 作成者:T.Masuda
+	 * 作成日:2015.09.22
+	 * 内容　:common.jsへ移動しました。
+	 */
+	this.setValueDBdata = function(setArray, setDomParent, targetArrayType) {
+		//ループで連想配列を全てループする
+		for (var key in setArray) {
+			//第二引数の値がkeyTableであるなら、テーブルから取り出した値を対象とするのでその値を変数に入れる
+			if (targetArrayType == 'keyTable') {
+				//テーブルから取り出した値をキーにして値を取得する
+				var resultValue = setArray[key]
+			//テーブルの置換済みの値からデータを読み込む場合の処理
+			} else if (targetArrayType == 'keyValue') {
+				//テーブルの置換済みの値を読み込む
+				var resultValue = setArray[key].value;
+			//テーブルから取り出した値でないときはtextがキーとなって値を取り出しているのでその値を取得する
+			} else {
+				//値を挿入する結果のvalueを変数に入れる
+				var resultValue = setArray[key]['text'];
+			}
+			//対象の要素がテキストエリアのときにtextで値を入れる
+			if ($(setDomParent + ' [name="' + key + '"]').prop("tagName") == 'TEXTAREA') {
+				//name属性がkeyのものに対して属性をDBから読み出した値にする
+				$(setDomParent + ' [name=' + key + ']').text(resultValue);
+			//値をセットする対象のdomがラジオボタンのときに対象の値に対してチェックを入れる処理をする
+			} else if($(setDomParent + ' [name=' + key + ']').attr('type') == 'radio') {
+				//値が当てはまるチェックボックスに対してチェックを入れる
+				$(setDomParent + ' [name=' + key + '][value="' + resultValue + '"]').prop('checked', true);
+			//値をセットする対象のdomがテキストボックスであるならばループ中の値をテキストボックスのデフォルト値に設定する
+			} else {
+				//name属性がkeyのものに対してvalue属性をDBから読み出した値にする
+				$(setDomParent + ' [name=' + key + ']').val(resultValue);
+			}
+		}
+	}
+
+	/* 関数名:sendMemberMail
+	 * 概要　:会員ページ 会員メール/目安箱メールを送信する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.07xx
+	 * 作成者　:A.Honmura
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:現行のdialogExクラス用に作り直しました。
+	 * 変更日　:2015.0812
+	 * 変更者　:T.Masuda
+	 * 内容　	:common.jsに移動しました。
+	 */
+	this.sendMemberMail = function() {
+		//はいボタンが押されていたら
+		if(this.instance.getPushedButtonState() == YES){
+			var data = commonFuncs.getInputData(SEL_SUGGESTION_AREA);		//domからデータを取得する
+			var resultwork = null;								//
+			var sendUrl = PATH_SEND_MEMBERMAIL_PHP ;	//通常会員メールの送信先PHP
+			var sendObject = {									//送信するデータのオブジェクト
+					from:parseInt(this.instance.getArgumentDataObject().user_key)	//送信元
+					,subject:data.suggest_title		//タイトル
+					,content:data.suggest_content	//本文
+			}
+			
+			//メールのタイプの数値で送信先PHP、送信データの構成を変える
+			switch(parseInt(data.suggestionRadio)){
+			//目安箱メールの場合
+			case SUGGESTION_MAIL:
+					//目安箱メールならタイプの値を追加する
+					$.extend(true, sendObject, {type:data.suggest_type});
+					//目安箱メール送信用PHPにメールを処理させる
+					sendUrl = PATH_SEND_SUGGESTION_PHP;
+					break;
+			default:break;
+			}
+			
+			$.ajax({					//PHPにメール用データを渡すAjax通信
+				url:sendUrl			//PHPのURLを設定する
+				,data:sendObject	//送信データのオブジェクト
+				,dataType:"json"	//JSON形式でデータをもらう
+				,type:"POST"		//POSTメソッドでHTTP通信する
+				,success:function(result){		//通信成功時
+					resultwork = result;		//通信結果から情報を取り出す
+					//送信完了と共に入力ダイアログを消す
+					alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
+					//目安箱メールを送信していたら
+					if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
+						//目安箱テーブルに新たにデータを挿入する
+						new baseDialog().sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
+					}
+				}
+				//通信失敗時
+				,error:function(xhr, status, error){
+					//送信完了と共に入力ダイアログを消す
+					alert(MESSAGE_SEND_FAILED_SIMPLE_NOTICE);	//送信失敗のメッセージを出す
+				}
+			});
+		}
+	}
+	
 //ここまでクラス定義領域
 }
 

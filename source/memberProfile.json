@@ -131,7 +131,7 @@
     "passLinkArea":{
         "class":"passLinkArea textCenter fRight",
         "passLink":{
-            "href":"#memberPassword.html",
+            "href":"#window/member/page/memberPassword.html",
             "text":"パスワード変更"
         }
     },

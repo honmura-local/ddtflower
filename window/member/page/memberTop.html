@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html>
-<meta charset="UTF-8">
 <body>
 	<div id="container">
 		<div class="main">
@@ -13,7 +12,7 @@
 					
 					//createTag継承クラスのインスタンスを生成する
 					var create_tag = new createLittleContents();
-
+					
 					create_tag.getJsonFile('source/memberPage.json');
 					// 会員共通のパーツのJSONを取得する。
 					create_tag.getJsonFile('source/memberCommon.json');
@@ -25,9 +24,13 @@
 					create_tag.getDomFile('template/memberCommon.html');
 					// 会員ページのjsonを読み込む
 					create_tag.getDomFile('template/memberPage.html');
+					//ユーザ情報のテキストをDBから取得する
+					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
 					//accountHeaderから会員IDを取得する。
 					var memberInfo = create_tag.json.accountHeader !== void(0) ? create_tag.json.accountHeader.user_key.value : '';
 					
+					// 会員ページヘッダーを作る
+					create_tag.outputTag('accountHeader','memberHeader', $currentContent);
 					// バナー領域を作る
 					create_tag.outputTag('userBanner', 'userBanner', $currentContent);
 					//告知領域のデータをDBから取得するためにクエリで送信する値の置換値をセットする
@@ -65,9 +68,9 @@
 					//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
 					create_tag.setSelectboxText(create_tag.json.memberCanReserveLesson[TABLE_DATA_KEY], create_tag.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
 					// 予約済み授業のタブ内コンテンツを作る
-					create_tag.outputTag('alreadyReserved', 'tabInContent', $('.tabContentArea', $currentContent));
+					create_tag.outputTag('alreadyReserved', 'tabInContent', '.tabContentArea');
 					// 受講済み授業のタブ内コンテンツを作る
-					create_tag.outputTag('finishedLesson', 'tabInContent', $('.tabContentArea', $currentContent));
+					create_tag.outputTag('finishedLesson', 'tabInContent', '.tabContentArea');
 	
 					// 予約済み授業と受講済み授業についてタブを作る
 					create_tag.createTab('#tab-container');
@@ -76,15 +79,15 @@
 					create_tag.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
 
 					//予約済み授業の絞り込み領域を作る
-					create_tag.outputTag('selectTheme', 'selectTheme', $('#alreadyReserved', $currentContent));
+					create_tag.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
 					//セレクトボックスのvalueを画面に表示されている値にする
 					create_tag.setSelectboxValue('.selectThemebox');
 					//予約中授業の外枠領域を作る
-					create_tag.outputTag('reservedLessonTableOutsideArea', 'divArea', $('#alreadyReserved', $currentContent));
+					create_tag.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 					//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 					if(create_tag.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 						// 予約中授業のテーブルを作る
-						create_tag.outputTagTable('reservedLessonTable','reservedLessonTable', $('.reservedLessonTableOutsideArea', $currentContent));
+						create_tag.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 
 						// 予約中テーブルのテーブルの値を置換する
 						commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, create_tag);

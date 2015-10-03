@@ -19,13 +19,13 @@ function setPasswordUpdate() {
 	//更新ボタンが押された時の処理
 	$('.passwordUpdate').click(function(){
 		//ユーザが入力した値を取得する
-		var queryReplaceData = getInputData('postPass');
+		var queryReplaceData = commonFuncs.getInputData('postPass');
 		//ユーザ番号を追加する
-		queryReplaceData['userId'] = creator.json.accountHeader.user_key.value;
+		queryReplaceData['userId'] = create_tag.json.accountHeader.user_key.value;
 		//新しいパスワードと確認のパスワードが一致すれば登録する
 		if(queryReplaceData.newPass === queryReplaceData.password) {
 			//データべベースにクエリを発行してデータを更新する
-			creator.setDBdata(creator.json.updatePassword, queryReplaceData, MESSAGE_SUCCESS_PASSWORD_UPDATE);
+			create_tag.setDBdata(create_tag.json.updatePassword, queryReplaceData, MESSAGE_SUCCESS_PASSWORD_UPDATE);
 		} else {
 			alert('パスワードが確認と異なります');
 		}

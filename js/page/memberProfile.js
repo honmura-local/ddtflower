@@ -18,11 +18,12 @@
  */
 function setProfileUpdate() {
 	//更新ボタンが押された時の処理
-	$(STR_BODY).on(CLICK, '.updateButton', function(){
+	$('.updateButton').on(CLICK, function(){
 		//ユーザが入力した値を取得する
-		var queryReplaceData = getInputData('memberInfo');
+		var queryReplaceData = commonFuncs.getInputData('.memberInfo');
+		console.log(queryReplaceData);
 		//ユーザ番号を追加する
-		queryReplaceData['userId'] = creator.json.accountHeader.user_key.value;
+		queryReplaceData['userId'] = create_tag.json.accountHeader.user_key.value;
 		//入力項目に不備があったときにエラーメッセージを出す配列を作る
 		var updateError = [];
 		//メッセージを挿入するための関数を作る
@@ -40,11 +41,11 @@ function setProfileUpdate() {
 			}
 		}
 		//名前の入力された文字をチェックする
-		erroeMesseageInput(creator.checkInputName, 'user_name', '名前に数字や記号が入っています');
+		erroeMesseageInput(create_tag.checkInputName, 'user_name', '名前に数字や記号が入っています');
 		//カナの入力された文字をチェックする
-		erroeMesseageInput(creator.checkInputName, 'name_kana', '名前(カナ)に数字や記号が入っています');
+		erroeMesseageInput(create_tag.checkInputName, 'name_kana', '名前(カナ)に数字や記号が入っています');
 		//電話番号の入力された文字をチェックする
-		erroeMesseageInput(creator.checkInputPhone, 'telephone', '電話番号に文字や記号が入っています');
+		erroeMesseageInput(create_tag.checkInputPhone, 'telephone', '電話番号に文字や記号が入っています');
 
 		//入力内容エラーがあったときにメッセージを表示する
 		if(updateError.length) {
@@ -53,7 +54,7 @@ function setProfileUpdate() {
 		//入力内容にエラーがなかった時の処理
 		} else {
 			//データべベースにクエリを発行してデータを更新する
-			creator.setDBdata(creator.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
+			create_tag.setDBdata(create_tag.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
 		}
 	});
 }

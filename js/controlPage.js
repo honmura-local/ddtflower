@@ -10,36 +10,36 @@ currentLocation = '';	//現在選択中のページの変数
  * 作成日 :2015.03.10
  * 作成者 :T.M
  */
-	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-			//URLを引数にしてページを切り替える関数をコールする。
-			callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-		
-	});
-
-	/*
-	 * イベント:ready
-	 * 引数   :なし
-	 * 戻り値 :なし
-	 * 概要   :ドキュメント読み込み後のイベント。PHP版
-	 * 作成日 :2015.05.13
-	 * 作成者 :T.M
-	 */
-	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
-		//pushState対応ブラウザであれば
-		//URLを引数にしてページを切り替える関数をコールする。
-		callPage($(this).attr('href'));
-		if(commonFuncs.isSupportPushState()){
-			//通常の画面遷移をキャンセルする。		
-			event.preventDefault();
-		}
-	});
+//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
+//	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//			//URLを引数にしてページを切り替える関数をコールする。
+//			callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//		
+//	});
+//
+//	/*
+//	 * イベント:ready
+//	 * 引数   :なし
+//	 * 戻り値 :なし
+//	 * 概要   :ドキュメント読み込み後のイベント。PHP版
+//	 * 作成日 :2015.05.13
+//	 * 作成者 :T.M
+//	 */
+//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
+//	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
+//		//pushState対応ブラウザであれば
+//		//URLを引数にしてページを切り替える関数をコールする。
+//		callPage($(this).attr('href'));
+//		if(commonFuncs.isSupportPushState()){
+//			//通常の画面遷移をキャンセルする。		
+//			event.preventDefault();
+//		}
+//	});
 	
 /*
  * 関数名:overwrightContent(target, data)
@@ -254,7 +254,7 @@ function postForm(form){
 	//フォームのaction属性から送信URLを取得する。
 	var url = $form.attr('action').split(',');
 	//送信するデータを格納する連想配列を作成する。
-	var formData = createFormData($form);
+	var formData = commonFuncs.createFormObject($form);
 	//creatorのメンバにフォームデータを保存する。
 	creator.formData['formData'] = formData;
 	// this.formData['formData'] = formData;
@@ -528,7 +528,7 @@ $(window).on('load', function(){
 		
 		//URLを取得していてかつ、トップページのURLでなければ
 		if(currentUrl != null && currentUrl != TOPPAGE_NAME){
-			callPage(currentUrl, state);	//画面遷移を行う
+			$(CURRENT_WINDOW)[0].instance.callPage(currentUrl, state);	//画面遷移を行う
 		}
 		// 2015.0604の@mod終了
 	//pushStateに対応していなければhashchangeのイベントで更新を行う。
@@ -540,7 +540,7 @@ $(window).on('load', function(){
 				//URLからハッシュを取り出し、変数に格納する。
 				var hash = location.hash;
 				//該当するページを読み込む。
-				callPage(hash);
+				$(CURRENT_WINDOW)[0].instance.callPage(hash);
 				//そうでなければ
 			} else {
 				//画面を更新する。
@@ -553,7 +553,7 @@ $(window).on('load', function(){
 			//URLからハッシュを取り出し、変数に格納する。
 			var hash = location.hash;
 			//該当するページを読み込む。
-			callPage(hash);
+			$(CURRENT_WINDOW)[0].instance.callPage(hash);
 		//そうでなければ
 		}
 	}
@@ -621,7 +621,7 @@ $(document).on('click', '.tabPanel.active button[href],.tabPanel.active input:bu
  */
 function submitImitateForm(form){
 	//フォームのデータを作る。
-	var formData = createFormData(form);
+	var formData = commonFuncs.createFormData(form);
 	//現在のタブを取得する。
 	var activeTabPanel = $('.tabPanel').has(form);
 	
@@ -643,7 +643,7 @@ function submitImitateForm(form){
 function sendImitateForm(form){
 	var $form = $(form);	//疑似フォームとなる要素を取得する。
 	//フォームのデータを作る。
-	var formData = createFormData($form);
+	var formData = commonFuncs.createFormData($form);
 	//createTagのフォームデータのメンバを初期化する。
 	creator.formData = {};
 	//createTagのインスタンスの連想配列メンバにフォームデータを格納する。
@@ -701,7 +701,7 @@ function addlogoutEvent(selector){
 	$(selector).on('click', function(event){
 		
 		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
-		
+		var self = this;	//自信の要素を変数に入れる
 		//Ajax通信を行い、ログアウト処理を行う。
 		$.ajax({
 			//ログアウト用PHPをコールする
@@ -716,7 +716,10 @@ function addlogoutEvent(selector){
 				//cookieにユーザ情報と期限の日付を格納する。
 				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';		//会員ID削除
 				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除
-				callPage(TOPPAGE_NAME);	//トップページへ遷移する
+				$(self).closest('.window')[0].instance.destroy();	//先頭のウィンドウを消す
+				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
+				//画面遷移の履歴を追加する。
+				history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
 			},
 			error:function(xhr,status,error){	//通信エラー時
 				//エラーメッセージを出す

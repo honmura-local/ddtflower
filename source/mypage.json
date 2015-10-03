@@ -22,7 +22,7 @@
     },
     "myPageBlog": {
         "class":"myPageBlog myPageContent",
-        "action": "createarticle.html",
+        "action": "window/member/page/createarticle.html",
         "method": "get",
         "data-role": "4"
     },

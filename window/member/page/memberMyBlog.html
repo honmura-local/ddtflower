@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DDTFlowers/マイページ</title>
+</head>
+<body>
+	<div id="container">
+		<div class="main">
+			<!-- コース案内のCSSファイルを読み込む。 -->
+			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
+			<!-- マイページのCSSファイルを読み込む。 -->
+			<link href="css/mypage.css" rel="stylesheet" type="text/css">
+			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
+			<link href="css/special.css" rel="stylesheet" type="text/css">
+			<script>
+				//カレントのウィンドウのDOMを取得する
+				var $currentWindow = $(CURRENT_WINDOW);
+				//カレントのウィンドウのコンテンツ領域を取得する
+				var $currentContent = $(CURRENT_WINDOW_MAIN)
+
+				// dom要素を作るクラスをインスタンス化する
+				var create_tag = new createLittleContents();
+				// 会員共通のパーツのJSONを取得する。
+				create_tag.getDomFile('template/memberCommon.html');
+				// 会員ページのjsonを読み込む
+				create_tag.getDomFile('template/memberPage.html');
+				//ユーザ情報のテキストをDBから取得する
+				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+				create_tag.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				// 会員ページヘッダーを作る
+				create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
+
+				// バナー領域を作る
+				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
+				
+				create_tag.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+				create_tag.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
+				create_tag.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
+				// ファイルのhtmlデータをdomを用いて持ってくる
+				create_tag.getDomFile('template/common.html');
+				create_tag.getDomFile('template/mypage.html');
+				create_tag.getDomFile('template/table.html');
+
+				create_tag.getJsonFile('source/mypagebloglist.json');	// マイページのブログ一覧のJSONを取得する。
+
+				// ブログ管理領域を作る。
+				create_tag.outputTag('myPageBlog', 'myPageBlog', $currentContent);
+				create_tag.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
+
+				//ボタンを作る
+				create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
+
+				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
+				create_tag.json.myBlogListTable.user_key.value = create_tag.getUserId();
+				create_tag.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
+				create_tag.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
+				
+				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
+				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogListTable'], 'myBlogListTable');
+				//ブログの投稿したことがある人のみブログリストテーブルを作る
+				if(create_tag.json.myBlogListTable[TABLE_DATA_KEY].length != 0) {
+					//ブログリストのテーブルを作る
+					create_tag.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
+					//テーブルの1列目をチェックボックスにする
+					create_tag.addCheckbox('checkWrap', 'check');
+					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
+					commonFuncs.allCheckbox('.check:eq(0)', '.check');
+				}
+				
+				//ユーザのブログ領域用のJSONに会員IDをセットする。
+				create_tag.json.myBlogTable.user_key.value = create_tag.json.accountHeader.user_key.value;
+				//ユーザ情報のテキストをDBから取得する
+				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogTable'], 'myBlogTable');
+				//ブログデータがあればブログ一覧を作る
+				if(create_tag.json.myBlogTable[TABLE_DATA_KEY][0]) {
+					create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages');	// ブログの記事を作る。
+				}
+				
+				create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
+				//submitイベントを登録する。
+				$('form').validate(articleSubmitHandler);
+				create_tag.deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+			</script>
+		</div>
+	</div>
+</body>
+</html>
