@@ -18,36 +18,6 @@ function windowEx(url, argumentObj, returnObj){
 	//親クラスのコンストラクタを起動する
 	baseWindow.call(this, url, argumentObj, returnObj);
 	
-	/* 関数名:load
-	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。
-	 * 引数　:String: domUrl:取得するHTMLファイルのパス
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.load = function(domUrl){
-		//クラスインスタンスへの参照を変数に格納しておく。
-		var tmpThis = this;
-		
-		//Ajax通信でURLからHTMLを取得する。
-		$.ajax({
-			url:domUrl,				//URLを設定する
-			dataType:'HTML',		//HTMLデータを取得する
-			async: false,			//同期通信を行う
-			cache: true,			//通信結果をキャッシュする
-			success:function(html){	//通信成功時
-				//DOMをクリアする
-				tmpThis.dom = EMPTY_STRING;	
-				//取得したhtmlデータをメンバに格納する。
-				tmpThis.dom = html;
-			},
-			error:function(xhr, status, e){	//通信失敗時
-				throw e;			//例外を投げる。エラーオブジェクトを渡す。
-			}
-		});
-	}
-
 	/* 関数名:run
 	 * 概要　:ウィンドウを生成して表示する。
 	 * 引数　:なし
@@ -57,30 +27,35 @@ function windowEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.run = function(){
-		var dirArray = this.url.split('/');	//URLをディレクトリ、ファイルに分解する
-		//ウィンドウ名(windowフォルダ直下のディレクトリ名)を格納する変数を用意する
-		var windowName;						
-		//通常ページでなければ
-		if(dirArray.length > 1){
-			//ディレクトリ名を取得する
-			windowName = dirArray[dirArray.length - 3];
-		//通常ページであれば
-		} else {
-			//通常ページウィンドウとなる
-			windowName = 'usuall';
+		//ロード失敗時の例外処理を行うため、try-catch節を使う。
+		try{
+			var dirArray = this.url.split('/');	//URLをディレクトリ、ファイルに分解する
+			//ウィンドウ名(windowフォルダ直下のディレクトリ名)を格納する変数を用意する
+			var windowName;						
+			//通常ページでなければ
+			if(dirArray.length > 1){
+				//ディレクトリ名を取得する
+				windowName = dirArray[dirArray.length - 3];
+			//通常ページであれば
+			} else {
+				//通常ページウィンドウとなる
+				windowName = 'usuall';
+			}
+			
+			//ウィンドウのDOMのURLを取得する
+			var windowUrl = WINDOW_URLS[windowName];
+	
+			//argumentObj、returnObjが空であればデフォルトのものを使う
+			this.setDefaultObjects();
+			this.load(windowUrl);					//HTMLファイルをロードする
+			
+			//ウィンドウのDOMを追加する
+			$(STR_BODY).append(this.dom);
+			this.runInit();						//run後の初期化処理を行う
+		//例外をキャッチしたら
+		} catch(e){
+			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
 		}
-		
-		//各トップページのURLを取得する
-		var topUrl = TOP_PAGES[windowName];
-
-		//argumentObj、returnObjが空であればデフォルトのものを使う
-		this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
-		this.returnObj = Object.keys(this.returnObj).length? this.defaultReturnObj: this.defaultReturnObj;
-		
-		this.load(topUrl);					//HTMLファイルをロードする
-		//ウィンドウのDOMを追加する
-		$(STR_BODY).append(this.dom);
-		this.runInit();						//run後の初期化処理を行う
 	}
 
 	/* 関数名:runInit
@@ -105,38 +80,6 @@ function windowEx(url, argumentObj, returnObj){
 	
 	
 	
-	/* 関数名:setWindowZIndex
-	 * 概要　:ウィンドウの重なりを整理する
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0921
-	 * 作成者　:T.Masuda
-	 */
-	this.setWindowZIndex = function(url){
-		var windows = $('.window');	//全てのウィンドウを取得する
-		//ウィンドウの数を取得する
-		var windowsLength = windows.length;
-		
-		//全ウィンドウを走査する
-		for(var i = 0; i < windowsLength; i++){
-			//ウィンドウをのZ座標を指定していく
-			$(windows[i]).css('z-index', (i + 1) * 500);
-		}
-	}
-	
-	/* 関数名:destroy
-	 * 概要　:ウィンドウをを破棄する。
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0729
-	 * 作成者　:T.Masuda
-	 */
-	this.destroy = function(){
-		$(this.dom).remove();	//自身のDOMを消す
-	}
-
-
 	/* 関数名:callPage
 	 * 概要　:自身のウィンドウにDOMをロードする
 	 * 引数　:String url:DOMのURL
@@ -187,7 +130,7 @@ function windowEx(url, argumentObj, returnObj){
 			//通信成功時の処理
 			success:function(html){
 				//既存のコンテンツを上書きする。
-				overwrightContent($('.main', self.dom), html);
+				self.overwrightContent($('.main', self.dom), html);
 				//カレントのURLを更新する。
 				currentLocation = url;
 
@@ -240,6 +183,37 @@ function windowEx(url, argumentObj, returnObj){
 		});
 	}
 
+	/*
+	 * 関数名:overwrightContent(target, data)
+	 * 引数  :String target, Object state
+	 * 戻り値:なし
+	 * 概要  :既存のコンテンツを消して、新たなコンテンツを書き出す。
+	 * 作成日:2015.03.09
+	 * 作成者:T.M
+	 */
+	this.overwrightContent = function(target, data){
+		var dat = $(data);
+		//mainのタグを空にする。
+		$(target).empty();
+		//linkタグを収集する。
+		var links = $('link', data);
+		//コードが書かれているscriptタグを収集する。
+		var scripts = $('script:not(:empty)', data);
+
+		//linkタグを展開する。
+		links.each(function(){
+			//headタグ内にlinkタグを順次追加していく。
+			$(target).append($(this));
+		});
+
+		//scriptタグを展開する。
+		scripts.each(function(){
+			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+			$(target).append($(this));
+		});
+	}
+	
+	
 }
 
 //baseWindowクラスを継承する
