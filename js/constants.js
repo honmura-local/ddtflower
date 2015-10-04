@@ -743,7 +743,7 @@ EXPERIENCE_MAIL_SEND_ONLY_CUSTOM			= "メールの送信に失敗しました。
 EXPERIENCE_MAIL_SEND_ADMIN					= "以上の内容でご予約の希望を承りました。\n追ってメールでの連絡をいたします。\n確認のメールがしばらく経っても届かない場合は、入力されたメールアドレスに誤りがある可能性がございます。\nもう一度メールアドレスを入力してご予約の操作を行ってください。";
 
 //各トップページのリスト
-WINDOW_URLS = {usuall:TOPPAGE_NAME, member:"window/member/memberPage.html", admin:"window/admin/adminPage.html"};
+WINDOW_URLS = {usuall:TOPPAGE_NAME, member:"window/member/memberPage.html", admin:"window/admin/adminPage.html", test:"window/test/testWindow.html"};
 //カレントのウィンドウ
 CURRENT_WINDOW								= '.window:last';
 CURRENT_WINDOW_MAIN							= CURRENT_WINDOW + ' .main';

@@ -130,7 +130,7 @@ function windowEx(url, argumentObj, returnObj){
 			//通信成功時の処理
 			success:function(html){
 				//既存のコンテンツを上書きする。
-				overwrightContent($('.main', self.dom), html);
+				self.overwrightContent($('.main', self.dom), html);
 				//カレントのURLを更新する。
 				currentLocation = url;
 
@@ -183,6 +183,37 @@ function windowEx(url, argumentObj, returnObj){
 		});
 	}
 
+	/*
+	 * 関数名:overwrightContent(target, data)
+	 * 引数  :String target, Object state
+	 * 戻り値:なし
+	 * 概要  :既存のコンテンツを消して、新たなコンテンツを書き出す。
+	 * 作成日:2015.03.09
+	 * 作成者:T.M
+	 */
+	this.overwrightContent = function(target, data){
+		var dat = $(data);
+		//mainのタグを空にする。
+		$(target).empty();
+		//linkタグを収集する。
+		var links = $('link', data);
+		//コードが書かれているscriptタグを収集する。
+		var scripts = $('script:not(:empty)', data);
+
+		//linkタグを展開する。
+		links.each(function(){
+			//headタグ内にlinkタグを順次追加していく。
+			$(target).append($(this));
+		});
+
+		//scriptタグを展開する。
+		scripts.each(function(){
+			//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
+			$(target).append($(this));
+		});
+	}
+	
+	
 }
 
 //baseWindowクラスを継承する
