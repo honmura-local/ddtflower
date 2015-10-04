@@ -15,62 +15,62 @@
  * 作成日:2015.07.20
  */
 function createAdminPermitLessonContent () {
-	//受講承認タブのコンテンツ
-	//タブ
-	create_tag.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
-	//受講承認タブ
-	create_tag.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
-	//受講承認一覧タブ
-	create_tag.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
-	// 受講承認テーブル用のJSON配列を取得する
-	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
-	//データがあればテーブルを追加する
-	if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
-		//受講承認タブのリストテーブル
-		create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
-		//受講承認のボタン
-		create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
-		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
-	}
-	//タブを作る
-	create_tag.createTab('.lecturePermitTab');
-
-	//受講承認のテーブルにチェックボックスを追加する
-	create_tag.addCheckbox('permitCheckboxArea', 'permitCheckbox');
-	//受講承認のテーブルを置換する
-	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
-	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
-	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
-	setDefaultSellingPrice();
-	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
-	commonFuncs.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
-	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
-	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionContent');
-	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
-	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
-	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionSummary');
-	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
-	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
-	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
-	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
-	//受講承認の備品名セレクトボックスにvalueを入れる
-	create_tag.setSelectboxValue('.contentSelect');
-	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	setSellingPrice('.contentCell', '.accordionContent');
-	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
-	setDefaultCommodityCostPrice();
-	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
-	setCommodityCostPrice('.contentSelect');
-	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
-	setCommodityCostPrice('.sellNumberTextbox');
-	//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
-	create_tag.createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
-	//承認ボタンクリックでデータを更新する
-	loopUpdatePermitLesson();
+//	//受講承認タブのコンテンツ
+//	//タブ
+//	create_tag.outputTag('lecturePermitTab', 'tabContainer', '#lecturePermit' );
+//	//受講承認タブ
+//	create_tag.outputTag('doLecturePermit','tabInContent', '.lecturePermitTab');
+//	//受講承認一覧タブ
+//	create_tag.outputTag('lecturePermitList','tabInContent', '.lecturePermitTab');
+//	// 受講承認テーブル用のJSON配列を取得する
+//	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+//	//データがあればテーブルを追加する
+//	if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
+//		//受講承認タブのリストテーブル
+//		create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+//		//受講承認のボタン
+//		create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+//		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+//		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
+//	}
+//	//タブを作る
+//	create_tag.createTab('.lecturePermitTab');
+//
+//	//受講承認のテーブルにチェックボックスを追加する
+//	create_tag.addCheckbox('permitCheckboxArea', 'permitCheckbox');
+//	//受講承認のテーブルを置換する
+//	dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+//	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+//	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+//	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+//	setDefaultSellingPrice();
+//	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+//	commonFuncs.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+//	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+//	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionContent');
+//	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+//	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
+//	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+//	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+//	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+//	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+//	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+//	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
+//	commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+//	//受講承認の備品名セレクトボックスにvalueを入れる
+//	create_tag.setSelectboxValue('.contentSelect');
+//	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+//	setSellingPrice('.contentCell', '.accordionContent');
+//	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+//	setDefaultCommodityCostPrice();
+//	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+//	setCommodityCostPrice('.contentSelect');
+//	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+//	setCommodityCostPrice('.sellNumberTextbox');
+//	//受講承認一覧タブをクリックしたときに受講承認一覧の内容を表示する
+//	create_tag.createContentTriggerClick('.tabLink[href="#lecturePermitList"]', createAdminPermitLessonListContent);
+//	//承認ボタンクリックでデータを更新する
+//	loopUpdatePermitLesson();
 }
 
 /* 
@@ -82,28 +82,28 @@ function createAdminPermitLessonContent () {
  * 作成日:2015.07.20
  */
 function createAdminPermitLessonListContent() {
-	//受講承認一覧の検索領域を作る
-	create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
-	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
-	setPermitListFromToDate();
-	//受講承認一覧テーブル外枠を作る
-	create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
-	//受講承認一覧テーブルを作る
-	create_tag.tableReload('lecturePermitListInfoTable')
-	//受講承認一覧のリスト更新ボタン
-	create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
-	//クリックでテキストボックスにカレンダーを表示する
-	//clickCalendar('fromSearach');
-	//クリックでテキストボックスにカレンダーを表示する
-	//clickCalendar('toSearach');
-	//受講承認一覧の検索機能を実装する
-	searchPermitListInfoTable();
-	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
-	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
-	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-	loopUpdatePermitLessonList();
+//	//受講承認一覧の検索領域を作る
+//	create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+//	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+//	setPermitListFromToDate();
+//	//受講承認一覧テーブル外枠を作る
+//	create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
+//	//受講承認一覧テーブルを作る
+//	create_tag.tableReload('lecturePermitListInfoTable')
+//	//受講承認一覧のリスト更新ボタン
+//	create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+//	//クリックでテキストボックスにカレンダーを表示する
+//	//clickCalendar('fromSearach');
+//	//クリックでテキストボックスにカレンダーを表示する
+//	//clickCalendar('toSearach');
+//	//受講承認一覧の検索機能を実装する
+//	searchPermitListInfoTable();
+//	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+//	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
+//	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+//	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
+//	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
+//	loopUpdatePermitLessonList();
 }
 
 /* 
@@ -115,32 +115,32 @@ function createAdminPermitLessonListContent() {
  * 作成日:2015.07.20
  */
 function createAdminUserListContent() {
-	// ユーザ検索テキストボックス
-	create_tag.outputTag('searchUserList', 'searchUserList', '#userList');
-	//ユーザ一覧ページングの一番外側となる領域を作る
-	create_tag.outputTag('userListPagingArea', 'divArea', '#userList');
-	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-	create_tag.outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
-	// ナンバリング領域を作る
-	create_tag.outputTag('numberingOuter','numberingOuter','.userListPagingArea');
-	//会員一覧のデータを取り出す
-	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['userListInfoTable'], 'userListInfoTable');
-	//ページング機能付きでユーザ情報一覧テーブルを作る
-	create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
-	//会員一覧タブのボタン群れ
-	create_tag.outputTag('userListButtons', 'userListButtons', '#userList');
-	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-	commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
-	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-	toggleClassClickElement('.userListInfoTable tr', 'selectRecord');
-	//検索ボタンをクリックしたときにテーブルの内容を更新する
-	userListSearch();
-	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	jumpToMemberPage();
-	//通常メールボタンをクリックしたときに通常メール作成のためのダイアログを開く
-	adminMessageCreate('.createMail', 'mail');
-	//お知らせボタンをクリックしたときにお知らせのためのダイアログを開く
-	adminMessageCreate('.announceButton', 'announce');
+//	// ユーザ検索テキストボックス
+//	create_tag.outputTag('searchUserList', 'searchUserList', '#userList');
+//	//ユーザ一覧ページングの一番外側となる領域を作る
+//	create_tag.outputTag('userListPagingArea', 'divArea', '#userList');
+//	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+//	create_tag.outputTag('userListTableOutside', 'divArea', '.userListPagingArea');
+//	// ナンバリング領域を作る
+//	create_tag.outputTag('numberingOuter','numberingOuter','.userListPagingArea');
+//	//会員一覧のデータを取り出す
+//	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['userListInfoTable'], 'userListInfoTable');
+//	//ページング機能付きでユーザ情報一覧テーブルを作る
+//	create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
+//	//会員一覧タブのボタン群れ
+//	create_tag.outputTag('userListButtons', 'userListButtons', '#userList');
+//	//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
+//	commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
+//	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+//	toggleClassClickElement('.userListInfoTable tr', 'selectRecord');
+//	//検索ボタンをクリックしたときにテーブルの内容を更新する
+//	userListSearch();
+//	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
+//	jumpToMemberPage();
+//	//通常メールボタンをクリックしたときに通常メール作成のためのダイアログを開く
+//	adminMessageCreate('.createMail', 'mail');
+//	//お知らせボタンをクリックしたときにお知らせのためのダイアログを開く
+//	adminMessageCreate('.announceButton', 'announce');
 }
 
 /* 
@@ -152,11 +152,11 @@ function createAdminUserListContent() {
  * 作成日:2015.07.20
  */
 function createAdminLessonDetailContent(create_tag) {
-	//授業詳細タブ内にカレンダ-作る
-	create_tag.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
-	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
-	var lessonCalendar = new adminCalendar('.adminCalendar', create_tag);
-	lessonCalendar.create();	//カレンダーを実際に作成する
+//	//授業詳細タブ内にカレンダ-作る
+//	create_tag.outputTag('adminCalendar', 'adminCalendar', '#lessonDetail');
+//	// 講座のカレンダーを作り、クリックでダイアログ作成を作る
+//	var lessonCalendar = new adminCalendar('.adminCalendar', create_tag);
+//	lessonCalendar.create();	//カレンダーを実際に作成する
 }
 
 /* 
@@ -168,39 +168,39 @@ function createAdminLessonDetailContent(create_tag) {
  * 作成日:2015.07.20
  */
 function createAdminMailMagaAnnounceContent() {
-	// ユーザーページのパーツのテンプレートのJSONを取得する。
-	create_tag.getJsonFile('source/commonUser.json');
-	// 管理者ページ共通のパーツのJSONを取得する。
-	create_tag.getJsonFile('source/adminCommon.json');
-	//共通のjsonを取得する
-	create_tag.getJsonFile('source/commonJson.json');
-
-	//メルマガ＆アナウンスタブのコンテンツ
-	//過去のメルマガを検索するための領域を作る
-	create_tag.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
-	//メルマガページングの一番外側となる領域を作る
-	create_tag.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
-	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
-	create_tag.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
-	// ナンバリング領域を作る
-	create_tag.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
-	//メルマガのデータを取り出す
-	create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
-	//ページング機能付きでメルマガテーブルを作る
-	create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
-
-	//メルマガ検索機能を実装する
-	mailMagaSearch();
-	//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる
-	setMailMagaSendContent();
-	//メルマガ・アナウンス入力領域を作る
-	create_tag.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
-	//メルマガ送信処理を行う、メルマガ送信確認ダイアログを作る
-	mailMagaSendConfirm();
-	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
-	resetMailMageSendContent();
-	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
-	commonFuncs.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
+//	// ユーザーページのパーツのテンプレートのJSONを取得する。
+//	create_tag.getJsonFile('source/commonUser.json');
+//	// 管理者ページ共通のパーツのJSONを取得する。
+//	create_tag.getJsonFile('source/adminCommon.json');
+//	//共通のjsonを取得する
+//	create_tag.getJsonFile('source/commonJson.json');
+//
+//	//メルマガ＆アナウンスタブのコンテンツ
+//	//過去のメルマガを検索するための領域を作る
+//	create_tag.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
+//	//メルマガページングの一番外側となる領域を作る
+//	create_tag.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
+//	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+//	create_tag.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
+//	// ナンバリング領域を作る
+//	create_tag.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
+//	//メルマガのデータを取り出す
+//	create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
+//	//ページング機能付きでメルマガテーブルを作る
+//	create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+//
+//	//メルマガ検索機能を実装する
+//	mailMagaSearch();
+//	//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる
+//	setMailMagaSendContent();
+//	//メルマガ・アナウンス入力領域を作る
+//	create_tag.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+//	//メルマガ送信処理を行う、メルマガ送信確認ダイアログを作る
+//	mailMagaSendConfirm();
+//	//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
+//	resetMailMageSendContent();
+//	//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
+//	commonFuncs.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');
 }
 
 /* 
@@ -800,7 +800,7 @@ function adminMessageCreate(buttonSelector, sendType) {
 			$.extend(true, dialogObj.data, sendMailData);
 			//メール送信ダイアログを作る
 			var mailSendDialog = new dialogEx('dialog/adminMailDialog.html', dialogObj);
-			mailSendDialog.setCallbackClose(dialogDestroy);	//閉じるときのイベントを登録
+			mailSendDialog.setCallbackClose(mailSendDialog.destroy);	//閉じるときのイベントを登録
 			mailSendDialog.run();	//主処理を走らせる
 		}
 	});

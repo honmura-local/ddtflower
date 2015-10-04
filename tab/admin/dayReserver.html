@@ -1,0 +1,53 @@
+<html>
+	<body>
+		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
+		<script>
+			//カレントのウィンドウのDOMを取得する
+			var $currentWindow = $(CURRENT_WINDOW);
+			//カレントのウィンドウのコンテンツ領域を取得する
+			var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+
+			// ユーザーページのパーツのテンプレートのJSONを取得する。
+			create_tag.getJsonFile('source/commonUser.json');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getJsonFile('source/adminCommon.json');
+			//共通のjsonを取得する
+			create_tag.getJsonFile('source/commonJson.json');
+
+			// ユーザーページのパーツのテンプレートのDOMを取得する。
+			create_tag.getDomFile('template/commonUser.html');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getDomFile('template/adminCommon.html');
+			// 共通パーツのDOMを取得する
+			create_tag.getDomFile('template/common.html');
+
+			//日ごと予約者一覧タブのコンテンツ
+			//選択された日付を表示する領域
+			create_tag.outputTag('dateBelt', 'dateBelt', '#dayReserver');
+			//日付選択パーツのセット
+			create_tag.outputTag('dateSelect', 'dateSelect', '#dayReserver');
+			//日付ページングを実装する
+			nowDatePaging('dateBelt', create_tag);
+			//日ごと授業テーブルの外枠領域を作る
+			create_tag.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
+			// 日ごと予約者一覧テーブル用のJSON配列を取得する
+			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['eachDayReservedInfoTable'], 'eachDayReservedInfoTable');
+			//日ごと予約者の情報がないときにテーブルを作らない
+			if(create_tag.json.eachDayReservedInfoTable[TABLE_DATA_KEY][0]) {
+				//日ごと予約者一覧テーブルを作る
+				create_tag.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
+				//管理者日ごと予約者一覧テーブルを置換する
+				dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag);
+
+			}
+			
+			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, .searchButton, input[type="button"]', $activePanel).button();
+			</script>
+	</body>
+</html>
+
+					

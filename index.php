@@ -79,7 +79,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/utils.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
 <script src="js/flowersstylefix.js"></script>
-<!-- タグを作成するJSの関数群を読み込む -->
+<!-- JSONとHTMLテンプレートから画面パーツを作るクラスのファイル -->
 <script type="text/javascript" src="js/createTag.js"></script>
 <!-- カルーセルのギャラリー生成プラグイン「Slick」の本体を読み込む。 -->
 <script type="text/javascript" src="js/slick.min.js" ></script>
@@ -129,6 +129,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script type="text/javascript" src="js/windowEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのJSファイル -->
 <script type="text/javascript" src="js/dialogEx.js"></script>
+<!-- タブ作成用クラス tabExクラスのJSファイル -->
+<script type="text/javascript" src="js/tabEx.js"></script>
 <!-- ダイアログ作成用クラス dialogExクラスのオプションが定義されたJSファイル -->
 <script type="text/javascript" src="js/dialogExOptions.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->

@@ -52,28 +52,12 @@
 					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, create_tag);
 					memCalendar.create();	//カレンダーを実際に作成する
 	
+					//予約一覧テーブルのタブを作る
+					var reservedLessonListTab = new tabEx('tab/memberReserveListTab.html');
+					reservedLessonListTab.run($currentContent);
 					// タブ機能を作る
-					create_tag.outputTag('lessonTab', 'lessonTab', $currentContent);
-					//予約中授業のデータを取得するために会員番号をクエリの置換値にセットする
-					create_tag.json.reservedLessonTable.user_key.value = memberInfo;
-					//予約中授業テーブル用のJSON配列を取得する
-					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['reservedLessonTable'], 'reservedLessonTable');
-					//会員が予約できる授業を取得するために会員番号をクエリの置換する場所に入れる
-					create_tag.json.memberCanReserveLesson.user_key.value = memberInfo;
-					//予約できる授業のテーマにをDBから取り出す
-					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['memberCanReserveLesson'], 'memberCanReserveLesson');
-					//予約中授業のテーマをセレクトボックスにDBから取り出した値を入れるために連想配列にDBから取り出したテーマの値を入れる
-					create_tag.setSelectboxText(create_tag.json.memberCanReserveLesson[TABLE_DATA_KEY], create_tag.json.selectTheme.selectThemebox.themeValue, 'lesson_name');
-					// 予約済み授業のタブ内コンテンツを作る
-					create_tag.outputTag('alreadyReserved', 'tabInContent', $('.tabContentArea', $currentContent));
-					// 受講済み授業のタブ内コンテンツを作る
-					create_tag.outputTag('finishedLesson', 'tabInContent', $('.tabContentArea', $currentContent));
-	
-					// 予約済み授業と受講済み授業についてタブを作る
-					create_tag.createTab('#tab-container');
-					//受講済み授業授業のデータをDBから取り出すために会員番号を置換値にセットする
-					create_tag.json.finishedLessonTable.user_key.value = memberInfo;					//受講済み授業タブをクリックしたときに受講済み授業の内容を表示する
-					create_tag.createContentTriggerClick('.tabLink[href="#finishedLesson"]', createMemberFinishedLessonContent);
+					//create_tag.outputTag('lessonTab', 'lessonTab', $currentContent);
+					
 
 					//予約済み授業の絞り込み領域を作る
 					create_tag.outputTag('selectTheme', 'selectTheme', $('#alreadyReserved', $currentContent));
