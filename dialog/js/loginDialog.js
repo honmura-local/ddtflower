@@ -1,15 +1,15 @@
-/* ファイル名:testdialog.js
- * 概要　　　:テスト用ダイアログ
+/* ファイル名:loginDialog.js
+ * 概要　　　:ログインを行うためのダイアログを作るクラスのJSファイル
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/testdialog.js
+ * 場所　　:dialog/js/loginDialog.js
  */
 
-/* クラス名:testdialog.js
- * 概要　　:URLからダイアログのHTMLファイルを取得して表示する。
+/* クラス名:loginDialog
+ * 概要　　:ログインを行うためのダイアログを作る
  * 親クラス:baseDialog
  * 引数	 :Element dialog:ダイアログのDOM
  * 作成者　:T.Masuda
- * 場所　　:dialog/js/testdialog.js
+ * 場所　　:dialog/js/loginDialog.js
  */
 function loginDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
@@ -64,21 +64,6 @@ function loginDialog(dialog){
 		//ログインダイアログのテンプレートHTMLを取得する
 		this[VAR_CREATE_TAG].getDomFile(PATH_LOGIN_DIALOG_TEMPLATE);		
 	};
-	
-	
-	/* 関数名:dispContentsHeader
-	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のヘッダー部分作成担当関数
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0814
-	 * 作成者　:T.Masuda
-	 */
-	this.dispContentsHeader = function(){
-		//ダイアログのタイトルを変更する。
-		//ログインエラー例外クラス生成時に設定されたタイトルを使う
-		//this.setDialogTitle(this.dialog.instance.getArgumentDataObject().title);
-	}
 	
 	/* 関数名:dispContentsMain
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数のメイン部分作成担当関数
@@ -203,7 +188,7 @@ function loginDialog(dialog){
 	this.afterLogin = function(loginResult){
 		var data = this.dialogClass.getArgumentDataObject();	//インプット用データオブジェクトを取得する
 		
-		//通常ログインかつ、管理者のIDならば
+		//通常ログインかつ、ユーザが管理者権限ならば
 		if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority == ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){
@@ -214,7 +199,7 @@ function loginDialog(dialog){
 				//管理者ページへ移動する
 				location.href = URL_ADMIN_PAGE; 
 			}
-		//通常ログインかつ、管理者のIDでなければ
+		//通常ログインかつ、ユーザが管理者権限でなければ
 		} else if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority != ADMIN_AUTHORITY){
 			//pushStateをサポートしているブラウザなら
 			if(commonFuncs.isSupportPushState()){

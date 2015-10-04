@@ -227,21 +227,6 @@ function memberReserveListDialog(dialog){
 		return argumentObj;	//生成したオブジェクトを返す
 	}
 
-	/* 関数名:updateTable
-	 * 概要　:テーブルを更新する
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:015.08.23
-	 * 作成者　:T.Masuda
-	 */
-	this.showAlertNoReserve = function(){
-		//ダイアログの専用のクラスインスタンスを取得する
-		var dialogBuilder = this.dialogBuilder;
-		$(CURRENT_DIALOG).empty;	//ダイアログを空にする
-		//ダイアログの内容を作り直す
-		dialogBuilder.dispContents();
-	}
-	
 	/* 関数名:showAlertNoReserve
 	 * 概要　:予約なしのアラートダイアログを作る
 	 * 引数　:なし
