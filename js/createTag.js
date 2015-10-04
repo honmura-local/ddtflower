@@ -1453,6 +1453,28 @@ function createTag(){
 		return this.json.accountHeader !== void(0)? this.json.accountHeader.authority.value: EMPTY_STRING;
 	}
 	
+
+	/* クッキーを連想配列で取得する関数。http://so-zou.jp/web-app/tech/programming/javascript/cookie/#no5より。 */
+	function GetCookies()
+	{
+	    var result = new Array();
+
+	    var allcookies = document.cookie;
+	    if( allcookies != '' )
+	    {
+	        var cookies = allcookies.split( '; ' );
+
+	        for( var i = 0; i < cookies.length; i++ )
+	        {
+	            var cookie = cookies[ i ].split( '=' );
+
+	            // クッキーの名前をキーとして 配列に追加する
+	            result[ cookie[ 0 ] ] = decodeURIComponent( cookie[ 1 ] );
+	        }
+	    }
+	    //結果を返す。
+	    return result;
+	}
 	
 	//コンストラクタ部分
 	//会員番号がcookie内にあれば取得する。

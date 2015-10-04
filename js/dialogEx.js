@@ -81,17 +81,14 @@ function dialogEx(url, argumentObj, returnObj){
 			//変更者:T.Yamamoto 変更指示者:H.Kaneko 日付2015.08.07 内容：loadの引数を
 			//メンバのURLからHTMLデータを読み込む
 			this.load(this.url);
-			//returnObjが空オブジェクトであれば、デフォルト用に用意したオブジェクトをセットする
-			//@mod 2015.0808 T.Masuda デフォルトでセットされるオブジェクトについて変更しました。
-			//argumentObjも空であればデフォルトのオブジェクトをが入力されるようにしました。
-			this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
-			this.returnObj = Object.keys(this.returnObj).length? this.defaultReturnObj: this.defaultReturnObj;
+			//argumentObj、returnObjが空であればデフォルトのものを使う
+			this.setDefaultObjects();
 			
-			var form = $(this.dom)[0];	//ダイアログのDOMを取得する
-			form.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
-			this.dom = form;			//クラスインスタンスにDOMへの参照を持たせる
+			var dom = $(this.dom)[0];	//ダイアログのDOMを取得する
+			dom.instance = this;		//ダイアログのDOMにクラスインスタンスへの参照を持たせる。
+			this.dom = dom;				//クラスインスタンスにDOMへの参照を持たせる
 			
-			$(form).dialog(this.argumentObj.config);	//configの設定を使ってダイアログを作成、表示する
+			$(dom).dialog(this.argumentObj.config);	//configの設定を使ってダイアログを作成、表示する
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
@@ -189,22 +186,6 @@ function dialogEx(url, argumentObj, returnObj){
 		$(UI_DIALOG_BUTTON_PANEL, this.dom.parent()).remove();
 	}
 
-	/* 関数名:setCallbackClose
-	 * 概要　:ダイアログのcloseイベントのコールバック関数をセットする。
-	 * 引数　:function func:コールバック関数で実行される関数のポインタ
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0729
-	 * 作成者　:T.Masuda
-	 * 変更日　:2015.0808
-	 * 変更者　:T.Masuda
-	 * 内容　　:セット先が変わりました。
-	 */
-	this.setCallbackClose = function(func){
-		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function? this.argumentObj.config[CLOSE] = func: console.log('setCallBackClose recieved enythingeles function');
-	}
-
 	/* 関数名:setCallbackCloseOnAfterOpen
 	 * 概要　:ダイアログが開いた後にcloseイベントのコールバックを設定する
 	 * 引数　:function func:コールバック関数で実行される関数のポインタ
@@ -223,35 +204,6 @@ function dialogEx(url, argumentObj, returnObj){
 		} else {
 			console.log("not a function");
 		}
-	}
-	
-	/* 関数名:setCallbackOpen
-	 * 概要　:ダイアログのopenイベントのコールバック関数をセットする。
-	 * 引数　:function func:コールバック関数で実行される関数のポインタ
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0813
-	 * 作成者　:T.Masuda
-	 */
-	this.setCallbackOpen = function(func){
-		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.argumentObj.config[STR_OPEN] = func: console.log('setCallBackOpen recieved enythingeles function');
-	}
-
-	/* 関数名:setCallbackCreate
-	 * 概要　:ダイアログのcreateイベントのコールバック関数をセットする。
-	 * 引数　:function func:コールバック関数で実行される関数のポインタ
-	 * 返却値:なし
-	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0729
-	 * 作成者　:T.Masuda
-	 * 変更日　:2015.0808
-	 * 変更者　:T.Masuda
-	 * 内容　　:セット先が変わりました。
-	 */
-	this.setCallbackCreate = function(func){
-		//引数が関数であれば、closeイベントのコールバック関数として登録する。
-		func instanceof Function?  this.argumentObj.config[EVENT_CREATE] = func: console.log('setCallBackCreate recieved enythingeles function');
 	}
 	
 	/* 関数名:setPushedButtonState
