@@ -1,0 +1,68 @@
+<html>
+	<body>
+		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
+		<script>
+			//カレントのウィンドウのDOMを取得する
+			var $currentWindow = $(CURRENT_WINDOW);
+			//カレントのウィンドウのコンテンツ領域を取得する
+			var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+
+			// ユーザーページのパーツのテンプレートのJSONを取得する。
+			create_tag.getJsonFile('source/commonUser.json');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getJsonFile('source/adminCommon.json');
+			//共通のjsonを取得する
+			create_tag.getJsonFile('source/commonJson.json');
+
+			// ユーザーページのパーツのテンプレートのDOMを取得する。
+			create_tag.getDomFile('template/commonUser.html');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getDomFile('template/adminCommon.html');
+			// 共通パーツのDOMを取得する
+			create_tag.getDomFile('template/common.html');
+
+			// 受講承認テーブル用のJSON配列を取得する
+			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+			//データがあればテーブルを追加する
+			if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
+				//受講承認タブのリストテーブル
+				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+				//受講承認のボタン
+				create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+				//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
+			}
+			
+			//受講承認一覧の検索領域を作る
+			create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+			//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+			setPermitListFromToDate();
+			//受講承認一覧テーブル外枠を作る
+			create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
+			//受講承認一覧テーブルを作る
+			create_tag.tableReload('lecturePermitListInfoTable')
+			//受講承認一覧のリスト更新ボタン
+			create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+			//クリックでテキストボックスにカレンダーを表示する
+			//clickCalendar('fromSearach');
+			//クリックでテキストボックスにカレンダーを表示する
+			//clickCalendar('toSearach');
+			//受講承認一覧の検索機能を実装する
+			searchPermitListInfoTable();
+			//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+			create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
+			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+			setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
+			//更新ボタンがクリックされたときにデータを更新するイベントを登録する
+			loopUpdatePermitLessonList();
+			
+			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, .searchButton, input[type="button"]', $activePanel).button();
+			</script>
+	</body>
+</html>
+
+					

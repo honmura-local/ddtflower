@@ -82,28 +82,28 @@ function createAdminPermitLessonContent () {
  * 作成日:2015.07.20
  */
 function createAdminPermitLessonListContent() {
-	//受講承認一覧の検索領域を作る
-	create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
-	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
-	setPermitListFromToDate();
-	//受講承認一覧テーブル外枠を作る
-	create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
-	//受講承認一覧テーブルを作る
-	create_tag.tableReload('lecturePermitListInfoTable')
-	//受講承認一覧のリスト更新ボタン
-	create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
-	//クリックでテキストボックスにカレンダーを表示する
-	//clickCalendar('fromSearach');
-	//クリックでテキストボックスにカレンダーを表示する
-	//clickCalendar('toSearach');
-	//受講承認一覧の検索機能を実装する
-	searchPermitListInfoTable();
-	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
-	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
-	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-	loopUpdatePermitLessonList();
+//	//受講承認一覧の検索領域を作る
+//	create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
+//	//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
+//	setPermitListFromToDate();
+//	//受講承認一覧テーブル外枠を作る
+//	create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
+//	//受講承認一覧テーブルを作る
+//	create_tag.tableReload('lecturePermitListInfoTable')
+//	//受講承認一覧のリスト更新ボタン
+//	create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
+//	//クリックでテキストボックスにカレンダーを表示する
+//	//clickCalendar('fromSearach');
+//	//クリックでテキストボックスにカレンダーを表示する
+//	//clickCalendar('toSearach');
+//	//受講承認一覧の検索機能を実装する
+//	searchPermitListInfoTable();
+//	//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
+//	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
+//	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+//	setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
+//	//更新ボタンがクリックされたときにデータを更新するイベントを登録する
+//	loopUpdatePermitLessonList();
 }
 
 /* 
