@@ -17,7 +17,7 @@ function windowEx(url, argumentObj, returnObj){
 
 	//親クラスのコンストラクタを起動する
 	baseWindow.call(this, url, argumentObj, returnObj);
-	
+
 	/* 関数名:run
 	 * 概要　:ウィンドウを生成して表示する。
 	 * 引数　:なし
@@ -161,7 +161,7 @@ function windowEx(url, argumentObj, returnObj){
 		//自身の配下のaタグクリックイベントコールバックを定義する
 
 		// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-		$(this.dom).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
+		$(this.dom).on('click', 'a[href$=".html"][target!="_blank"]:not([data-target^="#"])', function(event){
 			//URLを引数にしてページを切り替える関数をコールする。
 			$(this).closest('.window')[0].instance.callPage($(this).attr('href'));
 			//pushState対応ブラウザであれば

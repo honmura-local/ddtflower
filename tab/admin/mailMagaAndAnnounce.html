@@ -1,0 +1,67 @@
+<html>
+	<body>
+		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
+		<script>
+			//カレントのウィンドウのDOMを取得する
+			var $currentWindow = $(CURRENT_WINDOW);
+			//カレントのウィンドウのコンテンツ領域を取得する
+			var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+
+			// ユーザーページのパーツのテンプレートのJSONを取得する。
+			create_tag.getJsonFile('source/commonUser.json');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getJsonFile('source/adminCommon.json');
+			//共通のjsonを取得する
+			create_tag.getJsonFile('source/commonJson.json');
+
+			// ユーザーページのパーツのテンプレートのDOMを取得する。
+			create_tag.getDomFile('template/commonUser.html');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getDomFile('template/adminCommon.html');
+			// 共通パーツのDOMを取得する
+			create_tag.getDomFile('template/common.html');
+
+			// ユーザーページのパーツのテンプレートのJSONを取得する。
+			create_tag.getJsonFile('source/commonUser.json');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getJsonFile('source/adminCommon.json');
+			//共通のjsonを取得する
+			create_tag.getJsonFile('source/commonJson.json');
+
+			//メルマガ＆アナウンスタブのコンテンツ
+			//過去のメルマガを検索するための領域を作る
+			create_tag.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
+			//メルマガページングの一番外側となる領域を作る
+			create_tag.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
+			//ページングのテーブルを作るためにテーブルの外側となるdivを作る
+			create_tag.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
+			// ナンバリング領域を作る
+			create_tag.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
+			//メルマガのデータを取り出す
+			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
+			//ページング機能付きでメルマガテーブルを作る
+			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+
+			//メルマガ検索機能を実装する
+			mailMagaSearch();
+			//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる
+			setMailMagaSendContent();
+			//メルマガ・アナウンス入力領域を作る
+			create_tag.outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', '#mailMagaAndAnnounce');
+			//メルマガ送信処理を行う、メルマガ送信確認ダイアログを作る
+			mailMagaSendConfirm();
+			//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
+			resetMailMageSendContent();
+			//メルマガ検索領域の内容テキストボックスでエンターキーを押すと検索のイベントを開始する
+			commonFuncs.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');			
+			
+			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, .searchButton, input[type="button"]', $activePanel).button();
+			</script>
+	</body>
+</html>
+
+					

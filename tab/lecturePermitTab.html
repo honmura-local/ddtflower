@@ -1,0 +1,266 @@
+<div class="tabContainer lecturePermitTab" id="lecturePermitTab" data-easytabs="true">
+		<!-- タブを囲む領域 -->
+		<ul class="tabs">
+			<!-- 個々のタブ領域 -->
+			<li class="tab active">
+				<!-- タブのクリックする領域 -->
+				<a class="tabLink active" href="#doLecturePermit">受講承認</a>
+			</li><li class="tab">
+				<!-- タブのクリックする領域 -->
+				<a class="tabLink" href="#lecturePermitList" data-eventflag="0">受講承認一覧</a>
+			</li>
+		</ul>
+		<!-- タブのコンテンツを囲む領域 -->
+		<div class="tabContentArea panelContainer"></div>
+	<div class="doLecturePermit tabPanel active" id="doLecturePermit" style="display: block;">
+	<table class="doLecturePermitInfoTable">
+		<tbody><tr>
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">No.</td><td style="" colspan="">日時</td><td style="" colspan="">名前</td><td style="" colspan="">所持pt</td><td style="" colspan="">内容</td><td style="" colspan="">受講料</td><td style="display:none;" colspan="">user_key</td><td style="display:none;" colspan="">school_key</td><td style="display:none;" colspan="">stage_no</td><td style="display:none;" colspan="">level_no</td><td style="display:none;" colspan="">start_time</td><td style="display:none;" colspan="">end_time</td><td style="display:none;" colspan="">user_classwork_key</td><td style="display:none;" colspan="">order_students</td><td style="display:none;" colspan="">lesson_key</td></tr><tr class="lecturePermitAccordion">
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">1</td><td style="" colspan="">15-03-12 16:30-18:30</td><td style="" colspan="">田原　未晴</td><td style="" colspan="">3727</td><td style="" colspan="">生花</td><td style="" colspan="">2800</td><td style="display:none;" colspan="">1628</td><td style="display:none;" colspan="">1</td><td style="display:none;" colspan=""></td><td style="display:none;" colspan=""></td><td style="display:none;" colspan="">16:30:00</td><td style="display:none;" colspan="">18:30:00</td><td style="display:none;" colspan="">18876</td><td style="display:none;" colspan="">2</td><td style="display:none;" colspan="">15</td></tr><tr class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<td class="lateTimeSummary">遅刻</td>
+		<!-- 使用pt領域 -->
+		<td class="usePointSummary">使用pt</td>
+		<!-- 備品名領域 -->
+		<td class="contentSummary" colspan="2">備品名</td>
+		<!-- 個数領域 -->
+		<td class="sellNumberSummary">個数</td>
+		<!-- 備品代領域 -->
+		<td class="sellingPriceSummary">備品代</td>
+		<!-- 会計領域 -->
+		<td class="payCashSummary">会計</td>
+	</tr><tr class="accordionContent">
+		<!-- 遅刻 -->
+		<td class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="text" name="late_time" value="0">
+		</td>
+		<!-- 使用ポイント -->
+		<td class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="text" name="use_point" value="0">
+		</td>
+		<!-- 備品名 -->
+		<td class="contentCell" colspan="2">
+			<!-- 備品名セレクトボックス -->
+			<select class="contentSelect" name="content">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option class="contentOption" value="アレンジ袋大">アレンジ袋大</option><option class="contentOption" value="アレンジ袋中">アレンジ袋中</option><option class="contentOption" value="アレンジ袋小">アレンジ袋小</option><option class="contentOption" value="クリアケース大">クリアケース大</option><option class="contentOption" value="クリアケース中">クリアケース中</option><option class="contentOption" value="クリアケース小">クリアケース小</option><option class="contentOption" value="ブーケケース">ブーケケース</option><option class="contentOption" value="フローラルテープグリーン">フローラルテープグリーン</option><option class="contentOption" value="フローラルテープホワイト">フローラルテープホワイト</option><option class="contentOption" value="生花花器">生花花器</option><option class="contentOption" value="手作りキット">手作りキット</option><option class="contentOption" value="サービスブーケ">サービスブーケ</option><option class="contentOption" value="鉢植え">鉢植え</option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="sellNumber">
+			<!-- 備品個数テキストボックス -->
+			<input class="sellNumberTextbox" type="number" name="sell_number" value="0" min="0">
+		</td>
+		<!-- 備品代 -->
+		<td class="sellingPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="sellingPriceTextbox" type="text" name="selling_price" value="200" min="0">
+		</td>
+		<!-- 会計 -->
+		<td class="payCash" colspan="">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="payCashTextbox" type="text" name="pay_cash" value="" min="0">
+		</td>
+	<input class="commodityKeyBox" type="hidden" name="commodity_key" value="29"></tr>
+	<tr class="lecturePermitAccordion">
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">2</td><td style="" colspan="">15-03-12 19:00-21:00</td><td style="" colspan="">船水　美緒</td><td style="" colspan="">1441</td><td style="" colspan="">生花</td><td style="" colspan="">2800</td><td style="display:none;" colspan="">1659</td><td style="display:none;" colspan="">1</td><td style="display:none;" colspan=""></td><td style="display:none;" colspan=""></td><td style="display:none;" colspan="">19:00:00</td><td style="display:none;" colspan="">21:00:00</td><td style="display:none;" colspan="">18875</td><td style="display:none;" colspan="">3</td><td style="display:none;" colspan="">15</td></tr><tr class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<td class="lateTimeSummary">遅刻</td>
+		<!-- 使用pt領域 -->
+		<td class="usePointSummary">使用pt</td>
+		<!-- 備品名領域 -->
+		<td class="contentSummary" colspan="2">備品名</td>
+		<!-- 個数領域 -->
+		<td class="sellNumberSummary">個数</td>
+		<!-- 備品代領域 -->
+		<td class="sellingPriceSummary">備品代</td>
+		<!-- 会計領域 -->
+		<td class="payCashSummary">会計</td>
+	</tr><tr class="accordionContent">
+		<!-- 遅刻 -->
+		<td class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="text" name="late_time" value="0">
+		</td>
+		<!-- 使用ポイント -->
+		<td class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="text" name="use_point" value="0">
+		</td>
+		<!-- 備品名 -->
+		<td class="contentCell" colspan="2">
+			<!-- 備品名セレクトボックス -->
+			<select class="contentSelect" name="content">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option class="contentOption" value="アレンジ袋大">アレンジ袋大</option><option class="contentOption" value="アレンジ袋中">アレンジ袋中</option><option class="contentOption" value="アレンジ袋小">アレンジ袋小</option><option class="contentOption" value="クリアケース大">クリアケース大</option><option class="contentOption" value="クリアケース中">クリアケース中</option><option class="contentOption" value="クリアケース小">クリアケース小</option><option class="contentOption" value="ブーケケース">ブーケケース</option><option class="contentOption" value="フローラルテープグリーン">フローラルテープグリーン</option><option class="contentOption" value="フローラルテープホワイト">フローラルテープホワイト</option><option class="contentOption" value="生花花器">生花花器</option><option class="contentOption" value="手作りキット">手作りキット</option><option class="contentOption" value="サービスブーケ">サービスブーケ</option><option class="contentOption" value="鉢植え">鉢植え</option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="sellNumber">
+			<!-- 備品個数テキストボックス -->
+			<input class="sellNumberTextbox" type="number" name="sell_number" value="0" min="0">
+		</td>
+		<!-- 備品代 -->
+		<td class="sellingPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="sellingPriceTextbox" type="text" name="selling_price" value="200" min="0">
+		</td>
+		<!-- 会計 -->
+		<td class="payCash" colspan="">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="payCashTextbox" type="text" name="pay_cash" value="" min="0">
+		</td>
+	<input class="commodityKeyBox" type="hidden" name="commodity_key" value="29"></tr><tr class="lecturePermitAccordion">
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">3</td><td style="" colspan="">15-03-12 19:00-21:00</td><td style="" colspan="">手島　潤</td><td style="" colspan="">1360</td><td style="" colspan="">生花</td><td style="" colspan="">2800</td><td style="display:none;" colspan="">1719</td><td style="display:none;" colspan="">1</td><td style="display:none;" colspan=""></td><td style="display:none;" colspan=""></td><td style="display:none;" colspan="">19:00:00</td><td style="display:none;" colspan="">21:00:00</td><td style="display:none;" colspan="">18874</td><td style="display:none;" colspan="">3</td><td style="display:none;" colspan="">15</td></tr><tr class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<td class="lateTimeSummary">遅刻</td>
+		<!-- 使用pt領域 -->
+		<td class="usePointSummary">使用pt</td>
+		<!-- 備品名領域 -->
+		<td class="contentSummary" colspan="2">備品名</td>
+		<!-- 個数領域 -->
+		<td class="sellNumberSummary">個数</td>
+		<!-- 備品代領域 -->
+		<td class="sellingPriceSummary">備品代</td>
+		<!-- 会計領域 -->
+		<td class="payCashSummary">会計</td>
+	</tr><tr class="accordionContent">
+		<!-- 遅刻 -->
+		<td class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="text" name="late_time" value="0">
+		</td>
+		<!-- 使用ポイント -->
+		<td class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="text" name="use_point" value="0">
+		</td>
+		<!-- 備品名 -->
+		<td class="contentCell" colspan="2">
+			<!-- 備品名セレクトボックス -->
+			<select class="contentSelect" name="content">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option class="contentOption" value="アレンジ袋大">アレンジ袋大</option><option class="contentOption" value="アレンジ袋中">アレンジ袋中</option><option class="contentOption" value="アレンジ袋小">アレンジ袋小</option><option class="contentOption" value="クリアケース大">クリアケース大</option><option class="contentOption" value="クリアケース中">クリアケース中</option><option class="contentOption" value="クリアケース小">クリアケース小</option><option class="contentOption" value="ブーケケース">ブーケケース</option><option class="contentOption" value="フローラルテープグリーン">フローラルテープグリーン</option><option class="contentOption" value="フローラルテープホワイト">フローラルテープホワイト</option><option class="contentOption" value="生花花器">生花花器</option><option class="contentOption" value="手作りキット">手作りキット</option><option class="contentOption" value="サービスブーケ">サービスブーケ</option><option class="contentOption" value="鉢植え">鉢植え</option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="sellNumber">
+			<!-- 備品個数テキストボックス -->
+			<input class="sellNumberTextbox" type="number" name="sell_number" value="0" min="0">
+		</td>
+		<!-- 備品代 -->
+		<td class="sellingPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="sellingPriceTextbox" type="text" name="selling_price" value="200" min="0">
+		</td>
+		<!-- 会計 -->
+		<td class="payCash" colspan="">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="payCashTextbox" type="text" name="pay_cash" value="" min="0">
+		</td>
+	<input class="commodityKeyBox" type="hidden" name="commodity_key" value="29"></tr><tr class="lecturePermitAccordion">
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">4</td><td style="" colspan="">15-03-12 16:30-18:30</td><td style="" colspan="">佐藤　佳代</td><td style="" colspan="">1345</td><td style="" colspan="">生花</td><td style="" colspan="">2800</td><td style="display:none;" colspan="">1734</td><td style="display:none;" colspan="">1</td><td style="display:none;" colspan=""></td><td style="display:none;" colspan=""></td><td style="display:none;" colspan="">16:30:00</td><td style="display:none;" colspan="">18:30:00</td><td style="display:none;" colspan="">18881</td><td style="display:none;" colspan="">2</td><td style="display:none;" colspan="">15</td></tr><tr class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<td class="lateTimeSummary">遅刻</td>
+		<!-- 使用pt領域 -->
+		<td class="usePointSummary">使用pt</td>
+		<!-- 備品名領域 -->
+		<td class="contentSummary" colspan="2">備品名</td>
+		<!-- 個数領域 -->
+		<td class="sellNumberSummary">個数</td>
+		<!-- 備品代領域 -->
+		<td class="sellingPriceSummary">備品代</td>
+		<!-- 会計領域 -->
+		<td class="payCashSummary">会計</td>
+	</tr><tr class="accordionContent">
+		<!-- 遅刻 -->
+		<td class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="text" name="late_time" value="0">
+		</td>
+		<!-- 使用ポイント -->
+		<td class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="text" name="use_point" value="0">
+		</td>
+		<!-- 備品名 -->
+		<td class="contentCell" colspan="2">
+			<!-- 備品名セレクトボックス -->
+			<select class="contentSelect" name="content">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option class="contentOption" value="アレンジ袋大">アレンジ袋大</option><option class="contentOption" value="アレンジ袋中">アレンジ袋中</option><option class="contentOption" value="アレンジ袋小">アレンジ袋小</option><option class="contentOption" value="クリアケース大">クリアケース大</option><option class="contentOption" value="クリアケース中">クリアケース中</option><option class="contentOption" value="クリアケース小">クリアケース小</option><option class="contentOption" value="ブーケケース">ブーケケース</option><option class="contentOption" value="フローラルテープグリーン">フローラルテープグリーン</option><option class="contentOption" value="フローラルテープホワイト">フローラルテープホワイト</option><option class="contentOption" value="生花花器">生花花器</option><option class="contentOption" value="手作りキット">手作りキット</option><option class="contentOption" value="サービスブーケ">サービスブーケ</option><option class="contentOption" value="鉢植え">鉢植え</option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="sellNumber">
+			<!-- 備品個数テキストボックス -->
+			<input class="sellNumberTextbox" type="number" name="sell_number" value="0" min="0">
+		</td>
+		<!-- 備品代 -->
+		<td class="sellingPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="sellingPriceTextbox" type="text" name="selling_price" value="200" min="0">
+		</td>
+		<!-- 会計 -->
+		<td class="payCash" colspan="">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="payCashTextbox" type="text" name="pay_cash" value="" min="0">
+		</td>
+	<input class="commodityKeyBox" type="hidden" name="commodity_key" value="29"></tr><tr class="lecturePermitAccordion">
+			<td class="permitCheckboxArea" style="" colspan=""><input class="permitCheckbox" type="checkbox" name="permitCheckbox"></td>
+		<td style="" colspan="">5</td><td style="" colspan="">15-03-12 19:00-21:00</td><td style="" colspan="">久田　有佳</td><td style="" colspan="">94</td><td style="" colspan="">生花</td><td style="" colspan="">4680</td><td style="display:none;" colspan="">2109</td><td style="display:none;" colspan="">1</td><td style="display:none;" colspan=""></td><td style="display:none;" colspan=""></td><td style="display:none;" colspan="">19:00:00</td><td style="display:none;" colspan="">21:00:00</td><td style="display:none;" colspan="">18792</td><td style="display:none;" colspan="">3</td><td style="display:none;" colspan="">15</td></tr><tr class="accordionSummary">
+		<!-- 遅刻領域 -->
+		<td class="lateTimeSummary">遅刻</td>
+		<!-- 使用pt領域 -->
+		<td class="usePointSummary">使用pt</td>
+		<!-- 備品名領域 -->
+		<td class="contentSummary" colspan="2">備品名</td>
+		<!-- 個数領域 -->
+		<td class="sellNumberSummary">個数</td>
+		<!-- 備品代領域 -->
+		<td class="sellingPriceSummary">備品代</td>
+		<!-- 会計領域 -->
+		<td class="payCashSummary">会計</td>
+	</tr><tr class="accordionContent">
+		<!-- 遅刻 -->
+		<td class="lateTime">
+			<!-- 遅刻ポイントテキストボックス -->
+			<input class="lateTimeTextbox" type="text" name="late_time" value="0">
+		</td>
+		<!-- 使用ポイント -->
+		<td class="usePoint">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="usePointTextbox" type="text" name="use_point" value="0">
+		</td>
+		<!-- 備品名 -->
+		<td class="contentCell" colspan="2">
+			<!-- 備品名セレクトボックス -->
+			<select class="contentSelect" name="content">
+				<!-- 備品名、セレクトボックスの中身 -->
+				<option class="contentOption" value="アレンジ袋大">アレンジ袋大</option><option class="contentOption" value="アレンジ袋中">アレンジ袋中</option><option class="contentOption" value="アレンジ袋小">アレンジ袋小</option><option class="contentOption" value="クリアケース大">クリアケース大</option><option class="contentOption" value="クリアケース中">クリアケース中</option><option class="contentOption" value="クリアケース小">クリアケース小</option><option class="contentOption" value="ブーケケース">ブーケケース</option><option class="contentOption" value="フローラルテープグリーン">フローラルテープグリーン</option><option class="contentOption" value="フローラルテープホワイト">フローラルテープホワイト</option><option class="contentOption" value="生花花器">生花花器</option><option class="contentOption" value="手作りキット">手作りキット</option><option class="contentOption" value="サービスブーケ">サービスブーケ</option><option class="contentOption" value="鉢植え">鉢植え</option>
+			</select>
+		</td>
+		<!-- 備品個数 -->
+		<td class="sellNumber">
+			<!-- 備品個数テキストボックス -->
+			<input class="sellNumberTextbox" type="number" name="sell_number" value="0" min="0">
+		</td>
+		<!-- 備品代 -->
+		<td class="sellingPrice">
+			<!-- 備品代テキストボックス -->
+			<input class="sellingPriceTextbox" type="text" name="selling_price" value="200" min="0">
+		</td>
+		<!-- 会計 -->
+		<td class="payCash" colspan="">
+			<!-- 使用ポイントテキストボックス -->
+			<input class="payCashTextbox" type="text" name="pay_cash" value="" min="0">
+		</td>
+	<input class="commodityKeyBox" type="hidden" name="commodity_key" value="29"></tr></tbody></table><input class="normalButton ui-button ui-widget ui-state-default ui-corner-all" type="button" value="承認" role="button" aria-disabled="false"></div><div class="lecturePermitList tabPanel" id="lecturePermitList" style="display: none;">
+	</div></div>
