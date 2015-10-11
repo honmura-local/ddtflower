@@ -469,56 +469,6 @@ this.defaultClassworkCostColumns = [
 		return result;
 	};
 
-	/* 
-	 * 関数名:callReservedLessonValue
-	 * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
-	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
-	 		 loopData:ループ対象となるテーブルの行全体の連想配列
-	 		 counter:カウンタ変数
-	 		 rowNumber:行番号
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.06.13
-	 */
-	this.callReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		recordData = loopData[counter];
-		// 開始日時と終了時刻を組み合わせた値を入れる
-		timeSchedule = this.buildHourFromTo(recordData);
-		var cost;			//料金
-		var rest;			//残席
-		// var lessonStatus;	//状況
-		//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
-		if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
-			//料金を空白にする
-			cost = "";
-			//残席を罰にする
-			rest = this.restMarks[0];
-			//状況を予約不可にする
-			lessonStatus = this.classworkStatuses[4];
-		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
-		} else {
-			//料金を入れる
-			cost = this.sumCost(recordData);
-			//状況を入れる
-			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
-			//残席を記号にする
-			rest = this.getRestMark(recordData, timeTableStudents);
-		}
-		//残席がバツのときにはクリックできないことを分かりやすくするために行の背景をグレーにする
-		if(rest == this.restMarks[0]) {
-			//行の色をグレーっぽくする
-			$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
-		}
-		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
-		// 料金の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(cost);
-		// 残席の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(rest);
-		// 残席の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(5).text(lessonStatus);
-	};
 
 	/* 
 	 * 関数名:callEachDayReservedValue
@@ -644,72 +594,7 @@ this.defaultClassworkCostColumns = [
 		}
 	}
 
-	/* 
-	 * 関数名:customizeReserveLessonListTable
-	 * 概要  :会員トップページ、予約授業一覧テーブルのjsonに対して加工を行い、
-	 		加工後のデータをjsonにセットする
-	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
-	 		 counter:カウンタ変数。加工する行を識別するのに使う
-	 		 timeTableStudents:時限ごと受講生徒数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.08.15
-	 */
-	this.customizeReserveLessonTable = function(tableData, counter, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		var recordData = loopData[counter];
-		// 開始日時と終了時刻を組み合わせた値を入れる
-		var timeSchedule = this.buildHourFromTo(recordData);
-		var cost,			//料金
-			rest,			//残席
-		 	lessonStatus;	//状況
-		//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
-		if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
-			//料金を空白にする
-			cost = "";
-			//残席を罰にする
-			rest = this.restMarks[0];
-			//状況を予約不可にする
-			lessonStatus = this.classworkStatuses[4];
-		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
-		} else {
-			//料金を入れる
-			cost = this.sumCost(recordData);
-			//残席を記号にする
-			rest = this.getRestMark(recordData, timeTableStudents);
-			//状況を入れる
-			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
-		}
-		//取得したデータをjsonに入れていく
-		tableData[counter][COLUMN_START_END_TIME]	= timeSchedule;		//時間割開始と終了時刻
-		tableData[counter][SUM_COST]				= cost;				//受講料
-		tableData[counter][COLUMN_LESSON_REST]		= rest;				//残席
-		tableData[counter][COLUMN_LESSON_STATUS]	= lessonStatus;		//予約ステータス
-	};
 
-	/* 
-	 * 関数名:customizeMemberLessonTable
-	 * 概要  :予約中テーブルと予約済みテーブルのjsonに置換後の値を入れる
-	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
-	 		 counter:カウンタ変数。加工する行を識別するのに使う
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.08.15
-	 */
-	this.customizeMemberLessonTable = function(tableData, counter) {
-		//加工を行う行のデータを変数に入れる
-		var recordData = tableData[counter];
-		//年月日と開始日時と終了時刻を組み合わせた値を入れる
-		var lesson_date_time = allDateTime(recordData);
-		//料金を求めるために0で初期化する
-		var cost = sumCost(recordData);
-		//ポイントを求める
-		var point = getPoint(recordData, cost);
-		//取得したデータをjsonに入れていく
-		tableData[counter][LESSON_DATE_TIME]	= lesson_date_time;		//時間割開始と終了時刻
-		tableData[counter][SUM_COST]			= cost;					//レッスン合計受講料
-		tableData[counter][LESSON_POINT]		= point;				//授業加算ポイント
-	};
 //ここまでテーブル加工記述
 
 	/*
@@ -836,23 +721,18 @@ this.defaultClassworkCostColumns = [
 	 * 内容　	　:dialogExに対応しました
 	 */
 	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator) {
-		//テーブルを置換が終えるまで画面に表示しなくする
-		//$(DOT + tableName).hide();
-		//時間差で表現するためにsetTimeOutを使う
-	//	setTimeout(function(){
-			//置換を行うテーブルのデータを取得する
-			var tableData = creator.json[tableName][TABLE_DATA_KEY];
-			//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
-			if(lessonList) {
-				//時間割1限分の生徒の合計人数が入った連想配列を作る
-				var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
-				//テーブルの値を置換する
-				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
-			} else {
-				//テーブルの値を置換する
-				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
-			}
-	//	},1);
+		//置換を行うテーブルのデータを取得する
+		var tableData = creator.json[tableName][TABLE_DATA_KEY];
+		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
+		if(lessonList) {
+			//時間割1限分の生徒の合計人数が入った連想配列を作る
+			var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
+		} else {
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
+		}
 	}
 
 	
