@@ -282,22 +282,6 @@ function createLittleContents(){
 		}); 
 	}
 	
-
-	/*
-	 * 関数名:createTab(selector)
-	 * 引数  :String selector
-	 * 戻り値:なし
-	 * 概要  :タブのコンテンツを作成する。
-	 * 作成日:2015.03.17
-	 * 作成者:T.Masuda
-	 */
-	this.createTab = function (selector){
-		//タブのコンテンツを作成する。
-		$(selector).easytabs({
-			updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
-		});
-	}
-	
 	/*
 	 * 関数名:this.setTabAjaxCompleteEvent = function()
 	 * 引数  :なし

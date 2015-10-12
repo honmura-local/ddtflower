@@ -194,7 +194,7 @@ function memberReserveListDialog(dialog){
 		//ダイアログの位置調整を行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//予約不可能な授業情報をグレーアウトする
-		$(DOT + LESSON_TABLE + TAG_CHILD_TR, CURRENT_DIALOG).has("td:contains('✕')").css('background', '#EDEDED');
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td:contains('✕')").css('background', '#EDEDED');
 	}
 	
 	
@@ -247,8 +247,11 @@ function memberReserveListDialog(dialog){
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
 		//残席の記号を取得する
 		var restMarkNow = $(DOT + LESSON_TABLE + TAG_TR + ':eq(' + (this.recordData.number + 1) + CLOSE_AND_TD_TAG + '.rest', $(CURRENT_DIALOG)).text();
+
 		//会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
-		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]) {
+		//また、日時の関係で予約不可能な授業もダイアログを開かない
+		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
+			&& commonFuncs.isBookable(this.recordData.data)) {
 			var dialogUrl = EMPTY_STRING;	//ダイアログのURLを格納する変数を用意する
 			
 			//予約済みでなく、予約可能な授業であれば
@@ -358,7 +361,7 @@ function memberReserveListDialog(dialog){
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
 				//予約中授業テーブルをリロードして予約状況を最新にする
-				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
+				data[VAR_CREATE_TAG].tableReload(FINISHED_LESSONTABLE);
 				
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);

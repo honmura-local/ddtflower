@@ -76,6 +76,7 @@ div.scrollableArea
 	position: relative;
 	width: auto;
 	height: 100%;
+	font-size: 0px;			/* インラインブロック余白対策 */
 }
 #mixedContent {
 	position: relative;		/* 相対位置を指定する */

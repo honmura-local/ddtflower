@@ -701,21 +701,25 @@ function addlogoutEvent(selector){
 	$(selector).on('click', function(event){
 		
 		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
+		
 		var self = this;	//自信の要素を変数に入れる
+		//日付クラスインスタンスを生成する。
+		var cookieLimit = new Date();
+		//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+		cookieLimit.setTime(0);
+		
+		//管理者画面から会員ページへログインしていなければ
+		if(!commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)){
 		//Ajax通信を行い、ログアウト処理を行う。
 		$.ajax({
 			//ログアウト用PHPをコールする
 			url:'php/LogoutSession.php',
 			async:false,	//同期通信を行う
 			success:function(){	//通信成功時の処理
-				//日付クラスインスタンスを生成する。
-				var cookieLimit = new Date();
 				
-				//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
-				cookieLimit.setTime(0);
 				//cookieにユーザ情報と期限の日付を格納する。
-				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';		//会員ID削除
-				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除
+				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';';	//会員ID削除
+				document.cookie = 'authority=;expires=' + cookieLimit.toGMTString() + ';';	//権限値削除	
 				$(self).closest('.window')[0].instance.destroy();	//先頭のウィンドウを消す
 				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 				//画面遷移の履歴を追加する。
@@ -726,5 +730,11 @@ function addlogoutEvent(selector){
 				alert('通信エラーです。時間をおいて試してください。');
 			}
 		});
+		//管理者画面からの会員ページログインであったら
+		} else {
+			$(self).closest('.window')[0].instance.destroy();	//会員画面のウィンドウを消す
+			document.cookie = 'otherUserId=;expires=' + cookieLimit.toGMTString() + ';';	//ログインを行った会員ID削除
+			commonFuncs.showAdminWindow();	//管理者画面を表示する
+		}
 	});
 }

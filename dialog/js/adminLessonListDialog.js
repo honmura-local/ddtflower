@@ -117,7 +117,7 @@ function adminLessonListDialog(dialog){
 		//ダイアログの位置を修正する
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//授業データがない(授業名、校舎名がないことが基準)行を表示しない
-		$(DOT + LESSON_TABLE + TAG_CHILD_TR, CURRENT_DIALOG).has("td.lesson_name:empty, td.school_name:empty").hide();
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td.lesson_name:empty, td.school_name:empty").hide();
 	}
 
 

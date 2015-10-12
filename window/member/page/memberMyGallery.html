@@ -29,11 +29,16 @@
 					// HTMLのテンプレートデータをを取得する。
 					create_tag.getDomFile('template/common.html');			
 					create_tag.getDomFile('template/gallery.html');			
-					
+
 					// 会員共通のパーツのJSONを取得する。
 					create_tag.getDomFile('template/memberCommon.html');
 					// 会員ページのjsonを読み込む
 					create_tag.getDomFile('template/memberPage.html');
+
+					//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
+					var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
+					create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
+					
 					//ユーザ情報のテキストをDBから取得する
 					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
 					create_tag.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
