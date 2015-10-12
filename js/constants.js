@@ -765,3 +765,5 @@ CHECKED										= 'checked';	//「チェック済み」の意味合いの文字
 SEL_SUGGESTION_AREA							= '.suggestionArea';
 PATH_SEND_MEMBERMAIL_PHP					= 'php/mailSendEntryMemberMail.php';
 PATH_SEND_SUGGESTION_PHP					= 'php/mailSendEntrySuggest.php';
+
+RESERVE_AFTER_DEADLINE						= '予約締切';

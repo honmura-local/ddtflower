@@ -24,7 +24,11 @@
 				create_tag.getJsonFile('source/blogcontent.json');		// テスト用のブログJSONデータを取得する。
 				create_tag.getDomFile('template/common.html');			// 共通パーツのDOMを取得する
 				create_tag.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
-			
+
+				//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
+				var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
+				create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
+				
 				//ユーザ情報のテキストをDBから取得する
 				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
 				// パーツのテンプレートのDOMを取得する。

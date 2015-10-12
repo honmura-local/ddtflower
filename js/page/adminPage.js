@@ -678,9 +678,10 @@ function jumpToMemberPage() {
  */
 function loginInsteadOfMember (memberId) {
 	//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
-	create_tag.json.accountHeader.user_key.value = memberId;
+	//create_tag.json.accountHeader.user_key.value = memberId;
+	document.cookie = 'otherUserId=' + memberId;	//cookieに会員IDを追加する
 	//会員ページを呼び出す
-	callPage('memberPage.html');
+	$('.window[name="admin"]')[0].instance.callPage('window/member/page/memberTop.html');
 }
 
 /* 

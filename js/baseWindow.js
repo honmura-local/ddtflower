@@ -44,7 +44,7 @@ function baseWindow(url, argumentObj, returnObj){
 			}
 	};
 
-	this.WINDOW_ZINDEX_COEFFICIENT = 500;	//ウィンドウごとのz-indexの値の差
+	this.WINDOW_ZINDEX_COEFFICIENT = 250;	//ウィンドウごとのz-indexの値の差
 	
 	/* 関数名:load
 	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。

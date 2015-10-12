@@ -49,46 +49,27 @@ function adminLessonListDialog(dialog){
 	};
 
 	/* 関数名:customizeJson
-	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
-			この中で使っている関数はjs/customizeTableData.js で定義されているものを使う
+	 * 概要　:constructionContentで取得したJSONの加工を行う
 	 * 引数　:なし
 	 * 返却値:なし
 	 * 設計者　:H.Kaneko
-	 * 作成日　:2015.0816
-	 * 作成者　:T.Yamamoto
-	 */
-	this.customizeJson = function(){
-		// //テーブルのデータを連想配列に入れる
-		// var tableData = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY];
-		// //時限ごとの人数を取り出す
-		// var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
-		// //jsonに加工した値を入れる(customizeAdminLessonTableは関数名、レコードの加工データをjsonに追加する。);
-		// commonFuncs.customizeTableData(tableData, this.customizeAdminLessonTable, timeTableStudents);
-		
-		//テーブル置換用の時限データを取得する
-		// this.getReplacedTableData(LESSON_TABLE);
-		// var tableData = this.create_tag.json.lessonTable.tableData;
-		// var tableDataLength = tableData.length;
-		// for(var i = 0; i < tableDataLength; i++){
-		// 	this.customizeAdminLessonTable(this.create_tag.json.lessonTable.tableData, i, this.timeStudentsCount);
-		// }
-	};
-
-	/* 関数名:getReplacedTableData
-	 * 概要　:存在する時限情報を取得する
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0815
+	 * 作成日　:2015.1011
 	 * 作成者　:T.Masuda
 	 */
-	this.getReplacedTableData = function(tableName){
+	this.customizeJson = function(){
 		//授業のデータを取得する
-		var tableData = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY];
-		//授業のデータから、その日の存在する時限一覧を取得する。
-		this.timeStudentsCount = commonFuncs.getTotalStudentsOfTimeTable(tableData);
-	}
-	
-	
+		var tableData = $.extend([], true, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY]);
+		//テーブル置換用の時限データを取得する
+		var replaceData = commonFuncs.getRestAndReserveData(tableData);
+
+		//授業データを走査し、列データを追加していく
+		//※costはNaNになっているので追加しない。
+		for(var i = 0; i < tableData.length; i++){
+			tableData[i].start_and_end_time = replaceData.start_and_end_time[i];
+			tableData[i].rest = replaceData.rest[i];
+			tableData[i].lessonStatus = replaceData.lessonStatus[i];
+		}
+	};
 	
 	/* 関数名:dispContentsMain
 	 * 概要　:画面パーツ設定用関数のメイン部分作成担当関数
@@ -112,20 +93,15 @@ function adminLessonListDialog(dialog){
 	 * 返却値:なし
 	 * 作成日　:2015.0815
 	 * 作成者　:T.Yamamoto
-	 * 修正日　:2015.0822
+	 * 修正日　:2015.1011
 	 * 修正者　:T.Masuda
-	 * 内容	　:テーブルの行数を取得するコードを関数化しました。
+	 * 内容	　:テーブルを作成するか否かの判定をなくしました
 	 */
 	this.createTable = function() {
-		//データがなければテーブルは作らない
-		if(commonFuncs.getTableJsonLength(this[VAR_CREATE_TAG], LESSON_TABLE) != 0) {
-			//授業一覧テーブルの外側の領域を作る
-			this[VAR_CREATE_TAG].outputTag(TABLE_OUTER, TABLE_OUTER, $(this.dialog));
-			//授業のデータ一覧テーブルを作る
-			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(DOT+TABLE_OUTER, this.dialog));
-			//テーブルの値をクライアント側で編集して画面に表示する
-			commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
-		}
+		//授業一覧テーブルの外側の領域を作る
+		this[VAR_CREATE_TAG].outputTag(TABLE_OUTER, TABLE_OUTER, $(this.dialog));
+		//授業のデータ一覧テーブルを作る
+		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(DOT+TABLE_OUTER, this.dialog));
 	}
 
 	/* 関数名:setConfig
@@ -140,6 +116,8 @@ function adminLessonListDialog(dialog){
 		this.setDialogButtons(this.createNew);
 		//ダイアログの位置を修正する
 		this.setDialogPosition(POSITION_CENTER_TOP);
+		//授業データがない(授業名、校舎名がないことが基準)行を表示しない
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td.lesson_name:empty, td.school_name:empty").hide();
 	}
 
 
@@ -245,36 +223,6 @@ function adminLessonListDialog(dialog){
 
 		return argumentObj;	//生成したオブジェクトを返す
 	}
-
-	/* 
-	 * 関数名:customizeAdminLessonTable
-	 * 概要  :管理者、授業一覧テーブルの値必要な値をクライアント側で設定してjsonに入れる
-	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
-	 		 counter:カウンタ変数。加工する行を識別するのに使う
-	 		 timeTableStudents:時限ごとに予約している生徒の数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.08.16
-	 */
-	this.customizeAdminLessonTable = function(tableData, counter, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		var recordData = tableData[counter];
-		//レッスンテーマ名または店舗名が空であるならばその行を飛ばす
-		if(recordData[COLUMN_NAME_LESSON_NAME] && recordData[COLUMN_NAME_SCHOOL_NAME]) {
-			// 開始日時と終了時刻を組み合わせた値を入れる
-			var timeSchedule = commonFuncs.buildHourFromTo(recordData);
-			//状況を入れる
-			var lessonStatus = commonFuncs.getClassworkStatus(recordData, timeTableStudents);
-			//残席を記号にする
-			var rest = commonFuncs.getRestMark(recordData, timeTableStudents);
-			//取得したデータをjsonに入れていく
-			tableData[counter][START_END_TIME]	= timeSchedule;	//時間割開始と終了時刻
-			tableData[counter][LESSON_STATUS]	= lessonStatus;	//レッスンの開講状況ステータス
-			tableData[counter][LESSON_REST]		= rest;			//レッスン残席記号
-		}
-
-		return tableData;
-	};
 
 }
 

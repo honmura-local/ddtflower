@@ -431,7 +431,7 @@ function createTag(){
 		//ナンバリングのオブジェクトがあれば
 		if('numbering' in this.json && '1' in this.json.numbering){
 			//ナンバリング用Tagを表示する。
-			this.outputTag('numbering', 'numbering', '.numberingOuter');
+			this.outputTag('numbering', 'numbering', $(targetArea).siblings('.numberingOuter'));
 			//現在表示中のページに対応するナンバリングの色を変える。
 			this.selectPageNumber(displayPage);
 		}
@@ -588,7 +588,7 @@ function createTag(){
 		//メンバのJSONルートにある、引数の文字列と一致するキーのオブジェクトのtableキーを走査対象にする。
 		//tableキーの文字列は定数で定義してあるので任意で変更可。
 		//@mod 2015.0809 T.Masuda 引数のオブジェクトから記事数を取得するようにしましたなければメンバを見ます。
-		$searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
+		var $searchObject = articles !== void(0)? articles[TABLE_DATA_KEY]: this.json[jsonName][TABLE_DATA_KEY];
 
 		//配列であれば
 		if($.isArray($searchObject)){
@@ -1322,7 +1322,7 @@ function createTag(){
 			//trタグを取得する
 			var records = $('.recordWrapper tr');
 			//tableタグを外す
-			unwrapTable('.'+records.attr('class'));
+			$('.' + records.attr('class')).unwrap().unwrap();
 		}
 	}
 	

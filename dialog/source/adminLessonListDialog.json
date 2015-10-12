@@ -3,26 +3,39 @@
         "class":"tableArea"
     },
     "lessonTable":{
-        "db_getQuery":"SELECT start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key ,timetable_inf.id AS timetable_key FROM  time_table_day LEFT JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key RIGHT JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
+        "db_getQuery":"SELECT '' AS start_and_end_time, start_time ,school_name ,lesson_name ,classwork_note ,end_time ,classwork.lesson_key AS lesson_key ,time_table_day.lesson_date AS lesson_date ,order_students ,classwork.max_students AS max_students ,classwork.min_students AS min_students ,lesson_inf.min_students AS default_min_students ,time_table_day.max_num AS max_num ,time_table_day.min_num AS min_num ,classwork_status ,SUBSTRING(NOW(), 1,10) AS today ,classwork.id AS classwork_key ,classroom ,school_inf.id AS school_key ,time_table_day.id AS time_table_day_key ,timetable_inf.id AS timetable_key , '' AS rest, '' AS lessonStatus FROM  time_table_day LEFT JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = 'lessonDate' INNER JOIN lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN school_inf  ON school_inf.id = lesson_inf.school_key RIGHT JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key ORDER BY start_time ASC;",
         "lessonDate":{
             "value":""
         },
          "config": {
             "columns": {
-                "start_time": {
+                "start_and_end_time": {
                     "columnName": "時間割"
                 },
-                "school_name": {
-                    "columnName": "店舗"
+                "start_time": {
+                    "style": "display:none;"
                 },
-                "lesson_name": {
-                    "columnName": "テーマ"
-                },
-                "classwork_note": {
+                "rest": {
                     "columnName": "残席"
                 },
+                "lessonStatus": {
+                    "columnName": "状況"
+                },
+                "school_name": {
+                    "columnName": "店舗",
+                    "className": "school_name"
+                },
+                "lesson_name": {
+                    "columnName": "テーマ",
+                    "className": "lesson_name"
+                },
+                "classwork_note": {
+                    "columnName": "残席",
+                    "style":"display:none;"
+                },
                 "end_time": {
-                    "columnName":"状況"
+                    "columnName":"状況",
+                    "style":"display:none;"
                 },
                 "lesson_key": {
                     "style":"display:none;"

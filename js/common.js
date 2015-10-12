@@ -14,38 +14,40 @@
  */
 function common(){
 
+//以下、授業一覧テーブル作成用のデータ
 //授業状況
 this.classworkStatuses = {
-		CAN_RESERVED:"予約可能"
-		,HELD_ALREADY:"開催済み"
-		,STOP_RESERVED_2:"中止"
-		,STOP_RESERVED_3:"中止"
-		,CANNOT_RESERVED:"予約不可"
+		0:"予約可能"
+		,1:"開催済み"
+		,2:"中止"
+		,3:"中止"
+		,4:"予約不可"
+		,5:"予約締切"
+		,6:"満席"
 };
 
 //授業情報補足
-this.noLongerBookable = "予約締切";
-this.fullHouse = "満席";
 
 //ユーザ授業状況
 this.userClassworkStatuses = {
-	HAS_RESERVED_0:"予約済み"
-	,HAS_RESERVED_1:"予約済み"
-	,RECEIPT:"受付"
-	,HAS_LECTURES:"受講済み"
-	,CANCEL_CUSTOMER:"キャンセル(本人)"
-	,CANCEL_ADMIN:"キャンセル(管理者)"
-	,STOP_LESSON:"中止"
+		0:"予約済み"
+		,1:"予約済み"
+		,2:"受付"
+		,3:"受講済み"
+		,10:"キャンセル(本人)"
+		,11:"キャンセル(管理者)"
+		,12:"中止"
 };
 
 //授業残席
 this.restMarks = {
-	MARK_CROSS:"✕"
-	,MARK_TRIANGLE:"△"
-	,MARK_CIRCLE:"◯"
-	,MARK_DOUBLE_CIRCLE:"◎"
+	0:"✕"
+	,1:"△"
+	,4:"◯"
+	,7:"◎"
 };
 
+//費用関連の列名
 this.classworkCostColumns = [
 	'user_classwork_cost'
 	,'user_classwork_cost_aj'
@@ -54,23 +56,13 @@ this.classworkCostColumns = [
 	,'extension_cost'
 ];
 
+//デフォルト料金関連の列名
 this.defaultClassworkCostColumns = [
 	'default_user_classwork_cost'
 	,'default_flower_cost'
 ];
 
-	
-	/** クラス名:theFunc
-	 * 概要　:コピペ用関数
-	 * 引数	:なし
-	 * 作成日:2015.0813
-	 * 作成者:T.Masuda
-	 */
-	this.theFunc = function(){
-		
-	}
-
-//ここからテーブル加工記述
+//以上、授業一覧テーブル作成用のデータ
 
 	/* 
 	 * 関数名:getTotalStudentsOfTimeTable
@@ -79,33 +71,33 @@ this.defaultClassworkCostColumns = [
 	 * 返却値:時間ごとの合計人数が入った連想配列
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.23
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.11
+	 * 内容　:カウンター変数を削りました。$.eachのコールバック関数の引数を代わりに使うようにしました。
 	 */
 	 this.getTotalStudentsOfTimeTable = function(rowData) {
-		//カウンターを作る
-		var counter = 0;
 		//時限の値を変数に入れる
-		var lessonTime = rowData[counter][COLUMN_NAME_START_TIME];
+		var lessonTime = rowData[0][COLUMN_NAME_START_TIME];
 		//生徒の数を連想配列に入れる
 		var students = {};
 		//生徒の数を0で初期化する
 		students[lessonTime] = 0;
 
 		//取り出した行の数だけループする
-		$.each(rowData, function() {
+		$.each(rowData, function(i) {
 			// 時限が同じときは合計の変数に足す
-			if(lessonTime === rowData[counter][COLUMN_NAME_START_TIME]) {
+			if(lessonTime === rowData[i][COLUMN_NAME_START_TIME]) {
 				// 合計の変数に値を足す
-				students[lessonTime] += Number(rowData[counter][COLUMN_NAME_ORDER_STUDENTS]);
+				students[lessonTime] += Number(rowData[i][COLUMN_NAME_ORDER_STUDENTS]);
 			// 違う時限になった時の処理
 			} else {
 				// 時限の値を変数に入れる
-				lessonTime = rowData[counter][COLUMN_NAME_START_TIME];
+				lessonTime = rowData[i][COLUMN_NAME_START_TIME];
 				//生徒の数を0で初期化する
 				students[lessonTime] = 0;
 			}
-			//カウンタ変数をインクリメントする
-			counter++;
 		});
+		
 		// 生徒の合計人数を返す
 		return students;
 	};
@@ -115,15 +107,25 @@ this.defaultClassworkCostColumns = [
 	 * @param string 授業ステータス
 	 * @return bool 中止かどうか
 	 */ 
+	/* 
+	 * 関数名:isCanceled
+	 * 概要  :授業が中止かどうか判定する
+	 * 引数  :String classworkStatus 授業ステータスの文字列
+	 * 返却値:boolean 中止か否かの判定
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 */
 	this.isCanceled = function(classworkStatus) {
+		var retBoo = false;	//返却用変数を用意する
+		
 		// 授業が中止するかどうかを見るための配列を作る
 		var classworkCancelStatus = new Array(3,2);
 		// 授業ステータスがキャンセルならtrueを返す
 		 if($.inArray(classworkStatus, classworkCancelStatus) >= 0) {
-			// if(classworkCancelStatus.indexOf(classworkStatus == -1)) {
-			return true;
+			 retBoo = true;	//trueを返すようにする
 		}
-		return false;
+		 
+		return retBoo;	//判定を返す
 	}
 
 	/**
@@ -131,12 +133,26 @@ this.defaultClassworkCostColumns = [
 	 * @param string 授業ステータス
 	 * @return bool 開催済かどうか
 	 */ 
+	/* 
+	 * 関数名:hasDone
+	 * 概要  :授業が開催済かどうか判定する
+	 * 引数  :String classworkStatus 授業ステータスの文字列
+	 * 返却値:boolean 中止か否かの判定
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnの書き方を変えました
+	 */
 	this.hasDone = function(classworkStatus) {
+		var retBoo = false;	//返却用変数を用意する
+		
 		// 授業が開催済みであればtrueを返す
 		if(classworkStatus == 1) {
-			return true;
+			 retBoo = true;		//trueを返すようにする
 		}
-		return false;
+		
+		return retBoo;	//判定を返す
 	}
 
 	/**
@@ -145,9 +161,22 @@ this.defaultClassworkCostColumns = [
 	 * @param mixed rowdata 授業情報を格納した連想配列
 	 * @param string target ターゲットのkey
 	 */ 
+	/* 
+	 * 関数名:hasDone
+	 * 概要  :連想配列に引数のキーがあるかどうか確認する。なかったら例外を吐く
+	 * 引数  :Object rowData:行データの連想配列(用途自体は行データに限定しない)
+	 * 　　  :String target:確認対象のキー
+	 * 返却値:なし
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:コメントを追記しました
+	 */
 	this.isExist = function(rowData, target) {
-		// 連想配列にtargetのkeyがなければ例外を投げる
+		// 連想配列にtargetのkeyがなければ
 		if(!target in rowData) {
+			//例外を投げる
 			throw new Error("can't select status. no " + target);
 		}
 	}
@@ -158,7 +187,21 @@ this.defaultClassworkCostColumns = [
 	 * @param int timeTableStudents 時間割全体の予約人数
 	 * @return int 残席数
 	 */ 
+	/* 
+	 * 関数名:getRestOfSheets
+	 * 概要  :授業コマの残席を算出する
+	 * 引数  :Object rowData:行データの連想配列
+	 * 　　  :Object timeTableStudents:時間帯あたりの予約人数をまとめたオブジェクト
+	 * 返却値:なし
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnを1つにまとめました
+	 */
 	this.getRestOfSheets = function(rowData, timeTableStudents) {
+		var retCount = 0;	//返却値用変数を用意する
+		
 		// 指定の時間割の数を取り出す
 		var targetTimeSchedule = rowData[COLUMN_NAME_START_TIME];
 		// max_num列がなければ例外処理をする
@@ -175,12 +218,14 @@ this.defaultClassworkCostColumns = [
 		var students = rowData[COLUMN_NAME_ORDER_STUDENTS];	// 現予約人数
 		// 時間割としての残りの人数
 		var timeTableRest = maxNum - timeTableStudents[targetTimeSchedule];	// 時間割としての残り
-		var classworkRest = maxStudents - students;	// 授業コマとしての残り
-		// 時間割としてのが授業コマとしての数以下であるなら時間割基準の人数を返す
-		if(timeTableRest <= classworkRest) {
-			return timeTableRest;
+		retCount = maxStudents - students;	// 授業コマとしての残り
+
+		// 時間割としてのが授業コマとしての数以下であるなら
+		if(timeTableRest <= retCount) {
+			retCount = timeTableRest;	//時間割基準の人数を返すようにする
 		}
-		return classworkRest;
+		
+		return retCount;	//算出した結果を返す
 	}
 
 	/**
@@ -188,12 +233,27 @@ this.defaultClassworkCostColumns = [
 	 * @param mixed rowdata 授業情報を格納した連想配列
 	 * @return bool 満席かどうか
 	 */ 
+	/* 
+	 * 関数名:isFull
+	 * 概要  :満席かどうか判定する
+	 * 引数  :Object rowData:行データの連想配列
+	 * 　　  :Object timeTableStudents:時間帯あたりの予約人数をまとめたオブジェクト
+	 * 返却値:boolean:判定結果
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnを1つにまとめました
+	 */
 	 this.isFull = function(rowData, timeTableStudents) {
+		 var retBoo = false;	//返却値用変数を用意する
+		 
 	 	// 残席が0以下であればtrueを返す
 		if(this.getRestOfSheets(rowData, timeTableStudents) <= 0) {
-			return true;
+			retBoo = true;	//trueを返すようにする
 		}
-		return false;
+		
+		return retBoo;	//結果を返す
 	}
 
 	/**
@@ -202,100 +262,176 @@ this.defaultClassworkCostColumns = [
 	 * @param int addDays 加算日。マイナス指定でn日前も設定可能
 	 * @return 求まったdateオブジェクト
 	 */
+	/* 
+	 * 関数名:computeDate
+	 * 概要  :満席かどうか判定する
+	 * 引数  :Date date:操作対象の日付
+	 * 　　  :int addDays:加算日。マイナス指定でn日前も設定可能
+	 * 返却値:date:求まったdateオブジェクト
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:コメントを追記しました。
+	 */
 	this.computeDate = function(date, addDays) {
-	    var baseSec = date.getTime();
-	    var addSec = addDays * 86400000; // 日数 * 1日のミリ秒数
-	    var targetSec = baseSec + addSec;
-	    date.setTime(targetSec);
-	    return date;
+	    var baseSec = date.getTime();		//クライアントの現在時刻を取得する
+	    var addSec = addDays * 86400000; 	//日数 * 1日のミリ秒数	で加算するミリ秒数を算出する
+	    var targetSec = baseSec + addSec;	//現在時刻と加算するミリ秒を加算する
+	    date.setTime(targetSec);			//捜査対象の日付に算出した値をセットする
+	    
+	    return date;						//日付を返す
 	}
 
+	/**
+	 * 授業が予約可能かを判定する
+	 * @param rowData 授業データのオブジェクト
+	 * @return 予約可能かどうかの判定
+	 */
+	/* 
+	 * 関数名:isBookable
+	 * 概要  :授業が予約可能かを判定する
+	 * 引数  :Object rowData:授業データのオブジェクト
+	 * 返却値:boolean:予約可能かどうかの判定
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnを1つにまとめました。コメントを追記しました
+	 */
 	this.isBookable = function(rowData) {
-		this.isExist(rowData, COLUMN_NAME_LESSON_DATE);
-		var lessonDateStr = rowData[COLUMN_NAME_LESSON_DATE];	// レッスン日
-		var lessonDate = new Date(lessonDateStr);
-		this.isExist(rowData, COLUMN_NAME_STOP_ORDER_DATE);
-		var stopOrderDate = rowData[COLUMN_NAME_STOP_ORDER_DATE];	// 締切日数
-		this.isExist(rowData, COLUMN_NAME_TODAY);
-		var todayStr = rowData[COLUMN_NAME_TODAY];	// 今日
-		var today = new Date(todayStr);
+		var retBoo = true;	//返却値用の変数を用意、trueで初期化する
 		
-		// レッスン日の締切日数前を過ぎてたら締切
+		this.isExist(rowData, COLUMN_NAME_LESSON_DATE);			//授業データ内に日付データがあるかチェックする
+		var lessonDateStr = rowData[COLUMN_NAME_LESSON_DATE];	//授業日付を取得する
+		var lessonDate = new Date(lessonDateStr);				//授業日付で新たにオブジェクトを作る
+		this.isExist(rowData, COLUMN_NAME_STOP_ORDER_DATE);		//授業データ内に締切日数があるかチェックする
+		var stopOrderDate = rowData[COLUMN_NAME_STOP_ORDER_DATE];	// 締切日数を取得する
+		this.isExist(rowData, COLUMN_NAME_TODAY);					//授業データ内に今日日付データがあるかをチェックする
+		var todayStr = rowData[COLUMN_NAME_TODAY];					//今日日付データを取得する
+		var today = new Date(todayStr);								//今日日付データのオブジェクトを作る
+		//予約締切の日付を算出する
 		var limitDate = this.computeDate(lessonDate, -1 * stopOrderDate);
+		// レッスン日の締切日数前を過ぎてたら締切となる
 		if(today.getTime() >= limitDate.getTime()) {
-			return false;
+			retBoo = false;	//falseを返すようにする
 		}
-		return true;
+		
+		return retBoo;	//判定結果を返す
 	}
 
-	/*
+	/**
 	* 授業のステータスを表す文字列を取得する
 	* @param mixed rowdata 授業情報を格納した連想配列
 	* @param int timeTableStudents 時間割全体の予約人数
 	* @return string ステータス文字列
 	*/ 
+	/* 
+	 * 関数名:getClassworkStatus
+	 * 概要  :授業のステータスを表す文字列を取得する
+	 * 引数  :Object rowData:行データの連想配列
+	 * 　　  :Object timeTableStudents:時間帯あたりの予約人数をまとめたオブジェクト
+	 * 返却値:String:授業のステータスの文字列
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnを1つにまとめました。コメントを追記しました
+	 */
 	this.getClassworkStatus = function(rowData, timeTableStudents) {
+		var retStr = EMPTY_STRING;	//返却用の変数を用意する
+	
+		//最大予約人数が0なら
 		if (rowData[COLUMN_NAME_MAX_NUM] == 0) {
-			return this.classworkStatuses[RECEIPT];
-		}
-		// 授業コマステータス中止は問答無用で"中止"を表示
-		this.isExist(rowData, COLUMN_NAME_CLASSWORK_STATUS);
-		// 授業の状態を変数に入れる
-		var classworkStatus = rowData[COLUMN_NAME_CLASSWORK_STATUS];
-		// 授業が中止であるなら中止であることの結果を返す
-		if(this.isCanceled(classworkStatus)) {
-			return this.classworkStatuses[classworkStatus];
-		}
-		
-		// 予約ステータス取得 
-		this.isExist(rowData, COLUMN_NAME_USER_WORK_STATUS);
-		var userClassworkStatus = rowData[COLUMN_NAME_USER_WORK_STATUS];
-		
-		// 授業終了時の判断
-		if(this.hasDone(classworkStatus)) {
-			if(userClassworkStatus) {
-				return this.userClassworkStatuses[userClassworkStatus];
+			retStr = this.classworkStatuses[RECEIPT];	//中止
+		//最大予約人数が1以上なら
+		} else {
+			//行データから授業ステータスの列の存在を確認する
+			this.isExist(rowData, COLUMN_NAME_CLASSWORK_STATUS);
+			// 授業ステータスの値をを変数に入れる
+			var classworkStatus = rowData[COLUMN_NAME_CLASSWORK_STATUS];
+			// 授業が中止であるなら
+			if(this.isCanceled(classworkStatus)) {
+				//中止
+				retStr = this.classworkStatuses[classworkStatus];
+			//中止以外であれば更なる判定に入る
+			} else {
+				//行データから予約ステータスの列の存在を確認する 
+				this.isExist(rowData, COLUMN_NAME_USER_WORK_STATUS);
+				//予約ステータスの値を取得する
+				var userClassworkStatus = rowData[COLUMN_NAME_USER_WORK_STATUS];
+				
+				// 授業終了時の判断。開催済みであれば
+				if(this.hasDone(classworkStatus)) {
+					if(userClassworkStatus) {	//予約ステータスが0でなければ
+						//予約ステータスに応じた文字列を返すようにする
+						retStr = this.userClassworkStatuses[userClassworkStatus];
+					} else {	//予約ステータスが0なら
+						//授業ステータスに応じた文字列を返すようにする
+						retStr = this.classworkStatuses[classworkStatus];
+					}
+				//満席であれば
+				} else if(this.isFull(rowData, timeTableStudents)) {
+					//満席のステータスの文字列を返すようにする
+					retStr = this.classworkStatuses[6];
+				//予約可能であれば
+				} else if(this.isBookable(rowData)) {
+					if(userClassworkStatus) {	//予約ステータスが0でなければ
+						//予約ステータスに応じた文字列を返すようにする
+						retStr = this.userClassworkStatuses[userClassworkStatus];
+					} else {	//予約ステータスが0なら
+						//授業ステータスに応じた文字列を返すようにする
+						retStr = this.classworkStatuses[classworkStatus];
+					}
+				//どれにも当てはまらなければ締切判定
+				} else {
+					//締切リターン締切の文字列を返すようにする
+					retStr = this.classworkStatuses[5];
+				}
 			}
-			return this.classworkStatuses[classworkStatus];
 		}
 		
-		if(this.isFull(rowData, timeTableStudents)) {
-			return this.fullHouse;
-		}
-		
-		// 締め切られてないかの判断
-		if(this.isBookable(rowData)) {
-			if(userClassworkStatus) {
-				return this.userClassworkStatuses[userClassworkStatus];
-			}
-			return this.classworkStatuses[classworkStatus];
-		}
-		
-		return this.noLongerBookable;	// 締切リターン
+		return retStr;	//文字列を返す
 	}
 
-	/*
-	* 授業の残席を表す文字を取得する
-	* @param mixed rowdata 授業情報を格納した連想配列
-	* @param int timeTableStudents 時間割全体の予約人数
-	* @return string 残席文字
-	*/ 
-	this.getRestMark = function(rowData, timeTableStudents) {
+	/* 
+	 * 関数名:getRestMark
+	 * 概要  :授業データから授業の予約状況を解析して適切な予約可否状態のマークを返す(◎、✕等)
+	 * 引数  :Object rowData:授業データ
+	 * 引数  :int timeTableStudents:時間帯全体の受講者数
+	 * 引数  :String lessonStatus:予約可否状態の文字列(「予約締切」等)
+	 * 返却値:String 予約可否状態のマーク
+	 * 作成者:T.Masuda
+	 * 作成日:2015.10.11
+	 */
+	this.getRestMark = function(rowData, timeTableStudents, lessonStatus) {
+		//授業の時間帯全体の残席数を取得する
 		var rest = this.getRestOfSheets(rowData, timeTableStudents);
-		var restMark = "";
-		if (rowData[COLUMN_NAME_MAX_NUM] == 0 ||
+		var restMark = "";	//返却用の値保持用の変数を用意する
+		//単に予約不可の授業であった場合
+		if (lessonStatus == RESERVE_AFTER_DEADLINE || 
+			rowData[COLUMN_NAME_MAX_NUM] == 0 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_RESERVED_1 ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == RECEIPT ||
 			rowData[COLUMN_NAME_CLASSWORK_STATUS] == HAS_LECTURES) {
+			
+			//✕マークを返すようにする
 			restMark = this.restMarks[MARK_CROSS];
+		//残席数をチェックしてマークを算出する必要がある場合
 		} else {
+			//マーク一覧のオブジェクトを走査する
 			for(var key in this.restMarks) {
+				//キー(数値)が残席数より大きければ
 				if(key > rest) {
-					break;
+					break;	//走査を打ち切る
 				}
+				
+				//マークを入れ替える
 				restMark = this.restMarks[key];
 			}
 		}
+		
+		//マークを返す
 		return restMark;
 	};
 
@@ -319,38 +455,72 @@ this.defaultClassworkCostColumns = [
 		return resultPoint;
 	};
 
-	/*
+	/**
 	 * 1行中の各料金の合計を得る
 	 * @param rowData mixed 対象の列
 	 * @return int 料金合計
 	 */
+	/* 
+	 * 関数名:sumCost
+	 * 概要  :1行中の各料金の合計を得る
+	 * 引数  :Object rowData:行データ
+	 * 返却値  :int 算出した金額
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:コメントを追記しました
+	 */
 	this.sumCost = function(rowData) {
+		//行データに費用の列があるかチェックする
 		this.isExist(rowData, COLUMN_USER_CLASSWORK_COST);
 		// 予約済でないならデフォルトの値を使う
-		if(rowData[COLUMN_USER_CLASSWORK_COST] === "") {
+		if(rowData[COLUMN_USER_CLASSWORK_COST] === EMPTY_STRING) {
+		//デフォルトの費用を返す
 			return this.getDefaultCost(rowData);
 		}
 		
-		var result = 0;
+		var result = 0;	//算出結果をまとめる変数を宣言、初期化する
+		
+		//行データから費用関連の列を走査する
 		for (var i = 0; i < this.classworkCostColumns.length; i ++) {
-			this.isExist(rowData, this.classworkCostColumns[i]);
+			this.isExist(rowData, this.classworkCostColumns[i]);	//各費用の列の存在をチェックする
+			//費用を足していく
 			result += Number(rowData[this.classworkCostColumns[i]]);
-			
 		}
-		return result;
+		
+		return result;	//算出した費用を返す
 	};
 
-	/*
+	/**
 	 * 1行中の各デフォルト料金の合計を得る
 	 * @param rowData mixed 対象の列
 	 * @return int デフォルト料金合計
 	 */
+	/* 
+	 * 関数名:getDefaultCost
+	 * 概要  :1行中の各料金の合計を得る
+	 * 引数  :Object rowData:行データ
+	 * 返却値  :int 算出した金額
+	 * 作成者:A.Honmura
+	 * 作成日:2015.06.
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.12
+	 * 内容　:returnを1つにまとめました。コメントを追記しました
+	 */
 	this.getDefaultCost = function(rowData) {
-		var result = 0;
+		
+		var result = 0;	//算出結果の金額用の変数を宣言、初期化する
+		
+		//行データ中の各デフォルト料金の列を走査する
 		for (var i = 0; i < this.defaultClassworkCostColumns.length; i ++) {
+			//列の存在をチェックする
 			this.isExist(rowData, this.defaultClassworkCostColumns[i]);
+			//金額を足していく
 			result += Number(rowData[this.defaultClassworkCostColumns[i]]);
 		}
+		
+		//算出した結果の金額を返す
 		return result;
 	}
 
@@ -373,6 +543,25 @@ this.defaultClassworkCostColumns = [
 		return resultString;
 	}
 
+	/* 
+	 * 関数名:deleteStringBack
+	 * 概要  :オブジェクトのキーの値の文字列の後方の文字を消す
+	 * 引数  :Object target:処理対象のオブジェクト
+	 		:String key :処理対象のオブジェクトのキー
+	 		:int number:消す文字数
+	 * 返却値  :String :加工した文字列を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.10.11
+	 */
+	this.deleteStringBack = function(target, key, number) {
+		//オブジェクトから文字列を取り出す
+		var retStr = target[key];
+		//後方の文字を消す
+		retStr = retStr.substr(0, (retStr.length - number));
+		//加工した文字列を返す
+		return retStr;
+	}
+	
 	/* 
 	 * 関数名:frontTwoStringDelete
 	 * 概要  :第一引数の配列から第二引数のキーの値について、その値の前から2文字を削除する
@@ -399,14 +588,19 @@ this.defaultClassworkCostColumns = [
 	 * 返却値  :resultTimeschedule : 時間割の結果
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.13
+	 * 修正者:T.Masuda
+	 * 修正日:2015.1011
+	 * 内容　:文字列加工の関数を変えました
 	 */
 	this.buildHourFromTo = function(rowData) {
 		// 時間割の始まりの時間を求める
-		var start_time = this.backThreeStringDelete(rowData, COLUMN_NAME_START_TIME);
+		var start_time = this.deleteStringBack(rowData, COLUMN_NAME_START_TIME, 3);
 		// 時間割の終わりの時間を求める
-		var end_time = this.backThreeStringDelete(rowData, COLUMN_NAME_END_TIME);
+		var end_time = this.deleteStringBack(rowData, COLUMN_NAME_END_TIME, 3);
 		// 時間割の結果を求める
-		var resultTimeschedule = start_time + '-' + end_time;
+		var resultTimeschedule = start_time + CHAR_HYPHEN + end_time;
+		
+		//算出した結果を返す
 		return resultTimeschedule;
 	};
 
@@ -426,63 +620,13 @@ this.defaultClassworkCostColumns = [
 		//日付の前2文字を削除する(2015-01-01を15-01-01と表記したいため)
 		result = this.frontTwoStringDelete(rowData, COLUMN_NAME_LESSON_DATE);
 		//空白スペースを入れて見やすくする
-		result += ' ';
+		result += SPACE;
 		//時間の後ろ3文字を消す(12:00:00の「:00」を削除する)
 		result += this.buildHourFromTo(rowData);
 		//結果を返す
 		return result;
 	};
 
-	/* 
-	 * 関数名:callReservedLessonValue
-	 * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
-	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
-	 		 loopData:ループ対象となるテーブルの行全体の連想配列
-	 		 counter:カウンタ変数
-	 		 rowNumber:行番号
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.06.13
-	 */
-	this.callReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		recordData = loopData[counter];
-		// 開始日時と終了時刻を組み合わせた値を入れる
-		timeSchedule = this.buildHourFromTo(recordData);
-		var cost;			//料金
-		var rest;			//残席
-		// var lessonStatus;	//状況
-		//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
-		if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
-			//料金を空白にする
-			cost = "";
-			//残席を罰にする
-			rest = this.restMarks[0];
-			//状況を予約不可にする
-			lessonStatus = this.classworkStatuses[4];
-		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
-		} else {
-			//料金を入れる
-			cost = this.sumCost(recordData);
-			//状況を入れる
-			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
-			//残席を記号にする
-			rest = this.getRestMark(recordData, timeTableStudents);
-		}
-		//残席がバツのときにはクリックできないことを分かりやすくするために行の背景をグレーにする
-		if(rest == this.restMarks[0]) {
-			//行の色をグレーっぽくする
-			$(tableName + ' tr:eq(' + rowNumber + ')').css('background', '#EDEDED');
-		}
-		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
-		// 料金の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(cost);
-		// 残席の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(rest);
-		// 残席の表示を正規の表示にする
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(5).text(lessonStatus);
-	};
 
 	/* 
 	 * 関数名:callEachDayReservedValue
@@ -516,40 +660,6 @@ this.defaultClassworkCostColumns = [
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(6).text(userStatus);
 	};
 
-	/* 
-	 * 関数名:callAdminReservedLessonValue
-	 * 概要  :会員側予約テーブルについてデータベースから取り出した値を入れる関数をコールする
-	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
-	 		 loopData:ループ対象となるテーブルの行全体の連想配列
-	 		 counter:カウンタ変数
-	 		 rowNumber:行番号
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.07
-	 */
-	this.callAdminReservedLessonValue = function(tableName, loopData, counter, rowNumber, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		recordData = loopData[counter];
-		//レッスンテーマ名または店舗名が空であるならばその行を表示しなくする
-		if(recordData[COLUMN_NAME_LESSON_NAME] =="" || recordData[COLUMN_NAME_SCHOOL_NAME] == "") {
-			//授業情報があいまいなものは表示しないクラスを取得する
-			$(tableName + ' tr:eq(' + rowNumber + ')').addClass('displayNone');
-		//しっかりとした授業情報があれば表示する
-		} else {
-			// 開始日時と終了時刻を組み合わせた値を入れる
-			timeSchedule = this.buildHourFromTo(recordData);
-			//状況を入れる
-			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
-			//残席を記号にする
-			rest = this.getRestMark(recordData, timeTableStudents);
-			// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
-			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(timeSchedule);
-			// 残席の表示を正規の表示にする
-			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(rest);
-			// 予約状態の表示を正規の表示にする
-			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(lessonStatus);
-		}
-	};
 
 	/* 
 	 * 関数名:callLecturePermitValue
@@ -590,7 +700,7 @@ this.defaultClassworkCostColumns = [
 		//連番を入れる
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
 		//テーマの値が空白のとき、その列に後にセレクトボックスをアペンドするために対してクラスをつける。
-		if(recordData.lesson_name == "") {
+		if(recordData.lesson_name == EMPTY_STRING) {
 			//クラスappendSelectboxをつけてアペンド対象であることを分かりやすくする
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).addClass('appendSelectbox');
 		}
@@ -642,72 +752,7 @@ this.defaultClassworkCostColumns = [
 		}
 	}
 
-	/* 
-	 * 関数名:customizeReserveLessonListTable
-	 * 概要  :会員トップページ、予約授業一覧テーブルのjsonに対して加工を行い、
-	 		加工後のデータをjsonにセットする
-	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
-	 		 counter:カウンタ変数。加工する行を識別するのに使う
-	 		 timeTableStudents:時限ごと受講生徒数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.08.15
-	 */
-	this.customizeReserveLessonTable = function(tableData, counter, timeTableStudents) {
-		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
-		var recordData = loopData[counter];
-		// 開始日時と終了時刻を組み合わせた値を入れる
-		var timeSchedule = this.buildHourFromTo(recordData);
-		var cost,			//料金
-			rest,			//残席
-		 	lessonStatus;	//状況
-		//ユーザが予約不可の授業のとき、行の値を網掛けにして予約不可であることを示す。
-		if(!recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
-			//料金を空白にする
-			cost = "";
-			//残席を罰にする
-			rest = this.restMarks[0];
-			//状況を予約不可にする
-			lessonStatus = this.classworkStatuses[4];
-		//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
-		} else {
-			//料金を入れる
-			cost = this.sumCost(recordData);
-			//残席を記号にする
-			rest = this.getRestMark(recordData, timeTableStudents);
-			//状況を入れる
-			lessonStatus = this.getClassworkStatus(recordData, timeTableStudents);
-		}
-		//取得したデータをjsonに入れていく
-		tableData[counter][COLUMN_START_END_TIME]	= timeSchedule;		//時間割開始と終了時刻
-		tableData[counter][SUM_COST]				= cost;				//受講料
-		tableData[counter][COLUMN_LESSON_REST]		= rest;				//残席
-		tableData[counter][COLUMN_LESSON_STATUS]	= lessonStatus;		//予約ステータス
-	};
 
-	/* 
-	 * 関数名:customizeMemberLessonTable
-	 * 概要  :予約中テーブルと予約済みテーブルのjsonに置換後の値を入れる
-	 * 引数  :tableName:値を加工する対象となるテーブルのjsonデータ
-	 		 counter:カウンタ変数。加工する行を識別するのに使う
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.08.15
-	 */
-	this.customizeMemberLessonTable = function(tableData, counter) {
-		//加工を行う行のデータを変数に入れる
-		var recordData = tableData[counter];
-		//年月日と開始日時と終了時刻を組み合わせた値を入れる
-		var lesson_date_time = allDateTime(recordData);
-		//料金を求めるために0で初期化する
-		var cost = sumCost(recordData);
-		//ポイントを求める
-		var point = getPoint(recordData, cost);
-		//取得したデータをjsonに入れていく
-		tableData[counter][LESSON_DATE_TIME]	= lesson_date_time;		//時間割開始と終了時刻
-		tableData[counter][SUM_COST]			= cost;					//レッスン合計受講料
-		tableData[counter][LESSON_POINT]		= point;				//授業加算ポイント
-	};
 //ここまでテーブル加工記述
 
 	/*
@@ -834,23 +879,18 @@ this.defaultClassworkCostColumns = [
 	 * 内容　	　:dialogExに対応しました
 	 */
 	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator) {
-		//テーブルを置換が終えるまで画面に表示しなくする
-		//$(DOT + tableName).hide();
-		//時間差で表現するためにsetTimeOutを使う
-	//	setTimeout(function(){
-			//置換を行うテーブルのデータを取得する
-			var tableData = creator.json[tableName][TABLE_DATA_KEY];
-			//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
-			if(lessonList) {
-				//時間割1限分の生徒の合計人数が入った連想配列を作る
-				var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
-				//テーブルの値を置換する
-				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
-			} else {
-				//テーブルの値を置換する
-				dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
-			}
-	//	},1);
+		//置換を行うテーブルのデータを取得する
+		var tableData = creator.json[tableName][TABLE_DATA_KEY];
+		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
+		if(lessonList) {
+			//時間割1限分の生徒の合計人数が入った連想配列を作る
+			var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
+		} else {
+			//テーブルの値を置換する
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
+		}
 	}
 
 	
@@ -1713,6 +1753,134 @@ this.defaultClassworkCostColumns = [
 			});
 		}
 	}
+	
+	/* 
+	 * 関数名:getRestAndReserveData
+	 * 概要  :予約可否を踏まえた表示の料金、残席状況、予約可否状況、連結した時限のデータを取得する
+	 * 引数  :Array tableData:行データ
+	 * 返却値  :Object :残席状況、予約可否状況の配列をまとめたオブジェクト
+	 * 作成者:T.Masuda
+	 * 作成日:2015.10.04
+	 */
+	this.getRestAndReserveData = function(tableData, timeTableStudents) {
+		var cost;			//料金
+		var rest;			//残席
+		var lessonStatus;	//予約可否状態
+		
+		//算出データを受け取る配列を用意する
+		var data = [new Array(), new Array(), new Array(), new Array()];
+
+		//各時限ごとの生徒の合計人数が入った連想配列を取得する
+		var timeTableStudents = commonFuncs.getTotalStudentsOfTimeTable(tableData);
+		
+		//各レコードを走査する
+		for(var i = 0; i < tableData.length; i++){
+
+			//予約不可状態であれば
+			//※管理者画面の予約一覧テーブル用データにはuser_classwork_costはないため、この場合は判定をスキップさせる
+			if(commonFuncs.checkEmpty() && !tableData[i][COLUMN_DEFAULT_USER_CLASSWORK_COST]) {
+				//料金を空白にする
+				cost = EMPTY_STRING;
+				//残席を罰にする
+				rest = restMarks[0];
+				//状況を予約不可にする
+				lessonStatus = classworkStatuses[4];
+			//ユーザが予約可能な授業の時、料金、残席、状況を適切な形にする
+			} else {
+				//料金を入れる
+				cost = this.sumCost(tableData[i]);
+				//状況を入れる
+				lessonStatus = commonFuncs.getClassworkStatus(tableData[i], timeTableStudents[tableData[i].start_time]);
+				//残席を記号にする
+				rest = commonFuncs.getRestMark(tableData[i], timeTableStudents[tableData[i].start_time], lessonStatus);
+			}
+
+			//割り出した各データを配列にまとめていく
+			//時限
+			data[0].push(commonFuncs.buildHourFromTo(tableData[i]));		//時限データを追加する
+			data[1].push(cost);			//金額
+			data[2].push(rest);			//残席
+			data[3].push(lessonStatus);	//予約可否状況
+		}
+
+		//作成したデータをオブジェクトにまとめて返す
+		return {start_and_end_time : data[0], cost : data[1], rest : data[2], lessonStatus : data[3] };
+	};	
+	
+	/*
+	 * 関数名:createTab(selector)
+	 * 引数  :String selector
+	 * 戻り値:なし
+	 * 概要  :タブのコンテンツを作成する。
+	 * 作成日:2015.03.17
+	 * 作成者:T.Masuda
+	 */
+	this.createTab = function (selector){
+		//タブのコンテンツを作成する。
+		$(selector).easytabs({
+			updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする。
+		});
+	}
+	
+	/* クッキーを連想配列で取得する関数。http://so-zou.jp/web-app/tech/programming/javascript/cookie/#no5より。 */
+	this.GetCookies = function()
+	{
+	    var result = new Array();
+
+	    var allcookies = document.cookie;
+	    if( allcookies != '' )
+	    {
+	        var cookies = allcookies.split( '; ' );
+
+	        for( var i = 0; i < cookies.length; i++ )
+	        {
+	            var cookie = cookies[ i ].split( '=' );
+
+	            // クッキーの名前をキーとして 配列に追加する
+	            result[ cookie[ 0 ] ] = decodeURIComponent( cookie[ 1 ] );
+	        }
+	    }
+	    //結果を返す。
+	    return result;
+	}
+
+	//クッキーの削除。http://javascript.eweb-design.com/1404_dc.htmlより。
+	this.deleteCookie = function(cookieName) {
+	  cName = cookieName + "="; // 削除するクッキー名
+	  dTime = new Date();
+	  dTime.setYear(dTime.getYear() - 1);
+		  document.cookie = cName + ";expires=" + dTime.toGMTString();
+	}
+
+	/* 
+	 * 関数名:showAdminWindow
+	 * 概要  :管理者画面を表示する(現状では会員画面を閉じて管理者画面を表示する時に使う)
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.10.04
+	 */
+	this.showAdminWindow = function(){
+		//管理者画面のウィンドウがあれば
+		if($('.window[name="admin"]').length > 0){
+			//管理者画面を破棄する
+			$('.window[name="admin"]')[0].instance.destroy();
+		}
+		
+		//シーケンシャルにコードを実行する
+		$.when(
+			//通常サイトのウィンドウから管理者画面のウィンドウを呼び出す
+			$('.window[name="usuall"]')[0].instance.callPage('window/admin/page/adminTop.html')
+		//上記コードの処理が終わったら
+		).done(function(){
+			//ディレイをかけて実行する
+			window.setTimeout(function(){
+				$('a[data-target="#userList"]').click();	//ユーザ一覧タブをクリックする
+				commonFuncs.showCurrentWindow();					//管理者画面を出す
+			}, 10);	//10ミリ秒のディレイ
+		});
+	}
+	
 	
 //ここまでクラス定義領域
 }

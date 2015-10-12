@@ -111,24 +111,20 @@ function memberReserveListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.customizeJson = function(){
+		//授業のデータを取得する
+		var tableData = $.extend([], true, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY]);
 		//テーブル置換用の時限データを取得する
-		this.getReplacedTableData(LESSON_TABLE);
+		var replaceData = commonFuncs.getRestAndReserveData(tableData);
+		
+		//授業データを走査し、列データを追加していく
+		for(var i = 0; i < tableData.length; i++){
+			tableData[i].cost = replaceData.cost[i];
+			tableData[i].start_and_end_time = replaceData.start_and_end_time[i];
+			tableData[i].rest = replaceData.rest[i];
+			tableData[i].lessonStatus = replaceData.lessonStatus[i];
+		}
 	};
 
-	
-	/* 関数名:getReplacedTableData
-	 * 概要　:存在する時限情報を取得する
-	 * 引数　:なし
-	 * 返却値:なし
-	 * 作成日　:2015.0815
-	 * 作成者　:T.Masuda
-	 */
-	this.getReplacedTableData = function(tableName){
-		//授業のデータを取得する
-		var tableData = this[VAR_CREATE_TAG].json[tableName][TABLE_DATA_KEY];
-		//授業のデータから、その日の存在する時限一覧を取得する。
-		this.timeStudentsCount = commonFuncs.getTotalStudentsOfTimeTable(tableData);
-	}
 
 	/* 関数名:dispContents
 	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
@@ -171,10 +167,6 @@ function memberReserveListDialog(dialog){
 		this[VAR_CREATE_TAG].outputTag(TABLE_AREA, TABLE_AREA, this.dialog);
 		//予約できる授業のデータ一覧テーブルを作る
 		this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(SELECTOR_TABLE_AREA, this.dialog));
-		//テーブルの値を置換する
-		//commonFuncs.dbDataTableReplaceExecute(SELECTOR_LESSON_TABLE, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY], LESSON_TABLE_REPLACE_FUNC, this.timeStudentsCount);
-		//テーブルの値をクライアント側で編集して画面に表示する
-		commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, this.create_tag, LESSON_TABLE_RECORD);
 		//レッスンのステータス領域を作る
 		this[VAR_CREATE_TAG].outputTag(EXPLAIN + 1, EXPLAIN + 1, this.dialog);
 	}
@@ -201,6 +193,8 @@ function memberReserveListDialog(dialog){
 	this.setConfig = function(){
 		//ダイアログの位置調整を行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
+		//予約不可能な授業情報をグレーアウトする
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td:contains('✕')").css('background', '#EDEDED');
 	}
 	
 	
@@ -252,27 +246,31 @@ function memberReserveListDialog(dialog){
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
 		//残席の記号を取得する
-		var restMarkNow = $(SELECTOR_TARGET_LESSON_TABLE + EQ_FRONT + (this.recordData.number) + CLOSE_AND_TD_TAG).eq(REST_COLUMN_NUM).text();
-		//残席が✕でないものでかつ、会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+		var restMarkNow = $(DOT + LESSON_TABLE + TAG_TR + ':eq(' + (this.recordData.number + 1) + CLOSE_AND_TD_TAG + '.rest', $(CURRENT_DIALOG)).text();
+
+		//会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
+		//また、日時の関係で予約不可能な授業もダイアログを開かない
 		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
-			&& restMarkNow != CHAR_INVALIDATE) {
+			&& commonFuncs.isBookable(this.recordData.data)) {
 			var dialogUrl = EMPTY_STRING;	//ダイアログのURLを格納する変数を用意する
-			//予約済みでない
-			if(this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS) {
+			
+			//予約済みでなく、予約可能な授業であれば
+			if(this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] != RESERVED_LESSON_STATUS
+					&& restMarkNow != CHAR_INVALIDATE) {
 				//予約確認ダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
 				//予約操作を行う。初回予約、再予約で別の値をクエリ判別のための変数にセットする
 				this.manipulation = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] == EMPTY_STRING ? 
 						PROCESSING_RESERVE : PROCESSING_RESERVE_AGAIN;
+				this.openDialog(dialogUrl);	//ダイアログを開く
 			//予約済みであれば
-			} else {
+			} else if(this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] == RESERVED_LESSON_STATUS){
 				//予約キャンセルダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
 				//キャンセル操作を行う
 				this.manipulation = PROCESSING_CANCEL;
+				this.openDialog(dialogUrl);	//ダイアログを開く
 			}
-			
-			this.openDialog(dialogUrl);	//ダイアログを開く
 		}
 	};
 
@@ -363,7 +361,7 @@ function memberReserveListDialog(dialog){
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
 				//予約中授業テーブルをリロードして予約状況を最新にする
-				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
+				data[VAR_CREATE_TAG].tableReload(FINISHED_LESSONTABLE);
 				
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
