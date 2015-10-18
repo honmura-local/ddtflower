@@ -103,9 +103,18 @@ class ModelMail {
 		$addhed = 'From:' . $from . "\n";
 		if($mail_cc != '') $addhed .= 'Cc:' . $mail_cc . "\n";
 		if($mail_bcc != '') $addhed .= 'Bcc:' . $mail_bcc . "\n";
-
+		//文字コードを指定する
+		$addhed .="Content-Type: text/html; charset=\"ISO-2022-JP\";\n";
+		mb_internal_encoding("UTF-8");	//エンコード指定
+		
 		// メール送信
-		if(! mb_send_mail($mail_to, $subject, $content, $addhed)) {
+		if(!mail(
+				$mail_to,
+				mb_encode_mimeheader($subject, 'ISO-2022-JP-MS'),          //エンコードはISO-2022-JP-MSで行う！
+				mb_convert_encoding($content, 'ISO-2022-JP-MS'),          //エンコードはISO-2022-JP-MSで行う！
+				$addhed
+			)
+		) {
 			// 失敗時は管理者へメール送信
             $fail_title = ' メール送信エラー';
             // 管理者アドレス取得
@@ -116,8 +125,15 @@ class ModelMail {
             	,$mail_cc
             	,$mail_bcc
             );
-            mb_send_mail($admin_to, $subject . $fail_title, $fail_content);
-            
+		
+         	//失敗時のメールを送信する
+			mail(
+				$admin_to,
+				mb_encode_mimeheader($subject. $fail_title, 'ISO-2022-JP-MS'),    //エンコードはISO-2022-JP-MSで行う！
+				mb_convert_encoding($fail_content, 'ISO-2022-JP-MS'),        	  //エンコードはISO-2022-JP-MSで行う！
+				"Content-Type: text/html; charset=\"ISO-2022-JP\";\n"    		 //ヘッダはISO-2022-JPを指定する！
+			);
+			
 			// 失敗を返却
 			return false;
 		}
