@@ -162,7 +162,7 @@ this.defaultClassworkCostColumns = [
 	 * @param string target ターゲットのkey
 	 */ 
 	/* 
-	 * 関数名:hasDone
+	 * 関数名:isExist
 	 * 概要  :連想配列に引数のキーがあるかどうか確認する。なかったら例外を吐く
 	 * 引数  :Object rowData:行データの連想配列(用途自体は行データに限定しない)
 	 * 　　  :String target:確認対象のキー
@@ -1723,7 +1723,7 @@ this.defaultClassworkCostColumns = [
 			//目安箱メールの場合
 			case SUGGESTION_MAIL:
 					//目安箱メールならタイプの値を追加する
-					$.extend(true, sendObject, {type:data.suggest_type});
+					$.extend(true, sendObject, {type:data.suggest_type, school:data.school_key});
 					//目安箱メール送信用PHPにメールを処理させる
 					sendUrl = PATH_SEND_SUGGESTION_PHP;
 					break;
@@ -1740,10 +1740,10 @@ this.defaultClassworkCostColumns = [
 					//送信完了と共に入力ダイアログを消す
 					alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
 					//目安箱メールを送信していたら
-					if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
+					//if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
 						//目安箱テーブルに新たにデータを挿入する
-						new baseDialog().sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
-					}
+						//new baseDialog().sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
+					//}
 				}
 				//通信失敗時
 				,error:function(xhr, status, error){

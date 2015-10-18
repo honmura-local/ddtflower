@@ -168,7 +168,8 @@
 	width		:95%;		/*画像と横並びにできてかつ、十分余白が取れる幅を設定する。*/
 	margin		:5px 5%;	/*上下5pxの余白を配置し、左右に同じだけの余白を取る。*/
 	font-size	:16px;		/*標準的なフォントサイズにする。*/
-	text-indent: 1em;
+	/*text-indent: 1em;*/		
+	white-space: pre-line;		/* 改行を有効にする */
 }
 
  /* 

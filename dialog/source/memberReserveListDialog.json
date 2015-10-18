@@ -134,7 +134,7 @@
             }
         }
     },
-        "cancelReservedData":{
+    "cancelReservedData":{
         "db_setQuery":"UPDATE user_classwork SET user_work_status = 10, update_datetime = NOW() WHERE id = 'id'; UPDATE classwork SET order_students = order_students-1, update_datetime = NOW() WHERE id = 'classwork_key';"
     },
     "sendReservedData":{

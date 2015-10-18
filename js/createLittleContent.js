@@ -1501,7 +1501,7 @@ function createLittleContents(){
 	this.addQueryExtractionCondition = function(inputDataParent, queryArrayKey) {
 		var counter = 0;
 		//inputタグの数ループする
-		$('.' + inputDataParent + ' input[type="text"]').each(function(){
+		$('input[type="text"]', $('.' + inputDataParent)).each(function(){
 			//入力された値が空白でなければ
 			if($(this).val() != "") {
 					//入力値を取得する

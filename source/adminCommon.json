@@ -331,7 +331,11 @@
             "value":""
         }
     },
-    "doLecturePermitButton":{ "type":"button", "value":"承認"},
+    "doLecturePermitButton":{
+    	 "class":"doLecturePermit normalButton",
+    	 "type":"button",
+    	 "value":"承認"
+    	 },
     "lecturePermitListInfoTableOutsideArea":{
         "class":"lecturePermitListInfoTableOutsideArea"
     },

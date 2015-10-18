@@ -603,7 +603,7 @@ function loopUpdatePermitLessonList() {
 		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 		$('.lecturePermitListRecord').each(function() {
 				//DBを更新するための値を取得するために置換する連想配列を取得する
-				var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+				var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')');
 				//受講承認一覧データを更新する
 				permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
 			//カウンターをインクリメントする
@@ -876,7 +876,7 @@ function mailMagaSendConfirm() {
 		//メルマガ送信にチェックが入っていたらメルマガを送信する
 		if($('[name="messegeType"]').val() == "0") {
 			//メルマガを送信するための値をテキストボックスから取得する
-			var sendData = getInputData('mailMagaAndAnnounceArea');
+			var sendData = commonFuncs.getInputData('mailMagaAndAnnounceArea');
 			//ダイアログ用オブジェクトを作る
 			var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
 			//送信するデータをオブジェクトに統合する

@@ -6,10 +6,11 @@ $from = $_POST['from'];
 $subject = $_POST['subject'];
 $content = $_POST['content'];
 $type = $_POST['type'];
+$school = $_POST['school'];
 
 try {
 	ModelMysql::connect();
-	$sendResult = ModelMail::sendSuggestion($type, $from, $subject, $content);
+	$sendResult = ModelMail::sendSuggestion($type, $from, $subject, $content, $school);
 } catch(SendFailException $e) {
 	// ajax的に500返して異常を伝える。
 	error_log(e.getMessage());

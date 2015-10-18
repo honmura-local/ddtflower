@@ -457,8 +457,8 @@ class ModelMail {
 	const SUGGEST_TMP_NAME = '___suggestion_box___';
 	const ADMIN_ID = '1';
 	
-	public static function sendSuggestion($type, $from, $title, $content){
-		if(!self::saveSuggestion($from, $type, $title, $content)) {
+	public static function sendSuggestion($type, $from, $title, $content, $school){
+		if(!self::saveSuggestion($from, $type, $title, $content, $school)) {
 			throw new MailSendFailException('failed to insert suggestion.');
 		}
 		
@@ -481,13 +481,13 @@ EOF;
 		if(!$template) {
 			throw new MailSendFailException('failed to insert suggestion.');
 		}
-		
+
 		return self::send_mail_each(array(self::ADMIN_ID), $from, $template['mail_title'], $template['mail_content']);
 	}
 	
 	const SUGGEST_TABLE = 'suggestion_box';
 	
-	private static function saveSuggestion($userId, $type, $title, $content) {
+	private static function saveSuggestion($userId, $type, $title, $content, $school) {
 		$mysql = new ModelMysql();
 		// insert項目作成
 		$items = array(
@@ -496,6 +496,7 @@ EOF;
 			'suggest_content',
 			'send_datetime',
 			'suggest_type',	
+			'school_key'	
 		);
 		$values = array(
 				array($userId, false),
@@ -503,6 +504,7 @@ EOF;
 				array($content, true),
 				array(Date('Y-m-d H:i:s'), true),
 				array($type, false),
+				array($school, true)
 		);
 		
 		return $mysql->insert(self::SUGGEST_TABLE, $items, $values);

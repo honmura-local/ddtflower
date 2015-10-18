@@ -17,6 +17,8 @@
 					// dom要素を作るクラスをインスタンス化する
 					var create_tag = new createLittleContents();
 					
+					//当ページ用JSファイルを読み込む
+					commonFuncs.getScriptFile('js/page/memberSuggestionBox.js');
 					// 共通のパーツのJSONを取得する。
 					create_tag.getJsonFile('source/memberCommon.json');
 					// パスワード変更画面のjsonを読み込む
