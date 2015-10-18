@@ -108,6 +108,7 @@ $cf{send_b64} = 0;
 $cf{replace} = {
 		'name'    => 'ご氏名',
 		'sex'   => '性別',
+		'sex[]'   => '性別',
 		'eMail' => 'メールアドレス',
 		'email' => 'メールアドレス',
 		'reservedDate' => '予約希望日時',
