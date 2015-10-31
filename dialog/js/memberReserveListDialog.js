@@ -136,14 +136,14 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContents = function(){
 		//DBから1件もレコードを取得できなければ例外を投げてアラートダイアログに変化させる
-		try{
+		try {
 			//画面を表示する準備をする
 			this.constructionContent();
 		//レコードが取得できていなければ、またはエラーが起きたら
-		}catch (e){
+		} catch (e) {
 			//ダイアログをアラートのダイアログに変える
 			this.showAlertNoReserve();
-			throw e;	//例外を投げ、ダイアログの表示を切り上げる
+			return;	//処理を打ち切る
 		}
 		
 		//ダイアログの画面パーツをセットする
