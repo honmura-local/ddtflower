@@ -49,14 +49,15 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				// fixYCoordinate('header', '.main');
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
-				
+				//記事の画像を拡大できるようにする。
+				create_tag.useZoomImage('blogArticleImages');
+
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', create_tag);
 				bCalendar.create();	//カレンダーを実際に作成する
 
 				create_tag.createNewArticleList();	//最新記事一覧を作る
-				
-				//ブログ記事の中にMSLのリストを配置する
+
 				//$('.blogRightContent').prepend($('#mslongtail_1984').show());
 			</script>
 			<!-- MSLの記事を表示する -->
