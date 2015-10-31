@@ -370,8 +370,10 @@ function memberReserveListDialog(dialog){
 				
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
+				
+				console.log(data[VAR_CREATE_TAG]);
 				//予約中授業テーブルをリロードして予約状況を最新にする
-				data[VAR_CREATE_TAG].tableReload(FINISHED_LESSONTABLE);
+				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
 				
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
