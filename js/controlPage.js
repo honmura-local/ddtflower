@@ -483,7 +483,7 @@ $(document).ajaxStop( function(){
  */
 //popStateに対応できているブラウザであれば
 if (commonFuncs.isSupportPushState()){
-	//popStateのイベントを定義する。
+	//popStateに変動があれば
     $(window).on("popstate",function(event){
         //初回アクセスであれば何もしない。
     	if (!event.originalEvent.state){
@@ -491,7 +491,8 @@ if (commonFuncs.isSupportPushState()){
     	}
         var state = event.originalEvent.state; 	//stateオブジェクトを取得する。
         currentLocation = state['url'];			//stateから現在のURLを取り出し保存する。
-        callPage(state['url'], state);			//履歴からページを読み込む。
+        //履歴からページを読み込む。
+        $(CURRENT_WINDOW)[0].instance.callPage(state['url'], state);
   });
 }
 
