@@ -165,7 +165,8 @@
 /* Overlay helper */
 
 .fancybox-lock {
-    overflow: hidden !important;
+	/* @mod 20151031 T.Masuda オーバーレイ下のコンテンツが消えてしまうためコメントアウト */
+   /* overflow: hidden !important; */	
     width: auto;
 }
 
