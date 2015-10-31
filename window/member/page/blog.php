@@ -61,6 +61,8 @@
 				
 				// position:fixed;を設定したヘッダーが横スクロールしない問題を解決する関数をコールする。
 				fixXCoordinateOnScroll('header')
+				//記事の画像を拡大できるようにする。
+				create_tag.useZoomImage('blogArticleImages');
 				
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', create_tag);
