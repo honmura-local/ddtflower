@@ -16,4 +16,4 @@ require_once ('procedureLogout.php');
 $logout = new procedureLogout();
 
 //生成したインスタンスの処理関数を実行する。
-$logout->run($json);
+$logout->run();

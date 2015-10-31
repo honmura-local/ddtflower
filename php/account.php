@@ -136,8 +136,11 @@ class account extends JSONDBManager{
 		if (isset($_COOKIE[session_name()])) {
 			//クッキーの有効期限を過去に設定して破棄する
     		setcookie(session_name(), '', time()-42000, '/');
-
 		}
+		
+		//ユーザID、権限のcookieを削除する
+		setcookie("userId", '', time()-42000, '/');
+		setcookie("authority", '', time()-42000, '/');
 		
 		//セッションそのものを破棄する
 		session_destroy();
