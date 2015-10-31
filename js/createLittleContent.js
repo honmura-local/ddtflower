@@ -2359,6 +2359,9 @@ function createLittleContents(){
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
+	 * 変更者:T.Masuda
+	 * 変更日:2015.10.31
+	 * 内容　:fancyboxによる画像拡大表示に対応しました。
 	 */
 	this.createMyBlogImages = function(){
 		//ブログの各行を走査する
@@ -2368,7 +2371,7 @@ function createLittleContents(){
 			$('.blogImage', $row).each(function(){
 				if($(this).text() != EMPTY_STRING){	//画像列のセルにテキスト(画像名)があれば
 					//テキストを画像パスにして、新たに生成する画像のパスにする
-					$('.blogImage', $row).eq(0).append($('<img>').attr('src', IMAGE_PATH + $(this).text()));
+					$('.blogImage', $row).eq(0).append($('<a></a>').attr({href : IMAGE_PATH + $(this).text(), rel : "gallery" }).append($('<img>').attr('src', IMAGE_PATH + $(this).text())));
 				}
 			});
 		});
