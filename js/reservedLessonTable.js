@@ -48,9 +48,8 @@ function reservedLessonTable() {
 	this.openCancelDialog = function(clicked, memberNumber, create_tag) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		var recordData = this.getClickTableRecordData(clicked, RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD, create_tag);
-		
 		//授業が予約締切であれば、授業のキャンセルの操作を行わない
-		if(commonFuncs.isBookable(recordData.data)){
+		if(!commonFuncs.isBookable(recordData.data)){
 			return;	//ここで処理を終える
 		}
 		
@@ -162,7 +161,7 @@ function reservedLessonTable() {
 		//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
 		$(RESERVED_LESSON_TABLE_OUTSIDE).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD, function(){
 			//キャンセルダイアログを開く
-			thisElem.openCancelDialog(this, memberInfo, create_tag);
+			thisElem.openCancelDialog(this, memberInfo, $(RESERVED_LESSON_TABLE_OUTSIDE)[0].create_tag);
 		});
 	}
 
