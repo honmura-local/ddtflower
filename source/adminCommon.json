@@ -428,7 +428,7 @@
         }
     },
     "updatePermitListLesson":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id';"
     },
     "updatePermitListCommoditySell":{
         "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', update_datetime = NOW() WHERE id = 'id';"

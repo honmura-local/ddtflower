@@ -631,15 +631,29 @@ function loopUpdatePermitLessonList() {
 	$(STR_BODY).on(CLICK, '#lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-		$('.lecturePermitListRecord').each(function() {
-				//DBを更新するための値を取得するために置換する連想配列を取得する
-				var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')');
-				//受講承認一覧データを更新する
-				permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
-			//カウンターをインクリメントする
-			counter++;
-		});
+		//受講承認を行った生徒の方のリストを作る
+		var processedList = new Array();
+		
+		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
+		try{
+			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+			$('.lecturePermitListRecord').each(function() {
+					//DBを更新するための値を取得するために置換する連想配列を取得する
+					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+					//受講承認一覧データを更新する
+					permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
+				//カウンターをインクリメントする
+				counter++;
+			});
+		//例外処理
+		} catch(e){
+			//メッセージの先頭を追加する
+			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n');
+		//必ず行う処理
+		} finally {
+			processedList.push(counter + '件のレコードを更新しました。');
+			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+		}
 	});
 }
 
@@ -762,6 +776,10 @@ function afterReloadPermitListInfoTable() {
 	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 	create_tag.setTableTextboxValuefromDB(create_tag.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	//置換済みテキストボックスに数値入力のみできるようにする
+	$('.lecturePermitListInfoTable .replaceTextbox').attr({
+        onkeydown:"return controllInputChar(event);"	//数値のみ入力できるように関数を登録
+	});
 }
 
 /* 
