@@ -43,6 +43,9 @@
 				commonFuncs.dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag);
 			}
 			
+			//会員データをクリックして会員画面にログインできるようにする
+			loginMemberPageFromAdminPage('#dayReserver', '.targetEachDayLessonRecord', '.user_key');
+			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
 			$('button, .searchButton, input[type="button"]', $activePanel).button();

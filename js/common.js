@@ -1862,23 +1862,12 @@ this.defaultClassworkCostColumns = [
 	 */
 	this.showAdminWindow = function(){
 		//管理者画面のウィンドウがあれば
-		if($('.window[name="admin"]').length > 0){
-			//管理者画面を破棄する
-			$('.window[name="admin"]')[0].instance.destroy();
-		}
-		
-		//シーケンシャルにコードを実行する
-		$.when(
+		if(!$('.window[name="admin"]').length){
 			//通常サイトのウィンドウから管理者画面のウィンドウを呼び出す
 			$('.window[name="usuall"]')[0].instance.callPage('window/admin/page/adminTop.html')
-		//上記コードの処理が終わったら
-		).done(function(){
-			//ディレイをかけて実行する
-			window.setTimeout(function(){
-				$('a[data-target="#userList"]').click();	//ユーザ一覧タブをクリックする
-				commonFuncs.showCurrentWindow();					//管理者画面を出す
-			}, 10);	//10ミリ秒のディレイ
-		});
+		}
+		
+		commonFuncs.showCurrentWindow();					//管理者画面を出す
 	}
 	
 	/* 

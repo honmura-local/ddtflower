@@ -291,6 +291,9 @@ var updateDateMovement = function(clickSelector, nowDateObject) {
 	$(DOT + 'dateBelt' + ' p').text(nowDateString);
 }
 
+//日ごと予約者一覧共通で使う日付オブジェクト
+nowDateObject = new Date();
+
 /* 
  * 関数名:updateDateSearch
  * 概要  :日付検索をクリックした時の処理
@@ -302,10 +305,20 @@ var updateDateMovement = function(clickSelector, nowDateObject) {
 var updateDateSearch = function () {
 	//表示されている日付を更新するために検索する日付のデータを取得する。
 	var changeDate = $('.dateInput').val();
+	
+	//日付文字列を日付のオブジェクトに変換する
+	dateObject =  new Date(changeDate);
+	
+	//無効な日付であれば
+	if(dateObject.toString() === "Invalid Date"){
+		alert('有効な日付を入力してください。');	//警告を出す
+		return nowDateObject;	//処理を中断する
+	}
+	
+	nowDateObject =  dateObject;
+	
 	//現在表示されている日付を入力された日付で更新する
 	$(DOT + 'dateBelt p').text(changeDate)
-	//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
-	nowDateObject = new Date(changeDate);
 	//日ごと授業者一覧テーブルをリロードする
 	create_tag.eventTableReload('eachDayReservedInfoTable');
 	//日付オブジェクトを更新する
@@ -644,26 +657,48 @@ function userListSearch() {
 /* 
  * 関数名:jumpToMemberPage
  * 概要  :管理者 会員一覧で選択されているユーザの会員ページに接続する
- * 引数  :なし
+ * 引数  :String || Element clickTarget : クリックイベントの対象
+ * 　　  :String user : 選択中ユーザのセレクタ
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Masuda
+ * 変更日:2015.11.01
+ * 内容　:セレクタが固定になっていたため調整しました
  */
-function jumpToMemberPage() {
+function jumpToMemberPage(clickTarget, user) {
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, '.userDetail', function(){
+	$(STR_BODY).on(CLICK, clickTarget, function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.selectRecord').length;
+		var selected = $(user).length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
 		if(selected == 0 || selected > 1) {
 			//選択している
 			alert('ユーザを1人だけ選択してください');
 		} else {
 			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.selectRecord').children('.id').text();
+			var memberId = $(user).children('.id').text();
 			//クリックした人でなり代わりログインを行う
 			loginInsteadOfMember(memberId);
 		}
+	});
+}
+
+/* 
+ * 関数名:loginMemberPageFromAdminPage
+ * 概要  :クリックした対象からユーザIDを抽出して会員画面へのログインを行う
+ * 引数  :String || Element clickTarget : イベント登録の基点の要素
+ * 　　  :String clickTarget : クリックイベントの対象
+ * 	　   :String getTarget : ID取得対象のセレクタ
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.11.01
+ */
+function loginMemberPageFromAdminPage(eventBase, clickTarget, getTarget){
+	//対象の要素のクリックイベントコールバックを登録する
+	$(eventBase).on('click', clickTarget, function(e){
+		var id = $(getTarget, this).text();	//対象からテキスト(ID)を取得する
+		loginInsteadOfMember(id);			//取得したIDで会員画面へのログインを行う
 	});
 }
 
