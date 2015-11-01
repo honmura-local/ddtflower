@@ -578,24 +578,42 @@ function loopUpdatePermitLesson() {
 	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-		$('.lecturePermitAccordion').each(function() {
-			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-				//DBを更新するための値を取得するために置換する連想配列を取得する
-				var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-				//加算ポイントレートを取得する
-				var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
-				//受講料から加算ポイントを求める
-				sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
-				//備品代から加算ポイントを求める
-				sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
-				//受講承認データを更新する
-				permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
-			}
-			//カウンターをインクリメントする
-			counter++;
-		});
+		//受講承認を行った生徒の方のリストを作る
+		var processedList = new Array();
+		//序文を追加する
+		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
+		
+		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
+		try{
+			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+			$('.lecturePermitAccordion').each(function() {
+				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
+				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
+						//DBを更新するための値を取得するために置換する連想配列を取得する
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+						//加算ポイントレートを取得する
+						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+						//受講料から加算ポイントを求める
+						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+						//備品代から加算ポイントを求める
+						sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
+						//受講承認データを更新する
+						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+						//生徒さんの情報をリストに追加していく
+						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');	
+				}
+				
+				//カウンターをインクリメントする
+				counter++;
+			});
+		//例外処理
+		} catch(e){
+			//メッセージの先頭を追加する
+			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n');
+		//必ず行う処理
+		} finally {
+			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+		}
 	});
 }
 

@@ -1853,8 +1853,20 @@ function createLittleContents(){
 	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
 		//可変テーブルから連想配列を取得する
 		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
-		//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
-		var inputDataArray = commonFuncs.getInputData(inputDataSelector);
+		try{
+			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
+			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector);
+			//内容をチェックする
+			for(key in inputDataArray){
+				//空があれば
+				if(!commonFuncs.checkEmpty(inputDataArray[key])){
+					throw new Error();	//例外を発生させる
+				}
+			}
+		//例外処理
+		} catch (e) {
+			throw e;	//上位に例外を投げる
+		}
 		//取得した連想配列を結合する
 		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
 		//結合した結果の連想配列を返す

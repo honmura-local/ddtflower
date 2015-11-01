@@ -23,6 +23,8 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
+			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
+			create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
 			// 受講承認テーブル用のJSON配列を取得する
 			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
 			//データがあればテーブルを追加する
