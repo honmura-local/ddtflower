@@ -2580,7 +2580,9 @@ function createLittleContents(){
 				var loginUrl = thisElem.json.accountHeader !== void(0)
 								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? 'window/admin/page/adminTop.html' :'window/member/page/memberTop.html';
 				// 会員ページ、または管理者ページへリンクする。
-				$(CURRENT_WINDOW)[0].instance.callPage(loginUrl);
+				$(CURRENT_WINDOW)[0].instance.callPage(loginUrl, thisElem.json.accountHeader !== void(0)
+						//ログイン中でなければ画面遷移の履歴を作らない
+						&& commonFuncs.checkEmpty(thisElem.json.accountHeader.authority.text) ? null : 1 );
 			});
 //		}
 	}

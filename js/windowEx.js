@@ -72,7 +72,7 @@ function windowEx(url, argumentObj, returnObj){
 		
 		//ログインダイアログが出ていなければ
 		if(!$('.inputArea').length){
-			this.callPage(this.url);			//URLを読み込む
+			this.callPage(this.url, 1);		//URLを読み込む。履歴は積まない
 		}
 		this.setWindowZIndex();				//ウィンドウの重なりを整理する
 		commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
@@ -116,7 +116,7 @@ function windowEx(url, argumentObj, returnObj){
 			//該当するウィンドウを最前面に持ってくる
 			$('body').append(movingWindow);
 			//最前面に持ってきたウィンドウで当関数を再度コールする
-			$('.window:last')[0].instance.callPage(url);
+			$('.window:last')[0].instance.callPage(url, state);
 			this.setWindowZIndex();				//ウィンドウの重なりを整理する
 			commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 			return;	//このウィンドウの処理を終える
