@@ -1881,6 +1881,21 @@ this.defaultClassworkCostColumns = [
 		});
 	}
 	
+	/* 
+	 * 関数名:getTodayDate
+	 * 概要  :今日の日付を取得する
+	 * 引数  :なし
+	 * 返却値  :String : 今日の日付の文字列
+	 * 作成者:T.Masuda
+	 * 作成日:2015.10.31
+	 */
+	this.getTodayDate = function(){
+		//今日の日付を取得する
+		var date = new Date();
+		//今日の日付を返す
+		return 	date.getFullYear() + CHAR_HYPHEN + (date.getMonth() + 1) + CHAR_HYPHEN + date.getDate();
+	}
+	
 	
 //ここまでクラス定義領域
 }

@@ -18,7 +18,6 @@
 			//ヘッダー内のタグが作成済みでなければ
 		
 			creator.createNormalHeaderContent();	//ヘッダー内のタグが作成済みでなければ作る。
-			creator.showNormalHeader();				//ヘッダーが隠れていたら表示する。
 		
 			creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 			//ブログのお知らせを作る。

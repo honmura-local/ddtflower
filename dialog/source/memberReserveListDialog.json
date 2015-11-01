@@ -44,7 +44,8 @@
                     "columnName": "テーマ"
                 },
                 "cost": {
-                    "columnName": "料金(円)"
+                    "columnName": "料金(円)",
+                    "className" : "cost"
                 },
                 "rest": {
                     "columnName": "残席",

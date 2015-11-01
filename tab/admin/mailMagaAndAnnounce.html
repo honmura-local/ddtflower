@@ -8,7 +8,8 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
-
+			$('#mailMagaAndAnnounce')[0].create_tag = create_tag;	//createTagをDOMと結びつける
+			
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
 			// 管理者ページ共通のパーツのJSONを取得する。
@@ -42,7 +43,7 @@
 			//メルマガのデータを取り出す
 			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
 			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
 
 			//メルマガ検索機能を実装する
 			mailMagaSearch();

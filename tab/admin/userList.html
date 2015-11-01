@@ -8,7 +8,8 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
-
+			$('#userList')[0].create_tag = create_tag;	//createTagをDOMと結びつける
+			
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
 			// 管理者ページ共通のパーツのJSONを取得する。
@@ -34,7 +35,7 @@
 			//会員一覧のデータを取り出す
 			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['userListInfoTable'], 'userListInfoTable');
 			//ページング機能付きでユーザ情報一覧テーブルを作る
-			create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
+			create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable', "$('#userList')[0].");
 			//会員一覧タブのボタン群れ
 			create_tag.outputTag('userListButtons', 'userListButtons', '#userList');
 			//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする

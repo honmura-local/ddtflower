@@ -108,6 +108,18 @@ function windowEx(url, argumentObj, returnObj){
 			var newWindow = new windowEx(url);
 			newWindow.run();	//新たなウィンドウを表示する
 			return;
+		//既に表示されているウィンドウのコンテンツが呼ばれるなら
+		} else if((splited.length <= 2 && $('.window:last').attr('name') != 'usuall')
+				|| (splited.length > 2 && $('.window:last').attr('name') != splited[splited.length - 3])) {
+			//該当するウィンドウを取得する
+			var movingWindow = splited.length <= 2? $('.window[name="usuall"]'):$('.window[name="' + splited[splited.length - 3] + '"]');
+			//該当するウィンドウを最前面に持ってくる
+			$('body').append(movingWindow);
+			//最前面に持ってきたウィンドウで当関数を再度コールする
+			$('.window:last')[0].instance.callPage(url);
+			this.setWindowZIndex();				//ウィンドウの重なりを整理する
+			commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
+			return;	//このウィンドウの処理を終える
 		}
 		
 		//cgiなら

@@ -136,14 +136,14 @@ function memberReserveListDialog(dialog){
 	 */
 	this.dispContents = function(){
 		//DBから1件もレコードを取得できなければ例外を投げてアラートダイアログに変化させる
-		try{
+		try {
 			//画面を表示する準備をする
 			this.constructionContent();
 		//レコードが取得できていなければ、またはエラーが起きたら
-		}catch (e){
+		} catch (e) {
 			//ダイアログをアラートのダイアログに変える
 			this.showAlertNoReserve();
-			throw e;	//例外を投げ、ダイアログの表示を切り上げる
+			return;	//処理を打ち切る
 		}
 		
 		//ダイアログの画面パーツをセットする
@@ -195,6 +195,11 @@ function memberReserveListDialog(dialog){
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//予約不可能な授業情報をグレーアウトする
 		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td:contains('✕')").css('background', '#EDEDED');
+		//料金欄が0の授業もグレーアウトする
+		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).filter(function(){
+			//料金が0の行だけ抽出する
+			return parseInt($("td.cost", this).text()) <= 0? true : false;
+		}).css('background', '#EDEDED');
 	}
 	
 	
@@ -245,6 +250,11 @@ function memberReserveListDialog(dialog){
 	this.callbackRowClick = function(clicked) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
+		//料金が0であれば
+		if(this.recordData.data.cost == 0){
+			return;	//何もせずに終える
+		}
+		
 		//残席の記号を取得する
 		var restMarkNow = $(DOT + LESSON_TABLE + TAG_TR + ':eq(' + (this.recordData.number + 1) + CLOSE_AND_TD_TAG + '.rest', $(CURRENT_DIALOG)).text();
 
@@ -360,8 +370,10 @@ function memberReserveListDialog(dialog){
 				
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
+				
+				console.log(data[VAR_CREATE_TAG]);
 				//予約中授業テーブルをリロードして予約状況を最新にする
-				data[VAR_CREATE_TAG].tableReload(FINISHED_LESSONTABLE);
+				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
 				
 				//予約、キャンセルに応じた通知のアラートを出す
 				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);

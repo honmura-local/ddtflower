@@ -38,13 +38,13 @@ class procedureLogout extends procedureBase{
 	/*
 	 * 関数名：job
 	 * 概要  :クラス特有の処理を行う関数。ログアウト処理を行う。
-	 * 引数  :String $jsonString:JSON文字列
+	 * 引数  :なし
 	 * 戻り値:なし
 	 * 設計者:H.Kaneko
 	 * 作成者:T.Masuda
 	 * 作成日:2015.0728
 	 */
-	function job($jsonString){
+	function job(){
 		$this->logout();	//ログアウト処理を行う。
 	}
 	

@@ -397,7 +397,10 @@ function createTag(){
 	 * 変更日:2015.08.08
 	 * 内容　:日付による記事絞り込みに対応しました。
 	 */
-	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack){
+	this.outputNumberingTag = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack, createTagSelector){
+
+		//createTag取得用のセレクタが空なら空文字を入れる。
+		createTagSelector = commonFuncs.checkEmpty(createTagSelector) ? createTagSelector : EMPTY_STRING;
 		
 		var articles = this.checkArticleDate(jsonName);	//日付を確認する関数を実行する
 		//記事の絞り込みが行われていたら、そのまま代入する。そうでなければjsonNameからオブジェクトを取得する
@@ -407,7 +410,7 @@ function createTag(){
 		this.numbering = {};		
 
 		//ナンバリング用のJSONを作る。
-		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, callBack, articles);
+		this.createNumbering(jsonName, startPage, displayPageMax, displayPage ,pageNum, targetArea, callBack, articles, createTagSelector);
 		
 		//記事を消す
 		$(targetArea).empty();
@@ -424,7 +427,7 @@ function createTag(){
 		}
 		
 		//ナンバリングを消す。
-		$('.numberingOuter').empty();
+		$(targetArea).siblings('.numberingOuter').empty();
 		
 		// add T.Masuda 2015/0421 ナンバリングが生成されない時にcreateTagのエラーがコンソールに出力されるバグの修正
 		// add T.Masuda 2015/0422 numberingオブジェクトが生成されていない状況への対応
@@ -443,7 +446,7 @@ function createTag(){
 		}
 		
 		//コールバック関数が入力されていれば
-		if(callBack !== void(0) && callBack != 'undefined'){
+		if(commonFuncs.checkEmpty(callBack) && callBack != 'undefined'){
 			var evaled = eval(callBack);	//評価する
 			//evaledが関数であれば
 			if(evaled instanceof Function == true){
@@ -469,7 +472,7 @@ function createTag(){
 	 * 変更日:2015.04.08
 	 * 内容　:引数pageNumを追加し、1ページに複数の記事を載せることに対応しました。
 	 */
-	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack, articles){
+	this.createNumbering = function(jsonName, startPage, displayPageMax, displayPage, pageNum, targetArea, callBack, articles, createTagSelector){
 		//ページ数を取得する。
 		var pageMax = Math.ceil(this.getJsonObjectNum(jsonName, articles) / pageNum);
 		
@@ -483,7 +486,7 @@ function createTag(){
 		
 		// <<ボタンを作る。(1ページ前に進める)
 		this.createNumberingAround(this.numbering, 'pre', '<<', startPage,
-										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea, callBack);
+										displayPageMax, displayPage-1, pageMax, jsonName, pageNum, targetArea, callBack, createTagSelector);
 
 		//ナンバリングの中の最後の数字を算出して変数に格納する。最終ページを超えていれば最終ページに丸める。
 		var lastPage = (startPage + displayPageMax) <= pageMax ? (startPage + displayPageMax) : pageMax;
@@ -497,15 +500,15 @@ function createTag(){
 			//"text"キーにページ数を設定する。
 			map[indexText]['text'] = i;
 			//関数実行属性にoutputNumberingTagを設定する。
-			map[indexText]['onclick'] = 'create_tag.outputNumberingTag("' 
-				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '","' + callBack +'")';
+			map[indexText]['onclick'] = createTagSelector + 'create_tag.outputNumberingTag("' 
+				+ jsonName + '",' + startPage + ', ' + displayPageMax + ',' + i + ', ' + pageNum + ',"' + targetArea + '","' + callBack + '", "' + createTagSelector + '")';
 			//numberingオブジェクトの中に、作成したオブジェクトを追加する。
 			this.numbering[indexText] = map[indexText];
 		}
 			
 		// <<ボタンを作る。(1ページ後に進める)
 		this.createNumberingAround(this.numbering, 'next', '>>', startPage,
-										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea, callBack);
+										displayPageMax, displayPage+1, pageMax, jsonName, pageNum, targetArea, callBack, createTagSelector);
 			
 		//メンバjsonオブジェクトにnumberingオブジェクトを追加する。
 		this.json['numbering'] = this.numbering;
@@ -532,7 +535,7 @@ function createTag(){
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.12
 	 */
-	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea, callBack){
+	this.createNumberingAround = function(numbering, key, numberingString, startPage, displayPageMax, displayPage, pageMax, jsonName, pageNum, targetArea, callBack, createTagSelector){
 		var startAroundPage;
 		
 		//開始ページを算出する
@@ -558,9 +561,9 @@ function createTag(){
 		keyObj[key]['text'] = numberingString;
 		
 		//関数実行属性をoutputNumberingTagに設定する。
-		keyObj[key]['onclick'] = 'create_tag.outputNumberingTag("' + jsonName +'",'
-			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '","' + callBack +'")';
-		
+		keyObj[key]['onclick'] = createTagSelector + 'create_tag.outputNumberingTag("' + jsonName +'",'
+			+ Math.round(startAroundPage) +','+ displayPageMax + ',' + displayPage +', ' + pageNum + ',"' + targetArea + '","' + callBack + '", "' + createTagSelector + '")';
+		 
 		//numberingオブジェクトの中に追加する。
 		numbering[key] = keyObj[key];
 	}
@@ -986,93 +989,100 @@ function createTag(){
 		var colNameNode = null;
 		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
 		var $table = $(domNode);
-		//mapNodeの要素数を取得する。
-		var mapNodeArrayLength = mapNodeArray.length;
-		//レコードの列数を取得する
-		var mapObjectLength = Object.keys(mapNodeArray[0]).length;
 		
-		startIndex = 0;		//記事の表示開始インデックスを算出する
-		endCount = mapNodeArrayLength; 	//記事の表示終了インデックスを算出する。
-		
-		//デバッグ用
-		//pageNum = 10;
-		//displayPage = 3;
-		
-		//ページ番号、表示記事数が引数にあったら
-		if(pageNum !== void(0) && displayPage !== void(0)){
-			//表示する記事と記事数を指定するための値を算出する
-			startIndex = pageNum * (displayPage - 1);		//記事の表示開始インデックスを算出する
-			//記事の表示終了インデックスを算出する。記事配列の最大数を超えていたら、元の数値に戻す。
-			endCount = pageNum * displayPage > mapNodeArrayLength? mapNodeArrayLength: pageNum * displayPage;
-			pageNum = startIndex >= endCount? 0: endCount - startIndex;
-		//ページ番号、表示記事数が入力されていなければ
-		} else {
-			//記事数 = 配列の要素数にする
-			pageNum = mapNodeArrayLength;
-		}
-		 
-		 //設定データを格納するための変数を用意する
-		var config = null;
-		
-		//設定データが存在すれば
-		if(mapNode.config !== void(0)){
-			config = mapNode.config;	//列設定データを取得する
-		}
-
-		//テーブルの1行目のjQueryオブジェクトを生成し、変数に保存する。
-		//tableタグ直下に自動生成されるtbodyタグの取得をスキップするため、children関数を2度コールする
-		var $firstRow = $table.children().eq(0).children().eq(0);
-		
-		//配列のオブジェクト数分のdomNodeを作成する
-		for(var j = 1; j < mapObjectLength; j++){
-			//1行目の行の最初の子供(tdタグ)を必要なだけ増やす。
-			$firstRow.append($firstRow.children().eq(0).clone(false));
-		}
-
-		//設定データを取得できていたら
-		if(config != null){
-			var objectCounter = 0;	//行のオブジェクトを走査するためのカウンター変数を用意する
-			//複製したdomNodeに属性の値を指定していくループ
-			for(column in mapNodeArray[0]){
-				//各domNodeに属性の値を指定していく
-				$firstRow.children().eq(objectCounter++)
-				.addClass(this.getClassName(config, column))
-				.attr(STR_STYLE, this.getStyle(config, column))
-				.attr(STR_COLSPAN, this.getColspan(config, column));
+		//例外発生の恐れがある(レコード0時)ため、try-catchで例外処理を行う
+		try{
+			//mapNodeの要素数を取得する。
+			var mapNodeArrayLength = mapNodeArray.length;
+			//レコードの列数を取得する
+			var mapObjectLength = Object.keys(mapNodeArray[0]).length;
+			
+			startIndex = 0;		//記事の表示開始インデックスを算出する
+			endCount = mapNodeArrayLength; 	//記事の表示終了インデックスを算出する。
+			
+			//デバッグ用
+			//pageNum = 10;
+			//displayPage = 3;
+			
+			//ページ番号、表示記事数が引数にあったら
+			if(pageNum !== void(0) && displayPage !== void(0)){
+				//表示する記事と記事数を指定するための値を算出する
+				startIndex = pageNum * (displayPage - 1);		//記事の表示開始インデックスを算出する
+				//記事の表示終了インデックスを算出する。記事配列の最大数を超えていたら、元の数値に戻す。
+				endCount = pageNum * displayPage > mapNodeArrayLength? mapNodeArrayLength: pageNum * displayPage;
+				pageNum = startIndex >= endCount? 0: endCount - startIndex;
+			//ページ番号、表示記事数が入力されていなければ
+			} else {
+				//記事数 = 配列の要素数にする
+				pageNum = mapNodeArrayLength;
 			}
-		}
-		
-		//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
-		//@mod 2015.0730 T.Masuda 表示指定した記事数分だけ複製するように変更しました。
-		for(var i = 1; i < pageNum; i++){
-			//テーブルに必要なだけの行を追加する
-			$table.append($firstRow.clone(false));
-		}
-
-		//見出し行にセルを追加する
-		colNameNode = $firstRow.clone(false);
-		rowCounter = 0;	//行を指すカウンター変数を用意する
-		
-		//表示する記事数分ループする
-		for(var i = startIndex; i < endCount; i++){
-			//i番目の行を取得してjQueryオブジェクトに変換し、変数に格納する
-			var $row = $table.children().eq(0).children().eq(rowCounter++);
-			var j = 0;	//オブジェクト用ループ内でのカウンターを用意する
-			//テーブルの行に相当するオブジェクトを、テーブルに相当する配列から取得する
-			var mapObject = mapNodeArray[i];
-			//テーブルの行に相当するオブジェクトの要素分ループする
-			for(key in mapObject){
-				if(i == startIndex){
-					//見出し行のセルに値を入れる
-					$(colNameNode).children().eq(j).text(this.getColumnName(config, key));
+			 
+			 //設定データを格納するための変数を用意する
+			var config = null;
+			
+			//設定データが存在すれば
+			if(mapNode.config !== void(0)){
+				config = mapNode.config;	//列設定データを取得する
+			}
+	
+			//テーブルの1行目のjQueryオブジェクトを生成し、変数に保存する。
+			//tableタグ直下に自動生成されるtbodyタグの取得をスキップするため、children関数を2度コールする
+			var $firstRow = $table.children().eq(0).children().eq(0);
+			
+			//配列のオブジェクト数分のdomNodeを作成する
+			for(var j = 1; j < mapObjectLength; j++){
+				//1行目の行の最初の子供(tdタグ)を必要なだけ増やす。
+				$firstRow.append($firstRow.children().eq(0).clone(false));
+			}
+	
+			//設定データを取得できていたら
+			if(config != null){
+				var objectCounter = 0;	//行のオブジェクトを走査するためのカウンター変数を用意する
+				//複製したdomNodeに属性の値を指定していくループ
+				for(column in mapNodeArray[0]){
+					//各domNodeに属性の値を指定していく
+					$firstRow.children().eq(objectCounter++)
+					.addClass(this.getClassName(config, column))
+					.attr(STR_STYLE, this.getStyle(config, column))
+					.attr(STR_COLSPAN, this.getColspan(config, column));
 				}
-				//セルにクラスとテキストを追加していく
-				$row.children().eq(j++).text(mapObject[key]);
 			}
+			
+			//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
+			//@mod 2015.0730 T.Masuda 表示指定した記事数分だけ複製するように変更しました。
+			for(var i = 1; i < pageNum; i++){
+				//テーブルに必要なだけの行を追加する
+				$table.append($firstRow.clone(false));
+			}
+	
+			//見出し行にセルを追加する
+			colNameNode = $firstRow.clone(false);
+			rowCounter = 0;	//行を指すカウンター変数を用意する
+			
+			//表示する記事数分ループする
+			for(var i = startIndex; i < endCount; i++){
+				//i番目の行を取得してjQueryオブジェクトに変換し、変数に格納する
+				var $row = $table.children().eq(0).children().eq(rowCounter++);
+				var j = 0;	//オブジェクト用ループ内でのカウンターを用意する
+				//テーブルの行に相当するオブジェクトを、テーブルに相当する配列から取得する
+				var mapObject = mapNodeArray[i];
+				//テーブルの行に相当するオブジェクトの要素分ループする
+				for(key in mapObject){
+					if(i == startIndex){
+						//見出し行のセルに値を入れる
+						$(colNameNode).children().eq(j).text(this.getColumnName(config, key));
+					}
+					//セルにクラスとテキストを追加していく
+					$row.children().eq(j++).text(mapObject[key]);
+				}
+			}
+			
+			//colNameNodeを行の先頭に配置する
+			$table.prepend(colNameNode);
+		//例外処理ブロック
+		} catch(e){
+			//そのまま終了させるために握りつぶす
 		}
-		
-		//colNameNodeを行の先頭に配置する
-		$table.prepend(colNameNode);
 
 		return $table;	//作成したテーブルを返す
 	}
