@@ -25,7 +25,7 @@ function tabEx(url, argumentObj, returnObj){
 		//ダイアログの設定データオブジェクト
 		config:{
 			cache: true,		//一度読み込んだコンテンツは二度読み込まない
-			updateHash:false	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする
+			updateHash:true	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする
 		},
 		//インプット用データオブジェクト
 		data:{
@@ -82,6 +82,39 @@ function tabEx(url, argumentObj, returnObj){
 		//argumentObj、returnObjが空であればデフォルトのものを使う
 		this.argumentObj = Object.keys(this.argumentObj).length? this.argumentObj: this.defaultArgumentObj;
 		this.returnObj = Object.keys(this.returnObj).length? this.defaultReturnObj: this.defaultReturnObj;
+	}
+	
+	/* 関数名:setHashChangeSyncTab
+	 * 概要　:URLハッシュの切り替わりに合わせてタブを切り替えるイベントコールバックを設定する
+	 * 引数　:String || Element selector : イベントコールバックの対象となる要素
+	 * 返却値:なし
+	 * 作成日　:2015.1031
+	 * 作成者　:T.Masuda
+	 */
+	this.setHashChangeSyncTab = function(selector){
+		//ハッシュ切り替えイベント発生時の処理
+		$(window).bind("hashchange", function(ev){
+			//ハッシュが変わっていれば
+			if(location.hash) {
+				//URLからハッシュを取り出し、変数に格納する。
+				var hash = location.hash;
+
+				//引数の要素が存在していれば
+				if(commonFuncs.checkEmpty(selector) && $('> div > ' + hash, selector).length > 0){
+					//該当するタブを表示するを読み込む。
+					$(selector).easytabs('select', hash );
+				//ハッシュに対応するタブがネストして存在すれば
+				} else if ($(hash, selector).length > 0) {
+					//親のタブのIDを取得する
+					console.log($(hash));
+					 console.log($(hash).parents('.tabPanel'));
+					var parentTabPanelId = $(hash).parent().closest('.tabPanel').attr('id');
+					var parentTabContainerId = $('#' + parentTabPanelId).closest('.tabContainer').attr('id');
+					//親タブを開く
+					$('#' + parentTabContainerId).easytabs('select', '#' + parentTabPanelId);
+				}
+			}
+		});
 	}
 	
 }
