@@ -92,6 +92,10 @@ function dialogEx(url, argumentObj, returnObj){
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
+			//ダイアログのDOMが既に存在していたら
+			if(commonFuncs.checkEmpty(this.dom)){
+				this.destroy();	//ダイアログを消去する
+			}
 		}
 	}
 
@@ -111,12 +115,20 @@ function dialogEx(url, argumentObj, returnObj){
 		//ダイアログが確認ダイアログであれば、その親の要素(=元のダイアログ)を取得して処理対象にする
 		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 
 			? $(DOT + CONFIRM_DIALOG + SELECTOR_LAST).parent(): $dialog;
-		
-		//まずはダイアログを閉じる
-		$dialog.dialog(CLOSE);
-		//jQuery UIのダイアログを破棄する
-		$dialog.dialog(DESTROY);
-		$dialog.remove();	//DOMを消す
+			
+		//例外に備える
+		try{
+			//まずはダイアログを閉じる
+			$dialog.dialog(CLOSE);
+			//jQuery UIのダイアログを破棄する
+			$dialog.dialog(DESTROY);
+		//例外発生時
+		} catch(e) {
+			//握りつぶす
+		//必ず最後は
+		} finally {
+			$dialog.remove();	//DOMを消す
+		}
 	}
 	/* 関数名:setAlertContents
 	 * 概要　:ダイアログにアラートと閉じるボタンを表示する

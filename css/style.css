@@ -553,12 +553,15 @@ button.ui-button-text-only span.ui-button-text {
 }
 
 /* 
- * セレクタ:.window:first-child .main
+ * セレクタ:.window[name="usuall"] .main
  * 概要   :通常トップページコンテンツ領域。
  * 作成者 :T.Masuda
  * 作成日 :2015.09.22
+ * 変更者 :T.Masuda
+ * 変更日 :2015.10.31
+ * 内容　 :セレクタを変更しました。.window:first-child .main→.window[name="usuall"] .main
  */
-.window:first-child .main{
+.window[name="usuall"] .main{
     margin-top		: 115px;   /* 固定位置となっているヘッダーに被さる分上marginを取る */
 }
 

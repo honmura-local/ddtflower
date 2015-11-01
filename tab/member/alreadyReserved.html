@@ -21,6 +21,9 @@
 	//予約中授業のデータを取得するために会員番号をクエリの置換値にセットする
 	create_tag.json.reservedLessonTable.user_key.value = memberInfo;
 	
+	//今日以降の日付の予約授業データを取得するため、今日の日付をJSONにセットする
+	create_tag.json.reservedLessonTable.lesson_date.value = commonFuncs.getTodayDate();
+	
 	//予約中授業テーブル用のJSON配列を取得する
 	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['reservedLessonTable'], 'reservedLessonTable');
 	
