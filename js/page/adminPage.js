@@ -402,12 +402,24 @@ function searchPermitListInfoTable() {
 		var fromDate = $('[name=fromSearach]').val();
 		//検索終わりの値を取得する
 		var toDate = $('[name=toSearach]').val();
+		
+		console.log(new Date(fromDate));
+		
+		//不正な日付が入力されていたら
+		if(commonFuncs.isInvalidDate(new Date(fromDate)) 
+				|| commonFuncs.isInvalidDate(new Date(toDate))){
+			alert('不正な日付が入力されています。');	//警告を出す
+			return;	//処理を終える
+		}
+		
 		//受講承認一覧の連想配列に検索初めの値を入れる
 		create_tag.json.lecturePermitListInfoTable.FromDate.value = fromDate;
 		//受講承認一覧の連想配列に検索終わりの値を入れる
 		create_tag.json.lecturePermitListInfoTable.toDate.value = toDate;
-		//テーブルを更新する
-		create_tag.tableReload('lecturePermitListInfoTable');
+
+		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+		//受講承認一覧テーブルを作る
+		create_tag.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
 	});
 }
 
@@ -760,22 +772,24 @@ function loginInsteadOfMember (memberId) {
  * 作成日:2015.07.23
  */
 function afterReloadPermitListInfoTable() {
+	//当該タブのcreateTagを取得する
+	var lecturePermit = $('#lecturePermitList')[0].create_tag;
 	//受講承認一覧テーブルの取り出した行にクラス名を付ける
 	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	//受講承認一覧テーブルの列内を編集する
-	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
+	commonFuncs.dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, lecturePermit.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
 	//受講承認一覧テーブルの料金列をテキストボックスにする
-	create_tag.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	lecturePermit.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 	//受講承認一覧テーブルの使用pt列をテキストボックスにする
-	create_tag.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	lecturePermit.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
 	//セレクトボックスを列にアウトプットする
-	create_tag.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+	lecturePermit.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 	//セレクトボックスのvalueを画面に表示されている値にする
-	create_tag.setSelectboxValue('.contentSelect');
+	lecturePermit.setSelectboxValue('.contentSelect');
 	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+	lecturePermit.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	create_tag.setTableTextboxValuefromDB(create_tag.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	lecturePermit.setTableTextboxValuefromDB(lecturePermit.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
 	//置換済みテキストボックスに数値入力のみできるようにする
 	$('.lecturePermitListInfoTable .replaceTextbox').attr({
         onkeydown:"return controllInputChar(event);"	//数値のみ入力できるように関数を登録

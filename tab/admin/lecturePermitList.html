@@ -8,6 +8,7 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+			$('#lecturePermitList')[0].create_tag = create_tag;	//createTagをDOMと結びつける
 
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
@@ -32,8 +33,15 @@
 			setPermitListFromToDate();
 			//受講承認一覧テーブル外枠を作る
 			create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
+			// ナンバリング領域を作る
+			create_tag.outputTag('numberingOuter','numberingOuter','#lecturePermitList');
+
+			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
 			//受講承認一覧テーブルを作る
-			create_tag.tableReload('lecturePermitListInfoTable')
+			create_tag.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
+			//受講承認一覧テーブルを作る
+		//	create_tag.tableReload('lecturePermitListInfoTable')
+			
 			//受講承認一覧のリスト更新ボタン
 			create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
 			//クリックでテキストボックスにカレンダーを表示する

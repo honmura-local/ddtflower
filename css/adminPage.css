@@ -424,13 +424,26 @@
 /* 会員一覧の検索領域終わり */
 
 /* 
+ * セレクタ :ul.mailSendContent
+ * 概要   :ユーザ一覧 メール送信ダイアログ ユーザ情報部分
+ * 作成者 :T.Masuda
+ * 作成日 :2015.11.03
+ */
+ul.mailSendContent {
+	width: 300px;	/* ユーザ情報欄のスクロールを有効にするため固定幅にする */
+}
+
+/* 
  * セレクタ :.mailTo, .mailToPerson
  * 概要   :メール送信ダイアログの宛先人とアドレス表示領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.08.06
+ * 変更者 :T.Masuda
+ * 変更日 :2015.11.03
+ * 内容　 :スクロール設定を直しました
  */
 .mailTo, .mailToPerson {
-	overflow: auto;			/* 長すぎる領域はスクロールにする */
+	overflow-x: scroll;		/* 長すぎる領域はスクロールにする */
 	white-space: nowrap;	/* 改行をしない */
 	text-indent: 1em;		/* 1文字分のインデントをとる */
 }
