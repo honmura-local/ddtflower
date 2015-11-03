@@ -11,7 +11,10 @@ USER_ID = 'userId';			//ユーザID
 PHP_SESSID = 'PHPSESSID';	//PHPのセッションIDのキー
 //サーバへメッセージを送信したという文言
 SEND_TO_SERVER_MESSAGE = 'サーバへデータの送信を行いました。';
-validIdentifiers = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];	//有効な画像拡張子
+//有効な画像拡張子
+VALID_IMAGE_IDENTIFIERS = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG', '.tif', '.tiff', '.TIF', '.TIFF', '.pict', '.PICT', '.bmp', '.BMP'];
+//画像選択で無効な拡張子のファイルを選択した場合の警告
+INVALID_IMAGE_FILE_WARNING = '無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n' + VALID_IMAGE_IDENTIFIERS.join('').replace(/\./g, ' ');
 
 MSL_LIST_PHP					= 'list.php';						//MSLのリスト
 MSL_DETAIL_PHP					= 'detail.php';						//MSLの記事詳細

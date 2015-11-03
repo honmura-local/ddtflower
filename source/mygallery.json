@@ -66,14 +66,15 @@
         }
     },
     "myGalleryTable":{
-        "db_getQuery":"SELECT ug.id, ui.photo_title AS myPhotoImage,Date(ug.date) AS myPhotoDate, ug.title AS myPhotoTitle, uin.user_name AS myPhotoUser, ug.content_text AS myPhotoComment, ug.publication AS myPhotoPublication FROM user_gallery AS ug,user_image AS ui,user_inf AS uin WHERE ug.user_key='user_key' AND ug.user_key=uin.id AND ug.image_id=ui.id;",
+        "db_getQuery":"SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS myPhotoDate, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key='user_key' AND ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;",
         "user_key":{
             "value":""
         },
         "config": {
             "columns": {
                 "id":{
-                    "style":"display:none"
+                    "style":"display:none",
+                    "className":"id"
                 },
                 "myPhotoImage":{
                     "className":"myPhotoImage"
@@ -101,9 +102,9 @@
         "db_setQuery":"INSERT INTO user_image( user_key, photo_title, update_timestamp) VALUES ('user_key', 'photo_title', NOW());"
     },
     "updateMyGalleryPhoto":{
-        "db_setQuery":"UPDATE user_image SET summary = 'summary' WHERE id='id';"
+        "db_setQuery":"UPDATE user_image SET photo_summary='photo_summary', article_title='article_title' WHERE id='id';"
     },
     "deleteMyGalleryPhoto":{
-        "db_setQuery":"DELETE FROM user_image summary = 'summary' WHERE id='id';"
+        "db_setQuery":"DELETE FROM user_image WHERE id IN ('id');"
     }
 }

@@ -63,11 +63,11 @@
 					//ギャラリーデータがあればコンテンツを作る
 					if(create_tag.json.myGalleryTable[TABLE_DATA_KEY][0]) {
 						//ギャラリーの内容を追加する。
-						create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, 1, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+						create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, 4, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
 					}
 	
 					//ギャラリーの画像を拡大できるようにする。
-					create_tag.useZoomImage('myGalleryTable tr a');
+					create_tag.useZoomImage('myPhotoImage');
 					//jQuery UIのリッチなボタンを配置する。
 					$('.myGalleryEditButtons button').button();
 					//新規ボタンをクリックしたらアップロードするボタンを押すイベントを登録する。
@@ -76,6 +76,8 @@
 					create_tag.setMyGalleryChangeEvent('.myGalleryEditButtons .uploader');
 					//削除ボタンがクリックされた時にギャラリーコンテンツを削除するイベントを登録する
 					create_tag.deleteMyGalleryPhoto();
+					//更新ボタンが押されたらチェックが入った写真のデータの更新を行う
+					create_tag.updateMyGalleryPhotoData();
 					//ダブルクリックで記事の文字を編集できるようにする
 					create_tag.setDoubleClickMyPhotoEdit();
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

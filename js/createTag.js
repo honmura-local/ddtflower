@@ -436,7 +436,7 @@ function createTag(){
 			//ナンバリング用Tagを表示する。
 			this.outputTag('numbering', 'numbering', $(targetArea).siblings('.numberingOuter'));
 			//現在表示中のページに対応するナンバリングの色を変える。
-			this.selectPageNumber(displayPage);
+			this.selectPageNumber(displayPage, targetArea);
 		}
 		
 		//スクロール位置が低ければ
@@ -616,17 +616,23 @@ function createTag(){
 	
 	/* 
 	 * 関数名:this.selectPageNumber = function(displayPage)
-	 * 概要  :選択中のページナンバーの色を変える。
+	 * 概要  :選択中のナンバリングの色を変える。
 	 * 引数  :int displayPage:表示中のページ番号。
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.03.13
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 内容　:指定した領域以外のナンバリングまで色を変えてしまっていたため修正しました
 	 */
-	this.selectPageNumber = function(displayPage){
-		//全てのページナンバーからselectクラスを除去する。
-		$('.numbering li').removeClass('select');
-		//選択中のページナンバーのタグにselectクラスを付与して色を変える。
-		$('.numbering li:contains(' + displayPage + ')').addClass('select');
+	this.selectPageNumber = function(displayPage, targetArea){
+		
+		//対象となるナンバリングの領域を取得する
+		var targetNumberingOuter = $(targetArea).siblings('.numberingOuter');
+		//全てのナンバリングからselectクラスを除去する。
+		$('li', targetNumberingOuter).removeClass('select');
+		//選択中のナンバリングのタグにselectクラスを付与して色を変える。
+		$('li:contains(' + displayPage + ')', targetNumberingOuter).addClass('select');
 	}
 
 	/*

@@ -104,6 +104,10 @@
             "href": "#myoption.html"
         }
     },
+    "myBlogListArea":{
+    },
+    "myBlogList":{
+    },
     "myBlogListTable":{
         "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC; ",
         "user_key":{
@@ -128,10 +132,12 @@
         }
     },
     "deleteMyBlog":{
-        "db_setQuery":"DELETE FROM user_blog WHERE id = 'id';",
+        "db_setQuery":"DELETE FROM user_blog WHERE id IN ('id');",
         "id":{
             "value":""
         }
+    },
+    "blogArticleArea":{
     },
     "blogArticles":{
     },

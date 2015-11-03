@@ -25,7 +25,7 @@ function tabEx(url, argumentObj, returnObj){
 		//ダイアログの設定データオブジェクト
 		config:{
 			cache: true,		//一度読み込んだコンテンツは二度読み込まない
-			updateHash:true	//タブのインデックスをクリックしてもURLのハッシュが変わらないようにする
+			updateHash:true		//URLハッシュによるタブ開閉履歴を残す
 		},
 		//インプット用データオブジェクト
 		data:{

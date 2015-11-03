@@ -1,8 +1,5 @@
 /* アクションを制御するJSファイル。 */
 
-//有効な拡張子を配列に格納する。
-var validIdentifiers = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
-
 /*
  * 関数名:function checkIdentifier(fileName)
  * 引数  :String fileName:ファイル名。
@@ -13,12 +10,12 @@ var validIdentifiers = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
  */
 function checkIdentifier(fileName){
 	var retBoo = false;	//返却するチェック結果を格納する変数を宣言、初期化する。
-	var listLength = validIdentifiers.length;	//有効な拡張子の配列の長さを取得する。
+	var listLength = VALID_IMAGE_IDENTIFIERS.length;	//有効な拡張子の配列の長さを取得する。
 	
 	//有効な拡張子のリストとfileNameを比較する
 	for(var i = 0; i < listLength; i++){
 		//有効な拡張子であったら
-		if(fileName.indexOf(validIdentifiers[i]) > -1 ){
+		if(fileName.indexOf(VALID_IMAGE_IDENTIFIERS[i]) > -1 ){
 			retBoo = true;	//trueを返す
 			break;	//ループを抜ける
 		}
@@ -40,18 +37,14 @@ function checkIdentifier(fileName){
  * 作成者:T.M
  */
 function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, arg3){
-	var $parent = '';	//ボタンの親要素を格納する変数を宣言する。
+	var $parent = EMPTY_STRING;	//ボタンの親要素を格納する変数を宣言する。
 	
 	//アップロードボタンのchangeイベントを定義する。
 	$(uploader).on('change', function(){
-		//拡張子チェックを行う。画像の拡張子でなければはじく。
-		if(!checkIdentifier($(this).val())){
-			//有効なファイルを選んでもらうように警告を出す。
-			alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
-			return;	//処理を終える。
-		}
 		
-		if(callBack !== void(0)){	//引数で関数が指定されていれば
+		//ファイルが正しく、引数に関数がセットされていたら
+		if(commonFuncs.checkImageFile($(this).val(), INVALID_IMAGE_FILE_WARNING) 
+				&& commonFuncs.checkEmpty(callBack)){
 			callBack(this, $parent, arg1, arg2, arg3);	//コールバック関数を実行する。
 		}
 	});
