@@ -57,7 +57,7 @@ function adminMailDialog(dialog){
 		//表示、送信するデータをまとめる
 		var sendData = this.createSendData(data);
 		//createTag用にcreateLittleContentsクラスインスタンスのJSON連想配列に宛先の名前、メールアドレスを追加する
-		this[VAR_CREATE_TAG].json[KEY_MAIL_FORM].mailToPersonArea.mailToPersonLabel[STR_TEXT] = sendData[STR_NAME];
+		this[VAR_CREATE_TAG].json[KEY_MAIL_FORM].mailToPersonArea.mailToPerson[STR_TEXT] = sendData[STR_NAME];
 		this[VAR_CREATE_TAG].json[KEY_MAIL_FORM].mailToArea.mailTo[STR_TEXT] = sendData.email;
 		data.idList = sendData[ID];	//送信先のIDをセットする
 	};

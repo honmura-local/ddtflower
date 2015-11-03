@@ -46,6 +46,8 @@
 					//管理者タブ作成のため、タブ作成クラスインスタンスを生成する
 					var adminTab = new tabEx('tab/adminTab.html');
 					adminTab.run($currentContent);	//作成したタブを画面に追加する
+					//タブの履歴を有効にする
+					adminTab.setHashChangeSyncTab('#adminTab');
 					
 					//画面の先頭にスクロールを戻すボタン
 					create_tag.outputTag('returnTopPosition', 'returnTopPosition', $currentContent);

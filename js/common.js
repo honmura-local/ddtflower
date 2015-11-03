@@ -700,35 +700,13 @@ this.defaultClassworkCostColumns = [
 		//連番を入れる
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
 		//テーマの値が空白のとき、その列に後にセレクトボックスをアペンドするために対してクラスをつける。
-		if(recordData.lesson_name == EMPTY_STRING) {
+		if(!commonFuncs.checkEmpty(recordData.lesson_name)) {
 			//クラスappendSelectboxをつけてアペンド対象であることを分かりやすくする
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).addClass('appendSelectbox');
+			console.log($(tableName + ' tr:eq(' + rowNumber + ') input:hidden'));
+			$(tableName + ' tr:eq(' + rowNumber + ') input:hidden').val(recordData.id);
 		}
 	};
-
-	/* 
-	 * 関数名:dbDataTableReplaceExecute
-	 * 概要  :dbから取り出したテーブルについてクライアント側で置換させる
-	 * 引数  :
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.06.13
-	 */
-	this.dbDataTableReplaceExecute = function(tableName, rowData, func, timeTableStudents) {
-		// カウンターを作る
-		var counter = 0;
-		// テーブルの行番号
-		var rowNumber = 1;
-		// テーブルのすべての行に対してループで値を入れる
-		$.each(rowData, function() {
-			// テーブルの値を変える関数をコールする
-			eval(func)(tableName, rowData, counter, rowNumber, timeTableStudents);
-			// 行番号をインクリメントする
-			rowNumber++;
-			// カウンタ変数をインクリメントする
-			counter++;
-		});
-	}
 
 	/* 
 	 * 関数名:customizeTableData
@@ -920,6 +898,15 @@ this.defaultClassworkCostColumns = [
 		var counter = 0;
 		// テーブルの行番号
 		var rowNumber = 1;
+		// データの数
+		var rowDataNum = rowData.length;
+		
+		//ナンバリングがあれば
+		if($('.numbering .select:visible').length){
+			//途中からスタートする
+			counter = ($(tableName + ' tr').length - 1) * (parseInt($('.numbering .select:visible').text()) - 1);
+		}
+		
 		// テーブルのすべての行に対してループで値を入れる
 		$.each(rowData, function() {
 			// テーブルの値を変える関数をコールする
@@ -928,6 +915,11 @@ this.defaultClassworkCostColumns = [
 			rowNumber++;
 			// カウンタ変数をインクリメントする
 			counter++;
+			
+			//最後のデータまで走査したら
+			if(counter >= rowDataNum){
+				return false;	//ループ終了となる
+			}
 		});
 	}
 
@@ -1862,23 +1854,12 @@ this.defaultClassworkCostColumns = [
 	 */
 	this.showAdminWindow = function(){
 		//管理者画面のウィンドウがあれば
-		if($('.window[name="admin"]').length > 0){
-			//管理者画面を破棄する
-			$('.window[name="admin"]')[0].instance.destroy();
-		}
-		
-		//シーケンシャルにコードを実行する
-		$.when(
+		if(!$('.window[name="admin"]').length){
 			//通常サイトのウィンドウから管理者画面のウィンドウを呼び出す
 			$('.window[name="usuall"]')[0].instance.callPage('window/admin/page/adminTop.html')
-		//上記コードの処理が終わったら
-		).done(function(){
-			//ディレイをかけて実行する
-			window.setTimeout(function(){
-				$('a[data-target="#userList"]').click();	//ユーザ一覧タブをクリックする
-				commonFuncs.showCurrentWindow();					//管理者画面を出す
-			}, 10);	//10ミリ秒のディレイ
-		});
+		}
+		
+		commonFuncs.showCurrentWindow();					//管理者画面を出す
 	}
 	
 	/* 
@@ -1896,7 +1877,18 @@ this.defaultClassworkCostColumns = [
 		return 	date.getFullYear() + CHAR_HYPHEN + (date.getMonth() + 1) + CHAR_HYPHEN + date.getDate();
 	}
 	
-	
+	/* 
+	 * 関数名:isInvalidDate
+	 * 概要  :日付が不正かどうかをチェックする
+	 * 引数  :Date date : 任意の日付オブジェクト
+	 * 返却値  :Boolean : 判定結果 
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.01
+	 */
+	this.isInvalidDate = function(date){
+		//日付が不正かを判定して返す
+		return date.toString() === "Invalid Date";
+	}
 //ここまでクラス定義領域
 }
 

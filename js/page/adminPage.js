@@ -291,6 +291,9 @@ var updateDateMovement = function(clickSelector, nowDateObject) {
 	$(DOT + 'dateBelt' + ' p').text(nowDateString);
 }
 
+//日ごと予約者一覧共通で使う日付オブジェクト
+nowDateObject = new Date();
+
 /* 
  * 関数名:updateDateSearch
  * 概要  :日付検索をクリックした時の処理
@@ -302,10 +305,20 @@ var updateDateMovement = function(clickSelector, nowDateObject) {
 var updateDateSearch = function () {
 	//表示されている日付を更新するために検索する日付のデータを取得する。
 	var changeDate = $('.dateInput').val();
+	
+	//日付文字列を日付のオブジェクトに変換する
+	dateObject =  new Date(changeDate);
+	
+	//無効な日付であれば
+	if(dateObject.toString() === "Invalid Date"){
+		alert('有効な日付を入力してください。');	//警告を出す
+		return nowDateObject;	//処理を中断する
+	}
+	
+	nowDateObject =  dateObject;
+	
 	//現在表示されている日付を入力された日付で更新する
 	$(DOT + 'dateBelt p').text(changeDate)
-	//日付オブジェクトを検索された値で更新し、ページングの基準となる値にする
-	nowDateObject = new Date(changeDate);
 	//日ごと授業者一覧テーブルをリロードする
 	create_tag.eventTableReload('eachDayReservedInfoTable');
 	//日付オブジェクトを更新する
@@ -389,12 +402,24 @@ function searchPermitListInfoTable() {
 		var fromDate = $('[name=fromSearach]').val();
 		//検索終わりの値を取得する
 		var toDate = $('[name=toSearach]').val();
+		
+		console.log(new Date(fromDate));
+		
+		//不正な日付が入力されていたら
+		if(commonFuncs.isInvalidDate(new Date(fromDate)) 
+				|| commonFuncs.isInvalidDate(new Date(toDate))){
+			alert('不正な日付が入力されています。');	//警告を出す
+			return;	//処理を終える
+		}
+		
 		//受講承認一覧の連想配列に検索初めの値を入れる
 		create_tag.json.lecturePermitListInfoTable.FromDate.value = fromDate;
 		//受講承認一覧の連想配列に検索終わりの値を入れる
 		create_tag.json.lecturePermitListInfoTable.toDate.value = toDate;
-		//テーブルを更新する
-		create_tag.tableReload('lecturePermitListInfoTable');
+
+		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
+		//受講承認一覧テーブルを作る
+		create_tag.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
 	});
 }
 
@@ -565,24 +590,42 @@ function loopUpdatePermitLesson() {
 	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-		$('.lecturePermitAccordion').each(function() {
-			//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-			if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-				//DBを更新するための値を取得するために置換する連想配列を取得する
-				var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-				//加算ポイントレートを取得する
-				var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
-				//受講料から加算ポイントを求める
-				sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
-				//備品代から加算ポイントを求める
-				sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
-				//受講承認データを更新する
-				permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
-			}
-			//カウンターをインクリメントする
-			counter++;
-		});
+		//受講承認を行った生徒の方のリストを作る
+		var processedList = new Array();
+		//序文を追加する
+		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
+		
+		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
+		try{
+			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+			$('.lecturePermitAccordion').each(function() {
+				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
+				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
+						//DBを更新するための値を取得するために置換する連想配列を取得する
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+						//加算ポイントレートを取得する
+						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+						//受講料から加算ポイントを求める
+						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+						//備品代から加算ポイントを求める
+						sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
+						//受講承認データを更新する
+						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+						//生徒さんの情報をリストに追加していく
+						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');	
+				}
+				
+				//カウンターをインクリメントする
+				counter++;
+			});
+		//例外処理
+		} catch(e){
+			//メッセージの先頭を追加する
+			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n');
+		//必ず行う処理
+		} finally {
+			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+		}
 	});
 }
 
@@ -600,15 +643,29 @@ function loopUpdatePermitLessonList() {
 	$(STR_BODY).on(CLICK, '#lecturePermitList .normalButton', function(){
 		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-		$('.lecturePermitListRecord').each(function() {
-				//DBを更新するための値を取得するために置換する連想配列を取得する
-				var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, '.lecturePermitListRecord:eq(' + counter + ')');
-				//受講承認一覧データを更新する
-				permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
-			//カウンターをインクリメントする
-			counter++;
-		});
+		//受講承認を行った生徒の方のリストを作る
+		var processedList = new Array();
+		
+		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
+		try{
+			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+			$('.lecturePermitListRecord').each(function() {
+					//DBを更新するための値を取得するために置換する連想配列を取得する
+					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+					//受講承認一覧データを更新する
+					permitDataUpdate(sendReplaceArray, sendReplaceArray.lesson_name == "", 'updatePermitListCommoditySell', 'updatePermitListLesson');
+				//カウンターをインクリメントする
+				counter++;
+			});
+		//例外処理
+		} catch(e){
+			//メッセージの先頭を追加する
+			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n');
+		//必ず行う処理
+		} finally {
+			processedList.push(counter + '件のレコードを更新しました。');
+			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+		}
 	});
 }
 
@@ -644,26 +701,48 @@ function userListSearch() {
 /* 
  * 関数名:jumpToMemberPage
  * 概要  :管理者 会員一覧で選択されているユーザの会員ページに接続する
- * 引数  :なし
+ * 引数  :String || Element clickTarget : クリックイベントの対象
+ * 　　  :String user : 選択中ユーザのセレクタ
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Masuda
+ * 変更日:2015.11.01
+ * 内容　:セレクタが固定になっていたため調整しました
  */
-function jumpToMemberPage() {
+function jumpToMemberPage(clickTarget, user) {
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, '.userDetail', function(){
+	$(STR_BODY).on(CLICK, clickTarget, function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
-		var selected = $('.selectRecord').length;
+		var selected = $(user).length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する
 		if(selected == 0 || selected > 1) {
 			//選択している
 			alert('ユーザを1人だけ選択してください');
 		} else {
 			//クリックした人でログインするために会員番号を取得する
-			var memberId = $('.selectRecord').children('.id').text();
+			var memberId = $(user).children('.id').text();
 			//クリックした人でなり代わりログインを行う
 			loginInsteadOfMember(memberId);
 		}
+	});
+}
+
+/* 
+ * 関数名:loginMemberPageFromAdminPage
+ * 概要  :クリックした対象からユーザIDを抽出して会員画面へのログインを行う
+ * 引数  :String || Element clickTarget : イベント登録の基点の要素
+ * 　　  :String clickTarget : クリックイベントの対象
+ * 	　   :String getTarget : ID取得対象のセレクタ
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.11.01
+ */
+function loginMemberPageFromAdminPage(eventBase, clickTarget, getTarget){
+	//対象の要素のクリックイベントコールバックを登録する
+	$(eventBase).on('click', clickTarget, function(e){
+		var id = $(getTarget, this).text();	//対象からテキスト(ID)を取得する
+		loginInsteadOfMember(id);			//取得したIDで会員画面へのログインを行う
 	});
 }
 
@@ -693,22 +772,28 @@ function loginInsteadOfMember (memberId) {
  * 作成日:2015.07.23
  */
 function afterReloadPermitListInfoTable() {
+	//当該タブのcreateTagを取得する
+	var lecturePermit = $('#lecturePermitList')[0].create_tag;
 	//受講承認一覧テーブルの取り出した行にクラス名を付ける
 	setTableRecordClass('lecturePermitListInfoTable', 'lecturePermitListRecord');
 	//受講承認一覧テーブルの列内を編集する
-	dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
+	commonFuncs.dbDataTableReplaceExecute(DOT + LECTURE_PERMIT_LIST_INFO_TABLE, lecturePermit.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY], LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC);
 	//受講承認一覧テーブルの料金列をテキストボックスにする
-	create_tag.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
+	lecturePermit.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxCost', 'replaceTextboxCostCell');
 	//受講承認一覧テーブルの使用pt列をテキストボックスにする
-	create_tag.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
+	lecturePermit.insertTextboxToTable('lecturePermitListInfoTable', 'replaceTextboxUsePoint', 'replaceTextboxUsePointCell');
 	//セレクトボックスを列にアウトプットする
-	create_tag.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
+	lecturePermit.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 	//セレクトボックスのvalueを画面に表示されている値にする
-	create_tag.setSelectboxValue('.contentSelect');
+	lecturePermit.setSelectboxValue('.contentSelect');
 	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
+	lecturePermit.outputTag('commodityKeyBox','commodityKeyBox', '.appendSelectbox');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	create_tag.setTableTextboxValuefromDB(create_tag.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	lecturePermit.setTableTextboxValuefromDB(lecturePermit.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	//置換済みテキストボックスに数値入力のみできるようにする
+	$('.lecturePermitListInfoTable .replaceTextbox').attr({
+        onkeydown:"return controllInputChar(event);"	//数値のみ入力できるように関数を登録
+	});
 }
 
 /* 
