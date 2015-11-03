@@ -37,18 +37,14 @@ function checkIdentifier(fileName){
  * 作成者:T.M
  */
 function clickButtonToFile(parentClass, button, uploader, callBack, arg1, arg2, arg3){
-	var $parent = '';	//ボタンの親要素を格納する変数を宣言する。
+	var $parent = EMPTY_STRING;	//ボタンの親要素を格納する変数を宣言する。
 	
 	//アップロードボタンのchangeイベントを定義する。
 	$(uploader).on('change', function(){
-		//拡張子チェックを行う。画像の拡張子でなければはじく。
-		if(!checkIdentifier($(this).val())){
-			//有効なファイルを選んでもらうように警告を出す。
-			alert(INVALID_IMAGE_FILE_WARNING);
-			return;	//処理を終える。
-		}
 		
-		if(callBack !== void(0)){	//引数で関数が指定されていれば
+		//ファイルが正しく、引数に関数がセットされていたら
+		if(commonFuncs.checkImageFile($(this).val(), INVALID_IMAGE_FILE_WARNING) 
+				&& commonFuncs.checkEmpty(callBack)){
 			callBack(this, $parent, arg1, arg2, arg3);	//コールバック関数を実行する。
 		}
 	});

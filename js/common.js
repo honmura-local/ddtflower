@@ -1929,6 +1929,31 @@ this.defaultClassworkCostColumns = [
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(point);
 	};
 	
+	/* 
+	 * 関数名:callMemberLessonValue
+	 * 概要  :ファイルの拡張子が画像ファイルか、空でないかをチェックする
+	 * 引数  :String filePath:値を置換する対象となるテーブルのcssクラス名
+	 		 String invalidMessage:ループ対象となるテーブルの行全体の連想配列
+	 * 返却値  :Boolean : 判定結果
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.03
+	 */
+	this.checkImageFile = function(filePath, invalidMessage){
+		
+		var retBoo = true;	//返却値を格納する変数を用意、trueで初期化する
+		
+		//何も選択されていない場合
+		if (!commonFuncs.checkEmpty(filePath)) {
+			retBoo = false;	//NG判定となる
+		//拡張子チェックを行う。画像の拡張子でなければはじく。
+		} else if(!checkIdentifier(filePath)){
+			//有効なファイルを選んでもらうように警告を出す。
+			alert(invalidMessage);
+			retBoo = false;	//NG判定となる
+		}
+		
+		return retBoo;	//判定結果を返す
+	}
 	
 	
 	

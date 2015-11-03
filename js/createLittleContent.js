@@ -722,11 +722,10 @@ function createLittleContents(){
 	this.setMyGalleryChangeEvent = function (selector, imgWidth, imgHeight){
 		var thisElem = this;
 		$(selector).on('change', function(event){
-			//拡張子チェックを行う。画像の拡張子でなければはじく。
-			if(!checkIdentifier($(this).val())){
-				//有効なファイルを選んでもらうように警告を出す。
-				alert(VALID_IMAGE_IDENTIFIERS);
-				return;	//処理を終える。
+			
+			//選択したファイルをチェックする。
+			if(!commonFuncs.checkImageFile($(this).val(), INVALID_IMAGE_FILE_WARNING)){
+				return;
 			}
 			
 			var $uploader = $(this);		//画像アップローダーの要素を取得する
