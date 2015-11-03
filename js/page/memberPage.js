@@ -64,7 +64,8 @@ function finshedLessonTableAfterPaging() {
 	setTimeout(function(){
 		//ページングの処理を行う件数を取得するためにページングの現在のページを取得する
 		var nowPageNumber = Number($('.select').text() - 1);
-		console.log($('.select'));
+		//ページャがなければページ番号を1とする
+		nowPageNumber = nowPageNumber > -1 ? nowPageNumber : 0;
 		//テーブルのデータを取得する
 		var tableData = $('#finishedLesson')[0].create_tag.json.finishedLessonTable[TABLE_DATA_KEY];
 		//テーブルのレコード数を取得する
@@ -73,22 +74,21 @@ function finshedLessonTableAfterPaging() {
 		var loopEndCount = loopEndCount >= recordCount ? recordCount-1 : nowPageNumber * 10 + 9;
 		//テーブルのループのための行番号を取得する
 		var rowNumber = 1;
+		
 		//ループで受講済みテーブルを編集する
 		//ループの開始の値を算出する(loopStartCount)
-		
 		for(var loopStartCount = nowPageNumber * 10; loopStartCount <= loopEndCount; loopStartCount++) {
 			//走査対象のデータがなければ
 			if(tableData[loopStartCount] === void(0)){
-				console.log("break");
 				break;	//ループを抜ける
 			}
 			
 			//テーブルの値を置換する
-			callMemberLessonValue('.finishedLessonTable', tableData, loopStartCount, rowNumber);
+			commonFuncs.callMemberLessonValue('.finishedLessonTable', tableData, loopStartCount, rowNumber);
 			//行番号をインクリメントして次の行についてのループに備える
 			rowNumber++;
-			console.log(loopStartCount);
 		}
+		
 		//受講済みテーブルを表示する
 		$('.finishedLessonTable').show();
 	},1);
@@ -105,6 +105,8 @@ function finshedLessonTableAfterPaging() {
 function finshedLessonTableThemeSelect() {
 	//ページングがクリックされた時のイベントを登録する
 	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
+		//受講済み授業一覧のcreateTagを取得する
+		var create_tag = $('#finishedLesson')[0].create_tag;
 		//テーブルを作るためのクエリを置換する
 		create_tag.replaceTableQuery('finishedLessonTable');
 		//ページングに使うものを初期化し、ページングを作り直すために備える
@@ -115,7 +117,7 @@ function finshedLessonTableThemeSelect() {
 		//授業データがあれば
 		if(create_tag.json.finishedLessonTable.tableData.length > 0){
 			//ページング機能付きで受講済みテーブルを作り直す
-			create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+			create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging', "$('#finishedLesson')[0].");
 		}
 	});
 }
