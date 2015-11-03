@@ -132,7 +132,7 @@
         }
     },
     "deleteMyBlog":{
-        "db_setQuery":"DELETE FROM user_blog WHERE id = 'id';",
+        "db_setQuery":"DELETE FROM user_blog WHERE id IN ('id');",
         "id":{
             "value":""
         }

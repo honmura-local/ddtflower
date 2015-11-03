@@ -2111,17 +2111,30 @@ function createLittleContents(){
 	 * 内容	:createLittleContentsクラスの関数として対応しました
 	 */
 	this.deleteBlogArticle = function(deleteQueryKey, deleteArticleNumberArray) {
-		//記事を削除する個数をカウントし、ループさせる回数として使う
-		var deleteRoopCount = deleteArticleNumberArray.length;
-		//ループで記事削除処理を行う
-		for(var roopStartCount = 0; roopStartCount < deleteRoopCount; roopStartCount++) {
-			//削除するid番号を取得して削除するレコードを識別する
-			var deleteRowId = deleteArticleNumberArray[roopStartCount];
-			//削除クエリを実行するために削除対象記事の連想配列を作る
-			var sendReplaceArray = {id:{value:deleteRowId}};
-			//記事を削除しDBを更新する
-			 this.setDBdata(this.json[deleteQueryKey], sendReplaceArray, '');
-		}
+		//削除する記事IDの配列を文字列に変換してオブジェクトに格納する
+		var sendReplaceObject = deleteArticleNumberArray.join(','); 
+		//削除のクエリを取得する
+		var deleteQuery = this.json[deleteQueryKey].db_setQuery;
+		//削除のクエリの条件部分を置換する
+		this.json[deleteQueryKey].db_setQuery = deleteQuery.replace("'id'", sendReplaceObject);
+
+		//記事を削除しDBを更新する
+		 this.setDBdata(this.json[deleteQueryKey], { id : EMPTY_STRING }, EMPTY_STRING);
+		 //すげ替えたクエリを元に戻す
+		 this.json[deleteQueryKey].db_setQuery = deleteQuery;
+		 
+		//ブログのデータを取得し直す
+		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogTable'], 'myBlogTable');
+		 //ブログ一覧のデータを取得し直す
+		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogListTable'], 'myBlogListTable');
+
+		 //ブログ記事を作り直す
+		 this.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages');	// ブログの記事を作る。
+		 //ブログ一覧のテーブルを作り直す
+		 this.outputNumberingTag('myBlogListTable', 1, 4, 1, 3, '.myBlogList', 'commonFuncs.extendMyBlogList');
+		//記事の画像を拡大できるようにする。
+//		creator.useZoomImage('blogImage');
+				
 	}
 	
 	/* 
@@ -2436,13 +2449,13 @@ function createLittleContents(){
 			}
 			
 			//確認ダイアログを出して、OKならば
-			if(window.confirm('選択した行を削除しますか?')){
+			if(window.confirm('選択した記事を削除しますか?')){
 				//DBからチェックが入った記事を削除する
 				thisElem.deleteBlogArticle(deleteQueryKey, numberArray);
 				//先ほど選択した行を削除する。
 				$checkedRecord.remove();
 				//削除完了の旨を伝える。
-				alert('選択した行を削除しました。');
+				alert('選択した記事を削除しました。');
 			}
 		});
 	}
