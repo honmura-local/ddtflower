@@ -725,7 +725,7 @@ function createLittleContents(){
 			//拡張子チェックを行う。画像の拡張子でなければはじく。
 			if(!checkIdentifier($(this).val())){
 				//有効なファイルを選んでもらうように警告を出す。
-				alert('無効なファイルです。以下の拡張子の画像ファイルを選択してください。\n.png .PNG .jpg .jpeg .JPG .JPEG');
+				alert(VALID_IMAGE_IDENTIFIERS);
 				return;	//処理を終える。
 			}
 			
