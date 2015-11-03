@@ -161,7 +161,7 @@ function reservedLessonTable() {
 		//予約中授業テーブルの行がクリックされたときに予約キャンセルダイアログを出す処理
 		$(RESERVED_LESSON_TABLE_OUTSIDE).on(CLICK, DOT + RESERVED_LESSON_TABLE_RECORD, function(){
 			//キャンセルダイアログを開く
-			thisElem.openCancelDialog(this, memberInfo, $(RESERVED_LESSON_TABLE_OUTSIDE)[0].create_tag);
+			thisElem.openCancelDialog(this, memberInfo, create_tag);
 		});
 	}
 

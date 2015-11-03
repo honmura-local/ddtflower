@@ -5,6 +5,8 @@
 	//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
 	var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
 	create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
+	//このタブのcreateTagを再利用できるようにするため、タブのDOMに参照を保存する
+	$('#alreadyReserved')[0].create_tag = create_tag;	
 	
 	create_tag.getJsonFile('source/memberPage.json');
 	// 会員共通のパーツのJSONを取得する。
@@ -51,8 +53,8 @@
 	//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 	if(create_tag.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 		// 予約中授業のテーブルを作る
+		console.log(create_tag.json['reservedLessonTable'].toString());
 		create_tag.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
-
 		// 予約中テーブルのテーブルの値を置換する
 		commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, create_tag);
 		//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
@@ -65,7 +67,7 @@
 		var reservedLessonTableFuncs = new reservedLessonTable();
 
 		//キャンセルダイアログを予約中授業テーブルから開く処理
-		reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, create_tag);
+		reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, $('#alreadyReserved')[0].create_tag);
 		//予約中授業テーブル絞り込みボタン機能を実装する
 		create_tag.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 	}
