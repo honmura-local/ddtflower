@@ -28,7 +28,7 @@
 
 				// 会員共通のパーツのJSONを取得する。
 				create_tag.getDomFile('template/memberCommon.html');
-				// 会員ページのjsonを読み込む
+				// 会員ページのHTMLを読み込む
 				create_tag.getDomFile('template/memberPage.html');
 				//ユーザ情報のテキストをDBから取得する
 				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
@@ -45,14 +45,11 @@
 				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
 				
 				create_tag.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
-				create_tag.getJsonFile('source/mypage.json');// 各ページ共通のパーツのJSONを取得する。
-				create_tag.getJsonFile('source/mypagecontent.json');	// マイページの動的なコンテンツのJSONを取得する。
+				create_tag.getJsonFile('source/mypage.json');			// 各ページ共通のパーツのJSONを取得する。
 				// ファイルのhtmlデータをdomを用いて持ってくる
 				create_tag.getDomFile('template/common.html');
 				create_tag.getDomFile('template/mypage.html');
 				create_tag.getDomFile('template/table.html');
-
-				create_tag.getJsonFile('source/mypagebloglist.json');	// マイページのブログ一覧のJSONを取得する。
 
 				// ブログ管理領域を作る。
 				create_tag.outputTag('myPageBlog', 'myPageBlog', $currentContent);
@@ -63,26 +60,29 @@
 
 				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
 				create_tag.json.myBlogListTable.user_key.value = create_tag.getUserId();
-				create_tag.outputTag("blogArticles",'blogArticles','.myPageBlog');			//Myページのブログ領域
-				create_tag.outputTag('numberingOuter', 'numberingOuter', '.myPageBlog');	// ナンバリング領域を作る
-				
+				create_tag.outputTag("blogArticleArea",'blogArticleArea','.myPageBlog');
+				create_tag.outputTag("blogArticles",'blogArticles','.blogArticleArea');			//Myページのブログ領域
+				create_tag.outputTag('numberingOuter', 'numberingOuter', '.blogArticleArea');	// ナンバリング領域を作る
+
 				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
 				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogListTable'], 'myBlogListTable');
-				//ブログの投稿したことがある人のみブログリストテーブルを作る
+				
+				//ブログの投稿したことがある人のみブログ一覧テーブルを作る
 				if(create_tag.json.myBlogListTable[TABLE_DATA_KEY].length != 0) {
-					//ブログリストのテーブルを作る
-					create_tag.outputTagTable('myBlogListTable','myBlogListTable','.myPageBlog');
-					//テーブルの1列目をチェックボックスにする
-					create_tag.addCheckbox('checkWrap', 'check');
-					//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
-					commonFuncs.allCheckbox('.check:eq(0)', '.check');
+					//ブログ一覧の領域を作る
+					create_tag.outputTag("myBlogListArea",'myBlogListArea','.myPageBlog');
+					create_tag.outputTag("myBlogList",'myBlogList','.myBlogListArea');			//ブログ一覧のテーブルを格納する領域を作る
+					create_tag.outputTag('numberingOuter', 'numberingOuter', '.myBlogListArea');	// ナンバリング領域を作る
+					//ブログ一覧のテーブルを作る
+					create_tag.outputNumberingTag('myBlogListTable', 1, 4, 1, 3, '.myBlogList', 'commonFuncs.extendMyBlogList');
 				}
 				
 				//ユーザのブログ領域用のJSONに会員IDをセットする。
 				create_tag.json.myBlogTable.user_key.value = create_tag.json.accountHeader.user_key.value;
+								
 				//ユーザ情報のテキストをDBから取得する
 				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogTable'], 'myBlogTable');
-				//ブログデータがあればブログ一覧を作る
+				//ブログデータがあればブログを作る
 				if(create_tag.json.myBlogTable[TABLE_DATA_KEY][0]) {
 					create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages');	// ブログの記事を作る。
 					//記事の画像を拡大できるようにする。

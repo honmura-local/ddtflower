@@ -1955,7 +1955,36 @@ this.defaultClassworkCostColumns = [
 		return retBoo;	//判定結果を返す
 	}
 	
+	/* 
+	 * 関数名:addCheckbox
+	 * 概要  :チェックボックスを追加する
+	 * 引数  :selector : チェックボックスをappendするセレクター名
+	 		 attrName : チェックボックスのクラス名とname属性名(共通)
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.02
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 内容　:commonクラスに移動しました。
+	 */
+	this.addCheckbox = function(selector, attrName) {
+		$('.' + selector).html('<input class="' + attrName + '" type="checkbox" name="' + attrName + '">');
+	}
 	
+	/* 
+	 * 関数名:extendMyBlogList
+	 * 概要  :マイブログ一覧作成後にチェックボックス列を追加する
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.03
+	 */
+	this.extendMyBlogList = function() {
+		//テーブルの1列目をチェックボックスにする
+		commonFuncs.addCheckbox('checkWrap', 'check');
+		//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
+		commonFuncs.allCheckbox('.check:eq(0)', '.check');
+	}
 	
 //ここまでクラス定義領域
 }
