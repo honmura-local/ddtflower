@@ -58,7 +58,8 @@
 					create_tag.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
 					//ボタンをjqueryのボタンにする
 					$('input[type="button"], input[type="reset"]').button();
-					setSuggestionBoxSendEvent('.button1');	//目安箱の送信ボタンを押したときのイベントコールバックを作成する
+					//目安箱の送信ボタンを押したときのイベントコールバックを作成する
+					setSuggestionBoxSendEvent('.button1', '.labelTextbox[name="suggest_title"]', '.suggestion[name="suggest_content"]');
 					
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				} catch(e) {

@@ -17,6 +17,9 @@
         "createButton": {
             "text": "新規"
         },
+        "galleryUpdateButton": {
+            "text": "更新"
+        },
         "deleteButton": {
             "text": "削除"
         },
