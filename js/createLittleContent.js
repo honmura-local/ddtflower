@@ -459,7 +459,7 @@ function createLittleContents(){
 			 var result = this.setDBdata(this.json['deleteMyGalleryPhoto'], { id : EMPTY_STRING }, EMPTY_STRING);
 			 //すげ替えたクエリを元に戻す
 			 this.json['deleteMyGalleryPhoto'].db_setQuery = deleteQuery;
-
+			 
 			 //削除に成功していたら
 			 if (result) {
 				 //その旨を伝える
@@ -610,8 +610,6 @@ function createLittleContents(){
 				var myphoto = $('.myPhoto').has(this);
 				//編集モードを解除する。
 				self.endEditText(this);
-				//編集したデータを送信する。
-				self.postPhoto(myphoto);
 			});
 		} else {
 			$('body').on('click.editSelect', function(){
@@ -620,8 +618,6 @@ function createLittleContents(){
 				//編集終了の関数をコールする。
 				this.endEditText($('.myPhotoPublicationEdit').eq(0));
 				$('body').off('click.editSelect');
-				//編集したデータを送信する。
-				this.postPhoto(myphoto);
 			});
 		}
 		
@@ -772,6 +768,10 @@ function createLittleContents(){
     			//コールバック関数。画像パスを引数として受け取る。
     			callback: function(data) {
     				thisElem.uploadUserPhoto(data);	//画像をアップロードする
+    				//マイギャラリーのデータを取得し直す
+    				thisElem.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
+    				//マイギャラリーを作り直す
+    				thisElem.outputNumberingTag('myGalleryTable', 1, 4, 1, 4, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
     			}
     		});
 		});
@@ -805,7 +805,7 @@ function createLittleContents(){
             //通信成功時の処理
             success: function(xml){
             	thisElem.saveImgIntoDB(xml);	//アップロードした画像を保存する
-            	thisElem.setNewPhoto($(xml).find('src').text());	//アップロードした画像を基に新たな記事を作る
+            	//thisElem.setNewPhoto($(xml).find('src').text());	//アップロードした画像を基に新たな記事を作る
             },
             //通信失敗時の処理
             error: function(xhr, status, error){
@@ -2272,71 +2272,71 @@ function createLittleContents(){
 		});
 	}
 	
+	
+	
+	/* 
+	 * 関数名:updatePhoto
+	 * 概要  :写真のデータを更新する
+	 * 引数  :Element photo : 写真のデータ
+	 * 返却値  :int : 更新に成功したら1を返す。失敗したら0を返す
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.03
+	 */
+	this.updatePhoto = function(photo) {
+		//更新用のデータを取得する
+		var data = {photo_summary:$('.myPhotoComment', photo).text(), article_title:$('.myPhotoTitle', photo).text(), id:$('.id', photo).text() };
+		//写真のデータを更新する。結果を数値で返す
+		return this.setDBdata(this.json['updateMyGalleryPhoto'], data, EMPTY_STRING); 
+	}
+	
 	/* 
 	 * 関数名:updateMyGalleryPhotoData
 	 * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツのデータを更新する
-	 * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
-	 		:lessonStudents		:授業に出席した生徒様の人数
-	 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
-	 * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+	 * 引数  :なし
+	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.28
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 内容　:機能が作られていなかったため作りました
 	 */
 	this.updateMyGalleryPhotoData = function() {
-		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .updateButton', function() {
+		
+		var thisElem = this;	//クラスインスタンスへの参照を保存する
+		
+		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .galleryUpdateButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
-			//チェックが入っている値が0であるならアラートを出して削除処理を行わない
+			//チェックが入っている値が0であるならアラートを出して更新処理を行わない
 			if(checkContentCount == 0) {
 				//アラートでメッセージをだす
 				alert('画像を1つ以上選択してください');
+			//チェックが入っているなら
 			} else {
-				if(confirm('選択した写真を削除しますか')) {
-					//ループで画像を削除する処理を開始する
-					for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
-						//更新するのがどのコンテンツなのかの番号を取得する
-						var updateContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
-						//更新対象要素のid列の値を取得し、DBの値を更新できるようにする
-						//var updateId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
-						//データを更新するための値が入った連想配列を作っておく
-						// var sendReplaceArray = {};
-						// //写真についてのコメントを取得する
-						// sendReplaceArray['photo_summary'] = $('.myPhotoComment').eq(updateId).text();
-						//クエリに渡すために取得した値を連想配列に入れる
-						//var sendReplaceArray['id'] = deleteId;
-						//dbを更新する関数を走らせてDBデータを更新する
-						//setDBdata(json[ここにクエリのkey名],sendReplaceArray, '');
+				//確認ウィンドウを出して確定するかを選択してもらう
+				if(confirm('選択した写真を更新しますか')) {
+					
+					var success = 0;	//更新の成功数をカウントしていく
+					//順次更新処理を行っていく
+					$('.myPhoto').has('.myPhotoCheck:checked').each(function(){
+						//更新処理を行う
+						success = thisElem.updatePhoto(this);
+					});
+					
+					//少なくとも1件成功していれば
+					if(success){
+						//更新ができた旨を伝える
+						alert('写真のデータの更新を行いました。');
+					//全件失敗であれば
+					} else {
+						//更新ができなかった旨を伝える
+						alert('写真のデータの更新に失敗しました。時間をおいてお試しください。');
 					}
 				}
 			}
 		});
 	}
 	
-	/* 
-	 * 関数名:myGalleryDbUpdate
-	 * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツについてdbデータを更新する(updateまたはdeleteを行う)
-	 * 引数  :sendQueryKey		:DBを更新するときに使うクエリが入ったkey名
-	 		 checkContentCount	:舞マイギャラリ画面のチェックボックスにチェックが入っている数
-	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.30
-	 */
-	this.myGalleryDbUpdate = function(sendQueryKey, checkContentCount) {
-		//ループで画像を削除する処理を開始する
-		for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
-			//削除するのがどのコンテンツなのかの番号を取得する
-			var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
-			//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
-			//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
-			//クエリに渡すために取得した値を連想配列に入れる
-			//var sendReplaceArray = {id:{value:deleteId}};
-			//dbを更新する関数を走らせてDBデータを更新する
-			//setDBdata(json[sendQueryKey],sendReplaceArray, '');
-			//削除対象のコンテンツをクライアントから削除する
-			$('.myPhoto').eq(deleteContentNumber).remove();
-			// console.log(deleteContentNumber);
-		}
-	}
 	
 	/* 
 	 * 関数名:hideNormalHeader
