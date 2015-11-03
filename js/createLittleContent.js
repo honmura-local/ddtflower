@@ -1832,11 +1832,11 @@ function createLittleContents(){
 		//ユーザ一覧テーブルを削除する
 		$(DOT + targetPagingClassName).remove();
 		//会員一覧テーブルをリセットして検索に備える
-		create_tag.json[targetPagingClassName][TABLE_DATA_KEY] = {};
+		this.json[targetPagingClassName][TABLE_DATA_KEY] = {};
 		//ナンバリングのdomを初期化する
 		$('.numbering').remove();
 		//新しくページングを作り直すためにページングの番号一覧をリセットする
-		create_tag.json.numbering = {};
+		this.json.numbering = {};
 	}
 
 	/* 

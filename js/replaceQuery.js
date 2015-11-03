@@ -19,12 +19,15 @@ function connectConditions(query, condition, conjunction) {
 
 
 // 管理者側、ユーザ一覧での検索クエリ生成
-var adminUserSearcher = function() {
+/**
+ * @param ユーザ一覧テーブルのJSON(Object)
+ */
+var adminUserSearcher = function(userListInfoTable) {
 
 	// クエリ固定部分
 	// var baseQuery = "SELECT * FROM user_inf";
 	//クエリをjsonから取り出したものにする
-	var baseQuery = create_tag.json.userListInfoTable.db_getQuery;
+	var baseQuery = userListInfoTable.db_getQuery;
 	var result = baseQuery;	// 結果
 
 	// ユーザIDのクエリと置き換え対象

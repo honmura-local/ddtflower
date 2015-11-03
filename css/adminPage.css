@@ -445,7 +445,9 @@ ul.mailSendContent {
 .mailTo, .mailToPerson {
 	overflow-x: scroll;		/* 長すぎる領域はスクロールにする */
 	white-space: nowrap;	/* 改行をしない */
-	text-indent: 1em;		/* 1文字分のインデントをとる */
+	text-indent: 0.1em;		/* 0.1文字分のインデントをとる */
+	border: solid 1px #DDD;	/* 薄いグレーの線で囲む */
+	box-sizing: border-box;	/* サイズ計算を罫線込みにする */
 }
 
 /* 

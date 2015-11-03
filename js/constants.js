@@ -767,3 +767,5 @@ PATH_SEND_MEMBERMAIL_PHP					= 'php/mailSendEntryMemberMail.php';
 PATH_SEND_SUGGESTION_PHP					= 'php/mailSendEntrySuggest.php';
 
 RESERVE_AFTER_DEADLINE						= '予約締切';
+//メール送信確認前に空欄があったときの警告
+ALERT_EMPTY_CONTENTS						= '空欄があります。タイトル、お問い合わせ内容の記入をお願いします。';

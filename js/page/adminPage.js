@@ -680,20 +680,22 @@ function loopUpdatePermitLessonList() {
 function userListSearch() {
 //検索ボタンをクリックしたときにテーブルの内容を更新する
 	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
+		//当該タブのcreateTagを取得する
+		var userListCreateTag = $('#userList')[0].create_tag;
 		//ユーザ一覧テーブルを削除する
-		create_tag.pagingReset('userListInfoTable');
+		userListCreateTag.pagingReset('userListInfoTable');
 		//クエリのデフォルトを取得する
-		var defaultQuery = create_tag.json.userListInfoTable.db_getQuery;
+		var defaultQuery = userListCreateTag.json.userListInfoTable.db_getQuery;
 		//クエリを変数に入れてクエリ発行の準備をする
-		var sendQuery = {db_getQuery:new adminUserSearcher().execute()}
+		var sendQuery = {db_getQuery:new adminUserSearcher(userListCreateTag.json.userListInfoTable).execute()}
 		//会員一覧のデータを取り出す
-		create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
+		userListCreateTag.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
 		//クエリをデフォルトに戻す
-		create_tag.json.userListInfoTable.db_getQuery = defaultQuery;
+		userListCreateTag.json.userListInfoTable.db_getQuery = defaultQuery;
 		//取得した値が0の時のテーブルを作らない
-		if(create_tag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+		if(userListCreateTag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
-			create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable');
+			userListCreateTag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'userListCreateTag.afterReloadUserListInfoTable');
 		}
 	});
 }
@@ -759,8 +761,8 @@ function loginInsteadOfMember (memberId) {
 	//会員のヘッダー連想配列に会員番号を入れてログインの準備をする
 	//create_tag.json.accountHeader.user_key.value = memberId;
 	document.cookie = 'otherUserId=' + memberId;	//cookieに会員IDを追加する
-	//会員ページを呼び出す
-	$('.window[name="admin"]')[0].instance.callPage('window/member/page/memberTop.html');
+	//会員ページを呼び出す。会員画面内では画面遷移の履歴を作らない
+	$('.window[name="admin"]')[0].instance.callPage('window/member/page/memberTop.html', null);
 }
 
 /* 

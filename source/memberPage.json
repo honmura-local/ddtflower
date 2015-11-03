@@ -1,6 +1,6 @@
 ﻿{
     "advertise": {
-        "db_getQuery": "SELECT message_title,message_content,send_date FROM message_inf WHERE id IN ( SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC",
+        "db_getQuery": "SELECT message_title,message_content,send_date FROM message_inf WHERE id IN ( SELECT message_key FROM message_to WHERE user_key = 'user_key' AND check_datetime IS NULL) ORDER BY send_date DESC, id DESC",
         "user_key": {
             "value": ""
         },

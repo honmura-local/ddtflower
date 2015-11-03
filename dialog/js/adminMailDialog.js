@@ -305,6 +305,13 @@ function adminMailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
+		//タイトル、本文に空欄があれば
+		if(!commonFuncs.checkEmpty($('.mailContentTextbox').val()) 
+				|| !commonFuncs.checkEmpty($('.mailTitleTextbox').val())){
+			alert(ALERT_EMPTY_CONTENTS);	//警告を出して
+			return;		//処理を終える
+		}
+		
 		//確認ダイアログを開く
 		this.openDialog(URL_CONFIRM_DIALOG);
 	};

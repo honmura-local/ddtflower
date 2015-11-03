@@ -1889,6 +1889,49 @@ this.defaultClassworkCostColumns = [
 		//日付が不正かを判定して返す
 		return date.toString() === "Invalid Date";
 	}
+	
+	/* 
+	 * 関数名:callMemberLessonValue
+	 * 概要  :予約中テーブルと予約済みテーブルでセルに値を入れる関数を実行するための関数
+	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+	 		 loopData:ループ対象となるテーブルの行全体の連想配列
+	 		 counter:カウンタ変数
+	 		 rowNumber:行番号
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.06.18
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 内容　:commonクラスに移動しました。
+	 */
+	this.callMemberLessonValue = function(tableName, loopData, counter, rowNumber) {
+		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+		recordData = loopData[counter];
+		// 開始日時と終了時刻を組み合わせた値を入れる
+		allDay = this.allDateTime(recordData);
+		// 料金を求める
+		var cost = 0;
+		if(recordData[COLUMN_DEFAULT_USER_CLASSWORK_COST] === "") {
+			cost = "";
+		} else {
+			cost = this.sumCost(recordData);
+		}
+		// ポイントを求める
+		var point = 0;
+		if(cost) {
+			point = this.getPoint(recordData, cost);
+		}
+		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(allDay);
+		// 料金の表示を正規の表示にする
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(cost);
+		// ポイントの表示を正規の表示にする
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(point);
+	};
+	
+	
+	
+	
 //ここまでクラス定義領域
 }
 

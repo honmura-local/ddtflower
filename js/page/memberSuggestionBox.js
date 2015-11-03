@@ -25,7 +25,7 @@ function setSuggestionBoxSendEvent(button, titleElem, contentElem){
 		//空欄があれば
 		if(!commonFuncs.checkEmpty($(titleElem).val()) 
 				|| !commonFuncs.checkEmpty($(contentElem).val())){
-			alert('空欄があります。タイトル、お問い合わせ内容の記入をお願いします。');	//警告を出して
+			alert(ALERT_EMPTY_CONTENTS);	//警告を出して
 			return;		//処理を終える
 		}
 		
