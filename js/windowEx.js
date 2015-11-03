@@ -13,11 +13,14 @@
  * 作成日:2015.0813
  * 作成者:T.Masuda
  */
-function windowEx(url, argumentObj, returnObj){
+function windowEx(url, argumentObj, returnObj, state){
 
 	//親クラスのコンストラクタを起動する
-	baseWindow.call(this, url, argumentObj, returnObj);
+	baseWindow.call(this, url, argumentObj, returnObj, state);
 
+	//画面遷移の状態。空であれば履歴を積む
+	this.state = state;
+	
 	/* 関数名:run
 	 * 概要　:ウィンドウを生成して表示する。
 	 * 引数　:なし
@@ -72,7 +75,7 @@ function windowEx(url, argumentObj, returnObj){
 		
 		//ログインダイアログが出ていなければ
 		if(!$('.inputArea').length){
-			this.callPage(this.url, 1);		//URLを読み込む。履歴は積まない
+			this.callPage(this.url, this.state);	//URLを読み込む
 		}
 		this.setWindowZIndex();				//ウィンドウの重なりを整理する
 		commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
@@ -106,7 +109,8 @@ function windowEx(url, argumentObj, returnObj){
 				&& $('.window').filter('[name="'+ splited[splited.length - 3] +'"]').length == 0){
 			//新たなウィンドウのクラスインスタンスを生成する
 			var newWindow = new windowEx(url);
-			newWindow.run();	//新たなウィンドウを表示する
+			newWindow.state = state;	//stateを渡す
+			newWindow.run();			//新たなウィンドウを表示する
 			return;
 		//既に表示されているウィンドウのコンテンツが呼ばれるなら
 		} else if((splited.length <= 2 && $('.window:last').attr('name') != 'usuall')
@@ -149,7 +153,10 @@ function windowEx(url, argumentObj, returnObj){
 				//第二引数が入力されていなければ、また、pushStateに対応していれば
 				//@mod 2015.0604 T.Masuda 1つ目の条件式のtrue条件に || state == null を追加しました
 				//@mod 2015.0922 T.Masuda argumentObjの初回実行フラグの状態・存在を条件に追加しました。
-				if(((state === void(0) || state == null) && commonFuncs.isSupportPushState()) && !commonFuncs.checkEmpty(self.argumentObj.config.firstExec)){
+				//@mod 2015.1103 T.Masuda 会員画面へ管理者画面からログインしている場合は履歴を積まないようにしました
+				if(((state === void(0) || state == null) && commonFuncs.isSupportPushState())
+						&& !commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)
+						&& !commonFuncs.checkEmpty(self.argumentObj.config.firstExec)){
 					//画面遷移の履歴を追加する。
 					history.pushState({'url':'#' + currentLocation}, '', location.href);
 				}
