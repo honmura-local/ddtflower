@@ -434,12 +434,45 @@ function createLittleContents(){
 	 * 戻り値:なし
 	 * 作成日:2015.03.27
 	 * 作成者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 変更者:T.Masuda
+	 * 内容　:機能していなかったので機能を作りました
 	 */
 	this.deletePhoto = function(){
 		//チェックボックスが入っている写真があれば
-		if($('.myPhotoCheck:checked')){
-			//選択された写真を消す。
-			$('.myPhoto').has('.myPhotoCheck:checked').remove();
+		if($('.myPhotoCheck:checked').length){
+			
+			//写真のIDを格納する配列を用意する
+			var idArray = new Array();
+			//対象となる写真を走査する
+			$('.myPhoto').has('.myPhotoCheck:checked').each(function(){
+				//写真のIDを配列に追加していく
+				idArray.push($('.id', this).text());
+			});
+			
+			//削除用のクエリを取得する
+			var deleteQuery = this.json['deleteMyGalleryPhoto'].db_setQuery;
+			//クエリのID部分を置換し取得元にセットし直す
+			this.json['deleteMyGalleryPhoto'].db_setQuery = deleteQuery.replace("'id'", idArray.join(','));
+			
+			//記事を削除しDBを更新する
+			 var result = this.setDBdata(this.json['deleteMyGalleryPhoto'], { id : EMPTY_STRING }, EMPTY_STRING);
+			 //すげ替えたクエリを元に戻す
+			 this.json['deleteMyGalleryPhoto'].db_setQuery = deleteQuery;
+
+			 //削除に成功していたら
+			 if (result) {
+				 //その旨を伝える
+				 alert('選択した写真の削除に成功しました。');
+				//マイギャラリーのデータを取得し直す
+				this.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
+				//毎ギャラリーを作り直す
+				this.outputNumberingTag('myGalleryTable', 1, 4, 1, 4, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+			 //削除に失敗していたら
+			 } else {
+				 //その旨を伝える
+				 alert('削除に失敗しました。時間をおいてもう一度お試しください。');
+			 }
 		} else {
 			//写真未選択の旨を伝える。
 			alert('削除する写真を選んでください。');
@@ -2122,7 +2155,7 @@ function createLittleContents(){
 		 this.setDBdata(this.json[deleteQueryKey], { id : EMPTY_STRING }, EMPTY_STRING);
 		 //すげ替えたクエリを元に戻す
 		 this.json[deleteQueryKey].db_setQuery = deleteQuery;
-		 
+
 		//ブログのデータを取得し直す
 		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogTable'], 'myBlogTable');
 		 //ブログ一覧のデータを取得し直す
@@ -2212,14 +2245,18 @@ function createLittleContents(){
 	/* 
 	 * 関数名:deleteMyGalleryPhoto
 	 * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツを削除する
-	 * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
-	 		:lessonStudents		:授業に出席した生徒様の人数
-	 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
-	 * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
+	 * 引数  :なし
+	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.28
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.03
+	 * 内容　:機能が作りきられてなかったので作成しました
 	 */
 	this.deleteMyGalleryPhoto = function() {
+		
+		var thisElem = this;	//クラスインスタンスへの参照を保存する
+		
 		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
@@ -2229,20 +2266,7 @@ function createLittleContents(){
 				alert('画像を1つ以上選択してください');
 			} else {
 				if(confirm('選択した写真を削除しますか')) {
-					//ループで画像を削除する処理を開始する
-					for(var loopCount=0; loopCount<checkContentCount; loopCount++) {
-						//削除するのがどのコンテンツなのかの番号を取得する
-						var deleteContentNumber = $('.myPhotoCheck:checked').eq(loopCount).parent().index('.myPhoto');
-						//削除対象要素のid列の値を取得し、DBの値を削除できるようにする
-						//var deleteId =  $('ここにid列のセレクタ').eq(deleteParentNumber).text();
-						//クエリに渡すために取得した値を連想配列に入れる
-						//var sendReplaceArray = {id:{value:deleteId}};
-						//dbを更新する関数を走らせてDBデータを更新する
-						//setDBdata(json[ここにクエリのkey名],sendReplaceArray, '');
-						//削除対象のコンテンツをクライアントから削除する
-						$('.myPhoto').eq(deleteContentNumber).remove();
-						// console.log(deleteContentNumber);
-					}
+					thisElem.deletePhoto();	//写真削除関数をコールする
 				}
 			}
 		});
