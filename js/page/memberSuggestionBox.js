@@ -9,14 +9,25 @@
 /* 
  * 関数名:setSuggestionBoxSendEvent
  * 概要  :目安箱の送信ボタンが押されたときのイベントコールバックを登録する。
- * 引数  :String selector:ボタンのセレクタ
+ * 引数  :String || Element button:ボタンのセレクタ、または要素
+ * 　　  :String || Element titleElem:タイトル入力欄のセレクタ
+ * 　　  :String || Element contentElem:本文入力欄のセレクタ
  * 返却値  :なし
  * 作成者:T.Masuda
  * 作成日:2015.10.03
  */
-function setSuggestionBoxSendEvent(selector){
+function setSuggestionBoxSendEvent(button, titleElem, contentElem){
 	//送信ボタンがクリックされた時、入力されているデータを取得してDBを更新し、メールを送信する
-	$(selector).on(CLICK, function() {
+	$(button).on(CLICK, function() {
+		console.log($(titleElem));
+		console.log($(contentElem));
+		
+		//空欄があれば
+		if(!commonFuncs.checkEmpty($(titleElem).val()) 
+				|| !commonFuncs.checkEmpty($(contentElem).val())){
+			alert('空欄があります。タイトル、お問い合わせ内容の記入をお願いします。');	//警告を出して
+			return;		//処理を終える
+		}
 		
 		//ダイアログ用オブジェクトを作る
 		var dialogObj = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
