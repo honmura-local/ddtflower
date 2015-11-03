@@ -56,15 +56,29 @@
 					// 日ごと授業のテンプレートを読み込む
 					create_tag.getDomFile('template/eachDayLesson.html');
 
-					// カレンダーを作り、クリックでダイアログ作成を作る
-					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, create_tag);
-					memCalendar.create();	//カレンダーを実際に作成する
-	
-
-					//予約一覧テーブルのタブを作る
-					var reservedLessonListTab = new tabEx('tab/memberReserveListTab.html');
-					reservedLessonListTab.run($currentContent);
+					//予約一覧テーブルのインプット用データオブジェクトを作る
+					var argumentObj = {
+						config:{
+							cache: true,		//一度読み込んだコンテンツは二度読み込まない
+							updateHash:false	//ハッシュによるタブ開閉履歴を無効にする
+						},
+						//インプット用データオブジェクト
+						data:{
+						}
+					};
 					
+					//予約一覧テーブルのタブを作る
+					var reservedLessonListTab = new tabEx('tab/memberReserveListTab.html', argumentObj);
+					//シーケンシャルを保証してコードを実行する。タブを配置する。
+					$.when(reservedLessonListTab.run($currentContent))
+						.done(function(){	//whenのコード終了後
+							setTimeout(function(){	//遅延してコールバックを走らせる
+								// カレンダーを作り、クリックでダイアログ作成を作る
+			 					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, $('#alreadyReserved')[0].create_tag);
+								memCalendar.create();	//カレンダーを実際に作成する
+							}, 100);	//遅延時間を設定する
+						});
+ 					
 					//キャンセル料率,加算ポイントのレートをアコーディオン形式で表示する
 					create_tag.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

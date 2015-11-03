@@ -2809,19 +2809,21 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			//@mod 20150809 T.Masuda 改修したdialogExクラスに対応しました
-			var instance = this.instance;	//カレンダーのクラスインスタンスを取得する
 			//汎用のダイアログ用オブジェクトをコピーする
 			var sendObject = $.extend(true, {}, commonFuncs.getDefaultArgumentObject());
 			
 			//予約授業一覧ダイアログにカレンダーをクリックした日付の値を渡すための連想配列を作り、ダイアログのタイトルを日付に設定する
 			var dateObject = commonFuncs.lessonListDialogSendObject(dateText);
 			
+			//createTagがセットできていなかった場合はここで取得してセットする
+			this.instance.create_tag = commonFuncs.checkEmpty(this.instance.create_tag) ?
+					this.instance.create_tag : $('#alreadyReserved')[0].create_tag;
 			//会員番号をセットしてどのユーザが予約するのかを識別する
-			var dialogDataObject = instance.create_tag.addUserIdToObject(dateObject);
+			var dialogDataObject = this.instance.create_tag.addUserIdToObject(dateObject);
 			
 			//ページ内にある会員の予約状況のテーブルをダイアログから更新するため、
 			//dialogDataObjectにcreateLittleContentsクラスインスタンスをセットして以後リレーしていく
-			dialogDataObject.create_tag = instance.create_tag;
+			dialogDataObject.create_tag = this.instance.create_tag;
 			
 			//ダイアログに渡すデータをdialogExOptionのオブジェクトにセットする
 			$.extend(true, sendObject.data, dialogDataObject);
