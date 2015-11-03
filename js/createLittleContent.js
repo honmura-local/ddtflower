@@ -621,8 +621,8 @@ function createLittleContents(){
 			});
 		}
 		
-		//イベント発火元の要素を消す。
-		$(textElem).remove();
+		//イベント発火元の要素を非表示にする。
+		$(textElem).css('display', 'none');
 	};
 	
 	/*
@@ -639,25 +639,26 @@ function createLittleContents(){
 		var currentText = $this.val();
 		//編集モードになる前のクラス名を取得する。
 		var pastClass = $this.attr('class').replace('Edit', '');
-		
+		var pastElem = $($this).siblings(DOT + pastClass);
 		//セレクトメニューであれば
 		if($this[0].tagName == 'SELECT'){
-			//編集モードになる前のタグを生成する。
-			$this.after($('<p></p>')
-					.attr('value', currentText)	//value属性を設定する。
-					//テキストを反映する。
-					.text($('option[value="' + currentText + '"]', $this).text())
-					.addClass(pastClass)	//元のクラスを設定する。
-			);
+			//更新を反映する
+			pastElem.attr('value', currentText).text($('option[value="' + currentText + '"]', $this).text());
 		//それ以外であれば
 		} else {
-			//編集モードになる前のタグを生成する。
-			$this.after($('<p></p>')
-					.text(currentText)		//テキストを反映する。
-					.addClass(pastClass)	//元のクラスを設定する。
-			);
+			//編集した内容が空でなければ
+			if($($this).val() != EMPTY_STRING){
+				pastElem.text($($this).val());	//内容を更新する
+			//そうでなければ
+			} else {
+				//空入力はできないことを伝える
+				alert('内容を入力してください。');
+				//その後内容を更新せず終える
+			}
 		}
 		
+		//隠していた元々の要素を表示する
+		pastElem.css('display', 'inline-block');
 		//用済みになった編集要素を消す。
 		$this.remove();
 	}
