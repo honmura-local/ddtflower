@@ -219,17 +219,17 @@ function afterSubmitForm(form, event){
 	//submitボタンにconfirm属性が指定してありかつ、trueであれば
 	if($(('input:submit[confirm="true"]'), $this).length){
 		//フォームのvalue属性にmessageがあれば取得する
-		var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
+		//var message = $this.attr("value") !== void(0)? $this.attr("value"):"";
 		
 		//マイブログ記事更新(仮) 要調整
 		//ダイアログ用オブジェクトを作る
-		var dialogObj = $.extend(true, {}, dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG]);
+		//var dialogObj = $.extend(true, {}, dialogExOption[SUGGESTION_BOX_CONFIRM_DIALOG]);
 		//送信するデータをオブジェクトに統合する
-		$.extend(true, dialogObj.argumentObj.data, sendData, {form:$this});
+		//$.extend(true, dialogObj.argumentObj.data, sendData, {form:$this});
 		//更新確認ダイアログを作る
-		var myBlogConfirmDialog = new dialogEx('dialog/myBlogConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
-		myBlogConfirmDialog.setCallbackClose(submitArticle);	//閉じるときのイベントを登録
-		myBlogConfirmDialog.run();	//主処理を走らせる
+		//var myBlogConfirmDialog = new dialogEx('dialog/myBlogConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
+		//myBlogConfirmDialog.setCallbackClose(submitArticle);	//閉じるときのイベントを登録
+		//myBlogConfirmDialog.run();	//主処理を走らせる
 	} else {
 		//チェックの必要がなければ通常通りフォームをsubmitする。
 		postForm($this);

@@ -58,7 +58,8 @@
 				fixXCoordinateOnScroll('header')
 				//ギャラリーの画像を拡大できるようにする。
 				create_tag.useZoomImage('photo');
-
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+				
 			</script>
 		</div>
 	</div>

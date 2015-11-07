@@ -341,77 +341,6 @@ function createLittleContents(){
 		}
 	}
 	
-	/*
-	 * 関数名:createNewPhoto()
-	 * 概要  :作成したMyギャラリーの新規のし写真に基本データを追加する。
-	 * 引数  :String imgPath: 画像パス
-	 * 戻り値:なし
-	 * 作成日:2015.03.27
-	 * 作成者:T.Masuda
-	 * 修正日:2015.08.12
-	 * 修正者:T.Masuda
-	 * 内容	:変更された仕様に対応しました
-	 */
-	this.createNewPhoto = function(imgPath){
-		//新たな記事のひな形をつくる
-		//最初に枠(行)を作る
-		var newPhoto = $('<tr></tr>')
-							.addClass('myPhoto')
-							.append(
-								$('<td></td>')	//画像枠
-									.addClass('myPhotoImage')
-									.append($('<a></a>')	//画像のリンク部分
-											.attr({
-												href: imgPath,
-												rel:'gallery'
-											})
-										.append($('<span></span>')	//画像部分
-												.attr('style', 'background-image:url("' + imgPath + '")')
-										)
-									)
-							)
-							.append(	
-								$('<td></td>')	//日付
-									.addClass('myPhotoDate')
-									.text(this.getDateTime())
-							)
-							.append(
-								$('<td></td>')	//タイトル
-									.addClass('myPhotoTitle')
-									.text('新規')
-							)
-							.append(
-								$('<td></td>')	//ユーザ名
-									.addClass('myPhotoUser')
-									.text(this.json.accountHeader !== void(0) ? this.getUserName() : "Guest")
-							)
-							.append(
-								$('<td></td>')	//コメント
-									.addClass('myPhotoComment')
-									.text('一言お願いします')
-							)
-							.append(
-								$('<td></td>')	//公開設定。現状不要なので見せない
-									.addClass('myPhotoPublication')
-									.text('全体')
-									.attr('value', '0')
-									.css('display', 'none')
-							)
-							.append(
-								$('<input>')	//チェックボックス
-									.addClass('myPhotoCheck')
-									.attr('type', 'checkbox')
-							)
-							; 
-		//新規記事を作成する
-		return newPhoto;
-		//画像拡大用のタグにソースをセットする。
-		$('.myPhotoLink:last').attr('href', imgPath);
-		//画像サムネイルに使う要素の画像を設定する。
-		$('.myPhotoImage:last').css('background-image', 'url('  +  imgPath + ')');
-		$('.myPhoto:last').removeClass('blankPhoto');	//空の写真のクラスを消す。
-
-	}
 	
 	/*
 	 * 関数名:getDateTime()
@@ -477,26 +406,6 @@ function createLittleContents(){
 			//写真未選択の旨を伝える。
 			alert('削除する写真を選んでください。');
 		}
-	}
-	
-	/*
-	 * 関数名:postPhoto(photo)
-	 * 概要  :サーバに保存する写真のデータを送信する。
-	 * 引数  :element photo:写真のタグ。
-	 * 戻り値:なし
-	 * 作成日:2015.03.27
-	 * 作成者:T.Masuda
-	 */
-	this.postPhoto = function(photo){
-		//写真のデータを連想配列にして返してもらう。
-		var photoData = this.createPhotoData(photo);
-		$.extend(true, photoData, {db_setQuery:"INSERT INTO user_gallery(user_key,title,content_text,image_id,publication,date) values('user_key', 'title', 'content_text' ,'image_id' ,'publication', 'date');"})
-		var result = new baseDialog().sendQuery(URL_SAVE_JSON_DATA_PHP, photoData);
-		
-		if(!parseInt(result.message)){
-			console.log('save photo failer');
-		}
-		
 	}
 	
 	/*
@@ -836,22 +745,6 @@ function createLittleContents(){
 	}
 
 	/*
-	 * 関数名:setNewPhoto
-	 * 引数 	:String imgPath:画像パス
-	 * 戻り値:なし
-	 * 概要  :アップロードした画像を基にギャラリー記事を新規作成する
-	 * 作成日:2015.08.12
-	 * 作成者:T.Masuda
-	 */
-	this.setNewPhoto = function(imgPath){
-		//createTagで新たな写真を作成する。
-		this.outputTag('blankPhoto', 'myPhoto', '.myGallery');
-		//新たな記事を追加する。
-		$('.myGalleryTable tbody').append(this.createNewPhoto(imgPath));
-	}
-	
-	
-	/*
 	 * 関数名:function uploadImage(uploader, parent, srcReturn)
 	 * 引数  :element uploader:input type="file"の要素
 	 * 		:element parent: 画像パスの追加を行う要素の親要素。
@@ -865,18 +758,16 @@ function createLittleContents(){
 	this.uploadImage = function(uploader, parent, srcReturn){
 		$uploader = $(uploader);	//アップローダーの要素をjQueryオブジェクトにして変数に格納する。
 		//保存先を指定して画像のアップロードを行う。
-		$uploader.upload('source/dummy.xml',{"dir":init['photoDirectory']}, function(html) {
-	//		$uploader.upload(init['saveJSON'],{"dir":init['photoDirectory']}, function(html) {
-			//返ってきたデータから成否判定の値を取り出す。
-	//		var issuccess = parseInt($(xml).find('issuccess').text());
-			var issuccess = "true";
-			if(issuccess == "true"){	//保存に成功していたら
+		
+		var thisElem = this;						//クラスインスタンスを変数に入れる
+		//クラスインスタンスが取得できていなければグローバル領域から取得する
+		thisElem = thisElem instanceof createTag ? thisElem : create_tag;
 			
 				//IE6~9でなければ
 	    		if(!(uaName == 'ie6' || uaName == 'ie7' || uaName == 'ie8' || uaName == 'ie9')){
 		    		//ファイルのオブジェクトをを取得する。
 		    		var file = uploader.files[0];
-		    		var filetmp = '';	//画像パスの一時保存場所のパス用の変数を用意する。
+		    		
 		    		//画像の縮小を行う。
 		    		canvasResize(file, {
 		    			crop: false,	//画像を切り取るかを選択する
@@ -884,18 +775,39 @@ function createLittleContents(){
 		    			//コールバック関数。画像パスを引数として受け取る。
 		    			callback: function(data) {
 		    				filetmp = data;				//filetmpにdataを一時保存する。
-		    				//			var src = $(xml).find('src').text();	//画像の保存先を取得する。
-		    				var src = filetmp;								//画像の保存先を取得する。
-		    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
-		    					//画像タグであれば
-		    					if($(this)[0].tagName == 'IMG'){
-		    						$(this).attr('src', filetmp);	//ソースパスを設定する。
-		//					$(this).attr('src', src);	//ソースパスを設定する。
-		    						//特別処理の指定がないタグなら
-		    					} else {
-		    						$(this).val(src);	//画像パスをvalue属性にセットする。
-		    					}
-		    				});
+
+				    		//PHPへはフォームデータを作って送信する
+				    		var fd = new FormData();					//フォームデータを作る
+				    		fd.append('photo', toBlob(data), 'userPhoto');	//フォームデータにBLOB化した写真を登録する
+				    		fd.append('postedName', 'photo');			//フォームデータに投稿名を登録する
+				    		fd.append('userId', thisElem.getUserId());		//フォームデータにユーザIDを登録する
+				    		
+				            $.ajax({	//Ajax通信でサーバにデータを送る
+				                url: USER_IMAGE_UPLOADER,	//画像アップローダーのURLを指定する	
+				                type: 'post',				//HTTP通信のPOSTメソッドを使う
+				                async:false,				//同期通信
+				                data: fd,					//フォームデータを送信する
+				                dataType: 'xml',			//XMLデータを返してもらう
+				                //以下2点、よくわかっていません
+				                contentType: false,
+				                processData: false,
+				                //通信成功時の処理
+				                success: function(xml){
+				    				$(srcReturn, parent).each(function(){			//画像パスを返す要素を操作する。
+				    					//画像タグであれば
+				    					if($(this)[0].tagName == 'IMG'){
+				    						$(this).attr('src', $(xml).find('src').text());	//ソースパスを設定する。
+				    					//特別処理の指定がないタグなら
+				    					} else {
+				    						$(this).val($(xml).find('filename').text());	//画像パスをvalue属性にセットする。
+				    					}
+				    				});
+				                },
+				                //通信失敗時の処理
+				                error: function(xhr, status, error){
+				                	
+				                }
+				            });
 		    			}
 		    		},'xml');
 		    	//IE6~9なら
@@ -913,11 +825,6 @@ function createLittleContents(){
 						}
 					});
 	    		}
-			} else {
-				alert($(xml).find('message').text());	//メッセージを取り出してアラートに出す。
-			}
-			//サーバから返されたデータをXMLとして扱う。
-		},"xml");
 	}
 	
 	/*
@@ -2108,14 +2015,17 @@ function createLittleContents(){
 	 * 引数  :getContentKey:ブログのデータを取得するための連想配列key名
 	 		:userKeyParrentKey:会員番号が入っている親のkey名
 	 		:updateQueryKey:テキストボックスの親のセレクター。クエリを置換するために使う
+	 		:String number:記事番号
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.27
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.07
+	 * 内容　:記事番号を引数に追加しました
 	 */
-	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey) {
-		var number = location.hash.replace('#', EMPTY_STRING);	//URLハッシュから記事番号を取り出す
+	this.setBlogUpdateQueryReplace = function(getContentKey, userKeyParrentKey, updateQueryKey, number) {
 		
-		if(!isNaN(number) && number != EMPTY_STRING){	//記事番号があれば
+		if(!isNaN(number) && number != EMPTY_STRING && parseInt(number)){	//記事番号があれば、または0でなければなら
 			number = parseInt(number);	//番号を整数値に変換する
 			//DBから編集する対象となるブログ記事のデータを取得するために会員番号をセットする
 			this.json[getContentKey].user_key.value = this.json[userKeyParrentKey].user_key.value;
@@ -2123,10 +2033,6 @@ function createLittleContents(){
 			this.json[getContentKey].id.value = number;
 			//DBからブログ記事を読み込む
 			this.getJsonFile('php/GetJSONString.php', this.json[getContentKey], getContentKey);
-			//ブログタイトルテキストボックスにDBから読込んだデータを入れる
-//			$('[name=blogTitle]').val(this.json[getContentKey].title.text);
-			//ブログ内容テキストエリアにDBから読込んだデータを入れる
-//			$('[name="blogContent"]').text(this.json[getContentKey].content.text);
 			//クエリを更新するのか新規登録をするのかを決めるために更新クエリのjsonに値を入れて更新クエリを使うようにする
 			this.json[updateQueryKey].id.value = number;
 		}
@@ -2246,19 +2152,22 @@ function createLittleContents(){
 	/* 
 	 * 関数名:deleteMyGalleryPhoto
 	 * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツを削除する
-	 * 引数  :なし
+	 * 引数  :String || Element parentArea : イベントコールバック登録対象(ボタンの親要素)
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.28
 	 * 変更者:T.Masuda
 	 * 変更日:2015.11.03
 	 * 内容　:機能が作りきられてなかったので作成しました
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.07
+	 * 内容　:イベントコールバック登録対象の要素を指定できるように変更しました。
 	 */
-	this.deleteMyGalleryPhoto = function() {
+	this.deleteMyGalleryPhoto = function(parentArea) {
 		
 		var thisElem = this;	//クラスインスタンスへの参照を保存する
 		
-		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .deleteButton', function() {
+		$(parentArea).on(CLICK, '.deleteButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
 			//チェックが入っている値が0であるならアラートを出して削除処理を行わない
@@ -2293,19 +2202,22 @@ function createLittleContents(){
 	/* 
 	 * 関数名:updateMyGalleryPhotoData
 	 * 概要  :会員マイギャラリー画面でチェックボックスにチェックが入っているコンテンツのデータを更新する
-	 * 引数  :なし
+	 * 引数  :String || Element parentArea : イベントコールバック登録対象(ボタンの親要素)
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.28
 	 * 変更者:T.Masuda
 	 * 変更日:2015.11.03
 	 * 内容　:機能が作られていなかったため作りました
+	 * 変更者:T.Masuda
+	 * 変更日:2015.11.07
+	 * 内容　:イベントコールバック登録対象の要素を指定できるように変更しました。
 	 */
-	this.updateMyGalleryPhotoData = function() {
+	this.updateMyGalleryPhotoData = function(parentArea) {
 		
 		var thisElem = this;	//クラスインスタンスへの参照を保存する
 		
-		$(STR_BODY).on(CLICK, '.myGalleryEditButtons .galleryUpdateButton', function() {
+		$(parentArea).on(CLICK, '.galleryUpdateButton', function() {
 			//チェックが入っているコンテンツの数を取得し、削除するコンテンツがあるかどうかやループの回数として使う
 			var checkContentCount = $('.myPhotoCheck:checked').length;
 			//チェックが入っている値が0であるならアラートを出して更新処理を行わない
@@ -3397,6 +3309,26 @@ var showAlert = {
 		}
 	}
 
+//記事編集・作成フォームのvalidationと成功時の処理。showAlertの内容を利用する
+var articleCreateHandler = $.extend({}, true, showAlert, {
+	//成功時のコールバック
+	submitHandler : function(form, event){
+		//ダイアログのクラスインスタンスを生成する。
+		//openイベントはsetArgumentObjでセットしておく
+		var argumentObj = commonFuncs.getDefaultArgumentObject();
+		//ダイアログclose時のコールバック関数をセットする
+		argumentObj.config.close = sendArticleData;
+		//記事編集ページのcreateTagをダイアログに渡す
+		argumentObj.data.create_tag = create_tag;
+		//確認ダイアログクラスインスタンスを生成する
+		var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH, argumentObj);
+		//openイベントのコールバック関数をセットする
+		confirmDialog.run();	//ダイアログを開く
+		
+		return false;	//元々のsubmitイベントコールバックをキャンセルする
+	}
+})
+
 //デフォルトのsubmitHandlerを定義する連想配列。
 var defaultSubmitHandler = {
 	submitHandler:function(form){
@@ -3407,12 +3339,13 @@ var defaultSubmitHandler = {
 //記事の管理ボタン用のsubmitHandler。新規作成ならページを読み込むだけ、編集ならデータを取得
 //してテキストボックス等に格納する。
 var articleSubmitHandler = {
-	submitHandler:function(form){
+	submitHandler:function(form, event){
+		
 		//hiddenのinputタグからrole属性の値を受け取る。
 		var command = parseInt($('.valueHolder:first', form).attr('data-role'));
 		//チェック済みのチェックボックスの数を数える。
 		var checked = $('input:checkbox:checked' ,form).length;
-		//var userId = getUserId();				//ユーザIDを取得する。
+		//var userId = getUserId();					//ユーザIDを取得する。
 		var contentNum = $(form).attr('data-role');	//コンテンツ番号を取得する。
 		
 		//編集ボタンをクリックされてかつ、リストのチェックボックスに2つ以上チェックが入っていれば
@@ -3428,40 +3361,34 @@ var articleSubmitHandler = {
 					$('tr:has(input:checkbox:checked) .number' ,form).text() 
 					: parseInt($('tr:has(input:checkbox:checked) .memberId' ,form).text());
 			
-			//編集であれば
-			if(!isNaN(number) && command == 1){
-				//URLハッシュに記事番号をセットする
-				window.location.href = location.href.substring(0,location.href.indexOf("#")) + '#' +number;
-			//新規作成なら
-			} else {
-				//URLハッシュから記事番号を削除する
-				window.location.href = location.href.substring(0,location.href.indexOf("#")) + '#';
-			}
+			//新規作成の記事なら記事0番を入れる
+			number = !isNaN(number) && command == 1 ? number : 0;		
 			
-			//Ajax通信とそのコールバック関数の実行の順番を制御するため、when関数を利用する。
-			$.when(
-					afterSubmitForm(form)	//フォームをsubmitした後の処理を行う。
-			//whenのコードが終了したら
-			).then(function(){
-//				//commandが1(編集ボタンで画面遷移をしている)なら
-//				if(command == 1){
-//					
-//					//サーバ側の用意が2015/4/16の時点でできていないので、サンプルのJSONのパスを用意する。
-//					var url="";
-//					//コンテンツ番号で分岐する。
-//					switch(parseInt(contentNum)){
-//					case 4:url = 'source/blogeditsample.json';	//ブログ
-//						break;
-//					case 5:url = 'source/campaigneditsample.json';	//キャンペーン
-//						break;
-//					case 6:url = 'source/studenteditsample.json';	//生徒さん
-//						break;
-//					default:	//当てはまらなければそのまま
-//						break;
-//					}
-//					
-//				}
+			//ajax通信でPHPに記事番号を渡す
+			$.ajax({
+				//記事編集制御用PHPにアクセスする
+				url : 'php/articleEditController.php',
+				async : false,					//同期通信を行う
+				cache : false,					//通信結果をキャッシュしない
+				data  : {'number' : number},	//記事番号を送る
+				dataType : 'json',				//レスポンステキストにJSON形式を指定する
+				method : 'post',				//POSTする
+				success : function(json){		//通信成功時
+					//PHP内での処理が成功したかを判定する
+					parseInt(json.success) ? 
+							//成功であれば編集画面へ遷移する
+							$(CURRENT_WINDOW)[0].instance.callPage('window/member/page/createarticle.php')
+							//失敗であればその旨を伝える
+							: alert('通信に失敗しました。時間をおいてお試しください。');
+				}, 
+				//通信失敗時
+				error : function(xhr, status, error){
+					//失敗の旨を伝える。
+					alert('通信に失敗しました。時間をおいてお試しください。');
+				}
 			});
+			
+			return false;	//本来のsubmitをキャンセルする
 		}
 	}
 }

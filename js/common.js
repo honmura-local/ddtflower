@@ -1985,9 +1985,87 @@ this.defaultClassworkCostColumns = [
 		//チェックボックスにチェックが入ったらすべてのチェックボックスに影響を与えるイベントを登録する
 		commonFuncs.allCheckbox('.check:eq(0)', '.check');
 	}
+
+	/* 
+	 * 関数名:setBlogImages
+	 * 概要  :マイブログ編集画面読み込み時に記事に設定されている画像を読み込む
+	 * 引数  :createTag create_tag : 編集画面のcreateTag
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.07
+	 */
+	this.setBlogImages = function(create_tag){
+		//JSONから画像パスを取得する
+		var images = [create_tag.json.myBlogContent.image_1.text, create_tag.json.myBlogContent.image_2.text, create_tag.json.myBlogContent.image_3.text];
+		var imagesLength = images.length;	//画像数を取得する
+		
+		//順番に画像パスを画像アップローダーのサムネイル部分にセットしていく
+		for (var i = 0; i < imagesLength; i++) {
+			
+			//画像アップローダーを順次取得する
+			var uploader = $('.blogEditImagesSection').eq(i);
+			//画像パス用隠しフォームに画像パスをセットする
+			$('.blogEditImagesSectionImagePath', uploader).val(images[i]);
+			//画像パスが空でなければ
+			if(this.checkEmpty(images[i])){
+				//サムネイルをセットする
+				$('.blogEditImagesSectionImage', uploader).attr('src', IMAGE_PATH + images[i]);
+			}
+		}
+	}
 	
 //ここまでクラス定義領域
 }
 
 //どこでも当暮らすインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する
 commonFuncs = new common();
+
+/*
+ * 関数名:sendArticleData
+ * 引数   :なし
+ * 戻り値 :なし
+ * 概要   :記事を投稿する
+ * 作成日 :2015.11.07
+ * 作成者 :T.M
+ */
+function sendArticleData(){
+	
+	//ダイアログのクラスインスタンスを取得する。
+	var dialogClass = this.instance;
+
+	//はいボタンが押されていたら
+	if(dialogClass.getPushedButtonState() == YES){
+		var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
+		var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
+		
+		//フォームデータを取得する
+		var sendObject = commonFuncs.createFormObject('.blogEdit');
+		//ユーザIDをオブジェクトにセットする
+		sendObject.user_key = data.create_tag.getUserId();
+		//記事IDをオブジェクトにセットする
+		sendObject.id = articleNumber;
+		
+		//新規作成であれば
+		if(articleNumber == 0){
+			//INSERT用クエリをセットする
+			sendObject.db_setQuery = data.create_tag.json.insertMyBlog.db_setQuery;
+		//編集であれば
+		} else {
+			//UPDATE用クエリをセットする
+			sendObject.db_setQuery = data.create_tag.json.updateMyBlog.db_setQuery;
+		}
+		
+		//データを送信する
+		var result = this.dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
+		//データの保存に成功していれば
+		if(parseInt(result.message)){
+			alert(SEND_TO_SERVER_MESSAGE);					//メッセージを出す
+			//マイブログページに戻る
+			$(CURRENT_WINDOW)[0].instance.callPage('window/member/page/memberMyBlog.html');
+		//失敗であれば
+		} else {
+			//その旨を伝える
+			alert('記事の保存に失敗しました。時間をおいてお試しください。');
+		}
+	}
+}	

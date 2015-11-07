@@ -53,7 +53,6 @@
 	//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする
 	if(create_tag.json['reservedLessonTable'][TABLE_DATA_KEY][0]) {
 		// 予約中授業のテーブルを作る
-		console.log(create_tag.json['reservedLessonTable'].toString());
 		create_tag.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 		// 予約中テーブルのテーブルの値を置換する
 		commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, create_tag);
