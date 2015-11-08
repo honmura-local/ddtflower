@@ -1355,7 +1355,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.lessonTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を行う関数をまとめてコールしてテーブルを編集する
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListcreate_tag, LESSON_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(LESSON_TABLE, LESSON_TABLE_REPLACE_FUNC, true, reserveLessonListcreate_tag, LESSON_TABLE_RECORD, 10)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'受講承認一覧が見つかりませんでした。'
 	};
@@ -1364,7 +1364,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.reservedLessonTableOutsideArea',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, this, RESERVED_LESSON_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, true, this, RESERVED_LESSON_TABLE_RECORD, 10)',
 		//置換のvalueが入ったdom名
 		replaceValueDom:'#alreadyReserved .selectThemebox',
 		//置換するkey名
@@ -1390,7 +1390,7 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, create_tag, EACH_DAY_RESERVED_INFO_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, create_tag, EACH_DAY_RESERVED_INFO_TABLE_RECORD, 10)',
 		//検索結果がなかった時のエラーメッセージ
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'
@@ -1411,7 +1411,7 @@ function createLittleContents(){
 		//テーブルの追加先
 		addDomPlace:'.adminLessonDetailTableOutsideArea',
 		//テーブルのリロードが終わった時に処理を実行する関数名を入力してテーブルに対して処理を行う
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListcreate_tag, ADMIN_LESSON_DETAIL_TABLE_RECORD)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(ADMIN_LESSON_DETAIL_TABLE, ADMIN_LESSON_DETAIL_TABLE_REPLACE_FUNC, true, adminLessonListcreate_tag, ADMIN_LESSON_DETAIL_TABLE_RECORD, 10)',
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約できる授業はありません'
 	}
@@ -3289,7 +3289,16 @@ var errorJpNames = {name:'氏名',
 					adminBlogTitle:'管理者ブログタイトル',
 					allowMidnightMail:'深夜メール受信',
 					recieveMailType:'受信するメールの種類',
-					myEmail:'メールアドレス'
+					myEmail:'メールアドレス',
+					user_name : '氏名',
+					name_kana : '氏名(カナ)',
+					user_sex : '性別',
+					birthday_date : '生年月日',
+					zip_code : '郵便番号',
+					mail_address : 'メールアドレス',
+					telephone : '電話番号',
+					telephone2 : '緊急電話番号',
+					mail_deny : 'メルマガ受信設定'
 					};
 
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
@@ -3326,6 +3335,48 @@ var articleCreateHandler = $.extend({}, true, showAlert, {
 		confirmDialog.run();	//ダイアログを開く
 		
 		return false;	//元々のsubmitイベントコールバックをキャンセルする
+	}
+})
+
+//プロフィール編集フォームのvalidation設定
+var profileValidation = $.extend({}, true, showAlert, {
+	//成功時のコールバック
+	submitHandler : function(form, event){
+		//入力したデータでDBを更新する
+		setProfileUpdate();
+		
+		return false;	//元々のsubmitイベントコールバックをキャンセルする
+	}, rules :{
+		user_name:{
+			required : true
+		},
+		name_kana : {
+			required : true,
+			katakana : true
+		}, 
+		birthday_date : {
+			required : true,
+			date : true
+		},
+		zip_code : {
+			required : true,
+			postnum : true
+		}, 
+		address : {
+			required : true
+		}, 
+		mail_address:{	//メールアドレス入力確認欄
+			required : true,
+			email : true,
+			emailjp : true
+		},
+		telephone : {
+			required : true,
+			telnum : true
+		},
+		telephone2 : {
+			telnum : true
+		}
 	}
 })
 

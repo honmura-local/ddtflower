@@ -835,9 +835,9 @@ this.defaultClassworkCostColumns = [
 	 * 作成者　:T.Masuda
 	 * 作成者　:dialogExからcommon.jsに移動しました
 	 */
-	this.tableReplaceAndSetClass = function(tableName, tableReplaceFunc, replaceBool, create_tag, recordClassName) {
+	this.tableReplaceAndSetClass = function(tableName, tableReplaceFunc, replaceBool, create_tag, recordClassName, showMaxRow) {
 		//予約可能授業一覧を置換する
-		this.dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, create_tag);
+		this.dbDataTableValueReplace(tableName, tableReplaceFunc, replaceBool, create_tag, showMaxRow);
 		//予約一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 		this.setTableRecordClass(tableName, recordClassName);
 	}
@@ -856,7 +856,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成者　:T.Masuda
 	 * 内容　	　:dialogExに対応しました
 	 */
-	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator) {
+	this.dbDataTableValueReplace = function(tableName, replaceFuncName, lessonList, creator, showMaxRow) {
 		//置換を行うテーブルのデータを取得する
 		var tableData = creator.json[tableName][TABLE_DATA_KEY];
 		//第三引数がtrueなら授業受講者人数を求めた上で関数を実行する
@@ -864,10 +864,10 @@ this.defaultClassworkCostColumns = [
 			//時間割1限分の生徒の合計人数が入った連想配列を作る
 			var timeStudentsCount = getTotalStudentsOfTimeTable(tableData);
 			//テーブルの値を置換する
-			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount);
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, timeStudentsCount, showMaxRow);
 		} else {
 			//テーブルの値を置換する
-			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '');
+			dbDataTableReplaceExecute(DOT + tableName, tableData, replaceFuncName, '', showMaxRow);
 		}
 	}
 
@@ -893,18 +893,20 @@ this.defaultClassworkCostColumns = [
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.13
 	 */
-	this.dbDataTableReplaceExecute = function(tableName, rowData, func, timeTableStudents) {
+	this.dbDataTableReplaceExecute = function(tableName, rowData, func, timeTableStudents, showMaxRow) {
 		// カウンターを作る
 		var counter = 0;
 		// テーブルの行番号
 		var rowNumber = 1;
 		// データの数
 		var rowDataNum = rowData.length;
+		//最大表示行数が入力されていなければ初期化する
+		showMaxRow = this.checkEmpty(showMaxRow) ? showMaxRow : DEFAULT_SHOW_MAX_ROW;
 		
 		//ナンバリングがあれば
 		if($('.numbering .select:visible').length){
 			//途中からスタートする
-			counter = ($(tableName + ' tr').length - 1) * (parseInt($('.numbering .select:visible').text()) - 1);
+			counter = (showMaxRow) * (parseInt($('.numbering .select:visible').text()) - 1);
 		}
 		
 		// テーブルのすべての行に対してループで値を入れる

@@ -97,6 +97,8 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 <script src="js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
 <!-- 入力チェック機能のjQueryプラグイン -->
 <script src="js/jquery.validate.min.js"></script>
+<!-- validate.jsの拡張プラグイン -->
+<script src="js/jquery.validate.japlugin.js"></script>
 <!-- validate.jsの日本語対応プラグイン -->
 <script type="text/javascript" src="js/messages_ja.js"></script>
 <!-- ローカルからアップロードしたファイルを縮小するプラグインと、必要ファイル2つ -->
