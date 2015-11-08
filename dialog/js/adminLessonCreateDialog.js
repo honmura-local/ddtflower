@@ -14,6 +14,37 @@
 function adminLessonCreateDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 
+	//jQuery validation用設定オブジェクト
+	this.validation = {
+			//チェックが通った時の処理
+			submitHandler : function(form, event){
+				
+				//授業作成処理を行う
+				$(form)[0].dialogBuilder.newLessonEntry();
+				return false;	//デフォルトのsubmitをキャンセルする
+			},
+			invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
+				var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
+				//エラー文を表示する。
+				alert(createErrorText(errors, errorJpNames));
+			},
+			rules :{
+				min_students:{
+					required : true,
+					digits : true,
+					checkMinStudents : true
+				},
+				max_students : {
+					required : true,
+					digits : true
+				}, 
+				classroom : {
+					required : true,
+					alphabet : true
+				}
+			}
+	}
+	
 	/* 関数名:getJson
 	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
@@ -82,6 +113,8 @@ function adminLessonCreateDialog(dialog){
 		this.setDialogButtons(this.createNew);
 		//ダイアログの位置調整を行う
 		this.setDialogPosition(POSITION_CENTER_TOP);
+		//入力チェックを登録する
+		$(this.dialog).validate(this.validation);
 	}
 
 	/* 関数名:callbackCreateNew
@@ -92,23 +125,8 @@ function adminLessonCreateDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackCreateNew = function(){
-		//ダイアログ生成時に渡されたインプット用データを取得する
-		var data = this.dialogClass.getArgumentDataObject();
-		//入力した値を取得し、授業の新規作成に用いる
-		var newLessonData = commonFuncs.getInputData(DOT + LESSON_DATA);
-		
-		//新しく授業データを作るために授業日を連想配列に入れる
-		var lessonData = this.updateJson(newLessonData);
-		
-		//送信するオブジェクトを作る
-		var sendObj = $.extend(true, 
-				newLessonData, 	//このダイアログ内の入力データ
-				data, 			//親ダイアログからのデータ
-				lessonData		//探した授業データ
-		);
-		
-		//授業の新規作成を始める
-		this.newLessonEntry(sendObj);
+		//入力チェックを開始する
+		$(this.dialog).submit();
 	}
 
 	/* 関数名:updateJson
@@ -162,11 +180,36 @@ function adminLessonCreateDialog(dialog){
 		//授業データを返す
 		return lessonData;
 	}
+	
+	/* 
+	 * 関数名:getSendData
+	 * 概要  :送信用データをフォームから取得して返す
+	 * 引数  :なし
+	 * 返却値  :Object : フォームデータ
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.08
+	 */
+	this.getSendData = function() {
+		//ダイアログ生成時に渡されたインプット用データを取得する
+		var data = this.dialogClass.getArgumentDataObject();
+		//入力した値を取得し、授業の新規作成に用いる
+		var newLessonData = commonFuncs.getInputData(DOT + LESSON_DATA);
+		
+		//新しく授業データを作るために授業日を連想配列に入れる
+		var lessonData = this.updateJson(newLessonData);
+		
+		//送信するオブジェクトを作って返す
+		return $.extend(true, {}, 
+				newLessonData, 	//このダイアログ内の入力データ
+				data, 			//親ダイアログからのデータ
+				lessonData		//探した授業データ
+		);
+	}
 
 	/* 
 	 * 関数名:newLessonEntry
 	 * 概要  :管理者、授業詳細タブで新規に授業をDBに登録する処理
-	 * 引数  :Object lessonData:授業データ
+	 * 引数  :なし
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.08.03
@@ -176,13 +219,17 @@ function adminLessonCreateDialog(dialog){
 	 * 修正日　:2015.09.20
 	 * 修正者　:T.Masuda
 	 * 内容	　:adminLessonCreateDialogクラスに対応しました
+	 * 修正日　:2015.11.08
+	 * 修正者　:T.Masuda
+	 * 内容	　:jQuery validationに対応しました。
 	 */
-	this.newLessonEntry = function(lessonData){
+	this.newLessonEntry = function(){
 		//処理結果の通知の文字列を変数にセットする。成功時のメッセージで初期化する
 		var alertNotice = '新規授業の作成に成功しました。';	
 		var dialogClass = this.dialogClass;			//ダイアログのクラスインスタンスを取得する
+		
 		//当該関数の引数のデータから送信用データを作る。
-		var sendData = $.extend(true, {}, lessonData);
+		var sendData = this.getSendData();
 		
 		//授業作成失敗時の処理を一元化するため、try-catch構文を使う
 		try{

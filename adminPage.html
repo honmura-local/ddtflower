@@ -95,7 +95,7 @@
 						//日ごと予約者一覧テーブルを作る
 						create_tag.outputTagTable('eachDayReservedInfoTable','eachDayReservedInfoTable','#dayReserver');
 						//管理者日ごと予約者一覧テーブルを置換する
-						dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag);
+						commonFuncs.dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag, 10);
 
 					}
 					//画面の先頭にスクロールを戻すボタン

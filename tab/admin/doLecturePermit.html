@@ -38,7 +38,7 @@
 			}
 
 			//受講承認のテーブルにチェックボックスを追加する
-			create_tag.addCheckbox('permitCheckboxArea', 'permitCheckbox');
+			commonFuncs.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 			//受講承認のテーブルを置換する
 			dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 			//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
@@ -59,7 +59,7 @@
 			//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
 			commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
 			//受講承認の備品名セレクトボックスにvalueを入れる
-			create_tag.setSelectboxValue('.contentSelect');
+			create_tag.setSelectboxValueWithName('.contentSelect');
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.contentCell', '.accordionContent');
 			//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
