@@ -55,7 +55,7 @@
 		// 予約中授業のテーブルを作る
 		create_tag.outputTagTable('reservedLessonTable','reservedLessonTable','.reservedLessonTableOutsideArea');
 		// 予約中テーブルのテーブルの値を置換する
-		commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, create_tag);
+		commonFuncs.dbDataTableValueReplace(RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_REPLACE_FUNC, false, create_tag, 10);
 		//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 		//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 		commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 

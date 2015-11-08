@@ -109,8 +109,9 @@
 					//テキストボックスなどのvalue属性にDBから読込んだ値を入れる
 					commonFuncs.setValueDBdata(create_tag.json['getUserInf']['memberInfoValue'], '.userInf', EMPTY_STRING);
 
-					//入力したデータでDBを更新する
-					setProfileUpdate();
+					//入力値をチェックする
+					$('form').validate(profileValidation);
+					
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				} catch(e) {
 					console.log(e)
