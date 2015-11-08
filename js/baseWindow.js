@@ -44,7 +44,7 @@ function baseWindow(url, argumentObj, returnObj){
 			}
 	};
 
-	this.WINDOW_ZINDEX_COEFFICIENT = 250;	//ウィンドウごとのz-indexの値の差
+	this.WINDOW_ZINDEX_COEFFICIENT = 200;	//ウィンドウごとのz-indexの値の差
 	
 	/* 関数名:load
 	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。
@@ -141,11 +141,27 @@ function baseWindow(url, argumentObj, returnObj){
 		var windows = $('.window');	//全てのウィンドウを取得する
 		//ウィンドウの数を取得する
 		var windowsLength = windows.length;
+		var prevZindex = 0;
 		
 		//全ウィンドウを走査する
 		for(var i = 0; i < windowsLength; i++){
 			//ウィンドウをのZ座標を指定していく
-			$(windows[i]).css('z-index', (i + 1) * this.WINDOW_ZINDEX_COEFFICIENT);
+			$(windows[i]).css('z-index', (i + 1) * this.WINDOW_ZINDEX_COEFFICIENT + prevZindex);
+			//ダイアログとオーバーレイのZIndexも整理する
+			$(windows[i]).nextAll('.ui-dialog, .ui-widget-overlay').each(function(){
+				$(this).hide();
+			});
+			
+			$(windows[windowsLength - 1]).nextAll('.ui-dialog, .ui-widget-overlay').show();
+//			$('.dialog, .ui-widget-overlay', windows[i]).each(function(i){
+//				//順次Z座標を指定していく
+//				$(this).css('z-index', (i + 1) * this.WINDOW_ZINDEX_COEFFICIENT);
+//				//最後の要素なら
+//				if(i <= $('.dialog, .ui-widget-overlay', windows[i]).length){
+//					//次のウィンドウの処理のときに必ず前のウィンドウの要素より下にならないよう、zindexを加算していく
+//					prevZindex += parseInt($(this).css('z-index'));
+//				}
+//			});
 		}
 	}
 	

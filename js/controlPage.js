@@ -723,6 +723,8 @@ function addlogoutEvent(selector){
 				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 				//画面遷移の履歴を追加する。
 				history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
+				//ウィンドウの重なりを調整する
+				$(CURRENT_WINDOW)[0].instance.setWindowZIndex();	
 			},
 			error:function(xhr,status,error){	//通信エラー時
 				//エラーメッセージを出す
@@ -734,6 +736,8 @@ function addlogoutEvent(selector){
 			$(self).closest('.window')[0].instance.destroy();	//会員画面のウィンドウを消す
 			document.cookie = 'otherUserId=;expires=' + cookieLimit.toGMTString() + ';';	//ログインを行った会員ID削除
 			commonFuncs.showAdminWindow();	//管理者画面を表示する
+			//ウィンドウの重なりを調整する
+			$(CURRENT_WINDOW)[0].instance.setWindowZIndex();	
 		}
 	});
 }

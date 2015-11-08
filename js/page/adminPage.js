@@ -758,10 +758,12 @@ function adminMessageCreate(buttonSelector, sendType) {
  * 作成日:2015.09.12
  */
 function mailMagaSearch() {
-	var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
 
 	//メルマガ検索ボタンがクリックされた時に検索機能を行うイベントを開始する
 	$(STR_BODY).on(CLICK, '.mailMagaSearchButton', function() {
+		
+		//メルマガ・アナウンスタブのcreateTagを取得する
+		var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
 		//ページングの設定を初期化し、作り直しに備える
 		create_tag.pagingReset('mailMagaTable');
 		//クエリのデフォルトを取得し、編集した後でも戻せるようにする
@@ -805,14 +807,17 @@ function mailMagaSearch() {
  * 作成日:2015.09.12
  */
 function setMailMagaSendContent() {
+
 	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
 	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
+
+		//メルマガ・アナウンスタブのcreateTagを取得する
+		var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
 		var targetNumber = $('.targetMailMagazine').index(this);
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = create_tag.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
+		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
 		//取得した連想配列をテキストボックスにセットする
-		//setValueDBdata(targetInf, '.mailMagaAndAnnounceArea', 'keyTable');
 		commonFuncs.setObjectValue(targetInf, '.mailMagaAndAnnounceArea');
 	});
 }
@@ -826,22 +831,100 @@ function setMailMagaSendContent() {
  * 作成日:2015.09.12
  */
 function mailMagaSendConfirm() {
+	
 	//送信ボタンがクリックされたときにメール送信イベントを開始する
 	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
-		//メルマガ送信にチェックが入っていたらメルマガを送信する
-		if($('[name="messegeType"]').val() == "0") {
-			//メルマガを送信するための値をテキストボックスから取得する
-			var sendData = commonFuncs.getInputData('mailMagaAndAnnounceArea');
-			//ダイアログ用オブジェクトを作る
-			var dialogObj = $.extend(true, {}, dialogExOption[MAIL_MAGAZINE_CONFIRM_DIALOG]);
-			//送信するデータをオブジェクトに統合する
-			$.extend(true, dialogObj.argumentObj.data, sendData, {'creator':creator});
-			//メルマガ送信ダイアログを作る
-			var mailmagazineSendDialog = new dialogEx('dialog/mailMagazineSendConfirmDialog.html', dialogObj.argumentObj, dialogObj.returnObj);
-			mailmagazineSendDialog.setCallbackClose(mailmagazineSendDialog.sendMailmagazine);	//閉じるときのイベントを登録
-			mailmagazineSendDialog.run();	//主処理を走らせる
+
+		//タイトル、または本文が空であれば
+		if(!commonFuncs.checkEmpty($('.messageTitleTextbox').val()) 
+				|| !commonFuncs.checkEmpty($('.messageTextarea').val())){
+			//空白があるという警告を出して
+			alert('タイトル、または本文のいずれかが空白になっています。入力を行ってください。');
+			return;		//処理を終える
 		}
+		
+		//チェックボックスの入力状況によりコールバック関数を違うものにする
+		var callback = $('[name="messegeType"]').val() == "0" ? sendMailMaga : sendAnnounce;  
+		
+		//ダイアログ用オブジェクトを作る
+		var dialogObj = commonFuncs.createBasicComfirmDialogObject(callback, '送信確認', '入力した内容を送信します。');
+		//インプットデータ用オブジェクトにメルマガ・アナウンスタブのcreateTagをセットする
+		dialogObj.data.create_tag = $('#mailMagaAndAnnounce')[0].create_tag;
+		//メルマガ送信ダイアログを作る
+		var mailmagazineSendDialog = new dialogEx('dialog/confirmDialog.html', dialogObj);
+		mailmagazineSendDialog.run();	//ダイアログを表示する
 	});
+}
+
+/* 
+ * 関数名:sendMailMaga
+ * 概要  :メルマガの送信を行う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.11.08
+ */
+function sendMailMaga() {
+
+	//はいボタンが押されていたら
+	if(this.instance.getPushedButtonState() == YES){
+		
+		//メルマガタブのcreateTagを取得する
+		var create_tag = this.instance.getArgumentDataObject().create_tag;
+		//メルマガを送信するための値をテキストボックスから取得する
+		var data = commonFuncs.getInputData('.mailMagaAndAnnounceArea');
+		var sendObject = {									//送信するデータのオブジェクト
+				//DB保存用クエリ
+				db_setQuery : create_tag.json.insertMailMagazine.db_setQuery
+				,subject:data.magazine_title	//タイトル
+				,content:data.magazine_content	//本文
+				,type :data.magazine_type		//メルマガの種別
+				,school_key : data.school_key	//校舎キー
+		}
+
+		//DBにメルマガの内容を保存する。成功していれば送信処理に移る
+		if (new baseDialog().sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject)) {
+			$.ajax({					//PHPにメール用データを渡すAjax通信
+				url:SEND_MAILMAGA_PHP			//PHPのURLを設定する
+				,data:sendObject	//送信データのオブジェクト
+				,dataType:"json"	//JSON形式でデータをもらう
+				,type:"POST"		//POSTメソッドでHTTP通信する
+				,async : false		//同期通信を行う
+				,cache : false		//通信結果をキャッシュしない
+				,success:function(json){		//通信成功時
+					//送信結果を伝える
+					alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
+					//メルマガのデータを取り出す
+					create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
+					//メルマガテーブルをリフレッシュする
+					create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+				}
+				//通信失敗時
+				,error:function(xhr, status, error){
+					//送信失敗と再操作要求の旨を伝える
+					alert(SEND_MAILMAGA_FAIL_HALF);
+				}
+			});
+		//DBへの保存失敗時
+		} else {
+			//失敗の旨を伝える
+			alert(SEND_MAILMAGA_FAIL_ALL);
+		}
+		
+	}
+}
+
+/* 
+ * 関数名:sendAnnounce
+ * 概要  :アナウンスの送信を行う
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2015.11.08
+ */
+function sendAnnounce() {
+	
+	alert('当機能について内容が未定のため、現在停止しています。');
 }
 
 /* 

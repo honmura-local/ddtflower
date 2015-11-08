@@ -703,7 +703,6 @@ this.defaultClassworkCostColumns = [
 		if(!commonFuncs.checkEmpty(recordData.lesson_name)) {
 			//クラスappendSelectboxをつけてアペンド対象であることを分かりやすくする
 			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).addClass('appendSelectbox');
-			console.log($(tableName + ' tr:eq(' + rowNumber + ') input:hidden'));
 			$(tableName + ' tr:eq(' + rowNumber + ') input:hidden').val(recordData.id);
 		}
 	};
@@ -1441,14 +1440,14 @@ this.defaultClassworkCostColumns = [
 		return {
 			//ダイアログの設定データオブジェクト
 			config:{
-				width: STR_AUTO,		//幅を自動調整する
-				autoOpen : true,	//作成時の自動オープンを無効にする
-				modal : true,		//モーダル表示
-				resizable : false,	//ドラッグでのリサイズ可否
-				//表示位置の指定。
-				position :POSITION_CENTER_TOP,
-				closeOnEscape : false,	//escキーを押して閉じるか
-				create:function(){	//ダイアログ作成時のイベント
+				width: STR_AUTO,				//幅を自動調整する
+				autoOpen : true,				//作成時の自動オープンを無効にする
+				modal : true,					//モーダル表示
+				resizable : false,				//ドラッグでのリサイズ可否
+				position :POSITION_CENTER_TOP,	//表示位置の指定。
+				closeOnEscape : false,			//escキーを押して閉じるか
+				appendTo : $(CURRENT_WINDOW),	//表示中のウィンドウ内に追加する
+				create:function(){				//ダイアログ作成時のイベント
 				},
 				open://基本的にopen時はdispContentsが実行されるようにする
 					function(){
@@ -2015,6 +2014,48 @@ this.defaultClassworkCostColumns = [
 			}
 		}
 	}
+	
+	/* 
+	 * 関数名:getStartIndex
+	 * 概要  :ページングの表示開始行のインデックスを取得する
+	 * 引数  :int maxRowNum : 最大表示行数
+	 * 　　  :String || Element numberingParent : ナンバリングの親要素 
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.08
+	 */
+	this.getStartIndex = function(maxRowNum, numberingParent){
+		
+		//ナンバリングの親要素が指定されていれば親からナンバリングのタグを取得する
+		var $numbering = this.checkEmpty(numberingParent) ? $('.numbering li', $(numberingParent)) : $('.numbering li');
+		//レコードの表示開始番号を算出する。ナンバリングが存在しない状態なら0を返す
+		return $numbering.length ? parseInt($numbering.filter('.select').text() - 1) * maxRowNum : 0;
+	} 
+
+	/* 
+	 * 関数名:createBasicComfirmDialogObject
+	 * 概要  :確認ダイアログ用のオブジェクトを作成する
+	 * 引数  :Function callback : close時のコールバック関数
+	 * 　　  :String title : ダイアログのタイトル 
+	 * 　　  :String message : ダイアログのメッセージ 
+	 * 返却値  :Object : 作成した確認ダイアログ用のオブジェクト
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.08
+	 */
+	this.createBasicComfirmDialogObject = function(callback, title, message){
+		
+		//デフォルトのダイアログインプット用オブジェクトを取得する
+		var retObj = this.getDefaultArgumentObject();
+		//close時のコールバック関数をセットする
+		retObj.config.close = callback;
+		//ダイアログのタイトルをセットする
+		retObj.config.title = title;
+		//ダイアログのメッセージをセットする
+		retObj.data.message = message;
+		
+		return retObj;	//作成したオブジェクトを返す
+	}
+	
 	
 //ここまでクラス定義領域
 }

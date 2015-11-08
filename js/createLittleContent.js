@@ -3360,11 +3360,9 @@ var showAlert = {
 var articleCreateHandler = $.extend({}, true, showAlert, {
 	//成功時のコールバック
 	submitHandler : function(form, event){
-		//ダイアログのクラスインスタンスを生成する。
-		//openイベントはsetArgumentObjでセットしておく
-		var argumentObj = commonFuncs.getDefaultArgumentObject();
-		//ダイアログclose時のコールバック関数をセットする
-		argumentObj.config.close = sendArticleData;
+	
+		//ダイアログのインプットデータのオブジェクトを作成する。close時のコールバック関数、タイトル、ダイアログのメッセージを引数で渡す
+		var argumentObj = createBasicComfirmDialogObject(sendArticleData, SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
 		//記事編集ページのcreateTagをダイアログに渡す
 		argumentObj.data.create_tag = create_tag;
 		//確認ダイアログクラスインスタンスを生成する

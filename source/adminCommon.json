@@ -766,10 +766,6 @@
             },
             "schoolNameSelectBox":{
                 "name":"school_key",
-                "schoolNameSelect":{
-                    "text":"全て",
-                    "value":"99"
-                },
                 "shinjukuSchool":{
                     "text":"新宿店",
                     "value":"1"
@@ -784,10 +780,6 @@
             },
             "typeSelectBox":{
                 "name":"magazine_type",
-                "typeSelect":{
-                    "text":"全て",
-                    "value":"99"
-                },
                 "selectInfo":{
                     "text":"情報",
                     "value":"0"
@@ -862,7 +854,7 @@
         }
     },
     "insertMailMagazine":{
-        "db_setQuery":"INSERT INTO mail_magazine ( school_key,magazine_type,send_datetime,magazine_title,magazine_content,create_datetime) VALUES ('school_key','magazine_type',NOW(),'magazine_title','magazine_content',NOW());"
+        "db_setQuery":"INSERT INTO mail_magazine ( school_key,magazine_type,send_datetime,magazine_title,magazine_content,create_datetime,update_datetime) VALUES ('school_key','type',NOW(),'subject','content',NOW(),NOW());"
     },
     "getMailMagaMemberList":{
         "db_getQuery":"SELECT id, user_name AS name, mail_address AS email FROM user_inf WHERE mail_deny = 0;",

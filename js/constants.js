@@ -302,6 +302,7 @@ MEMBER_MAIL									= 0;											//目安箱 会員メールを示す数値
 SUGGESTION_MAIL								= 1;											//目安箱 目安箱メールを示す数値
 SEND_MEMBERMAIL_PHP							= 'php/mailSendEntryMemberMail.php';			//目安箱 会員メール送信用のPHP
 SEND_SUGGEST_PHP							= 'php/mailSendEntrySuggest.php';				//目安箱 目安箱メール送信用のPHP
+SEND_MAILMAGA_PHP							= 'php/mailSendEntryMagazine.php';				//メルマガ送信用PHP
 DIALOG_JS_DIR								= 'dialog/js/';
 JS_IDENTIFIER								= '.js';
 TEST_DIALOG									= 'testdialog';
@@ -774,3 +775,14 @@ RESERVE_AFTER_DEADLINE						= '予約締切';
 ALERT_EMPTY_CONTENTS						= '空欄があります。タイトル、お問い合わせ内容の記入をお願いします。';
 //デフォルトの最大表示行数
 DEFAULT_SHOW_MAX_ROW 						= 15;	
+//記事投稿選択前のメッセージ
+SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE = '入力した内容で記事を投稿します。';
+//記事投稿選択前の確認ダイアログのタイトル
+SAVE_ARTICLE_BEFORE_CONFIRM_TITLE = '記事投稿';
+//メルマガ DB登録成功かつ送信失敗のメッセージ
+SEND_MAILMAGA_FAIL_HALF = 'DBへのメルマガの登録が完了しましたが、メルマガの送信に失敗しました。時間をおいてから再度メルマガの送信を行ってください。'
+//メルマガ DB登録の時点で失敗したときのメッセージ
+SEND_MAILMAGA_FAIL_ALL = 'メルマガの登録に失敗しました。時間をおいてお試しください。';
+//受講者一覧のJSON、HTMLファイル
+ADMIN_LESSON_USER_LIST_DIALOG_JSON = 'dialog/source/adminLessonUserListDialog.json';
+ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.html';

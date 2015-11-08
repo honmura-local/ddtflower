@@ -141,7 +141,13 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackStudents = function(){
-		//未作成
+		
+		//親ダイアログから渡されたデータを次のダイアログに渡すため取得する
+		var argumentObj = $.extend(true, {}, this.dialogClass.getArgumentObject());
+		//受講者一覧ダイアログを作る
+		var userListDialog = new dialogEx('dialog/adminLessonUserListDialog.html', argumentObj);
+		//受講者一覧ダイアログを表示する
+		userListDialog.run();
 	}
 
 	/* 関数名:setConfig
