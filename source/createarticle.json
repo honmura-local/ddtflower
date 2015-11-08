@@ -29,25 +29,67 @@
     	}
     },
     "blogEditImages": {},
-    "blogEditImagesSection": {
+    "blogEditImagesSection1": {
     	"class":"blogEditImagesSection cf",
         "blogEditImagesSectionImage": {
-        
+        	"name":"thumb1"
         },
         "blogEditImagesSectionAddButton": {
         	"text":"選択",
         	"onclick":"",
         	"type":"button"
         },
-        "blogblogEditImagesSectionImagePath":{
-        	"name":"imagePath",
+        "blogEditImagesSectionImagePath":{
+        	"name":"image_1",
         	"type":"hidden",
         	"value":""
         },
         "blogEditImagesSectionDeleteButton": {
         	"text":"削除",
         	"type":"button",
-        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',deleteSiblingSrc,this,'.blogblogEditImagesSectionImagePath,.blogEditImagesSectionImage')"
+        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_1\"],[name=\"thumb1\"]')"
+        }
+    },
+    "blogEditImagesSection2": {
+    	"class":"blogEditImagesSection cf",
+        "blogEditImagesSectionImage": {
+        	"name":"thumb2"
+        },
+        "blogEditImagesSectionAddButton": {
+        	"text":"選択",
+        	"onclick":"",
+        	"type":"button"
+        },
+        "blogEditImagesSectionImagePath":{
+        	"name":"image_2",
+        	"type":"hidden",
+        	"value":""
+        },
+        "blogEditImagesSectionDeleteButton": {
+        	"text":"削除",
+        	"type":"button",
+        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_2\"],[name=\"thumb2\"]')"
+        }
+    },
+    "blogEditImagesSection3": {
+    	"class":"blogEditImagesSection cf",
+        "blogEditImagesSectionImage": {
+        	"name":"thumb3"
+        },
+        "blogEditImagesSectionAddButton": {
+        	"text":"選択",
+        	"onclick":"",
+        	"type":"button"
+        },
+        "blogEditImagesSectionImagePath":{
+        	"name":"image_3",
+        	"type":"hidden",
+        	"value":""
+        },
+        "blogEditImagesSectionDeleteButton": {
+        	"text":"削除",
+        	"type":"button",
+        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_3\"],[name=\"thumb3\"]')"
         }
     },
     "blogEditText": {
@@ -71,19 +113,9 @@
     		"type":"radio",
     		"value":"1",
     		"name":"blogPublication"
-    	},
-    	"blogPublicationLabel2":{
-    		"class":"blogPublicationLabel",
-    		"text":"友達のみ"
-    	},
-    	"blogPublicationRadio3":{
-    		"class":"blogPublicationRadio",
-    		"type":"radio",
-    		"value":"2",
-    		"name":"blogPublication"
     		
     	},
-    	"blogPublicationLabel3":{
+    	"blogPublicationLabel2":{
     		"class":"blogPublicationLabel",
     		"text":"非公開"
     	}
@@ -106,16 +138,16 @@
         }
     },
     "insertMyBlog":{
-        "db_setQuery":"INSERT INTO user_blog(user_key, title, content, post_timestamp) VALUES ('user_key', 'blogTitle', 'blogContent', NOW())"
+        "db_setQuery":"INSERT INTO user_blog(user_key, title, content, post_timestamp, image_1, image_2, image_3) VALUES ('user_key', 'blogTitle', 'blogContent', NOW(), 'image_1', 'image_2', 'image_3')"
     },
     "updateMyBlog":{
-        "db_setQuery":"UPDATE user_blog SET title='blogTitle', content='blogContent' WHERE id='id';",
+        "db_setQuery":"UPDATE user_blog SET title='blogTitle', content='blogContent' , image_1='image_1', image_2='image_2', image_3='image_3' WHERE id='id';",
         "id":{
             "value":""
         }
     },
     "myBlogContent":{
-        "db_getQuery":"SELECT title, content FROM user_blog WHERE user_key='user_key' AND id='id' ",
+        "db_getQuery":"SELECT * FROM user_blog WHERE user_key='user_key' AND id='id' ",
         "user_key":{
             "value":""
         },
@@ -128,6 +160,18 @@
         "content":{
             "text":""
         },
-        "updateFlag":""
+        "updateFlag":"",
+        "disclosure_range":{
+        	"text":""
+        },
+        "image_1":{
+        	"text":""
+        },
+        "image_2":{
+        	"text":""
+        },
+        "image_3":{
+        	"text":""
+        }
     }
 }

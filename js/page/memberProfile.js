@@ -15,10 +15,11 @@
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.02
+ * 変更者:T.Masuda
+ * 変更日:2015.11.07
+ * 内容　:validation.jsで利用するためイベントコールバック登録を省きました
  */
 function setProfileUpdate() {
-	//更新ボタンが押された時の処理
-	$('.updateButton').on(CLICK, function(){
 		//ユーザが入力した値を取得する
 		var queryReplaceData = commonFuncs.getInputData('.memberInfo');
 		console.log(queryReplaceData);
@@ -56,7 +57,6 @@ function setProfileUpdate() {
 			//データべベースにクエリを発行してデータを更新する
 			create_tag.setDBdata(create_tag.json.updateUserInf, queryReplaceData, MESSAGE_SUCCESS_PROFILE_UPDATE);
 		}
-	});
 }
 
 

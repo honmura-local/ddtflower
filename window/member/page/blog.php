@@ -67,9 +67,11 @@
 				//datepickerによるカレンダーのクラスを作成する。
 				var bCalendar = new blogCalendar('.calendar', create_tag);
 				bCalendar.create();	//カレンダーを実際に作成する
-
 				create_tag.createNewArticleList();	//最新記事一覧を作る
-			</script>
+
+				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+				
+				</script>
 		</div>	
 	</div>
 </body>

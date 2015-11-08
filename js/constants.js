@@ -768,7 +768,9 @@ CHECKED										= 'checked';	//「チェック済み」の意味合いの文字
 SEL_SUGGESTION_AREA							= '.suggestionArea';
 PATH_SEND_MEMBERMAIL_PHP					= 'php/mailSendEntryMemberMail.php';
 PATH_SEND_SUGGESTION_PHP					= 'php/mailSendEntrySuggest.php';
-
+//予約締切
 RESERVE_AFTER_DEADLINE						= '予約締切';
 //メール送信確認前に空欄があったときの警告
 ALERT_EMPTY_CONTENTS						= '空欄があります。タイトル、お問い合わせ内容の記入をお願いします。';
+//デフォルトの最大表示行数
+DEFAULT_SHOW_MAX_ROW 						= 15;	
