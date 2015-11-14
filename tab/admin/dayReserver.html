@@ -40,7 +40,7 @@
 			create_tag.tableReload(EACH_DAY_RESERVED_INFO_TABLE);
 			if(create_tag.json.eachDayReservedInfoTable[TABLE_DATA_KEY].length > 0) {
 				//管理者日ごと予約者一覧テーブルを置換する
-				commonFuncs.dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag);
+				commonFuncs.dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag, 10);
 			}
 			
 			//会員データをクリックして会員画面にログインできるようにする

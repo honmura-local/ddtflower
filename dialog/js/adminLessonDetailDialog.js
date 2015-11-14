@@ -14,6 +14,37 @@
 function adminLessonDetailDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 
+	//jQuery validation用設定オブジェクト
+	this.validation = {
+			//チェックが通った時の処理
+			submitHandler : function(form, event){
+				
+				//授業の内容を更新する
+				$(form)[0].dialogBuilder.lessonDataUpdate();
+				return false;	//デフォルトのsubmitをキャンセルする
+			},
+			invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
+				var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
+				//エラー文を表示する。
+				alert(createErrorText(errors, errorJpNames));
+			},
+			rules :{
+				min_students:{
+					required : true,
+					digits : true,
+					checkMinStudents : true
+				},
+				max_students : {
+					required : true,
+					digits : true
+				}, 
+				classroom : {
+					required : true,
+					alphabet : true
+				}
+			}
+	}
+	
 	/* 関数名:getJson
 	 * 概要　:JSONを取得する(オーバーライドして内容を定義してください)
 	 * 引数　:なし
@@ -96,8 +127,9 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackUpdate = function(){
-		//授業の内容を更新する
-		this.lessonDataUpdate();
+		
+		//フォームをsubmitしてvalidationを行う
+		$(this.dialog).submit();
 	}
 
 	/* 関数名:callbackStudents
@@ -109,7 +141,13 @@ function adminLessonDetailDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackStudents = function(){
-		//未作成
+		
+		//親ダイアログから渡されたデータを次のダイアログに渡すため取得する
+		var argumentObj = $.extend(true, {}, this.dialogClass.getArgumentObject());
+		//受講者一覧ダイアログを作る
+		var userListDialog = new dialogEx('dialog/adminLessonUserListDialog.html', argumentObj);
+		//受講者一覧ダイアログを表示する
+		userListDialog.run();
 	}
 
 	/* 関数名:setConfig
@@ -128,6 +166,8 @@ function adminLessonDetailDialog(dialog){
 		var data = this.dialogClass.getArgumentDataObject();
 		//連想配列のデータをダイアログの各要素に配置していく
 		commonFuncs.setObjectValue(data, this.dialog);
+		//入力チェックを登録する
+		$(this.dialog).validate(this.validation);
 	}
 
 	/* 関数名:updateJson

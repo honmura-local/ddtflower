@@ -50,8 +50,8 @@
 			//clickCalendar('toSearach');
 			//受講承認一覧の検索機能を実装する
 			searchPermitListInfoTable();
-			//受講承認一覧の備品名にセレクトボックスの値をDBから取り出した値で追加する
-			create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.contentSelect.contentOption, 'commodity_name');
+			//セレクトボックスのvalueを画面に表示されている値にする
+			create_tag.setSelectboxValue('.contentSelect', LECTURE_PERMIT_LIST_INFO_TABLE, 'commodity_key', create_tag.json.selectCommodityInf[TABLE_DATA_KEY]);
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 			//更新ボタンがクリックされたときにデータを更新するイベントを登録する

@@ -81,7 +81,6 @@ table.myBlogTable tr td:first-child {
 .blogImage img{
 	width: 100%;			/* できるだけ広げる */
 	display: inline-block;	/* インラインブロック */
-	margin-right: 5px;		/* 右に軽く間隔を取る */
 	height: auto;			/* 高さを比率に合わせる */
 	border-radius: 10px;	/* 角丸にする */
 	margin-bottom: 5px;		/* 下に余白を取る */
@@ -129,11 +128,17 @@ table.myBlogTable tr td:first-child {
  * 概要   :記事の本文
  * 作成者 :T.Masuda
  * 作成日 :2015.08.02
+ * 変更者 :T.Masuda
+ * 変更日 :2015.11.08
+ * 内容　 :改行を有効にしました
  */
 .blogContent{
-	font-size: 20px;	/* 大きめで見やすいフォントにする */
-	text-indent: 1em;	/* インデントを付ける */
-	display:block;		/* ブロック要素で横に並べない */
+	font-size: 20px;		/* 大きめで見やすいフォントにする */
+	text-indent: 1em;		/* インデントを付ける */
+	display:block;			/* ブロック要素で横に並べない */
+	white-space : pre-wrap;	/* 改行を有効にする */	
+	width : 73%;			/* 幅を指定する。隣にある画像との比率を考慮する */
+	float : right;			/* 右に寄せる */
 }
 
 /* 

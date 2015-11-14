@@ -43,7 +43,7 @@ function createMemberFinishedLessonContent() {
  */
 function setConfigFinishedLesson() {
 	//セレクトボックスのvalueを画面に表示されている値にする
-	create_tag.setSelectboxValue('.selectThemebox');
+	create_tag.setSelectboxValueWithName('.selectThemebox');
 	//絞り込み機能を実装する
 	finshedLessonTableThemeSelect();
 }

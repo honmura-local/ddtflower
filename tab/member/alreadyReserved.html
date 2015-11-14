@@ -47,7 +47,7 @@
 	//予約済み授業の絞り込み領域を作る
 	create_tag.outputTag('selectTheme', 'selectTheme', '#alreadyReserved');
 	//セレクトボックスのvalueを画面に表示されている値にする
-	create_tag.setSelectboxValue('.selectThemebox');
+	create_tag.setSelectboxValueWithName('.selectThemebox');
 	//予約中授業の外枠領域を作る
 	create_tag.outputTag('reservedLessonTableOutsideArea', 'divArea', '#alreadyReserved');
 	//予約中の授業データがあった時の予約中授業を表示するのに必要な処理をする

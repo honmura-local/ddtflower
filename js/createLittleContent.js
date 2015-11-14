@@ -1123,14 +1123,14 @@ function createLittleContents(){
 	}
 	
 	/* 
-	 * 関数名:setSelectboxValue
+	 * 関数名:setSelectboxValueWithName
 	 * 引数  :selector セレクトボックスのセレクター
 	 * 戻り値:なし
-	 * 概要  :optionタグのvalue属性に値を入れる
-	 * 作成日 :2015.06.24
-	 * 作成者:T.Yamamoto
+	 * 概要  :optionタグのvalue属性に表示されている文字列と同じ値を入れる
+	 * 作成日 :2015.11.08
+	 * 作成者:T.Masuda
 	　*/
-	this.setSelectboxValue = function(selector) {
+	this.setSelectboxValueWithName = function(selector) {
 		// optionタグをループで全て操作する
 		$(selector + ' option').each(function(i){
 			// optionタグの文字列を変数に入れる
@@ -1138,6 +1138,26 @@ function createLittleContents(){
 			// 取得した文字列をvalue属性に入れる
 			$(this).val(selectValue);
 		});
+	}
+	
+	/* 
+	 * 関数名:setSelectboxValue
+	 * 引数  :selector セレクトボックスのセレクター
+	 * 戻り値:なし
+	 * 概要  :optionタグのvalue属性に値を入れる
+	 * 作成日 :2015.06.24
+	 * 作成者:T.Yamamoto
+	 * 変更日 :2015.11.08
+	 * 変更者:T.Masuda
+	 * 内容　:古い内容をsetSelectboxValueWithNameに移し、処理を一新しました
+	　*/
+	this.setSelectboxValue = function(selector, key, columnName, items) {
+		
+		//データ取得元の連想配列を走査する
+		for(key in items) { 
+			//optionタグにテキストに応じたIDをセットする
+			$('option', $(selector)).filter(function(index){return $(this).text() == items[key].commodity_name;}).val(items[key].id);
+		}
 	}
 	
 	/*
@@ -1424,28 +1444,43 @@ function createLittleContents(){
 	 * 戻り値　:なし
 	 * 作成日　:2015.07.03
 	 * 作成者　:T.Yamamoto
+	 * 変更日　:2015.11.08
+	 * 変更者　:T.Masuda
+	 * 内容　　:処理を見直しました。また、テキストボックスのみの対応であったため他のフォーム要素にも対応しました
 	 */
 	this.addQueryExtractionCondition = function(inputDataParent, queryArrayKey) {
-		var counter = 0;
-		//inputタグの数ループする
-		$('input[type="text"]', $('.' + inputDataParent)).each(function(){
-			//入力された値が空白でなければ
-			if($(this).val() != "") {
-					//入力値を取得する
-					var inputData = $(this).val();
-					//name属性を所得する
-					var attrName = $(this).attr('name');
-				//カウンターが0でなければ
-				if(counter != 0){
-					//追加する変数を作る
-					var addString = ' AND ' + attrName + " LIKE '%" + inputData + "%' ";
+		
+		var counter = 0;				//走査用カウンター変数
+		var operator = EMPTY_STRING;	//演算子の文字列
+		var addString = EMPTY_STRING;	//追記するクエリの文字列
+		var thisElem = this;			//ループ内でクラスインスタンスを使うため変数に保存する
+		
+		//フォームパーツを走査する
+		$(SEL_INPUT_DATA, $('.' + inputDataParent)).filter(':not([type="button"])').each(function(){
+			var value = $(this).val();	//フォームの値を取得する
+			//入力された値が空白、スキップ用の値99でなければ
+			if(commonFuncs.checkEmpty(value) && value != '99') {
+				//入力値を取得する
+				var inputData = $(this).val();
+				//name属性を所得する
+				var attrName = $(this).attr('name');
+			
+				//試行回数で利用する演算子をWHEREかANDに切り替える
+				operator = counter ? ' AND ' : ' WHERE ';
+					
+				//テキストボックス、テキストエリアなら
+				if(this.tagName == 'INPUT' || this.tagName == 'TEXTAREA'){
+					//LIKE演算子のクエリを作成する
+					addString = operator + attrName + " LIKE '%" + inputData + "%' ";
 				} else {
-					//追加する変数を作る
-					var addString = ' WHERE ' + attrName + " LIKE '%" + inputData + "%' ";
-					counter++;
+					//=演算子のクエリを作成する
+					addString = operator + attrName + " = '" + inputData + "' ";
 				}
+				
+				counter++;	//カウンターを回す
+				
 				//クエリに文字を付け加える
-				create_tag.json[queryArrayKey].db_getQuery += addString;
+				thisElem.json[queryArrayKey].db_getQuery += addString;
 			}
 		});
 	}
@@ -3298,7 +3333,10 @@ var errorJpNames = {name:'氏名',
 					mail_address : 'メールアドレス',
 					telephone : '電話番号',
 					telephone2 : '緊急電話番号',
-					mail_deny : 'メルマガ受信設定'
+					mail_deny : 'メルマガ受信設定',
+					max_students : '最大人数',
+					min_students : '最低人数',
+					classroom : '教室'
 					};
 
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
@@ -3322,11 +3360,9 @@ var showAlert = {
 var articleCreateHandler = $.extend({}, true, showAlert, {
 	//成功時のコールバック
 	submitHandler : function(form, event){
-		//ダイアログのクラスインスタンスを生成する。
-		//openイベントはsetArgumentObjでセットしておく
-		var argumentObj = commonFuncs.getDefaultArgumentObject();
-		//ダイアログclose時のコールバック関数をセットする
-		argumentObj.config.close = sendArticleData;
+	
+		//ダイアログのインプットデータのオブジェクトを作成する。close時のコールバック関数、タイトル、ダイアログのメッセージを引数で渡す
+		var argumentObj = createBasicComfirmDialogObject(sendArticleData, SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
 		//記事編集ページのcreateTagをダイアログに渡す
 		argumentObj.data.create_tag = create_tag;
 		//確認ダイアログクラスインスタンスを生成する
