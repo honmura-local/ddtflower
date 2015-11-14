@@ -346,6 +346,7 @@
                     "size": "27",
                     "autocomplete": "off",
                     "style": "ime-mode:disabled",
+                    "onkeyDown": "return controllInputChar(event);",
                     "type": "email"
                 }
             }
@@ -365,6 +366,7 @@
                     "oncopy": "return false",
                     "onpaste": "return false",
                     "ononcontextmenu": "return false",
+                    "onkeyDown": "return controllInputChar(event);",
                     "placeholder":"手動で入力してください。"
                 }
             }

@@ -262,7 +262,7 @@ EACH_DAY_RESERVED_INFO_TABLE 				 = 'eachDayReservedInfoTable';					//管理者�
 EACH_DAY_RESERVED_INFO_TABLE_RECORD			 = 'targetEachDayLessonRecord';					//管理者、日ごと予約者一覧テーブル1行ごとのクラス名
 EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC 	 = 'callEachDayReservedValue';					//管理者、日ごと予約者一覧テーブル置換関数名
 DO_LECTURE_PERMIT_INFO_TABLE 				 = 'doLecturePermitInfoTable';					//管理者、受講承認テーブル
-DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC 	 = 'callLecturePermitValue';					//管理者、受講承認テーブル置換関数名
+DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC 	 = 'commonFuncs.callLecturePermitValue';					//管理者、受講承認テーブル置換関数名
 LECTURE_PERMIT_LIST_INFO_TABLE				 = 'lecturePermitListInfoTable';				//管理者、受講承認一覧テーブル
 LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC  = 'commonFuncs.callPermitLessonListValue';		//管理者、受講承認一覧テーブル置換関数名
 ADMIN_LESSON_ADD_BUTTON						 = 'lessonAddButton';							//管理者、授業詳細、新規授業の追加ボタン
@@ -478,7 +478,7 @@ CONFIRM_DIALOG_JS 							= 'dialog/js/confirmDialog.js';
 
 //体験レッスン予約希望ダイアログの入力チェック用の定数群
 //必須入力を行う入力フォームのname属性を配列に入れる。
-EXPERIENCE_CHECK_FORMS = ['construct', 'course','schedule', 'name', 'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
+EXPERIENCE_CHECK_FORMS = ['construct', 'course','schedule', 'name', 'nameKana',  'personPhoneNumber', 'email', 'personEmailCheck', 'personCount'];
 //必須入力を行う入力フォームのname属性の日本語版を連想配列で用意する。
 EXPERIENCE_CHECK_FORMS_JP_NAME = {
 			reservedDate:'希望日', 

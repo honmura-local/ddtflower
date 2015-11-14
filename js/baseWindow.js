@@ -19,6 +19,7 @@ function baseWindow(url, argumentObj, returnObj){
 	this.url = url;
 	//ウィンドウ自身のDOMを格納するメンバ
 	this.dom = EMPTY_STRING;
+	this.WINDOW_ZINDEX_COEFFICIENT = 200;	//ウィンドウごとのz-indexの値の差
 	//インプット用データのオブジェクト
 	this.argumentObj = argumentObj !== void(0)? argumentObj : {};
 	//アウトプット用データのオブジェクト
@@ -43,8 +44,6 @@ function baseWindow(url, argumentObj, returnObj){
 			data:{
 			}
 	};
-
-	this.WINDOW_ZINDEX_COEFFICIENT = 200;	//ウィンドウごとのz-indexの値の差
 	
 	/* 関数名:load
 	 * 概要　:URLのHTMLファイルを取得してメンバに保存する。
