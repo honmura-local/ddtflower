@@ -40,7 +40,7 @@
 			//受講承認のテーブルにチェックボックスを追加する
 			commonFuncs.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 			//受講承認のテーブルを置換する
-			dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+			commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 			//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 			create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 			//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
