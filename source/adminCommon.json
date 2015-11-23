@@ -23,7 +23,7 @@
                 },
                 {
                     "href": "#mailMagaAndAnnounce",
-                    "html": "メルマガ<br>アナウンス"
+                    "html": "メルマガ"
                 }
             ]
         },
@@ -816,29 +816,6 @@
         "messageContentArea":{
             "messageTextarea":{
                 "name":"magazine_content"
-            }
-        },
-        "messageOptionArea":{
-            "class":"messageOptionArea fLeft",
-            "mailMagaLabel":{
-                "mailMagaRadio":{
-                    "type":"radio",
-                    "name":"messegeType",
-                    "value":"0"
-                },
-                "mailMagaLabelText":{
-                    "text":"メルマガ"
-                }
-            },
-            "announceLabel":{
-                "announceRadio":{
-                    "type":"radio",
-                    "name":"messegeType",
-                    "value":""
-                },
-                "announceLabelText":{
-                    "text":"アナウンス"
-                }
             }
         },
         "messageButtonArea":{

@@ -849,11 +849,8 @@ function mailMagaSendConfirm() {
 			return;		//処理を終える
 		}
 		
-		//チェックボックスの入力状況によりコールバック関数を違うものにする
-		var callback = $('[name="messegeType"]').val() == "0" ? sendMailMaga : sendAnnounce;  
-		
 		//ダイアログ用オブジェクトを作る
-		var dialogObj = commonFuncs.createBasicComfirmDialogObject(callback, '送信確認', '入力した内容を送信します。');
+		var dialogObj = commonFuncs.createBasicComfirmDialogObject(sendMailMaga, '送信確認', '入力した内容を送信します。');
 		//インプットデータ用オブジェクトにメルマガ・アナウンスタブのcreateTagをセットする
 		dialogObj.data.create_tag = $('#mailMagaAndAnnounce')[0].create_tag;
 		//メルマガ送信ダイアログを作る
@@ -918,19 +915,6 @@ function sendMailMaga() {
 		}
 		
 	}
-}
-
-/* 
- * 関数名:sendAnnounce
- * 概要  :アナウンスの送信を行う
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Masuda
- * 作成日:2015.11.08
- */
-function sendAnnounce() {
-	
-	alert('当機能について内容が未定のため、現在停止しています。');
 }
 
 /* 
