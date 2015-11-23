@@ -14,6 +14,88 @@
 function experienceReservedDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
+	//フォーム入力チェックのルールを定義するオブジェクト
+	this.validationRule = {
+			//submit成功時のコールバック
+			submitHandler : function (form, event){
+				//確認ダイアログを表示する。その前にチェックも入れる
+				$(CURRENT_DIALOG)[0].dialogBuilder.openDialog(URL_CONFIRM_DIALOG);
+				return false;	//本来のsubmitをキャンセルする
+			},
+			//submit失敗時のコールバック
+			invalidHandler : function() {
+				
+			},
+			//バリデーションルール
+			rules : {
+				//氏名
+				name:{
+					//必須チェック
+					required : true
+				},
+				//氏名(カナ)
+				nameKana : {
+					//必須チェック
+					required : true,
+					katakana : true
+				},
+				//電話番号
+				personPhoneNumber : {
+					//必須チェック
+					required : true,
+					telnum : true
+				},
+				//メールアドレス
+				email : {
+					//必須チェック
+					required : true,
+					//メール形式チェック
+					email : true
+				},
+				//メールアドレス入力確認
+				personEmailCheck:{
+					//必須チェック
+					required : true,
+					//メール形式チェック
+					equalTo: '[name="email"]'
+				},
+				//人数
+				personCount:{
+					//必須チェック
+					required : true,
+					//数値のみの入力
+					range : [0, 100]
+				}, 
+				//作品
+				construct : {
+					required : true
+				}, 
+				//時限
+				schedule : {
+					required : true
+				},
+				//曜日
+				dayOfWeek : {
+					required : false
+				}, 
+				//週
+				week : {
+					required : false
+				}
+			},
+			messages : {
+				personCount : {
+					range : "0 〜 100の範囲で入力してください。"
+				}
+			},
+			invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
+				var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
+				console.log(errors)
+				//エラー文を表示する。
+				alert(createErrorText(errors, errorJpNames));
+			}
+	};
+	
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
 	 * 引数　:なし
@@ -139,6 +221,7 @@ function experienceReservedDialog(dialog){
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//日付を隠しフォームにセットする
 		$('.reservedDate').val(this.dialogClass.getArgumentDataObject().dateJapanese);
+		$(CURRENT_DIALOG).validate(this.validationRule);
 	}
 	
 	/* 関数名:validationForm
@@ -235,8 +318,8 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
-		//確認ダイアログを開く
-		this.openDialog(URL_CONFIRM_DIALOG);
+		//フォームをsubmitする
+		$(CURRENT_DIALOG).submit();
 	};
 	
 	/* 関数名:createExperienceReservedMail

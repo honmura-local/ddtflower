@@ -786,3 +786,6 @@ SEND_MAILMAGA_FAIL_ALL = 'メルマガの登録に失敗しました。時間を
 //受講者一覧のJSON、HTMLファイル
 ADMIN_LESSON_USER_LIST_DIALOG_JSON = 'dialog/source/adminLessonUserListDialog.json';
 ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.html';
+
+//マイギャラリーの表示記事数
+MYGALLERY_SHOW_NUMBER				= 4;

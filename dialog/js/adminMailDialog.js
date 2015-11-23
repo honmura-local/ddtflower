@@ -294,6 +294,9 @@ function adminMailDialog(dialog){
 			//処理を行うボタンが押されていなければ
 			default:break;	//そのまま処理を終える
 		}
+		
+		//確認ダイアログを消す
+		this.instance.destroy();
 	};
 	
 	/* 関数名:callbackSend

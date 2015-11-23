@@ -51,6 +51,10 @@ function memberReserveListDialog(dialog){
 			if(e instanceof cannotGetAnyRecordException){
 				//もう一度例外を投げ、dispContents内で処理する
 				throw new cannotGetAnyRecordException();
+			//それ以外の例外であれば
+			} else {
+				//もう一度例外を投げ、dispContents内で処理する
+				throw e;
 			}
 		}
 	};
@@ -141,9 +145,15 @@ function memberReserveListDialog(dialog){
 			this.constructionContent();
 		//レコードが取得できていなければ、またはエラーが起きたら
 		} catch (e) {
-			//ダイアログをアラートのダイアログに変える
-			this.showAlertNoReserve();
-			return;	//処理を打ち切る
+			//レコードが取得できていなければ
+			if (e instanceof cannotGetAnyRecordException) {
+				//ダイアログをアラートのダイアログに変える
+				this.showAlertNoReserve();
+				return;	//処理を打ち切る
+			//別のエラーなら
+			} else {
+				throw e;	//上位にエラーを投げる
+			}
 		}
 		
 		//ダイアログの画面パーツをセットする

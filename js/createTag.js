@@ -72,9 +72,10 @@ function createTag(){
 				}
 			},
 			//通信失敗時の処理。
-			error:function(){
+			error:function(xhr, status, error){
 				//エラーのダイアログを出す。
 				alert('通信に失敗しました。');
+				throw error;
 			}
 		});
 
@@ -87,8 +88,10 @@ function createTag(){
 			//キーが入力されていたら
 		} else if(key !== void(0)){
 			//指定したキーにJSONを格納する
-//			this.json[key] = tmp;
-			this.replaceData(PATTERN_ADD, this.json[key], tmp);
+			var tmpObj = {};	//統合用オブジェクトを作る
+			tmpObj[key] = tmp;	//統合用オブジェクトにkeyのキーを作り、valueをセットする
+			//オブジェクトを統合する
+			$.extend(true, this.json, tmpObj);
 		//既にJSONが格納されていたら
 		} else {
 			//連想配列を連結する。
