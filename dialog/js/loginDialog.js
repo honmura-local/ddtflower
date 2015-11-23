@@ -170,8 +170,6 @@ function loginDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.getLoginProcedureResult = function(){
-		//※ログインダイアログ表示時に引数のJSONは取得されている
-		console.log(this[VAR_CREATE_TAG].json);
 		//サーバにアクセスし、ログイン処理を行う
  		this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_STRING_PHP, this[VAR_CREATE_TAG].json[KEY_LOGIN], KEY_LOGIN);
  		//DBから取得したログイン処理の結果をオブジェクトにまとめて返す

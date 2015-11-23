@@ -1152,11 +1152,15 @@ function createLittleContents(){
 	 * 内容　:古い内容をsetSelectboxValueWithNameに移し、処理を一新しました
 	　*/
 	this.setSelectboxValue = function(selector, key, columnName, items) {
+		//option追加前にセレクトメニューを空にしておく
+		$(selector).empty();
 		
 		//データ取得元の連想配列を走査する
 		for(key in items) { 
+			console.log(items[key]);
+			$(selector).append($('<option></option>').addClass('contentOption').val(items[key].commodity_key).text(items[key].commodity_name));
 			//optionタグにテキストに応じたIDをセットする
-			$('option', $(selector)).filter(function(index){return $(this).text() == items[key].commodity_name;}).val(items[key].id);
+			//$('option', $(selector)).filter(function(index){return $(this).text() == items[key].commodity_name;}).val(items[key].id);
 		}
 	}
 	

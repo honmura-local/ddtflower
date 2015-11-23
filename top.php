@@ -47,6 +47,9 @@
 			//お知らせウィンドウを開閉させるイベントを登録する
 			commonFuncs.toggleNoticeWindows();
 
+
+			commonFuncs.setShowSelectedBlogArticleEvent();			
+			
 			//例外処理
 			}catch(e){
 				//エラーログを出す

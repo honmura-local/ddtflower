@@ -221,6 +221,9 @@ function searchPermitListInfoTable() {
 		//受講承認一覧の連想配列に検索終わりの値を入れる
 		lecturePermitList.json.lecturePermitListInfoTable.toDate.value = toDate;
 
+		//テーブルデータをリセットしておく
+		lecturePermitList.json.lecturePermitListInfoTable.tableData = [];
+		//DBからデータを取得する
 		lecturePermitList.getJsonFile('php/GetJSONArray.php', lecturePermitList.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
 		
 		//データがあれば
@@ -400,6 +403,13 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
 	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
+		
+		//チェックが入っているレコードがなければ
+		if (!$('.permitCheckbox:checked').length) {
+			alert('受講承認を行うレコードを選択してください。');
+			return;	//処理を終える
+		}
+		
 		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
 		//受講承認を行った生徒の方のリストを作る
@@ -437,8 +447,73 @@ function loopUpdatePermitLesson() {
 		//必ず行う処理
 		} finally {
 			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+			
+			//1件でも処理していたら
+			if (counter > 0) {
+				//先に既存のテーブルとボタンを消して
+				$('.doLecturePermitInfoTable').remove();
+				$('.doLecturePermit.normalButton').remove();
+				
+				//テーブルを更新する
+				updateDoLecturePermitTable(create_tag);
+			} 
+			
 		}
 	});
+}
+
+function updateDoLecturePermitTable (create_tag) {
+	//テーブル用JSONをクリアする
+	create_tag.json['doLecturePermitInfoTable'].tableData = [];
+	// 受講承認テーブル用のJSON配列を取得する
+	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
+	//データがあればテーブルを追加する
+	if(!create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY].length) {
+		return;	//なければ終了する
+	}
+	
+	//受講承認タブのリストテーブル
+	create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+	//受講承認のボタン
+	create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+	//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
+
+	//受講承認のテーブルにチェックボックスを追加する
+	commonFuncs.addCheckbox('permitCheckboxArea', 'permitCheckbox');
+	//受講承認のテーブルを置換する
+	commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
+	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
+	setDefaultSellingPrice();
+	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
+	commonFuncs.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
+	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
+	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionContent');
+	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
+	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
+	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
+	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionSummary');
+	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
+	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
+	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
+	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
+	commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
+	//受講承認の備品名セレクトボックスにvalueを入れる
+	create_tag.setSelectboxValueWithName('.contentSelect');
+	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
+	setSellingPrice('.contentCell', '.accordionContent');
+	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
+	setDefaultCommodityCostPrice();
+	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
+	setCommodityCostPrice('.contentSelect');
+	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
+	setCommodityCostPrice('.sellNumberTextbox');
+	
+	var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
+	// ボタンの見た目をjqueryuiのものにしてデザインを整える
+	$('button, .searchButton, input[type="button"]', $activePanel).button();
 }
 
 /* 
@@ -467,7 +542,7 @@ function loopUpdatePermitLessonList() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
 					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
 					//受講承認一覧データを更新する
-					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.commodity_key), 'updatePermitListCommoditySell', 'updatePermitListLesson');
+					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
 				//カウンターをインクリメントする
 				counter++;
 			});
@@ -599,7 +674,7 @@ function afterReloadPermitListInfoTable() {
 	//セレクトメニューを列にアウトプットする
 	lecturePermitList.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-	lecturePermitList.setSelectboxText(lecturePermitList.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	lecturePermitList.setSelectboxText(lecturePermitList.json.selectCommodityInf[TABLE_DATA_KEY], lecturePermitList.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	
 	//セレクトメニューが生成されていたら
 	if($('.contentSelect').length){
@@ -790,7 +865,7 @@ function mailMagaSearch() {
 			//メルマガのデータを取り出す
 			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
 			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//例外処理ブロック
 		} catch (e) {
 			//エラー発生を伝える
@@ -821,8 +896,16 @@ function setMailMagaSendContent() {
 		var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
 		var targetNumber = $('.targetMailMagazine').index(this);
+		
+		//ページャの番号を取得する
+		var pager = $('.mailMagaPagingArea .numbering .select').text();
+		//ページャの番号-1の値を取得する
+		var pageNum = commonFuncs.checkEmpty(pager) && !isNaN(pager)  ? parseInt(pager) - 1 : 0;
+		//JSON内での記事の番号を取得する
+		var targetNumberFix = pageNum * MAILMAGA_TABLE_SHOW_NUMBER + targetNumber;
+		
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
+		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumberFix];
 		//取得した連想配列をテキストボックスにセットする
 		commonFuncs.setObjectValue(targetInf, '.mailMagaAndAnnounceArea');
 	});
@@ -849,11 +932,8 @@ function mailMagaSendConfirm() {
 			return;		//処理を終える
 		}
 		
-		//チェックボックスの入力状況によりコールバック関数を違うものにする
-		var callback = $('[name="messegeType"]').val() == "0" ? sendMailMaga : sendAnnounce;  
-		
 		//ダイアログ用オブジェクトを作る
-		var dialogObj = commonFuncs.createBasicComfirmDialogObject(callback, '送信確認', '入力した内容を送信します。');
+		var dialogObj = commonFuncs.createBasicComfirmDialogObject(sendMailMaga, '送信確認', '入力した内容を送信します。');
 		//インプットデータ用オブジェクトにメルマガ・アナウンスタブのcreateTagをセットする
 		dialogObj.data.create_tag = $('#mailMagaAndAnnounce')[0].create_tag;
 		//メルマガ送信ダイアログを作る
@@ -918,19 +998,6 @@ function sendMailMaga() {
 		}
 		
 	}
-}
-
-/* 
- * 関数名:sendAnnounce
- * 概要  :アナウンスの送信を行う
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Masuda
- * 作成日:2015.11.08
- */
-function sendAnnounce() {
-	
-	alert('当機能について内容が未定のため、現在停止しています。');
 }
 
 /* 

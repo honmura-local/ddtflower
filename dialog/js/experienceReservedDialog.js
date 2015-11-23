@@ -22,10 +22,6 @@ function experienceReservedDialog(dialog){
 				$(CURRENT_DIALOG)[0].dialogBuilder.openDialog(URL_CONFIRM_DIALOG);
 				return false;	//本来のsubmitをキャンセルする
 			},
-			//submit失敗時のコールバック
-			invalidHandler : function() {
-				
-			},
 			//バリデーションルール
 			rules : {
 				//氏名
@@ -37,12 +33,14 @@ function experienceReservedDialog(dialog){
 				nameKana : {
 					//必須チェック
 					required : true,
+					//カタカナ入力要求
 					katakana : true
 				},
 				//電話番号
 				personPhoneNumber : {
 					//必須チェック
 					required : true,
+					//電話番号入力要求
 					telnum : true
 				},
 				//メールアドレス
@@ -56,41 +54,47 @@ function experienceReservedDialog(dialog){
 				personEmailCheck:{
 					//必須チェック
 					required : true,
-					//メール形式チェック
+					//メールアドレス入力確認
 					equalTo: '[name="email"]'
 				},
 				//人数
 				personCount:{
 					//必須チェック
 					required : true,
-					//数値のみの入力
+					//0〜100の間の値を要求する
 					range : [0, 100]
 				}, 
 				//作品
 				construct : {
+					//必須チェック
 					required : true
 				}, 
 				//時限
 				schedule : {
+					//必須チェック
 					required : true
 				},
 				//曜日
 				dayOfWeek : {
+					//必須ではない
 					required : false
 				}, 
 				//週
 				week : {
+					//必須ではない
 					required : false
 				}
 			},
+			//エラーメッセージ追記
 			messages : {
+				//人数入力欄
 				personCount : {
+					//入力範囲を伝える
 					range : "0 〜 100の範囲で入力してください。"
 				}
 			},
 			invalidHandler:function(form,error){	//チェックで弾かれたときのイベントを設定する。
 				var errors = $(error.errorList);	//今回のチェックで追加されたエラーを取得する。
-				console.log(errors)
 				//エラー文を表示する。
 				alert(createErrorText(errors, errorJpNames));
 			}
@@ -318,6 +322,7 @@ function experienceReservedDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackConfirm = function(){
+		console.log("confirmed");
 		//フォームをsubmitする
 		$(CURRENT_DIALOG).submit();
 	};
@@ -417,6 +422,8 @@ function experienceReservedDialog(dialog){
 			//処理を行うボタンが押されていなければ
 			default:break;	//そのまま処理を終える
 		}
+		
+		dialogClass.destroy();	//確認ダイアログを破棄する
 	}
 	
 	
