@@ -22,6 +22,16 @@
 }
 
 /* 
+ * セレクタ :#adminTab > ul
+ * 概要   :管理者画面 タブインデックス枠
+ * 作成者 :T.Masuda
+ * 作成日 :2015.11.23
+ */
+#adminTab > ul {
+	width : 100%;		/* 幅を親要素に合わせる */
+	display : table;	/* テーブル扱いにする。タブインデックスにvertical-alignを効かせるための処置 */
+}
+/* 
  * セレクタ :#adminTab .tab
  * 概要   :管理者画面、タブ領域
  * 作成者 :T.Yamamoto
@@ -30,10 +40,11 @@
 #adminTab .tab {
 	font-size: 11px;			/* フォントサイズを11pxにする */
 	width: 20%;					/* 幅を20%にする */
-	display: inline-block;		/* インラインブロック要素としてあつかう */
-	background: #ce6;		/* 背景を黄緑にする */
+	display: table-cell;		/* テーブルセルとして扱う。vertical-alignを効かせるための処置 */
+	background: #ce6;			/* 背景を黄緑にする */
 	border: none;				/* 線をなくす */
 	border-radius: 0;			/* 角丸をなくす */
+	vertical-align: middle;		/* 縦位置を中心に合わせる */
 }
 
 /* 
