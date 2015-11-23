@@ -32,8 +32,6 @@
 					//ユーザ情報のテキストをDBから取得する
 					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
 					
-					console.log(memberInfo);
-					
 					// 会員ページヘッダーを作る
 					create_tag.outputTag('accountHeader','memberHeader', $currentContent);
 					// バナー領域を作る
@@ -51,14 +49,10 @@
 					// 会員ページのカレンダーを作る
 					create_tag.outputTag('lessonCalendar', 'calendar', $currentContent);
 
-					// 日ごと授業のjsonを読み込む
-					create_tag.getJsonFile('source/eachDayLesson.json');
-					// 日ごと授業のテンプレートを読み込む
-					create_tag.getDomFile('template/eachDayLesson.html');
-
 					//予約一覧テーブルのインプット用データオブジェクトを作る
 					var argumentObj = {
 						config:{
+							animate : false,	//アニメーションを切って読み込みを速くする
 							cache: true,		//一度読み込んだコンテンツは二度読み込まない
 							updateHash:false	//ハッシュによるタブ開閉履歴を無効にする
 						},
@@ -72,16 +66,20 @@
 					//シーケンシャルを保証してコードを実行する。タブを配置する。
 					$.when(reservedLessonListTab.run($currentContent))
 						.done(function(){	//whenのコード終了後
-							setTimeout(function(){	//遅延してコールバックを走らせる
+						//	setTimeout(function(){	//遅延してコールバックを走らせる
+								// 日ごと授業のjsonを読み込む
+								create_tag.getJsonFile('source/eachDayLesson.json');
+								// 日ごと授業のテンプレートを読み込む
+								create_tag.getDomFile('template/eachDayLesson.html');
 								// カレンダーを作り、クリックでダイアログ作成を作る
 			 					var memCalendar = new memberCalendar('.lessonCalendar', 90, memberInfo, $('#alreadyReserved')[0].create_tag);
 								memCalendar.create();	//カレンダーを実際に作成する
-							}, 100);	//遅延時間を設定する
+								//キャンセル料率,加算ポイントのレートをアコーディオン形式で表示する
+								create_tag.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
+								addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+						//	}, 100);	//遅延時間を設定する
 						});
  					
-					//キャンセル料率,加算ポイントのレートをアコーディオン形式で表示する
-					create_tag.accordionSetting(DOT+CLASS_INFO_ACCORDION, DOT+CLASS_LESSON_ACCORDION);
-					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				}catch(e){
 					console.log(e);
 				}
