@@ -30,7 +30,7 @@ function reservedLessonTable() {
 		//子ダイアログに渡すオブジェクトを生成する
 		$.extend(true, argumentObj.data,							//元データ
 				clickRowData.data,										//クリックした行データ
-				{callback:this.registerReserved},					//子ダイアログclose時のコールバック関数
+				{callback:this.cancelExecute},					//子ダイアログclose時のコールバック関数
 				{create_tag:create_tag}
 		);
 		argumentObj.config.title = changeJapaneseDate(clickRowData.data[COLUMN_NAME_LESSON_DATE]);
@@ -55,13 +55,14 @@ function reservedLessonTable() {
 		
 		//キャンセルダイアログに値を渡すためのデータを作る
 		var argumentObj = this.setArgumentObj(recordData, create_tag);
+		//ダイアログclose時に授業キャンセル処理を走らせる
+		argumentObj.config.close = this.cancelExecute;
 		//予約キャンセルダイアログのURLをセットする
 		dialogUrl = HTML_MEMBER_RESERVE_CANCEL_DIALOG;
 		//openイベントはsetArgumentObjでセットしておく
 		var newDialog = new dialogEx(dialogUrl, argumentObj);
 		//openイベントのコールバック関数をセットする
 		newDialog.run();	//ダイアログを開く
-		newDialog.setCallbackCloseOnAfterOpen(this.cancelExecute);
 	}
 
 	/*

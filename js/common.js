@@ -1745,6 +1745,9 @@ this.defaultClassworkCostColumns = [
 				}
 			});
 		}
+		
+		//確認ダイアログを消す
+		this.instance.destroy();
 	}
 	
 	/* 
@@ -2074,11 +2077,10 @@ commonFuncs = new common();
 function sendArticleData(){
 	
 	//ダイアログのクラスインスタンスを取得する。
-	var dialogClass = this.instance;
+	var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
 
 	//はいボタンが押されていたら
 	if(dialogClass.getPushedButtonState() == YES){
-		var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
 		var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
 		
 		//フォームデータを取得する
@@ -2111,4 +2113,7 @@ function sendArticleData(){
 			alert('記事の保存に失敗しました。時間をおいてお試しください。');
 		}
 	}
+	
+	//ダイアログを破棄する
+	dialogClass.destroy();
 }	

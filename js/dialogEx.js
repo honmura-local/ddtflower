@@ -91,6 +91,8 @@ function dialogEx(url, argumentObj, returnObj){
 			$(dom).dialog(this.argumentObj.config);	//configの設定を使ってダイアログを作成、表示する
 		//例外をキャッチしたら
 		} catch(e){
+			//通信が終了しているのでローディング画面を消す
+			commonFuncs.hideLoadingScreen();
 			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
 			//ダイアログのDOMが既に存在していたら
 			if(commonFuncs.checkEmpty(this.dom)){
@@ -114,7 +116,7 @@ function dialogEx(url, argumentObj, returnObj){
 		var dialogRole = $dialog.attr(ROLE);	//ダイアログのrole属性を取得する
 		//ダイアログが確認ダイアログであれば、その親の要素(=元のダイアログ)を取得して処理対象にする
 		$dialog = dialogRole !== void(0) && dialogRole.indexOf(CONFIRM_DIALOG) != -1 
-			? $(DOT + CONFIRM_DIALOG + SELECTOR_LAST).parent(): $dialog;
+			? $('[role="' + CONFIRM_DIALOG + '"]' + SELECTOR_LAST) : $dialog;
 			
 		//例外に備える
 		try{
@@ -127,7 +129,8 @@ function dialogEx(url, argumentObj, returnObj){
 			//握りつぶす
 		//必ず最後は
 		} finally {
-			$dialog.remove();	//DOMを消す
+			//DOMを消す
+			$dialog.remove();
 		}
 	}
 	/* 関数名:setAlertContents

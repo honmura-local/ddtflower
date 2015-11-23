@@ -391,12 +391,12 @@ function createLittleContents(){
 			 
 			 //削除に成功していたら
 			 if (result) {
-				 //その旨を伝える
-				 alert('選択した写真の削除に成功しました。');
-				//マイギャラリーのデータを取得し直す
-				this.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
-				//毎ギャラリーを作り直す
-				this.outputNumberingTag('myGalleryTable', 1, 4, 1, 4, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+				//その旨を伝える
+				alert('選択した写真の削除に成功しました。');
+				//ユーザのギャラリー情報を取得する
+				this.getJsonFile('php/GetJSONArray.php', this.json['myGalleryTable'], 'myGalleryTable');
+				//ギャラリーの内容を追加する。
+				this.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
 			 //削除に失敗していたら
 			 } else {
 				 //その旨を伝える
@@ -521,12 +521,12 @@ function createLittleContents(){
 				self.endEditText(this);
 			});
 		} else {
-			$('body').on('click.editSelect', function(){
+			$('.memberMyGallery').on('click.editSelect', function(){
 				//自身を持つ写真要素のセレクタを取得する。
 				var myphoto = $('.myPhoto').has('.myPhotoPublicationEdit').eq(0);
 				//編集終了の関数をコールする。
 				this.endEditText($('.myPhotoPublicationEdit').eq(0));
-				$('body').off('click.editSelect');
+				//$('body').off('click.editSelect');
 			});
 		}
 		
@@ -617,7 +617,7 @@ function createLittleContents(){
 	 */
 	this.setDoubleClickMyPhotoEdit = function(){
 		$ownerClass = this;	//自分自身の暮らすインスタンスを変数に保存
-		$(document).on('dblclick doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(){
+		$('.memberMyGallery').on('doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(event){
 			//タイトルを編集モードにする。
 			$ownerClass.startEditText(this);
 		});
@@ -2275,6 +2275,10 @@ function createLittleContents(){
 					if(success){
 						//更新ができた旨を伝える
 						alert('写真のデータの更新を行いました。');
+						//ユーザのギャラリー情報を取得する
+						thisElem.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
+						//ギャラリーの内容を追加する。
+						thisElem.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
 					//全件失敗であれば
 					} else {
 						//更新ができなかった旨を伝える
@@ -3291,7 +3295,8 @@ function validateFirefoxKeyCode(keyCode,type){
 }
 
 //テキストボックス等のname属性の日本語版を格納する連想配列。
-var errorJpNames = {name:'氏名',
+var errorJpNames = {
+		name:'氏名',
 					eMail:'メールアドレス',
 					email:'メールアドレス',
 					sex:'性別',
@@ -3336,8 +3341,18 @@ var errorJpNames = {name:'氏名',
 					mail_deny : 'メルマガ受信設定',
 					max_students : '最大人数',
 					min_students : '最低人数',
-					classroom : '教室'
-					};
+					classroom : '教室',
+					personPhoneNumber : '電話番号',
+					personEmailCheck: 'メールアドレス(確認)',
+					personCount : '人数',
+					construct : '作品',
+					schedule : '時限',
+					dayOfWeek : '曜日',
+					week : '週'
+				}
+
+
+
 
 //validate.jsでチェックした結果を表示する記述をまとめた連想配列。
 var showAlert = {
@@ -3362,7 +3377,7 @@ var articleCreateHandler = $.extend({}, true, showAlert, {
 	submitHandler : function(form, event){
 	
 		//ダイアログのインプットデータのオブジェクトを作成する。close時のコールバック関数、タイトル、ダイアログのメッセージを引数で渡す
-		var argumentObj = createBasicComfirmDialogObject(sendArticleData, SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
+		var argumentObj = commonFuncs.createBasicComfirmDialogObject(sendArticleData, SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
 		//記事編集ページのcreateTagをダイアログに渡す
 		argumentObj.data.create_tag = create_tag;
 		//確認ダイアログクラスインスタンスを生成する
@@ -3626,7 +3641,7 @@ function cutString(cutTargetSelector, cutCount) {
  * 作成日:2015.04.15
  * 作成者:T.Masuda
  */
-this.createErrorText = function(errors, jpNames){
+function createErrorText (errors, jpNames) {
 	//返却する文字列を格納する変数を用意する。
 	var retText = "";
 	//エラーメッセージの数を取得する。
@@ -3638,20 +3653,21 @@ this.createErrorText = function(errors, jpNames){
 	var messageLength;
 	
 	//エラーメッセージを取得する。
-	for(var i = 0; i < errorLength; i++){
-		messageLength = errorMessages.length;	//エラーメッセージの数を更新する。
+	for(var i = 1; i < errorLength; i++){
 		//エラーメッセージの重複をチェックする。
-		for(var j = 0; j < messageLength; j++){
+		for(var j = 0; j < errorMessages.length; j++){
 			//エラーメッセージが重複していれば
 			if(errorMessages[j] == errors[i].message){
 				break;	//追加せずに抜ける。
 			//エラーメッセージの重複がなかったら
-			} else if(errorMessages.length >= j){
+			} else if(errorMessages.length - 1 <= j){
 				//エラーメッセージを配列に追加する。
 				errorMessages.push(errors[i].message);	
 			}
 		}
 	}
+	
+	messageLength = errorMessages.length;	//エラーメッセージの数を取得する。
 	
 	//エラーメッセージを取得する。
 	for(var i = 0; i < messageLength; i++){

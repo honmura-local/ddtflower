@@ -222,8 +222,16 @@ function searchPermitListInfoTable() {
 		lecturePermitList.json.lecturePermitListInfoTable.toDate.value = toDate;
 
 		lecturePermitList.getJsonFile('php/GetJSONArray.php', lecturePermitList.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
-		//受講承認一覧テーブルを作る
-		lecturePermitList.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
+		
+		//データがあれば
+		if (lecturePermitList.json.lecturePermitListInfoTable.tableData.length) {
+			//受講承認一覧テーブルを作る
+			lecturePermitList.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
+		//なければ
+		} else {
+			//その旨を伝える
+			alert('指定した期間内に受講データがありませんでした。');
+		}
 	});
 }
 
@@ -488,8 +496,6 @@ function userListSearch() {
 	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
 		//当該タブのcreateTagを取得する
 		var userListCreateTag = $('#userList')[0].create_tag;
-		//ユーザ一覧テーブルを削除する
-		userListCreateTag.pagingReset('userListInfoTable');
 		//クエリのデフォルトを取得する
 		var defaultQuery = userListCreateTag.json.userListInfoTable.db_getQuery;
 		//クエリを変数に入れてクエリ発行の準備をする
@@ -501,7 +507,7 @@ function userListSearch() {
 		//取得した値が0の時のテーブルを作らない
 		if(userListCreateTag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
-			userListCreateTag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'userListCreateTag.afterReloadUserListInfoTable');
+			userListCreateTag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', "afterReloadUserListInfoTable", "$('#userList')[0].");
 		}
 	});
 }
