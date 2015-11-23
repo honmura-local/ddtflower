@@ -59,17 +59,16 @@
 		//予約確認ダイアログ、予約キャンセルののダイアログで加算ポイントと
 		//予約中授業テーブルのクリック範囲レコードにクラス属性を付ける
 		commonFuncs.setTableRecordClass('reservedLessonTable', 'targetCancelReservedLesson'); 
-		//テーブルからキャンセルダイアログを開くクラスをインクルードする
-		commonFuncs.getScriptFile('js/reservedLessonTable.js');
-
-		//予約済み授業一覧テーブルのインスタンスを作り、テーブルの操作処理を使えるようにする
-		var reservedLessonTableFuncs = new reservedLessonTable();
-
-		//キャンセルダイアログを予約中授業テーブルから開く処理
-		reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, $('#alreadyReserved')[0].create_tag);
-		//予約中授業テーブル絞り込みボタン機能を実装する
-		create_tag.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 	}
+	
+	//テーブルからキャンセルダイアログを開くクラスをインクルードする
+	commonFuncs.getScriptFile('js/reservedLessonTable.js');
+	//予約済み授業一覧テーブルのインスタンスを作り、テーブルの操作処理を使えるようにする
+	var reservedLessonTableFuncs = new reservedLessonTable();
+	//キャンセルダイアログを予約中授業テーブルから開く処理
+	reservedLessonTableFuncs.cancelDialogOpenFromReservedTable(memberInfo, $('#alreadyReserved')[0].create_tag);
+	//予約中授業テーブル絞り込みボタン機能を実装する
+	create_tag.reloadTableTriggerEvent('#alreadyReserved .selectThemebox', CHANGE, 'reservedLessonTable');
 	
 </script>
 </body>
