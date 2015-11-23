@@ -2078,19 +2078,16 @@ this.defaultClassworkCostColumns = [
 			var index = $('.topicBlog .topicContent').index(this);
 			//URLを取得する
 			var url = $(this).attr('href');
-			
-			//一時的なajaxイベントコールバックを登録する。全Ajax通信が終わったら
-			$(document).ajaxStop(function(event){
+
+			//ブログページを読み込んだら
+			$.when($(CURRENT_WINDOW)[0].instance.callPage(url))
+			//通信終了後
+			.done(function(){
 				//最新記事一覧から該当する項目を取得する
 				var selectedArticle = $('.currentArticleListContent').eq(index);
 				//項目内のリンクをクリックする
 				$('a', selectedArticle).click();
-				//当該イベントコールバックを削除する
-				$(this).off();
 			});
-	
-			//ブログページへ遷移する
-			$(CURRENT_WINDOW)[0].instance.callPage(url);
 		});
 	}
 	
