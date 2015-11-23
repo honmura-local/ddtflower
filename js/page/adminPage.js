@@ -790,7 +790,7 @@ function mailMagaSearch() {
 			//メルマガのデータを取り出す
 			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
 			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//例外処理ブロック
 		} catch (e) {
 			//エラー発生を伝える
@@ -821,8 +821,16 @@ function setMailMagaSendContent() {
 		var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
 		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
 		var targetNumber = $('.targetMailMagazine').index(this);
+		
+		//ページャの番号を取得する
+		var pager = $('.mailMagaPagingArea .numbering .select').text();
+		//ページャの番号-1の値を取得する
+		var pageNum = commonFuncs.checkEmpty(pager) && !isNaN(pager)  ? parseInt(pager) - 1 : 0;
+		//JSON内での記事の番号を取得する
+		var targetNumberFix = pageNum * MAILMAGA_TABLE_SHOW_NUMBER + targetNumber;
+		
 		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumber];
+		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumberFix];
 		//取得した連想配列をテキストボックスにセットする
 		commonFuncs.setObjectValue(targetInf, '.mailMagaAndAnnounceArea');
 	});

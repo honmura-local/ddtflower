@@ -751,6 +751,7 @@
         }
     },
     "mailMagaAndAnnounceArea":{
+		"class" : "mailMagaAndAnnounceArea cf",
         "messageInfo":{
             "class":"messageInfo fLeft",
             "NoLabel":{

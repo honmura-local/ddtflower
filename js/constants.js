@@ -789,3 +789,5 @@ ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.
 
 //マイギャラリーの表示記事数
 MYGALLERY_SHOW_NUMBER				= 4;
+//メルマガ送信テーブルの表示記事数
+MAILMAGA_TABLE_SHOW_NUMBER			= 15;
