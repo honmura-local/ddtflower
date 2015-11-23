@@ -260,8 +260,8 @@ function memberReserveListDialog(dialog){
 	this.callbackRowClick = function(clicked) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
-		//料金が0であれば
-		if(this.recordData.data.cost == 0){
+		//無効な行(見出し)をクリックしていたら、または料金が0であれば
+		if(this.recordData.number < 0 || this.recordData.data.cost == 0){
 			return;	//何もせずに終える
 		}
 		
