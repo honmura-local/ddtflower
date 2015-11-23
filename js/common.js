@@ -2059,6 +2059,40 @@ this.defaultClassworkCostColumns = [
 		return retObj;	//作成したオブジェクトを返す
 	}
 	
+	/* 
+	 * 関数名:setShowSelectedBlogArticleEvent
+	 * 概要  :トップ画面のお知らせウィンドウ(ブログ)の項目をクリックしたらブログページの該当する記事を表示するイベントコールバックを登録する
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.11.23
+	 */
+	this.setShowSelectedBlogArticleEvent = function(){
+
+		//お知らせウィンドウ(ブログ)の項目をクリックしたら
+		$('.topicBlog .topicContent').on('click', function(event){
+			
+			//本来のイベントコールバックをキャンセルし、独自に画面遷移を行う
+			event.stopPropagation();
+			//選択した項目の番号を取得する
+			var index = $('.topicBlog .topicContent').index(this);
+			//URLを取得する
+			var url = $(this).attr('href');
+			
+			//一時的なajaxイベントコールバックを登録する。全Ajax通信が終わったら
+			$(document).ajaxStop(function(event){
+				//最新記事一覧から該当する項目を取得する
+				var selectedArticle = $('.currentArticleListContent').eq(index);
+				//項目内のリンクをクリックする
+				$('a', selectedArticle).click();
+				//当該イベントコールバックを削除する
+				$(this).off();
+			});
+	
+			//ブログページへ遷移する
+			$(CURRENT_WINDOW)[0].instance.callPage(url);
+		});
+	}
 	
 //ここまでクラス定義領域
 }
