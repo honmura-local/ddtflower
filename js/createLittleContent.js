@@ -1333,9 +1333,15 @@ function createLittleContents(){
 		//DBから取得した使用ptの値を取得する
 		resultValueUsePoint = recordData['use_point'];
 		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=user_classwork_cost]').eq(counter).attr('value', resultValueCost);
+		$('[name=user_classwork_cost]').eq(counter).attr({
+				value : resultValueCost,
+				min   : 0
+			});
 		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
-		$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr('value', resultValueUsePoint);
+		$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr({
+				value : resultValueUsePoint,
+				min   : 0
+			});
 		//授業データでなく備品データのとき備品データをデフォルトでセットする
 		if(recordData['lesson_name'] == "" && recordData['content'] != "") {
 			//DBから取得した日備品の値を取得する
@@ -1835,6 +1841,13 @@ function createLittleContents(){
 		}
 		//取得した連想配列を結合する
 		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+		
+		//使用ポイントが所持ポイントを上回っていれば
+		if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
+			//所持ポイント(設定できる最大値)を使用ポイントにセットする
+			sendReplaceArray.use_point = sendReplaceArray.get_point;
+		}
+		
 		//結合した結果の連想配列を返す
 		return sendReplaceArray;
 	}
