@@ -574,16 +574,17 @@ function userListSearch() {
 		//クエリのデフォルトを取得する
 		var defaultQuery = userListCreateTag.json.userListInfoTable.db_getQuery;
 		//クエリを変数に入れてクエリ発行の準備をする
-		var sendQuery = {db_getQuery:new adminUserSearcher(userListCreateTag.json.userListInfoTable).execute()}
+		var sendQuery = {db_getQuery:new adminUserSearcher($.extend(true, {}, userListCreateTag.json.userListInfoTable)).execute()}
+		userListCreateTag.json.userListInfoTable.tableData = [];	//データを消しておく
 		//会員一覧のデータを取り出す
 		userListCreateTag.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
 		//クエリをデフォルトに戻す
 		userListCreateTag.json.userListInfoTable.db_getQuery = defaultQuery;
 		//取得した値が0の時のテーブルを作らない
-		if(userListCreateTag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+//		if(userListCreateTag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
 			//ページング機能付きでユーザ情報一覧テーブルを作る
 			userListCreateTag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', "afterReloadUserListInfoTable", "$('#userList')[0].");
-		}
+//		}
 	});
 }
 
