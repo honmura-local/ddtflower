@@ -17,7 +17,7 @@ INSERT INTO
 		, sell_number
 		, pay_cash
 		, use_point
-        ,get_point
+        	,get_point
 		,content
 		,user_key
 		,school_key
@@ -29,7 +29,7 @@ INSERT INTO
 		,{{個数}}
 		,{{備品代}}
 		,{{受講情報の更新時のポイントのあまり}
-        ,{{point_rate * 備品代}}
+        	,0
 		,{{備品代}}
 		,{{ユーザID}}
 		,{{セッションのschool_key}}
