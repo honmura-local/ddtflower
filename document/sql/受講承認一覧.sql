@@ -9,6 +9,7 @@
 	,1 AS sell_number
 	,'' AS content
 	,user_inf.id AS user_key
+	,user_inf.get_point AS get_point
 	,lesson_inf.scholl_key AS school_key
 FROM
 	user_classwork
