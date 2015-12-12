@@ -48,7 +48,7 @@ function experienceReservedDialog(dialog){
 					//必須チェック
 					required : true,
 					//メール形式チェック
-					email : true
+					emailjp : true
 				},
 				//メールアドレス入力確認
 				personEmailCheck:{

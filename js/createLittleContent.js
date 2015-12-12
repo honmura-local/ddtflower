@@ -3435,7 +3435,7 @@ var profileValidation = $.extend({}, true, showAlert, {
 		}, 
 		mail_address:{	//メールアドレス入力確認欄
 			required : true,
-			email : true,
+//			email : true,
 			emailjp : true
 		},
 		telephone : {
