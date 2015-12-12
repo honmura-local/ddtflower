@@ -2719,6 +2719,22 @@ function createLittleContents(){
 			return retObject;	//チェックが終わったオブジェクトを返す
 		}
 
+		/*
+		 * 関数名:updateUserName
+		 * 概要  :会員画面ヘッダー内のユーザ名を更新する
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.12
+		 * 作成者:T.Masuda
+		 */
+		this.updateUserName = function() {
+			//ユーザ情報のテキストをDBから取得する
+			this.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+			//ユーザ名を取り出す
+			var updatedUserName = this.json.accountHeader.memberStatus.memberName.user_name.text;
+			//ヘッダー内のユーザ名を更新する
+			$('.memberName > .user_name').text(updatedUserName);
+		}
 		
 		
 	 
