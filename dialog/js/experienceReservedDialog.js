@@ -26,6 +26,8 @@ function experienceReservedDialog(dialog){
 			rules : {
 				//氏名
 				name:{
+					//日本語入力
+					jp : true,
 					//必須チェック
 					required : true
 				},

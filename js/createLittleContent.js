@@ -3416,6 +3416,7 @@ var profileValidation = $.extend({}, true, showAlert, {
 		return false;	//元々のsubmitイベントコールバックをキャンセルする
 	}, rules :{
 		user_name:{
+			jp : true,
 			required : true
 		},
 		name_kana : {
