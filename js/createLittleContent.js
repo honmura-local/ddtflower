@@ -1835,24 +1835,42 @@ function createLittleContents(){
 					throw new Error();	//例外を発生させる
 				}
 			}
+			
+			//取得した連想配列を結合する
+			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+			
+			//使用ポイントが所持ポイントを上回っていれば
+			if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
+				throw new Error();	//例外を発生させる
+			}
+			
+			console.log(sendReplaceArray);
+			
+			//受講料に対する使用ポイント
+			var lessonUsePoint = sendReplaceArray.use_point;
+			//備品購入に対する使用ポイント
+			var commodityUsePoint = 0;
+			//使用ポイントが受講料を上回っていれば
+			if (usePoint > sendReplaceArray.user_classwork_cost) {
+				//備品の購入があれば
+				if (sendReplaceArray.sell_number != "0") {
+					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+					commodityUsePoint = sendReplaceArray.use_point - sendReplaceArray.user_classwork_cost;
+				//なければ
+				} else {
+					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+				}
+			}
+			
+			//実費の支払額をセットする
+			sendReplaceArray.pay_price = sendReplaceArray.user_classwork_cost - sendReplaceArray.use_point;
+			
+			//結合した結果の連想配列を返す
+			return sendReplaceArray;
 		//例外処理
 		} catch (e) {
 			throw e;	//上位に例外を投げる
 		}
-		//取得した連想配列を結合する
-		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
-		
-		//使用ポイントが所持ポイントを上回っていれば
-		if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
-			//所持ポイント(設定できる最大値)を使用ポイントにセットする
-			sendReplaceArray.use_point = sendReplaceArray.get_point;
-		}
-		
-		//実費の支払額をセットする
-		sendReplaceArray.pay_price = sendReplaceArray.user_classwork_cost - sendReplaceArray.use_point;
-		
-		//結合した結果の連想配列を返す
-		return sendReplaceArray;
 	}
 
 	/* 
