@@ -149,10 +149,6 @@ class JSONDBManager extends dbConnect{
 				$this->processedRecords = $stmt->rowCount();
 				// 結果セットを返す
 				$retRS = $stmt->fetchALL(PDO::FETCH_ASSOC);  //結果セット
-				//queryが特定の文字列を含んでいたら
-//				if(strstr($query, 'lesson_cancel_rate') != false){
-//					var_dump($retRS);	//クエリを出力する
-//				}
 			}
 		}
 		// 結果セットを返す
