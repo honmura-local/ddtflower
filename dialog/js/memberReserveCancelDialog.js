@@ -13,7 +13,35 @@
  */
 function memberReserveCancelDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
-	
+
+	/* 関数名:dispContents
+	 * 概要　:openDialogから呼ばれる、画面パーツ設定用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0813
+	 * 作成者　:T.Masuda
+	 */
+	this.dispContents = function(){
+		try{
+			//ダイアログ内コンテンツの準備を行う
+			this.constructionContent();
+			//小分けした画面作成用関数をコールする
+			this.dispContentsHeader();	//上部
+			this.dispContentsMain();	//メイン部分
+			this.dispContentsFooter();	//下部
+			this.setConfig();			//ダイアログの設定関数をコールする
+			this.setCallback();			//イベントのコールバック関数をセットする
+			//キャンセル料を算出してcreateTagにセットする
+			this.setCancelCharge();
+		} catch(e){
+			console.log(e);
+			//ダイアログ生成エラー
+			throw new failedToDisplayException();
+		}
+	}
+
+
 	/* 関数名:getJson
 	 * 概要　:create_tagのインスタンスにデータのjsonをまとめるための処理
 	 * 引数　:なし
@@ -84,6 +112,30 @@ function memberReserveCancelDialog(dialog){
 		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
 
+	/* 関数名:setCancelCharge
+	 * 概要　:キャンセル料をセットする
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2015.1212
+	 * 作成者　:T.Masuda
+	 */
+	this.setCancelCharge = function() {
+		//インプットデータオブジェクトを取得する
+		var data = this.dialogClass.getArgumentDataObject();
+		//インプットデータからレッスン日時を取得する
+		var lessonDate = data.lesson_date;
+		//受講料を取得する
+		var cost = parseInt(data.cost);
+		//createTagからキャンセル料のレートをまとめたノードを取り出す
+		var cancelRateNodes = this.create_tag.json.lessonConfirmContent.attention.cancelRateValue;
+		
+		//ノードからキャンセル料のレートの配列を作成する
+		var rate = [parseInt(cancelRateNodes.cancel__0.cancel_rate.text), parseInt(cancelRateNodes.cancel__1.cancel_rate.text), parseInt(cancelRateNodes.cancel__2.cancel_rate.text)];
+		//キャンセル料を算出する
+		var cancelCharge = commonFuncs.calcCancelCharge(lessonDate, cost, rate); //キャンセル料を算出する
+		this.create_tag.cancel_charge = cancelCharge;	//キャンセル料をcreateTagにセットする
+	}
+	
 }
 
 //継承の記述

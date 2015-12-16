@@ -1580,6 +1580,9 @@ this.defaultClassworkCostColumns = [
 		create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.price[STR_TEXT] 					= sumCost(argumentObj);					//受講料
 		create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_LESSON_LEY][VALUE] 	= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(キャンセル)
 		create_tag.json.lessonConfirmContent.attention.addPointValue[COLUMN_LESSON_LEY][VALUE] 		= argumentObj[COLUMN_LESSON_LEY];			//受講授業id(加算ポイント)
+		//キャンセル料
+		create_tag.json.lessonConfirmContent.cancelCharge 
+		= create_tag.json.lessonConfirmContent.attention.cancelRateValue[COLUMN_LESSON_LEY][VALUE] * create_tag.json.lessonConfirmContent.lessonConfirm.lessonInfo.price[STR_TEXT] / 100;
 	}	 
 
 	/*
@@ -2089,6 +2092,43 @@ this.defaultClassworkCostColumns = [
 				$('a', selectedArticle).click();
 			});
 		});
+	}
+
+	/* 関数名:calcCancelCharge
+	 * 概要　:キャンセル料を算出する
+	 * 引数　:String date : 受講日 
+	 * 　　　:int cost :受講料 
+	 * 　　　:Array cancelRate :キャンセル料のレートの配列 
+	 * 返却値:int : キャンセル料
+	 * 作成日　:2015.1212
+	 * 作成者　:T.Masuda
+	 */
+	this.calcCancelCharge = function(date, cost, cancelRate) {
+		var cancelCharge = 0;			//受講料
+		var today = new Date();			//本日の日付を取得する
+		var lessonDay = new Date(date);	//受講日を取得する
+		
+		//受講日までの日数を計算する
+		var dateDiff = this.getDateDiff(today, lessonDay) + 1;
+		
+		//キャンセル料が発生するなら
+		if(dateDiff < cancelRate.length) {
+			//キャンセル料を算出する
+			cancelCharge = Math.floor(cost * cancelRate[dateDiff] / 100);
+		}
+		
+		console.log(cancelCharge);
+		return cancelCharge;	//キャンセル料を返す
+	}
+	
+	this.getDateDiff = function(date1, date2) {
+		// getTimeメソッドで経過ミリ秒を取得し、２つの日付の差を求める
+		var msDiff = date2.getTime() - date1.getTime();
+	 
+		// 求めた差分（ミリ秒）を日付へ変換します（経過ミリ秒÷(1000ミリ秒×60秒×60分×24時間)。端数切り捨て）
+		var daysDiff = Math.floor(msDiff / (1000 * 60 * 60 *24));
+		
+		return daysDiff;
 	}
 	
 //ここまでクラス定義領域
