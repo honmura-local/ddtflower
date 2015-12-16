@@ -1848,6 +1848,9 @@ function createLittleContents(){
 			sendReplaceArray.use_point = sendReplaceArray.get_point;
 		}
 		
+		//実費の支払額をセットする
+		sendReplaceArray.pay_price = sendReplaceArray.user_classwork_cost - sendReplaceArray.use_point;
+		
 		//結合した結果の連想配列を返す
 		return sendReplaceArray;
 	}
