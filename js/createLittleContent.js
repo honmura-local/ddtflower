@@ -1845,8 +1845,6 @@ function createLittleContents(){
 				throw new Error();	//例外を発生させる
 			}
 			
-			console.log(sendReplaceArray);
-			
 			//受講料に対する使用ポイント
 			var lessonUsePoint = sendReplaceArray.use_point;
 			//備品購入に対する使用ポイント
