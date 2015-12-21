@@ -1840,7 +1840,7 @@ function createLittleContents(){
 			
 			//取得した連想配列を結合する
 			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
-			
+			console.log(sendReplaceArray);
 			//使用ポイントが所持ポイントを上回っていれば
 			if (sendReplaceArray.diff_point && sendReplaceArray.get_point < sendReplaceArray.diff_point) {
 				throw new Error("使用ポイントが所持ポイントを上回っています。 所持:" + sendReplaceArray.get_point + " 使用ポイント: " + sendReplaceArray.data-diff_point);	//例外を発生させる
@@ -2154,33 +2154,37 @@ function createLittleContents(){
 	 * 関数名:getUserPlusPointRate
 	 * 概要  :管理者　受講承認画面でユーザが加算するポイントのレートを取得する
 	 * 引数  :plusPointQueryKey	:加算ポイントを発行するためのクエリが入ったkey
-	 		:lessonStudents		:授業に出席した生徒様の人数
+	 		:orderStudents		:1コマあたりの予約人数
 	 		:lessonKey			:授業のテーマを表すためのテーマの値(DBのlesson_infテーブルのlesson_key列の値)
 	 * 返却値  :userPlusPointRate 	:ユーザにプラスポイントの数
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.28
 	 */
-	this.getUserPlusPointRate = function(plusPointQueryKey, lessonStudents, lessonKey) {
+	this.getUserPlusPointRate = function(plusPointQueryKey, orderStudents, lessonKey) {
+		var retRate = 0;	//ポイントレート返却用の変数を用意する
+		
 		//レッスンの加算ポイントを取得するために加算ポイント取得クエリの置換する値となるlesson_keyの値を入れる
 		this.json[plusPointQueryKey].lesson_key.value = lessonKey;
 		//受講ポイントの一覧を取得しどのポイントがユーザに加算されるポイント化を取得する
 		this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[plusPointQueryKey], plusPointQueryKey);
-		//加算ポイントについてループして値を走査するためにループの値を取得する
-		var loopMaxCount = this.json[plusPointQueryKey][[TABLE_DATA_KEY]].length;
-		//加算ポイントのレートを返すための変数を作る
-		var userPlusPointRate;
-		//ループでポイントのレートを求める
-		for(var loopCount=0; loopCount<loopMaxCount; loopCount++) {
-			//テーブルの生徒の数を取得して加算ポイントレートを求めるために使う
-			var studentsCount = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].students;
-			//受講した生徒の数が加算ポイント以下であるとき、加算ポイントのレートを決める
-			if (lessonStudents < studentsCount || lessonStudents == studentsCount || loopCount == (loopMaxCount-1)) {
-				//加算ポイントのレートを決定しループを終わらせる
-				userPlusPointRate = this.json[plusPointQueryKey][TABLE_DATA_KEY][loopCount].point_rate;
-				break;
+		//ポイントレートの配列を取得する
+		var rates = this.json[plusPointQueryKey][TABLE_DATA_KEY];
+		var ratesLength = rates.length;	//ポイントレートの数を取得する
+		
+		//ポイントレートを順次比較していく。ポイントレートは人数が少ない順から走査される
+		for (var i = 0; i < ratesLength; i++) {
+			//ポイントレートに対する人数を取り出す
+			var students = parseInt(rates[i].students);
+			//予約数がポイントレート当たりの人数以上でなければ
+			if (!(orderStudents >= rates[i].students)) {
+				break;	//処理終了
 			}
+			
+			//ポイントレートを更新していく
+			retRate = parseInt(rates[i].students);
 		}
-		return userPlusPointRate;
+		
+		return retRate;		//算出したポイントレートを返す
 	}
 	
 	/* 

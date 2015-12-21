@@ -417,6 +417,12 @@ function loopUpdatePermitLesson() {
 		//序文を追加する
 		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
 		
+		//フォームの追加取得用オブジェクトを作る
+//		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+//		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
+//		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
+//		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
+		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -425,8 +431,9 @@ function loopUpdatePermitLesson() {
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 						//DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+//						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
 						//加算ポイントレートを取得する
-						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
 						//受講料から加算ポイントを求める
 						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
 						//備品代から加算ポイントを求める
