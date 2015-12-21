@@ -1828,6 +1828,7 @@ function createLittleContents(){
 		try{
 			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector);
+			delete inputDataArray.columnCheckbox;	//チェックボックス列から取得したデータは空なので削除する
 			//内容をチェックする
 			for(key in inputDataArray){
 				//空があれば
@@ -1851,7 +1852,7 @@ function createLittleContents(){
 			//備品購入に対する使用ポイント
 			var commodityUsePoint = 0;
 			//使用ポイントが受講料を上回っていれば
-			if (usePoint > sendReplaceArray.user_classwork_cost) {
+			if (lessonUsePoint > sendReplaceArray.user_classwork_cost) {
 				//備品の購入があれば
 				if (sendReplaceArray.sell_number != "0") {
 					lessonUsePoint = sendReplaceArray.user_classwork_cost;
