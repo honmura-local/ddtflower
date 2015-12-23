@@ -27,6 +27,33 @@
             "text":"人"
         }
     },
+	"minNumArea":{
+        "minNumText":{
+            "text":"最少人数(時間帯)"
+        },
+        "minNumTextbox":{
+            "type":"number",
+            "name":"min_num",
+            "value":"0",
+            "min":"0"
+        },
+        "minNumUnit":{
+            "text":"人"
+        }
+    },
+    "maxNumArea":{
+        "maxNumText":{
+            "text":"最大人数(時間帯)"
+        },
+        "maxNumbox":{
+            "type":"number",
+            "name":"max_num",
+            "value":"10"
+        },
+        "maxNumUnit":{
+            "text":"人"
+        }
+    },
     "statusArea":{
         "lessonStatusLabel":{
             "text":"ステータス"
