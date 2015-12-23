@@ -1329,29 +1329,23 @@ this.defaultClassworkCostColumns = [
 		$(SEL_INPUT_DATA , $form).each(function() {
 			//入力データのname属性を取得する
 			var name = $(this).attr(STR_NAME);
-			//name属性の値と同じキーがsettingに含まれていれば
-			if (setting !== void(0) && name in setting) {
-				//設定のノードを取り出す
-				var settingNode = setting[name];
-				//settingで指定したattributeの値をmapに追加する
-				retMap = commonFuncs.addMapKeyValue(this, retMap, settingNode);
-			//name属性の値と同じキーがsettingになければ
-			} else {
-				//入力データの値を取得する
-				var value = $(this).val();
-				//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
-				var typeAttr = $(this).attr(TYPE);
-				//ラジオボタンに対応する
-				if (typeAttr == RADIO) {
-					//ラジオボタンの値がチェックされているものだけ送信する
-					if($(this).prop(CHECKED)) {
-						//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
-						retMap[name] = value;
-					}
-				} else {
-					//入力データを結果の変数に、key名をクラス名にして保存する
+			//settingで指定したattributeの値をmapに追加する
+			retMap = commonFuncs.addMapKeyValue(this, name, retMap, setting);
+			
+			//入力データの値を取得する
+			var value = $(this).val();
+			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+			var typeAttr = $(this).attr(TYPE);
+			//ラジオボタンに対応する
+			if (typeAttr == RADIO) {
+				//ラジオボタンの値がチェックされているものだけ送信する
+				if($(this).prop(CHECKED)) {
+					//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
 					retMap[name] = value;
 				}
+			} else {
+				//入力データを結果の変数に、key名をクラス名にして保存する
+				retMap[name] = value;
 			}
 		});
 		
@@ -1363,23 +1357,23 @@ this.defaultClassworkCostColumns = [
 	 * 概要　:オブジェクトのクローンを作成する
 	 * 引数　:Element inputElem:値を取得する元の要素
 	 * 　　　:Object map:エントリを追加する対象のオブジェクト
-	 * 　　　:Object settings:要素からの値取得方法設定のオブジェクト
+	 * 　　　:Object setting:要素からの値取得方法設定のオブジェクト
 	 * 返却値:object:引数のオブジェクトのクローンを返す
 	 * 作成日　:2015.1223
 	 * 作成者　:T.Masuda
 	 */
-	this.addMapKeyValue = function (inputElem, map, settings) {
-		//該当するキーのオブジェクトの中身を走査する
-		for (key in settings) {
-			//設定名になるキー名を取得する
-			var keyName = settings[key];
+	this.addMapKeyValue = function (inputElem, name, map, setting) {
+
+		//name属性の値と同じキーがsettingに含まれていれば
+		if (setting !== void(0) && name in setting) {
+			//設定のノードを取り出す
+			var settingNode = setting[name];
 			
-			//keyがvalueなら
-			if (key == VALUE) {
-				//val関数で返却するオブジェクトにエントリを追加する
-				map[keyName] = $(inputElem).val();
-			//value以外なら;
-			} else {
+			//該当するキーのオブジェクトの中身を走査する
+			for (key in settingNode) {
+				//設定名になるキー名を取得する
+				var keyName = settingNode[key];
+				
 				//attr関数で取得するattributeを指定してオブジェクトにエントリを追加する
 				map[keyName] = $(inputElem).attr(key);
 			}
