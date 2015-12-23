@@ -80,12 +80,16 @@ INSERT INTO
 	time_table_day(
 		timetable_key
 		,lesson_date
+        ,max_num
+        ,min_num
 		,create_datetime
 		,update_datetime
 	)
 	VALUES(
 		{{timetable_key}}
 		,{{lesson_date}}
+        ,{{max_num}}
+        ,{{min_num}}
 		,NOW()
 		,NOW()
 	);
