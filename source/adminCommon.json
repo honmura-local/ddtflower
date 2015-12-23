@@ -152,7 +152,7 @@
         "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point' ,late_time = 'late_time' ,update_datetime = NOW(), receipt_datetime = NOW(), user_work_status = 3, pay_price = 'pay_price' WHERE id = 'user_classwork_key'; UPDATE user_inf SET get_point = get_point + 'lessonPlusPoint' ,update_datetime = NOW() WHERE id = 'user_key'; "
     },
     "getPoinRate" : {
-    	"db_getQuery" : "SELECT point_rate FROM lesson_point_rate WHERE lesson_key = 'lesson_key' AND students = 'students';",
+    	"db_getQuery" : "SELECT point_rate FROM lesson_point_rate WHERE lesson_key = 'lesson_key' AND students <= 'students';",
     	"pointRate" : {
     		"text" : ""
     	},
