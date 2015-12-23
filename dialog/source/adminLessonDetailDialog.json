@@ -16,6 +16,6 @@
         }
     },
     "updateLessonQuery":{
-    	"db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';"
+    	"db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key'; UPDATE time_table_day SET max_num = 'max_num', min_num = 'min_num', update_datetime = NOW() WHERE id = 'time_table_day_key';"
     }
 }
