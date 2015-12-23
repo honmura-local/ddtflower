@@ -759,6 +759,7 @@ this.defaultClassworkCostColumns = [
 			url:scriptUrl,					//ファイルパス
 			dataTYpe:"script",				//JSファイルを取得する設定
 			async:false,					//同期通信
+			cache : false, 					//キャッシュを無効にする
 			success:function(sc){			//通信成功時
 				//console.log("got script");	//成功判定のログを出す
 			},
@@ -1320,7 +1321,7 @@ this.defaultClassworkCostColumns = [
 	 * 修正者　:T.Masuda
 	 * 内容	　:共通で使えるためcommon.jsに移動しました。また、セレクタをクラスに限定しないようにしました
 	 */
-	this.getInputData = function(selector) {
+	this.getInputData = function(selector, setting) {
 		var $form = $(selector);	//処理対象の親要素を取得する
 		//結果の変数を初期化する
 		var retMap = {};
@@ -1328,26 +1329,65 @@ this.defaultClassworkCostColumns = [
 		$(SEL_INPUT_DATA , $form).each(function() {
 			//入力データのname属性を取得する
 			var name = $(this).attr(STR_NAME);
-			//入力データの値を取得する
-			var value = $(this).val();
-			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
-			var typeAttr = $(this).attr(TYPE);
-			//ラジオボタンに対応する
-			if (typeAttr == RADIO) {
-				//ラジオボタンの値がチェックされているものだけ送信する
-				if($(this).prop(CHECKED)) {
-					//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+			//name属性の値と同じキーがsettingに含まれていれば
+			if (setting !== void(0) && name in setting) {
+				//設定のノードを取り出す
+				var settingNode = setting[name];
+				//settingで指定したattributeの値をmapに追加する
+				retMap = commonFuncs.addMapKeyValue(this, retMap, settingNode);
+			//name属性の値と同じキーがsettingになければ
+			} else {
+				//入力データの値を取得する
+				var value = $(this).val();
+				//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
+				var typeAttr = $(this).attr(TYPE);
+				//ラジオボタンに対応する
+				if (typeAttr == RADIO) {
+					//ラジオボタンの値がチェックされているものだけ送信する
+					if($(this).prop(CHECKED)) {
+						//ラジオボタンにチェックがついているものの値を送信する連想配列に入れる
+						retMap[name] = value;
+					}
+				} else {
+					//入力データを結果の変数に、key名をクラス名にして保存する
 					retMap[name] = value;
 				}
-			} else {
-				//入力データを結果の変数に、key名をクラス名にして保存する
-				retMap[name] = value;
 			}
 		});
+		
 		//結果を返す
 		return retMap;
 	}
 	
+	/* 関数名:addMapKeyValue
+	 * 概要　:オブジェクトのクローンを作成する
+	 * 引数　:Element inputElem:値を取得する元の要素
+	 * 　　　:Object map:エントリを追加する対象のオブジェクト
+	 * 　　　:Object settings:要素からの値取得方法設定のオブジェクト
+	 * 返却値:object:引数のオブジェクトのクローンを返す
+	 * 作成日　:2015.1223
+	 * 作成者　:T.Masuda
+	 */
+	this.addMapKeyValue = function (inputElem, map, settings) {
+		//該当するキーのオブジェクトの中身を走査する
+		for (key in settings) {
+			//設定名になるキー名を取得する
+			var keyName = settings[key];
+			
+			//keyがvalueなら
+			if (key == VALUE) {
+				//val関数で返却するオブジェクトにエントリを追加する
+				map[keyName] = $(inputElem).val();
+			//value以外なら;
+			} else {
+				//attr関数で取得するattributeを指定してオブジェクトにエントリを追加する
+				map[keyName] = $(inputElem).attr(key);
+			}
+		}
+		
+		//mapを返す
+		return map;
+	}
 	
 	/* 関数名:sendMail
 	 * 概要　:メールを送信する
