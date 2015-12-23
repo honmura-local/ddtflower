@@ -267,11 +267,12 @@ function memberReserveListDialog(dialog){
 		
 		//残席の記号を取得する
 		var restMarkNow = $(DOT + LESSON_TABLE + TAG_TR + ':eq(' + (this.recordData.number + 1) + CLOSE_AND_TD_TAG + '.rest', $(CURRENT_DIALOG)).text();
-
+		//現状の予約状態を取得する
+		var userWorkStatus = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS];
 		//会員が受講できないようになっている授業(NFDなど)についてはクリックして予約確認ダイアログは開かない
 		//また、日時の関係で予約不可能な授業もダイアログを開かない
 		if (this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_DEFAULT_USER_CLASSWORK_COST]
-			&& commonFuncs.isBookable(this.recordData.data)) {
+			&& (commonFuncs.isBookable(this.recordData.data) || userWorkStatus == 1)) {
 			var dialogUrl = EMPTY_STRING;	//ダイアログのURLを格納する変数を用意する
 			
 			//予約済みでなく、予約可能な授業であれば
@@ -280,7 +281,7 @@ function memberReserveListDialog(dialog){
 				//予約確認ダイアログのURLをセットする
 				dialogUrl = HTML_MEMBER_RESERVE_CONFIRM_DIALOG;
 				//予約操作を行う。初回予約、再予約で別の値をクエリ判別のための変数にセットする
-				this.manipulation = this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY][this.recordData.number][COLUMN_NAME_USER_WORK_STATUS] == EMPTY_STRING ? 
+				this.manipulation = userWorkStatus == EMPTY_STRING ? 
 						PROCESSING_RESERVE : PROCESSING_RESERVE_AGAIN;
 				this.openDialog(dialogUrl);	//ダイアログを開く
 			//予約済みであれば
@@ -344,6 +345,8 @@ function memberReserveListDialog(dialog){
 		//キャンセル
 		case PROCESSING_CANCEL:
 			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.cancelReservedData.db_setQuery;
+			//キャンセル料をセットする
+			retObj.cancel_charge = dialogBuilder.create_tag.cancel_charge;
 			break;
 		//それ以外であれば、そのまま終わる
 		default:
@@ -377,7 +380,7 @@ function memberReserveListDialog(dialog){
 				var sendObject = parentDialogBuilder.updateJson(this.dialogBuilder);
 				//クエリを発行してキャンセル処理を行う
 				parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
-				
+				console.log(sendObject);
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
 				

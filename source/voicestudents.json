@@ -15,9 +15,13 @@
 		            }
 		        },
 		        "blogArticleImages": {
-		            "blogArticleImage1": {
-		                "src": "photo/general/web120/DSC_0894.jpg"
-		            },
+                    "blogArticleImage1": {
+                        "href": "photo/general/web/DSC_0894.jpg",
+                        "rel": "gallery",
+                        "photoImageThumb": {
+                            "src": "photo/general/web120/DSC_0894.jpg"
+                        }
+                    },
 		            "blogArticleImage2": {
 		                "src": ""
 		            },
@@ -43,9 +47,13 @@
 		            }
 		        },
 		        "blogArticleImages": {
-		            "blogArticleImage1": {
-		                "src": "photo/general/web120/DSC_0898.jpg"
-		            },
+                    "blogArticleImage1": {
+                        "href": "photo/general/web/DSC_0894.jpg",
+                        "rel": "gallery",
+                        "photoImageThumb": {
+                            "src": "photo/general/web120/DSC_0894.jpg"
+                        }
+                    },
 		            "blogArticleImage2": {
 		                "src": ""
 		            },

@@ -48,10 +48,6 @@ function reservedLessonTable() {
 	this.openCancelDialog = function(clicked, memberNumber, create_tag) {
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		var recordData = this.getClickTableRecordData(clicked, RESERVED_LESSON_TABLE, RESERVED_LESSON_TABLE_RECORD, create_tag);
-		//授業が予約締切であれば、授業のキャンセルの操作を行わない
-		if(!commonFuncs.isBookable(recordData.data)){
-			return;	//ここで処理を終える
-		}
 		
 		//キャンセルダイアログに値を渡すためのデータを作る
 		var argumentObj = this.setArgumentObj(recordData, create_tag);
@@ -100,6 +96,8 @@ function reservedLessonTable() {
 		var retObj = commonFuncs.createCloneObject(dialogClass.getArgumentDataObject());
 		//クエリをセットする
 		retObj[KEY_DB_SETQUERY] = create_tag.json.cancelReservedData.db_setQuery;
+		//キャンセル料をセットする
+		retObj.cancel_charge = dialogBuilder.create_tag.cancel_charge;
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;
 	};

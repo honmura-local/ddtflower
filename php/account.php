@@ -33,7 +33,7 @@ class LoginCheckException extends  Exception{
 		
 		$retState = 0;	//返却値の変数に初回ログインの値0をセットする
 		//cookieがあるかどうかをチェックする。
-		if(isset($_COOKIE['PHPSESSID'])){
+		if(isset($_COOKIE['user'])){
 			$retState = 1;	//タイムアウトであれば1をセットする
 		}
 		

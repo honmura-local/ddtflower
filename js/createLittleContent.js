@@ -1828,6 +1828,7 @@ function createLittleContents(){
 		try{
 			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector);
+			delete inputDataArray.columnCheckbox;	//チェックボックス列から取得したデータは空なので削除する
 			//内容をチェックする
 			for(key in inputDataArray){
 				//空があれば
@@ -1835,21 +1836,40 @@ function createLittleContents(){
 					throw new Error();	//例外を発生させる
 				}
 			}
+			
+			//取得した連想配列を結合する
+			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
+			
+			//使用ポイントが所持ポイントを上回っていれば
+			if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
+				throw new Error();	//例外を発生させる
+			}
+			
+//			//受講料に対する使用ポイント
+//			var lessonUsePoint = sendReplaceArray.use_point;
+//			//備品購入に対する使用ポイント
+//			var commodityUsePoint = 0;
+//			//使用ポイントが受講料を上回っていれば
+//			if (lessonUsePoint > sendReplaceArray.user_classwork_cost) {
+//				//備品の購入があれば
+//				if (sendReplaceArray.sell_number != "0") {
+//					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+//					commodityUsePoint = sendReplaceArray.use_point - sendReplaceArray.user_classwork_cost;
+//				//なければ
+//				} else {
+//					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+//				}
+//			}
+			
+			//実費の支払額をセットする
+			sendReplaceArray.pay_price = sendReplaceArray.user_classwork_cost - sendReplaceArray.use_point;
+			
+			//結合した結果の連想配列を返す
+			return sendReplaceArray;
 		//例外処理
 		} catch (e) {
 			throw e;	//上位に例外を投げる
 		}
-		//取得した連想配列を結合する
-		var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
-		
-		//使用ポイントが所持ポイントを上回っていれば
-		if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
-			//所持ポイント(設定できる最大値)を使用ポイントにセットする
-			sendReplaceArray.use_point = sendReplaceArray.get_point;
-		}
-		
-		//結合した結果の連想配列を返す
-		return sendReplaceArray;
 	}
 
 	/* 
@@ -2719,6 +2739,22 @@ function createLittleContents(){
 			return retObject;	//チェックが終わったオブジェクトを返す
 		}
 
+		/*
+		 * 関数名:updateUserName
+		 * 概要  :会員画面ヘッダー内のユーザ名を更新する
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.12
+		 * 作成者:T.Masuda
+		 */
+		this.updateUserName = function() {
+			//ユーザ情報のテキストをDBから取得する
+			this.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+			//ユーザ名を取り出す
+			var updatedUserName = this.json.accountHeader.memberStatus.memberName.user_name.text;
+			//ヘッダー内のユーザ名を更新する
+			$('.memberName > .user_name').text(updatedUserName);
+		}
 		
 		
 	 
@@ -3416,6 +3452,7 @@ var profileValidation = $.extend({}, true, showAlert, {
 		return false;	//元々のsubmitイベントコールバックをキャンセルする
 	}, rules :{
 		user_name:{
+			jp : true,
 			required : true
 		},
 		name_kana : {
@@ -3435,7 +3472,7 @@ var profileValidation = $.extend({}, true, showAlert, {
 		}, 
 		mail_address:{	//メールアドレス入力確認欄
 			required : true,
-			email : true,
+//			email : true,
 			emailjp : true
 		},
 		telephone : {

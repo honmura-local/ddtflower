@@ -26,6 +26,8 @@ function experienceReservedDialog(dialog){
 			rules : {
 				//氏名
 				name:{
+					//日本語入力
+					jp : true,
 					//必須チェック
 					required : true
 				},
@@ -48,7 +50,7 @@ function experienceReservedDialog(dialog){
 					//必須チェック
 					required : true,
 					//メール形式チェック
-					email : true
+					emailjp : true
 				},
 				//メールアドレス入力確認
 				personEmailCheck:{
