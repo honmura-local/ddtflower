@@ -1845,21 +1845,21 @@ function createLittleContents(){
 				throw new Error();	//例外を発生させる
 			}
 			
-			//受講料に対する使用ポイント
-			var lessonUsePoint = sendReplaceArray.use_point;
-			//備品購入に対する使用ポイント
-			var commodityUsePoint = 0;
-			//使用ポイントが受講料を上回っていれば
-			if (lessonUsePoint > sendReplaceArray.user_classwork_cost) {
-				//備品の購入があれば
-				if (sendReplaceArray.sell_number != "0") {
-					lessonUsePoint = sendReplaceArray.user_classwork_cost;
-					commodityUsePoint = sendReplaceArray.use_point - sendReplaceArray.user_classwork_cost;
-				//なければ
-				} else {
-					lessonUsePoint = sendReplaceArray.user_classwork_cost;
-				}
-			}
+//			//受講料に対する使用ポイント
+//			var lessonUsePoint = sendReplaceArray.use_point;
+//			//備品購入に対する使用ポイント
+//			var commodityUsePoint = 0;
+//			//使用ポイントが受講料を上回っていれば
+//			if (lessonUsePoint > sendReplaceArray.user_classwork_cost) {
+//				//備品の購入があれば
+//				if (sendReplaceArray.sell_number != "0") {
+//					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+//					commodityUsePoint = sendReplaceArray.use_point - sendReplaceArray.user_classwork_cost;
+//				//なければ
+//				} else {
+//					lessonUsePoint = sendReplaceArray.user_classwork_cost;
+//				}
+//			}
 			
 			//実費の支払額をセットする
 			sendReplaceArray.pay_price = sendReplaceArray.user_classwork_cost - sendReplaceArray.use_point;
