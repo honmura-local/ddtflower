@@ -1,6 +1,6 @@
 $(function(){
 	// use_pointの初期保存と差分保存
-	var target =  $("input[name='use_point']", $(this));
+	var target =  $("input[name='use_point']", $("#lecturePermitList"));
 	// 初期値保存
 	target.each(function() {
 		$(this).focus(function() {

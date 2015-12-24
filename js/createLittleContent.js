@@ -2962,6 +2962,15 @@ function createLittleContents(){
 				}
 			}
 			
+			//当該関数の引数にテーブルデータ取得に必要な値がセットされていたら
+			if(values) {
+				//JSONに値をセットしていく
+				for (key in values) {
+					//実際にデータをセットしていく
+					this.json[tableKey][key][VALUE];
+				}
+			}
+			
 			//テーブルデータを取得する
 			this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[tableKey], tableKey);
 			//テーブルを作る
