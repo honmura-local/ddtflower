@@ -9,7 +9,7 @@
 .blogArticles {
 	font-size: 0px;		/* インラインブロックの要素を扱うため、フォントサイズを0にする */
 	width: 95%;			/* 幅をパーセンテージ指定する */
-	margin: 50px auto 0px;	/* 中央に寄せる。上下にも適正なマージン */	
+	margin: 0px auto 0px;	/* 中央に寄せる。上下にも適正なマージン */	
 }
 
 /* 
@@ -183,4 +183,47 @@ table.myBlogTable tr td:first-child {
 .myPageBlog .numberingOuter{
 	font-size: 16px;		/* フォントサイズが0になっているので指定する */
 	margin-bottom: 20px;	/* 下にmarginを入れる */
+}
+
+/* 
+ * セレクタ:.myPageBlog .calendar
+ * 概要   :マイブログのカレンダー
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.23
+ */
+.myPageBlog .calendar{
+	margin : 0 auto 10px;	/* 中央に寄せて下と間隔を取る */
+}
+
+/* 
+ * セレクタ:.myPageBlogButtons
+ * 概要   :マイブログのボタン領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.23
+ */
+.myPageBlogButtons {
+	width: 90%;			/* 少し余裕のある幅にする */
+	margin: 0 auto ;	/* 中央に寄せる */
+}
+
+/* 
+ * セレクタ:.blogArticles .buttons
+ * 概要   :マイブログの編集・削除ボタン領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.23
+ */
+.blogArticles .buttons {
+	clear : both;	/* 回り込みしない */
+	display : block; /* ブロック要素として扱う */
+}
+
+/* 
+ * セレクタ:.blogArticles .buttons button
+ * 概要   :マイブログの編集・削除ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.23
+ */
+.blogArticles .buttons button {
+	float : right;	/* 右に寄せる */
+	margin : 10px 3px 3px;	/* 少々のmarginを取る */
 }

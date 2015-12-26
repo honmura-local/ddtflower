@@ -14,35 +14,6 @@
             "type":"button",
             "value":"記事作成",
             "data-role":"0"
-        },
-        "editArticleButton":{
-            "type":"button",
-            "value":"記事編集",
-            "data-role":"1"
-        },
-        "deleteArticleButton":{
-            "type":"button",
-            "value":"記事削除",
-            "data-role":"2"
-        }
-    },
-    "myBlogListTable":{
-        "db_getQuery":"SELECT id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC ",
-        "user_key":{
-            "value":""
-        },
-        "config": {
-            "columns": {
-                "id":{
-                    "className":"replaceCheckbox"
-                },
-                "date": {
-                    "columnName": "日付"
-                },
-                "title": {
-                    "columnName": "タイトル"
-                }
-            }
         }
     },
     "deleteMyBlog":{

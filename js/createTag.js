@@ -1387,13 +1387,17 @@ function createTag(){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
 		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
-		var tableLength = retObj[TABLE_DATA_KEY].length;	//走査対象のテーブルのサイズを取得する
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
-		for(var i = 0; i < tableLength; i++){
+		for(var i = 0; i < retObj[TABLE_DATA_KEY].length; i++){
+			console.log(dateText.replace(/\//g, '-'));
 			//日付が合わなければ
-			if(retObj[TABLE_DATA_KEY][i].blogArticleDate != dateText){
-				retObj[TABLE_DATA_KEY].splice(i);	//該当する記事を削除する
+			if(retObj[TABLE_DATA_KEY][i].date !== void(0) && retObj[TABLE_DATA_KEY][i].date != dateText.replace(/\//g, '-')){
+				retObj[TABLE_DATA_KEY].splice(i--, 1);	//該当する記事を削除する
+			}
+			
+			if(retObj[TABLE_DATA_KEY].length - 1<= i) {
+				break;
 			}
 		}
 		

@@ -104,33 +104,6 @@
             "href": "#myoption.html"
         }
     },
-    "myBlogListArea":{
-    },
-    "myBlogList":{
-    },
-    "myBlogListTable":{
-        "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC; ",
-        "user_key":{
-            "value":""
-        },
-        "config": {
-            "columns": {
-                "checkbox":{
-                    "className":"checkWrap"
-                },
-                "id":{
-                    "style":"display:none",
-                    "className":"number"
-                },
-                "date": {
-                    "columnName": "日付"
-                },
-                "title": {
-                    "columnName": "タイトル"
-                }
-            }
-        }
-    },
     "deleteMyBlog":{
         "db_setQuery":"DELETE FROM user_blog WHERE id IN ('id');",
         "id":{
@@ -142,12 +115,16 @@
     "blogArticles":{
     },
     "myBlogTable":{
-        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='user_key' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;",
+        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='user_key' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;",
         "user_key":{
             "value":""
         },
         "config": {
             "columns": {
+                "id":{
+                    "style":"display:none",
+                    "className":"number"
+                },
                 "image1":{
                     "className":"blogImage"
                 },
@@ -170,6 +147,9 @@
                 },
                 "title": {
                     "className":"blogTitle"
+                },
+                "buttons": {
+                    "className":"buttons"
                 }
             }
         }

@@ -11,89 +11,91 @@
 			<link href="css/courseguide.css" rel="stylesheet" type="text/css">
 			<!-- マイページのCSSファイルを読み込む。 -->
 			<link href="css/mypage.css" rel="stylesheet" type="text/css">
-			<!-- 予約希望ダイアログのCSSファイルを読み込む。 -->
-			<link href="css/special.css" rel="stylesheet" type="text/css">
+			<!-- ブログのCSSファイルを読み込む。 -->
+			<link href="css/blog.css" rel="stylesheet" type="text/css">
 			<script>
-				//カレントのウィンドウのDOMを取得する
-				var $currentWindow = $(CURRENT_WINDOW);
-				//カレントのウィンドウのコンテンツ領域を取得する
-				var $currentContent = $(CURRENT_WINDOW_MAIN)
-
-				// dom要素を作るクラスをインスタンス化する
-				var create_tag = new createLittleContents();
-
-				//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
-				var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
-				create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
-
-				// 会員共通のパーツのJSONを取得する。
-				create_tag.getDomFile('template/memberCommon.html');
-				// 会員ページのHTMLを読み込む
-				create_tag.getDomFile('template/memberPage.html');
-				//ユーザ情報のテキストをDBから取得する
-				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
-				create_tag.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
-
-				//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
-				var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
-				create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
-				
-				// 会員ページヘッダーを作る
-				create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
-
-				// バナー領域を作る
-				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
-				
-				create_tag.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
-				create_tag.getJsonFile('source/mypage.json');			// 各ページ共通のパーツのJSONを取得する。
-				// ファイルのhtmlデータをdomを用いて持ってくる
-				create_tag.getDomFile('template/common.html');
-				create_tag.getDomFile('template/mypage.html');
-				create_tag.getDomFile('template/table.html');
-
-				// ブログ管理領域を作る。
-				create_tag.outputTag('myPageBlog', 'myPageBlog', $currentContent);
-				create_tag.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
-
-				//ボタンを作る
-				create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.myPageBlog');
-
-				//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
-				create_tag.json.myBlogListTable.user_key.value = create_tag.getUserId();
-				create_tag.outputTag("blogArticleArea",'blogArticleArea','.myPageBlog');
-				create_tag.outputTag("blogArticles",'blogArticles','.blogArticleArea');			//Myページのブログ領域
-				create_tag.outputTag('numberingOuter', 'numberingOuter', '.blogArticleArea');	// ナンバリング領域を作る
-
-				//ブログのデータをDBから取得しブログリストのテーブルを作るためにjson化する
-				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogListTable'], 'myBlogListTable');
-				
-				//ブログの投稿したことがある人のみブログ一覧テーブルを作る
-				if(create_tag.json.myBlogListTable[TABLE_DATA_KEY].length != 0) {
-					//ブログ一覧の領域を作る
-					create_tag.outputTag("myBlogListArea",'myBlogListArea','.myPageBlog');
-					create_tag.outputTag("myBlogList",'myBlogList','.myBlogListArea');			//ブログ一覧のテーブルを格納する領域を作る
-					create_tag.outputTag('numberingOuter', 'numberingOuter', '.myBlogListArea');	// ナンバリング領域を作る
-					//ブログ一覧のテーブルを作る
-					create_tag.outputNumberingTag('myBlogListTable', 1, 4, 1, 3, '.myBlogList', 'commonFuncs.extendMyBlogList');
+				try {
+					//カレントのウィンドウのDOMを取得する
+					var $currentWindow = $(CURRENT_WINDOW);
+					//カレントのウィンドウのコンテンツ領域を取得する
+					var $currentContent = $(CURRENT_WINDOW_MAIN)
+	
+					// dom要素を作るクラスをインスタンス化する
+					var create_tag = new createLittleContents();
+	
+					//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
+					var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
+					create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
+	
+					// 会員共通のパーツのJSONを取得する。
+					create_tag.getDomFile('template/memberCommon.html');
+					// 会員ページのHTMLを読み込む
+					create_tag.getDomFile('template/memberPage.html');
+					create_tag.getDomFile('template/blog.html');			// ブログページ用のDOMを取得する
+					//ユーザ情報のテキストをDBから取得する
+					create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+					create_tag.getJsonFile('source/memberCommon.json');		// 各ページ共通のパーツのJSONデータを取得する。
+					create_tag.getJsonFile('source/blog.json');			// ファイルのデータをjsonを用いて持ってくる
+	
+					//accountHeaderから会員IDを取得する。別ユーザログインしていた場合はcookieからIDを取得する
+					var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
+					create_tag.json.accountHeader.user_key.value = memberInfo;	//取得したIDをaccountHeaderに反映する
+					
+					// 会員ページヘッダーを作る
+					create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
+					//ヘッダーにcreateTagへの参照を持たせる
+					$('.memberHeader')[0].create_tag = create_tag;
+					
+					// バナー領域を作る
+					create_tag.outputTag('userBanner', 'userBanner', $currentContent);
+					
+					create_tag.getJsonFile('source/commonJson.json');		// 各ページ共通のパーツのJSONデータを取得する。
+					create_tag.getJsonFile('source/mypage.json');			// 各ページ共通のパーツのJSONを取得する。
+					// ファイルのhtmlデータをdomを用いて持ってくる
+					create_tag.getDomFile('template/common.html');
+					create_tag.getDomFile('template/mypage.html');
+					create_tag.getDomFile('template/table.html');
+	
+					// ブログ管理領域を作る。
+					create_tag.outputTag('myPageBlog', 'myPageBlog', $currentContent);
+					create_tag.outputTag('myPageBlogTitle','myPageBlogTitle','.myPageBlog');		// タイトル領域を作る
+	
+					//会員番号をブログ検索のjsonに入れて置換できるようにし、会員ごとのブログ記事を読み込むのの使う
+					create_tag.outputTag("blogArticleArea",'blogArticleArea','.myPageBlog');
+					// 右側領域を作る
+					create_tag.outputTag('blogRightContent', 'blogRightContent', ".blogArticleArea");
+					create_tag.outputTag("blogArticles",'blogArticles','.blogRightContent');			//Myページのブログ領域
+					create_tag.outputTag('numberingOuter','numberingOuter','.blogRightContent');
+	
+					create_tag.outputTag('blogLeftContent', 'blogLeftContent', ".blogArticleArea");	// 左側領域を作る
+					create_tag.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
+					
+					//ユーザのブログ領域用のJSONに会員IDをセットする。
+					create_tag.json.myBlogTable.user_key.value = create_tag.json.accountHeader.user_key.value;
+									
+					//ユーザ情報のテキストをDBから取得する
+					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogTable'], 'myBlogTable');
+					//ブログデータがあればブログを作る
+					if(create_tag.json.myBlogTable[TABLE_DATA_KEY][0]) {
+						create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	// ブログの記事を作る。
+						//記事の画像を拡大できるようにする。
+						creator.useZoomImage('blogImage');
+					}
+					
+					//datepickerによるカレンダーのクラスを作成する。
+					var mbCalendar = new myBlogCalendar('.calendar', create_tag, create_tag.json.myBlogTable[TABLE_DATA_KEY]);
+					mbCalendar.create();	//カレンダーを実際に作成する
+					//ボタンを作る
+					create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.blogLeftContent');
+	
+					create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
+					//submitイベントを登録する。
+					$('form').validate(articleSubmitHandler);
+					create_tag.deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
+				} catch (e) {
+					console.log(e);
 				}
-				
-				//ユーザのブログ領域用のJSONに会員IDをセットする。
-				create_tag.json.myBlogTable.user_key.value = create_tag.json.accountHeader.user_key.value;
-								
-				//ユーザ情報のテキストをDBから取得する
-				create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogTable'], 'myBlogTable');
-				//ブログデータがあればブログを作る
-				if(create_tag.json.myBlogTable[TABLE_DATA_KEY][0]) {
-					create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages');	// ブログの記事を作る。
-					//記事の画像を拡大できるようにする。
-					creator.useZoomImage('blogImage');
-				}
-				
-				create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
-				//submitイベントを登録する。
-				$('form').validate(articleSubmitHandler);
-				create_tag.deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
-				addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 			</script>
 		</div>
 	</div>
