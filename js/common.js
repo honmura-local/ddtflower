@@ -1369,7 +1369,7 @@ this.defaultClassworkCostColumns = [
 	this.addMapKeyValue = function (inputElem, name, map, additionalAttr) {
 
 		//name属性の値と同じキーがadditionalAttrに含まれていれば
-		if (!additionalAttr) {
+		if (additionalAttr) {
 			//設定のノードを取り出す
 			var additionalAttrNode = additionalAttr[name];
 			
