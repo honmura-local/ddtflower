@@ -325,3 +325,24 @@
 .gallery #mslongtail_1985{
 	display: block;	/* 最初から表示しておく */
 }
+
+ /* 
+ * セレクタ:.galleryRightSide
+ * 概要   :ギャラリーの右側(写真)
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryRightSide{
+	width:	70%;	/* 幅を70%にしてコンテンツと並べる。 */
+	float:	right;	/* 右に寄せる。 */
+}
+ /* 
+ * セレクタ:.galleryLeftSide
+ * 概要   :ギャラリーの左側(カレンダー)
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryLeftSide{
+	width:	29%;	/* 幅を29%にしてコンテンツと並べる。 */
+	float:	right;	/* 右に寄せる。 */
+}

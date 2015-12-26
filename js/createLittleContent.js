@@ -1303,9 +1303,9 @@ function createLittleContents(){
 	 * 関数名:insertTextboxToTable
 	 * 概要  :テーブルにテキストボックスを挿入する。
 			受講承認テーブルなどでセルの内容をテキストボックスにする時に使う
-	 * 引数  :string tableClassName 対象テーブルのクラス名
-	 		string appendDom 追加するdom名
-	 		string appendTo 追加先セレクター
+	 * 引数  :string tableClassName: 対象テーブルのクラス名
+	 		string appendDom: 追加するdom名
+	 		string appendTo: 追加先セレクター
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.11
@@ -1318,7 +1318,7 @@ function createLittleContents(){
 		//テキストボックスを追加する
 		this.outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
 	}
-	
+
 	/* 
 	 * 関数名:setInputValueToLecturePermitListInfoTable
 	 * 概要  :受講者一覧テーブルのテキストボックスにデフォルトで値を入れる。
@@ -2865,6 +2865,17 @@ calendarOptions['myBlog'] = $.extend(true, {}, calendarOptions['blog'], {
 		}
 	});
 
+//マイギャラリーページのカレンダー。ブログ用オプションを継承する
+calendarOptions['myGallery'] = $.extend(true, {}, calendarOptions['blog'], {
+	// カレンダーの日付を選択したら
+	onSelect: function(dateText, inst){
+		//日付をcreateTagに渡して日付絞り込みを有効にする
+		this.instance.create_tag.dateText = dateText;
+		//絞り込まれたブログ記事を書き出す
+		this.instance.create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	
+	}
+});
+
 //マイページの予約カレンダー
 calendarOptions['myPageReserved'] = {
 		// カレンダーの日付を選択したら
@@ -3332,9 +3343,10 @@ function blogCalendar(selector, create_tag, tableData) {
  * クラス名:myBlogCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
  * 戻り値:なし
- * 概要  :ブログページのカレンダーを作る
- * 作成日:2015.12.10
+ * 概要  :マイブログページのカレンダーを作る
+ * 作成日:2015.12.26
  * 作成者:T.Masuda
  */
 function myBlogCalendar(selector, create_tag, tableData) {
@@ -3345,16 +3357,36 @@ function myBlogCalendar(selector, create_tag, tableData) {
 	this.calendarOptions = calendarOptions['myBlog'];
 }
 
+/*
+ * クラス名:myGalleryCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
+ * 戻り値:なし
+ * 概要  :マイギャラリーページのカレンダーを作る
+ * 作成日:2015.12.26
+ * 作成者:T.Masuda
+ */
+function myGalleryCalendar(selector, create_tag, tableData) {
+	blogCalendar.call(this, selector, create_tag);			//スーパークラスのコンストラクタを呼ぶ
+	//日付の配列を作成する
+	this.dom.dateArray = this.extractDateArray(tableData);	
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['myGallery'];
+}
+
 //カレンダークラスの親子関係を設定する
 reservedCalendar.prototype = new calendar();
 myPageReservedCalendar.prototype = new calendar();
 blogCalendar.prototype = new calendar();
 myBlogCalendar.prototype = new blogCalendar();
+myGalleryCalendar.prototype = new blogCalendar();
 //サブクラスのコンストラクタを有効にする
 reservedCalendar.prototype.constructor = reservedCalendar;
 myPageReservedCalendar.prototype.constructor = myPageReservedCalendar;
 blogCalendar.prototype.constructor = blogCalendar;
 myBlogCalendar.prototype.constructor = myBlogCalendar;
+myGalleryCalendar.prototype.constructor = myGalleryCalendar;
 
 
 //グローバルなスコープで定義されるべき関数を定義していく
