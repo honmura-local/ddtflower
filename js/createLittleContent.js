@@ -1816,18 +1816,19 @@ function createLittleContents(){
 	 * 概要  :可変テーブルで取得した連想配列とユーザがテキストボックスで入力した値の連想配列を結合する。
 	 		:これによってdb_setQueryで値を置換するときの連想配列が取得できる
 	 * 引数  :tableClassName:可変テーブルクラス名
-	 		rowNumber:可変テーブルで取り出す行番号
-	 		inputDataSelector:ユーザが入力した値を取得するためにinputタグなどの親のセレクター名
+	 		int rowNumber:可変テーブルで取り出す行番号
+	 		StringinputDataSelector:ユーザが入力した値を取得するためにinputタグなどの親のセレクター名
+	 		Object addAttr:追加で取得するフォームデータの設定
 	 * 返却値  :sendReplaceArray:テーブルと入力データを結合した結果の連想配列
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.17
 	 */
-	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector) {
+	this.getSendReplaceArray = function(tableClassName, rowNumber, inputDataSelector, addAttr) {
 		//可変テーブルから連想配列を取得する
 		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
 		try{
 			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
-			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector);
+			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector, addAttr);
 			delete inputDataArray.columnCheckbox;	//チェックボックス列から取得したデータは空なので削除する
 			//内容をチェックする
 			for(key in inputDataArray){
@@ -1841,7 +1842,7 @@ function createLittleContents(){
 			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
 			
 			//使用ポイントが所持ポイントを上回っていれば
-			if (sendReplaceArray.get_point < sendReplaceArray.data-diff_point) {
+			if (sendReplaceArray.diff_point && sendReplaceArray.get_point < sendReplaceArray.diff_point) {
 				throw new Error("使用ポイントが所持ポイントを上回っています。 所持:" + sendReplaceArray.get_point + " 使用ポイント: " + sendReplaceArray.data-diff_point);	//例外を発生させる
 			}
 			

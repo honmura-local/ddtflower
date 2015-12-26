@@ -535,12 +535,15 @@ function loopUpdatePermitLessonList() {
 		//クエリのキー
 		var queryKey = EMPTY_STRING;
 		
+		//フォームの追加取得用オブジェクトを作る
+		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.lecturePermitListRecord').each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
 					//受講承認一覧データを更新する
 					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
 				//カウンターをインクリメントする
