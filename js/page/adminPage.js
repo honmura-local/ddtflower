@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:adminPage.js
  * 概要  :管理者ページ用のjsファイル
  * 作成者:T.Yamamoto
@@ -549,7 +549,7 @@ function loopUpdatePermitLessonList() {
 		//例外処理
 		} catch(e){
 			//メッセージの先頭を追加する
-			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n');
+			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n' + e.message + '\n');
 		//必ず行う処理
 		} finally {
 			processedList.push(counter + '件のレコードを更新しました。');

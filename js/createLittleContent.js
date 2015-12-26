@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:createLittleContent.js
  * 概要  :小規模の処理の関数を定義する
  * 作成者:T.M
@@ -1833,7 +1833,7 @@ function createLittleContents(){
 			for(key in inputDataArray){
 				//空があれば
 				if(!commonFuncs.checkEmpty(inputDataArray[key])){
-					throw new Error();	//例外を発生させる
+					throw new Error("key: " + key + 'の値が設定されていません。');	//例外を発生させる
 				}
 			}
 			
@@ -1841,8 +1841,8 @@ function createLittleContents(){
 			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
 			
 			//使用ポイントが所持ポイントを上回っていれば
-			if (sendReplaceArray.get_point < sendReplaceArray.use_point) {
-				throw new Error();	//例外を発生させる
+			if (sendReplaceArray.get_point < sendReplaceArray.data-diff_point) {
+				throw new Error("使用ポイントが所持ポイントを上回っています。 所持:" + sendReplaceArray.get_point + " 使用ポイント: " + sendReplaceArray.data-diff_point);	//例外を発生させる
 			}
 			
 //			//受講料に対する使用ポイント
