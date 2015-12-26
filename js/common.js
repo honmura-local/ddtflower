@@ -759,6 +759,7 @@ this.defaultClassworkCostColumns = [
 			url:scriptUrl,					//ファイルパス
 			dataTYpe:"script",				//JSファイルを取得する設定
 			async:false,					//同期通信
+			cache : false, 					//キャッシュを無効にする
 			success:function(sc){			//通信成功時
 				//console.log("got script");	//成功判定のログを出す
 			},
@@ -1312,15 +1313,19 @@ this.defaultClassworkCostColumns = [
 	 * 関数名:getInputData
 	 * 概要  :テキストボックスとセレクトボックスとテキストエリアのデータを取得し、
 	        :クラス名をkey、入っている値をvalueの連想配列にして返す
-	 * 引数  :string selector:値を走査したい親のセレクター名
+	 * 引数  :String selector:値を走査したい親のセレクター名
+	 * 　　  :Object additionalAttr:追加で取得するHTMLタグのAttributeと返却値のオブジェクトに追加するエントリのキーの設定
 	 * 返却値  :Object:入力データの結果連想配列
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.27
 	 * 修正日　:2015.0822
 	 * 修正者　:T.Masuda
 	 * 内容	　:共通で使えるためcommon.jsに移動しました。また、セレクタをクラスに限定しないようにしました
+	 * 修正日　:2015.1226
+	 * 修正者　:T.Masuda
+	 * 内容	　:value以外のattributeも取得できるように変更しました。
 	 */
-	this.getInputData = function(selector) {
+	this.getInputData = function(selector, additionalAttr) {
 		var $form = $(selector);	//処理対象の親要素を取得する
 		//結果の変数を初期化する
 		var retMap = {};
@@ -1328,6 +1333,9 @@ this.defaultClassworkCostColumns = [
 		$(SEL_INPUT_DATA , $form).each(function() {
 			//入力データのname属性を取得する
 			var name = $(this).attr(STR_NAME);
+			//additionalAttrで指定したattributeの値をmapに追加する
+			retMap = commonFuncs.addMapKeyValue(this, name, retMap, additionalAttr);
+			
 			//入力データの値を取得する
 			var value = $(this).val();
 			//ラジオボタンやチェックボックスの判定に使うため、type属性を取得する
@@ -1344,10 +1352,40 @@ this.defaultClassworkCostColumns = [
 				retMap[name] = value;
 			}
 		});
+		
 		//結果を返す
 		return retMap;
 	}
 	
+	/* 関数名:addMapKeyValue
+	 * 概要　:オブジェクトのクローンを作成する
+	 * 引数　:Element inputElem:値を取得する元の要素
+	 * 　　　:Object map:エントリを追加する対象のオブジェクト
+	 * 　　　:Object additionalAttr:要素からの値取得方法設定のオブジェクト
+	 * 返却値:object:引数のオブジェクトのクローンを返す
+	 * 作成日　:2015.1223
+	 * 作成者　:T.Masuda
+	 */
+	this.addMapKeyValue = function (inputElem, name, map, additionalAttr) {
+
+		//name属性の値と同じキーがadditionalAttrに含まれていれば
+		if (additionalAttr) {
+			//設定のノードを取り出す
+			var additionalAttrNode = additionalAttr[name];
+			
+			//該当するキーのオブジェクトの中身を走査する
+			for (key in additionalAttrNode) {
+				//設定名になるキー名を取得する
+				var keyName = additionalAttrNode[key];
+				
+				//attr関数で取得するattributeを指定してオブジェクトにエントリを追加する
+				map[keyName] = $(inputElem).attr(key);
+			}
+		}
+		
+		//mapを返す
+		return map;
+	}
 	
 	/* 関数名:sendMail
 	 * 概要　:メールを送信する
