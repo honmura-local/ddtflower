@@ -453,10 +453,10 @@
         }
     },
     "updatePermitListLesson":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id';"
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'data-diff_point', get_point = get_point - 'data-diff_point' WHERE id = 'user_key;"
     },
     "updatePermitListCommoditySell":{
-        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', commodity_key='content', update_datetime = NOW() WHERE id = 'id';"
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', commodity_key='content', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'data-diff_point', get_point = get_point - 'data-diff_point' WHERE id = 'user_key';"
     },
     "searchUserList":{
         "searchName":{
@@ -683,7 +683,9 @@
     },
     "replaceTextboxUsePoint":{
         "type":"number",
-        "name":"use_point"
+        "name":"use_point",
+	"data-diff_point":"",
+	"data-base_point":""
     },
     "mailMagaAndAnnounce":{
         "class": "mailMagaAndAnnounce tabPanel",
