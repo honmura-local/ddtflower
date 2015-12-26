@@ -31,7 +31,7 @@
             },
             "banner5": {
                 "class": "banner inlineBlock",
-                "href": "#window/member/page/blog.php",
+                "href": "#window/member/page/blog.html",
                 "bannerImage": {
                     "src": "image/icon(blog).png"
                 }

@@ -336,6 +336,7 @@
 	width:	70%;	/* 幅を70%にしてコンテンツと並べる。 */
 	float:	right;	/* 右に寄せる。 */
 }
+
  /* 
  * セレクタ:.galleryLeftSide
  * 概要   :ギャラリーの左側(カレンダー)
@@ -345,4 +346,51 @@
 .galleryLeftSide{
 	width:	29%;	/* 幅を29%にしてコンテンツと並べる。 */
 	float:	right;	/* 右に寄せる。 */
+}
+
+ /* 
+ * セレクタ:.galleryLeftSide .calendar
+ * 概要   :カレンダー
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryLeftSide .calendar {
+	width:	100%;	/* カレンダーをなるべく大きく表示する。 */
+	float:	left;	/* 左に寄せる。 */
+}
+
+/* スマホレイアウト設定 */
+@media screen and (max-width: 429px) {
+	 /* 
+	 * セレクタ:.galleryRightSide, .galleryLeftSide
+	 * 概要   :ギャラリーの両サイド
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.galleryRightSide, .galleryLeftSide{
+		width:	100%;	/* 幅を100%にしてコンテンツと並べる。 */
+		float:	none;	/* floatを解除する */
+	}
+	
+	 /* 
+	 * セレクタ:.myGalleryTable
+	 * 概要   :ギャラリーの写真一覧
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.myGalleryTable {
+		width : 100%;	/* サイズを画面に合わせる */
+	}
+
+	 /* 
+	 * セレクタ:.myGalleryTable tr 
+	 * 概要   :ギャラリーの写真
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.myGalleryTable tr  {
+		display : block;	/* margin autoを利かせるための設定 */
+		margin : 20px auto 0;	/* 中央に寄せる */
+	}
+
 }

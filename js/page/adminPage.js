@@ -384,8 +384,6 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
 	var sendQueryArray = create_tag.choiceSendQueryArray(boolRule, trueQueryKey, falseQueryKey);
 	//クエリのデフォルトを取得してあとから元の戻せるようにする
 	var defaultQuery = sendQueryArray.db_setQuery;
-	//ユーザがポイントを使用したときにポイント使用のクエリを追加する
-	sendQueryArray = create_tag.addUsePointQuery(sendQueryArray, sendReplaceArray);
 	//クエリを実行してテーブルの値1行ずつ更新していく
 	create_tag.setDBdata(sendQueryArray, sendReplaceArray, '');
 	//ループで実行するので置換データ連想配列を初期化する

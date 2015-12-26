@@ -790,6 +790,6 @@ ADMIN_LESSON_USER_LIST_DIALOG_JSON = 'dialog/source/adminLessonUserListDialog.js
 ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.html';
 
 //マイギャラリーの表示記事数
-MYGALLERY_SHOW_NUMBER				= 4;
+MYGALLERY_SHOW_NUMBER				= 6;
 //メルマガ送信テーブルの表示記事数
 MAILMAGA_TABLE_SHOW_NUMBER			= 15;

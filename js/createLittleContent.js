@@ -2386,7 +2386,7 @@ function createLittleContents(){
 	 */
 	this.createMyBlogImages = function(){
 		//ブログの各行を走査する
-		$('.myBlogTable tr:not(:first)').each(function(){
+		$('.blogTable tr:not(:first)').each(function(){
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//画像の列を走査する
 			$('.blogImage', $row).each(function(){
@@ -2837,7 +2837,7 @@ calendarOptions['blog'] = {
 		onSelect: function(dateText, inst){
 			this.instance.create_tag.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.create_tag.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
+			this.instance.create_tag.outputNumberingTag('blogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages()')
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -3329,9 +3329,9 @@ function blogCalendar(selector, create_tag, tableData) {
 	this.create_tag = create_tag;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
 	//create_tagが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-//	this.dom.dateArray = this.extractDateArray(this.create_tag.json.blogArticle[TABLE_DATA_KEY]);
 	if (tableData !== void(0)) {
-		this.dom.dateArray = this.extractDateArrayForBlog(tableData);	
+		//日付の配列を作成する
+		this.dom.dateArray = this.extractDateArray(tableData);	
 	}
 	
 	//オプションを設定する
@@ -3350,9 +3350,7 @@ function blogCalendar(selector, create_tag, tableData) {
  * 作成者:T.Masuda
  */
 function myBlogCalendar(selector, create_tag, tableData) {
-	blogCalendar.call(this, selector, create_tag);			//スーパークラスのコンストラクタを呼ぶ
-	//日付の配列を作成する
-	this.dom.dateArray = this.extractDateArray(tableData);	
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['myBlog'];
 }
@@ -3368,9 +3366,7 @@ function myBlogCalendar(selector, create_tag, tableData) {
  * 作成者:T.Masuda
  */
 function myGalleryCalendar(selector, create_tag, tableData) {
-	blogCalendar.call(this, selector, create_tag);			//スーパークラスのコンストラクタを呼ぶ
-	//日付の配列を作成する
-	this.dom.dateArray = this.extractDateArray(tableData);	
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['myGallery'];
 }
