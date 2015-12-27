@@ -822,17 +822,22 @@ SETTING_CURRENT_ARTICLE_CODE		= {
 	callBack : "create_tag.createMyBlogImages()",
 	createTagSelector : void(0)
 };
+
 //数値1
 NUMBER_1							= 1;
 //サーバとの通信失敗時のエラーメッセージ
 FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
 	//ログアウト処理ファイルのURL
 LOGOUT_URL							= 'php/LogoutSession.php';
-
-GUEST_ID = '9999';
-GUEST_PASS = 'xxxxxx';
-DELETE_COOKIE_FRONT = 'userId=;expires=';
-DELETE_COOKIE_REAR = ';authority=;expires=';
-GALLERY_TABLE		= 'galleryTable';
-SELECTOR_GALLERY_TABLE = '.galleryTable';
-SELECTOR_MY_GALLERY_TABLE = '.myGalleryTable';
+//ゲストID、パス
+GUEST_ID							= '9999';
+GUEST_PASS							= 'xxxxxx';
+//ログイン用クッキー削除用文字列前半後半
+DELETE_COOKIE_FRONT					= 'userId=;expires=';
+DELETE_COOKIE_REAR					= ';authority=;expires=';
+//ギャラリーのテーブル
+GALLERY_TABLE						= 'galleryTable';
+//ギャラリーのテーブルのセレクタ
+SELECTOR_GALLERY_TABLE				= '.galleryTable';
+//マイギャラリーのテーブルのセレクタ
+SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';

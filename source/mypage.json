@@ -157,7 +157,7 @@
     },
     "blogTable":{
     	"class" : "blogTable",
-        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date, ub.post_timestamp AS post_date, uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key=uin.id ORDER BY post_date DESC;",
+        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date, ub.post_timestamp AS post_date, uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, ub.disclosure_range, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key=uin.id AND ub.disclosure_range = 0 ORDER BY post_date DESC;",
         "user_key":{
             "value":""
         },
