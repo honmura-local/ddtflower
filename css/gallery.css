@@ -368,9 +368,8 @@
 .galleryTable tr:first-child {
 	display: none;	/* 見せるべきものではないので隠す */
 }
-
-/* スマホレイアウト設定 */
-@media screen and (max-width: 429px) {
+/* 画面伸縮時の設定 */
+@media screen and (max-width: 679px) {
 	 /* 
 	 * セレクタ:.galleryRightSide, .galleryLeftSide
 	 * 概要   :ギャラリーの両サイド
@@ -381,24 +380,28 @@
 		width:	100%;	/* 幅を100%にしてコンテンツと並べる。 */
 		float:	none;	/* floatを解除する */
 	}
+}
+
+/* スマホレイアウト設定 */
+@media screen and (max-width: 355px) {
 	
-	 /* 
-	 * セレクタ:.myGalleryTable
+	/* 
+	 * セレクタ:.galleryTable, .myGalleryTable
 	 * 概要   :ギャラリーの写真一覧
 	 * 作成者 :T.Masuda
-	 * 作成日 :2015.12.26
+	 * 作成日 :2015.12.27
 	 */
-	.myGalleryTable {
+	.galleryTable, .myGalleryTable {
 		width : 100%;	/* サイズを画面に合わせる */
 	}
 
 	 /* 
-	 * セレクタ:.myGalleryTable tr 
+	 * セレクタ:.galleryTable tr , .myGalleryTable tr 
 	 * 概要   :ギャラリーの写真
 	 * 作成者 :T.Masuda
-	 * 作成日 :2015.12.26
+	 * 作成日 :2015.12.27
 	 */
-	.myGalleryTable tr  {
+	.galleryTable tr , .myGalleryTable tr {
 		display : block;	/* margin autoを利かせるための設定 */
 		margin : 20px auto 0;	/* 中央に寄せる */
 	}

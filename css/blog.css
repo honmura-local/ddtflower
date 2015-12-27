@@ -247,3 +247,30 @@ table.blogTable tr td:first-child {
 .currentArticleListContent {
 	margin-bottom : 5px;	/* 項目ごとに間隔を取る */
 }
+
+
+/* 画面伸縮開始時 */
+@media screen and (max-width : 680px) {
+	
+	/* 
+	 * セレクタ:.blogRightContent, .blogLeftContent
+	 * 概要   :ブログの左右領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.blogRightContent, .blogLeftContent {
+		display : block;	/* ブロック要素にする */
+		float : none; 		/* floatを解除して縦に並べる */
+		width : 100%;		/* 幅を画面一杯に取る */
+	}
+	
+	/* 
+	 * セレクタ:.currentArticleListContentTitle
+	 * 概要   :最新記事一覧のタイトル部分
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.27
+	 */
+	.currentArticleListContentTitle {
+		display : inline-block;	/* 横並びにする */
+	}
+}
