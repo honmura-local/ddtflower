@@ -824,3 +824,12 @@ SETTING_CURRENT_ARTICLE_CODE		= {
 };
 //数値1
 NUMBER_1							= 1;
+//サーバとの通信失敗時のエラーメッセージ
+FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
+	//ログアウト処理ファイルのURL
+LOGOUT_URL							= 'php/LogoutSession.php';
+
+GUEST_ID = '9999';
+GUEST_PASS = 'xxxxxx';
+DELETE_COOKIE_FRONT = 'userId=;expires=';
+DELETE_COOKIE_REAR = ';authority=;expires=';

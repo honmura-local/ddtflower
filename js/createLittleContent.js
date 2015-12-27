@@ -2824,8 +2824,115 @@ function createLittleContents(){
 			$('.memberName > .user_name').text(updatedUserName);
 		}
 		
+		/*
+		 * 関数名:guestLogin
+		 * 概要  :一時的なDBアクセスのためにゲストログインを行う
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLogin = function() {
+			//ログインの準備を行う
+			try {
+				//ログイン用のJSONファイルを読み込む
+				this.getJsonFile(PATH_LOGIN_DIALOG_JSON);
+				
+				//ゲストログイン情報をセットする
+				this.json[KEY_LOGIN][KEY_LOGIN_ID][VALUE] = GUEST_ID;
+			   	this.json[KEY_LOGIN][KEY_LOGIN_PASSWORD][VALUE] = GUEST_PASS;
+			   	
+				//サーバにアクセスし、ログイン処理を行う
+		 		this.getJsonFile(URL_GET_JSON_STRING_PHP, this.json[KEY_LOGIN], KEY_LOGIN);
+		 		//DBから取得したログイン処理の結果をオブジェクトにまとめる
+		 		var resultObj = {userId: this.json.login[ID][STR_TEXT], authority: this.json.login.authority[STR_TEXT]};
+		 		
+		 		//ログインに失敗してたら
+		 		if (resultObj.userId == EMPTY_STRING || resultObj.authority == EMPTY_STRING) {
+		 			//例外を投げて処理を止める
+		 			throw new Error();
+		 		}
+			} catch (e) {
+				//エラーオブジェクトにメッセージが入っていれば
+				if (e && e instanceof String) {
+					//エラーメッセージを新たなエラーオブジェクトに渡して上位に例外を投げる
+					throw new Error(e);
+				//エラーオブジェクトにメッセージが入っていなければ
+				} else {
+					//規定のエラーメッセージをエラーオブジェクトに渡して上位に例外を投げる
+					throw new Error(FAIL_TO_CONNECT_MESSAGE);
+				}
+			}
+			
+		}
 		
+		/*
+		 * 関数名:guestLogin
+		 * 概要  :ゲストログイン状態が不要になった時にログアウトを行う
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLogout = function() {
+			//日付クラスインスタンスを生成する。
+			var cookieLimit = new Date();
+			//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			cookieLimit.setTime(0);
+			
+			//Ajax通信を行い、ログアウト処理を行う。
+			$.ajax({
+				//ログアウト処理を呼び出す
+				url:LOGOUT_URL,
+				async:false,	//同期通信を行う
+				success:function(){	//通信成功時の処理
+					//cookieを消去する
+					document.cookie = DELETE_COOKIE_FRONT + cookieLimit.toGMTString() + DELETE_COOKIE_REAR  + cookieLimit.toGMTString() + ';';
+				},
+				error:function(xhr,status,error){	//通信エラー時
+					//エラーメッセージを出す
+					alert(FAIL_TO_CONNECT_MESSAGE);
+				}
+			});
+		}
 	 
+		/*
+		 * 関数名:guestLoginAndProcedure
+		 * 概要  :ゲストログインを行い処理を行う
+		 * 引数  :function procedure : ゲストログイン中に行う処理
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLoginAndProcedure = function(procedure) {
+			//ゲストログインを行う
+			this.guestLogin();
+			//必要な処理を行う
+			procedure();
+			//ログアウトする
+			this.guestLogout();
+		}
+		
+		/*
+		 * 関数名:doGuestLoginProcedure
+		 * 概要  :必要ならゲストログインを行い処理を行う。必要なければそのまま処理を行う
+		 * 引数  :function procedure : ログイン中に行う処理
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.doGuestLoginProcedure = function(procedure) {
+			//未ログイン状態なら
+			if (!commonFuncs.checkEmpty(commonFuncs.GetCookies().userId)) {
+				//ゲストログインを行った上で処理を行う
+				this.guestLoginAndProcedure(procedure);
+			//ログイン中なら
+			} else {
+				//そのまま関数をコールする
+				procedure();
+			}
+		}		
+		
 }	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();
