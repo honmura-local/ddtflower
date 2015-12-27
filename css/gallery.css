@@ -359,6 +359,16 @@
 	float:	left;	/* 左に寄せる。 */
 }
 
+ /* 
+ * セレクタ:.galleryTable tr:first-child
+ * 概要   :ギャラリーの写真1枚目
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.27
+ */
+.galleryTable tr:first-child {
+	display: none;	/* 見せるべきものではないので隠す */
+}
+
 /* スマホレイアウト設定 */
 @media screen and (max-width: 429px) {
 	 /* 
@@ -392,5 +402,5 @@
 		display : block;	/* margin autoを利かせるための設定 */
 		margin : 20px auto 0;	/* 中央に寄せる */
 	}
-
+	
 }

@@ -141,7 +141,7 @@
         },
         "galleryButton": {
             "galleryLink": {
-                "href": "#gallery.php",
+                "href": "#gallery.html",
                 "title": "",
                 "galleryText": {
                     "text": "ギャラリー"

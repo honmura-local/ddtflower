@@ -833,3 +833,6 @@ GUEST_ID = '9999';
 GUEST_PASS = 'xxxxxx';
 DELETE_COOKIE_FRONT = 'userId=;expires=';
 DELETE_COOKIE_REAR = ';authority=;expires=';
+GALLERY_TABLE		= 'galleryTable';
+SELECTOR_GALLERY_TABLE = '.galleryTable';
+SELECTOR_MY_GALLERY_TABLE = '.myGalleryTable';

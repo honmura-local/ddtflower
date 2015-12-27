@@ -454,7 +454,7 @@ function createTag(){
 			var evaled = eval(callBack);	//評価する
 			//evaledが関数であれば
 			if(evaled instanceof Function == true){
-				evaled();	//関数を実行する
+				evaled(this);	//関数を実行する
 			}
 		}
 	}

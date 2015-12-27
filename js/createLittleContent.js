@@ -2464,17 +2464,22 @@ function createLittleContents(){
 	/* 
 	 * 関数名:createMyGalleryImages
 	 * 概要  :マイギャラリーの記事の画像列セルから画像タグを作る
-	 * 引数  :なし
+	 * 引数  :createTag ownerInstance : createTagクラスインスタンス(自身)。コールバックで呼び出された場合thisが自分自身を指さないことがあることへの対処
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
 	 * 修正者:T.Masuda
 	 * 修正日:2015.08.12
 	 * 内容	:チェックボックスを追加する処理を追加しました。
+	 * 修正者:T.Masuda
+	 * 修正日:2015.12.27
+	 * 内容	:通常のギャラリー、マイギャラリー双方に対応しました
 	 */
-	this.createMyGalleryImages = function(){
+	this.createMyGalleryImages = function(ownerInstance){
+		//通常のギャラリーかマイギャラリーかを判定し、該当する方のセレクタを取得する
+		var target = commonFuncs.checkEmpty(ownerInstance.json[GALLERY_TABLE]) ? SELECTOR_GALLERY_TABLE : SELECTOR_MY_GALLERY_TABLE;
 		//各記事を処理する
-		$('.myGalleryTable tr').each(function(){
+		$(target + ' tr').each(function(){
 			//画像列にaタグに入ったspanタグを用意する
 			$('.myPhotoImage', this).append($('<a></a>')
 					.attr({
@@ -2488,8 +2493,11 @@ function createLittleContents(){
 					);
 		});
 		
-		//最後にまとめてチェックボックスを追加する
-		$('.myGalleryTable tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
+		//チェックボックスが必要なら
+		if (target == SELECTOR_MY_GALLERY_TABLE) {
+			//最後にまとめてチェックボックスを追加する
+			$(SELECTOR_MY_GALLERY_TABLE + ' tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
+		}
 	}
 	
 	/*
@@ -3008,6 +3016,17 @@ calendarOptions['myGallery'] = $.extend(true, {}, calendarOptions['blog'], {
 	}
 });
 
+//マイギャラリーページのカレンダー。ブログ用オプションを継承する
+calendarOptions['gallery'] = $.extend(true, {}, calendarOptions['blog'], {
+	// カレンダーの日付を選択したら
+	onSelect: function(dateText, inst){
+		//日付をcreateTagに渡して日付絞り込みを有効にする
+		this.instance.create_tag.dateText = dateText;
+		//絞り込まれたブログ記事を書き出す
+		this.instance.create_tag.outputNumberingTag(GALLERY_TABLE, 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	
+	}
+});
+
 //マイページの予約カレンダー
 calendarOptions['myPageReserved'] = {
 		// カレンダーの日付を選択したら
@@ -3488,6 +3507,22 @@ function myBlogCalendar(selector, create_tag, tableData) {
 }
 
 /*
+ * クラス名:galleryCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
+ * 戻り値:なし
+ * 概要  :ギャラリーページのカレンダーを作る
+ * 作成日:2015.12.26
+ * 作成者:T.Masuda
+ */
+function galleryCalendar(selector, create_tag, tableData) {
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['gallery'];
+}
+
+/*
  * クラス名:myGalleryCalendar
  * 引数  :string selector:カレンダーにするタグのセレクタ
  *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
@@ -3508,12 +3543,14 @@ reservedCalendar.prototype = new calendar();
 myPageReservedCalendar.prototype = new calendar();
 blogCalendar.prototype = new calendar();
 myBlogCalendar.prototype = new blogCalendar();
+galleryCalendar.prototype = new blogCalendar();
 myGalleryCalendar.prototype = new blogCalendar();
 //サブクラスのコンストラクタを有効にする
 reservedCalendar.prototype.constructor = reservedCalendar;
 myPageReservedCalendar.prototype.constructor = myPageReservedCalendar;
 blogCalendar.prototype.constructor = blogCalendar;
 myBlogCalendar.prototype.constructor = myBlogCalendar;
+galleryCalendar.prototype.constructor = galleryCalendar;
 myGalleryCalendar.prototype.constructor = myGalleryCalendar;
 
 

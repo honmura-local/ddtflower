@@ -24,7 +24,7 @@
             },
             "banner4": {
                 "class": "banner inlineBlock",
-                "href": "#window/member/page/gallery.php",
+                "href": "#window/member/page/gallery.html",
                 "bannerImage": {
                     "src": "image/icon(gallery).png"
                 }
