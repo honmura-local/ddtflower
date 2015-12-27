@@ -227,3 +227,48 @@ table.myBlogTable tr td:first-child {
 	float : right;	/* 右に寄せる */
 	margin : 10px 3px 3px;	/* 少々のmarginを取る */
 }
+
+/* 
+ * セレクタ:.blogRightContent, .blogLeftContent
+ * 概要   :ブログの左右の領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.blogRightContent, .blogLeftContent {
+	float : right; /* 右に寄せる */
+}
+
+/* 
+ * セレクタ:.blogRightContent
+ * 概要   :ブログの右の領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.blogRightContent {
+	width : 70%;	/* 左に対して広めにする */
+}
+
+/* 
+ * セレクタ:.blogLeftContent
+ * 概要   :ブログの左の領域
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.blogLeftContent {
+	width : 29%;	/* 左に対して狭めにする */
+}
+
+/* スマホレイアウト用 */
+@media screen and (max-width : 429px) {
+	/* 
+	 * セレクタ:.blogRightContent, .blogLeftContent
+	 * 概要   :ブログの左右の領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.blogRightContent, .blogLeftContent {
+		float : none; 	/* floatを解除する */
+		width : 100%;	/* 幅を画面一杯に広げる */
+	}
+	
+}

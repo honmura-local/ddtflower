@@ -1017,17 +1017,19 @@ function createLittleContents(){
 	 * 内容  　:現行のクラスの仕様に対応しました。
 	 */
 	this.createNewArticleList = function(){
+		//無名コールバック関数でこの時点のthisを使うための準備としてthisを変数に格納する
 		var thisElem = this;
+		
 		//各項目を走査する
-		$('.currentArticleList li').each(function(i){
-			var $elem = $('a:first',this);	//リンク部分を取得する
+		$(CURRENT_ARTICLE_LIST_CONTENTS).each(function(i){
+			var $elem = $(FIRST_ANCHOR_TAG, this);	//リンク部分を取得する
 			//クリックしたらブログの記事を作るコードを追加する
-			$elem.attr('onclick', 
-						'$(".numberingOuter,.blog").empty();$(".blog").append(create_tag.createTag(create_tag.json.blogArticle.tableData["' + i + '"], create_tag.getDomNode("blogArticle")));');
+			$elem.attr(ONCLICK_EVENT, 
+					CURRENT_ARTICLE_CODE_FRONT + i + CURRENT_ARTICLE_CODE_REAR);
 				
-			var $elems = $('*',$elem);	//項目を取得する
+			var $elems = $(WILD_CARD ,$elem);	//項目を取得する
 			//ブログ記事のオブジェクトを取得する
-			var articleNode = thisElem.json.blogArticle[TABLE_DATA_KEY][String(i)];
+			var articleNode = thisElem.json[BLOG_TABLE_KEY][TABLE_DATA_KEY][String(i)];
 			//オブジェクトが取得できていなければ
 			if(articleNode === void(0)){
 				return;	//関数を終える
@@ -1038,9 +1040,32 @@ function createLittleContents(){
 	}
 	
 	/*
+	 * 関数名 :createOneTableArticle
+	 * 引数  　:int number:記事の番号(テーブルデータの配列のインデックス)
+	 * 　　　　:String tableName:テーブル名
+	 * 　　　　:Object settingONT:outputNumberingTagの設定オブジェクト
+	 * 戻り値　:なし
+	 * 概要  　:outputNumberingTagで記事を1つだけ指定して表示する
+	 * 作成日　:2015.12.26
+	 * 作成者　:T.Masuda
+	 */
+	this.createOneTableArticle = function (number, tableName, settingONT) {
+		//日付による記事絞り込みを解除する
+		this.dateText = null;
+		//テーブルのデータを丸まる一時保存する
+		var tableDataClone = this.json[tableName][TABLE_DATA_KEY];
+		//記事1個分のデータだけテーブルデータにセットする
+		this.json[tableName][TABLE_DATA_KEY] = [tableDataClone[number]];
+		//outputNumberingTagをコールして記事を表示する
+		this.outputNumberingTag(tableName, settingONT.startPage,settingONT.displayPageMax, NUMBER_1, settingONT.pageNum, settingONT.targetArea, settingONT.callBack, settingONT.createTagSelector);
+		//一時保存したテーブルデータを基に戻す
+		this.json[tableName][TABLE_DATA_KEY] = tableDataClone;
+	}
+	
+	/*
 	 * 関数名 :insertBlogArticleListText
 	 * 引数  　:element elem:記事リストの項目を構成する要素
-	 * 　　　　:element articleNode:記事のノード
+	 * 　　　　:Object articleNode:記事のノード
 	 * 戻り値　:なし
 	 * 概要  　:ブログの最新記事の一覧のテキストを入れる
 	 * 作成日　:2015.05.27
@@ -1054,17 +1079,17 @@ function createLittleContents(){
 			var tagName = elems[j].tagName;
 			//タグ名でデータを取得するJSONノードを決める
 			//タイトル
-			if(tagName == 'P'){
+			if(tagName == PARAGRAPH_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleTitleText.text);
+				elems.eq(j).text(articleNode.title);
 				//日時
-			} else if(tagName == 'TIME'){
+			} else if(tagName == TIME_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleDate.text);
+				elems.eq(j).text(articleNode.date);
 				//投稿者
-			} else if(tagName == 'SMALL'){
+			} else if(tagName == SMALL_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleUserName.text);
+				elems.eq(j).text(articleNode.userName);
 			}
 		}
 	}

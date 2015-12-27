@@ -22,7 +22,8 @@ function createTag(){
 	this.formData = {};			//フォームデータを格納する連想配列。
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
-
+	this.dateText = null;		//日付による記事絞込時の日付。nullでなければ絞込を行う
+	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
@@ -1358,8 +1359,7 @@ function createTag(){
 		var retObj = null;	//返却用のオブジェクトを格納する変数を宣言、nullで初期化する
 		
 		//dateTextが入力されていれば
-		//※dateTextは現状ではblogCalendarで利用する
-		if(this.dateText !== void(0)){
+		if(this.dateText){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
 				//絞り込み対象のJSONの記事タイプが配列形式であれば

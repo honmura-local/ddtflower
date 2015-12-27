@@ -793,3 +793,34 @@ ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.
 MYGALLERY_SHOW_NUMBER				= 6;
 //メルマガ送信テーブルの表示記事数
 MAILMAGA_TABLE_SHOW_NUMBER			= 15;
+
+//createTagのJSON内ブログのテーブルデータのキー
+BLOG_TABLE_KEY						= "blogTable";
+//ワイルドカード
+WILD_CARD							= '*';
+//onclickイベント
+ONCLICK_EVENT						= 'onclick'
+//最初のAタグ
+FIRST_ANCHOR_TAG					= 'a:first';
+//ブログ最新記事一覧の各項目
+CURRENT_ARTICLE_LIST_CONTENTS		= '.currentArticleList li';
+//段落タグ
+PARAGRAPH_TAG						= 'P';
+//小さい文章タグ
+SMALL_TAG							= 'SMALL';
+//時刻タグ
+TIME_TAG							= 'TIME';
+//ブログの記事指定表示コード前半・後半
+CURRENT_ARTICLE_CODE_FRONT			= 'create_tag.createOneTableArticle(';
+CURRENT_ARTICLE_CODE_REAR			= ', "blogTable", SETTING_CURRENT_ARTICLE_CODE)';
+//ブログの記事指定表示コードの設定オブジェクト
+SETTING_CURRENT_ARTICLE_CODE		= {
+	startPage : 1,
+	displayPageMax : 1, 
+	pageNum : 1,
+	targetArea : ".blogArticles", 
+	callBack : "create_tag.createMyBlogImages()",
+	createTagSelector : void(0)
+};
+//数値1
+NUMBER_1							= 1;

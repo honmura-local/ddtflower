@@ -227,3 +227,23 @@ table.blogTable tr td:first-child {
 	float : right;	/* 右に寄せる */
 	margin : 10px 3px 3px;	/* 少々のmarginを取る */
 }
+
+/* 
+ * セレクタ:.currentArticleList
+ * 概要   :ブログの最新記事一覧
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.currentArticleList {
+	font-size : 10px;	/* 小さめの文字を指定する */
+}
+
+/* 
+ * セレクタ:.currentArticleListContent
+ * 概要   :ブログの最新記事一覧の各項目
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.currentArticleListContent {
+	margin-bottom : 5px;	/* 項目ごとに間隔を取る */
+}
