@@ -2946,6 +2946,31 @@ function createLittleContents(){
 			}
 		}		
 		
+		/*
+		 * 関数名:reloadTableData
+		 * 概要  :テーブルのデータを更新して再描画する
+		 * 引数　:String tableKey : 対象テーブルのcreateTagメンバJSON内のキー
+		 * 		 int startPage:表示する1つ目のナンバリングの数
+		 * 		 int displayPageMax:表示するナンバリングの最大数
+		 * 		 int displayPage:表示するブログのページ番号
+		 * 		 int pageNum:1ページに表示する記事数。
+		 *   　　:String target : 対象テーブルのセレクタ
+		 * 　　  :String callback : テーブルリロード後にコールされる関数名
+		 * 　　  :String getCreateTag : ナンバリングのタグのonclickでのcreateTag再取得のための文字列。
+		 * 　　　　例）"$('#lecturePermitList')[0]." ※jQueryオブジェクトは配列であるため、0番目を指定しないとメンバの取得ができない
+		 * 戻り値:なし
+		 * 作成日:2015.1230
+		 * 作成者:T.Masuda
+		 */
+		this.reloadTableData = function(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag) {
+			//テーブルデータを一度空にする
+			this.json[tableKey][TABLE_DATA_KEY] =[];
+			//テーブルデータを更新する
+			this.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json[tableKey], tableKey);
+			//テーブルを作る
+			this.outputNumberingTag(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag);
+		}
+		
 }	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();

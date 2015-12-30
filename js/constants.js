@@ -824,8 +824,10 @@ SETTING_CURRENT_ARTICLE_CODE		= {
 	createTagSelector : void(0)
 };
 
-//数値1
-NUMBER_1							= 1;
+//数値
+NUMBER_1							= 1;	//1
+NUMBER_4							= 4;	//4
+NUMBER_15							= 15;	//15
 //サーバとの通信失敗時のエラーメッセージ
 FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
 	//ログアウト処理ファイルのURL
@@ -845,3 +847,12 @@ SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
 
 //管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
 ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
+//更新件数を知らせるメッセージ
+NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER ='件のレコードを更新しました。';
+//受講承認一覧テーブルの領域
+SELECTOR_LECTUREPERMITLIST_OUTSIDE	= '.lecturePermitListInfoTableOutsideArea';
+//受講承認異常終了用のメッセージ
+ALERT_LECTUREPERMIT_PROCESS_ERROR	= '更新処理中にエラーが発生したため更新処理を途中で終了しました。\n';
+LINE_BREAK							= '\n';	//改行文字
+//受講承認一覧の各行のセレクタ
+SELECTOR_LECTUREPERMITLIST_RECORD	= '.lecturePermitListRecord';
