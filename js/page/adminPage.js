@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * ファイル名:adminPage.js
  * 概要  :管理者ページ用のjsファイル
  * 作成者:T.Yamamoto
@@ -417,6 +417,12 @@ function loopUpdatePermitLesson() {
 		//序文を追加する
 		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
 		
+		//フォームの追加取得用オブジェクトを作る
+//		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+//		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
+//		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
+//		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
+		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
@@ -425,8 +431,9 @@ function loopUpdatePermitLesson() {
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 						//DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+//						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
 						//加算ポイントレートを取得する
-						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', sendReplaceArray.students, sendReplaceArray.lesson_key);
+						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
 						//受講料から加算ポイントを求める
 						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
 						//備品代から加算ポイントを求める
@@ -535,12 +542,15 @@ function loopUpdatePermitLessonList() {
 		//クエリのキー
 		var queryKey = EMPTY_STRING;
 		
+		//フォームの追加取得用オブジェクトを作る
+		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.lecturePermitListRecord').each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')');
+					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
 					//受講承認一覧データを更新する
 					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
 				//カウンターをインクリメントする
@@ -549,7 +559,7 @@ function loopUpdatePermitLessonList() {
 		//例外処理
 		} catch(e){
 			//メッセージの先頭を追加する
-			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n');
+			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n' + e.message + '\n');
 		//必ず行う処理
 		} finally {
 			processedList.push(counter + '件のレコードを更新しました。');
