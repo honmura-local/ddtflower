@@ -1436,3 +1436,16 @@ form[target^="jquery_upload"]{
     }
     
 }
+
+/* 画面がタブレットのみの幅であれば */
+@media screen and (max-width: 429px){
+	/* 
+	 * セレクタ:.main
+	 * 概要   :コンテンツ領域。
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.main {
+	    min-width: 320px;  /* 画面を一定サイズ以上縮小しない。 */
+	}
+}

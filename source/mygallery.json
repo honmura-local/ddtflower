@@ -13,6 +13,15 @@
     },
     "memberMyGallery": {
     },
+    "galleryLeftSide" : {
+    	"class":"galleryLeftSide"
+    },
+    "galleryRightSide" : {
+    	"class":"galleryRightSide"
+    },
+    "galleryArea" : {
+    	"class" : "galleryArea"
+    },
     "myGalleryEditButtons": {
         "createButton": {
             "text": "新規"
@@ -49,7 +58,7 @@
                 "style": ""
             }
         },
-        "myPhotoDate": {
+        "date": {
             "text": ""
         },
         "myPhotoTitle": {
@@ -66,7 +75,7 @@
         }
     },
     "myGalleryTable":{
-        "db_getQuery":"SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS myPhotoDate, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key='user_key' AND ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;",
+        "db_getQuery":"SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key='user_key' AND ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;",
         "user_key":{
             "value":""
         },
@@ -79,7 +88,7 @@
                 "myPhotoImage":{
                     "className":"myPhotoImage"
                 },
-                "myPhotoDate":{
+                "date":{
                     "className":"myPhotoDate"
                 },
                 "myPhotoTitle":{

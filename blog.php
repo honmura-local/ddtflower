@@ -53,7 +53,7 @@ $msl_infos2 = new MSLPageInfo('1197', '1985');
 				create_tag.useZoomImage('blogArticleImages');
 
 				//datepickerによるカレンダーのクラスを作成する。
-				var bCalendar = new blogCalendar('.calendar', create_tag);
+				var bCalendar = new blogCalendar('.calendar', create_tag, create_tag.json.blogArticle[TABLE_DATA_KEY]);
 				bCalendar.create();	//カレンダーを実際に作成する
 
 				create_tag.createNewArticleList();	//最新記事一覧を作る

@@ -704,33 +704,33 @@ function addlogoutEvent(selector){
 		event.preventDefault();	//Aタグがイベント登録の対象であった場合、本来の画面遷移をキャンセルする。
 		
 		var self = this;	//自信の要素を変数に入れる
-		//日付クラスインスタンスを生成する。
-		var cookieLimit = new Date();
-		//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
-		cookieLimit.setTime(0);
-		
-		//管理者画面から会員ページへログインしていなければ
-		if(!commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)){
-		//Ajax通信を行い、ログアウト処理を行う。
-		$.ajax({
-			//ログアウト用PHPをコールする
-			url:'php/LogoutSession.php',
-			async:false,	//同期通信を行う
-			success:function(){	//通信成功時の処理
-				//cookieを消去する
-				document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';authority=;expires=' + cookieLimit.toGMTString() + ';';
-				$(self).closest('.window')[0].instance.destroy();	//先頭のウィンドウを消す
-				commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
-				//画面遷移の履歴を追加する。
-				history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
-				//ウィンドウの重なりを調整する
-				$(CURRENT_WINDOW)[0].instance.setWindowZIndex();	
-			},
-			error:function(xhr,status,error){	//通信エラー時
-				//エラーメッセージを出す
-				alert('通信エラーです。時間をおいて試してください。');
-			}
-		});
+			//日付クラスインスタンスを生成する。
+			var cookieLimit = new Date();
+			//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			cookieLimit.setTime(0);
+			
+			//管理者画面から会員ページへログインしていなければ
+			if(!commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)){
+			//Ajax通信を行い、ログアウト処理を行う。
+			$.ajax({
+				//ログアウト用PHPをコールする
+				url:'php/LogoutSession.php',
+				async:false,	//同期通信を行う
+				success:function(){	//通信成功時の処理
+					//cookieを消去する
+					document.cookie = 'userId=;expires=' + cookieLimit.toGMTString() + ';authority=;expires=' + cookieLimit.toGMTString() + ';';
+					$(self).closest('.window')[0].instance.destroy();	//先頭のウィンドウを消す
+					commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
+					//画面遷移の履歴を追加する。
+					history.pushState({'url':'#' + TOPPAGE_NAME}, '', location.href);
+					//ウィンドウの重なりを調整する
+					$(CURRENT_WINDOW)[0].instance.setWindowZIndex();	
+				},
+				error:function(xhr,status,error){	//通信エラー時
+					//エラーメッセージを出す
+					alert('通信エラーです。時間をおいて試してください。');
+				}
+			});
 		//管理者画面からの会員ページログインであったら
 		} else {
 			$(self).closest('.window')[0].instance.destroy();	//会員画面のウィンドウを消す

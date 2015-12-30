@@ -325,3 +325,85 @@
 .gallery #mslongtail_1985{
 	display: block;	/* 最初から表示しておく */
 }
+
+ /* 
+ * セレクタ:.galleryRightSide
+ * 概要   :ギャラリーの右側(写真)
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryRightSide{
+	width:	70%;	/* 幅を70%にしてコンテンツと並べる。 */
+	float:	right;	/* 右に寄せる。 */
+}
+
+ /* 
+ * セレクタ:.galleryLeftSide
+ * 概要   :ギャラリーの左側(カレンダー)
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryLeftSide{
+	width:	29%;	/* 幅を29%にしてコンテンツと並べる。 */
+	float:	right;	/* 右に寄せる。 */
+}
+
+ /* 
+ * セレクタ:.galleryLeftSide .calendar
+ * 概要   :カレンダー
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.26
+ */
+.galleryLeftSide .calendar {
+	width:	100%;	/* カレンダーをなるべく大きく表示する。 */
+	float:	left;	/* 左に寄せる。 */
+}
+
+ /* 
+ * セレクタ:.galleryTable tr:first-child
+ * 概要   :ギャラリーの写真1枚目
+ * 作成者 :T.Masuda
+ * 作成日 :2015.12.27
+ */
+.galleryTable tr:first-child {
+	display: none;	/* 見せるべきものではないので隠す */
+}
+/* 画面伸縮時の設定 */
+@media screen and (max-width: 679px) {
+	 /* 
+	 * セレクタ:.galleryRightSide, .galleryLeftSide
+	 * 概要   :ギャラリーの両サイド
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.26
+	 */
+	.galleryRightSide, .galleryLeftSide{
+		width:	100%;	/* 幅を100%にしてコンテンツと並べる。 */
+		float:	none;	/* floatを解除する */
+	}
+}
+
+/* スマホレイアウト設定 */
+@media screen and (max-width: 355px) {
+	
+	/* 
+	 * セレクタ:.galleryTable, .myGalleryTable
+	 * 概要   :ギャラリーの写真一覧
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.27
+	 */
+	.galleryTable, .myGalleryTable {
+		width : 100%;	/* サイズを画面に合わせる */
+	}
+
+	 /* 
+	 * セレクタ:.galleryTable tr , .myGalleryTable tr 
+	 * 概要   :ギャラリーの写真
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.12.27
+	 */
+	.galleryTable tr , .myGalleryTable tr {
+		display : block;	/* margin autoを利かせるための設定 */
+		margin : 20px auto 0;	/* 中央に寄せる */
+	}
+	
+}

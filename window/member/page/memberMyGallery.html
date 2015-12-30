@@ -51,11 +51,19 @@
 					create_tag.outputTag('pageTitle', 'pageTitle', $currentContent);						// タイトル領域を作る
 					create_tag.outputTag('myGalleryEditButtons', 'myGalleryEditButtons', $currentContent);			// ギャラリー編集用のボタンを作る。
 					//ギャラリーのちょっとした説明を付け足す。
-					create_tag.outputTag('myGalleryNotice', 'myGalleryNotice', '.myGalleryEditButtons');	
-					create_tag.outputTag('memberMyGallery', 'memberMyGallery', $currentContent);						// ギャラリーページ用のギャラリーを作る。
-					// ナンバリング領域を作る
-					create_tag.outputTag('numberingOuter', 'numberingOuter', $currentContent);
+					create_tag.outputTag('myGalleryNotice', 'myGalleryNotice', '.myGalleryEditButtons');
+					//ギャラリー全体の領域のDOMを配置する
+					create_tag.outputTag('memberMyGallery', 'memberMyGallery', $currentContent);
+					//ギャラリーの左右のエリアのDOMを作る
+					create_tag.outputTag('galleryRightSide', 'gallerySideArea', $currentContent);
+					create_tag.outputTag('galleryLeftSide', 'gallerySideArea', $currentContent);
+					create_tag.outputTag('galleryArea', 'memberMyGallery', '.galleryRightSide');
 					
+					// ギャラリーページ用のギャラリーを作る。
+					// ナンバリング領域を作る
+					create_tag.outputTag('numberingOuter', 'numberingOuter', '.galleryRightSide');
+					create_tag.outputTag('calendar','calendar','.galleryLeftSide');	//カレンダーを作る
+
 					//ユーザのギャラリーのJSONに会員IDをセットする。
 					create_tag.json.myGalleryTable.user_key.value = create_tag.json.accountHeader.user_key.value;
 					//ユーザのギャラリー情報を取得する
@@ -63,7 +71,7 @@
 					//ギャラリーデータがあればコンテンツを作る
 					if(create_tag.json.myGalleryTable[TABLE_DATA_KEY][0]) {
 						//ギャラリーの内容を追加する。
-						create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+						create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
 					}
 	
 					//ギャラリーの画像を拡大できるようにする。
@@ -78,6 +86,10 @@
 					create_tag.deleteMyGalleryPhoto('.myGalleryEditButtons');
 					//更新ボタンが押されたらチェックが入った写真のデータの更新を行う
 					create_tag.updateMyGalleryPhotoData('.myGalleryEditButtons');
+					
+					var mgCalendar = new myGalleryCalendar('.calendar', create_tag, create_tag.json.myGalleryTable[TABLE_DATA_KEY]);
+					mgCalendar.create();	//カレンダーを実際に作成する
+					
 					//ダブルクリックで記事の文字を編集できるようにする
 					create_tag.setDoubleClickMyPhotoEdit();
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。

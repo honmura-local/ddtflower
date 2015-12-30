@@ -22,7 +22,8 @@ function createTag(){
 	this.formData = {};			//フォームデータを格納する連想配列。
 	//add T.Masuda 2015/0417 予約ダイアログを作る関数を格納した連想配列を用意する。
 	this.reservedDialog = {};	
-
+	this.dateText = null;		//日付による記事絞込時の日付。nullでなければ絞込を行う
+	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
@@ -453,7 +454,7 @@ function createTag(){
 			var evaled = eval(callBack);	//評価する
 			//evaledが関数であれば
 			if(evaled instanceof Function == true){
-				evaled();	//関数を実行する
+				evaled(this);	//関数を実行する
 			}
 		}
 	}
@@ -1358,8 +1359,7 @@ function createTag(){
 		var retObj = null;	//返却用のオブジェクトを格納する変数を宣言、nullで初期化する
 		
 		//dateTextが入力されていれば
-		//※dateTextは現状ではblogCalendarで利用する
-		if(this.dateText !== void(0)){
+		if(this.dateText){
 			//evaledが日付であれば、記事の絞り込みを行う。
 			if(!isNaN(Date.parse(this.dateText))){
 				//絞り込み対象のJSONの記事タイプが配列形式であれば
@@ -1387,13 +1387,17 @@ function createTag(){
 		//対象のオブジェクトのコピーを作成する
 		var retObj = $.extend(true, {}, this.getMapNode(jsonName));
 		var deleteOffset = 0;					//要素の削除でずれたインデックスを修正するための数値
-		var tableLength = retObj[TABLE_DATA_KEY].length;	//走査対象のテーブルのサイズを取得する
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
-		for(var i = 0; i < tableLength; i++){
+		for(var i = 0; i < retObj[TABLE_DATA_KEY].length; i++){
+			console.log(dateText.replace(/\//g, '-'));
 			//日付が合わなければ
-			if(retObj[TABLE_DATA_KEY][i].blogArticleDate != dateText){
-				retObj[TABLE_DATA_KEY].splice(i);	//該当する記事を削除する
+			if(retObj[TABLE_DATA_KEY][i].date !== void(0) && retObj[TABLE_DATA_KEY][i].date != dateText.replace(/\//g, '-')){
+				retObj[TABLE_DATA_KEY].splice(i--, 1);	//該当する記事を削除する
+			}
+			
+			if(retObj[TABLE_DATA_KEY].length - 1<= i) {
+				break;
 			}
 		}
 		

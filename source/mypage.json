@@ -104,33 +104,6 @@
             "href": "#myoption.html"
         }
     },
-    "myBlogListArea":{
-    },
-    "myBlogList":{
-    },
-    "myBlogListTable":{
-        "db_getQuery":"SELECT '' AS checkbox, id, DATE(post_timestamp) AS date,title FROM user_blog WHERE user_key='user_key' ORDER BY post_timestamp DESC; ",
-        "user_key":{
-            "value":""
-        },
-        "config": {
-            "columns": {
-                "checkbox":{
-                    "className":"checkWrap"
-                },
-                "id":{
-                    "style":"display:none",
-                    "className":"number"
-                },
-                "date": {
-                    "columnName": "日付"
-                },
-                "title": {
-                    "columnName": "タイトル"
-                }
-            }
-        }
-    },
     "deleteMyBlog":{
         "db_setQuery":"DELETE FROM user_blog WHERE id IN ('id');",
         "id":{
@@ -142,12 +115,17 @@
     "blogArticles":{
     },
     "myBlogTable":{
-        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='user_key' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;",
+    	"class" : "blogTable myBlogTable",
+        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='user_key' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;",
         "user_key":{
             "value":""
         },
         "config": {
             "columns": {
+                "id":{
+                    "style":"display:none",
+                    "className":"number"
+                },
                 "image1":{
                     "className":"blogImage"
                 },
@@ -170,6 +148,54 @@
                 },
                 "title": {
                     "className":"blogTitle"
+                },
+                "buttons": {
+                    "className":"buttons"
+                }
+            }
+        }
+    },
+    "blogTable":{
+    	"class" : "blogTable",
+        "db_getQuery":"SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date, ub.post_timestamp AS post_date, uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, ub.disclosure_range, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key=uin.id AND ub.disclosure_range = 0 ORDER BY post_date DESC;",
+        "user_key":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "id":{
+                    "style":"display:none",
+                    "className":"number"
+                },
+                "image1":{
+                    "className":"blogImage"
+                },
+                "image2":{
+                    "style":"display:none",
+                    "className":"blogImage"
+                },
+                "image3":{
+                    "style":"display:none",
+                    "className":"blogImage"
+                },
+                "text": {
+                    "className":"blogContent"
+                },
+                "date": {
+                    "className":"blogDate"
+                },
+                "userName": {
+                    "className":"userName"
+                },
+                "title": {
+                    "className":"blogTitle"
+                },
+                "post_date": {
+                    "className":"post_date",
+                    "display" : "none"
+                },
+                "buttons": {
+                    "className":"buttons"
                 }
             }
         }
