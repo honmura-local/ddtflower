@@ -400,11 +400,11 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
+	$(STR_BODY).on(CLICK, SELECTOR_DOLECTUREPERMIT_BUTTON, function(){
 		
 		//チェックが入っているレコードがなければ
-		if (!$('.permitCheckbox:checked').length) {
-			alert('受講承認を行うレコードを選択してください。');
+		if (!$(SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX).length) {
+			alert(ALERT_NEED_SELECT_LECTUREPERMIT_RECORD);
 			return;	//処理を終える
 		}
 		
@@ -413,7 +413,7 @@ function loopUpdatePermitLesson() {
 		//受講承認を行った生徒の方のリストを作る
 		var processedList = new Array();
 		//序文を追加する
-		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
+		processedList.push(MESSAGE_RESULT_DOLECTUREPERMIT);
 		
 		//フォームの追加取得用オブジェクトを作る
 //		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
@@ -428,8 +428,11 @@ function loopUpdatePermitLesson() {
 				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 						//DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-//						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
+						
+						//取得した値が不正かどうかをチェックする
+						VALIDATOR.validate(sendReplaceArray, commonFuncs.getDoLecturePermitRules());
+						
 						//加算ポイントレートを取得する
 						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
 						//受講料から加算ポイントを求める
@@ -547,6 +550,7 @@ function loopUpdatePermitLessonList() {
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.lecturePermitListRecord').each(function() {
+					console.log($('input[name="use_point"]').eq(counter).attr('data-diff_point'));
 					//DBを更新するための値を取得するために置換する連想配列を取得する
 					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
 					//受講承認一覧データを更新する

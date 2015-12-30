@@ -845,3 +845,11 @@ SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
 
 //管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
 ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
+//受講承認画面の承認ボタン
+SELECTOR_DOLECTUREPERMIT_BUTTON = '.doLecturePermit .normalButton';
+//受講承認画面のチェックが入ったチェックボックス
+SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX = '.permitCheckbox:checked';
+//受講承認時に対象のレコードが存在しなかった場合の警告
+ALERT_NEED_SELECT_LECTUREPERMIT_RECORD = '受講承認を行うレコードを選択してください。';
+//受講承認処理完了時のメッセージの序文
+MESSAGE_RESULT_DOLECTUREPERMIT = '以下の生徒の受講承認処理が完了しました。\n';
