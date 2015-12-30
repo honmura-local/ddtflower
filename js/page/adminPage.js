@@ -549,10 +549,9 @@ function loopUpdatePermitLessonList() {
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.lecturePermitListRecord').each(function() {
-					console.log($('input[name="use_point"]').eq(counter).attr('data-diff_point'));
+			$(SELECTOR_LECTUREPERMITLIST_RECORD).each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = create_tag.getSendReplaceArray('lecturePermitListInfoTable', counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
+					var sendReplaceArray = create_tag.getSendReplaceArray(LECTURE_PERMIT_LIST_INFO_TABLE, counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
 					//受講承認一覧データを更新する
 					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
 				//カウンターをインクリメントする
@@ -561,11 +560,14 @@ function loopUpdatePermitLessonList() {
 		//例外処理
 		} catch(e){
 			//メッセージの先頭を追加する
-			processedList.unshift('更新処理中にエラーが発生したため更新処理を途中で終了しました。\n' + e.message + '\n');
+			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理
 		} finally {
-			processedList.push(counter + '件のレコードを更新しました。');
-			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
+			//テーブルをリロードする。
+			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
+			//処理件数を処理リストの末尾に追加する
+			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
+			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
 		}
 	});
 }

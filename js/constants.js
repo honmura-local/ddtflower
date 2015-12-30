@@ -824,8 +824,21 @@ SETTING_CURRENT_ARTICLE_CODE		= {
 	createTagSelector : void(0)
 };
 
-//数値1
-NUMBER_1							= 1;
+//outputNumberingTagで一件だけ表示する場合の数
+SHOW_ONLY_ONE_ARTICLE_NUM									= 1;
+//outputNumberingTagで1ページ目を指定して表示する場合の数
+FIRST_DISPLAY_PAGE											= 1;
+//outputNumberingTagで最初のコール時に開始ページを指定する場合の数
+START_PAGE_NUM												= 1;
+//受講承認一覧テーブルのナンバリングの最大個数(0で1個)
+LECTUREPERMITLIST_TABLE_NUMBERING_MAX						= 4;
+//受講承認一覧テーブルの最大行数
+LECTUREPERMITLIST_TABLE_MAX_ROWS							= 15;
+//受講承認一覧を表示した後の処理関数の文字列
+AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC						= 'afterReloadPermitListInfoTable';
+//outputNumberingTagでcreateTagをonclick内で取得するための文字列。受講承認一覧版
+GET_LECTUREPERMITLIST_CREATE_TAG = "$('#lecturePermitList')[0].";
+
 //サーバとの通信失敗時のエラーメッセージ
 FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
 	//ログアウト処理ファイルのURL
@@ -853,3 +866,14 @@ SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX = '.permitCheckbox:checked';
 ALERT_NEED_SELECT_LECTUREPERMIT_RECORD = '受講承認を行うレコードを選択してください。';
 //受講承認処理完了時のメッセージの序文
 MESSAGE_RESULT_DOLECTUREPERMIT = '以下の生徒の受講承認処理が完了しました。\n';
+//更新件数を知らせるメッセージ
+NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER ='件のレコードを更新しました。';
+//受講承認一覧テーブルの領域
+SELECTOR_LECTUREPERMITLIST_OUTSIDE	= '.lecturePermitListInfoTableOutsideArea';
+//受講承認異常終了用のメッセージ
+ALERT_LECTUREPERMIT_PROCESS_ERROR	= '更新処理中にエラーが発生したため更新処理を途中で終了しました。\n';
+JS_EOL								= '\n';	//改行文字
+//受講承認一覧の各行のセレクタ
+SELECTOR_LECTUREPERMITLIST_RECORD	= '.lecturePermitListRecord';
+//受講承認一覧タブのセレクタ
+SELECTOR_LECTUREPERMITLIST_TAB		= '#lecturePermitList';
