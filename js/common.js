@@ -1218,16 +1218,24 @@ this.defaultClassworkCostColumns = [
 			//nameが空でなければ
 			if(name != "" && name !== void(0)){
 				//チェックボックスか、ラジオボタンなら
-				if(type == 'checkbox' || type=='radio'){
+				if(type == CHECKBOX || type == RADIO){
 					if($(this).index('[name="' + name + '"]:checked') == 0){
 						val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
 						//name属性で括られたチェックボックスを走査していく。
 						$('input[name="' + name + '"]:checked').each(function(){
 							//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-							val.push(this.getAttribute('value'));
+							val.push(this.getAttribute(VALUE));
 						});
-						//formDataを連想配列として扱い、keyとvalueを追加していく。
-						formDataReturn[name] = val;
+						
+						//ラジオボタンなら
+						if (type == RADIO) {
+							//formDataにラジオボタンの値を追加する
+							formDataReturn[name] = val[0];
+						//チェックボックスなら
+						} else {
+							//formDataにチェックボックスの値を追加する
+							formDataReturn[name] = val;
+						}
 					}
 				//それ以外であれば
 				} else {

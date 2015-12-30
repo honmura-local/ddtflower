@@ -12,36 +12,55 @@
 			<!-- マイページのCSSファイルを読み込む。 -->
 			<link href="css/mypage.css" rel="stylesheet" type="text/css">
 			<script>
+				var $currentWindow = $(CURRENT_WINDOW);
+				var $currentContent = $(CURRENT_WINDOW_MAIN);
+			
+				var create_tag = new createLittleContents();
+			
+				create_tag.getJsonFile('source/createarticle.json');	
+				create_tag.getJsonFile('source/commonJson.json');		
+				create_tag.getJsonFile('source/memberCommon.json');		
 
-				var creator = new createLittleContents();
-				creator.hideNormalHeader();
-			
-				creator.getJsonFile('source/createarticle.json');
-				creator.getJsonFile('source/commonJson.json');
-				creator.getJsonFile('source/memberCommon.json');
-				creator.getDomFile('template/common.html');				
-				creator.getDomFile('template/memberCommon.html');				
-				creator.getDomFile('template/createblogarticle.html');
-				creator.outputTag('accountHeader', 'memberHeader');
-				creator.outputTag('userBanner');
-			
-				creator.outputTag('pageTitle');	
+				var memberInfo = commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId) ?  commonFuncs.GetCookies().otherUserId: create_tag.json.accountHeader.user_key.value;
+				create_tag.json.accountHeader.user_key.value = memberInfo;	
 				
-				creator.outputTag('blogEditImageUploader');	
-				creator.outputTag('blogEdit');				
-				creator.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');
-				creator.outputTag('blogEditImages', 'blogEditImages','.blogEdit');		
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditImagesSection','blogEditImagesSection','.blogEditImages');
-				creator.outputTag('blogEditText', 'blogEditText','.blogEdit');				
-				creator.outputTag('blogPublication', 'blogPublication','.blogEdit');		
-				creator.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');		
+				create_tag.getJsonFile('php/GetJSONString.php', create_tag.json['accountHeader'], 'accountHeader');
+
+				create_tag.setBlogUpdateQueryReplace('myBlogContent', 'accountHeader', 'updateMyBlog', articleNumber);
 				
+				create_tag.getDomFile('template/common.html');				
+				create_tag.getDomFile('template/memberCommon.html');
+				create_tag.getDomFile('template/createblogarticle.html');
+				
+				create_tag.outputTag('accountHeader', 'memberHeader', $currentContent);
+				create_tag.outputTag('userBanner', 'userBanner', $currentContent);
+			
+				create_tag.outputTag('pageTitle', 'pageTitle', $currentContent);
+				create_tag.outputTag('blogEditImageUploader', 'blogEditImageUploader', $currentContent);
+				create_tag.outputTag('blogEdit', 'blogEdit', $currentContent);
+				create_tag.outputTag('blogEditTitle', 'blogEditTitle', '.blogEdit');
+				create_tag.outputTag('blogEditImages', 'blogEditImages','.blogEdit');
+				create_tag.outputTag('blogEditImagesSection1','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditImagesSection2','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditImagesSection3','blogEditImagesSection','.blogEditImages');
+				create_tag.outputTag('blogEditText', 'blogEditText','.blogEdit');
+				create_tag.outputTag('blogPublication', 'blogPublication','.blogEdit');
+				create_tag.outputTag('blogEditButtons', 'blogEditButtons','.blogEdit');	
+				
+				var disclosureRange = create_tag.json.myBlogContent.disclosure_range.text;
+				if(commonFuncs.checkEmpty(disclosureRange)){
+					$(".blogPublicationRadio").filter('[value="' + disclosureRange + '"]').prop('checked', 'checked');
+				}
+				
+				commonFuncs.setBlogImages(create_tag);
+				
+				$('[name=blogTitle]').val(create_tag.json.myBlogContent.title.text);
+				$('[name="blogContent"]').text(create_tag.json.myBlogContent.content.text);
 				
 				$('.main button, .main input:submit').button();
-				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', creator.uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImage');
-				$('form').validate(showAlert);
+				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', create_tag.uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImagePath');
+				$('form').validate(articleCreateHandler);
+				addlogoutEvent('.logoutLink');
 			</script>
 		</div>
 	</div>
