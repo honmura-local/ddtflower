@@ -2208,6 +2208,40 @@ this.defaultClassworkCostColumns = [
 		//オブジェクトを返す
 		return retObj;
 	}	
+
+	/* 関数名:checkBeforeEnterAdminPage
+	 * 概要　:管理者権限であるかをチェックして、該当しなければ画面を閉じてトップページに戻る
+	 * 引数　:String authority : 権限の値 
+	 * 　　　:Element currentWindow :ウィンドウのDOM  
+	 * 返却値:boolean : 権限のチェック結果
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkBeforeEnterAdminPage = function (authority, currentWindow) {
+		//判定結果を格納する変数を用意する
+		retResult = true;
+		
+		//管理者権限でなければ
+		if (authority != ADMIN_AUTHORITY) {
+			
+			retResult = false;	//管理者権限ではなかったという判定をセットする
+			
+			//警告を出す
+			alert(ALERT_NOT_ADMIN_USER_ACCESS);
+			 
+			//強制ログアウトを行う
+			currentWindow.instance.destroy();	//先頭のウィンドウを消す
+			commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
+			//画面遷移の履歴を追加する。
+			history.pushState({ url :SHARP + TOPPAGE_NAME}, EMPTY_STRING, location.href);
+			//ウィンドウの重なりを調整する
+			$(CURRENT_WINDOW)[0].instance.setWindowZIndex();
+			//通常画面ウィンドウを表示する
+			$(CURRENT_WINDOW)[0].instance.showCurrentWindow();
+		}
+		
+		return retResult;	//判定結果を返す
+	}
 	
 //ここまでクラス定義領域
 }
