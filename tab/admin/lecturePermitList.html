@@ -8,7 +8,7 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
-			$('#lecturePermitList')[0].create_tag = create_tag;	//createTagをDOMと結びつける
+			$(SELECTOR_LECTUREPERMITLIST_TAB)[0].create_tag = create_tag;	//createTagをDOMと結びつける
 
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
@@ -36,18 +36,11 @@
 			// ナンバリング領域を作る
 			create_tag.outputTag('numberingOuter','numberingOuter','#lecturePermitList');
 
-			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['lecturePermitListInfoTable'], 'lecturePermitListInfoTable');
 			//受講承認一覧テーブルを作る
-			create_tag.outputNumberingTag('lecturePermitListInfoTable', 1, 4, 1, 15, '.lecturePermitListInfoTableOutsideArea', 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
-			//受講承認一覧テーブルを作る
-		//	create_tag.tableReload('lecturePermitListInfoTable')
+			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
 			
 			//受講承認一覧のリスト更新ボタン
 			create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
-			//クリックでテキストボックスにカレンダーを表示する
-			//clickCalendar('fromSearach');
-			//クリックでテキストボックスにカレンダーを表示する
-			//clickCalendar('toSearach');
 			//受講承認一覧の検索機能を実装する
 			searchPermitListInfoTable();
 			//セレクトボックスのvalueを画面に表示されている値にする
