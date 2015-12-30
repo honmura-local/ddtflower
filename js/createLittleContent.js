@@ -1856,13 +1856,6 @@ function createLittleContents(){
 			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
 			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector, addAttr);
 			delete inputDataArray.columnCheckbox;	//チェックボックス列から取得したデータは空なので削除する
-			//内容をチェックする
-			for(key in inputDataArray){
-				//空があれば
-				if(!commonFuncs.checkEmpty(inputDataArray[key])){
-					throw new Error("key: " + key + 'の値が設定されていません。');	//例外を発生させる
-				}
-			}
 			
 			//取得した連想配列を結合する
 			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);

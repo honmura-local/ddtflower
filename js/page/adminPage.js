@@ -416,10 +416,16 @@ function loopUpdatePermitLesson() {
 		processedList.push(MESSAGE_RESULT_DOLECTUREPERMIT);
 		
 		//フォームの追加取得用オブジェクトを作る
-//		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
-//		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
-//		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
-//		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
+		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
+		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
+		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
+
+		//validation用の設定オブジェクトを作る
+		//use_pointの未定義チェック
+		var validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isUndefined');
+		//use_pointの数字チェック
+		validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isNumeric', validateSettings);
 		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
@@ -429,9 +435,8 @@ function loopUpdatePermitLesson() {
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 						//DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
-						
 						//取得した値が不正かどうかをチェックする
-						VALIDATOR.validate(sendReplaceArray, commonFuncs.getDoLecturePermitRules());
+						VALIDATOR.validate(validateSettings, sendReplaceArray);
 						
 						//加算ポイントレートを取得する
 						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
@@ -450,8 +455,12 @@ function loopUpdatePermitLesson() {
 			});
 		//例外処理
 		} catch(e){
+			//処理件数が0件であれば
+			if (counter == 0) {
+				processedList = [];		//序文を消す
+			}
 			//メッセージの先頭を追加する
-			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n');
+			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n' + e.message + '\n');
 		//必ず行う処理
 		} finally {
 			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
@@ -559,6 +568,10 @@ function loopUpdatePermitLessonList() {
 			});
 		//例外処理
 		} catch(e){
+			//処理件数が0件であれば
+			if (counter == 0) {
+				processedList = [];		//序文を消す
+			}
 			//メッセージの先頭を追加する
 			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理

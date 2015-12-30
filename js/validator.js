@@ -13,20 +13,6 @@
  */
 function validator () {
 
-	//validation用関数をオブジェクトに登録する
-	this.method = {
-			//数値チェック
-			isNumeric : this.checkNumeric,
-			//数値チェック
-			isNumericStrict : this.checkNumericStrict,
-			//nullチェック
-			isNull : this.checkNull,
-			//空文字チェック
-			isEmpty : this.checkEmpty,
-			//undefinedチェック
-			isUndefined : this.checkUndefined
-	} 
-	
 	/* 関数名:validate
 	 * 概要　:指定したルールでvalidationを行う
 	 * 引数　:Object rules : validationルールのオブジェクト。以下の構成となる
@@ -78,7 +64,7 @@ function validator () {
 	this.checkNumeric = function(key, value) {
 		
 		//数値であれば(文字列扱いの数字も対象)
-		if (!(value instanceof int) && isNan(value)) {
+		if (!(typeof value == NUMBER) && isNaN(value)) {
 			//数字でないというメッセージを例外として渡す
 			throw Error(key + ALERT_VALUE_IS_NOT_NUMERIC);
 		} 
@@ -95,7 +81,7 @@ function validator () {
 	this.checkNumericStrict = function(key, value) {
 		
 		//数値であれば(文字列扱いの数字は対象外)
-		if (!(value instanceof int)) {
+		if (!(typeof value == NUMBER)) {
 			//数値でないというメッセージを例外として渡す
 			throw Error(key + ALERT_VALUE_IS_NOT_NUMERIC_STRICT);
 		} 
@@ -151,7 +137,45 @@ function validator () {
 		} 
 	}
 	
+	/* 関数名:getValidationSettingObject
+	 * 引数　:String  name : 追加するname
+	 * 　　　:String rule : nameに対して設定するvalidationルール
+	 * 　　　:Object object: 設定を追加する先のオブジェクト
+	 * 返却値:Object : ルールを追加したオブジェクト
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.getValidationSettingObject = function(name, rule, object) {
+		var retObj = object ? object : {};	//引数のオブジェクトが空なら新規のオブジェクトを用意する
+		
+		//該当するnameに何もはいっていなければ　
+		if (retObj[name] === void(0)) {
+			retObj[name] = [];	//配列を追加する
+		}
+		
+		//ルールを追加する
+		retObj[name].push(rule);
+		
+		//ルールを追加したオブジェクトを返す
+		return retObj;
+	}
+	
+	//validation用関数をオブジェクトに登録する
+	this.method = {
+			//数値チェック
+			isNumeric : this.checkNumeric,
+			//数値チェック
+			isNumericStrict : this.checkNumericStrict,
+			//nullチェック
+			isNull : this.checkNull,
+			//空文字チェック
+			isEmpty : this.checkEmpty,
+			//undefinedチェック
+			isUndefined : this.checkUndefined
+	} 
+
 }
 
 //様々な場所で利用されるため予めインスタンスを生成しておく
-var VALIDATOR = new validator();
+VALIDATOR = new validator();
+
