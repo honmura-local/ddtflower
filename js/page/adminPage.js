@@ -557,11 +557,11 @@ function loopUpdatePermitLessonList() {
 		//例外処理
 		} catch(e){
 			//メッセージの先頭を追加する
-			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + LINE_BREAK);
+			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理
 		} finally {
 			//テーブルをリロードする。
-			create_tag.reloadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, NUMBER_1, NUMBER_4, NUMBER_1, NUMBER_15, SELECTOR_LECTUREPERMITLIST_OUTSIDE, 'afterReloadPermitListInfoTable', "$('#lecturePermitList')[0].");
+			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
 			//処理件数を処理リストの末尾に追加する
 			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
 			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
