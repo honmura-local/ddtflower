@@ -2169,6 +2169,38 @@ this.defaultClassworkCostColumns = [
 		return daysDiff;
 	}
 	
+	/* 関数名:getAddAttrObject
+	 * 概要　:getInputDataで利用する取得attribute追加の設定のオブジェクトを作る
+	 * 引数　:String name : 追加取得対象のフォームパーツのname属性値 
+	 * 　　　:String attrName : attribute名 
+	 * 　　　:String customName :追加取得するattributeのオブジェクト内でのkey名 
+	 * 　　　:Object map :追加する場合に設定するオブジェクト 
+	 * 返却値:Object : 設定を格納したオブジェクト
+	 * 作成日　:2015.1226
+	 * 作成者　:T.Masuda
+	 */
+	this.getAddAttrObject = function(name, attrName, customName, map) {
+		//エントリを追加するオブジェクトを設定する
+		var retObj = map ? map : {};
+		
+		//該当するキーがあれば
+		if (name in retObj) {
+			//キーに追加を行う
+			retObj[name][attrName] = customName;
+		//新規に追加する
+		} else {
+			//最下層のオブジェクトを作る
+			var addObj = {};
+			//最下層のエントリを作る
+			addObj[attrName] = customName;
+			//返却用オブジェクトに追加を行う
+			retObj[name] = addObj;
+		}
+		
+		//オブジェクトを返す
+		return retObj;
+	}	
+	
 //ここまでクラス定義領域
 }
 
