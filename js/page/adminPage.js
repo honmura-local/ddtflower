@@ -429,13 +429,33 @@ function loopUpdatePermitLesson() {
 			$('.lecturePermitAccordion').each(function() {
 				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-						//DBを更新するための値を取得するために置換する連想配列を取得する
+						// DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-//						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
-						//加算ポイントレートを取得する
+						// 加算ポイントレートを取得する
 						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
-						//受講料から加算ポイントを求める
-						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+						// ユーザの所持ポイント退避
+						var user_get_point = sendReplaceArray['get_point']
+						// 受講料から加算ポイントを求める
+						var userClassworkCost = endReplaceArray['user_classwork_cost']
+						var get_point = create_tag.getUserPlusPoint(userClassworkCost, lessonPlusPointRate);
+						sendReplaceArray['get_point'] = get_point;
+						// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
+						var use_point = sendReplaceArray['use_point'];
+						if (user_get_point < use_point) {
+							throw new Error("使用ポイント(" + use_point + ")が所持ポイント(" + user_get_point + ")を超えています");
+						}
+						var classworkUsePoint = usePoint;
+						var commodityUsePoint = usePoint - userClassworkCost;
+						if (commodityUsePoint > 0) {
+							classworkUsePoint = userClassworkCost;
+						} else {
+							commodityUsePoint = 0;
+						}
+						sendReplaceArray['pay_price'] = sendReplaceArray['pay_price'] - classworkUsePoint;
+						sendReplaceArray['pay_cash'] = sendReplaceArray['pay_cash'] - commodityUsePoint;
+						
+						sendReplaceArray['classwork_use_point'] = classworkUsePoint;
+						sendReplaceArray['commodity_use_point'] = commodityUsePoint;
 						//備品代から加算ポイントを求める
 						sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
 						//受講承認データを更新する
