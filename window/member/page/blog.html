@@ -67,31 +67,33 @@
 					create_tag.outputTag("blogArticles",'blogArticles','.blogRightContent');			//Myページのブログ領域
 					create_tag.outputTag('numberingOuter','numberingOuter','.blogRightContent');
 	
-					create_tag.outputTag('blogLeftContent', 'blogLeftContent', ".blogArticleArea");	// 左側領域を作る
+					// 左側領域を作る
+					create_tag.outputTag('blogLeftContent', 'blogLeftContent', ".blogArticleArea");	
 					create_tag.outputTag('calendar','calendar','.blogLeftContent');	// 左側領域にカレンダーを作る
+					//空の最新記事一覧のタグを生成する
+					create_tag.outputTag('currentArticleList','currentArticleList','.blogLeftContent');
 					
 					//ユーザのブログ領域用のJSONに会員IDをセットする。
 					create_tag.json.myBlogTable.user_key.value = create_tag.json.accountHeader.user_key.value;
-									
-					//ユーザ情報のテキストをDBから取得する
-					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myBlogTable'], 'myBlogTable');
-					//ブログデータがあればブログを作る
-					if(create_tag.json.myBlogTable[TABLE_DATA_KEY][0]) {
-						create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	// ブログの記事を作る。
-						//記事の画像を拡大できるようにする。
-						creator.useZoomImage('blogImage');
-					}
+
+					//ログイン状態をチェックした上でDBにアクセスする
+					create_tag.doGuestLoginProcedure(function() {
+						//ユーザ情報のテキストをDBから取得する
+						create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['blogTable'], 'blogTable');
+						//ブログデータがあればブログを作る
+						if(create_tag.json.blogTable[TABLE_DATA_KEY][0]) {
+							create_tag.outputNumberingTag('blogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages()');	// ブログの記事を作る。
+							//記事の画像を拡大できるようにする。
+							creator.useZoomImage('blogImage');
+						}
+					});
 					
 					//datepickerによるカレンダーのクラスを作成する。
-					var mbCalendar = new myBlogCalendar('.calendar', create_tag, create_tag.json.myBlogTable[TABLE_DATA_KEY]);
+					var mbCalendar = new blogCalendar('.calendar', create_tag, create_tag.json.blogTable[TABLE_DATA_KEY]);
 					mbCalendar.create();	//カレンダーを実際に作成する
-					//ボタンを作る
-					create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.blogLeftContent');
-	
-					create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
-					//submitイベントを登録する。
-					$('form').validate(articleSubmitHandler);
-					create_tag.deleteRowData('form', 'deleteMyBlog');	//行の削除イベントを登録する。
+
+					create_tag.createNewArticleList();	//最新記事一覧を作る
+
 					addlogoutEvent('.logoutLink');	//ログアウトボタンのイベントを登録する。
 				} catch (e) {
 					console.log(e);

@@ -58,7 +58,8 @@ if (userAgent.indexOf('msie') != -1) {
 };
 //以上、引用終了。
 
-
+//ブログ削除クエリのキー
+var QUERY_KEY_DELETE_MYBLOG = 'deleteMyBlog'
 
 
 /* createLittleContentsクラス(仮) */
@@ -1016,17 +1017,19 @@ function createLittleContents(){
 	 * 内容  　:現行のクラスの仕様に対応しました。
 	 */
 	this.createNewArticleList = function(){
+		//無名コールバック関数でこの時点のthisを使うための準備としてthisを変数に格納する
 		var thisElem = this;
+		
 		//各項目を走査する
-		$('.currentArticleList li').each(function(i){
-			var $elem = $('a:first',this);	//リンク部分を取得する
+		$(CURRENT_ARTICLE_LIST_CONTENTS).each(function(i){
+			var $elem = $(FIRST_ANCHOR_TAG, this);	//リンク部分を取得する
 			//クリックしたらブログの記事を作るコードを追加する
-			$elem.attr('onclick', 
-						'$(".numberingOuter,.blog").empty();$(".blog").append(create_tag.createTag(create_tag.json.blogArticle.tableData["' + i + '"], create_tag.getDomNode("blogArticle")));');
+			$elem.attr(ONCLICK_EVENT, 
+					CURRENT_ARTICLE_CODE_FRONT + i + CURRENT_ARTICLE_CODE_REAR);
 				
-			var $elems = $('*',$elem);	//項目を取得する
+			var $elems = $(WILD_CARD ,$elem);	//項目を取得する
 			//ブログ記事のオブジェクトを取得する
-			var articleNode = thisElem.json.blogArticle[TABLE_DATA_KEY][String(i)];
+			var articleNode = thisElem.json[BLOG_TABLE_KEY][TABLE_DATA_KEY][String(i)];
 			//オブジェクトが取得できていなければ
 			if(articleNode === void(0)){
 				return;	//関数を終える
@@ -1037,9 +1040,32 @@ function createLittleContents(){
 	}
 	
 	/*
+	 * 関数名 :createOneTableArticle
+	 * 引数  　:int number:記事の番号(テーブルデータの配列のインデックス)
+	 * 　　　　:String tableName:テーブル名
+	 * 　　　　:Object settingONT:outputNumberingTagの設定オブジェクト
+	 * 戻り値　:なし
+	 * 概要  　:outputNumberingTagで記事を1つだけ指定して表示する
+	 * 作成日　:2015.12.26
+	 * 作成者　:T.Masuda
+	 */
+	this.createOneTableArticle = function (number, tableName, settingONT) {
+		//日付による記事絞り込みを解除する
+		this.dateText = null;
+		//テーブルのデータを丸まる一時保存する
+		var tableDataClone = this.json[tableName][TABLE_DATA_KEY];
+		//記事1個分のデータだけテーブルデータにセットする
+		this.json[tableName][TABLE_DATA_KEY] = [tableDataClone[number]];
+		//outputNumberingTagをコールして記事を表示する
+		this.outputNumberingTag(tableName, settingONT.startPage,settingONT.displayPageMax, NUMBER_1, settingONT.pageNum, settingONT.targetArea, settingONT.callBack, settingONT.createTagSelector);
+		//一時保存したテーブルデータを基に戻す
+		this.json[tableName][TABLE_DATA_KEY] = tableDataClone;
+	}
+	
+	/*
 	 * 関数名 :insertBlogArticleListText
 	 * 引数  　:element elem:記事リストの項目を構成する要素
-	 * 　　　　:element articleNode:記事のノード
+	 * 　　　　:Object articleNode:記事のノード
 	 * 戻り値　:なし
 	 * 概要  　:ブログの最新記事の一覧のテキストを入れる
 	 * 作成日　:2015.05.27
@@ -1053,17 +1079,17 @@ function createLittleContents(){
 			var tagName = elems[j].tagName;
 			//タグ名でデータを取得するJSONノードを決める
 			//タイトル
-			if(tagName == 'P'){
+			if(tagName == PARAGRAPH_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleTitleText.text);
+				elems.eq(j).text(articleNode.title);
 				//日時
-			} else if(tagName == 'TIME'){
+			} else if(tagName == TIME_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleDate.text);
+				elems.eq(j).text(articleNode.date);
 				//投稿者
-			} else if(tagName == 'SMALL'){
+			} else if(tagName == SMALL_TAG){
 				//値を入れる
-				elems.eq(j).text(articleNode.blogArticleTitle.blogArticleUserName.text);
+				elems.eq(j).text(articleNode.userName);
 			}
 		}
 	}
@@ -1302,9 +1328,9 @@ function createLittleContents(){
 	 * 関数名:insertTextboxToTable
 	 * 概要  :テーブルにテキストボックスを挿入する。
 			受講承認テーブルなどでセルの内容をテキストボックスにする時に使う
-	 * 引数  :string tableClassName 対象テーブルのクラス名
-	 		string appendDom 追加するdom名
-	 		string appendTo 追加先セレクター
+	 * 引数  :string tableClassName: 対象テーブルのクラス名
+	 		string appendDom: 追加するdom名
+	 		string appendTo: 追加先セレクター
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.11
@@ -1317,7 +1343,7 @@ function createLittleContents(){
 		//テキストボックスを追加する
 		this.outputTag(appendDom, 'replaceTextbox', DOT + appendTo);
 	}
-	
+
 	/* 
 	 * 関数名:setInputValueToLecturePermitListInfoTable
 	 * 概要  :受講者一覧テーブルのテキストボックスにデフォルトで値を入れる。
@@ -2138,13 +2164,8 @@ function createLittleContents(){
 
 		//ブログのデータを取得し直す
 		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogTable'], 'myBlogTable');
-		 //ブログ一覧のデータを取得し直す
-		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogListTable'], 'myBlogListTable');
-
 		 //ブログ記事を作り直す
-		 this.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages');	// ブログの記事を作る。
-		 //ブログ一覧のテーブルを作り直す
-		 this.outputNumberingTag('myBlogListTable', 1, 4, 1, 3, '.myBlogList', 'commonFuncs.extendMyBlogList');
+		 this.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	
 		//記事の画像を拡大できるようにする。
 //		creator.useZoomImage('blogImage');
 				
@@ -2381,6 +2402,7 @@ function createLittleContents(){
 			this.checkLoginState();
 		}
 	}
+	
 	/*
 	 * 関数名:createMyBlogImages
 	 * 概要  :マイブログの記事の画像列セルから画像タグを作る
@@ -2394,7 +2416,7 @@ function createLittleContents(){
 	 */
 	this.createMyBlogImages = function(){
 		//ブログの各行を走査する
-		$('.myBlogTable tr:not(:first)').each(function(){
+		$('.blogTable tr:not(:first)').each(function(){
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//画像の列を走査する
 			$('.blogImage', $row).each(function(){
@@ -2406,20 +2428,63 @@ function createLittleContents(){
 		});
 	}
 	
+	/*
+	 * 関数名:setBlogEditButtons
+	 * 概要  :マイブログの記事の編集・削除ボタンを作る
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2015.12.23
+	 */
+	this.setBlogEditButtons = function(){
+		//ブログの各行を走査する
+		$('.myBlogTable tr:not(:first)').each(function(){
+			var $row = $(this);	//行そのものへの参照を変数に入れておく
+			//編集ボタン用の列を走査する
+			$('.buttons', $row).each(function(){
+				//編集ボタン・削除ボタンを追加する
+				//編集ボタン
+				$(this).append($('<button></button>')
+							.attr({
+								type : 'submit', 
+								class : 'deleteButton', 
+								'data-role' : '2'
+								})
+								.text('削除'))
+						//削除ボタン
+						.append($('<button></button>')
+							.attr({
+								type : 'submit', 
+								class : 'editButton', 
+								'data-role' : '1'
+								})
+								.text('編集'));
+			});
+		});
+		
+		//jQueryのリッチなボタンを配置する
+		$('.blogArticles .buttons button').button();
+	}
+	
 	/* 
 	 * 関数名:createMyGalleryImages
 	 * 概要  :マイギャラリーの記事の画像列セルから画像タグを作る
-	 * 引数  :なし
+	 * 引数  :createTag ownerInstance : createTagクラスインスタンス(自身)。コールバックで呼び出された場合thisが自分自身を指さないことがあることへの対処
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
 	 * 修正者:T.Masuda
 	 * 修正日:2015.08.12
 	 * 内容	:チェックボックスを追加する処理を追加しました。
+	 * 修正者:T.Masuda
+	 * 修正日:2015.12.27
+	 * 内容	:通常のギャラリー、マイギャラリー双方に対応しました
 	 */
-	this.createMyGalleryImages = function(){
+	this.createMyGalleryImages = function(ownerInstance){
+		//通常のギャラリーかマイギャラリーかを判定し、該当する方のセレクタを取得する
+		var target = commonFuncs.checkEmpty(ownerInstance.json[GALLERY_TABLE]) ? SELECTOR_GALLERY_TABLE : SELECTOR_MY_GALLERY_TABLE;
 		//各記事を処理する
-		$('.myGalleryTable tr').each(function(){
+		$(target + ' tr').each(function(){
 			//画像列にaタグに入ったspanタグを用意する
 			$('.myPhotoImage', this).append($('<a></a>')
 					.attr({
@@ -2433,8 +2498,11 @@ function createLittleContents(){
 					);
 		});
 		
-		//最後にまとめてチェックボックスを追加する
-		$('.myGalleryTable tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
+		//チェックボックスが必要なら
+		if (target == SELECTOR_MY_GALLERY_TABLE) {
+			//最後にまとめてチェックボックスを追加する
+			$(SELECTOR_MY_GALLERY_TABLE + ' tr').append($('<input>').attr('type', 'checkbox').addClass('myPhotoCheck'));
+		}
 	}
 	
 	/*
@@ -2488,9 +2556,17 @@ function createLittleContents(){
 	 */
 	this.sendButtonRole = function(form){
 		//submitボタンのクリックイベントを設定する。
-		$('input:submit').on('click', function(){
+		$('input:submit, button[type="submit"]').on('click', function(){
 			//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
-			$(this).nextAll('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
+			$('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
+			
+			//ボタンのクラス名を取得する
+			var buttonClass = $(this).attr('class');
+			//編集ボタン、または削除ボタンなら
+			if (buttonClass.indexOf('edit') != -1 || buttonClass.indexOf('delete') != -1 ) {
+				//記事番号をセットする
+				$('.valueHolder:first').attr('data-number', $(this).parent().parent().children('.number').text());
+			}
 		});
 	}
 
@@ -2761,8 +2837,115 @@ function createLittleContents(){
 			$('.memberName > .user_name').text(updatedUserName);
 		}
 		
+		/*
+		 * 関数名:guestLogin
+		 * 概要  :一時的なDBアクセスのためにゲストログインを行う
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLogin = function() {
+			//ログインの準備を行う
+			try {
+				//ログイン用のJSONファイルを読み込む
+				this.getJsonFile(PATH_LOGIN_DIALOG_JSON);
+				
+				//ゲストログイン情報をセットする
+				this.json[KEY_LOGIN][KEY_LOGIN_ID][VALUE] = GUEST_ID;
+			   	this.json[KEY_LOGIN][KEY_LOGIN_PASSWORD][VALUE] = GUEST_PASS;
+			   	
+				//サーバにアクセスし、ログイン処理を行う
+		 		this.getJsonFile(URL_GET_JSON_STRING_PHP, this.json[KEY_LOGIN], KEY_LOGIN);
+		 		//DBから取得したログイン処理の結果をオブジェクトにまとめる
+		 		var resultObj = {userId: this.json.login[ID][STR_TEXT], authority: this.json.login.authority[STR_TEXT]};
+		 		
+		 		//ログインに失敗してたら
+		 		if (resultObj.userId == EMPTY_STRING || resultObj.authority == EMPTY_STRING) {
+		 			//例外を投げて処理を止める
+		 			throw new Error();
+		 		}
+			} catch (e) {
+				//エラーオブジェクトにメッセージが入っていれば
+				if (e && e instanceof String) {
+					//エラーメッセージを新たなエラーオブジェクトに渡して上位に例外を投げる
+					throw new Error(e);
+				//エラーオブジェクトにメッセージが入っていなければ
+				} else {
+					//規定のエラーメッセージをエラーオブジェクトに渡して上位に例外を投げる
+					throw new Error(FAIL_TO_CONNECT_MESSAGE);
+				}
+			}
+			
+		}
 		
+		/*
+		 * 関数名:guestLogin
+		 * 概要  :ゲストログイン状態が不要になった時にログアウトを行う
+		 * 引数  :なし
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLogout = function() {
+			//日付クラスインスタンスを生成する。
+			var cookieLimit = new Date();
+			//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
+			cookieLimit.setTime(0);
+			
+			//Ajax通信を行い、ログアウト処理を行う。
+			$.ajax({
+				//ログアウト処理を呼び出す
+				url:LOGOUT_URL,
+				async:false,	//同期通信を行う
+				success:function(){	//通信成功時の処理
+					//cookieを消去する
+					document.cookie = DELETE_COOKIE_FRONT + cookieLimit.toGMTString() + DELETE_COOKIE_REAR  + cookieLimit.toGMTString() + ';';
+				},
+				error:function(xhr,status,error){	//通信エラー時
+					//エラーメッセージを出す
+					alert(FAIL_TO_CONNECT_MESSAGE);
+				}
+			});
+		}
 	 
+		/*
+		 * 関数名:guestLoginAndProcedure
+		 * 概要  :ゲストログインを行い処理を行う
+		 * 引数  :function procedure : ゲストログイン中に行う処理
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.guestLoginAndProcedure = function(procedure) {
+			//ゲストログインを行う
+			this.guestLogin();
+			//必要な処理を行う
+			procedure();
+			//ログアウトする
+			this.guestLogout();
+		}
+		
+		/*
+		 * 関数名:doGuestLoginProcedure
+		 * 概要  :必要ならゲストログインを行い処理を行う。必要なければそのまま処理を行う
+		 * 引数  :function procedure : ログイン中に行う処理
+		 * 戻り値:なし
+		 * 作成日:2015.12.26
+		 * 作成者:T.Masuda
+		 */
+		this.doGuestLoginProcedure = function(procedure) {
+			//未ログイン状態なら
+			if (!commonFuncs.checkEmpty(commonFuncs.GetCookies().userId)) {
+				//ゲストログインを行った上で処理を行う
+				this.guestLoginAndProcedure(procedure);
+			//ログイン中なら
+			} else {
+				//そのまま関数をコールする
+				procedure();
+			}
+		}		
+		
 }	//createLittleContentsクラスの終わり
 
 createLittleContents.prototype = new createTag();
@@ -2793,13 +2976,13 @@ dpJpSetting = {
 //Datepickerによるカレンダー作成時に関数に渡すオプションをまとめた連想配列を定義する
 calendarOptions = {};
 
-//ブログページのカレンダー
+//ブログページのカレンダーの設定
 calendarOptions['blog'] = {
 		// カレンダーの日付を選択したら
 		onSelect: function(dateText, inst){
 			this.instance.create_tag.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.create_tag.outputNumberingTag('blogArticle', 1, 4, 1, BLOG_SHOW_PAGES, '.blog', "this.dateText");	// ブログの記事を作る。
+			this.instance.create_tag.outputNumberingTag('blogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages()')
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -2814,6 +2997,40 @@ calendarOptions['blog'] = {
 			return retArray;
 		}
 	}
+
+
+//マイブログページのカレンダー。ブログ用オプションを継承する
+calendarOptions['myBlog'] = $.extend(true, {}, calendarOptions['blog'], {
+		// カレンダーの日付を選択したら
+		onSelect: function(dateText, inst){
+			//日付をcreateTagに渡して日付絞り込みを有効にする
+			this.instance.create_tag.dateText = dateText;
+			//絞り込まれたブログ記事を書き出す
+			this.instance.create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	
+		}
+	});
+
+//マイギャラリーページのカレンダー。ブログ用オプションを継承する
+calendarOptions['myGallery'] = $.extend(true, {}, calendarOptions['blog'], {
+	// カレンダーの日付を選択したら
+	onSelect: function(dateText, inst){
+		//日付をcreateTagに渡して日付絞り込みを有効にする
+		this.instance.create_tag.dateText = dateText;
+		//絞り込まれたブログ記事を書き出す
+		this.instance.create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	
+	}
+});
+
+//マイギャラリーページのカレンダー。ブログ用オプションを継承する
+calendarOptions['gallery'] = $.extend(true, {}, calendarOptions['blog'], {
+	// カレンダーの日付を選択したら
+	onSelect: function(dateText, inst){
+		//日付をcreateTagに渡して日付絞り込みを有効にする
+		this.instance.create_tag.dateText = dateText;
+		//絞り込まれたブログ記事を書き出す
+		this.instance.create_tag.outputNumberingTag(GALLERY_TABLE, 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	
+	}
+});
 
 //マイページの予約カレンダー
 calendarOptions['myPageReserved'] = {
@@ -3025,7 +3242,7 @@ function calendar(selector) {
 	 * 作成日:2015.04.19
 	 * 作成者:T.Masuda
 	 */
-	this.extractDateArray = function(map){
+	this.extractDateArrayForBlog = function(map){
 		var retArray = [];		//返却するための配列を用意する。
 		//キーが数字かどうかのチェックを行いながら走査する。
 		for(key in map){
@@ -3034,6 +3251,25 @@ function calendar(selector) {
 				//日付のキーを取得して配列に格納する。
 				retArray.push(new Date(map[key].blogArticleTitle.blogArticleDate.text));
 			}
+		}
+		
+		return retArray;	//配列を返す。
+	}
+	
+	/*
+	 * 関数名: extractDateArray(map)
+	 * 引数  :map map: 処理対象とする連想配列。
+	 * 戻り値:Array:日付型の配列。
+	 * 概要  :blogのJSONから日付型の配列を作る。現状ではblogcontent.jsonの形式にあわせる。
+	 * 作成日:2015.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.extractDateArray = function(array){
+		var retArray = [];		//返却するための配列を用意する。
+		//キーが数字かどうかのチェックを行いながら走査する。
+		for(var i = 0; i < array.length; i++){
+			//日付を取得して配列に格納する。
+			retArray.push(new Date(array[i].date));
 		}
 		
 		return retArray;	//配列を返す。
@@ -3144,7 +3380,7 @@ function reservedCalendar(selector, dateRange) {
 	this.dateRange = dateRange;		//クリック可能な日付の期間の引数をメンバに格納する
 	this.dom = $(selector)[0];		//DOMをメンバに保存する
 	this.dom.instance = this;		//DOMにクラスインスタンスを保存する
-	
+
 	//オプションを設定する
 	this.calendarOptions = calendarOptions['reserved'];
 }
@@ -3237,30 +3473,90 @@ function adminCalendar(selector, dialog, create_tag) {
  * 作成日:2015.06.10
  * 作成者:T.Masuda
  */
-function blogCalendar(selector, create_tag) {
+function blogCalendar(selector, create_tag, tableData) {
+	//セレクタの指定がなければ終える
+	if(selector === void(0)) {
+		return;
+	}
+	
 	this.calendarName = 'blog';				//カレンダー名をセットする
 	this.dom = $(selector)[0];				//クラスインスタンスにDOMへの参照を持たせる
 	this.dom.instance = this;				//クラスインスタンスへの参照をDOMに持たせる
 	this.create_tag = create_tag;					//createLittleContentsクラスインスタンスの参照をメンバに入れる
 	
 	//create_tagが読み込んだブログ記事のJSONから、カレンダーの有効日付を割り出す
-	this.dom.dateArray = this.extractDateArray(this.create_tag.json.blogArticle[TABLE_DATA_KEY]);	
+	if (tableData !== void(0)) {
+		//日付の配列を作成する
+		this.dom.dateArray = this.extractDateArray(tableData);	
+	}
+	
 	//オプションを設定する
 	calendar.call(this, selector);			//スーパークラスのコンストラクタを呼ぶ
 	this.calendarOptions = calendarOptions['blog'];
 }
 
+/*
+ * クラス名:myBlogCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
+ * 戻り値:なし
+ * 概要  :マイブログページのカレンダーを作る
+ * 作成日:2015.12.26
+ * 作成者:T.Masuda
+ */
+function myBlogCalendar(selector, create_tag, tableData) {
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['myBlog'];
+}
 
+/*
+ * クラス名:galleryCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
+ * 戻り値:なし
+ * 概要  :ギャラリーページのカレンダーを作る
+ * 作成日:2015.12.26
+ * 作成者:T.Masuda
+ */
+function galleryCalendar(selector, create_tag, tableData) {
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['gallery'];
+}
 
+/*
+ * クラス名:myGalleryCalendar
+ * 引数  :string selector:カレンダーにするタグのセレクタ
+ *     :createLittleContents create_tag:createLittleContentsクラスインスタンス
+ *     :Array tableData : ギャラリーの写真データ
+ * 戻り値:なし
+ * 概要  :マイギャラリーページのカレンダーを作る
+ * 作成日:2015.12.26
+ * 作成者:T.Masuda
+ */
+function myGalleryCalendar(selector, create_tag, tableData) {
+	blogCalendar.call(this, selector, create_tag, tableData);			//スーパークラスのコンストラクタを呼ぶ
+	//オプションを設定する
+	this.calendarOptions = calendarOptions['myGallery'];
+}
 
 //カレンダークラスの親子関係を設定する
 reservedCalendar.prototype = new calendar();
 myPageReservedCalendar.prototype = new calendar();
 blogCalendar.prototype = new calendar();
+myBlogCalendar.prototype = new blogCalendar();
+galleryCalendar.prototype = new blogCalendar();
+myGalleryCalendar.prototype = new blogCalendar();
 //サブクラスのコンストラクタを有効にする
 reservedCalendar.prototype.constructor = reservedCalendar;
 myPageReservedCalendar.prototype.constructor = myPageReservedCalendar;
 blogCalendar.prototype.constructor = blogCalendar;
+myBlogCalendar.prototype.constructor = myBlogCalendar;
+galleryCalendar.prototype.constructor = galleryCalendar;
+myGalleryCalendar.prototype.constructor = myGalleryCalendar;
 
 
 //グローバルなスコープで定義されるべき関数を定義していく
@@ -3504,27 +3800,23 @@ var articleSubmitHandler = {
 		
 		//hiddenのinputタグからrole属性の値を受け取る。
 		var command = parseInt($('.valueHolder:first', form).attr('data-role'));
-		//チェック済みのチェックボックスの数を数える。
-		var checked = $('input:checkbox:checked' ,form).length;
 		//var userId = getUserId();					//ユーザIDを取得する。
 		var contentNum = $(form).attr('data-role');	//コンテンツ番号を取得する。
+		//記事番号を取得する
+		var number = parseInt($('.valueHolder:first', form).attr('data-number'));
 		
-		//編集ボタンをクリックされてかつ、リストのチェックボックスに2つ以上チェックが入っていれば
-		if(command == 1 && checked > 1){
-			alert('編集する記事を1つ選んでください');
-		//編集ボタンかつチェックがなければ
-		} else if(command == 1 && checked <= 0){
-			alert('編集する記事を1つ選んでください');
-		//以上の条件に引っかからなければ
+		//新規作成の記事なら記事0番を入れる
+		number = !isNaN(number) && command != 0 ? number : 0;		
+		
+		//削除ボタンを押していたら
+		if (command == 2) {
+			//確認ダイアログを出して、OKならば
+			if(window.confirm('選択した記事を削除しますか?')){
+				//ブログ記事の削除を行う
+				$('.memberHeader')[0].create_tag.deleteBlogArticle(QUERY_KEY_DELETE_MYBLOG, [number]);
+			}
+		//新規作成、編集ボタンなら
 		} else {
-			//記事番号を取得する。記事番号でなければ会員IDを取得する。
-			var number = $('tr:has(input:checkbox:checked) .number' ,form).length > 0?
-					$('tr:has(input:checkbox:checked) .number' ,form).text() 
-					: parseInt($('tr:has(input:checkbox:checked) .memberId' ,form).text());
-			
-			//新規作成の記事なら記事0番を入れる
-			number = !isNaN(number) && command == 1 ? number : 0;		
-			
 			//ajax通信でPHPに記事番号を渡す
 			$.ajax({
 				//記事編集制御用PHPにアクセスする
@@ -3548,9 +3840,9 @@ var articleSubmitHandler = {
 					alert('通信に失敗しました。時間をおいてお試しください。');
 				}
 			});
-			
-			return false;	//本来のsubmitをキャンセルする
 		}
+			
+		return false;	//本来のsubmitをキャンセルする
 	}
 }
 

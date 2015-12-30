@@ -1218,16 +1218,24 @@ this.defaultClassworkCostColumns = [
 			//nameが空でなければ
 			if(name != "" && name !== void(0)){
 				//チェックボックスか、ラジオボタンなら
-				if(type == 'checkbox' || type=='radio'){
+				if(type == CHECKBOX || type == RADIO){
 					if($(this).index('[name="' + name + '"]:checked') == 0){
 						val = [];	//配列を生成してvalに代入する。ここから値を作り直していく
 						//name属性で括られたチェックボックスを走査していく。
 						$('input[name="' + name + '"]:checked').each(function(){
 							//配列にチェックボックスの値をgetAttributeNodeメソッドを使い格納していく。
-							val.push(this.getAttribute('value'));
+							val.push(this.getAttribute(VALUE));
 						});
-						//formDataを連想配列として扱い、keyとvalueを追加していく。
-						formDataReturn[name] = val;
+						
+						//ラジオボタンなら
+						if (type == RADIO) {
+							//formDataにラジオボタンの値を追加する
+							formDataReturn[name] = val[0];
+						//チェックボックスなら
+						} else {
+							//formDataにチェックボックスの値を追加する
+							formDataReturn[name] = val;
+						}
 					}
 				//それ以外であれば
 				} else {
@@ -2200,6 +2208,40 @@ this.defaultClassworkCostColumns = [
 		//オブジェクトを返す
 		return retObj;
 	}	
+
+	/* 関数名:checkBeforeEnterAdminPage
+	 * 概要　:管理者権限であるかをチェックして、該当しなければ画面を閉じてトップページに戻る
+	 * 引数　:String authority : 権限の値 
+	 * 　　　:Element currentWindow :ウィンドウのDOM  
+	 * 返却値:boolean : 権限のチェック結果
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkBeforeEnterAdminPage = function (authority, currentWindow) {
+		//判定結果を格納する変数を用意する
+		retResult = true;
+		
+		//管理者権限でなければ
+		if (authority != ADMIN_AUTHORITY) {
+			
+			retResult = false;	//管理者権限ではなかったという判定をセットする
+			
+			//警告を出す
+			alert(ALERT_NOT_ADMIN_USER_ACCESS);
+			 
+			//強制ログアウトを行う
+			currentWindow.instance.destroy();	//先頭のウィンドウを消す
+			commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
+			//画面遷移の履歴を追加する。
+			history.pushState({ url :SHARP + TOPPAGE_NAME}, EMPTY_STRING, location.href);
+			//ウィンドウの重なりを調整する
+			$(CURRENT_WINDOW)[0].instance.setWindowZIndex();
+			//通常画面ウィンドウを表示する
+			$(CURRENT_WINDOW)[0].instance.showCurrentWindow();
+		}
+		
+		return retResult;	//判定結果を返す
+	}
 	
 //ここまでクラス定義領域
 }

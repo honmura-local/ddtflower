@@ -107,6 +107,7 @@ CREATOR										= 'creator';
 RESERVE_LIST_CREATOR						= 'reserveListCreator';	
 NUMBER										= 'number';									//numberキーの文字列
 STRING										= 'string';									//stringの文字列
+SHARP										= '#';										//#
 
 //画像縮小時のデフォルトサイズ
 DEFAULT_WIDTH								= 300;										//画像の縮小サイズ 横
@@ -790,6 +791,57 @@ ADMIN_LESSON_USER_LIST_DIALOG_JSON = 'dialog/source/adminLessonUserListDialog.js
 ADMIN_LESSON_USER_LIST_DIALOG_HTML = 'dialog/template/adminLessonUserListDialog.html';
 
 //マイギャラリーの表示記事数
-MYGALLERY_SHOW_NUMBER				= 4;
+MYGALLERY_SHOW_NUMBER				= 6;
 //メルマガ送信テーブルの表示記事数
 MAILMAGA_TABLE_SHOW_NUMBER			= 15;
+
+//createTagのJSON内ブログのテーブルデータのキー
+BLOG_TABLE_KEY						= "blogTable";
+//ワイルドカード
+WILD_CARD							= '*';
+//onclickイベント
+ONCLICK_EVENT						= 'onclick'
+//最初のAタグ
+FIRST_ANCHOR_TAG					= 'a:first';
+//ブログ最新記事一覧の各項目
+CURRENT_ARTICLE_LIST_CONTENTS		= '.currentArticleList li';
+//段落タグ
+PARAGRAPH_TAG						= 'P';
+//小さい文章タグ
+SMALL_TAG							= 'SMALL';
+//時刻タグ
+TIME_TAG							= 'TIME';
+//ブログの記事指定表示コード前半・後半
+CURRENT_ARTICLE_CODE_FRONT			= 'create_tag.createOneTableArticle(';
+CURRENT_ARTICLE_CODE_REAR			= ', "blogTable", SETTING_CURRENT_ARTICLE_CODE)';
+//ブログの記事指定表示コードの設定オブジェクト
+SETTING_CURRENT_ARTICLE_CODE		= {
+	startPage : 1,
+	displayPageMax : 1, 
+	pageNum : 1,
+	targetArea : ".blogArticles", 
+	callBack : "create_tag.createMyBlogImages()",
+	createTagSelector : void(0)
+};
+
+//数値1
+NUMBER_1							= 1;
+//サーバとの通信失敗時のエラーメッセージ
+FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
+	//ログアウト処理ファイルのURL
+LOGOUT_URL							= 'php/LogoutSession.php';
+//ゲストID、パス
+GUEST_ID							= '9999';
+GUEST_PASS							= 'xxxxxx';
+//ログイン用クッキー削除用文字列前半後半
+DELETE_COOKIE_FRONT					= 'userId=;expires=';
+DELETE_COOKIE_REAR					= ';authority=;expires=';
+//ギャラリーのテーブル
+GALLERY_TABLE						= 'galleryTable';
+//ギャラリーのテーブルのセレクタ
+SELECTOR_GALLERY_TABLE				= '.galleryTable';
+//マイギャラリーのテーブルのセレクタ
+SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
+
+//管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
+ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
