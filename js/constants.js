@@ -107,6 +107,7 @@ CREATOR										= 'creator';
 RESERVE_LIST_CREATOR						= 'reserveListCreator';	
 NUMBER										= 'number';									//numberキーの文字列
 STRING										= 'string';									//stringの文字列
+SHARP										= '#';										//#
 
 //画像縮小時のデフォルトサイズ
 DEFAULT_WIDTH								= 300;										//画像の縮小サイズ 横
@@ -841,3 +842,6 @@ GALLERY_TABLE						= 'galleryTable';
 SELECTOR_GALLERY_TABLE				= '.galleryTable';
 //マイギャラリーのテーブルのセレクタ
 SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
+
+//管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
+ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
