@@ -877,3 +877,13 @@ JS_EOL								= '\n';	//改行文字
 SELECTOR_LECTUREPERMITLIST_RECORD	= '.lecturePermitListRecord';
 //受講承認一覧タブのセレクタ
 SELECTOR_LECTUREPERMITLIST_TAB		= '#lecturePermitList';
+//対象が数字でないというメッセージ
+ALERT_VALUE_IS_NOT_NUMERIC = 'は数字ではありません。';
+//対象が数値でないというメッセージ
+ALERT_VALUE_IS_NOT_NUMERIC_STRICT = 'は数値ではありません。';
+//対象がnullであるというメッセージ
+ALERT_VALUE_IS_NULL = 'はnullです。';
+//対象が空であるというメッセージ
+ALERT_VALUE_IS_EMPTY = 'は空です。';
+//対象がundefinedであるというメッセージ
+ALERT_VALUE_IS_UNDEFINED = 'は未定義です。';

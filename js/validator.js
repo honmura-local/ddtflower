@@ -17,10 +17,14 @@ function validator () {
 	this.method = {
 			//数値チェック
 			isNumeric : this.checkNumeric,
+			//数値チェック
+			isNumericStrict : this.checkNumericStrict,
 			//nullチェック
 			isNull : this.checkNull,
 			//空文字チェック
-			isEmpty : this.checkEmpty
+			isEmpty : this.checkEmpty,
+			//undefinedチェック
+			isUndefined : this.checkUndefined
 	} 
 	
 	/* 関数名:validate
@@ -52,7 +56,7 @@ function validator () {
 					//validationがinvalidであることをエラーとしてtry-catch節を開始する
 					try {
 						//validation関数をコールする
-						this.method[key](values[key]);
+						this.method[rule[i]](key, values[key]);
 					//validationエラーが発生したら
 					} catch (e) {
 						//呼び出し元にエラーを渡す。形式としては文字列をエラーメッセージとして渡す
@@ -64,18 +68,87 @@ function validator () {
 	}
 	
 	/* 関数名:checkNumeric
+	 * 概要　:渡された値が数字かどうかを調べる
+	 * 引数　:  key 　: 確認対象のkey
+	 * 　　　:? value : 確認する対象
+	 * 返却値:なし
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkNumeric = function(key, value) {
+		
+		//数値であれば(文字列扱いの数字も対象)
+		if (!(value instanceof int) && isNan(value)) {
+			//数字でないというメッセージを例外として渡す
+			throw Error(key + ALERT_VALUE_IS_NOT_NUMERIC);
+		} 
+	}
+	
+	/* 関数名:checkNumericStrict
 	 * 概要　:渡された値が数値かどうかを調べる
-	 * 引数　:? value : 整数かどうかを確認する対象
+	 * 引数　:  key 　: 確認対象のkey
+	 * 　　　:? value : 確認する対象
+	 * 返却値:なし
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkNumericStrict = function(key, value) {
+		
+		//数値であれば(文字列扱いの数字は対象外)
+		if (!(value instanceof int)) {
+			//数値でないというメッセージを例外として渡す
+			throw Error(key + ALERT_VALUE_IS_NOT_NUMERIC_STRICT);
+		} 
+	}
+	
+	/* 関数名:checkNull
+	 * 概要　:渡された値がnullかどうかを調べる
+	 * 引数　:? value : 確認する対象
 	 * 返却値:boolean : 判定結果
 	 * 作成日　:2015.1230
 	 * 作成者　:T.Masuda
 	 */
-	this.checkNumeric = function(value) {
+	this.checkNull = function(key, value) {
 		//返す判定結果の変数を用意する
-		var retBoo = true;
+		var retBoo = false;
 		
-		//数値であれば
+		//nullであれば
+		if (value == null) {
+			throw new Error(key + ALERT_VALUE_IS_NULL);	//nullであるというメッセージを例外として渡す
+		} 
+	}
+	
+	/* 関数名:checkEmpty
+	 * 概要　:渡された値が空文字かどうかを調べる
+	 * 引数　:  key 　: 確認対象のkey
+	 * 　　　:? value : 確認する対象
+	 * 返却値:なし
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkEmpty = function(key, value) {
 		
+		//空文字であれば
+		if (value == EMPTY_STRING) {
+			//空であるというメッセージを渡す
+			throw new Error(key + ALERT_VALUE_IS_EMPTY);
+		} 
+	}
+	
+	/* 関数名:checkUndefined
+	 * 引数　:  key 　: 確認対象のkey
+	 * 　　　:? value : 確認する対象
+	 * 返却値:なし
+	 * 作成日　:2015.1230
+	 * 作成者　:T.Masuda
+	 */
+	this.checkUndefined = function(key, value) {
+		
+		//undefinedであれば
+		if (value === void(0)) {
+			//未定義である(undefined)というメッセージを渡す
+			throw new Error(key + ALERT_VALUE_IS_UNDEFINED);
+		} 
 	}
 	
 }
