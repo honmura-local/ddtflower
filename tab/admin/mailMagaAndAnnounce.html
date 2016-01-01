@@ -40,11 +40,9 @@
 			create_tag.outputTag('mailMagaTableOutside', 'divArea', '.mailMagaPagingArea');
 			// ナンバリング領域を作る
 			create_tag.outputTag('numberingOuter','numberingOuter','.mailMagaPagingArea');
-			//メルマガのデータを取り出す
-			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
-			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
-
+			//ページング機能付きでメルマガテーブルを作る			
+			create_tag.loadTableData('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+			
 			//メルマガ検索機能を実装する
 			mailMagaSearch();
 			//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる

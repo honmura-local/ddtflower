@@ -50,11 +50,9 @@
 	create_tag.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
 	// ナンバリング領域を作る
 	create_tag.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
-	//受講済み授業一覧のデータを取り出す
-	create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['finishedLessonTable'], 'finishedLessonTable');
+	//受講済み授業一覧のデータを取り出して一覧テーブルを作成して表示する
+	create_tag.loadTableData('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging', "$('#finishedLesson')[0].");
 	
-	//ページング機能付きでメルマガテーブルを作る
-	create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging', "$('#finishedLesson')[0].");
 	//授業の絞り込み機能を実装する
 	setConfigFinishedLesson()
 	

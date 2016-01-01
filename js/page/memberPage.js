@@ -24,12 +24,10 @@ function createMemberFinishedLessonContent() {
 	create_tag.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
 	// ナンバリング領域を作る
 	create_tag.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
-	//受講済み授業一覧のデータを取り出す
-	create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['finishedLessonTable'], 'finishedLessonTable');
-	//ページング機能付きでメルマガテーブルを作る
-	create_tag.outputNumberingTag('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
+	//受講済み授業一覧テーブルを表示する
+	create_tag.loadTableData('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging');
 	//授業の絞り込み機能を実装する
-	setConfigFinishedLesson()
+	setConfigFinishedLesson();
 }
 
 /* 

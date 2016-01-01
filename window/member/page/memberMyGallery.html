@@ -66,13 +66,9 @@
 
 					//ユーザのギャラリーのJSONに会員IDをセットする。
 					create_tag.json.myGalleryTable.user_key.value = create_tag.json.accountHeader.user_key.value;
-					//ユーザのギャラリー情報を取得する
-					create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
-					//ギャラリーデータがあればコンテンツを作る
-					if(create_tag.json.myGalleryTable[TABLE_DATA_KEY][0]) {
-						//ギャラリーの内容を追加する。
-						create_tag.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
-					}
+					
+					//ユーザ自身のブログ記事を取得して表示する
+					create_tag.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');
 	
 					//ギャラリーの画像を拡大できるようにする。
 					create_tag.useZoomImage('myPhotoImage');

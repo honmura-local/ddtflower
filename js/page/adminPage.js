@@ -743,7 +743,7 @@ function setSelectedCommodity(create_tag, showMaxNum){
 	//ナンバリングを検出する
 	if ($('.numbering li').length){
 		//ナンバリングがある場合は選択済みのものの値を取得してページ番号として利用する
-		pagenum = parseInt($('.numbering .select').text());
+		pagenum = parseInt($('.numbering .select:visible').text());
 	}
 	
 	//表示するレコードの起点の値を算出する
@@ -890,10 +890,8 @@ function mailMagaSearch() {
 			create_tag.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
 			//クエリに切り取ったORDER BYを付け足す
 			create_tag.json.mailMagaTable.db_getQuery += cutString;
-			//メルマガのデータを取り出す
-			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
-			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+			//メルマガのデータを取得して表示する
+			create_tag.loadTableData('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//例外処理ブロック
 		} catch (e) {
 			//エラー発生を伝える
@@ -1008,10 +1006,8 @@ function sendMailMaga() {
 				,success:function(json){		//通信成功時
 					//送信結果を伝える
 					alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
-					//メルマガのデータを取り出す
-					create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
 					//メルマガテーブルをリフレッシュする
-					create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+					create_tag.loadTableData('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
 				}
 				//通信失敗時
 				,error:function(xhr, status, error){

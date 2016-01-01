@@ -394,10 +394,7 @@ function createLittleContents(){
 			 if (result) {
 				//その旨を伝える
 				alert('選択した写真の削除に成功しました。');
-				//ユーザのギャラリー情報を取得する
-				this.getJsonFile('php/GetJSONArray.php', this.json['myGalleryTable'], 'myGalleryTable');
-				//ギャラリーの内容を追加する。
-				this.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+				this.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');
 			 //削除に失敗していたら
 			 } else {
 				 //その旨を伝える
@@ -2155,10 +2152,8 @@ function createLittleContents(){
 		 //すげ替えたクエリを元に戻す
 		 this.json[deleteQueryKey].db_setQuery = deleteQuery;
 
-		//ブログのデータを取得し直す
-		 this.getJsonFile('php/GetJSONArray.php', this.json['myBlogTable'], 'myBlogTable');
-		 //ブログ記事を作り直す
-		 this.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	
+		//ブログの記事を作り直す
+		this.loadTableData('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');
 		//記事の画像を拡大できるようにする。
 //		creator.useZoomImage('blogImage');
 				
@@ -2331,10 +2326,8 @@ function createLittleContents(){
 					if(success){
 						//更新ができた旨を伝える
 						alert('写真のデータの更新を行いました。');
-						//ユーザのギャラリー情報を取得する
-						thisElem.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
-						//ギャラリーの内容を追加する。
-						thisElem.outputNumberingTag('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+						//ギャラリーのデータをロードし直して再描画する
+						this.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');
 					//全件失敗であれば
 					} else {
 						//更新ができなかった旨を伝える
