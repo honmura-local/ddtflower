@@ -143,10 +143,10 @@
 	    "id": "lecturePermitList"
 	},
     "permitLessonContainCommodity":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', get_point = 'get_point', use_point = 'data-classwork_use_point' ,late_time = 'late_time' ,update_datetime = NOW(), receipt_datetime = NOW(), user_work_status = 3, pay_price = 'pay_price' WHERE id = 'user_classwork_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (  NOW() ,'sell_number' ,'pay_cash' ,'data-commodity_use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW() ); UPDATE user_inf SET get_point = get_point + 'get_point',update_datetime = NOW() WHERE id = 'user_key'; UPDATE user_inf SET get_point = get_point - 'use_point', use_point = use_point +'use_point' ,update_datetime = NOW() WHERE id = 'user_key'; "
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', get_point = 'get_point', use_point = 'classwork_use_point' ,late_time = 'late_time' ,update_datetime = NOW(), receipt_datetime = NOW(), user_work_status = 3, pay_price = 'pay_price' WHERE id = 'user_classwork_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime,  update_datetime) VALUES (  NOW() ,'sell_number' ,'pay_cash' ,'commodity_use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW(), NOW() ); UPDATE user_inf SET get_point = get_point + 'get_point',update_datetime = NOW() WHERE id = 'user_key'; UPDATE user_inf SET get_point = get_point - 'use_point', use_point = use_point +'use_point' ,update_datetime = NOW() WHERE id = 'user_key'; "
     },
     "permitLessonUpdate":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', get_point = 'get_point', use_point = 'data-classwork_use_point' ,late_time = 'late_time' ,update_datetime = NOW(), receipt_datetime = NOW(), user_work_status = 3, pay_price = 'pay_price' WHERE id = 'user_classwork_key'; UPDATE user_inf SET get_point = get_point + 'get_point' ,update_datetime = NOW() WHERE id = 'user_key'; UPDATE user_inf SET get_point = get_point - 'use_point', use_point = use_point +'use_point' ,update_datetime = NOW() WHERE id = 'user_key'; "
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', get_point = 'get_point', use_point = 'classwork_use_point' ,late_time = 'late_time' ,update_datetime = NOW(), receipt_datetime = NOW(), user_work_status = 3, pay_price = 'pay_price' WHERE id = 'user_classwork_key'; UPDATE user_inf SET get_point = get_point + 'get_point' ,update_datetime = NOW() WHERE id = 'user_key'; UPDATE user_inf SET get_point = get_point - 'use_point', use_point = use_point +'use_point' ,update_datetime = NOW() WHERE id = 'user_key'; "
     },
     "getPoinRate" : {
     	"db_getQuery" : "SELECT point_rate, students FROM lesson_point_rate WHERE lesson_key = 'lesson_key';",
@@ -450,10 +450,10 @@
         }
     },
     "updatePermitListLesson":{
-        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'data-diff_point', get_point = get_point - 'data-diff_point' WHERE id = 'user_key;"
+        "db_setQuery":"UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'diff_point', get_point = get_point - 'diff_point' WHERE id = 'user_key';"
     },
     "updatePermitListCommoditySell":{
-        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', commodity_key='content', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'data-diff_point', get_point = get_point - 'data-diff_point' WHERE id = 'user_key';"
+        "db_setQuery":"UPDATE commodity_sell SET pay_cash = 'user_classwork_cost', commodity_key='content', use_point = 'use_point', update_datetime = NOW() WHERE id = 'id'; UPDATE user_inf SET use_point = use_point + 'diff_point', get_point = get_point - 'diff_point' WHERE id = 'user_key';"
     },
     "searchUserList":{
         "searchName":{
@@ -644,6 +644,36 @@
             "value":""
         }
     },
+    "insertTimeTableDay":{
+        "db_setQuery":"INSERT INTO time_table_day( timetable_key ,lesson_date ,create_datetime ,update_datetime ) VALUES( 'timetable_key' ,'lessonDate' ,NOW() ,NOW() );"
+    },
+    "newClassWork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students ) VALUES( 'max_students' ,'min_students' ,'classwork_status' ,'classroom' ,'classwork_note' ,(select id from user_inf where authority = 10 limit 1) ,(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key') ,'lesson_key' ,'time_table_day_key' ,NOW() ,NOW(), 0 );"
+    },
+    "normalInsertClasswork":{
+        "db_setQuery":"INSERT INTO classwork( max_students ,min_students ,classwork_status ,classroom ,classwork_note ,teacher_key ,school_key ,lesson_key ,time_table_day_key ,create_datetime ,update_datetime, order_students) VALUES('max_students' ,'min_students','classwork_status','classroom','classwork_note',(select id from user_inf where authority = 10 limit 1),(SELECT school_key FROM timetable_inf WHERE id = 'timetable_key'),'lesson_key','time_table_day_key',NOW(),NOW(), 0)"
+    },
+    "lessonDetailUpdate":{
+        "db_setQuery":"UPDATE classwork SET max_students = 'max_students' ,min_students = 'min_students' ,classwork_status = 'classwork_status' ,classroom = 'classroom' ,classwork_note = 'classwork_note' ,update_datetime = NOW() WHERE id = 'classwork_key';",
+        "max_students":{
+            "style":"display:none"
+        },
+        "min_students":{
+            "style":"display:none"
+        },
+        "classwork_status":{
+            "style":"display:none"
+        },
+        "classroom":{
+            "style":"display:none"
+        },
+        "classwork_note":{
+            "style":"display:none"
+        },
+        "classwork_key":{
+            "style":"display:none"
+        }
+    },
     "replaceTextboxCost":{
         "type":"number",
         "name":"user_classwork_cost"
@@ -651,8 +681,8 @@
     "replaceTextboxUsePoint":{
         "type":"number",
         "name":"use_point",
-	"data-diff_point":"",
-	"data-base_point":""
+        "data-diff_point":"",
+        "data-base_point":""
     },
     "mailMagaAndAnnounce":{
         "class": "mailMagaAndAnnounce tabPanel",

@@ -433,17 +433,37 @@ function loopUpdatePermitLesson() {
 			$('.lecturePermitAccordion').each(function() {
 				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-						//DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')', addAttr);
+						// DBを更新するための値を取得するために置換する連想配列を取得する
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
 						//取得した値が不正かどうかをチェックする
 						VALIDATOR.validate(validateSettings, sendReplaceArray);
 						
 						//加算ポイントレートを取得する
 						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
-						//受講料から加算ポイントを求める
-						sendReplaceArray['lessonPlusPoint'] = create_tag.getUserPlusPoint(sendReplaceArray['user_classwork_cost'], lessonPlusPointRate);
+						// ユーザの所持ポイント退避
+						var userGetPoint = sendReplaceArray['get_point'];
+						// 受講料から加算ポイントを求める
+						var userClassworkCost = sendReplaceArray['user_classwork_cost'];
+						var get_point = create_tag.getUserPlusPoint(userClassworkCost, lessonPlusPointRate);
+						sendReplaceArray['get_point'] = get_point;
+						// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
+						var usePoint = sendReplaceArray['use_point'];
+						if (userGetPoint * 1 < usePoint * 1) {
+							throw new Error("使用ポイント(" + usePoint + ")が所持ポイント(" + userGetPoint + ")を超えています");
+						}
+						var classworkUsePoint = usePoint;
+						var commodityUsePoint = usePoint - userClassworkCost;
+						if (commodityUsePoint > 0) {
+							classworkUsePoint = userClassworkCost;
+						} else {
+							commodityUsePoint = 0;
+						}
+						sendReplaceArray['pay_price'] = userClassworkCost - classworkUsePoint;
+						sendReplaceArray['pay_cash'] = sendReplaceArray['pay_cash'] - commodityUsePoint;
+						
+						sendReplaceArray['classwork_use_point'] = classworkUsePoint;
+						sendReplaceArray['commodity_use_point'] = commodityUsePoint;
 						//備品代から加算ポイントを求める
-						sendReplaceArray['commodityPlusPoint'] = create_tag.getCommodityPlusPoint('commodityPlusPoint', sendReplaceArray)
 						//受講承認データを更新する
 						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
 						//生徒さんの情報をリストに追加していく
@@ -463,10 +483,10 @@ function loopUpdatePermitLesson() {
 			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n' + e.message + '\n');
 		//必ず行う処理
 		} finally {
-			alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-			
+
 			//1件でも処理していたら
 			if (counter > 0) {
+				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
 				//先に既存のテーブルとボタンを消して
 				$('.doLecturePermitInfoTable').remove();
 				$('.doLecturePermit.normalButton').remove();
@@ -560,7 +580,14 @@ function loopUpdatePermitLessonList() {
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$(SELECTOR_LECTUREPERMITLIST_RECORD).each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = create_tag.getSendReplaceArray(LECTURE_PERMIT_LIST_INFO_TABLE, counter, 'lecturePermitListRecord:eq(' + counter + ')', commonFuncs.checkEmpty($('input[name="use_point"]').eq(counter).attr('data-diff_point')) ? addAttr : null);
+					var diffPoint = $('input[name="use_point"]').eq(counter).attr('data-diff_point');	// 元の値からの増減値
+					var sendReplaceArray = 
+						create_tag.getSendReplaceArray(
+							LECTURE_PERMIT_LIST_INFO_TABLE, 
+							counter, 
+							'lecturePermitListRecord:eq(' + counter + ')',
+							 commonFuncs.checkEmpty(diffPoint) ? addAttr : null
+					);
 					//受講承認一覧データを更新する
 					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
 				//カウンターをインクリメントする
