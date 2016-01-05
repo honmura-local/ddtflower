@@ -48,12 +48,8 @@
 					
 					//ログイン状態をチェックした上でDBにアクセスする
 					create_tag.doGuestLoginProcedure(function() {
-						//ユーザのギャラリー情報を取得する
-						create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json[GALLERY_TABLE], GALLERY_TABLE);
-						//ギャラリーデータがあればコンテンツを作る
-						if(create_tag.json.galleryTable[TABLE_DATA_KEY][0]) {
-							//ギャラリーの内容を追加する。
-							create_tag.outputNumberingTag(GALLERY_TABLE, 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');	
+						//ギャラリーの写真を作成して表示する
+						create_tag.loadTableData(GALLERY_TABLE, 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');
 						}
 					});
 	

@@ -400,11 +400,11 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
  */
 function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$(STR_BODY).on(CLICK, '.doLecturePermit .normalButton', function(){
+	$(STR_BODY).on(CLICK, SELECTOR_DOLECTUREPERMIT_BUTTON, function(){
 		
 		//チェックが入っているレコードがなければ
-		if (!$('.permitCheckbox:checked').length) {
-			alert('受講承認を行うレコードを選択してください。');
+		if (!$(SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX).length) {
+			alert(ALERT_NEED_SELECT_LECTUREPERMIT_RECORD);
 			return;	//処理を終える
 		}
 		
@@ -413,12 +413,19 @@ function loopUpdatePermitLesson() {
 		//受講承認を行った生徒の方のリストを作る
 		var processedList = new Array();
 		//序文を追加する
-		processedList.push('以下の生徒の受講承認処理が完了しました。\n');
+		processedList.push(MESSAGE_RESULT_DOLECTUREPERMIT);
 		
 		//フォームの追加取得用オブジェクトを作る
-		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point");
-		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point");
-		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point");
+		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
+		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
+		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
+		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
+
+		//validation用の設定オブジェクトを作る
+		//use_pointの未定義チェック
+		var validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isUndefined');
+		//use_pointの数字チェック
+		validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isNumeric', validateSettings);
 		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
@@ -428,7 +435,10 @@ function loopUpdatePermitLesson() {
 				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
 						// DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-						// 加算ポイントレートを取得する
+						//取得した値が不正かどうかをチェックする
+						VALIDATOR.validate(validateSettings, sendReplaceArray);
+						
+						//加算ポイントレートを取得する
 						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
 						// ユーザの所持ポイント退避
 						var userGetPoint = sendReplaceArray['get_point'];
@@ -465,6 +475,10 @@ function loopUpdatePermitLesson() {
 			});
 		//例外処理
 		} catch(e){
+			//処理件数が0件であれば
+			if (counter == 0) {
+				processedList = [];		//序文を消す
+			}
 			//メッセージの先頭を追加する
 			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n' + e.message + '\n');
 		//必ず行う処理
@@ -581,6 +595,10 @@ function loopUpdatePermitLessonList() {
 			});
 		//例外処理
 		} catch(e){
+			//処理件数が0件であれば
+			if (counter == 0) {
+				processedList = [];		//序文を消す
+			}
 			//メッセージの先頭を追加する
 			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理
@@ -752,7 +770,7 @@ function setSelectedCommodity(create_tag, showMaxNum){
 	//ナンバリングを検出する
 	if ($('.numbering li').length){
 		//ナンバリングがある場合は選択済みのものの値を取得してページ番号として利用する
-		pagenum = parseInt($('.numbering .select').text());
+		pagenum = parseInt($('.numbering .select:visible').text());
 	}
 	
 	//表示するレコードの起点の値を算出する
@@ -899,10 +917,8 @@ function mailMagaSearch() {
 			create_tag.addQueryExtractionCondition('mailMagaSearchArea', 'mailMagaTable');
 			//クエリに切り取ったORDER BYを付け足す
 			create_tag.json.mailMagaTable.db_getQuery += cutString;
-			//メルマガのデータを取り出す
-			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
-			//ページング機能付きでメルマガテーブルを作る
-			create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
+			//メルマガのデータを取得して表示する
+			create_tag.loadTableData('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable');
 		//例外処理ブロック
 		} catch (e) {
 			//エラー発生を伝える
@@ -1017,10 +1033,8 @@ function sendMailMaga() {
 				,success:function(json){		//通信成功時
 					//送信結果を伝える
 					alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
-					//メルマガのデータを取り出す
-					create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json['mailMagaTable'], 'mailMagaTable');
 					//メルマガテーブルをリフレッシュする
-					create_tag.outputNumberingTag('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+					create_tag.loadTableData('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
 				}
 				//通信失敗時
 				,error:function(xhr, status, error){

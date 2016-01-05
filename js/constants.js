@@ -858,6 +858,14 @@ SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
 
 //管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
 ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
+//受講承認画面の承認ボタン
+SELECTOR_DOLECTUREPERMIT_BUTTON = '.doLecturePermit .normalButton';
+//受講承認画面のチェックが入ったチェックボックス
+SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX = '.permitCheckbox:checked';
+//受講承認時に対象のレコードが存在しなかった場合の警告
+ALERT_NEED_SELECT_LECTUREPERMIT_RECORD = '受講承認を行うレコードを選択してください。';
+//受講承認処理完了時のメッセージの序文
+MESSAGE_RESULT_DOLECTUREPERMIT = '以下の生徒の受講承認処理が完了しました。\n';
 //更新件数を知らせるメッセージ
 NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER ='件のレコードを更新しました。';
 //受講承認一覧テーブルの領域
@@ -869,3 +877,13 @@ JS_EOL								= '\n';	//改行文字
 SELECTOR_LECTUREPERMITLIST_RECORD	= '.lecturePermitListRecord';
 //受講承認一覧タブのセレクタ
 SELECTOR_LECTUREPERMITLIST_TAB		= '#lecturePermitList';
+//対象が数字でないというメッセージ
+ALERT_VALUE_IS_NOT_NUMERIC = 'は数字ではありません。';
+//対象が数値でないというメッセージ
+ALERT_VALUE_IS_NOT_NUMERIC_STRICT = 'は数値ではありません。';
+//対象がnullであるというメッセージ
+ALERT_VALUE_IS_NULL = 'はnullです。';
+//対象が空であるというメッセージ
+ALERT_VALUE_IS_EMPTY = 'は空です。';
+//対象がundefinedであるというメッセージ
+ALERT_VALUE_IS_UNDEFINED = 'は未定義です。';
