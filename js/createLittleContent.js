@@ -2197,12 +2197,12 @@ function createLittleContents(){
 			//ポイントレートに対する人数を取り出す
 			var students = parseInt(rates[i].students);
 			//予約数がポイントレート当たりの人数以上でなければ
-			if (!(orderStudents >= rates[i].students)) {
+			if (!(orderStudents > rates[i].students)) {
 				break;	//処理終了
 			}
 			
 			//ポイントレートを更新していく
-			retRate = parseInt(rates[i].students);
+			retRate = parseInt(rates[i].point_rate);
 		}
 		
 		return retRate;		//算出したポイントレートを返す
