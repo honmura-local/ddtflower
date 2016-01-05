@@ -730,6 +730,8 @@ function afterReloadPermitListInfoTable() {
 	lecturePermitList.outputTag('contentSelect', 'contentSelect', '.appendSelectbox');
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 	lecturePermitList.setSelectboxText(lecturePermitList.json.selectCommodityInf[TABLE_DATA_KEY], lecturePermitList.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
+	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
+	lecturePermitList.setTableTextboxValuefromDB(lecturePermitList.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
 	
 	//セレクトメニューが生成されていたら
 	if($('.contentSelect').length){
@@ -741,8 +743,6 @@ function afterReloadPermitListInfoTable() {
 		setSelectedCommodity(create_tag);
 	}
 	
-	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	lecturePermitList.setTableTextboxValuefromDB(lecturePermitList.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
 	//置換済みテキストボックスに数値入力のみできるようにする
 	$('.lecturePermitListInfoTable .replaceTextbox').attr({
         onkeydown:"return controllInputChar(event);"	//数値のみ入力できるように関数を登録
