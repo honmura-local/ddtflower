@@ -2944,15 +2944,26 @@ function createLittleContents(){
 		 * 　　  :String callback : テーブルリロード後にコールされる関数名
 		 * 　　  :String getCreateTag : ナンバリングのタグのonclickでのcreateTag再取得のための文字列。
 		 * 　　　　例）"$('#lecturePermitList')[0]." ※jQueryオブジェクトは配列であるため、0番目を指定しないとメンバの取得ができない
+		 * 　　  :Object values : データ取得用の値をまとめたオブジェクト
 		 * 戻り値:なし
 		 * 作成日:2015.1230
 		 * 作成者:T.Masuda
 		 */
-		this.loadTableData = function(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag) {
+		this.loadTableData = function(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag, values) {
 			//テーブルデータを一度空にする
 			this.json[tableKey][TABLE_DATA_KEY] =[];
+			
+			//データ取得用の値のオブジェクトがセットされていたら
+			if (values) {
+				//オブジェクトを走査して
+				for (key in values) {
+					//jsonに値をセットする
+					this.json[tableKey][key][VALUE] = values[key];
+				}
+			}
+			
 			//テーブルデータを取得する
-			this.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json[tableKey], tableKey);
+			this.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.json[tableKey], tableKey);
 			//テーブルを作る
 			this.outputNumberingTag(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag);
 		}

@@ -887,3 +887,6 @@ ALERT_VALUE_IS_NULL = 'はnullです。';
 ALERT_VALUE_IS_EMPTY = 'は空です。';
 //対象がundefinedであるというメッセージ
 ALERT_VALUE_IS_UNDEFINED = 'は未定義です。';
+//検索用日付のキー
+KEY_FROM_DATE = 'FromDate';
+KEY_TO_DATE = 'toDate';

@@ -572,6 +572,9 @@ function loopUpdatePermitLessonList() {
 		//クエリのキー
 		var queryKey = EMPTY_STRING;
 		
+		//受講承認一覧のcreateTagを取得する
+		var create_tag = $(SELECTOR_LECTUREPERMITLIST_TAB)[0].create_tag;
+		
 		//フォームの追加取得用オブジェクトを作る
 		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
 		
@@ -603,8 +606,14 @@ function loopUpdatePermitLessonList() {
 			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理
 		} finally {
+			//検索日付を取得する
+			var fromDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_FROM_DATE][VALUE];
+			var toDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_TO_DATE][VALUE];
+			//日付をオブジェクトにまとめる
+			var searchDate = {'FromDate' : fromDate, 'toDate' : toDate};
+			
 			//テーブルをリロードする。
-			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
+			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG, searchDate);
 			//処理件数を処理リストの末尾に追加する
 			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
 			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
@@ -740,7 +749,7 @@ function afterReloadPermitListInfoTable() {
 		//備品販売IDを格納するための隠しフォームを各行にセットする
 		lecturePermitList.outputTag('commoditySellId','commoditySellId', '.appendSelectbox');
 		//備品セレクトボックスを規定のものにする
-		setSelectedCommodity(create_tag);
+		setSelectedCommodity(lecturePermitList);
 	}
 	
 	//置換済みテキストボックスに数値入力のみできるようにする
@@ -768,9 +777,12 @@ function setSelectedCommodity(create_tag, showMaxNum){
 	}
 	
 	//ナンバリングを検出する
-	if ($('.numbering li').length){
+	if ($('.numbering li:visible').length){
 		//ナンバリングがある場合は選択済みのものの値を取得してページ番号として利用する
-		pagenum = parseInt($('.numbering .select:visible').text());
+		//ページ番号をテキストで取得する
+		var pageNumText = $('.numbering .select:visible').text();
+		//有効なページ番号が取得できていたら数値に変換する。そうでなければ1ページ目とする
+		pagenum = isNaN(pageNumText) ? parseInt(pageNumText) : 0;
 	}
 	
 	//表示するレコードの起点の値を算出する
