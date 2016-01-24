@@ -157,10 +157,12 @@ function windowEx(url, argumentObj, returnObj, state){
 				if(((state === void(0) || state == null) && commonFuncs.isSupportPushState())
 						&& !commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)
 						&& !commonFuncs.checkEmpty(self.argumentObj.config.firstExec)){
+					//ファイル名でpushstateに追加する
+					var domFileName = splited[splited.length - 1];
 					//画面遷移の履歴を追加する。
-					history.pushState({'url':'#' + currentLocation}, '', location.href);
+					history.pushState({'url':currentLocation}, EMPTY_STRING, location.href);
 				}
-				
+
 				self.argumentObj.config.firstExec = null;	//初回実行フラグをオフにする
 
 				//スクロール位置をトップに戻す。
@@ -180,18 +182,7 @@ function windowEx(url, argumentObj, returnObj, state){
 		//自身の配下のaタグクリックイベントコールバックを定義する
 
 		// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-		$(this.dom).on('click', 'a[href$=".html"][target!="_blank"]:not([data-target^="#"])', function(event){
-			//URLを引数にしてページを切り替える関数をコールする。
-			$(this).closest('.window')[0].instance.callPage($(this).attr('href'));
-			//pushState対応ブラウザであれば
-			if(commonFuncs.isSupportPushState()){
-				//通常の画面遷移をキャンセルする。		
-				event.preventDefault();
-			}
-		});
-
-		// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-		$(this.dom).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
+		$(this.dom).on('click', 'a[href$=".html"][target!="_blank"]:not([data-target^="#"]), a[href$=".php"][target!="_blank"],a[href="./"][target!="_blank"]', function(event){
 			//URLを引数にしてページを切り替える関数をコールする。
 			$(this).closest('.window')[0].instance.callPage($(this).attr('href'));
 			//pushState対応ブラウザであれば

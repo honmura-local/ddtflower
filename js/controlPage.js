@@ -339,11 +339,6 @@ function postForm(form){
 					
 					//カレントのURLを更新する。
 					currentLocation = url;
-					//pushstateに対応していたら、かつcallPageからcgiが呼び出されていなければ
-					if(!(isCgiHistory) && commonFuncs.isSupportPushState()){
-						//画面遷移の履歴を追加する。
-						history.pushState({'url':'#' + currentLocation}, '', location.href);
-					}
 				}
 			}
 			
@@ -489,6 +484,7 @@ if (commonFuncs.isSupportPushState()){
     	if (!event.originalEvent.state){
     		return; // 処理を終える。
     	}
+    	
         var state = event.originalEvent.state; 	//stateオブジェクトを取得する。
         currentLocation = state['url'];			//stateから現在のURLを取り出し保存する。
         //履歴からページを読み込む。

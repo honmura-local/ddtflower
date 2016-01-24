@@ -1784,7 +1784,7 @@ function createLittleContents(){
 				//通常ページを使いやすくするためにヘッダーを表示するようにする
 //				$('header').css('display', 'block');
 				//通常ページに遷移する(create_tagがリセットされる問題があるかも？)
-//				callPage('top.php');
+//				callPage('./');
 			}
 		});
 	}

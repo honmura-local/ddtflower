@@ -5,6 +5,8 @@
  * 場所　　:js/constants.js
  */
 
+//カレントディレクトリのパス(実際は別の箇所で定義する)
+//SITE_ROOT_DIRECTORY
 //トップページのファイル名の定数
 TOPPAGE_NAME = 'top.php';
 USER_ID = 'userId';			//ユーザID
@@ -841,7 +843,7 @@ GET_LECTUREPERMITLIST_CREATE_TAG = "$('#lecturePermitList')[0].";
 
 //サーバとの通信失敗時のエラーメッセージ
 FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
-	//ログアウト処理ファイルのURL
+//ログアウト処理ファイルのURL
 LOGOUT_URL							= 'php/LogoutSession.php';
 //ゲストID、パス
 GUEST_ID							= '9999';

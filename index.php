@@ -80,6 +80,44 @@
 <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
 <!-- 共通関数クラスを読み込む。 -->
 <script src="js/common.js"></script>
+<script>
+	//サイトのルートディレクトリを取得する
+	SITE_ROOT_DIRECTORY = commonFuncs.getCurrentDirectory();
+</script>
+</head>
+<body>
+<div class="main">
+<script>
+	$(function(){
+		var isFirstLoad = void(0);			//初回読み込みかの判定
+		//コンテンツが未生成(初回ロード時)であれば
+		if (!$('#container').length) {
+			//トップページ用ウィンドウを準備する
+			windowElem = new windowEx(TOP_LOCATION, {config:{firstExec:true}});	//初回実行フラグオン
+			//トップページ用ウィンドウを生成して表示する
+			windowElem.run();
+			//containerにmainを移動する
+			$('#container').append($('.main'));
+			//初回読み込みでない判定としてcallPageをコールする準備をする
+			isFirstLoad = true;
+		}
+
+		//トップページのコンテンツを呼び出す
+		windowElem.callPage('top.html', isFirstLoad);
+	});
+</script>
+</div>
+<!-- JavaScriptのコードを記述する -->
+<!-- SEO対策の文章。 -->
+<h1 id="SEOHeadText" style="display:none;">【東京】新宿のプリザーブドフラワースクール『DDTFlowers』。生花やブライダル用のフラワーアレンジメントなら是非当スクールへ！</h1>
+<!-- SEO対策のフッターテキスト -->
+<p id="SEOFootText" style="display:none;">東京の新宿にありますフラワーアレンジメントスクール【DDT Flowers（ディーディーティーフラワーズ）】のホームページをご覧いただき、誠にありがとうございます。
+本校ではプリザーブドフラワーアレンジメントコース、生花フラワーアレンジメントコース、NFD資格取得コース、フラワー装飾技能検定資格取得コース、ブライダル・フラワーアイテム手作りコース、FC（フランチャイズ・ライセンス）資格取得コースの6つのコースをご用意しています。
+入会金や年会費は一切かかりません。レッスン代は、次のレッスン分を先に支払う都度払い前金制です。退会時に前金は返金されますのでご安心ください。
+また本校はお仕事帰りに通いやすい時間帯でもレッスンを行っています。「仕事が終わってからじゃ間に合わない…」と今までレッスン受講を諦めていた方も勿論そうでない方も、この機会に本校でフラワーアレンジメントを始めてみませんか。体験レッスンも随時行っていますので、ぜひお気軽にホームページよりご予約ください。
+皆様の受講を心よりお待ちしています。</p>
+<!-- msl指定のタイトル -->
+<title>【東京】プリザーブドフラワースクール | DDTFlowers</title>
 <!-- ユーティリティクラスのjsファイル。 -->
 <script src="js/utils.js"></script>
 <!-- サイト全体のレイアウト調整用JSファイル。 -->
@@ -142,11 +180,5 @@
 <script type="text/javascript" src="js/dialogExOptions.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/dailyClasses.js"></script>
-<script>
-	//トップページ用ウィンドウを準備する
-	windowElem = new windowEx(TOP_LOCATION, {config:{firstExec:true}});	//初回実行フラグオン
-	//トップページ用ウィンドウを生成して表示する
-	windowElem.run();
-</script>
 </body>
 </html>

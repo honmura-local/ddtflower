@@ -1,4 +1,4 @@
-﻿/** ファイル名:common.js
+/** ファイル名:common.js
  * 概要　　　:汎用関数クラス定義のファイル
  * 作成日　:2015.0813
  * 作成者　:T.Masuda
@@ -2232,8 +2232,8 @@ this.defaultClassworkCostColumns = [
 			//強制ログアウトを行う
 			currentWindow.instance.destroy();	//先頭のウィンドウを消す
 			commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
-			//画面遷移の履歴を追加する。
-			history.pushState({ url :SHARP + TOPPAGE_NAME}, EMPTY_STRING, location.href);
+			//トップページへ遷移する
+			$(CURRENT_WINDOW)[0].instance.callPage(SHARP + TOPPAGE_NAME);
 			//ウィンドウの重なりを調整する
 			$(CURRENT_WINDOW)[0].instance.setWindowZIndex();
 			//通常画面ウィンドウを表示する
@@ -2258,6 +2258,29 @@ this.defaultClassworkCostColumns = [
 		var valueLength = valueArray.length;
 		//区切った文字の最後の部分を返す
 		return valueArray[valueLength - 1];
+	}
+	/* 関数名:getCurrentDirectory
+	 * 概要　:カレントのディレクトリを取得する
+	 * 引数　:なし
+	 * 返却値:String : カレントディレクトリ
+	 * 作成日　:2015.0104
+	 * 作成者　:T.Masuda
+	 */
+	this.getCurrentDirectory = function () {
+		//現在のフルパスを取得する
+		var currentLocation = location.href;
+		//フルパスを配列にする
+		var pathArray = currentLocation.split(SLASH);
+		
+		//パスにファイル名が含まれていたら
+		if (currentLocation.match(/\./) ) {
+			pathArray.pop();	//ファイル名部分の要素を削除する
+		}
+
+		//パスの配列を文字に変換してカレントディレクトリのパスを作る
+		var dirPath = pathArray.join(SLASH);
+		
+		return dirPath;	//カレントディレクトリのパスを返す
 	}
 	
 //ここまでクラス定義領域
@@ -2313,7 +2336,7 @@ function sendArticleData(){
 			alert('記事の保存に失敗しました。時間をおいてお試しください。');
 		}
 	}
-	
+
 	//ダイアログを破棄する
 	dialogClass.destroy();
 }	

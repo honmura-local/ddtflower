@@ -14,6 +14,8 @@
 function loginDialog(dialog){
 	baseDialog.call(this, dialog);	//親クラスのコンストラクタをコールする
 	
+	this.url = EMPTY_STRING;		//ログイン後に表示する画面のURL		
+	
 	/* 関数名:constructionContent
 	 * 概要　:JSONやHTMLをcreateLittleContentsクラスインスタンスにロードする。
 	 * 引数　:なし
@@ -101,22 +103,38 @@ function loginDialog(dialog){
 	 */
 	this.callbackClose = function(){
 		
+		//ダイアログを完全に消す
+		this.dialogBuilder.dialogClass.destroy();
+		
 		//押されたボタンの判定を行う。returnObjに設定されたボタンの値を基準にする
 		switch(this.dialogBuilder.dialogClass.getPushedButtonState()){
 			//ログインボタンが押されていたら
 			case LOGIN_NUM:
-				//ログインボタンのコールバックで処理が終わっているので何もしない
+				//URLが設定されていたら
+				if (this.dialogBuilder.url != EMPTY_STRING) {
+					//pushStateをサポートしているブラウザなら
+					if(commonFuncs.isSupportPushState()){
+						//画面遷移を行う
+						$(CURRENT_WINDOW)[0].instance.callPage(this.dialogBuilder.url);
+					} else {
+						//アドレスを直接入力して画面遷移を行う
+						location.href = this.dialogBuilder.url; 
+					}
+				}
 				break;
 			//閉じるボタン、クローズボックスが押されていたら
 			default:
-				//トップページに戻る
-				callPage(TOP_LOCATION);
-				break;
+				//セッション切れでのログインし直しでなければ
+				if (!commonFuncs.GetCookies().userId) {
+					//中途半端に表示されている会員画面ウィンドウを消す
+					$(CURRENT_WINDOW)[0].instance.destroy();
+				}
+			
+				break;	//switchを抜ける
 		}
-		//ダイアログを完全に消す
-		this.dialogBuilder.dialogClass.destroy();
-		//画面をリロードする
-		location.reload();
+		
+		//ウィンドウ同士の重なりを整理する(隠れていた通常ウィンドウを表示する)
+		commonFuncs.showCurrentWindow()
 	};
 	
 	/* 関数名:setCallback
@@ -186,27 +204,19 @@ function loginDialog(dialog){
 	this.afterLogin = function(loginResult){
 		var data = this.dialogClass.getArgumentDataObject();	//インプット用データオブジェクトを取得する
 		
-		//通常ログインかつ、ユーザが管理者権限ならば
-		if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority == ADMIN_AUTHORITY){
-			//pushStateをサポートしているブラウザなら
-			if(commonFuncs.isSupportPushState()){
-				//管理者ページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + DIR_ADMIN_PAGE +URL_ADMIN_TOP}, EMPTY_STRING, location.href);
-			//URLハッシュを利用する
-			} else {
-				//管理者ページへ移動する
-				location.href = URL_ADMIN_PAGE; 
-			}
-		//通常ログインかつ、ユーザが管理者権限でなければ
-		} else if(data.createTagState == STATE_NOT_LOGIN && loginResult.authority != ADMIN_AUTHORITY){
-			//pushStateをサポートしているブラウザなら
-			if(commonFuncs.isSupportPushState()){
-				//会員トップページの画面遷移の履歴を追加する。
-				history.pushState({url:CHAR_HASH + DIR_MEMBER_PAGE + URL_MEMBER_TOP}, EMPTY_STRING, location.href);
-			//URLハッシュを利用する
-			} else {
+		//通常ログインであれば
+		if(data.createTagState == STATE_NOT_LOGIN) {
+			//中途半端に表示されている会員画面ウィンドウを消す
+			$(CURRENT_WINDOW)[0].instance.destroy();
+			//ユーザが管理者権限ならば
+			if(loginResult.authority == ADMIN_AUTHORITY){
+				this.url = DIR_ADMIN_PAGE + URL_ADMIN_TOP;
+			//通常ログインかつ、ユーザが管理者権限でなければ
+			} else if(loginResult.authority != ADMIN_AUTHORITY){
+				//会員トップページに遷移する様に設定する
+				this.url = CHAR_HASH + DIR_MEMBER_PAGE + URL_MEMBER_TOP;
 				//会員トップページへ移動する
-				location.href = URL_MEMBER_PAGE; 
+				location.href = SHARP + URL_MEMBER_PAGE; 
 			}
 		}
 		

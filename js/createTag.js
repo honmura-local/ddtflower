@@ -1556,11 +1556,8 @@ function createTag(){
 			
 			//ログインダイアログを作る。
 			var loginDialog = new dialogEx(URL_LOGIN_DIALOG, argumentObj, {});
-//			loginDialog.setCallbackCreate(whenLoginDialogCreate);				//ダイアログが作成されたときのコールバック関数を登録する。
-//			loginDialog.setCallbackClose(whenLoginDialogClose);					//ダイアログを閉じる時のコールバック関数を登録する。
 			loginDialog.run();	//ログインダイアログを開く
 			commonFuncs.hideLoadingScreen();	//ローディング画面が出っぱなしになっているので消す
-//			$('.loginDialogMessage', loginDialog.dom).html(this.message);	//ダイアログのメッセージ領域を書き換える	
 		}
 	};
 	
