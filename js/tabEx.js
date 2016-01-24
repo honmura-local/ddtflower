@@ -16,16 +16,17 @@
  * 作成者　:T.Masuda
  */
 function tabEx(url, argumentObj, returnObj){
+	
 	//親クラスのコンストラクタを起動する
 	baseWindow.call(this, url, argumentObj, returnObj);
-
+	
 	//デフォルト設定のオブジェクト
 	//argumentObjを作る際に参考にしてください。
 	this.defaultArgumentObj = {
 		//ダイアログの設定データオブジェクト
 		config:{
-			cache: true,		//一度読み込んだコンテンツは二度読み込まない
-			updateHash:true		//URLハッシュによるタブ開閉履歴を残す
+			cache: false,		//タブを開くたびにデータを最新のものにする
+			updateHash:false	//URLハッシュによるタブ開閉履歴を残す
 		},
 		//インプット用データオブジェクト
 		data:{
@@ -92,22 +93,50 @@ function tabEx(url, argumentObj, returnObj){
 	 * 作成者　:T.Masuda
 	 */
 	this.setHashChangeSyncTab = function(selector){
+	
+		//クリック判定
+		var isClicked = false;
+		//登録済みのhashchangeイベントの一覧を取得する
+		var registerdHashchangeEvents = $._data($(window).get(0), "events").hashchange;
+		//イベントコールバック内で自身を利用するために変数に保存する
+		var thisElem = this;
+		
+		//登録済みのhashchangeイベントを走査する
+		for (key in registerdHashchangeEvents) {
+			//登録済みのイベントであったら
+			if(registerdHashchangeEvents[key].namespace == selector) {
+				return false;	//新たにhashchangeイベントを登録せず処理を終了する
+			}
+		}
+		
+		$(document).on(CLICK, selector + ' > ul a', function(e){
+			isClicked = true;
+			$(e.currentTarget).attr("href");
+			var clickedHref = commonFuncs.getLastValue($(e.currentTarget).attr("href"), SLASH);
+			location.hash = clickedHref.substring(0, clickedHref.indexOf(DOT));
+		});
+		
 		//ハッシュ切り替えイベント発生時の処理
-		$(window).bind("hashchange", function(ev){
+		$(window).bind("hashchange." + selector, function(ev){
+			
+			if(isClicked) {
+				isClicked = false;
+				return false;
+			}
+						
 			//ハッシュが変わっていれば
 			if(location.hash) {
 				//URLからハッシュを取り出し、変数に格納する。
 				var hash = location.hash;
 
 				//引数の要素が存在していれば
-				if(commonFuncs.checkEmpty(selector) && $('> div > ' + hash, selector).length > 0){
+				if(commonFuncs.checkEmpty(selector) && $('> div > ' + hash, $(selector)).length > 0){
+					var $tabParent = $(selector);
 					//該当するタブを表示するを読み込む。
-					$(selector).easytabs('select', hash );
+					$tabParent.easytabs('select', hash );
 				//ハッシュに対応するタブがネストして存在すれば
 				} else if ($(hash, selector).length > 0) {
 					//親のタブのIDを取得する
-					console.log($(hash));
-					 console.log($(hash).parents('.tabPanel'));
 					var parentTabPanelId = $(hash).parent().closest('.tabPanel').attr('id');
 					var parentTabContainerId = $('#' + parentTabPanelId).closest('.tabContainer').attr('id');
 					//親タブを開く

@@ -238,7 +238,7 @@
             $container.trigger('easytabs:ajax:beforeSend', [$clicked, $targetPanel]);
 
             $targetPanel.load(ajaxUrl, function(response, status, xhr){
-              $clicked.parent().data('easytabs').cached = true;
+//              $clicked.parent().data('easytabs').cached = true;
               $container.trigger('easytabs:ajax:complete', [$clicked, $targetPanel, response, status, xhr]);
             });
           }
@@ -448,7 +448,7 @@
         if ( defaultAjaxUrl && (!settings.cache || !$defaultTab.data('easytabs').cached) ) {
           $container.trigger('easytabs:ajax:beforeSend', [$defaultTabLink, defaultPanel]);
           defaultPanel.load(defaultAjaxUrl, function(response, status, xhr){
-            $defaultTab.data('easytabs').cached = true;
+//            $defaultTab.data('easytabs').cached = true;
             $container.trigger('easytabs:ajax:complete', [$defaultTabLink, defaultPanel, response, status, xhr]);
           });
         }
@@ -557,7 +557,7 @@
         if ( ajaxUrl && (!settings.cache || !$clicked.parent().data('easytabs').cached) ) {
           $container.trigger('easytabs:ajax:beforeSend', [$clicked, $targetPanel]);
           $targetPanel.load(ajaxUrl, function(response, status, xhr){
-            $clicked.parent().data('easytabs').cached = true;
+//            $clicked.parent().data('easytabs').cached = true;
             $container.trigger('easytabs:ajax:complete', [$clicked, $targetPanel, response, status, xhr]);
           });
         }

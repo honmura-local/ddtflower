@@ -2220,7 +2220,7 @@ this.defaultClassworkCostColumns = [
 	this.checkBeforeEnterAdminPage = function (authority, currentWindow) {
 		//判定結果を格納する変数を用意する
 		retResult = true;
-		
+
 		//管理者権限でなければ
 		if (authority != ADMIN_AUTHORITY) {
 			
@@ -2241,6 +2241,23 @@ this.defaultClassworkCostColumns = [
 		}
 		
 		return retResult;	//判定結果を返す
+	}
+
+	/* 
+	 * 関数名:getLastValue
+	 * 概要  :対象となる文字列を区切り文字で区切り、最後に来る部分を返す
+	 * 引数  :String value : 対象となる文字列
+	 * 　　  :String delimiter : 区切り文字
+	 * 作成者:T.Masuda
+	 * 作成日:2015.0110
+	 */
+	this.getLastValue = function(value, delimiter) {
+		//対象となる文字を区切る
+		var valueArray = value.split(delimiter);
+		//区切った数を調べる
+		var valueLength = valueArray.length;
+		//区切った文字の最後の部分を返す
+		return valueArray[valueLength - 1];
 	}
 	
 //ここまでクラス定義領域

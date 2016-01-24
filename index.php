@@ -97,7 +97,7 @@
 <!-- Smooth DIV Scrollの本体を読み込む。 -->
 <script type="text/javascript" src="js/jquery.smoothDivScroll-1.3.js"></script>
 <!-- easytabsの本体を読み込む。 -->
-<script type="text/javascript" src="js/jquery.easytabs.min.js"></script>
+<script type="text/javascript" src="js/jquery.easytabs.js"></script>
 <!-- アップロード機能を提供するjQueryプラグイン -->
 <script src="js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
 <!-- 入力チェック機能のjQueryプラグイン -->
