@@ -148,16 +148,16 @@
         }
     },
     "insertMyBlog":{
-        "db_setQuery":"INSERT INTO user_blog(user_key, title, content, post_timestamp, image_1, image_2, image_3) VALUES ('user_key', 'blogTitle', 'blogContent', NOW(), 'image_1', 'image_2', 'image_3')"
+        "db_setQuery":"CALL insertNewBlogArticle('user_key', 'blogTitle', 'blogContent', 'blogPublication', 'image_1', 'image_2', 'image_3')"
     },
     "updateMyBlog":{
-        "db_setQuery":"UPDATE user_blog SET title='blogTitle', content='blogContent' , image_1='image_1', image_2='image_2', image_3='image_3', disclosure_range = 'blogPublication' WHERE id='id';",
+        "db_setQuery":"CALL updateBlogArticle('id', 'blogTitle', 'blogContent' , 'image_1', 'image_2', 'image_3', 'blogPublication');",
         "id":{
             "value":""
         }
     },
     "myBlogContent":{
-        "db_getQuery":"SELECT * FROM user_blog WHERE user_key='user_key' AND id='id' ",
+        "db_getQuery":"CALL getBlogArticleWithId('user_key', 'id'); SELECT * FROM tmp_my_blog_article;",
         "user_key":{
             "value":""
         },

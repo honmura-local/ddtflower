@@ -7,6 +7,8 @@
 -- サーバのバージョン： 5.6.20
 -- PHP Version: 5.5.15
 
+#ブログ
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -45,3 +47,74 @@ ALTER TABLE `blog_article_image`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+#ブログ記事取得
+delimiter $$
+CREATE PROCEDURE getBlogArticle(in userKey int)
+BEGIN
+CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT ub.id, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3,ub.title,ub.post_timestamp AS date,uin.user_name AS userName,ub.content AS text FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key=userKey AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+END$$
+delimiter ;
+
+CALL getBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;
+
+#IDからブログ記事取得
+delimiter $$
+CREATE PROCEDURE getBlogArticleWithId(in user_key int, articleId int)
+BEGIN
+CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT * FROM user_blog WHERE user_key = user_key AND id = articleId;
+END$$
+delimiter ;
+
+CALL getBlogArticleWithId('user_key', 'id'); SELECT * FROM tmp_my_blog_article;
+
+#ブログ記事作成
+delimiter $$
+CREATE PROCEDURE insertNewBlogArticle(in user_key int, blogTitle varchar(200), blogContent text, blogPublication tinyint, blogImage1 varchar(255), blogImage2 varchar(255), blogImage3 varchar(255))
+BEGIN
+INSERT INTO user_blog(user_key, title, content, post_timestamp, disclosure_range, image_1, image_2, image_3) VALUES (user_key, blogTitle, blogContent, NOW(), blogImage1, blogImage2, blogImage3);
+END$$
+delimiter ;
+
+CALL insertNewBlogArticle('user_key', 'blogTitle', 'blogContent', 'blogPublication', 'image_1', 'image_2', 'image_3');
+
+#ブログ記事更新
+delimiter $$
+CREATE PROCEDURE updateBlogArticle(in blogId int, blogTitle varchar(200), blogContent text, blogImage1 varchar(255), blogImage2 varchar(255), blogImage3 varchar(255), blogPublication tinyint)
+BEGIN
+UPDATE user_blog SET title = blogTitle, content = blogContent , image_1 = blogImage1, image_2 = blogImage2, image_3 = blogImage3, disclosure_range = blogPublication WHERE id = blogId;
+END$$
+delimiter ;
+
+CALL updateBlogArticle('id', 'blogTitle', 'blogContent' , 'image_1', 'image_2', 'image_3', 'blogPublication');
+
+#ブログ記事削除
+delimiter $$
+CREATE PROCEDURE deleteBlogArticle(in articleId int)
+BEGIN
+DELETE FROM user_blog WHERE id = articleId;
+END$$
+delimiter ;
+
+CALL deleteBlogArticle('id');
+
+
+#マイブログ画面記事取得
+delimiter $$
+CREATE PROCEDURE getMyBlogArticle(in userKey int)
+BEGIN
+CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='userKey' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+END$$
+delimiter ;
+
+CALL getMyBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;
+
+#マイブログ画面記事一覧取得
+delimiter $$
+CREATE PROCEDURE getMyBlogList(in userKey int)
+BEGIN
+CREATE TEMPORARY TABLE tmp_my_blog_article_list AS SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='userKey' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+END$$
+delimiter ;
+
+CALL getMyBlogList('user_key'); SELECT * FROM tmp_my_blog_article_list;
