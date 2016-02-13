@@ -158,3 +158,74 @@ AND
     school_key = 1
 #----------------------------------------------------
 
+#会員一覧
+# ユーザ情報(自分)
+delimiter $$
+CREATE PROCEDURE getSelfUserInfo(in userKey int)
+BEGIN
+CREATE TEMPORARY TABLE 
+	tmp_user_info AS
+SELECT 
+	*
+FROM
+	user_inf
+WHERE
+	id = userKey
+;
+END$$
+delimiter ;
+
+CALL getSelfUserInfo('user_key'); SELECT * FROM tmp_user_info;
+
+# ユーザ情報
+delimiter $$
+CREATE PROCEDURE getUserInfoList(in sortTarget varchar(30), sortOrder tinyint)
+BEGIN
+
+IF sortOrder = 0 THEN
+	CREATE TEMPORARY TABLE 
+		tmp_user_info_list AS
+	SELECT 
+		*
+	FROM
+		user_inf
+	ORDER BY 
+		sortTarget ASC
+	;
+ELSE
+	CREATE TEMPORARY TABLE 
+		tmp_user_info_list AS
+	SELECT 
+		*
+	FROM
+		user_inf
+	ORDER BY 
+		sortTarget DESC
+	;
+END IF;
+
+END$$
+delimiter ;
+
+CALL getUserInfoList('sort_target', 'sort_order'); SELECT * FROM tmp_user_info_list;
+
+# テーマ指定用リスト作成
+delimiter $$
+CREATE PROCEDURE getListForChooseThemes()
+BEGIN
+CREATE TEMPORARY TABLE 
+	tmp_themes AS
+SELECT
+    id AS lesson_key
+    ,lesson_name
+FROM
+    lesson_inf
+WHERE
+    rec_status = 0
+AND
+    school_key = 1
+;
+END$$
+delimiter ;
+
+CALL getListForChooseThemes(); SELECT * FROM tmp_themes;
