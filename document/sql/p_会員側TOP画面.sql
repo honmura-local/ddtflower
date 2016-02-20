@@ -1,12 +1,11 @@
-DELIMINATER $$
+DELIMITER $$
 
 -- user_inf
 CREATE PROCEDURE p_user_inf(
-	,IN in_user_key INT
+	IN in_user_key INT
 )
 BEGIN
 
-CREATE TEMPORARY TABLE tmp_user_inf AS 
 SELECT 
 	*
 FROM 
@@ -18,11 +17,10 @@ END$$
 
 -- essage_inf
 CREATE PROCEDURE p_message_inf(
-	,IN in_user_key INT
+	IN in_user_key INT
 )
 BEGIN
 
-CREATE TEMPORARY TABLE tmp_message_inf AS 
 SELECT 
 	message_title
 	,message_content
@@ -45,7 +43,7 @@ END$$
 
 -- 受講可能レッスン
 CREATE PROCEDURE p_booked_lessons(
-	,IN in_user_key INT
+	IN in_user_key INT
 )
 BEGIN
 
@@ -168,7 +166,6 @@ CREATE PROCEDURE p_bookable_lessons(
 )
 BEGIN
 
-CREATE TEMPORARY TABLE tmp_bookable_lessons AS 
 SELECT 
     lesson_name
     ,id AS lesson_key
@@ -190,4 +187,4 @@ AND
 
 END$$
 
-DELIMINATER ;
+DELIMITER ;
