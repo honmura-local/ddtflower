@@ -6,3 +6,13 @@ SET
     ,update_datetime = NOW()
 WHERE
 	id = {{ユーザID}}
+	
+#パスワード変更
+delimiter $$
+CREATE PROCEDURE updateUserPassword(in newPassword varchar(255), userId int)
+BEGIN
+UPDATE user_inf SET password = newPassword,update_datetime = NOW() WHERE id = userId;
+END$$
+delimiter ;
+
+CALL updateUserPassword('password', 'userId');
