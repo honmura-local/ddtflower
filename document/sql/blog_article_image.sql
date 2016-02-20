@@ -52,21 +52,42 @@ ALTER TABLE `blog_article_image`
 delimiter $$
 CREATE PROCEDURE getBlogArticle(in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT ub.id, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3,ub.title,ub.post_timestamp AS date,uin.user_name AS userName,ub.content AS text FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key=userKey AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+SELECT 
+	ub.id
+	,ub.image_1 AS image1
+	,ub.image_2 AS image2
+	,ub.image_3 AS image3
+	,ub.title,ub.post_timestamp AS date
+	,uin.user_name AS userName
+	,ub.content AS text 
+FROM 
+	user_blog AS ub
+	,user_inf AS uin 
+WHERE 
+	ub.user_key=userKey 
+	AND ub.user_key=uin.id 
+ORDER BY 
+	post_timestamp DESC;
 END$$
 delimiter ;
 
-CALL getBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;
+CALL getBlogArticle(@result, 'user_key'); SELECT @result AS 'result';
 
 #IDからブログ記事取得
 delimiter $$
-CREATE PROCEDURE getBlogArticleWithId(in user_key int, articleId int)
+CREATE PROCEDURE getBlogArticleWithId(out result text, in user_key int, articleId int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT * FROM user_blog WHERE user_key = user_key AND id = articleId;
+SELECT 
+	* 
+FROM 
+	user_blog 
+WHERE 
+	user_key = user_key 
+	AND id = articleId;
 END$$
 delimiter ;
 
-CALL getBlogArticleWithId('user_key', 'id'); SELECT * FROM tmp_my_blog_article;
+CALL getBlogArticleWithId(@result, 'user_key', 'id'); SELECT @result AS 'result';
 
 #ブログ記事作成
 delimiter $$
@@ -101,20 +122,53 @@ CALL deleteBlogArticle('id');
 
 #マイブログ画面記事取得
 delimiter $$
-CREATE PROCEDURE getMyBlogArticle(in userKey int)
+CREATE PROCEDURE getMyBlogArticle(out result text, in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_my_blog_article AS SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='userKey' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+SELECT 
+	ub.id
+	,ub.title
+	,Date(ub.post_timestamp) AS date
+	,uin.user_name AS userName
+	,ub.image_1 AS image1
+	,ub.image_2 AS image2
+	,ub.image_3 AS image3
+	,ub.content AS text
+	, '' AS buttons
+FROM 
+	user_blog AS ub
+	,user_inf AS uin 
+WHERE 
+	ub.user_key = 'userKey' 
+	AND ub.user_key=uin.id 
+ORDER BY 
+	post_timestamp DESC;
 END$$
 delimiter ;
 
-CALL getMyBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;
+CALL getMyBlogArticle(@result, 'user_key'); SELECT @result AS 'result';
 
 #マイブログ画面記事一覧取得
 delimiter $$
-CREATE PROCEDURE getMyBlogList(in userKey int)
+CREATE PROCEDURE getMyBlogList(out result text, in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_my_blog_article_list AS SELECT ub.id,ub.title,Date(ub.post_timestamp) AS date,uin.user_name AS userName, ub.image_1 AS image1, ub.image_2 AS image2,ub.image_3 AS image3, ub.content AS text, '' AS buttons FROM user_blog AS ub,user_inf AS uin WHERE ub.user_key='userKey' AND ub.user_key=uin.id ORDER BY post_timestamp DESC;
+SELECT 
+	ub.id,ub.title
+	,Date(ub.post_timestamp) AS date
+	,uin.user_name AS userName
+	,ub.image_1 AS image1
+	,ub.image_2 AS image2
+	,ub.image_3 AS image3
+	,ub.content AS text, 
+	'' AS buttons 
+FROM 
+	user_blog AS ub
+	,user_inf AS uin 
+WHERE 
+	ub.user_key='userKey' 
+	AND ub.user_key=uin.id 
+ORDER BY 
+	post_timestamp DESC;
 END$$
 delimiter ;
 
-CALL getMyBlogList('user_key'); SELECT * FROM tmp_my_blog_article_list;
+CALL getMyBlogList(@result, 'user_key'); SELECT @result AS 'result';

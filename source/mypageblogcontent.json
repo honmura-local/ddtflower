@@ -1,6 +1,6 @@
 {
 	"myBlogTable":{
-		"db_getQuery":"CALL getBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;",
+		"db_getQuery" :"CALL getBlogArticle(@result, 'user_key'); SELECT @result AS 'result';",
 		"user_key":{
 			"value":""
 		}

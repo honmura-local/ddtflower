@@ -53,13 +53,32 @@ INSERT INTO
 
 #お知らせ取得
 delimiter $$
-CREATE PROCEDURE getUserMessage(in userKey int)
+CREATE PROCEDURE getUserMessage(out result text, in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_message AS SELECT message_title,message_content,send_date FROM message_inf WHERE id IN ( SELECT message_key FROM message_to WHERE user_key = 'userKey' AND check_datetime IS NULL) ORDER BY send_date DESC, id DESC;
+SELECT
+	message_title
+	,message_content
+	,send_date 
+FROM 
+	message_inf 
+WHERE 
+	id IN 
+	(
+	SELECT 
+		message_key 
+	FROM 
+		message_to 
+	WHERE 
+		user_key = 'userKey' 
+		AND check_datetime IS NULL
+	) 
+	ORDER BY 
+		send_date DESC
+		, id DESC;
 END$$
 delimiter ;
 
-CALL getUserMessage('user_key'); SELECT * FROM tmp_message;
+CALL getUserMessage(@result, 'user_key'); SELECT @result AS 'result';
 
 #お知らせ登録1
 delimiter $$

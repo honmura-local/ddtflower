@@ -1,6 +1,6 @@
 {
     "advertise": {
-        "db_getQuery": "CALL getUserMessage('user_key'); SELECT * FROM tmp_message;",
+        "db_getQuery": "CALL getUserMessage(@result, 'user_key'); SELECT @result AS 'result';",
         "user_key": {
             "value": ""
         },

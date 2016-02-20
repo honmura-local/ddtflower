@@ -46,7 +46,7 @@ ORDER BY
 
 #日ごと予約者一覧取得
 delimiter $$
-CREATE PROCEDURE getEachDayLessonList(in date date)
+CREATE PROCEDURE getEachDayLessonList(out result text, in date date)
 BEGIN
 CREATE TEMPORARY TABLE 
 	tmp_eachday_lesson_list AS
@@ -96,4 +96,4 @@ ON
 END$$
 delimiter ;
 
-CALL getEachDayLessonList('date'); SELECT * FROM tmp_eachday_lesson_list;
+CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';

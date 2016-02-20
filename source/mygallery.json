@@ -75,7 +75,7 @@
         }
     },
     "myGalleryTable":{
-        "db_getQuery":"CALL getMyGalleryContents2('user_key'); SELECT * FROM tmp_gallery;",
+        "db_getQuery":"CALL getMyGalleryContents2(@result, 'user_key'); SELECT @result AS 'result';",
         "user_key":{
             "value":""
         },

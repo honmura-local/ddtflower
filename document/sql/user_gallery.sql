@@ -98,35 +98,49 @@ AND
 AND
 	ug.image_id=ui.id;
 	
+
 #ギャラリー記事取得
 delimiter $$
-CREATE PROCEDURE getGalleryContents()
+CREATE PROCEDURE getGalleryContents(out result text)
 BEGIN
 CREATE TEMPORARY TABLE tmp_gallery AS SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;
 END$$
 delimiter ;
 
-CALL getGalleryContents(); SELECT * FROM tmp_gallery;
+CALL getGalleryContents(@result); SELECT @result AS 'result';
 
 #マイギャラリー記事取得1
 delimiter $$
-CREATE PROCEDURE getMyGalleryContents1()
+CREATE PROCEDURE getMyGalleryContents1(out result text)
 BEGIN
-CREATE TEMPORARY TABLE tmp_gallery AS SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin ORDER BY ui.update_timestamp DESC LIMIT 300;
+SELECT 
+	ui.id
+	,ui.photo_title AS myPhotoImage
+	,Date(ui.update_timestamp) AS date
+	,ui.article_title AS myPhotoTitle
+	,uin.user_name AS myPhotoUser
+	,ui.photo_summary AS myPhotoComment 
+FROM 
+	user_image AS ui
+	,user_inf AS uin 
+ORDER BY 
+	ui.update_timestamp 
+DESC 
+LIMIT 300;
 END$$
 delimiter ;
 
-CALL getMyGalleryContents(); SELECT * FROM tmp_gallery;
+CALL getMyGalleryContents(@result);  SELECT @result AS 'result';
 
 ##マイギャラリー記事取得2
 delimiter $$
-CREATE PROCEDURE getMyGalleryContents2(in userKey int)
+CREATE PROCEDURE getMyGalleryContents2(out result text, in userKey int)
 BEGIN
 CREATE TEMPORARY TABLE tmp_gallery AS SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key='userKey' AND ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;
 END$$
 delimiter ;
 
-CALL getMyGalleryContents2('user_key'); SELECT * FROM tmp_gallery;
+CALL getMyGalleryContents2(@result, 'user_key'); SELECT @result AS 'result';
 
 #マイギャラリー記事作成
 delimiter $$

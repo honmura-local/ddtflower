@@ -69,8 +69,8 @@
         "class":"eachDayReservedInfoTableOutsideArea"
     },
     "eachDayReservedInfoTable":{
-        "db_getQuery": "CALL getEachDayLessonList('date'); SELECT * FROM tmp_eachday_lesson_list;",
-        "replace_query":"CALL getEachDayLessonList('date'); SELECT * FROM tmp_eachday_lesson_list;",
+        "db_getQuery": "CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';",
+        "replace_query":"CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';",
         "lesson_date": {
             "value": ""
         },
@@ -149,7 +149,7 @@
         "db_setQuery":"CALL doLecturePermit('user_classwork_cost', 'get_point', 'classwork_use_point', 'late_time', 'pay_price', 'user_classwork_key'); CALL updateLecturePermitPoints('get_point' ,'use_point', 'user_key');"
     },
     "getPoinRate" : {
-    	"db_getQuery" : "CALL getPointRate('lesson_key'); SELECT * FROM tmp_point_rate;",
+    	"db_getQuery" : "CALL getPointRate(@result,'lesson_key'); SELECT @result AS 'result';",
     	"pointRate" : {
     		"text" : ""
     	},
@@ -161,7 +161,7 @@
     	}
     },
     "doLecturePermitInfoTable":{
-        "db_getQuery": "SELECT '' AS columnCheckbox, time_table_day.id AS time_table_key ,time_table_day.lesson_date AS lesson_date ,classwork.order_students AS order_students    ,classwork.lesson_key AS lesson_key ,start_time ,end_time ,lesson_name ,user_name ,user_classwork.stage_no AS stage_no ,user_classwork.level_no AS level_no ,user_classwork_cost ,user_inf.get_point AS get_point ,user_classwork.id AS user_classwork_key ,user_inf.id AS user_key ,timetable_inf.school_key AS school_key, classwork.order_students  FROM time_table_day INNER JOIN classwork ON time_table_day.id = classwork.time_table_day_key AND time_table_day.lesson_date = SUBSTRING(NOW(), 1, 10) INNER JOIN user_classwork ON classwork.id = user_classwork.classwork_key INNER JOIN user_inf ON user_inf.id = user_classwork.user_key INNER JOIN  lesson_inf ON lesson_inf.id = classwork.lesson_key INNER JOIN timetable_inf ON timetable_inf.id = time_table_day.timetable_key AND user_classwork.user_work_status = 2;",
+        "db_getQuery": "CALL getLecturePermit(@result); SELECT @result AS 'result';",
         "date":{
             "value":""
         },
@@ -229,7 +229,7 @@
         }
     },
     "selectCommodityInf":{
-        "db_getQuery": "SELECT commodity_name,selling_price,id AS commodity_key FROM commodity_inf;",
+        "db_getQuery": "CALL getCommodityNameList(@result); SELECT @result AS 'result';",
         "config": {
             "columns": {
                 "commodity_name": {
@@ -245,7 +245,7 @@
         }
     },
     "lecturePermitPlusPointRate":{
-        "db_getQuery":"CALL getPointRate('lesson_key'); SELECT * FROM tmp_point_rate;",
+        "db_getQuery" : "CALL getPointRate(@result,'lesson_key'); SELECT @result AS 'result';",
         "lesson_key":{
             "value":""
         },
@@ -365,7 +365,7 @@
         "class":"lecturePermitListInfoTableOutsideArea"
     },
     "lecturePermitListInfoTable":{
-        "db_getQuery": "CALL getLecturePermitInfoList('fromDate', 'toDate'); SELECT * FROM tmp_lecture_permit_info_list;",
+        "db_getQuery": "CALL getLecturePermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
         "FromDate":{
             "value":""
         },

@@ -161,10 +161,8 @@ AND
 #会員一覧
 # ユーザ情報(自分)
 delimiter $$
-CREATE PROCEDURE getSelfUserInfo(in userKey int)
+CREATE PROCEDURE getSelfUserInfo(out result text, in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_user_info AS
 SELECT 
 	*
 FROM
@@ -175,16 +173,14 @@ WHERE
 END$$
 delimiter ;
 
-CALL getSelfUserInfo('user_key'); SELECT * FROM tmp_user_info;
+CALL getSelfUserInfo(@result, 'user_key'); SELECT @result AS 'result';
 
 # ユーザ情報
 delimiter $$
-CREATE PROCEDURE getUserInfoList(in sortTarget varchar(30), sortOrder tinyint)
+CREATE PROCEDURE getUserInfoList(out result text, in sortTarget varchar(30), sortOrder tinyint)
 BEGIN
 
 IF sortOrder = 0 THEN
-	CREATE TEMPORARY TABLE 
-		tmp_user_info_list AS
 	SELECT 
 		*
 	FROM
@@ -193,8 +189,6 @@ IF sortOrder = 0 THEN
 		sortTarget ASC
 	;
 ELSE
-	CREATE TEMPORARY TABLE 
-		tmp_user_info_list AS
 	SELECT 
 		*
 	FROM
@@ -207,14 +201,12 @@ END IF;
 END$$
 delimiter ;
 
-CALL getUserInfoList('sort_target', 'sort_order'); SELECT * FROM tmp_user_info_list;
+CALL getUserInfoList(@result, 'sort_target', 'sort_order'); SELECT @result AS 'result';
 
 # テーマ指定用リスト作成
 delimiter $$
-CREATE PROCEDURE getListForChooseThemes()
+CREATE PROCEDURE getListForChooseThemes(out result text)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_themes AS
 SELECT
     id AS lesson_key
     ,lesson_name
@@ -228,4 +220,4 @@ AND
 END$$
 delimiter ;
 
-CALL getListForChooseThemes(); SELECT * FROM tmp_themes;
+CALL getListForChooseThemes(@result); SELECT @result AS 'result';

@@ -91,10 +91,8 @@ FROM
 #受講承認
 #受講承認対象の一覧取得
 delimiter $$
-CREATE PROCEDURE getLecturePermit()
+CREATE PROCEDURE getLecturePermit(out result text)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_lecture_permit AS
 SELECT 
 	'' AS columnCheckbox
 	,time_table_day.id AS time_table_key 
@@ -141,14 +139,12 @@ AND
 END$$
 delimiter ;
 
-CALL getLecturePermit(); SELECT * FROM tmp_lecture_permit;	
+CALL getLecturePermit(@result); SELECT @result AS 'result';	
 
 #ポイントレート算出
 delimiter $$
-CREATE PROCEDURE getPointRate(in lessonKey int)
+CREATE PROCEDURE getPointRate(out result text, in lessonKey int)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_point_rate AS
 SELECT
     point_rate
     ,students
@@ -160,14 +156,12 @@ WHERE
 END$$
 delimiter ;
 
-CALL getPointRate('lesson_key'); SELECT * FROM tmp_point_rate;
+CALL getPointRate(@result,'lesson_key'); SELECT @result AS 'result';
 
 # 備品名リスト用クエリ
 delimiter $$
-CREATE PROCEDURE getCommodityNameList()
+CREATE PROCEDURE getCommodityNameList(out result text)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_commodity_name_list AS
 SELECT 
 	commodity_name
 	,selling_price
@@ -177,5 +171,5 @@ FROM
 END$$
 delimiter ;
 
-CALL getCommodityNameList('lesson_key'); SELECT * FROM tmp_commodity_name_list;
+CALL getCommodityNameList(@result); SELECT @result AS 'result';
 

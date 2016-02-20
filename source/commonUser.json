@@ -1,6 +1,6 @@
 {
     "adminHeader": {
-        "db_getQuery": "CALL getSelfUserInfo('user_key'); SELECT * FROM tmp_user_info;",
+        "db_getQuery": "CALL getSelfUserInfo(@result, 'user_key'); SELECT @result AS 'result';",
         "user_key": {
             "value": "1"
         },

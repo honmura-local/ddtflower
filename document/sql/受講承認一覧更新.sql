@@ -64,7 +64,7 @@ SET
 WHERE
 	id = commoditySellKey
 ;
-CALL updateLecturePermitListPoint(diffPoint, userKey);
+CALL updateLecturePermitListPoint(@result, diffPoint, userKey);
 END$$
 delimiter ;
 

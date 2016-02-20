@@ -116,7 +116,7 @@
     },
     "myBlogTable":{
     	"class" : "blogTable myBlogTable",
-        "db_getQuery":"CALL getMyBlogArticle('user_key'); SELECT * FROM tmp_my_blog_article;",
+        "db_getQuery" : "CALL getMyBlogArticle(@result, 'user_key'); SELECT @result AS 'result';",
         "user_key":{
             "value":""
         },
@@ -157,7 +157,7 @@
     },
     "blogTable":{
     	"class" : "blogTable",
-        "db_getQuery":"CALL getMyBlogList('user_key'); SELECT * FROM tmp_my_blog_article_list;",
+        "db_getQuery" : "CALL getMyBlogList(@result, 'user_key'); SELECT @result AS 'result';",
         "user_key":{
             "value":""
         },

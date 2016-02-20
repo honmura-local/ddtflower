@@ -157,7 +157,7 @@
         }
     },
     "myBlogContent":{
-        "db_getQuery":"CALL getBlogArticleWithId('user_key', 'id'); SELECT * FROM tmp_my_blog_article;",
+        "db_getQuery":"CALL getBlogArticleWithId(@result, 'user_key', 'id'); SELECT @result AS 'result';",
         "user_key":{
             "value":""
         },
