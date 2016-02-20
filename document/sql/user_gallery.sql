@@ -159,7 +159,7 @@ FROM
 	user_image AS ui
 	,user_inf AS uin 
 WHERE 
-	ui.user_key='userKey' 
+	ui.user_key=userKey 
 	AND ui.user_key=uin.id 
 ORDER BY 
 	ui.update_timestamp DESC;

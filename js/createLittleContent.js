@@ -394,7 +394,7 @@ function createLittleContents(){
 			 if (result) {
 				//その旨を伝える
 				alert('選択した写真の削除に成功しました。');
-				this.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.memberMyGallery', 'create_tag.createMyGalleryImages');
+				this.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');
 			 //削除に失敗していたら
 			 } else {
 				 //その旨を伝える
@@ -615,7 +615,7 @@ function createLittleContents(){
 	 */
 	this.setDoubleClickMyPhotoEdit = function(){
 		$ownerClass = this;	//自分自身の暮らすインスタンスを変数に保存
-		$('.memberMyGallery').on('doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(event){
+		$('.myGalleryTable').on('doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(event){
 			//タイトルを編集モードにする。
 			$ownerClass.startEditText(this);
 		});
@@ -676,10 +676,10 @@ function createLittleContents(){
     			//コールバック関数。画像パスを引数として受け取る。
     			callback: function(data) {
     				thisElem.uploadUserPhoto(data);	//画像をアップロードする
-    				//マイギャラリーのデータを取得し直す
-    				thisElem.getJsonFile('php/GetJSONArray.php', create_tag.json['myGalleryTable'], 'myGalleryTable');
-    				//マイギャラリーを作り直す
-    				thisElem.outputNumberingTag('myGalleryTable', 1, 4, 1, 4, '.memberMyGallery', 'create_tag.createMyGalleryImages');	// ブログの記事を作る。
+    				//テーブルをクリアする
+    				$('.myGalleryTable').empty();
+    				//メルマガのデータを取得して表示する
+					thisElem.loadTableData('myGalleryTable', 1, 4, 1, MY_GALLERY_SHOW_PHOTO_NUM, '.galleryArea', 'create_tag.createMyGalleryImages');
     			}
     		});
 		});
@@ -1180,7 +1180,6 @@ function createLittleContents(){
 		
 		//データ取得元の連想配列を走査する
 		for(key in items) { 
-			console.log(items[key]);
 			$(selector).append($('<option></option>').addClass('contentOption').val(items[key].commodity_key).text(items[key].commodity_name));
 			//optionタグにテキストに応じたIDをセットする
 			//$('option', $(selector)).filter(function(index){return $(this).text() == items[key].commodity_name;}).val(items[key].id);
@@ -1856,7 +1855,6 @@ function createLittleContents(){
 			
 			//取得した連想配列を結合する
 			var sendReplaceArray = $.extend(true, {}, resultTableArray, inputDataArray);
-			console.log(sendReplaceArray);
 			//使用ポイントが所持ポイントを上回っていれば
 			if (sendReplaceArray.diff_point && sendReplaceArray.get_point < sendReplaceArray.diff_point) {
 				throw new Error("使用ポイントが所持ポイントを上回っています。 所持:" + sendReplaceArray.get_point + " 使用ポイント: " + sendReplaceArray.data-diff_point);	//例外を発生させる
@@ -2153,7 +2151,7 @@ function createLittleContents(){
 		 this.json[deleteQueryKey].db_setQuery = deleteQuery;
 
 		//ブログの記事を作り直す
-		this.loadTableData('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');
+		this.loadTableData('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages(\'.myBlogTable\');create_tag.setBlogEditButtons');
 		//記事の画像を拡大できるようにする。
 //		creator.useZoomImage('blogImage');
 				
@@ -2392,7 +2390,7 @@ function createLittleContents(){
 	/*
 	 * 関数名:createMyBlogImages
 	 * 概要  :マイブログの記事の画像列セルから画像タグを作る
-	 * 引数  :なし
+	 * 引数  :String or Element target: 処理対象となる行を持つテーブルのセレクタ
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2015.08.03
@@ -2400,9 +2398,9 @@ function createLittleContents(){
 	 * 変更日:2015.10.31
 	 * 内容　:fancyboxによる画像拡大表示に対応しました。
 	 */
-	this.createMyBlogImages = function(){
+	this.createMyBlogImages = function(target){
 		//ブログの各行を走査する
-		$('.blogTable tr:not(:first)').each(function(){
+		$('tr:not(:first)', $(target)).each(function(){
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//画像の列を走査する
 			$('.blogImage', $row).each(function(){
@@ -2535,14 +2533,14 @@ function createLittleContents(){
 	/*
 	 * 関数名:this.sendButtonRole(form)
 	 * 引数  :element form: フォームの要素。
-	 * 戻り値:String:エラーメッセージの文字列。
+	 * 戻り値:なし
 	 * 概要  :ボタンに設定されたroleの値を隠しフォームにセットする。
 	 * 作成日:2015.04.15
 	 * 作成者:T.Masuda
 	 */
 	this.sendButtonRole = function(form){
 		//submitボタンのクリックイベントを設定する。
-		$('input:submit, button[type="submit"]').on('click', function(){
+		$(form).on('click', 'input:submit, button[type="submit"]', function(){
 			//次に来るvalueHolderクラスのhiddenのinputタグにdata-role属性を渡す。
 			$('.valueHolder:first').attr('data-role', $(this).attr('data-role'));
 			
@@ -3013,7 +3011,7 @@ calendarOptions['blog'] = {
 		onSelect: function(dateText, inst){
 			this.instance.create_tag.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.create_tag.outputNumberingTag('blogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages()')
+			this.instance.create_tag.outputNumberingTag('blogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages(\'.blogTable\')')
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
@@ -3037,7 +3035,7 @@ calendarOptions['myBlog'] = $.extend(true, {}, calendarOptions['blog'], {
 			//日付をcreateTagに渡して日付絞り込みを有効にする
 			this.instance.create_tag.dateText = dateText;
 			//絞り込まれたブログ記事を書き出す
-			this.instance.create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages();create_tag.setBlogEditButtons');	
+			this.instance.create_tag.outputNumberingTag('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages(\'.myBlogTable\');create_tag.setBlogEditButtons');	
 		}
 	});
 

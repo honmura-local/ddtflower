@@ -2163,7 +2163,6 @@ this.defaultClassworkCostColumns = [
 			cancelCharge = Math.floor(cost * cancelRate[dateDiff] / 100);
 		}
 		
-		console.log(cancelCharge);
 		return cancelCharge;	//キャンセル料を返す
 	}
 	

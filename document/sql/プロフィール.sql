@@ -13,7 +13,7 @@ WHERE
 
 #プロフィール取得
 delimiter $$
-CREATE PROCEDURE getUserProfile(out result text, in userKey int)
+CREATE PROCEDURE getUserProfile(out result text, in userId int)
 BEGIN
 SELECT 
 	user_name
@@ -29,8 +29,8 @@ SELECT
 FROM 
 	user_inf 
 WHERE 
-	id = 'userId';
+	id = userId;
 END$$
 delimiter ;
 
-CALL getUserProfile(@result, 'user_key'); SELECT @result AS 'result';
+CALL getUserProfile(@result, 'userId'); SELECT @result AS 'result';

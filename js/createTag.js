@@ -1390,7 +1390,6 @@ function createTag(){
 		
 		//記事を走査し、日付が当てはまらない記事を削除していく
 		for(var i = 0; i < retObj[TABLE_DATA_KEY].length; i++){
-			console.log(dateText.replace(/\//g, '-'));
 			//日付が合わなければ
 			if(retObj[TABLE_DATA_KEY][i].date !== void(0) && retObj[TABLE_DATA_KEY][i].date != dateText.replace(/\//g, '-')){
 				retObj[TABLE_DATA_KEY].splice(i--, 1);	//該当する記事を削除する

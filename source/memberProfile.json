@@ -139,7 +139,7 @@
         "db_setQuery":"CALL updateUserProfile('user_name', 'name_kana', 'zip_code', 'address', 'user_sex', 'birthday_date', 'telephone','telephone2' ,'mail_address', 'mail_deny', 'userId');"
     },
     "getUserInf":{
-        "db_getQuery":"CALL getUserProfile(@result, 'user_key'); SELECT @result AS 'result';",
+        "db_getQuery":"CALL getUserProfile(@result, 'userId'); SELECT @result AS 'result';",
         "userId":{
             "value":""
         },

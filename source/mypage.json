@@ -157,10 +157,7 @@
     },
     "blogTable":{
     	"class" : "blogTable",
-        "db_getQuery" : "CALL getMyBlogList(@result, 'user_key'); SELECT @result AS 'result';",
-        "user_key":{
-            "value":""
-        },
+        "db_getQuery" : "CALL getBlogArticle(@result); SELECT @result AS 'result';",
         "config": {
             "columns": {
                 "id":{

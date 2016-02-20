@@ -249,7 +249,6 @@ function afterSubmitForm(form, event){
  * 内容　:通信メソッドをフォームから取得して設定する様にしました。
  */
 function postForm(form){
-						// console.log(command);
 	$form = $(form);	//高速化のため、フォームの要素をjQueryオブジェクトにして変数に格納する。
 	//フォームのaction属性から送信URLを取得する。
 	var url = $form.attr('action').split(',');

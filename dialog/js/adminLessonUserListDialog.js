@@ -24,7 +24,6 @@ function adminLessonUserListDialog(dialog){
 	this.getJson = function() {
 		//管理者ページ受講者一覧ダイアログのjsonデータを取得する
 		this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_USER_LIST_DIALOG_JSON);
-		console.log(this.dialogClass.getArgumentDataObject());
 		//授業データ検索のキーとして授業IDをインプットデータから取得し、JSONにセットする
 		this.create_tag.json.lessonTable.id.value = this.dialogClass.getArgumentDataObject().classwork_key;
 		//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする

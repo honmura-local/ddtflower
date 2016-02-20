@@ -69,8 +69,8 @@
         "class":"eachDayReservedInfoTableOutsideArea"
     },
     "eachDayReservedInfoTable":{
-        "db_getQuery": "CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';",
-        "replace_query":"CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';",
+        "db_getQuery": "CALL getEachDayLessonList(@result, 'lesson_date'); SELECT @result AS 'result';",
+        "replace_query":"CALL getEachDayLessonList(@result, 'lesson_date'); SELECT @result AS 'result';",
         "lesson_date": {
             "value": ""
         },
@@ -366,7 +366,7 @@
     },
     "lecturePermitListInfoTable":{
         "db_getQuery": "CALL getLecturePermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
-        "FromDate":{
+        "fromDate":{
             "value":""
         },
         "toDate":{

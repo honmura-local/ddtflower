@@ -889,5 +889,7 @@ ALERT_VALUE_IS_EMPTY = 'は空です。';
 ALERT_VALUE_IS_UNDEFINED = 'は未定義です。';
 //検索用日付のキー
 //日付検索用データのキー
-KEY_FROM_DATE = 'FromDate';
+KEY_FROM_DATE = 'fromDate';
 KEY_TO_DATE = 'toDate';
+//Myギャラリーの表示記事数
+MY_GALLERY_SHOW_PHOTO_NUM = 6;

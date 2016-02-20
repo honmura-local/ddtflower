@@ -1,8 +1,0 @@
-{
-	"myBlogTable":{
-		"db_getQuery" :"CALL getBlogArticle(@result, 'user_key'); SELECT @result AS 'result';",
-		"user_key":{
-			"value":""
-		}
-	}
-}

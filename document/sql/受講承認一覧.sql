@@ -24,7 +24,7 @@ ON
 AND
 	time_table_day.lesson_date <= {{toDate}}
 AND
-	time_table_day.lesson_date >= {{FromDate}}
+	time_table_day.lesson_date >= {{fromDate}}
 INNER JOIN
 	user_inf
 ON
@@ -64,7 +64,7 @@ ON
 AND
 	sell_datetime <= {{toDate}}
 AND
-	sell_datetime >= {{FromDate}}
+	sell_datetime >= {{fromDate}}
 INNER JOIN
 	commodity_inf 
 ON
@@ -144,7 +144,7 @@ INNER JOIN
 ON 
 	user_inf.id = commodity_sell.user_key 
 AND sell_datetime <= toDate
-AND sell_datetime >= FromDate
+AND sell_datetime >= fromDate
 INNER JOIN 
 	commodity_inf  
 ON 

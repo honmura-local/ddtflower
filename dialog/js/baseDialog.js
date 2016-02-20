@@ -275,7 +275,7 @@ function baseDialog(dialog){
 				throw new connectErrorException(xhr, status, error);
 			}
 		});
-
+		
 		return retObj;
 	};
 	

@@ -180,7 +180,7 @@ function setPermitListFromToDate() {
 	//今月の末日の日付を取得して、受講承認一覧のtoの部分で使う
 	monthEndday = create_tag.getDateFormatDB(monthEndday);
 	//受講承認一覧に今月の初日を入れて一覧テーブルを検索するようにする
-	create_tag.json.lecturePermitListInfoTable.FromDate.value = monthStartday;
+	create_tag.json.lecturePermitListInfoTable.fromDate.value = monthStartday;
 	//受講承認一覧に今月の末日を入れて一覧テーブルを検索するようにする
 	create_tag.json.lecturePermitListInfoTable.toDate.value = monthEndday;
 	//デフォルトの検索値を分かりやすくするためにfromテキストボックスに月の初日の値を入れる
@@ -217,7 +217,7 @@ function searchPermitListInfoTable() {
 		var lecturePermitList = $('#lecturePermitList')[0].create_tag;
 		
 		//受講承認一覧の連想配列に検索初めの値を入れる
-		lecturePermitList.json.lecturePermitListInfoTable.FromDate.value = fromDate;
+		lecturePermitList.json.lecturePermitListInfoTable.fromDate.value = fromDate;
 		//受講承認一覧の連想配列に検索終わりの値を入れる
 		lecturePermitList.json.lecturePermitListInfoTable.toDate.value = toDate;
 
@@ -609,7 +609,7 @@ function loopUpdatePermitLessonList() {
 			var fromDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_FROM_DATE][VALUE];
 			var toDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_TO_DATE][VALUE];
 			//検索日付をオブジェクトにまとめる
-			var searchDate = {'FromDate' : fromDate, 'toDate' : toDate}
+			var searchDate = {'fromDate' : fromDate, 'toDate' : toDate}
 			
 			//テーブルをリロードする。
 			//create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG, searchDate);

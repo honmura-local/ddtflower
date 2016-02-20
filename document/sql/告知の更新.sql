@@ -98,6 +98,6 @@ INSERT INTO message_to(message_key, user_key,create_datetime ,update_datetime) V
 END$$
 delimiter ;
 
-CALL insertMessageTo('userKey');
+CALL insertMessageTo('user_key');
 	
 	
