@@ -103,7 +103,20 @@ AND
 delimiter $$
 CREATE PROCEDURE getGalleryContents(out result text)
 BEGIN
-CREATE TEMPORARY TABLE tmp_gallery AS SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;
+SELECT 
+	ui.id
+	,ui.photo_title AS myPhotoImage
+	,Date(ui.update_timestamp) AS date
+	,ui.article_title AS myPhotoTitle
+	,uin.user_name AS myPhotoUser
+	,ui.photo_summary AS myPhotoComment 
+FROM 
+	user_image AS ui
+	,user_inf AS uin 
+WHERE 
+	ui.user_key=uin.id 
+ORDER BY 
+	ui.update_timestamp DESC;
 END$$
 delimiter ;
 
@@ -136,7 +149,20 @@ CALL getMyGalleryContents(@result);  SELECT @result AS 'result';
 delimiter $$
 CREATE PROCEDURE getMyGalleryContents2(out result text, in userKey int)
 BEGIN
-CREATE TEMPORARY TABLE tmp_gallery AS SELECT ui.id, ui.photo_title AS myPhotoImage,Date(ui.update_timestamp) AS date, ui.article_title AS myPhotoTitle, uin.user_name AS myPhotoUser, ui.photo_summary AS myPhotoComment FROM user_image AS ui,user_inf AS uin WHERE ui.user_key='userKey' AND ui.user_key=uin.id ORDER BY ui.update_timestamp DESC;
+SELECT 
+	ui.id, ui.photo_title AS myPhotoImage
+	,Date(ui.update_timestamp) AS date
+	,ui.article_title AS myPhotoTitle
+	,uin.user_name AS myPhotoUser
+	,ui.photo_summary AS myPhotoComment 
+FROM 
+	user_image AS ui
+	,user_inf AS uin 
+WHERE 
+	ui.user_key='userKey' 
+	AND ui.user_key=uin.id 
+ORDER BY 
+	ui.update_timestamp DESC;
 END$$
 delimiter ;
 

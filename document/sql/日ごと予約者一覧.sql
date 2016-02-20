@@ -48,8 +48,6 @@ ORDER BY
 delimiter $$
 CREATE PROCEDURE getEachDayLessonList(out result text, in date date)
 BEGIN
-CREATE TEMPORARY TABLE 
-	tmp_eachday_lesson_list AS
 SELECT
 	time_table_day.id AS time_table_key
 	,time_table_day.lesson_date AS lesson_date
@@ -96,4 +94,4 @@ ON
 END$$
 delimiter ;
 
-CALL getEachDayLessonList(@result, 'date'); SELECT @result AS 'result';
+CALL getEachDayLessonList(@result, 'lesson_date'); SELECT @result AS 'result';
