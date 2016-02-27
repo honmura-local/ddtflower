@@ -1,10 +1,11 @@
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `cancel_classwork` $$
-CREATE PROCEDURE `cancel_classwork`(
+DROP PROCEDURE IF EXISTS `getAdminLessonList` $$
+CREATE PROCEDURE `getAdminLessonList`(
+	OUT result text,
 	IN in_date VARCHAR(25)
 )
 BEGIN
-create temporary table table_name AS 
+ 
 SELECT 
 	lesson_name
 	,classwork.lesson_key AS lesson_key
@@ -28,7 +29,7 @@ SELECT
     ,timetable_inf.id AS timetable_key
 FROM 
 	time_table_day
-LEFT JOIN
+INNER JOIN
 	classwork
 ON
 	time_table_day.id = classwork.time_table_day_key
