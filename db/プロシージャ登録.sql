@@ -1,7 +1,7 @@
 -- ストアドプロシージャ登録
 
 -- 授業予約
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `book_classwork` $$
 -- プロシージャの登録を行う
@@ -116,7 +116,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 -- 授業キャンセル
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `cancel_classwork` $$
@@ -174,7 +174,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 -- 管理者画面 授業詳細タブ 日ごと予約一覧
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getAdminLessonList` $$
 -- プロシージャの登録を行う
@@ -231,7 +231,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- ブログ
 #ブログ記事取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getBlogArticle` $$
 -- プロシージャの登録を行う
@@ -256,10 +256,8 @@ ORDER BY
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL getBlogArticle(@result); SELECT -- 出力対象の列を指定する @result AS 'result';
-
 #IDからブログ記事取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getBlogArticleWithId` $$
 -- プロシージャの登録を行う
@@ -275,10 +273,8 @@ WHERE -- 検索条件を指定する
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL getBlogArticleWithId(@result, 'user_key', 'id'); SELECT -- 出力対象の列を指定する @result AS 'result';
-
 #ブログ記事作成
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `insertNewBlogArticle` $$
 -- プロシージャの登録を行う
@@ -312,10 +308,8 @@ VALUES (
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL insertNewBlogArticle('user_key', 'blogTitle', 'blogContent', 'blogPublication', 'image_1', 'image_2', 'image_3');
-
 #ブログ記事更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateBlogArticle` $$
 -- プロシージャの登録を行う
@@ -335,10 +329,8 @@ WHERE -- 検索条件を指定する
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL updateBlogArticle('id', 'blogTitle', 'blogContent' , 'image_1', 'image_2', 'image_3', 'blogPublication');
-
 #ブログ記事削除
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `deleteBlogArticle` $$
 -- プロシージャの登録を行う
@@ -351,7 +343,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #マイブログ画面記事取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getMyBlogArticle` $$
 -- プロシージャの登録を行う
@@ -379,7 +371,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #マイブログ画面記事一覧取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getMyBlogList` $$
 -- プロシージャの登録を行う
@@ -407,7 +399,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- ギャラリー
 #ギャラリー記事取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getGalleryContents` $$
 -- プロシージャの登録を行う
@@ -430,10 +422,8 @@ ORDER BY
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL getGalleryContents(@result); SELECT -- 出力対象の列を指定する @result AS 'result';
-
 #マイギャラリー記事取得1
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getMyGalleryContents1` $$
 -- プロシージャの登録を行う
@@ -456,10 +446,8 @@ LIMIT 300;
 END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
-CALL getMyGalleryContents(@result);  SELECT -- 出力対象の列を指定する @result AS 'result';
-
 ##マイギャラリー記事取得2
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getMyGalleryContents2` $$
 -- プロシージャの登録を行う
@@ -483,7 +471,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #マイギャラリー記事作成
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `insertGalleryContent` $$
 -- プロシージャの登録を行う
@@ -498,7 +486,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 
 #マイギャラリー記事更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateGalleryContent` $$
 -- プロシージャの登録を行う
@@ -511,7 +499,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 
 #マイギャラリー記事削除
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `deleteGalleryContent` $$
 -- プロシージャの登録を行う
@@ -525,7 +513,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 -- 会員側トップ画面
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- user_inf
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `p_user_inf` $$
@@ -545,7 +533,7 @@ WHERE -- 検索条件を指定する
 END $$ -- ストアドプロシージャの処理を終える
 
 -- essage_inf
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `p_message_inf` $$
 -- プロシージャの登録を行う
@@ -575,7 +563,7 @@ ORDER BY send_date DESC;
 END $$ -- ストアドプロシージャの処理を終える
 
 -- 受講可能レッスン
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `p_booked_lessons` $$
 -- プロシージャの登録を行う
@@ -700,7 +688,7 @@ WHERE -- 検索条件を指定する
 END $$ -- ストアドプロシージャの処理を終える
 
 -- 受講可能レッスン
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `p_bookable_lessons` $$
 -- プロシージャの登録を行う
@@ -732,7 +720,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 -- 会員側日ごと授業一覧
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS p_user_classwork_a_day $$
 -- プロシージャの登録を行う
@@ -829,7 +817,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 	
 #パスワード変更
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateUserPassword` $$
 -- プロシージャの登録を行う
@@ -851,7 +839,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- ユーザプロフィール取得
 #プロフィール取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getUserProfile` $$
 -- プロシージャの登録を行う
@@ -881,7 +869,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- ユーザプロフィール変更
 #プロフィール更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateUserProfile` $$
 -- プロシージャの登録を行う
@@ -922,7 +910,7 @@ delimiter ; -- 区切り文字を;に戻す
 -- 会員一覧
 #会員一覧
 # ユーザ情報(自分)
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getSelfUserInfo` $$
 -- プロシージャの登録を行う
@@ -943,7 +931,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # ユーザ情報
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getUserInfoList` $$
 -- プロシージャの登録を行う
@@ -977,7 +965,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # テーマ指定用リスト作成
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getListForChooseThemes` $$
 -- プロシージャの登録を行う
@@ -1001,7 +989,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- 会員トップ画面のお知らせ
 #お知らせ取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getUserMessage` $$
 -- プロシージャの登録を行う
@@ -1035,7 +1023,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #お知らせ登録1
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `insertMessageInfo` $$
 -- プロシージャの登録を行う
@@ -1071,7 +1059,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #お知らせ登録2
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `insertMessageTo` $$
 -- プロシージャの登録を行う
@@ -1110,7 +1098,7 @@ delimiter ; -- 区切り文字を;に戻す
 -- 受講承認
 #受講承認
 #受講承認対象の一覧取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getLecturePermit` $$
 -- プロシージャの登録を行う
@@ -1168,7 +1156,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #ポイントレート算出
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getPointRate` $$
 -- プロシージャの登録を行う
@@ -1190,7 +1178,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # 備品名リスト用クエリ
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getCommodityNameList` $$
 -- プロシージャの登録を行う
@@ -1207,7 +1195,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 #受講承認更新
 #受講情報の更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `doLecturePermit` $$
 -- プロシージャの登録を行う
@@ -1238,7 +1226,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す 
 
 #獲得ポイント更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitGetPoint` $$
 -- プロシージャの登録を行う
@@ -1260,7 +1248,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #使用ポイント更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitUsePoint` $$
 -- プロシージャの登録を行う
@@ -1283,7 +1271,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # ポイントの更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitPoints` $$
 -- プロシージャの登録を行う
@@ -1313,7 +1301,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # 備品代情報の更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `insertSellCommodity` $$
 -- プロシージャの登録を行う
@@ -1366,7 +1354,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 #受講承認一覧
 #受講承認一覧のデータ取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getLecturePermitInfoList` $$
 -- プロシージャの登録を行う
@@ -1456,7 +1444,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 #使用ポイントの更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitListPoint` $$
 -- プロシージャの登録を行う
@@ -1477,7 +1465,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # 受講情報の場合の更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitListClasswork` $$
 -- プロシージャの登録を行う
@@ -1506,7 +1494,7 @@ END $$ -- ストアドプロシージャの処理を終える
 delimiter ; -- 区切り文字を;に戻す
 
 # 備品代の時の更新
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitListCommodity` $$
 -- プロシージャの登録を行う
@@ -1537,7 +1525,7 @@ delimiter ; -- 区切り文字を;に戻す
 
 -- 日ごと予約者一覧画面
 #日ごと予約者一覧取得
-DELIMITER $$ -- ;の代わりの区切り文字を設定する
+DELIMITER $$ 
 -- 当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getEachDayLessonList` $$
 -- プロシージャの登録を行う
