@@ -1019,6 +1019,8 @@ WHERE
 	;
 #ストアドプロシージャの処理を終える
 END $$
+#区切り文字をセミコロンに戻す
+delimiter ;
 
 #お知らせ取得
 #コード記述のため区切り文字を一時的に変更する
@@ -2501,7 +2503,7 @@ ON
 	#授業時間帯情報テーブルID
 	time_table_day.id = classwork.time_table_day_key
 	#指定した期間(開始日付)
-	AND　time_table_day.lesson_date <= toDate
+	AND time_table_day.lesson_date <= toDate
 	#指定した期間(終了日付)
 	AND time_table_day.lesson_date >= fromDate
 #結合対象の列の値がnullのデータを排除して結合する 
