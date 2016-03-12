@@ -158,6 +158,21 @@ AND
     school_key = 1
 #----------------------------------------------------
 
+#----------------------------------------------------
+# 受講承認からの遷移時のクエリ
+SELECT
+	*
+FROM
+	user_inf
+INNER JOIN
+	user_classwork
+ON
+	user_inf.id = user_classwork.user_key
+AND
+	user_classwork.user_work_status = 2
+#----------------------------------------------------
+
+
 #会員一覧
 # ユーザ情報(自分)
 delimiter $$
