@@ -22,6 +22,20 @@ function tabEx(url, argumentObj, returnObj){
 	//キャッシュ設定デフォルトではtrue
 	this.cache = true;
 	
+	//各種文字列
+	//空タグの疑似セレクタ
+	this.selectorEmpty			= ':empty';
+	//easytabsのタブパネル切り替え直前のイベント
+	this.eventEasytabsBefore	= 'easytabs:before';
+	//href属性
+	this.attrHref				= 'href';
+	//オブジェクト内eventsキー
+	this.keyEvents				= 'events';
+	//タブインデックス内リンク文字のセレクタ
+	this.tabIndexStrSelector	= ' > ul a';
+	//対象を指定して登録するハッシュ切り替えイベント
+	this.hashChangeTarget		= "hashchange.";
+	
 	//デフォルト設定のオブジェクト
 	//argumentObjを作る際に参考にしてください。
 	this.defaultArgumentObj = {
@@ -75,13 +89,13 @@ function tabEx(url, argumentObj, returnObj){
 			var thisElem = this;	//下記イベントコールバック内で自身のインスタンスを使うため変数に保存する
 			
 			//タブ切り替え時
-			$(this.tab).bind('easytabs:before', function(event, $clicked, $targetPanel, settings){
+			$(this.tab).bind(this.eventEasytabsBefore, function(event, $clicked, $targetPanel, settings){
 				//初回読み込み時ではないときにキャッシュしない設定であれば、新規にHTMLを取得して対象タブパネルに展開する
-				if($targetPanel.filter(':empty').length == 0 && !thisElem.tab[0].cache){
+				if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.tab[0].cache){
 					//対象のタブパネルの内容を空にする
 					$targetPanel.empty();
 					//対象タブパネルのHTMLファイルのソースパスを取得する
-					var source = $clicked.attr('href');
+					var source = $clicked.attr(thisElem.attrHref);
 					
 					//対象のHTMLデータを取得する
 					$.get(source, '', function(html){
@@ -121,7 +135,7 @@ function tabEx(url, argumentObj, returnObj){
 		//クリック判定
 		var isClicked = false;
 		//登録済みのhashchangeイベントの一覧を取得する
-		var registerdHashchangeEvents = $._data($(window).get(0), "events").hashchange;
+		var registerdHashchangeEvents = $._data($(window).get(0), this.keyEvents).hashchange;
 		//イベントコールバック内で自身を利用するために変数に保存する
 		var thisElem = this;
 		
@@ -133,15 +147,15 @@ function tabEx(url, argumentObj, returnObj){
 			}
 		}
 		
-		$(document).on(CLICK, selector + ' > ul a', function(e){
+		$(document).on(CLICK, selector + this.tabIndexStrSelector, function(e){
 			isClicked = true;
-			$(e.currentTarget).attr("href");
-			var clickedHref = commonFuncs.getLastValue($(e.currentTarget).attr("href"), SLASH);
+			$(e.currentTarget).attr(thisElem.attrHref);
+			var clickedHref = commonFuncs.getLastValue($(e.currentTarget).attr(thisElem.attrHref), SLASH);
 			location.hash = clickedHref.substring(0, clickedHref.indexOf(DOT));
 		});
 		
 		//ハッシュ切り替えイベント発生時の処理
-		$(window).bind("hashchange." + selector, function(ev){
+		$(window).bind(this.hashChangeTarget + selector, function(ev){
 			
 			if(isClicked) {
 				isClicked = false;
