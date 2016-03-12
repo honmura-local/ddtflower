@@ -86,30 +86,41 @@ function tabEx(url, argumentObj, returnObj){
 			this.tab[0].cache = this.cache;
 			$(target).append(tab);	//タブを指定した先に追加する
 			
-			var thisElem = this;	//下記イベントコールバック内で自身のインスタンスを使うため変数に保存する
 			
-			//タブ切り替え時
-			$(this.tab).bind(this.eventEasytabsBefore, function(event, $clicked, $targetPanel, settings){
-				//初回読み込み時ではないときにキャッシュしない設定であれば、新規にHTMLを取得して対象タブパネルに展開する
-				if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.tab[0].cache){
-					//対象のタブパネルの内容を空にする
-					$targetPanel.empty();
-					//対象タブパネルのHTMLファイルのソースパスを取得する
-					var source = $clicked.attr(thisElem.attrHref);
-					
-					//対象のHTMLデータを取得する
-					$.get(source, '', function(html){
-						//取得したHTMLを対象タブパネルに追加する
-						$targetPanel.append(html);
-					});
-				}
-			});
+			this.tabChange();	//タブ切り替え時のイベントコールバックを設定する
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
 		}
 	}
 
+	/* 関数名:tabChange
+	 * 概要　:タブの切り替えを行う直前の処理。キャッシュが無効ならタブパネルの内容を再取得して表示する
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2016.0312
+	 * 作成者　:T.Masuda
+	 */
+	this.tabChange = function(){
+		var thisElem = this;	//下記イベントコールバック内で自身のインスタンスを使うため変数に保存する
+		//タブ切り替え時
+		$(this.tab).bind(this.eventEasytabsBefore, function(event, $clicked, $targetPanel, settings){
+			//初回読み込み時ではないときにキャッシュしない設定であれば、新規にHTMLを取得して対象タブパネルに展開する
+			if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.tab[0].cache){
+				//対象のタブパネルの内容を空にする
+				$targetPanel.empty();
+				//対象タブパネルのHTMLファイルのソースパスを取得する
+				var source = $clicked.attr(thisElem.attrHref);
+				
+				//対象のHTMLデータを取得する
+				$.get(source, '', function(html){
+					//取得したHTMLを対象タブパネルに追加する
+					$targetPanel.append(html);
+				});
+			}
+		});
+	}
+	
 	/* 関数名:setDefaultObjects
 	 * 概要　:メンバの各オブジェクトが空であれば、デフォルトのものを使う
 	 * 引数　:なし
