@@ -19,13 +19,15 @@ function tabEx(url, argumentObj, returnObj){
 	
 	//親クラスのコンストラクタを起動する
 	baseWindow.call(this, url, argumentObj, returnObj);
+	//キャッシュ設定デフォルトではtrue
+	this.cache = true;
 	
 	//デフォルト設定のオブジェクト
 	//argumentObjを作る際に参考にしてください。
 	this.defaultArgumentObj = {
 		//ダイアログの設定データオブジェクト
 		config:{
-			cache: false,		//タブを開くたびにデータを最新のものにする
+			cache: this.cache,	//キャッシュ設定をメンバの設定と合わせる
 			updateHash:false	//URLハッシュによるタブ開閉履歴を残す
 		},
 		//インプット用データオブジェクト
@@ -64,8 +66,30 @@ function tabEx(url, argumentObj, returnObj){
 			this.setDefaultObjects();
 			
 			var tab = $(this.dom).easytabs(this.argumentObj.config);	//configの設定を使ってタブを作成する
+			//タブをクラスインスタンスから参照できる様にする
+			this.tab = tab;
+			//DOMにキャッシュ設定を保存する
+			this.tab[0].cache = this.cache;
 			$(target).append(tab);	//タブを指定した先に追加する
 			
+			var thisElem = this;	//下記イベントコールバック内で自身のインスタンスを使うため変数に保存する
+			
+			//タブ切り替え時
+			$(this.tab).bind('easytabs:before', function(event, $clicked, $targetPanel, settings){
+				//初回読み込み時ではないときにキャッシュしない設定であれば、新規にHTMLを取得して対象タブパネルに展開する
+				if($targetPanel.filter(':empty').length == 0 && !thisElem.tab[0].cache){
+					//対象のタブパネルの内容を空にする
+					$targetPanel.empty();
+					//対象タブパネルのHTMLファイルのソースパスを取得する
+					var source = $clicked.attr('href');
+					
+					//対象のHTMLデータを取得する
+					$.get(source, '', function(html){
+						//取得したHTMLを対象タブパネルに追加する
+						$targetPanel.append(html);
+					});
+				}
+			});
 		//例外をキャッチしたら
 		} catch(e){
 			console.log(e.stack);	//投げられたエラーオブジェクトをコンソールログに出す。
