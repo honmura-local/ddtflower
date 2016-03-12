@@ -20,7 +20,9 @@ function tabEx(url, argumentObj, returnObj){
 	//親クラスのコンストラクタを起動する
 	baseWindow.call(this, url, argumentObj, returnObj);
 	//キャッシュ設定デフォルトではtrue
-	this.cache = true;
+	this.cache		= false;
+	//selectでタブが切り替わったかの判定
+	this.isSelected	= false;
 	
 	//各種文字列
 	//空タグの疑似セレクタ
@@ -119,6 +121,8 @@ function tabEx(url, argumentObj, returnObj){
 				});
 			}
 		});
+		
+		this.isSelected = false;	//コードで呼ばれたという判定を戻す
 	}
 	
 	/* 関数名:setDefaultObjects
