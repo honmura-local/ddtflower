@@ -2841,5 +2841,387 @@ ON
 #ストアドプロシージャの処理を終える
 END $$
 #区切り文字をセミコロンに戻す
-delimiter ;
 
+#条項一覧-商品の更新
+DROP PROCEDURE IF EXISTS p_update_approval_list_purchase $$
+CREATE PROCEDURE p_update_approval_list_purchase (
+	IN in_sell_number INT
+    ,IN in_pay_cash INT
+    ,IN in_use_point INT
+    ,IN in_commodity_sell_key INT
+	,IN in_user_key INT
+	,IN in_diff_point INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE latest_timestamp VARCHAR(25);
+DECLARE updated_timestamp VARCHAR(25);
+DECLARE latest_timestamp_user VARCHAR(25);
+DECLARE updated_timestamp_user VARCHAR(25);
+DECLARE diff_point int(11);
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    commodity_sell
+INTO
+    latest_timestamp;
+
+START TRANSACTION;
+
+UPDATE
+	commodity_sell
+SET
+	pay_cash = in_pay_cash
+	,use_point = in_use_point
+    ,update_datetime = NOW()
+WHERE
+	id = in_commodity_sell_key;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    commodity_sell
+INTO
+    updated_timestamp;
+
+IF latest_timestamp < updated_timestamp THEN
+	IF in_diff_point = 0 THEN
+		SELECT 1 INTO result;
+		COMMIT;
+	ELSE
+		SELECT
+	        MAX(update_datetime)
+    	FROM
+        	user_inf
+    	INTO
+        	latest_timestamp_user;
+			
+		UPDATE
+			user_inf
+		SET
+			get_point = get_point + in_diff_point
+			,update_datetime = NOW()
+		WHERE
+			id = in_user_key;
+		
+		SELECT
+            MAX(update_datetime)
+        FROM
+            user_inf
+        INTO
+            updated_timestamp_user;
+		
+		IF latest_timestamp_user < updated_timestamp_user THEN
+            SELECT 1 INTO result;
+            COMMIT;
+        ELSE
+            SELECT 0 INTO result;
+            ROLLBACK;
+        END IF;
+	END IF;
+ELSE 
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+#条項一覧-授業の更新
+DROP PROCEDURE IF EXISTS p_update_approval_list_lesson $$
+CREATE PROCEDURE p_update_approval_list_lesson (
+	IN in_user_classwork_cost INT
+    ,IN in_use_point INT
+    ,IN in_diff_point INT
+	,IN in_user_key INT
+    ,IN in_user_classwork_key INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE latest_timestamp VARCHAR(25);
+DECLARE updated_timestamp VARCHAR(25);
+DECLARE latest_timestamp_user VARCHAR(25);
+DECLARE updated_timestamp_user VARCHAR(25);
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    user_classwork
+INTO
+    latest_timestamp;
+
+START TRANSACTION;
+
+UPDATE
+	user_classwork
+SET
+	user_classwork_cost = in_user_classwork_cost
+	,use_point = in_use_point
+    ,update_datetime = NOW()
+WHERE
+	id = in_user_classwork_key;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    user_classwork
+INTO
+    updated_timestamp;
+
+IF latest_timestamp < updated_timestamp THEN
+	IF in_diff_point = 0 THEN
+		SELECT 1 INTO result;
+		COMMIT;
+	ELSE
+		SELECT
+	        MAX(update_datetime)
+    	FROM
+        	user_inf
+    	INTO
+        	latest_timestamp_user;
+			
+		UPDATE
+			user_inf
+		SET
+			get_point = get_point + in_diff_point
+			,update_datetime = NOW()
+		WHERE
+			id = in_user_key;
+		
+		SELECT
+            MAX(update_datetime)
+        FROM
+            user_inf
+        INTO
+            updated_timestamp_user;
+		
+		IF latest_timestamp_user < updated_timestamp_user THEN
+            SELECT 1 INTO result;
+            COMMIT;
+        ELSE
+            SELECT 0 INTO result;
+            ROLLBACK;
+        END IF;
+	END IF;
+ELSE 
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+#受講承認-授業の更新
+DROP PROCEDURE IF EXISTS p_update_approval_lesson $$
+CREATE PROCEDURE p_update_approval_lesson (
+	IN in_user_classwork_cost INT
+    ,IN in_use_point INT
+    ,IN in_get_point INT
+    ,IN in_pay_price INT
+	,IN in_user_key INT
+    ,IN in_user_classwork_key INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE latest_timestamp VARCHAR(25);
+DECLARE updated_timestamp VARCHAR(25);
+DECLARE latest_timestamp_user VARCHAR(25);
+DECLARE updated_timestamp_user VARCHAR(25);
+DECLARE diff_point int(11);
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    user_classwork
+INTO
+    latest_timestamp;
+
+START TRANSACTION;
+
+UPDATE
+	user_classwork
+SET
+	user_classwork_cost = in_user_classwork_cost
+	,use_point = in_use_point
+    ,get_point = in_get_point
+	,update_datetime = NOW()
+	,user_work_status = 3
+	,pay_price = in_pay_price
+WHERE
+	id = in_user_classwork_key;
+
+SELECT 
+    MAX(update_datetime) AS latest
+FROM
+    user_classwork
+INTO
+    updated_timestamp;
+
+IF latest_timestamp < updated_timestamp THEN
+    SELECT
+        in_get_point - in_use_point
+    INTO
+        diff_point;
+    SELECT
+        MAX(update_datetime)
+    FROM
+        user_inf
+    INTO
+        latest_timestamp_user;
+    IF diff_point = 0 THEN
+        IF in_get_point = 0 THEN
+            SELECT 1 INTO result;
+            COMMIT;
+        ELSE
+            UPDATE
+                user_inf
+            SET
+                use_point = use_point + in_use_point
+                ,update_datetime = NOW()
+            WHERE
+                id = in_user_key;
+            SELECT
+                MAX(update_datetime) AS latest
+            FROM
+                user_inf
+            INTO
+                updated_timestamp_user;
+            IF latest_timestamp_user < updated_timestamp_user THEN
+                COMMIT;
+            ELSE
+                SELECT 0 INTO result;
+                ROLLBACK;
+            END IF;
+        END IF;
+    ELSE
+        UPDATE
+            user_inf
+        SET
+            use_point = use_point + in_use_point
+            ,get_point = get_point + diff_point
+            ,update_datetime = NOW()
+        WHERE
+            id = in_user_key;
+        SELECT
+            MAX(update_datetime)
+        FROM
+            user_inf
+        INTO
+            updated_timestamp_user;
+        IF latest_timestamp_user < updated_timestamp_user THEN
+            SELECT 1 INTO result;
+            COMMIT;
+        ELSE
+            SELECT 0 INTO result;
+            ROLLBACK;
+        END IF;
+    END IF;
+ELSE
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+#受講承認-商品の更新
+DROP PROCEDURE IF EXISTS p_update_approval_purchase $$
+CREATE PROCEDURE p_update_approval_purchase (
+	IN in_sell_number INT
+    ,IN in_pay_cash INT
+    ,IN in_use_point INT
+    ,IN in_commodity_key INT
+	,IN in_user_key INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE old_count int;
+DECLARE new_count int;
+DECLARE latest_timestamp_user VARCHAR(25);
+DECLARE updated_timestamp_user VARCHAR(25);
+
+SELECT 
+    COUNT(id)
+FROM
+    commodity_sell
+INTO
+    old_count;
+
+START TRANSACTION;
+
+INSERT INTO
+	commodity_sell(
+		sell_datetime
+		,sell_number
+		,pay_cash
+		,use_point
+        ,get_point
+		,content
+		,user_key
+		,school_key
+		,commodity_key
+		,create_datetime
+		,update_datetime
+	)
+	VALUES (
+		 NOW()
+		,in_sell_number
+		,in_pay_cash
+		,in_use_point
+        ,0
+		,""
+		,in_user_key
+		,1
+		,in_commodity_key
+		,NOW()
+		,NOW()
+	);
+
+SELECT
+    COUNT(id)
+FROM
+    commodity_sell
+INTO
+    new_count;
+
+IF old_count < new_count THEN
+    SELECT
+        MAX(update_datetime)
+    FROM
+        user_inf
+    INTO
+        latest_timestamp_user;
+
+    UPDATE
+        user_inf
+    SET
+        use_point = use_point + in_use_point
+        ,get_point = get_point - in_use_point
+        ,update_datetime = NOW()
+    WHERE
+        id = in_user_key;
+
+    SELECT
+        MAX(update_datetime)
+    FROM
+        user_inf
+    INTO
+        updated_timestamp_user;
+
+    IF latest_timestamp_user < updated_timestamp_user THEN
+        SELECT 1 INTO result;
+        COMMIT;
+    ELSE
+        SELECT 0 INTO result;
+        ROLLBACK;
+    END IF;
+ELSE
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+delimiter ;
