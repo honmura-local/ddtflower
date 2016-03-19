@@ -33,7 +33,7 @@ SET
 	,use_point = in_use_point
     ,update_datetime = NOW()
 WHERE
-	id = in_commodity_sell_key
+	id = in_commodity_sell_key;
 
 SELECT 
     MAX(update_datetime)
