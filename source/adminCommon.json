@@ -112,36 +112,6 @@
             }
         }
     },
-    "lecturePermitTab": {
-        "class": "tabContainer lecturePermitTab",
-        "id": "lecturePermitTab",
-        "tabs": {
-            "tab":{
-                "class":"tab inlineBlock textCenter"
-            },
-            "tab": [
-                {
-                    "href": "#doLecturePermit",
-                    "text": "受講承認"
-                },
-                {
-                    "href": "#lecturePermitList",
-                    "text": "受講承認一覧"
-                }
-            ]
-        },
-        "tabContentArea":{
-        	"class":"tabContentArea panelContainer"
-        }
-    },
-	"doLecturePermit": {
-	    "class": "doLecturePermit tabPanel",
-		"id": "doLecturePermit"
-	},
-	"lecturePermitList": {
-	    "class": "lecturePermitList tabPanel",
-	    "id": "lecturePermitList"
-	},
     "permitLessonContainCommodity":{
         "db_setQuery":"CALL doLecturePermit('user_classwork_cost', 'get_point', 'classwork_use_point', 'late_time', 'pay_price', 'user_classwork_key'); CALL insertSellCommodity('sell_number' ,'pay_cash' ,'commodity_use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key', 'get_point');"
     },
@@ -165,6 +135,68 @@
         "date":{
             "value":""
         },
+        "config": {
+            "columns": {
+                "columnCheckbox": {
+                    "columnName": "",
+                    "className":"permitCheckboxArea"
+                },
+                "time_table_key": {
+                    "columnName": "No."
+                },
+                "lesson_date": {
+                    "columnName": "日時"
+                },
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "get_point": {
+                    "columnName": "所持pt"
+                },
+                "lesson_name": {
+                    "columnName": "内容"
+                },
+                "user_classwork_cost": {
+                    "columnName":"受講料"
+                },
+                "user_key": {
+                    "style":"display:none;"
+                },
+                "school_key": {
+                    "style":"display:none;"
+                },
+                "stage_no": {
+                    "style":"display:none;"
+                },
+                "level_no": {
+                    "style":"display:none;"
+                },
+                "start_time": {
+                    "style":"display:none;"
+                },
+                "end_time": {
+                    "style":"display:none;"
+                },
+                "user_classwork_key": {
+                    "style":"display:none;"
+                },
+                "order_students": {
+                    "style":"display:none;"
+                },
+                "lesson_key": {
+                    "style":"display:none;"
+                },
+                "use_point" : {
+                	"columnName" : "使用ポイント"
+                	,"className" : "use_point"
+                }
+            }
+        }
+    },
+    "sellCommodityPermitInfoTable":{
+    	"date" : {
+    		"value" : ""
+    	},
         "config": {
             "columns": {
                 "columnCheckbox": {
@@ -356,16 +388,83 @@
             "value":""
         }
     },
+    "addUserRecordButton":{
+    	 "class":"addUserRecordButton",
+    	 "type":"button",
+    	 "value":"追加"
+    },
     "doLecturePermitButton":{
     	 "class":"doLecturePermit normalButton",
     	 "type":"button",
     	 "value":"承認"
-    	 },
+    },
+    "sellCommodityPermitButton":{
+    	 "class":"doLecturePermit normalButton",
+    	 "type":"button",
+    	 "value":"承認"
+	 },
     "lecturePermitListInfoTableOutsideArea":{
         "class":"lecturePermitListInfoTableOutsideArea"
     },
+    "sellCommodityListInfoTableOutsideArea":{
+        "class":"sellCommodityPermitListInfoTableOutsideArea"
+    },
     "lecturePermitListInfoTable":{
         "db_getQuery": "CALL getLecturePermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
+        "fromDate":{
+            "value":""
+        },
+        "toDate":{
+            "value":""
+        },
+        "config": {
+            "columns": {
+                "id": {
+                    "columnName": "No."
+                },
+                "user_name": {
+                    "columnName": "名前"
+                },
+                "lesson_name": {
+                    "columnName": "内容"
+                },
+                "cost": {
+                    "columnName": "入金(円)",
+                    "className":"replaceTextboxCostCell replaceTextboxTypeNumber"
+                },
+                "use_point": {
+                    "columnName": "使用pt",
+                    "className":"replaceTextboxUsePointCell replaceTextboxTypeNumber"
+                },
+                "stage_no":{
+                    "style":"display:none;"
+                },
+                "level_no":{
+                    "style":"display:none;"
+                },
+                "sell_number":{
+                    "style":"display:none;"
+                },
+                "content":{
+                    "style":"display:none;"
+                },
+                "user_key":{
+                    "style":"display:none;"
+                },
+                "school_key":{
+                    "style":"display:none;"
+                },
+                "commodity_key" : {
+                    "style":"display:none;"
+                },
+                "get_point" : {
+                    "style":"display:none;"
+                }
+            }
+        }
+    },
+    "sellCommodityPermitListInfoTable":{
+        "db_getQuery": "CALL getSellCommodityPermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
         "fromDate":{
             "value":""
         },
@@ -452,8 +551,8 @@
     "updatePermitListLesson":{
         "db_setQuery":"CALL updateLecturePermitListClasswork('user_classwork_cost', 'use_point', 'id', 'diff_point', 'user_key');"
     },
-    "updatePermitListCommoditySell":{
-        "db_setQuery":"CALL updateLecturePermitListCommodity('user_classwork_cost', 'content', 'use_point', 'id', 'diff_point', 'user_key');"
+    "updateSellCommodityPermitList":{
+        "db_setQuery":"CALL updateSellCommodityPermitListCommodity('user_classwork_cost', 'content', 'use_point', 'id', 'diff_point', 'user_key');"
     },
     "searchUserList":{
         "searchName":{
@@ -567,6 +666,7 @@
         }
     },
     "lecturePermitListUpdateButton":{"type":"button", "value":"更新"},
+    "sellCommodityPermitListUpdateButton":{"type":"button", "value":"更新"},
     "userListPagingArea":{
         "class":"userListPagingArea"
     },

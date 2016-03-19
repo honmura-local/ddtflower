@@ -175,6 +175,17 @@
 /* スクロールボタン領域終わり */
 
 /* 
+ * セレクタ :.addUserRecordButton
+ * 概要   :承認タブ追加ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.03.19
+ */
+.addUserRecordButton {
+	float : right;	/* 右に寄せる */
+	margin : 5px;	/* 全体的に間隔を取る */
+}
+
+/* 
  * セレクタ :#lecturePermit .tab
  * 概要   :受講承認、タブ領域
  * 作成者 :T.Yamamoto

@@ -23,13 +23,13 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
-			//受講承認タブを作る
-			var lecturePermitTab = new tabEx('tab/lecturePermitTab.html');
-			//受講承認タブを表示する
-			lecturePermitTab.run($('.lecturePermit', $currentContent));
-			//受講承認タブ内のブラウザバックを有効にする
-			lecturePermitTab.setHashChangeSyncTab('#lecturePermitTab');
-			
+			//承認タブを作る
+			var permitTab = new tabEx('tab/permitTab.html');
+			//承認タブを表示する
+			permitTab.run($('#permitTab', $currentContent));
+			//承認タブ内のブラウザバックを有効にする
+			permitTab.setHashChangeSyncTab('#permitTab');
+
 		</script>
 	</body>
 </html>

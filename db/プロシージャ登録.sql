@@ -306,12 +306,9 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `getAdminLessonList` $$
 #日ごと予約一覧(管理者画面用)のプロシージャの登録を行う
 CREATE PROCEDURE `getAdminLessonList`(
-	#取得した結果セットを返すようにする
-	OUT result text,
-	#授業の日付
-	IN in_date VARCHAR(25)
+	OUT `result` TEXT
+	,IN `in_date` VARCHAR(14)
 )
-#以降にストアドプロシージャの処理を記述する
 BEGIN
 
 #指定した日付の授業データを取得する
@@ -2023,11 +2020,7 @@ DELIMITER $$
 #当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getLecturePermit` $$
 #受講承認対象の一覧取得のプロシージャの登録を行う
-CREATE PROCEDURE getLecturePermit
-	(
-		#結果セットを返す
-		OUT result text
-	)
+CREATE PROCEDURE  `getLecturePermit`(OUT `result` TEXT)
 #以降にストアドプロシージャの処理を記述する
 BEGIN
 #本日の受講承認対象の一覧を取得する
@@ -2047,22 +2040,24 @@ SELECT
 	,start_time 
 	#授業終了時間
 	,end_time 
-	#授業名
-	,lesson_name
 	#ユーザ名
 	,user_name
 	#ステージ番号
 	,user_classwork.stage_no AS stage_no
 	#レベル番号
 	,user_classwork.level_no AS level_no
-	#受講料
-	,user_classwork_cost
-	#所持ポイント
-	,user_inf.get_point AS get_point
 	#受講情報テーブルID
 	,user_classwork.id AS user_classwork_key
 	#ユーザID
 	,user_inf.id AS user_key
+	#所持ポイント
+	,user_inf.get_point AS get_point
+	#授業名
+	,lesson_name
+	#利用ポイント用列
+	,'' AS use_point
+	#受講料
+	,user_classwork_cost
 	#校舎テーブルID
 	,timetable_inf.school_key AS school_key
 	#現在の受講者数
@@ -2455,7 +2450,7 @@ CREATE PROCEDURE getLecturePermitInfoList
 #以降にストアドプロシージャの処理を記述する
 BEGIN
 #出力対象の列を指定する
-(SELECT
+SELECT
 	#受講情報テーブルのID
 	user_classwork.id AS id
 	#ユーザ名
@@ -2542,66 +2537,7 @@ ON
 ORDER BY
 	#授業日付が新しい順番に並べる
 	time_table_day.lesson_date DESC
-)
-#結果セットを結合する
-UNION ALL
-#出力対象の列を指定する
-(SELECT
-	#商品売り上げ情報テーブルID
-	commodity_sell.id AS id
-	#ユーザ名
-	,user_name
-	#授業名(一覧出力後入る)
-	,'' AS lesson_name
-	#支払額
-	,pay_cash AS cost
-	#商品購入での使用ポイント
-	,commodity_sell.use_point AS use_point
-	#ステージ番号(デフォルト値)
-	,1 AS stage_no 
-	#レベル番号(デフォルト値)
-	,1 AS level_no
-	#売上個数
-	,sell_number
-	#商品名
-	,content
-	#ユーザID
-	,user_inf.id AS user_key
-	#校舎情報テーブルID
-	,commodity_sell.school_key AS school_key
-	#商品情報テーブルID
-	,commodity_sell.commodity_key
-	#所持ポイント
-	,user_inf.get_point AS get_point 
-#データ取得元のテーブルを指定する
-FROM
-	#商品売り上げ情報テーブル
-	commodity_sell
-#結合対象の列の値がnullのデータを排除して結合する 
-INNER JOIN
-	#ユーザ情報
-	user_inf
-#以下に指定した列を基に結合を行う
-ON
-	#ユーザID
-	user_inf.id = commodity_sell.user_key 
-	#売上期間(開始日付)
-	AND sell_datetime <= toDate
-	#売上期間(終了日付)
-	AND sell_datetime >= fromDate
-#結合対象の列の値がnullのデータを排除して結合する 
-INNER JOIN
-	#商品詳細情報テーブル
-	commodity_inf
-#以下に指定した列を基に結合を行う
-ON
-	#商品詳細情報テーブルID
-	commodity_inf.id = commodity_sell.commodity_key
-#ソートを行う
-ORDER BY
-	#売り上げ日付が新しい順番に並べる
-	sell_datetime DESC
-);
+;
 #ストアドプロシージャの処理を終える
 END $$
 #区切り文字をセミコロンに戻す
@@ -3224,4 +3160,74 @@ END IF;
 
 END$$
 
+delimiter ;
+
+#商品購入承認一覧のデータ取得
+#コード記述のため区切り文字を一時的に変更する
+DELIMITER $$
+#当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
+DROP PROCEDURE IF EXISTS `getSellCommodityPermitInfoList` $$
+#商品購入承認一覧のデータ取得のプロシージャの登録を行う
+CREATE PROCEDURE `getSellCommodityPermitInfoList`(OUT `result` TEXT, IN `fromDate` VARCHAR(10), IN `toDate` VARCHAR(10))
+BEGIN
+#出力対象の列を指定する
+SELECT
+	#商品売り上げ情報テーブルID
+	commodity_sell.id AS id
+	#ユーザ名
+	,user_name
+	#授業名(一覧出力後入る)
+	,'' AS lesson_name
+	#支払額
+	,pay_cash AS cost
+	#商品購入での使用ポイント
+	,commodity_sell.use_point AS use_point
+	#ステージ番号(デフォルト値)
+	,1 AS stage_no 
+	#レベル番号(デフォルト値)
+	,1 AS level_no
+	#売上個数
+	,sell_number
+	#商品名
+	,content
+	#ユーザID
+	,user_inf.id AS user_key
+	#校舎情報テーブルID
+	,commodity_sell.school_key AS school_key
+	#商品情報テーブルID
+	,commodity_sell.commodity_key
+	#所持ポイント
+	,user_inf.get_point AS get_point 
+#データ取得元のテーブルを指定する
+FROM
+	#商品売り上げ情報テーブル
+	commodity_sell
+#結合対象の列の値がnullのデータを排除して結合する 
+INNER JOIN
+	#ユーザ情報
+	user_inf
+#以下に指定した列を基に結合を行う
+ON
+	#ユーザID
+	user_inf.id = commodity_sell.user_key 
+	#売上期間(開始日付)
+	AND sell_datetime <= toDate
+	#売上期間(終了日付)
+	AND sell_datetime >= fromDate
+#結合対象の列の値がnullのデータを排除して結合する 
+INNER JOIN
+	#商品詳細情報テーブル
+	commodity_inf
+#以下に指定した列を基に結合を行う
+ON
+	#商品詳細情報テーブルID
+	commodity_inf.id = commodity_sell.commodity_key
+#ソートを行う
+ORDER BY
+	#売り上げ日付が新しい順番に並べる
+	sell_datetime DESC
+;
+#ストアドプロシージャの処理を終える
+END $$
+#区切り文字をセミコロンに戻す
 delimiter ;

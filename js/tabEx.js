@@ -21,8 +21,8 @@ function tabEx(url, argumentObj, returnObj){
 	baseWindow.call(this, url, argumentObj, returnObj);
 	//キャッシュ設定デフォルトではtrue
 	this.cache		= false;
-	//selectでタブが切り替わったかの判定
-	this.isSelected	= false;
+	//selectでタブが切り替わったかの判定。切り替え前の画面名が入る。通常はnull
+	this.beforePanel	= null;
 	
 	//各種文字列
 	//空タグの疑似セレクタ
@@ -122,7 +122,7 @@ function tabEx(url, argumentObj, returnObj){
 			}
 		});
 		
-		this.isSelected = false;	//コードで呼ばれたという判定を戻す
+		this.beforePanel = null;	//コードで呼ばれたという判定を戻す
 	}
 	
 	/* 関数名:setDefaultObjects

@@ -3,7 +3,7 @@
         "class":"tableArea"
     },
     "lessonTable":{
-        "db_getQuery":"CALL getAdminLessonList(); SELECT * FROM tmp_adminLessonList;",
+        "db_getQuery":"CALL getAdminLessonList(@result, 'lessonDate'); SELECT @result AS 'result';",
         "lessonDate":{
             "value":""
         },

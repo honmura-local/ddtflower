@@ -266,6 +266,8 @@ DO_LECTURE_PERMIT_INFO_TABLE 				 = 'doLecturePermitInfoTable';					//管理者�
 DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC 	 = 'commonFuncs.callLecturePermitValue';					//管理者、受講承認テーブル置換関数名
 LECTURE_PERMIT_LIST_INFO_TABLE				 = 'lecturePermitListInfoTable';				//管理者、受講承認一覧テーブル
 LECTURE_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC  = 'commonFuncs.callPermitLessonListValue';		//管理者、受講承認一覧テーブル置換関数名
+SELLCOMMODITY_PERMIT_LIST_INFO_TABLE				= 'sellCommodityPermitListInfoTable';				//管理者、商品購入承認一覧テーブル
+SELLCOMMODITY_PERMIT_LIST_INFO_TABLE_REPLACE_FUNC	= 'commonFuncs.callSellCommodityPermitListValue';		//管理者、商品購入承認一覧テーブル置換関数名
 ADMIN_LESSON_ADD_BUTTON						 = 'lessonAddButton';							//管理者、授業詳細、新規授業の追加ボタン
 LESSON_DATA 								 = 'lessonData';								//管理者、授業詳細、授業データ部分クラス名
 COL_TIME_TABLE_DAY_KEY 						 = 'time_table_day_key';						//授業の時限データのキー名
@@ -838,6 +840,10 @@ LECTUREPERMITLIST_TABLE_MAX_ROWS							= 15;
 AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC						= 'afterReloadPermitListInfoTable';
 //outputNumberingTagでcreateTagをonclick内で取得するための文字列。受講承認一覧版
 GET_LECTUREPERMITLIST_CREATE_TAG = "$('#lecturePermitList')[0].";
+//受講承認一覧を表示した後の処理関数の文字列
+AFTER_RELOAD_SELLCOMMODITYPERMITINFOLIST_FUNC						= 'afterReloadSellCommodityPermitListInfoTable';
+//outputNumberingTagでcreateTagをonclick内で取得するための文字列。受講承認一覧版
+GET_SELLCOMMODITYPERMITLIST_CREATE_TAG = "$('#sellCommodityPermitList')[0].";
 
 //サーバとの通信失敗時のエラーメッセージ
 FAIL_TO_CONNECT_MESSAGE = 'サーバとの通信に失敗しました。時間を置いてアクセスしてください。'
@@ -859,7 +865,7 @@ SELECTOR_MY_GALLERY_TABLE			= '.myGalleryTable';
 //管理者権限ではないアカウントで管理者画面にアクセスしようとしたときの警告文
 ALERT_NOT_ADMIN_USER_ACCESS = '管理者権限ではないユーザでは管理者画面を表示できません。';
 //受講承認画面の承認ボタン
-SELECTOR_DOLECTUREPERMIT_BUTTON = '.doLecturePermit .normalButton';
+SELECTOR_DOLECTUREPERMIT_BUTTON = '.doLecturePermit.normalButton';
 //受講承認画面のチェックが入ったチェックボックス
 SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX = '.permitCheckbox:checked';
 //受講承認時に対象のレコードが存在しなかった場合の警告
@@ -872,11 +878,19 @@ NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER ='件のレコードを更新しまし�
 SELECTOR_LECTUREPERMITLIST_OUTSIDE	= '.lecturePermitListInfoTableOutsideArea';
 //受講承認異常終了用のメッセージ
 ALERT_LECTUREPERMIT_PROCESS_ERROR	= '更新処理中にエラーが発生したため更新処理を途中で終了しました。\n';
+//商品購入承認以上終了用のメッセージ
+ALERT_SELLCOMMODITYPERMIT_PROCESS_ERROR	= '更新処理中にエラーが発生したため更新処理を途中で終了しました。\n';
 JS_EOL								= '\n';	//改行文字
 //受講承認一覧の各行のセレクタ
 SELECTOR_LECTUREPERMITLIST_RECORD	= '.lecturePermitListRecord';
+//商品購入承認一覧の各行のセレクタ
+SELECTOR_SELLCOMMODITYPERMITLIST_RECORD	= '.sellCommodityPermitListRecord';
 //受講承認一覧タブのセレクタ
 SELECTOR_LECTUREPERMITLIST_TAB		= '#lecturePermitList';
+//承認タブのセレクタ
+SELECTOR_PERMIT_TAB		= '#permitTab';
+//承認一覧タブのセレクタ
+SELECTOR_PERMITLIST_TAB		= '#permitListTab';
 //対象が数字でないというメッセージ
 ALERT_VALUE_IS_NOT_NUMERIC = 'は数字ではありません。';
 //対象が数値でないというメッセージ
@@ -893,3 +907,17 @@ KEY_FROM_DATE = 'fromDate';
 KEY_TO_DATE = 'toDate';
 //Myギャラリーの表示記事数
 MY_GALLERY_SHOW_PHOTO_NUM = 6;
+
+//商品購入承認ボタンのセレクタ
+SELECTOR_SELLCOMMODITYPERMIT_BUTTON = '.sellCommodityPermitButton';
+//何も子要素がない要素のセレクタ。主にfilter関数での絞り込みに使う
+SELECTOR_HAS_ANYTHING = ':not(:has(*))';
+//inputタグ
+TAG_INPUT = '<input>';
+//inputタグのセレクタ
+SELECTOR_INPUT		= 'input';
+//最初の要素ではないというセレクタ。主に見出し行を除外したテーブルのレコードを指定するのに使う
+SELECTOR_NOT_FIRST	= ':not(:first)';
+//商品購入一覧タブのセレクタ
+SELECTOR_SELLCOMMODITYPERMITLIST_TAB	= '#sellCommodityPermitList';
+SELECTOR_SELLCOMMODITYLIST_OUTSIDE		= '.sellCommodityPermitListInfoTableOutsideArea';

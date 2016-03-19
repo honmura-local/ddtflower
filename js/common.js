@@ -2259,6 +2259,54 @@ this.defaultClassworkCostColumns = [
 		return valueArray[valueLength - 1];
 	}
 	
+	/* 
+	 * 関数名:putTextboxInTd
+	 * 概要  :テーブルの指定た列にテキストボックスを入れる
+	 * 引数  :Object settings : テキストボックスの設定。キーを属性名、値を設定値にする
+	 * 		:String targetSelector : 処理対象の列のセレクタ
+	 * 作成者:T.Masuda
+	 * 作成日:2016.0319
+	 */
+	this.putTextboxInTd = function (settings, targetSelector){
+		
+		//INPUTタグを作成する
+		var $input = $(TAG_INPUT);
+		
+		//設定を取り出す
+		for (key in settings) {
+			//attr関数で属性値をセットする
+			$input.attr(key, settings[key]);
+		}
+
+		//対象にinputタグを入れる。既に何かしら入っている場合ものは除外する
+		$(targetSelector).filter(SELECTOR_NOT_FIRST).filter(SELECTOR_HAS_ANYTHING).append($input);
+
+	}
+
+	/* 
+	 * 関数名:callSellCommodityPermitListValue
+	 * 概要  :受講承認一覧テーブルに表示されている値を変換する
+	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
+	 		 loopData:ループ対象となるテーブルの行全体の連想配列
+	 		 counter:カウンタ変数
+	 		 rowNumber:行番号
+	 * 返却値  :なし
+	 * 作成者:T.Yamamoto
+	 * 作成日:2015.07.20
+	 */
+	this.callSellCommodityPermitListValue = function(tableName, loopData, counter, rowNumber) {
+		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
+		recordData = loopData[counter];
+		//連番を入れる
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
+		//テーマの値が空白のとき、その列に後にセレクトボックスをアペンドするために対してクラスをつける。
+		if(!commonFuncs.checkEmpty(recordData.lesson_name)) {
+			//クラスappendSelectboxをつけてアペンド対象であることを分かりやすくする
+			$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).addClass('appendSelectbox');
+			$(tableName + ' tr:eq(' + rowNumber + ') input:hidden').val(recordData.id);
+		}
+	};
+	
 //ここまでクラス定義領域
 }
 

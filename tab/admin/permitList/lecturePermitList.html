@@ -30,7 +30,7 @@
 			//受講承認一覧の検索領域を作る
 			create_tag.outputTag('permitListSearch', 'permitListSearch', '#lecturePermitList');
 			//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
-			setPermitListFromToDate();
+			setPermitListFromToDate(LECTURE_PERMIT_LIST_INFO_TABLE);
 			//受講承認一覧テーブル外枠を作る
 			create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
 			// ナンバリング領域を作る
@@ -42,11 +42,11 @@
 			//受講承認一覧のリスト更新ボタン
 			create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList');
 			//受講承認一覧の検索機能を実装する
-			searchPermitListInfoTable();
+			searchPermitListInfoTable('#lecturePermitList', 'lecturePermitListInfoTable', START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, '#lecturePermitList .permitListSearch .searchButton');
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 			//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-			loopUpdatePermitLessonList();
+			loopUpdatePermitLessonList('#lecturePermitList .normalButton', SELECTOR_LECTUREPERMITLIST_TAB, 'lecturePermitListRecord', LECTURE_PERMIT_LIST_INFO_TABLE, '#permitList');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
