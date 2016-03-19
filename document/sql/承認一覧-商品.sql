@@ -6,6 +6,7 @@ SELECT
 	,sell_number
 	,commodity_inf.commodity_name AS commodity_name
 	,user_inf.id AS user_key
+    ,user_inf.get_point AS get_point
 	,commodity_inf.scholl_key AS school_key
 FROM
 	commodity_sell
