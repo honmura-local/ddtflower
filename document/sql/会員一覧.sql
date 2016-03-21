@@ -172,6 +172,25 @@ AND
 	user_classwork.user_work_status = 2
 #----------------------------------------------------
 
+#----------------------------------------------------
+#上記クエリを実装されていたクエリに合わせました
+SELECT DISTINCT 
+	user_name
+	,pre_paid
+	,user_inf.get_point
+	,DATE(user_inf.update_datetime) AS update_date
+	,user_inf.id
+	,mail_address
+FROM 
+	user_inf 
+INNER JOIN 
+	user_classwork 
+ON 
+	user_inf.id = user_classwork.user_key 
+WHERE 
+	user_classwork.user_work_status = 2
+;
+#----------------------------------------------------
 
 #会員一覧
 # ユーザ情報(自分)

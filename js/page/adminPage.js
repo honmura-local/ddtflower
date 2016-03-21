@@ -422,7 +422,7 @@ function loopUpdatePermitLesson() {
 	//受講承認の承認ボタンをクリックされた時にDBのデータを更新するイベントを登録する
 	$(SELECTOR_DOLECTUREPERMIT_BUTTON).on(CLICK, function(){
 		//チェックが入っているレコードがなければ
-		if (!$(SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX).length) {
+		if (!$(LECTUREPERMIT_SELECTED_RECORD).length) {
 			alert(ALERT_NEED_SELECT_LECTUREPERMIT_RECORD);
 			return;	//処理を終える
 		}
@@ -450,8 +450,8 @@ function loopUpdatePermitLesson() {
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.doLecturePermitInfoTable tr:not(:first)').each(function() {
-				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-				if($('.permitCheckbox:not(:first)').eq(counter).prop('checked')) {
+				//選択されているものだけを更新するように条件設定する
+				if($(this).eq(counter).attr('class').indexOf('selectRecord') != -1) {
 						// DBを更新するための値を取得するために置換する連想配列を取得する
 						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
 						console.log(sendReplaceArray);
@@ -522,57 +522,26 @@ function loopUpdatePermitLesson() {
 }
 
 function updateDoLecturePermitTable (create_tag) {
+	//一旦テーブルを削除する
+	$('.doLecturePermitInfoTable').remove();
 	//テーブル用JSONをクリアする
 	create_tag.json['doLecturePermitInfoTable'].tableData = [];
+	//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
+	create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
 	// 受講承認テーブル用のJSON配列を取得する
 	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
 	//データがあればテーブルを追加する
-	if(!create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY].length) {
-		return;	//なければ終了する
+	if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
+		//受講承認タブのリストテーブル
+		create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+		//受講承認のボタン
+		create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
+		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
 	}
-	
-	//受講承認タブのリストテーブル
-	create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
-	//受講承認のボタン
-	create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-	//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
-	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
 
-	//受講承認のテーブルにチェックボックスを追加する
-	commonFuncs.addCheckbox('permitCheckboxArea', 'permitCheckbox');
 	//受講承認のテーブルを置換する
 	commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
-	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
-	create_tag.setSelectboxText(create_tag.json.selectCommodityInf[TABLE_DATA_KEY], create_tag.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
-	//備品代の連想配列にDBから取り出した最初の値をデフォルトで入れる
-	setDefaultSellingPrice();
-	//受講承認テーブルでアコーディオン機能を実装するために可変テーブルの行にクラス属性を付ける
-	commonFuncs.setTableRecordClass('doLecturePermitInfoTable', 'lecturePermitAccordion');
-	//受講承認テーブルのアコーディオン機能の中身の行をテーブルに挿入する
-	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionContent');
-	//アコーディオンのコンテントの中に隠れテキストボックスとして備品idを入れる
-	create_tag.outputTag('commodityKeyBox','commodityKeyBox', '.accordionContent');
-	//受講承認テーブルのアコーディオン機能の概要の行をテーブルに挿入する
-	create_tag.insertTableRecord('lecturePermitAccordion', 'accordionSummary');
-	//受講承認テーブルがクリックされた時にアコーディオン機能を実装する
-	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionSummary');
-	create_tag.accordionSettingToTable('.lecturePermitAccordion', '.accordionContent');
-	//受講承認テーブルのチェックボックスですべてのチェックボックスにチェックを入れる関数を実行する
-	commonFuncs.allCheckbox('.permitCheckbox:eq(0)', '.permitCheckbox');
-	//受講承認の備品名セレクトボックスにvalueを入れる
-	create_tag.setSelectboxValueWithName('.contentSelect');
-	//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
-	setSellingPrice('.contentCell', '.accordionContent');
-	//受講承認テーブルアコーディオンの会計のテキストボックスにデフォルト値を設定する
-	setDefaultCommodityCostPrice();
-	//受講承認テーブルの会計列を備品名が変化した時に自動でセットする
-	setCommodityCostPrice('.contentSelect');
-	//受講承認テーブルの会計列を個数が変化した時に自動でセットする
-	setCommodityCostPrice('.sellNumberTextbox');
-	
-	var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
-	// ボタンの見た目をjqueryuiのものにしてデザインを整える
-	$('button, .searchButton, input[type="button"]', $activePanel).button();
 }
 
 /* 
@@ -777,7 +746,7 @@ function afterReloadPermitListInfoTable() {
 		//備品販売IDを格納するための隠しフォームを各行にセットする
 		lecturePermitList.outputTag('commoditySellId','commoditySellId', '.appendSelectbox');
 		//備品セレクトボックスを規定のものにする
-		setSelectedCommodity(lecturePermitList);
+		setSelectedCommodity(lecturePermitList, null, LECTURE_PERMIT_LIST_INFO_TABLE, '.lecturePermitListRecord');
 	}
 	
 	//置換済みテキストボックスに数値入力のみできるようにする
@@ -795,7 +764,7 @@ function afterReloadPermitListInfoTable() {
  * 作成者:T.Masuda
  * 作成日:2015.11.08
  */
-function setSelectedCommodity(create_tag, showMaxNum){
+function setSelectedCommodity(create_tag, showMaxNum, targetTable, targetRowClass){
 	
 	var pagenum = 1;					//ページ番号
 	
@@ -819,13 +788,13 @@ function setSelectedCommodity(create_tag, showMaxNum){
 	var endNum = startNum + showMaxNum;
 	
 	//リストのレコードを走査する
-	$('.lecturePermitListRecord').each(function(i){
+	$(targetRowClass).each(function(i){
 		//セレクトメニューが行内にあれば
 		if($('.contentSelect', this).length){
 			//セレクトメニューをDBの値のものを選択した状態にする
-			$('.contentSelect' ,this).val(create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY][startNum + i]['commodity_key']);
+			$('.contentSelect' ,this).val(create_tag.json[targetTable][TABLE_DATA_KEY][startNum + i]['commodity_key']);
 			//備品販売IDもセットする
-			$('.commoditySellId' ,this).val(create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][TABLE_DATA_KEY][startNum + i]['id']);
+			$('.commoditySellId' ,this).val(create_tag.json[targetTable][TABLE_DATA_KEY][startNum + i]['id']);
 		}
 	});
 }
@@ -1121,21 +1090,20 @@ function permitSellCommodity() {
 	$(SELECTOR_SELLCOMMODITYPERMIT_BUTTON).on(CLICK, function(){
 		
 		//チェックが入っているレコードがなければ
-		if (!$(SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX).length) {
+		if (!$('.sellCommodityPermitInfoTable tr.selectRecord').length) {
 			alert(ALERT_NEED_SELECT_LECTUREPERMIT_RECORD);
 			return;	//処理を終える
 		}
-		
-		//受講承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
+
+		//商品購入承認テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
 		var counter = 0;
-		//受講承認を行った生徒の方のリストを作る
+		//商品購入承認を行った生徒の方のリストを作る
 		var processedList = new Array();
 		//序文を追加する
-		processedList.push(MESSAGE_RESULT_DOLECTUREPERMIT);
+		processedList.push(MESSAGE_RESULT_SELLCOMMODITYLECTUREPERMIT);
 		
 		//フォームの追加取得用オブジェクトを作る
 		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
-		commonFuncs.getAddAttrObject("use_point", "data-classwork_use_point", "classwork_use_point", addAttr);
 		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
 		commonFuncs.getAddAttrObject("use_point", "data-base_point", "base_point", addAttr);
 
@@ -1145,47 +1113,39 @@ function permitSellCommodity() {
 		//use_pointの数字チェック
 		validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isNumeric', validateSettings);
 		
-		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
+		//createTagを取得する
+		var scpc =$('#sellCommodityPermit')[0].create_tag;
+		
+		//商品購入承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
-			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.lecturePermitAccordion').each(function() {
-				//チェックボックスにチェックが入っているものだけを更新するように条件設定する
-				if($('.permitCheckbox').eq(counter+1).prop('checked')) {
-						// DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
-						//取得した値が不正かどうかをチェックする
-						VALIDATOR.validate(validateSettings, sendReplaceArray);
-						
-						//加算ポイントレートを取得する
-						var lessonPlusPointRate = create_tag.getUserPlusPointRate('lecturePermitPlusPointRate', parseInt(sendReplaceArray.order_students), sendReplaceArray.lesson_key);
-						// ユーザの所持ポイント退避
-						var userGetPoint = sendReplaceArray['get_point'];
-						// 受講料から加算ポイントを求める
-						var userClassworkCost = sendReplaceArray['user_classwork_cost'];
-						var get_point = create_tag.getUserPlusPoint(userClassworkCost, lessonPlusPointRate);
-						sendReplaceArray['get_point'] = get_point;
-						// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
-						var usePoint = sendReplaceArray['use_point'];
-						if (userGetPoint * 1 < usePoint * 1) {
-							throw new Error("使用ポイント(" + usePoint + ")が所持ポイント(" + userGetPoint + ")を超えています");
-						}
-						var classworkUsePoint = usePoint;
-						var commodityUsePoint = usePoint - userClassworkCost;
-						if (commodityUsePoint > 0) {
-							classworkUsePoint = userClassworkCost;
-						} else {
-							commodityUsePoint = 0;
-						}
-						sendReplaceArray['pay_price'] = userClassworkCost - classworkUsePoint;
-						sendReplaceArray['pay_cash'] = sendReplaceArray['pay_cash'] - commodityUsePoint;
-						
-						sendReplaceArray['classwork_use_point'] = classworkUsePoint;
-						sendReplaceArray['commodity_use_point'] = commodityUsePoint;
-						//備品代から加算ポイントを求める
-						//受講承認データを更新する
-						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
-						//生徒さんの情報をリストに追加していく
-						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');	
+			//商品購入承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
+			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function() {
+				//選択済みレコードであれば
+				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1){
+					// DBを更新するための値を取得するために置換する連想配列を取得する
+					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, 'sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
+					//取得した値が不正かどうかをチェックする
+					VALIDATOR.validate(validateSettings, sendReplaceArray);
+					// ユーザの所持ポイント退避
+					var userGetPoint = sendReplaceArray['get_point'];
+					//商品購入時のポイントレート
+					var commodityPointrate = 1;
+					// 商品代から加算ポイントを求める
+					var get_point = Math.ceil(Number(sendReplaceArray.pay_cash) * commodityPointrate / 100);
+					sendReplaceArray['get_point'] = get_point;
+					// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
+					var usePoint = sendReplaceArray['use_point'];
+					if (userGetPoint * 1 < usePoint * 1) {
+						throw new Error("使用ポイント(" + usePoint + ")が所持ポイント(" + userGetPoint + ")を超えています");
+					}
+					
+					//実際の支配額をセットする
+					sendReplaceArray['pay_cash'] = sendReplaceArray['pay_price'] - usePoint;
+					
+					//商品購入承認データを更新する
+					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+					//生徒さんの情報をリストに追加していく
+					processedList.push(sendReplaceArray.user_name + ' ' + sendReplaceArray.content + ' ' + sendReplaceArray.sell_number + '個 ' + sendReplaceArray.pay_cash + '円' + '\n');	
 				}
 				
 				//カウンターをインクリメントする
@@ -1198,19 +1158,15 @@ function permitSellCommodity() {
 				processedList = [];		//序文を消す
 			}
 			//メッセージの先頭を追加する
-			processedList.unshift('受講承認処理中にエラーが発生したため受講承認処理を中断しました。\n' + e.message + '\n');
+			processedList.unshift('商品購入処理中にエラーが発生したため商品購入承認処理を中断しました。\n' + e.message + '\n');
 		//必ず行う処理
 		} finally {
 
 			//1件でも処理していたら
 			if (counter > 0) {
 				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-				//先に既存のテーブルとボタンを消して
-				$('.doLecturePermitInfoTable').remove();
-				$('.doLecturePermit.normalButton').remove();
-				
-				//テーブルを更新する
-				updateDoLecturePermitTable(create_tag);
+				//タブを開き直してページを更新する
+				$('#permitTab').easytabs('select', '#sellCommodityPermit');
 			} 
 			
 		}
@@ -1317,7 +1273,7 @@ function afterReloadSellCommodityPermitListInfoTable() {
 		//備品販売IDを格納するための隠しフォームを各行にセットする
 		sellCommodityPermitList.outputTag('commoditySellId','commoditySellId', '.appendSelectbox');
 		//備品セレクトボックスを規定のものにする
-		setSelectedCommodity(sellCommodityPermitList);
+		setSelectedCommodity(sellCommodityPermitList, null, SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, '.sellCommodityPermitListRecord');
 	}
 	
 	//置換済みテキストボックスに数値入力のみできるようにする
@@ -1345,3 +1301,285 @@ function moveToUserList(beforePanel, button) {
 	});
 }
 
+/*
+ * 関数名:returnFromUserList
+ * 概要  :ユーザ情報を選択した後前の画面に戻る
+ * 引数  :element button : 押されたボタン
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function returnFromUserList(button) {
+	//管理者タブから前の画面名を取得する
+	var moveTo = $(SELECTOR_ADMIN_TAB)[0].instance.beforePanel;
+	//選択済みの行を取得する
+	var selectedRecords = $(SELECTED_USER_RECORDS);
+	//押されたボタンの値を取得する
+	var buttonType = $(this).attr('data-buttontype');
+	
+	//元の画面に戻る前の処理を行う
+	backCallbacks[moveTo](selectedRecords, buttonType);
+}
+
+//ユーザ一覧から元画面に戻るときにコールする関数
+var backCallbacks = {
+		//受講承認
+		doLecturePermit : function(records, buttonType){
+			//押されたボタンがキャンセルでなければ
+			if (buttonType != 0) {
+				//受講承認タブのcreateTagを取得する
+				var dlpc = $(DO_LECTUREPERMIT_TAB)[0].create_tag;
+				//DOMの入れ物を作る
+				var recordList = $(TAG_DIV)[0];
+				var idList = [];	//ID一覧の入れ物を作る
+				
+				//元テーブルからID行を取り出す
+				$(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE + ' td.user_key:not(:empty)').each(function(){
+					//IDリストにIDを追加していく
+					idList.push($(this).text());
+				});
+				
+				//元テーブルのID一覧を作る
+				for (var i = 0; i < records.length; i++) {
+					//レコードからIDを抽出してJSONにセットする
+					dlpc.json.getAdditionalUserForLecturePermit.user_key.value = $(records[i]).children('.id').text();
+					
+					//IDチェックを始める
+					for(var j = 0; j < idList.length; j++) {
+						if(idList[j] == dlpc.json.getAdditionalUserForLecturePermit.user_key.value){
+							//スルーする
+						//どれにも当てはまらなければレコード追加
+						} else if(j == idList.length - 1){
+							//DBからユーザに対応した受講承認データを取得する
+							dlpc.getJsonFile(URL_GET_JSON_ARRAY_PHP, dlpc.json.getAdditionalUserForLecturePermit, 'getAdditionalUserForLecturePermit');
+							//受講承認用のDOMを作り入れ物に追加する
+							$(recordList).append(creaetLecturePermitRecord(dlpc.json.getAdditionalUserForLecturePermit.tableData[0]));
+							//受講承認用JSONデータを追加する
+							dlpc.json.doLecturePermitInfoTable.tableData.push(dlpc.json.getAdditionalUserForLecturePermit.tableData[0]);
+							break;	//ループをやめる
+						}
+					}
+				}
+			}
+			
+			//作成したレコードを受講承認テーブルに追加する
+			$('.doLecturePermitInfoTable').append($('tr', recordList));
+			
+			//タブのインスタンスを取得する
+			var tabInstance = $('#adminTab')[0].instance;
+			//タブが切り替わっても元々あったコンテンツを取得し直さない様に一時設定する
+			tabInstance.cache = true;
+			//元のタブに戻る
+			$('#adminTab').easytabs('select', '#lecturePermit')
+			//呼び出し画面情報を初期値に戻す
+			tabInstance.beforePanel = null;
+		},
+		//商品購入承認
+		sellCommodityPermit : function(records, buttonType){
+			//押されたボタンがキャンセルでなければ
+			if (buttonType != 0) {
+				//商品購入承認画面のcreateTagを取得する
+				var scpc = $('#sellCommodityPermit')[0].create_tag;
+				//レコードを走査する
+				$(records).each(function(){
+					//データ作成用のデータをレコードから抽出する
+					var recordData = createRecordFromDom(this);
+					//元画面に追加するレコード(DOM)を作成する
+					var addRecord = creaetSellCommodityPermitRecord(recordData);
+					//承認用データを作り追加する
+					scpc.json.sellCommodityPermitInfoTable.tableData.push(creaetSellCommodityPermitData(recordData));
+					$('.sellCommodityPermitInfoTable tbody').append($('tr', addRecord));
+					//TODO.sell_commodityテーブルへINSERTを行う
+				});
+			}
+
+			//タブのインスタンスを取得する
+			var tabInstance = $('#adminTab')[0].instance;
+			//タブが切り替わっても元々あったコンテンツを取得し直さない様に一時設定する
+			tabInstance.cache = true;
+			//元のタブに戻る
+			$('#adminTab').easytabs('select', '#lecturePermit')
+			//呼び出し画面情報を初期値に戻す
+			tabInstance.beforePanel = null;
+		}
+}
+
+
+/* 
+ * 関数名:creaetLecturePermitRecord
+ * 概要  :受講承認用レコードのDOMを作成する
+ * 引数  :Object record : 受講承認データ1レコード分 
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function creaetLecturePermitRecord(record) {
+	//連番を取得する
+	var seqNum = $('.doLecturePermitInfoTable tr:not(:first)').length + 1;
+	//返却用のDOMを作成する
+	var retDom =
+			//行の連番
+			$('<table><tr><td>' + seqNum
+			//開始〜終了時刻
+			+ TD_FROM_REAR + commonFuncs.allDateTime(record)
+			//受講人数
+			+ TD_FROM_REAR_DISPLAY_NONE + record.order_students
+			//授業詳細情報テーブルのID
+			+ TD_FROM_REAR_DISPLAY_NONE + record.lesson_key
+			//開始時刻
+			+ TD_FROM_REAR_DISPLAY_NONE + record.start_time
+			//終了時刻
+			+ TD_FROM_REAR_DISPLAY_NONE + record.end_time
+			//ユーザ名
+			+ TD_FROM_REAR + record.user_name
+			//ステージ番号
+			+ TD_FROM_REAR_DISPLAY_NONE + record.stage_no
+			//レベル番号
+			+ TD_FROM_REAR_DISPLAY_NONE + record.level_no
+			//受講情報テーブルのID
+			+ TD_FROM_REAR_DISPLAY_NONE + record.user_classwork_key
+			//ユーザID
+			+ TD_FROM_REAR_DISPLAY_NONE + record.user_key
+			//所持ポイント
+			+ TD_FROM_REAR+ record.get_point
+			//授業(コース)名
+			+ TD_FROM_REAR + record.lesson_name
+			//使用ポイントを入力するテキストボックス
+			+ '</td><td class="use_point"><input type="number" min="0" name="use_point" onkeydown="return controllInputChar(event);" value="0"></td>'
+			+ '<td style="" colspan="">' + record.user_classwork_cost
+			+ TD_FROM_REAR_DISPLAY_NONE+ record.school_key + '</td></tr></table>');
+	
+	//作成したDOMを返す
+	return retDom;
+}
+
+/* 
+ * 関数名:creaetLecturePermitData
+ * 概要  :受講承認用データを作成する
+ * 引数  :Object record : 受講承認データ1レコード分 
+ * 返却値  :object : 受講承認データ
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function creaetLecturePermitData(record) {
+	//返却用のDOMを作成する
+	var obj =
+			{
+				//受講人数
+				order_students : record.order_students
+				//授業詳細情報テーブルのID
+				,lesson_key : record.lesson_key
+				//開始時刻
+				 ,start_time : record.start_time
+				//終了時刻
+				 ,end_time : record.end_time
+				//ユーザ名
+				 ,user_name : record.user_name
+				//ステージ番号
+				 ,stage_no : record.stage_no
+				//レベル番号
+				 ,level_no : record.level_no
+				//受講情報テーブルのID
+				 ,user_classwork_key : record.user_classwork_key
+				//ユーザID
+				 ,user_key : record.user_key
+				//所持ポイント
+				 ,get_point : record.get_point
+				//授業(コース)名
+				 ,lesson_name : record.lesson_name
+				//使用ポイントを入力するテキストボックス
+				 ,use_point : 0
+				 ,user_classwork_cost : record.user_classwork_cost
+				 ,school_key : record.school_key
+			};
+	
+	//作成したDOMを返す
+	return obj;
+}
+
+/* 
+ * 関数名:creaetSellCommodityPermitRecord
+ * 概要  :商品購入承認用レコードのDOMを作成する
+ * 引数  :Object record : 受講承認データ1レコード分 
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function creaetSellCommodityPermitRecord(record) {
+	var seqNum = $('.sellCommodityPermitInfoTable tr:not(:first)').length + 1;
+	//返却用のDOMを作成する
+	var retDom =
+		//行の連番
+		$('<table><tr><td>' + seqNum
+				//ユーザ名
+				+ '</td><td style="" colspan="">' + record.user_name
+				//獲得ポイント
+				+ '</td><td style="" colspan="">' + record.get_point
+				//商品キー
+				+ '</td><td style="display : none" colspan="">' + 0
+				//ユーザID
+				+ '</td><td style="" colspan="">' + record.user_key
+				//商品名
+				+ '</td><td style="" colspan="">' + '未選択'
+				//個数
+				+ '</td><td style="" colspan="">' + 1
+				//単価
+				+ '</td><td style="" colspan="">' + 0
+				//使用ポイント
+				+ '</td><td style="" colspan="">' + 0
+				//合計金額
+				+ '</td><td style="" colspan="">' + 0
+				+ '</td></tr></table>');		
+	//作成したDOMを返す
+	return retDom;
+}
+
+/* 
+ * 関数名:creaetSellCommodityPermitData
+ * 概要  :商品購入承認データを作成する
+ * 引数  :Object record : 商品購入承認データ1レコード分 
+ * 返却値  :object : 購入承認データ
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function creaetSellCommodityPermitData(record) {
+	//返却用のDOMを作成する
+	var obj =
+		{
+			//列の内訳 連番 ユーザ名 所持ポイント 商品ID ユーザID 商品名 数量 単価 使用ポイント 支払額
+			'user_name' : record.user_name
+			,'get_point' : record.get_point
+			,'commodity_key' :0
+			,'user_key' : record.user_key
+			,'content' : "未選択"
+			,'sell_number' : 1
+			,'price' : 0
+			,'use_point' : 0
+			,'pay_price' : 0
+		};
+	
+	//作成したDOMを返す
+	return obj;
+}
+
+/* 
+ * 関数名:createRecordFromDom
+ * 概要  :ユーザ一覧の行DOMから販売承認用データを作る
+ * 引数  :element record : 商品購入承認データ1レコード分 
+ * 返却値  :object : 購入承認データ
+ * 作成者:T.Masuda
+ * 作成日:2016.03.19
+ */
+function createRecordFromDom(record){
+	//返却するオブジェクトを用意する
+	var dataObj = {
+		//ユーザ名
+		user_name : $('td', record).filter('.user_name').text()
+		//ユーザID
+		,user_key : $('td', record).filter('.id').text()
+		//所持ポイント
+		,get_point : $('td', record).filter('.get_point').text()
+	}
+	
+	return dataObj;	//作成したデータを返す
+}

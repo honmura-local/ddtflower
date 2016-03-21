@@ -678,9 +678,9 @@ this.defaultClassworkCostColumns = [
 		// 開始日時と終了時刻を組み合わせた値を入れる
 		allDay = this.allDateTime(recordData);
 		//連番を入れる
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(1).text(rowNumber);
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(0).text(rowNumber);
 		// 開始日時と終了時間を合わせてテーブルの最初のカラムに値を入れる
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(2).text(allDay);
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(1).text(allDay);
 	};
 
 	/* 
@@ -2261,7 +2261,7 @@ this.defaultClassworkCostColumns = [
 	
 	/* 
 	 * 関数名:putTextboxInTd
-	 * 概要  :テーブルの指定た列にテキストボックスを入れる
+	 * 概要  :テーブルの指定した列にテキストボックスを入れる
 	 * 引数  :Object settings : テキストボックスの設定。キーを属性名、値を設定値にする
 	 * 		:String targetSelector : 処理対象の列のセレクタ
 	 * 作成者:T.Masuda
@@ -2284,6 +2284,54 @@ this.defaultClassworkCostColumns = [
 	}
 
 	/* 
+	 * 関数名:createCommoditySelectMenu
+	 * 概要  :商品選択のセレクトメニューを作る
+	 * 引数  :Array contentSelect : 商品情報オブジェクトをまとめた配列
+	 * 		:String targetSelector : 処理対象の列のセレクタ
+	 * 作成者:T.Masuda
+	 * 作成日:2016.0320
+	 */
+	this.createCommoditySelectMenu = function (commodityData){
+		
+		//SELECTタグを作成する
+		var $select = $('<select></select>');
+		//セレクトメニューに属性を追加する
+		$select.attr({
+			class : 'contentSelect'
+			,name : 'content'
+		});
+		
+		//商品データの数を取得する
+		var commodityNum = commodityData.length;
+		
+		//商品データを走査する
+		for (var i = 0; i < commodityNum; i++) {
+			//該当する商品情報を取り出す
+			var oneCommodityData = commodityData[i];
+			//セレクトメニューにデータを追加していく
+			$select.append($('<option></option>').addClass('contentOption').text(oneCommodityData.commodity_name).attr({
+				value : oneCommodityData.commodity_name
+				,dataPrice : oneCommodityData.selling_price
+				,dataCommodityKey : oneCommodityData.commodity_key
+			}));
+		}
+		
+		
+		//設定を取り出す
+		for (key in settings) {
+			//attr関数で属性値をセットする
+			$input.attr(key, settings[key]);
+		}
+
+		//対象にinputタグを入れる。既に何かしら入っている場合ものは除外する
+		$(targetSelector).filter(SELECTOR_NOT_FIRST).filter(SELECTOR_HAS_ANYTHING).append($input);
+	}
+
+	this.changeSelectedValue = function(){
+		
+	}
+	
+	/* 
 	 * 関数名:callSellCommodityPermitListValue
 	 * 概要  :受講承認一覧テーブルに表示されている値を変換する
 	 * 引数  :tableName:値を置換する対象となるテーブルのcssクラス名
@@ -2291,8 +2339,8 @@ this.defaultClassworkCostColumns = [
 	 		 counter:カウンタ変数
 	 		 rowNumber:行番号
 	 * 返却値  :なし
-	 * 作成者:T.Yamamoto
-	 * 作成日:2015.07.20
+	 * 作成者:T.Masuda
+	 * 作成日:2016.03.19
 	 */
 	this.callSellCommodityPermitListValue = function(tableName, loopData, counter, rowNumber) {
 		// テーブルの値に入る連想配列(テーブルの値一覧)を変数に入れる
@@ -2306,6 +2354,33 @@ this.defaultClassworkCostColumns = [
 			$(tableName + ' tr:eq(' + rowNumber + ') input:hidden').val(recordData.id);
 		}
 	};
+
+	/* 
+	 * 関数名:tdReplaceToTextbox
+	 * 概要  :TDタグの値を持ったテキストボックスを配置する
+	 * 引数  :String tableName:値を置換する対象となるテーブルのcssクラス名
+	 		 String || int value : 値
+	 		 String name : テキストボックスのname属性
+	 		 String type : テキストボックスのtype属性
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.03.20
+	 */
+	this.tdReplaceToTextbox = function(tableName, targetColumn, value, name, type) {
+		//対象となる列を走査する
+		$(tableName).each(targetColumn, function(){
+			//tdタグ内の値を一時避難する
+			var tmpValue = $(this).text();
+			//対象のrdタグを一旦からにする
+			$(this).remove();
+			//対象のtdタグに様々設定を行ったテキストボックスを突っ込む
+			$(this).append($('<input>').attr({
+				'name' : name
+				,'type' : type
+				,'value' : value
+			}));
+		});
+	}
 	
 //ここまでクラス定義領域
 }

@@ -2026,10 +2026,8 @@ BEGIN
 #本日の受講承認対象の一覧を取得する
 #出力対象の列を指定する
 SELECT
-	#チェックボックス用列の空文字の列を設定する
-	'' AS columnCheckbox
 	#授業時間帯テーブルID
-	,time_table_day.id AS time_table_key
+	time_table_day.id AS time_table_key
 	#授業日付
 	,time_table_day.lesson_date AS lesson_date
 	#受講者数

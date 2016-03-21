@@ -43,7 +43,7 @@ function tabEx(url, argumentObj, returnObj){
 	this.defaultArgumentObj = {
 		//ダイアログの設定データオブジェクト
 		config:{
-			cache: this.cache,	//キャッシュ設定をメンバの設定と合わせる
+			cache: true,	//キャッシュをtrueに固定する
 			updateHash:false	//URLハッシュによるタブ開閉履歴を残す
 		},
 		//インプット用データオブジェクト
@@ -83,9 +83,11 @@ function tabEx(url, argumentObj, returnObj){
 			
 			var tab = $(this.dom).easytabs(this.argumentObj.config);	//configの設定を使ってタブを作成する
 			//タブをクラスインスタンスから参照できる様にする
-			this.tab = tab;
+			this.tab = tab[0];
+			tab[0].instance = this;	//逆の参照も可能にする
+			
 			//DOMにキャッシュ設定を保存する
-			this.tab[0].cache = this.cache;
+			this.tab.cache = this.cache;
 			$(target).append(tab);	//タブを指定した先に追加する
 			
 			
@@ -108,7 +110,8 @@ function tabEx(url, argumentObj, returnObj){
 		//タブ切り替え時
 		$(this.tab).bind(this.eventEasytabsBefore, function(event, $clicked, $targetPanel, settings){
 			//初回読み込み時ではないときにキャッシュしない設定であれば、新規にHTMLを取得して対象タブパネルに展開する
-			if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.tab[0].cache){
+			if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.cache){
+//				if($targetPanel.filter(thisElem.selectorEmpty).length == 0 && !thisElem.tab[0].cache){
 				//対象のタブパネルの内容を空にする
 				$targetPanel.empty();
 				//対象タブパネルのHTMLファイルのソースパスを取得する
@@ -120,9 +123,13 @@ function tabEx(url, argumentObj, returnObj){
 					$targetPanel.append(html);
 				});
 			}
+			
+			//デフォルトのキャッシュ設定がfalseなら
+			if(!tabEx.cache) {
+				//falseに戻す
+				thisElem.cache = false;
+			}
 		});
-		
-		this.beforePanel = null;	//コードで呼ばれたという判定を戻す
 	}
 	
 	/* 関数名:setDefaultObjects

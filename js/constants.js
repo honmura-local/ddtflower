@@ -870,8 +870,12 @@ SELECTOR_DOLECTUREPERMIT_BUTTON = '.doLecturePermit.normalButton';
 SELECTOR_DOLECTUREPERMIT_SELECTED_CHECKBOX = '.permitCheckbox:checked';
 //受講承認時に対象のレコードが存在しなかった場合の警告
 ALERT_NEED_SELECT_LECTUREPERMIT_RECORD = '受講承認を行うレコードを選択してください。';
+//受講承認時に対象のレコードが存在しなかった場合の警告
+ALERT_NEED_SELECT_SELLCOMMODITYPERMIT_RECORD = '商品購入承認を行うレコードを選択してください。';
 //受講承認処理完了時のメッセージの序文
 MESSAGE_RESULT_DOLECTUREPERMIT = '以下の生徒の受講承認処理が完了しました。\n';
+//受講承認処理完了時のメッセージの序文
+MESSAGE_RESULT_SELLCOMMODITYLECTUREPERMIT = '以下の生徒の商品購入承認処理が完了しました。\n';
 //更新件数を知らせるメッセージ
 NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER ='件のレコードを更新しました。';
 //受講承認一覧テーブルの領域
@@ -921,3 +925,18 @@ SELECTOR_NOT_FIRST	= ':not(:first)';
 //商品購入一覧タブのセレクタ
 SELECTOR_SELLCOMMODITYPERMITLIST_TAB	= '#sellCommodityPermitList';
 SELECTOR_SELLCOMMODITYLIST_OUTSIDE		= '.sellCommodityPermitListInfoTableOutsideArea';
+//受講承認タブ内の選択済みレコードのセレクタ
+LECTUREPERMIT_SELECTED_RECORD			= '.doLecturePermitInfoTable .selectRecord';
+//管理者タブのセレクタ
+SELECTOR_ADMIN_TAB						= '#adminTab';
+//選択済みのユーザ一覧のレコード
+SELECTED_USER_RECORDS					= '.userListInfoTable tr.selectRecord';
+//受講承認タブ
+DO_LECTUREPERMIT_TAB					= '#doLecturePermit';
+//tdタグ後方から
+TD_FROM_REAR							= '</td><td>';
+TD_FROM_REAR_DISPLAY_NONE							= '</td><td style="display : none">';
+SELECTOR_SELLCOMMODITY_PERMIT_LIST_INFO_TABLE	= '.sellCommodityPermitListInfoTable';				//管理者、商品購入承認一覧テーブルのセレクタ
+SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE 			 = '.doLecturePermitInfoTable';					//管理者、受講承認テーブルのセレクタ
+//受講承認のダミーデータ
+DUMMY_LECTUREPERMIT_DATA = {time_table_key: "", lesson_date: "", order_students: "", lesson_key: "", start_time: "", end_time: "", user_name: "", stage_no: "", level_no: "", user_classwork_key: "", user_key: "", get_point: "", lesson_name: "", use_point: "", user_classwork_cost: "", school_key: ""};
