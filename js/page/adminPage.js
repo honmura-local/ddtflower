@@ -446,14 +446,17 @@ function loopUpdatePermitLesson() {
 		//use_pointの数字チェック
 		validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isNumeric', validateSettings);
 		
+		//当該画面のcreateTagを取得する
+		var create_tag = $('#doLecturePermit')[0].create_tag;
+		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.doLecturePermitInfoTable tr:not(:first)').each(function() {
 				//選択されているものだけを更新するように条件設定する
-				if($(this).eq(counter).attr('class').indexOf('selectRecord') != -1) {
+				if(commonFuncs.checkEmpty($('.doLecturePermitInfoTable tr:not(:first)').eq(counter).attr('class')) && $('.doLecturePermitInfoTable tr:not(:first)').eq(counter).attr('class').indexOf('selectRecord') != -1) {
 						// DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'accordionContent:eq(' + counter + ')');
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'doLecturePermitInfoTable tr:not(:first):eq(' + counter + ')');
 						console.log(sendReplaceArray);
 						console.log(validateSettings);
 						//取得した値が不正かどうかをチェックする
@@ -480,13 +483,13 @@ function loopUpdatePermitLesson() {
 							commodityUsePoint = 0;
 						}
 						sendReplaceArray['pay_price'] = userClassworkCost - classworkUsePoint;
-						sendReplaceArray['pay_cash'] = sendReplaceArray['pay_cash'] - commodityUsePoint;
+						sendReplaceArray['pay_cash'] = sendReplaceArray['pay_price'] - commodityUsePoint;
 						
 						sendReplaceArray['classwork_use_point'] = classworkUsePoint;
 						sendReplaceArray['commodity_use_point'] = commodityUsePoint;
 						//備品代から加算ポイントを求める
 						//受講承認データを更新する
-						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonUpdate', 'permitLessonUpdate');
 						//生徒さんの情報をリストに追加していく
 						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');
 						
@@ -542,6 +545,17 @@ function updateDoLecturePermitTable (create_tag) {
 
 	//受講承認のテーブルを置換する
 	commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
+	
+	//使用ポイントのテキストボックスの設定を書く
+	var getPointSettings = {
+			type : 'number'	//数値用テキストボックス
+			,min : 0			//最低値
+			,value : 0			//デフォルト値
+			,name : 'use_point'	//使用ポイント
+	};
+	//使用ポイントのテキストボックスをセットする
+	commonFuncs.putTextboxInTd(getPointSettings, 'td.use_point');
+
 }
 
 /* 
@@ -1143,7 +1157,7 @@ function permitSellCommodity() {
 					sendReplaceArray['pay_cash'] = sendReplaceArray['pay_price'] - usePoint;
 					
 					//商品購入承認データを更新する
-					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonUpdate');
+					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonContainCommodity');
 					//生徒さんの情報をリストに追加していく
 					processedList.push(sendReplaceArray.user_name + ' ' + sendReplaceArray.content + ' ' + sendReplaceArray.sell_number + '個 ' + sendReplaceArray.pay_cash + '円' + '\n');	
 				}

@@ -65,9 +65,8 @@
 			var getPointSettings = {
 					type : 'number'	//数値用テキストボックス
 					,min : 0			//最低値
-					//入力制御関数をセットする
-					,onkeydown : 'return controllInputChar(event);'
 					,value : 0			//デフォルト値
+					,name : 'use_point'	//使用ポイント
 			};
 			//使用ポイントのテキストボックスをセットする
 			commonFuncs.putTextboxInTd(getPointSettings, 'td.use_point');
