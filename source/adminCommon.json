@@ -544,7 +544,7 @@
 		"db_setQuery": "CALL updateLecturePermitListClasswork('user_classwork_cost', 'use_point', 'id', 'diff_point', 'user_key');"
 	},
 	"updateSellCommodityPermitList": {
-		"db_setQuery": "CALL updateSellCommodityPermitList('user_classwork_cost', 'content', 'use_point', 'id', 'diff_point', 'user_key');"
+		"db_setQuery": "CALL updateLecturePermitListCommodity('user_classwork_cost', 'commodity_key', 'use_point', 'id', 'diff_point', 'user_key');"
 	},
 	"searchUserList": {
 		"searchName": {
