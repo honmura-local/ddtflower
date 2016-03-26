@@ -940,3 +940,10 @@ SELECTOR_SELLCOMMODITY_PERMIT_LIST_INFO_TABLE	= '.sellCommodityPermitListInfoTab
 SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE 			 = '.doLecturePermitInfoTable';					//管理者、受講承認テーブルのセレクタ
 //受講承認のダミーデータ
 DUMMY_LECTUREPERMIT_DATA = {time_table_key: "", lesson_date: "", order_students: "", lesson_key: "", start_time: "", end_time: "", user_name: "", stage_no: "", level_no: "", user_classwork_key: "", user_key: "", get_point: "", lesson_name: "", use_point: "", user_classwork_cost: "", school_key: ""};
+//未選択の商品名
+COMMODITY_NOT_SELECTED = '-未選択-';
+//未選択の商品のキー
+COMMODITY_NOT_SELECTED_KEY = -1;
+//デフォルトの商品購入数
+DEFAULT_COMMODITY_SELL_NUMBER = 1;
+MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION = '以下の生徒の商品が未選択です。\n';
