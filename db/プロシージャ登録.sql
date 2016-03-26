@@ -1957,8 +1957,6 @@ delimiter ;
 #受講承認
 #受講承認
 #受講承認対象の一覧取得
-#コード記述のため区切り文字を一時的に変更する
-DELIMITER $$
 #当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getLecturePermit` $$
 #受講承認対象の一覧取得のプロシージャの登録を行う
@@ -2000,8 +1998,6 @@ SELECT
 	,user_classwork_cost
 	#校舎テーブルID
 	,timetable_inf.school_key AS school_key
-	#現在の受講者数
-	,classwork.order_students
 #データ取得元のテーブルを指定する
 FROM
 	#授業時間帯テーブル
@@ -2055,12 +2051,74 @@ AND
 ;
 #ストアドプロシージャの処理を終える
 END $$
-#区切り文字をセミコロンに戻す
-delimiter ;
+
+#受講承認対象の一覧取得(個人ごと)
+DROP PROCEDURE IF EXISTS getLecturePermitIndivisual $$
+CREATE PROCEDURE  getLecturePermitIndivisual(
+	IN in_user_key INT
+	OUT result TEXT
+)
+BEGIN
+
+SELECT
+	time_table_day.id AS time_table_key
+	,time_table_day.lesson_date AS lesson_date
+	,classwork.order_students AS order_students
+	,classwork.lesson_key AS lesson_key
+	,start_time 
+	,end_time 
+	,user_name
+	,user_classwork.stage_no AS stage_no
+	,user_classwork.level_no AS level_no
+	,user_classwork.id AS user_classwork_key
+	,user_inf.id AS user_key
+	,user_inf.get_point AS get_point
+	,lesson_name
+	,'' AS use_point
+	,level_price AS user_classwork_cost
+	,timetable_inf.school_key AS school_key
+FROM
+	user_inf
+INNER JOIN
+	user_classwork
+ON
+	user_classwork.user_key = user_inf.id
+AND
+	user_inf.id = in_user_key
+INNER JOIN
+	classwork
+ON
+	classwork.id = user_classwork.classwork_key
+INNER JOIN 
+	lesson_inf
+ON
+	lesson_inf.id = classwork.lesson_key
+INNER JOIN
+	time_table_day
+ON
+	time_table_day.id = classwork.time_table_day_key 
+AND
+	time_table_day.lesson_date < current_date
+INNER JOIN
+	timetable_inf 
+ON
+	timetable_inf.id = time_table_day.timetable_key 
+INNER JOIN
+    stage_inf
+ON
+    stage_inf.lesson_key = classwork.lesson_key
+AND
+    stage_inf.stage_no = user_classwork.stage_no
+INNER JOIN
+    lesson_sub
+ON
+    lesson_sub.stage_key = stage_inf.id
+AND
+    lesson_sub.level_no = user_classwork.level_no;
+
+END$$
 
 #ポイントレート算出
-#コード記述のため区切り文字を一時的に変更する
-DELIMITER $$
 #当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `getPointRate` $$
 #授業のポイントレート算出用プロシージャの登録を行う
@@ -2088,8 +2146,6 @@ WHERE
 ;
 #ストアドプロシージャの処理を終える
 END $$
-#区切り文字をセミコロンに戻す
-delimiter ;
 
 # 商品購入用商品名リスト用
 #コード記述のため区切り文字を一時的に変更する
