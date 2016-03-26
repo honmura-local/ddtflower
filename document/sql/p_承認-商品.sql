@@ -25,29 +25,17 @@ INTO
 
 START TRANSACTION;
 
-IF in_commodity_key < 0 THEN
-    UPDATE
-        commodity_sell
-    SET
-        sell_number = in_sell_number
-        ,pay_cash = in_pay_cash
-        ,use_point = in_use_point
-        ,commodity_key = NULL
-        ,purchase_status = in_purchase_status
-        ,update_datetime = NOW()
-    WHERE
-        id = in_id;
-ELSE
-    SET
-        sell_number = in_sell_number
-        ,pay_cash = in_pay_cash
-        ,use_point = in_use_point
-        ,commodity_key = in_commodity_key
-        ,purchase_status = in_purchase_status
-        ,update_datetime = NOW()
-    WHERE
-        id = in_id;
-END IF;
+UPDATE
+    commodity_sell
+SET
+    sell_number = in_sell_number
+    ,pay_cash = in_pay_cash
+    ,use_point = in_use_point
+    ,commodity_key = last_purchase_id
+    ,purchase_status = in_purchase_status
+    ,update_datetime = NOW()
+WHERE
+    id = in_id;
 
 SELECT 
     MAX(update_datetime)
@@ -104,7 +92,6 @@ CREATE PROCEDURE p_insert_approval_purchase (
     IN in_sell_number INT
     ,IN in_pay_cash INT
     ,IN in_use_point INT
-    ,IN in_commodity_key INT
     ,IN in_user_key INT
     ,IN in_purchase_status INT
     ,OUT result INT
@@ -115,6 +102,7 @@ DECLARE old_count int;
 DECLARE new_count int;
 DECLARE latest_timestamp_user VARCHAR(25);
 DECLARE updated_timestamp_user VARCHAR(25);
+DECLARE last_purchase_id int;
 
 SELECT 
     COUNT(id)
@@ -125,63 +113,47 @@ INTO
 
 START TRANSACTION;
 
-IF in_commodity_key < 0 THEN
-    INSERT INTO
-        commodity_sell (
-            commodity_key
-            ,school_key
-            ,user_key
-            ,purchase_status
-            ,content
-            ,sell_datetime
-            ,sell_number
-            ,pay_cash
-            ,use_point
-            ,create_datetime
-            ,update_datetime
-        )
-    VALUES (
-        NULL
-        ,1
-        ,in_user_key
-        ,in_purchase_status
-        ,''
-        ,NOW()
-        ,in_sell_number
-        ,in_pay_cash
-        ,in_use_point
-        ,NOW()
-        ,NOW()
-    );
-ELSE
-    INSERT INTO
-        commodity_sell (
-            commodity_key
-            ,school_key
-            ,user_key
-            ,purchase_status
-            ,content
-            ,sell_datetime
-            ,sell_number
-            ,pay_cash
-            ,use_point
-            ,create_datetime
-            ,update_datetime
-        )
-    VALUES (
-        in_commodity_key
-        ,1
-        ,in_user_key
-        ,in_purchase_status
-        ,''
-        ,NOW()
-        ,in_sell_number
-        ,in_pay_cash
-        ,in_use_point
-        ,NOW()
-        ,NOW()
-    );
-END IF;
+SELECT
+    commodity_key
+FROM
+    commodity_sell
+WHERE
+    create_datetime = (
+        SELECT
+            MAX(create_datetime)
+        FROM
+            commodity_sell
+    )
+LIMIT 1
+INTO last_purchase_id;
+
+INSERT INTO
+    commodity_sell (
+        commodity_key
+        ,school_key
+        ,user_key
+        ,purchase_status
+        ,content
+        ,sell_datetime
+        ,sell_number
+        ,pay_cash
+        ,use_point
+        ,create_datetime
+        ,update_datetime
+    )
+VALUES (
+    last_purchase_id
+    ,1
+    ,in_user_key
+    ,in_purchase_status
+    ,''
+    ,NOW()
+    ,in_sell_number
+    ,in_pay_cash
+    ,in_use_point
+    ,NOW()
+    ,NOW()
+);
 
 SELECT
     COUNT(id)
@@ -236,10 +208,10 @@ END$$
 DROP PROCEDURE IF EXISTS p_delete_approval_purchase $$
 CREATE PROCEDURE p_delete_approval_purchase (
     IN in_id INT
-	,OUT result INT
+    ,OUT result INT
 )
 BEGIN
-	
+    
 DECLARE old_count int;
 DECLARE new_count int;
 
