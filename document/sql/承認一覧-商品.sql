@@ -15,6 +15,8 @@ INNER JOIN
 ON
 	user_inf.id = commodity_sell.user_key
 AND
+    commodity_sell.purchase_status > 0
+AND
 	sell_datetime <= {{toDate}}
 AND
 	sell_datetime >= {{fromDate}}
