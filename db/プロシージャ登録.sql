@@ -2056,7 +2056,7 @@ END $$
 DROP PROCEDURE IF EXISTS getLecturePermitIndivisual $$
 CREATE PROCEDURE  getLecturePermitIndivisual(
 	IN in_user_key INT
-	OUT result TEXT
+	,OUT result TEXT
 )
 BEGIN
 
