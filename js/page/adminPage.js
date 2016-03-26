@@ -1136,8 +1136,15 @@ function permitSellCommodity() {
 			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function() {
 				//選択済みレコードであれば
 				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1){
+					
 					// DBを更新するための値を取得するために置換する連想配列を取得する
 					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, 'sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
+					//商品が未選択であれば
+					if(sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY) {
+						//エラー扱いにするため例外を投げる。対象の行のお客様の名前を挙げる
+						throw new Error(MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION + sendReplaceArray.user_name);
+					}
+					
 					//取得した値が不正かどうかをチェックする
 					VALIDATOR.validate(validateSettings, sendReplaceArray);
 					// ユーザの所持ポイント退避
@@ -1145,7 +1152,7 @@ function permitSellCommodity() {
 					//商品購入時のポイントレート
 					var commodityPointrate = 1;
 					// 商品代から加算ポイントを求める
-					var get_point = Math.ceil(Number(sendReplaceArray.pay_cash) * commodityPointrate / 100);
+					var get_point = Math.ceil(Number(sendReplaceArray.pay_price) * commodityPointrate / 100);
 					sendReplaceArray['get_point'] = get_point;
 					// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
 					var usePoint = sendReplaceArray['use_point'];
@@ -1407,17 +1414,44 @@ var backCallbacks = {
 				});
 			}
 
+			//数量、価格、使用ポイント、合計金額列をテキストボックスに置き換える
+			//商品キー列は隠しinputに置き換える
+			replaceSellCommodityPermitInputs(commonFuncs);
+			
+			//合計金額列を編集不可にする
+			$('input[name="pay_price"]').attr('readonly', 'readonly');
+			
 			//タブのインスタンスを取得する
 			var tabInstance = $('#adminTab')[0].instance;
 			//タブが切り替わっても元々あったコンテンツを取得し直さない様に一時設定する
 			tabInstance.cache = true;
 			//元のタブに戻る
 			$('#adminTab').easytabs('select', '#lecturePermit')
+			//追加した行に製品選択用セレクトメニューを追加する
+			commonFuncs.createCommoditySelectMenu($('#sellCommodityPermit')[0].create_tag.json.selectCommodityInf.tableData, '.sellCommodityPermitInfoTable .content');
+
 			//呼び出し画面情報を初期値に戻す
 			tabInstance.beforePanel = null;
 		}
 }
 
+/* 
+ * 関数名:replaceSellCommodityPermitInputs
+ * 概要  :受講承認用レコードのDOMを作成する
+ * 引数  :common common : 汎用関数クラスインスタンス 
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2016.03.26
+ */
+function replaceSellCommodityPermitInputs(common) {
+	//数量、価格、使用ポイント、合計金額列をテキストボックスに置き換える
+	//商品キー列は隠しinputに置き換える
+	common.tdReplaceToTextbox('.sellCommodityPermitInfoTable', '.sell_number:not(:first)', 'sell_number', 'number');
+	common.tdReplaceToTextbox('.sellCommodityPermitInfoTable', '.price:not(:first)', 'price', 'number');
+	common.tdReplaceToTextbox('.sellCommodityPermitInfoTable', '.use_point:not(:first)', 'use_point', 'number');
+	common.tdReplaceToTextbox('.sellCommodityPermitInfoTable', '.pay_price:not(:first)', 'pay_price', 'number');
+	common.tdReplaceToTextbox('.sellCommodityPermitInfoTable', '.commodity_key:not(:first)', 'commodity_key', 'hidden');
+}
 
 /* 
  * 関数名:creaetLecturePermitRecord
@@ -1530,19 +1564,19 @@ function creaetSellCommodityPermitRecord(record) {
 				//獲得ポイント
 				+ '</td><td style="" colspan="">' + record.get_point
 				//商品キー
-				+ '</td><td style="display : none" colspan="">' + 0
+				+ '</td><td class="commodity_key" style="display : none" colspan="">' + COMMODITY_NOT_SELECTED_KEY
 				//ユーザID
 				+ '</td><td style="" colspan="">' + record.user_key
-				//商品名
-				+ '</td><td style="" colspan="">' + '未選択'
+				//商品名 未選択状態で
+				+ '</td><td class="content" style="" colspan="">' + COMMODITY_NOT_SELECTED
 				//個数
-				+ '</td><td style="" colspan="">' + 1
+				+ '</td><td class="sell_number" style="" colspan="">' + DEFAULT_COMMODITY_SELL_NUMBER
 				//単価
-				+ '</td><td style="" colspan="">' + 0
+				+ '</td><td class="price" style="" colspan="">' + 0
 				//使用ポイント
-				+ '</td><td style="" colspan="">' + 0
+				+ '</td><td class="use_point" style="" colspan="">' + 0
 				//合計金額
-				+ '</td><td style="" colspan="">' + 0
+				+ '</td><td class="pay_price" style="" colspan="">' + 0
 				+ '</td></tr></table>');		
 	//作成したDOMを返す
 	return retDom;
@@ -1563,10 +1597,10 @@ function creaetSellCommodityPermitData(record) {
 			//列の内訳 連番 ユーザ名 所持ポイント 商品ID ユーザID 商品名 数量 単価 使用ポイント 支払額
 			'user_name' : record.user_name
 			,'get_point' : record.get_point
-			,'commodity_key' :0
+			,'commodity_key' : COMMODITY_NOT_SELECTED_KEY
 			,'user_key' : record.user_key
-			,'content' : "未選択"
-			,'sell_number' : 1
+			,'content' : COMMODITY_NOT_SELECTED
+			,'sell_number' : DEFAULT_COMMODITY_SELL_NUMBER
 			,'price' : 0
 			,'use_point' : 0
 			,'pay_price' : 0

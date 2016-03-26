@@ -7,24 +7,14 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `book_classwork` $$
 #授業予約のプロシージャの登録を行う
 CREATE PROCEDURE `book_classwork`(
-	#入力引数を指定する
-	#デフォルト受講料
     IN in_default_user_classwork_cost int(11)
-    #デフォルト花材費
 	,IN in_default_flower_cost int(11)
-	#ユーザID
 	,IN in_user_key int(11)
-	#授業テーブルのID
 	,IN in_classwork_key int(11)
-	#コースのステージ情報のID
 	,IN in_stage_key int(11)
-	#現在のステージNo
 	,IN in_stage_no_present int(11)
-	#コースのレベル情報のID
 	,IN in_level_key int(11)
-	#現在のレベルNo
 	,IN in_level_no_present int(11)
-	#授業ID
 	,IN in_id int(11)
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -207,11 +197,8 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `cancel_classwork` $$
 #授業予約キャンセルのプロシージャの登録を行う
 CREATE PROCEDURE `cancel_classwork`(
-	#受講テーブルID
 	IN in_id int(11)
-	#授業テーブルのID
 	,in_classwork_key int(11)
-	#キャンセル料
 	,in_cancel_charge int(11)
 )
 #以降にストアドプロシージャの処理を記述する
@@ -618,7 +605,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `deleteBlogArticle` $$
 #ブログ記事削除のプロシージャの登録を行う
 CREATE PROCEDURE deleteBlogArticle(
-		#記事ID
 		IN articleId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -644,9 +630,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `getMyBlogArticle` $$
 #マイブログ画面記事取得のプロシージャの登録を行う
 CREATE PROCEDURE getMyBlogArticle(
-		#結果セットを返す
 		OUT result text
-		#記事を取得する対象のユーザID
 		,IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -700,9 +684,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `getMyBlogList` $$
 #マイブログ画面記事一覧取得のプロシージャの登録を行う
 CREATE PROCEDURE getMyBlogList(
-		#結果セットを返す
 		OUT result text
-		#ユーザIDで記事を検索する
 		,IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -843,9 +825,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `getMyGalleryContents2` $$
 #マイギャラリー記事取得(指定したユーザのみ)のプロシージャの登録を行う
 CREATE PROCEDURE getMyGalleryContents2(
-		#結果セットを出力する
 		OUT result text
-		#記事のユーザIDを指定する
 		,IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -891,9 +871,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `insertGalleryContent` $$
 #マイギャラリー記事作成のプロシージャの登録を行う
 CREATE PROCEDURE insertGalleryContent(
-		#ユーザID
 		IN userKey int
-		#記事画像(名)
 		,photoTitle varchar(200)
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -933,11 +911,8 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `updateGalleryContent` $$
 #マイギャラリー記事更新のプロシージャの登録を行う
 CREATE PROCEDURE updateGalleryContent(
-		#記事コメント
 		IN photoSummary varchar(210)
-		#記事タイトル
 		,articleTitle varchar(100)
-		#記事ID
 		,articleId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -969,7 +944,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `deleteGalleryContent` $$
 #マイギャラリー記事削除のプロシージャの登録を行う
 CREATE PROCEDURE deleteGalleryContent(
-		#記事ID
 		IN articleId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -996,7 +970,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `p_user_inf` $$
 #ユーザ情報取得のプロシージャの登録を行う
 CREATE PROCEDURE p_user_inf(
-	#ユーザID
 	IN in_user_key int(11)
 )
 #以降にストアドプロシージャの処理を記述する
@@ -1026,7 +999,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `p_message_inf` $$
 #お知らせ取得のプロシージャの登録を行う
 CREATE PROCEDURE p_message_inf(
-	#ユーザID
 	IN in_user_key int(11)
 )
 #以降にストアドプロシージャの処理を記述する
@@ -1080,7 +1052,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `p_booked_lessons` $$
 #受講可能レッスン一覧取得のプロシージャの登録を行う
 CREATE PROCEDURE p_booked_lessons(
-	#ユーザID
 	IN in_user_key int(11)
 )
 #以降にストアドプロシージャの処理を記述する
@@ -1280,7 +1251,6 @@ END $$
 DROP PROCEDURE IF EXISTS `p_lesson_cancel_rate` $$
 #キャンセル料(率)取得のプロシージャの登録を行う
 CREATE PROCEDURE p_lesson_cancel_rate(
-	#授業詳細情報テーブルID
 	IN in_lesson_key INT
 )
 #以降にストアドプロシージャの処理を記述する
@@ -1310,7 +1280,6 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `p_bookable_lessons` $$
 #受講可能レッスン一覧取得のプロシージャの登録を行う
 CREATE PROCEDURE p_bookable_lessons(
-	#ユーザID
 	IN in_user_key int(11)	
 )
 #以降にストアドプロシージャの処理を記述する
@@ -1365,10 +1334,8 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS p_user_classwork_a_day $$
 #会員側日ごと授業一覧のプロシージャの登録を行う
 CREATE PROCEDURE p_user_classwork_a_day(
-	#授業の日付
 	IN in_date INT
-	#ユーザID
-	,IN in_user_key int(11)
+	,in_user_key int(11)
 )
 #以降にストアドプロシージャの処理を記述する
 BEGIN
@@ -1552,9 +1519,7 @@ DROP PROCEDURE IF EXISTS `updateUserPassword` $$
 #パスワード変更のプロシージャの登録を行う
 CREATE PROCEDURE updateUserPassword
 	(
-		#新しいパスワード
 		IN newPassword varchar(255)
-		#更新対象のユーザID
 		,userId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1590,9 +1555,7 @@ DROP PROCEDURE IF EXISTS `getUserProfile` $$
 #プロフィール取得のプロシージャの登録を行う
 CREATE PROCEDURE getUserProfile
 	(
-		#結果セットを返す
 		OUT result text
-		#取得対象のユーザID
 		,IN userId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1643,28 +1606,16 @@ DROP PROCEDURE IF EXISTS `updateUserProfile` $$
 #プロフィール更新のプロシージャの登録を行う
 CREATE PROCEDURE updateUserProfile
 	(
-		#以下、更新する値
-		#ユーザ名
 		IN userName varchar(40)
-		#ユーザ名(カナ)
 		,nameKana varchar(40)
-		#郵便番号
 		,zipCode varchar(8)
-		#住所
 		,userAddress varchar(255)
-		#性別
 		,userSex tinyint
-		#誕生日
 		,birthdayDate date
-		#電話番号
 		,userTelephone1 varchar(20)
-		#緊急連絡先
 		,userTelephone2 varchar(20)
-		#メールアドレス
 		,userMailAddress varchar(255)
-		#メルマガ受信設定
 		,mailDeny int
-		#ユーザID
 		,userId int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1716,9 +1667,7 @@ DROP PROCEDURE IF EXISTS `getSelfUserInfo` $$
 #ユーザ情報(自分)のプロシージャの登録を行う
 CREATE PROCEDURE getSelfUserInfo
 	(
-		#結果セットを返す
 		OUT result text
-		#ユーザIDを指定する
 		,IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1750,9 +1699,7 @@ DROP PROCEDURE IF EXISTS `getUserInfoList` $$
 #ユーザ情報一覧のプロシージャの登録を行う
 CREATE PROCEDURE getUserInfoList
 	(
-		#結果セットを返す
 		OUT result text
-		#ソート対象項目
 		,IN sortTarget varchar(30)
 		,sortOrder tinyint
 	)
@@ -1847,9 +1794,7 @@ DROP PROCEDURE IF EXISTS `getUserMessage` $$
 #お知らせ取得のプロシージャの登録を行う
 CREATE PROCEDURE getUserMessage
 	(
-		#結果セットを返す
 		OUT result text
-		#ユーザIDを指定してデータを取得する
 		,IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1907,9 +1852,7 @@ DROP PROCEDURE IF EXISTS `insertMessageInfo` $$
 #お知らせ登録1(お知らせ情報)のプロシージャの登録を行う
 CREATE PROCEDURE insertMessageInfo
 	(
-		#お知らせタイトル
 		IN messageTitle varchar(100)
-		#お知らせ本文
 		,messageContent text
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -1962,7 +1905,6 @@ DROP PROCEDURE IF EXISTS `insertMessageTo` $$
 #お知らせ登録2(送信先)のプロシージャの登録を行う
 CREATE PROCEDURE insertMessageTo
 	(
-		#送信先となるユーザID
 		IN userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2124,9 +2066,7 @@ DROP PROCEDURE IF EXISTS `getPointRate` $$
 #授業のポイントレート算出用プロシージャの登録を行う
 CREATE PROCEDURE getPointRate
 	(
-		#結果セットを返す
 		OUT result text
-		#授業詳細情報テーブルキーからポイントレートのデータを取得する
 		,IN lessonKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2187,17 +2127,11 @@ DROP PROCEDURE IF EXISTS `doLecturePermit` $$
 #受講情報の更新処理のプロシージャの登録を行う
 CREATE PROCEDURE doLecturePermit
 	(
-		#受講料
 		IN userClassworkCost int
-		#獲得ポイント
 		,getPoint int
-		#利用ポイント
 		,classworkUsePoint int
-		#遅刻時間(数値で)
 		,lateTime int
-		#支払金額
 		,payPrice int
-		#受講情報テーブルID
 		,userClassworkKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2242,9 +2176,7 @@ DROP PROCEDURE IF EXISTS `updateLecturePermitGetPoint` $$
 #獲得ポイント更新処理のプロシージャの登録を行う
 CREATE PROCEDURE updateLecturePermitGetPoint
 	(
-		#獲得ポイント
 		IN getPoint int
-		#ユーザID
 		,userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2278,9 +2210,7 @@ DROP PROCEDURE IF EXISTS `updateLecturePermitUsePoint` $$
 #使用ポイント更新処理のプロシージャの登録を行う
 CREATE PROCEDURE updateLecturePermitUsePoint
 	(
-		#使用ポイント
 		IN usePoint int
-		#ユーザID
 		,userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2316,11 +2246,8 @@ DROP PROCEDURE IF EXISTS `updateLecturePermitPoints` $$
 #ポイントの更新処理のプロシージャの登録を行う
 CREATE PROCEDURE updateLecturePermitPoints
 	(
-		#獲得ポイント
 		IN getPoint int
-		#使用ポイント
 		,usePoint int
-		#ユーザID
 		,userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2351,21 +2278,13 @@ DROP PROCEDURE IF EXISTS `insertSellCommodity` $$
 #商品代情報の更新のプロシージャの登録を行う
 CREATE PROCEDURE insertSellCommodity
 	(
-		#販売個数
 		IN sellNumber int
-		#支払額
 		,payCash int
-		#商品購入の使用ポイント
 		,commodityUsePoint int
-		#商品名
 		,commodityContent text
-		#ユーザID
 		,userKey int
-		#校舎情報テーブルID
 		,schoolKey int 
-		#商品マスタテーブルID
 		,commodityKey int
-		#獲得ポイント
 		,getPoint int
 	)
 	
@@ -2438,11 +2357,8 @@ DROP PROCEDURE IF EXISTS `getLecturePermitInfoList` $$
 #受講承認一覧のデータ取得のプロシージャの登録を行う
 CREATE PROCEDURE getLecturePermitInfoList
 	(
-		#結果セットの出力を行う
 		OUT result text
-		#取得する期間の開始日付
 		,IN fromDate date
-		#取得する期間の終了日付
 		,toDate date
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2549,9 +2465,7 @@ DROP PROCEDURE IF EXISTS `updateLecturePermitListPoint` $$
 #受講承認一覧での使用ポイントの更新処理のプロシージャの登録を行う
 CREATE PROCEDURE updateLecturePermitListPoint
 	(
-		#使用前と使用後のポイントの差
 		IN diffPoint int
-		#ユーザID
 		,userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2583,15 +2497,10 @@ DROP PROCEDURE IF EXISTS `updateLecturePermitListClasswork` $$
 #受講承認一覧での受講情報の更新処理のプロシージャの登録を行う
 CREATE PROCEDURE updateLecturePermitListClasswork
 	(
-		#受講料
 		IN userClassworkCost int
-		#使用ポイント
 		,usePoint int
-		#授業情報テーブルID
 		,classworkId int
-		#使用ポイントと元の所持ポイントの差
 		,diffPoint int
-		#ユーザID
 		,userKey int
 	)
 #以降にストアドプロシージャの処理を記述する
@@ -2627,21 +2536,7 @@ DELIMITER $$
 #当該プロシージャが既に登録されていた場合、登録し直すため一旦削除する
 DROP PROCEDURE IF EXISTS `updateLecturePermitListCommodity` $$
 #受講承認一覧での商品代の更新処理のプロシージャの登録を行う
-CREATE PROCEDURE updateLecturePermitListCommodity
-	(
-		#受講料
-		IN userClassworkCost int
-		#商品情報テーブルID
-		,commodityContent text
-		#使用ポイント
-		,usePoint int
-		#商品売り上げ情報テーブルID
-		,commoditySellKey int
-		#使用前と使用後のポイントの差
-		,diff_point int
-		#ユーザID
-		,userKey int
-	)
+CREATE PROCEDURE updateLecturePermitListCommodity(IN userClassworkCost int ,commodityKey int,usePoint int,commoditySellKey int,diff_point int,userKey int)
 #以降にストアドプロシージャの処理を記述する
 BEGIN
 #以下のテーブルを更新する
@@ -2653,7 +2548,7 @@ SET
 	#指定した支払額
 	pay_cash = userClassworkCost
 	#商品情報ID
-	,commodity_key=commodityContent
+	,commodity_key=commodityKey
 	#使用ポイント
 	,use_point = usePoint
 	#現在時刻
@@ -2680,9 +2575,7 @@ DROP PROCEDURE IF EXISTS `getEachDayLessonList` $$
 #日ごと予約者一覧取得のためのプロシージャの登録を行う
 CREATE PROCEDURE getEachDayLessonList
 	(
-		#結果セットを返す
 		OUT result text
-		#検索対象の日付
 		,IN date date
 	)
 #以降にストアドプロシージャの処理を記述する

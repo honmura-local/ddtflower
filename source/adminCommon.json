@@ -215,24 +215,30 @@
 				},
 				"commodity_key": {
 					"style": "display : none"
+					,"className" : "commodity_key"
 				},
 				"user_key": {
 					"columnName": "会員番号"
 				},
 				"content": {
-					"columnName": "商品名"
+					"columnName": "商品名",
+					"className" : "content"
 				},
 				"pay_price": {
-					"columnName": "合計"
+					"columnName": "合計",
+					"className":"pay_price"
 				},
 				"use_point": {
-					"columnName": "使用ポイント"
+					"columnName": "使用ポイント",
+					"className":"use_point"
 				},
 				"sell_number": {
 					"columnName": "個数"
+					,"className" : "sell_number"
 				},
 				"price": {
 					"columnName": "単価"
+					,"className" : "price"
 				}
 			}
 		}

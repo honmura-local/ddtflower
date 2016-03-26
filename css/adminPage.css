@@ -649,6 +649,26 @@ ul.mailSendContent {
 	width: 43px;		/* 幅を6桁の数字が入る幅にする */
 }
 
+/* 
+ * セレクタ :.sellCommodityPermitInfoTable td
+ * 概要   :商品購入テーブルのセル
+ * 作成者 :T.Masuda
+ * 作成日 :2016.03.26
+ */
+.sellCommodityPermitInfoTable td {
+	white-space : pre;	/* 改行が起こらないようにする */
+}
+
+/* 
+ * セレクタ :.sellCommodityPermitInfoTable td input[type="numer"]
+ * 概要   :商品購入テーブルのセル内数値入力ボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.03.26
+ */
+.sellCommodityPermitInfoTable td input[type="number"] {
+	width : 70px ;	/* 幅を固定にする */
+}
+
 /* メルマガ・アナウンス画面領域終わり */
 
 /* スマホ・タブレットレイアウト */

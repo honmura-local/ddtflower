@@ -2291,7 +2291,7 @@ this.defaultClassworkCostColumns = [
 	 * 作成者:T.Masuda
 	 * 作成日:2016.0320
 	 */
-	this.createCommoditySelectMenu = function (commodityData){
+	this.createCommoditySelectMenu = function (commodityData, targetSelector){
 		
 		//SELECTタグを作成する
 		var $select = $('<select></select>');
@@ -2303,32 +2303,49 @@ this.defaultClassworkCostColumns = [
 		
 		//商品データの数を取得する
 		var commodityNum = commodityData.length;
+		//商品データのリストを作る
+		var commodityList = {};
+		
+		//処理対象を取得しておく
+		var $targetElems = $(targetSelector).filter(SELECTOR_NOT_FIRST);
+		//該当列のテキストデータを消しておく
+		$targetElems.empty();
+
+		//セレクトメニューに未選択データを追加する
+		$select.append($('<option></option>').addClass('contentOption').text(COMMODITY_NOT_SELECTED).attr({
+			value : COMMODITY_NOT_SELECTED
+			,'data-price' : 0
+			,'data-commodity_Key' : COMMODITY_NOT_SELECTED_KEY
+		}));
+
+		//未選択の商品データをリストを追加する
+		commodityList[COMMODITY_NOT_SELECTED_KEY] = COMMODITY_NOT_SELECTED;
 		
 		//商品データを走査する
 		for (var i = 0; i < commodityNum; i++) {
 			//該当する商品情報を取り出す
 			var oneCommodityData = commodityData[i];
+			
 			//セレクトメニューにデータを追加していく
 			$select.append($('<option></option>').addClass('contentOption').text(oneCommodityData.commodity_name).attr({
 				value : oneCommodityData.commodity_name
-				,dataPrice : oneCommodityData.selling_price
-				,dataCommodityKey : oneCommodityData.commodity_key
+				,'data-price' : oneCommodityData.selling_price
+				,'data-commodity_Key' : oneCommodityData.commodity_key
 			}));
+			
+			//商品データのリストに内容を追加する
+			commodityList[oneCommodityData.commodity_key] = oneCommodityData.commodity_name;
 		}
 		
-		
-		//設定を取り出す
-		for (key in settings) {
-			//attr関数で属性値をセットする
-			$input.attr(key, settings[key]);
-		}
-
-		//対象にinputタグを入れる。既に何かしら入っている場合ものは除外する
-		$(targetSelector).filter(SELECTOR_NOT_FIRST).filter(SELECTOR_HAS_ANYTHING).append($input);
-	}
-
-	this.changeSelectedValue = function(){
-		
+		//対象にselectタグを入れる。既に何かしら入っている場合ものは除外する
+		$targetElems.filter(SELECTOR_HAS_ANYTHING).append($select);
+		//処理対象の親要素を取得する
+		var $parent = $targetElems.parent();
+		//対象各行を走査
+		$parent.each(function(){
+			//商品IDを基にセレクトメニューを選択されたものに変える
+			$('select[name="content"]', this).val(commodityList[$('[name="commodity_key"]', this).val()]);
+		});
 	}
 	
 	/* 
@@ -2366,19 +2383,45 @@ this.defaultClassworkCostColumns = [
 	 * 作成者:T.Masuda
 	 * 作成日:2016.03.20
 	 */
-	this.tdReplaceToTextbox = function(tableName, targetColumn, value, name, type) {
+	this.tdReplaceToTextbox = function(tableName, targetColumn, name, type) {
 		//対象となる列を走査する
-		$(tableName).each(targetColumn, function(){
+		$(targetColumn, $(tableName)).filter(':not(:has("*"))').each(function(){
 			//tdタグ内の値を一時避難する
 			var tmpValue = $(this).text();
-			//対象のrdタグを一旦からにする
-			$(this).remove();
+			//対象のtdタグを一旦からにする
+			$(this).empty();
 			//対象のtdタグに様々設定を行ったテキストボックスを突っ込む
 			$(this).append($('<input>').attr({
 				'name' : name
 				,'type' : type
-				,'value' : value
+				,'value' : tmpValue
 			}));
+		});
+	}
+	
+	/* 
+	 * 関数名:calcPayPrice
+	 * 概要  :支払い金額を計算する
+	 * 引数  :String tableName:処理対象テーブル名
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.03.20
+	 */
+	this.calcPayPrice = function(tableName){
+		//数量、商品をいじったら
+		$(tableName).on('change', '[name="content"],[name="sell_number"],[name="price"]', function(){
+			var $parent = $(this).closest('tr');	//イベント発火元要素の親を取得する
+			
+			//商品プルダウンを触っていたら
+			if($(this).attr('name').indexOf('content') != -1) {
+				var $targetOption = $(this).children('[value="' + $(this).val() + '"]');
+				//価格テキストボックスの値を選択した商品の価格に変更する
+				$('[name="price"]', $parent).attr('value', $targetOption.attr('data-price'));
+				//商品キーを更新する
+				$('[name="commodity_key"]', $parent).val($targetOption.attr('data-commodity_key'));
+			}
+			//支払額を計算して対象のテキストボックスに格納する
+			$('[name="pay_price"]', $parent).attr('value', $('[name="sell_number"]', $parent).val() * $('input[name="price"]', $parent).val());
 		});
 	}
 	
