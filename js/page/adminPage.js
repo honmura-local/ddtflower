@@ -25,15 +25,16 @@ function clickEvent(clickSelector, clickFunc) {
 /* 
  * 関数名:toggleClassClickElement
  * 概要  :クリックした要素に対してクラス属性を付ける
- * 引数  :clickSelector:クリックされた要素のセレクター。
- 		:clickFunc：クリックされたときにコールする関数
+ * 引数  :clickSelector:イベントコールバック登録対象のセレクタ
+ 		:className：付与、消去するクラス名
+ 		:parentElem：コールバック登録対象の親要素
  * 返却値  :なし
  * 作成者:.Yamamoto
  * 作成日:2015.08.29
  */
-function toggleClassClickElement (clickSelector, className) {
+function toggleClassClickElement (clickSelector, className, parentElem) {
 	//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-	$(STR_BODY).on(CLICK, clickSelector, function(){
+	$(parentElem).on(CLICK, clickSelector, function(){
 		//userSelectクラスを追加したり消したりする。このクラスがあればユーザが選択されているとみなしてボタン処理を行うことができる
 		$(this).toggleClass(className);
 	});
@@ -594,7 +595,7 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$(DOT + rowSelector).each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var diffPoint = $('input[name="use_point"]').eq(counter).attr('data-diff_point');	// 元の値からの増減値
+					var diffPoint = $('input[name="use_point"]', this).attr('data-diff_point');	// 元の値からの増減値
 					var sendReplaceArray = 
 						create_tag.getSendReplaceArray(
 							targetTable, 
@@ -602,6 +603,7 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 							rowSelector + ':eq(' + counter + ')',
 							 commonFuncs.checkEmpty(diffPoint) ? addAttr : null
 					);
+					sendReplaceArray.diff_point = diffPoint;
 					//受講承認一覧データを更新する
 					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updateSellCommodityPermitList', 'updatePermitListLesson');
 				//カウンターをインクリメントする
@@ -883,7 +885,7 @@ function getSendPersonInfo() {
  */
 function adminMessageCreate(buttonSelector, sendType) {
 	//お知らせボタンをクリックでメール送信ダイアログを作る
-	$(STR_BODY).on(CLICK, buttonSelector, function() {
+	$(buttonSelector).on(CLICK, function() {
 		//選択されているユーザの数を変数に入れ、ユーザが選択されていればメール送信処理を開始する
 		var selected = $(SEL_SELECT_USER).length;
 		//会員一覧から送信するメールの対象となる人が1人以上選択されているなら送信ダイアログを開く
