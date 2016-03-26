@@ -449,17 +449,17 @@ function loopUpdatePermitLesson() {
 		
 		//当該画面のcreateTagを取得する
 		var create_tag = $('#doLecturePermit')[0].create_tag;
+		//承認済みとなって削除するべきデータのインデックスの配列
+		var deleteList = [];
 		
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.doLecturePermitInfoTable tr:not(:first)').each(function() {
+			$('.doLecturePermitInfoTable tr:not(:first)').each(function(i) {
 				//選択されているものだけを更新するように条件設定する
-				if(commonFuncs.checkEmpty($('.doLecturePermitInfoTable tr:not(:first)').eq(counter).attr('class')) && $('.doLecturePermitInfoTable tr:not(:first)').eq(counter).attr('class').indexOf('selectRecord') != -1) {
+				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1) {
 						// DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'doLecturePermitInfoTable tr:not(:first):eq(' + counter + ')');
-						console.log(sendReplaceArray);
-						console.log(validateSettings);
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'doLecturePermitInfoTable tr:not(:first):eq(' + $('doLecturePermitInfoTable tr:not(:first)').index(this) + ')');
 						//取得した値が不正かどうかをチェックする
 						VALIDATOR.validate(validateSettings, sendReplaceArray);
 						
@@ -494,6 +494,11 @@ function loopUpdatePermitLesson() {
 						//生徒さんの情報をリストに追加していく
 						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');
 						
+						//承認を終えたデータのインデックスをリストに追加する
+						deleteList.push(i);
+						//承認を終えた行を削除する
+						$(this).remove();
+
 				}
 				
 				//カウンターをインクリメントする
@@ -513,50 +518,16 @@ function loopUpdatePermitLesson() {
 			//1件でも処理していたら
 			if (counter > 0) {
 				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-				//先に既存のテーブルとボタンを消して
-				$('.doLecturePermitInfoTable').remove();
-				$('.doLecturePermit.normalButton').remove();
 				
-				//テーブルを更新する
-				updateDoLecturePermitTable(create_tag);
+				//承認済みのデータを削除する
+				for (var i = 0; i < deleteList.length; i++) {
+					//テーブル用JSONをクリアする
+					create_tag.json['doLecturePermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
+				}
 			} 
 			
 		}
 	});
-}
-
-function updateDoLecturePermitTable (create_tag) {
-	//一旦テーブルを削除する
-	$('.doLecturePermitInfoTable').remove();
-	//テーブル用JSONをクリアする
-	create_tag.json['doLecturePermitInfoTable'].tableData = [];
-	//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
-	create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
-	// 受講承認テーブル用のJSON配列を取得する
-	create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['doLecturePermitInfoTable'], 'doLecturePermitInfoTable');
-	//データがあればテーブルを追加する
-	if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]) {
-		//受講承認タブのリストテーブル
-		create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
-		//受講承認のボタン
-		create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-		//アコーディオンのセレクトボックスにいれるため受講承認の備品名JSON配列を取得する
-		create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
-	}
-
-	//受講承認のテーブルを置換する
-	commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
-	
-	//使用ポイントのテキストボックスの設定を書く
-	var getPointSettings = {
-			type : 'number'	//数値用テキストボックス
-			,min : 0			//最低値
-			,value : 0			//デフォルト値
-			,name : 'use_point'	//使用ポイント
-	};
-	//使用ポイントのテキストボックスをセットする
-	commonFuncs.putTextboxInTd(getPointSettings, 'td.use_point');
-
 }
 
 /* 
@@ -625,11 +596,18 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 			//検索日付をオブジェクトにまとめる
 			var searchDate = {'fromDate' : fromDate, 'toDate' : toDate}
 			
-			//テーブルをリロードする。
 			//処理件数を処理リストの末尾に追加する
 			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
 			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
-			$(parentTab).easytabs('select', targetTab);
+			
+			//受講承認一覧テーブルなら
+			if($('#lecturePermitList:visible').length > 0){
+				create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
+			//商品購入一覧テーブルなら
+			} else if ($('#sellCommodityPermitList:visible').length > 0) {
+				//テーブルをリロードする。
+				create_tag.loadTableData(SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_SELLCOMMODITYLIST_OUTSIDE, AFTER_RELOAD_SELLCOMMODITYPERMITINFOLIST_FUNC, GET_SELLCOMMODITYPERMITLIST_CREATE_TAG);
+			}
 		}
 	});
 }
@@ -1131,11 +1109,12 @@ function permitSellCommodity() {
 		
 		//createTagを取得する
 		var scpc =$('#sellCommodityPermit')[0].create_tag;
+		var deleteList = [];
 		
 		//商品購入承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//商品購入承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function() {
+			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function(i) {
 				//選択済みレコードであれば
 				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1){
 					
@@ -1169,6 +1148,11 @@ function permitSellCommodity() {
 					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonContainCommodity');
 					//生徒さんの情報をリストに追加していく
 					processedList.push(sendReplaceArray.user_name + ' ' + sendReplaceArray.content + ' ' + sendReplaceArray.sell_number + '個 ' + sendReplaceArray.pay_cash + '円' + '\n');	
+
+					//データ削除用リストに番号を追加する
+					deleteList.push[i];
+					//承認を終えた行を削除する
+					$(this).remove();
 				}
 				
 				//カウンターをインクリメントする
@@ -1188,8 +1172,12 @@ function permitSellCommodity() {
 			//1件でも処理していたら
 			if (counter > 0) {
 				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-				//タブを開き直してページを更新する
-				$('#permitTab').easytabs('select', '#sellCommodityPermit');
+				
+				//承認済みのデータを削除する
+				for (var i = 0; i < deleteList.length; i++) {
+					//テーブル用JSONをクリアする
+					create_tag.json['sellCommodityPermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
+				}
 			} 
 			
 		}
@@ -1258,7 +1246,7 @@ function loopUpdatesellCommodityList() {
 			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
 			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
 			//テーブルをリロードする。
-			$('#permitListTab').easytabs('select', '#sellCommodityPermitList' );
+			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
 		}
 	});
 }
@@ -1355,9 +1343,11 @@ var backCallbacks = {
 				//DOMの入れ物を作る
 				var recordList = $(TAG_DIV)[0];
 				var idList = [];	//ID一覧の入れ物を作る
-				
+				//新たな受講承認データを作る
+				var newData = dlpc.json.doLecturePermitInfoTable.tableData.concat();
+
 				//元テーブルからID行を取り出す
-				$(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE + ' td.user_key:not(:empty)').each(function(){
+				$(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE + ' td.user_key:not(:first)').each(function(){
 					//IDリストにIDを追加していく
 					idList.push($(this).text());
 				});
@@ -1368,23 +1358,27 @@ var backCallbacks = {
 					dlpc.json.getAdditionalUserForLecturePermit.user_key.value = $(records[i]).children('.id').text();
 					
 					//IDチェックを始める
-					for(var j = 0; j < idList.length; j++) {
+					for(var j = 0; j < idList.length + 1; j++) {
 						if(idList[j] == dlpc.json.getAdditionalUserForLecturePermit.user_key.value){
 							//スルーする
 						//どれにも当てはまらなければレコード追加
-						} else if(j == idList.length - 1){
+						} else if(j == idList.length){
 							//DBからユーザに対応した受講承認データを取得する
 							dlpc.getJsonFile(URL_GET_JSON_ARRAY_PHP, dlpc.json.getAdditionalUserForLecturePermit, 'getAdditionalUserForLecturePermit');
 							//受講承認用のDOMを作り入れ物に追加する
 							$(recordList).append(creaetLecturePermitRecord(dlpc.json.getAdditionalUserForLecturePermit.tableData[0]));
+							var tmpData = dlpc.json.getAdditionalUserForLecturePermit.tableData.concat();
 							//受講承認用JSONデータを追加する
-							dlpc.json.doLecturePermitInfoTable.tableData.push(dlpc.json.getAdditionalUserForLecturePermit.tableData[0]);
+							newData.push(tmpData[0]);
+							dlpc.json.getAdditionalUserForLecturePermit.tableData = [];
 							break;	//ループをやめる
 						}
 					}
 				}
 			}
 			
+			//作成した受講承認用データをcreateTagに渡す
+			dlpc.json.doLecturePermitInfoTable.tableData = newData.concat();
 			//作成したレコードを受講承認テーブルに追加する
 			$('.doLecturePermitInfoTable').append($('tr', recordList));
 			

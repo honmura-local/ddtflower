@@ -8,7 +8,7 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
-			$(SELECTOR_SELLCOMMODITYPERMITLIST_TAB)[0].create_tag = create_tag;	//createTagをDOMと結びつける
+			$('#sellCommodityPermitList')[0].create_tag = create_tag;	//createTagをDOMと結びつける
 
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
