@@ -1,13 +1,13 @@
 SELECT
+    sell_datetime
 	,commodity_sell.id AS id
-	user_name
+	,user_name
 	,pay_cash
 	,commodity_sell.use_point AS use_point
 	,sell_number
 	,commodity_inf.commodity_name AS commodity_name
 	,user_inf.id AS user_key
     ,user_inf.get_point AS get_point
-	,commodity_inf.scholl_key AS school_key
 FROM
 	commodity_sell
 INNER JOIN
