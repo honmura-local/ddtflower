@@ -53,7 +53,7 @@
 			//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
 			commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-			toggleClassClickElement('.userListInfoTable tr', 'selectRecord');
+			toggleClassClickElement('tr', 'selectRecord', '.userListTableOutside');
 			//検索ボタンをクリックしたときにテーブルの内容を更新する
 			userListSearch();
 

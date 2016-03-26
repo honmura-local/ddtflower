@@ -72,7 +72,7 @@
 			commonFuncs.putTextboxInTd(getPointSettings, 'td.use_point');
 
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-			toggleClassClickElement('.doLecturePermitInfoTable tr', 'selectRecord');
+			toggleClassClickElement('tr', 'selectRecord', '.doLecturePermitInfoTable');
 			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
 			moveToUserList('doLecturePermit', '#doLecturePermit .addUserRecordButton');
 			

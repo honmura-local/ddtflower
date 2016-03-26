@@ -1,0 +1,91 @@
+<html>
+	<body>
+		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
+		<script>
+			//カレントのウィンドウのDOMを取得する
+			var $currentWindow = $(CURRENT_WINDOW);
+			//カレントのウィンドウのコンテンツ領域を取得する
+			var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+
+			//createTagをDOMにセットする
+			$('#sellCommodityPermit')[0].create_tag = create_tag;
+			
+			// ユーザーページのパーツのテンプレートのJSONを取得する。
+			create_tag.getJsonFile('source/commonUser.json');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getJsonFile('source/adminCommon.json');
+			//共通のjsonを取得する
+			create_tag.getJsonFile('source/commonJson.json');
+
+			// ユーザーページのパーツのテンプレートのDOMを取得する。
+			create_tag.getDomFile('template/commonUser.html');
+			// 管理者ページ共通のパーツのJSONを取得する。
+			create_tag.getDomFile('template/adminCommon.html');
+			// 共通パーツのDOMを取得する
+			create_tag.getDomFile('template/common.html');
+
+			//ユーザ追加のボタンを追加する
+			create_tag.outputTag('addUserRecordButton', 'normalButton', '#sellCommodityPermit');
+
+			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
+			create_tag.json.sellCommodityPermitInfoTable.date.value = commonFuncs.getTodayDate();
+			// 商品購入承認テーブル用のJSON配列を取得する
+//			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['sellCommodityPermitInfoTable'], 'sellCommodityPermitInfoTable');
+			//※テスト用 商品販売テーブルのデータノードにダミーの配列を追加する
+			//列の内訳 連番 ユーザ名 所持ポイント 商品ID ユーザID 商品名 数量 単価 使用ポイント 支払額
+			create_tag.json.sellCommodityPermitInfoTable.tableData = [
+			                                      					{'no' : 1, 'user_name' : '瀬戸　純子', 'get_point' : 1000, 'commodity_key' :36, 'user_key' : 34, 'content' : "フローラルテープグリーン", 'sell_number' : 1, 'price' : 300, 'use_point' : 100, 'pay_price' : 300}
+			                                    					,{'no' : 2, 'user_name' : '田中　陽子', 'get_point' : 2000, 'commodity_key' : 35, 'user_key' : 35, 'content' : "ブーケケース", 'sell_number' : 2, 'price' : 2500, 'use_point' : 200, 'pay_price' : 5000}
+				];
+			//何も取得できなければ
+			if (create_tag.json['sellCommodityPermitInfoTable'].tableData.length == 0){
+				//ダミー行データを作る
+				create_tag.json.sellCommodityPermitInfoTable.tableData = [
+				                                      					{'no' : 0, 'user_name' : '', 'get_point' : 0, 'commodity_key' :0, 'user_key' : 0, 'content' : "", 'sell_number' : 0, 'price' : 0, 'use_point' : 0, 'pay_price' : 0}
+					];
+				//商品販売テーブルを一旦出力する
+				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '#sellCommodityPermit');
+				//ダミー行を削除する
+				$('.sellCommodityPermitInfoTable tr:not(:first)').remove();
+				//ダミー行データをクリアする
+				create_tag.json.sellCommodityPermitInfoTable.tableData = [];
+			//取得していれば
+			} else {
+				//商品販売テーブルを出力する。
+				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '#sellCommodityPermit');
+			}
+			
+			//商品販売承認のボタンを追加する
+			create_tag.outputTag('sellCommodityPermitButton', 'normalButton', '#sellCommodityPermit');
+			//商品選択のセレクトボックスを作るためのデータを取得しておく
+			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
+			
+			//フォーム要素配置
+			//数量、価格、使用ポイント、合計金額列をテキストボックスに置き換える
+			//商品キー列は隠しinputに置き換える
+			replaceSellCommodityPermitInputs(commonFuncs);
+			//合計金額列を編集不可にする
+			$('input[name="pay_price"]').attr('readonly', 'readonly');
+			//商品セレクトメニューを配置する
+			commonFuncs.createCommoditySelectMenu(create_tag.json.selectCommodityInf.tableData, '.sellCommodityPermitInfoTable .content');
+			
+			//イベントコールバック登録
+			//承認ボタンクリックで商品販売情報を登録する
+			permitSellCommodity();
+			commonFuncs.calcPayPrice('.sellCommodityPermitInfoTable');
+			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+			toggleClassClickElement('tr', 'selectRecord', '.sellCommodityPermitInfoTable');
+			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
+			moveToUserList('sellCommodityPermit', '#sellCommodityPermit .addUserRecordButton');
+			
+			//見た目変更
+			var $activePanel = $('#permitTab .tabPanel.active:last', $currentContent);	//現タブパネルを取得する
+			// ボタンの見た目をjqueryuiのものにしてデザインを整える
+			$('button, input[type="button"]', $activePanel).button();
+			</script>
+	</body>
+</html>
+
+					
