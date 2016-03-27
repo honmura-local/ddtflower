@@ -98,6 +98,8 @@ function createTag(){
 			//連想配列を連結する。
 			this.json = $.extend(true, this.json, tmp);
 		}
+		
+		return tmp;	//取得したデータを返す
 	};
 
 	/* 

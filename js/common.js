@@ -2425,6 +2425,23 @@ this.defaultClassworkCostColumns = [
 		});
 	}
 	
+	
+	/* 
+	 * 関数名:insertSequenceNo
+	 * 概要  :指定した列に連番を入れる
+	 * 引数  :String targetTable:処理対象テーブル名
+	 * 　　  :String targetColumn:処理対象列
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.03.27
+	 */
+	this.insertSequenceNo = function(targetTable, targetColumn){
+		//指定した列のセルを走査する。先頭の見出し行は無視する
+		$(targetColumn, $(targetTable)).filter(':not(:first)').each(function(i){
+			$(this).empty();		//セルの中身を空にする
+			$(this).text(i + 1);	//連番を振る
+		});
+	}
 //ここまでクラス定義領域
 }
 

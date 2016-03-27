@@ -248,3 +248,30 @@ END IF;
 END$$
 
 DELIMITER ;
+
+#一覧取得
+SELECT 
+	'' AS no
+	,user_name
+	,user_inf.get_point AS get_point
+	,commodity_key
+	,user_key
+	,content
+	,pay_cash + commodity_sell.get_point AS pay_price
+	,commodity_sell.use_point
+	,sell_number
+	,selling_price
+	,commodity_sell.id AS commodity_sell_key 
+FROM 
+	commodity_sell 
+INNER JOIN 
+	user_inf 
+ON 
+	commodity_sell.user_key = user_inf.id 
+INNER JOIN 
+	commodity_inf 
+ON 
+	commodity_sell.commodity_key = commodity_inf.id 
+WHERE 
+	purchase_status LIKE 0
+;

@@ -947,3 +947,7 @@ COMMODITY_NOT_SELECTED_KEY = -1;
 //デフォルトの商品購入数
 DEFAULT_COMMODITY_SELL_NUMBER = 1;
 MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION = '以下の生徒の商品が未選択です。\n';
+//商品購入履歴レコードINSERT失敗メッセージ
+COUNDNT_INSERT_SELLCOMMODITY_PERMIT_MESSAGE = '以下の生徒の商品購入履歴レコードを作成できませんでした。\n';
+
+

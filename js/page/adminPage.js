@@ -1401,22 +1401,42 @@ var backCallbacks = {
 				$(records).each(function(){
 					//データ作成用のデータをレコードから抽出する
 					var recordData = createRecordFromDom(this);
+					//承認用データを作る
+					var permitData = creaetSellCommodityPermitData(recordData);
 					//元画面に追加するレコード(DOM)を作成する
 					var addRecord = creaetSellCommodityPermitRecord(recordData);
-					//承認用データを作り追加する
-					scpc.json.sellCommodityPermitInfoTable.tableData.push(creaetSellCommodityPermitData(recordData));
-					$('.sellCommodityPermitInfoTable tbody').append($('tr', addRecord));
-					//TODO.sell_commodityテーブルへINSERTを行う
+					//商品購入承認のレコードをINSERTする準備を行う
+					scpc.json.insertSellCommodityRecord.user_key.value = permitData.user_key;
+					//レコードの保存を行う
+					var result = scpc.getJsonFile(URL_SAVE_JSON_DATA_PHP, scpc.json.insertSellCommodityRecord, 'insertSellCommodityRecord');
+					//レコードの保存に成功した
+					if (parseInt(result.message)) {
+						//最新の商品販売IDを取得し、画面に追加する行のデータへ追加する
+						scpc.getJsonFile(URL_GET_JSON_ARRAY_PHP, scpc.json.getCommoditySellId, 'getCommoditySellId');
+						//承認データに商品販売IDを追加する
+						console.log(scpc.json.getCommoditySellId);
+						permitData.commodity_sell_key = scpc.json.getCommoditySellId.tableData[0].id;
+						//承認用データをJSONに追加する
+						scpc.json.sellCommodityPermitInfoTable.tableData.push(permitData);
+						$('.sellCommodityPermitInfoTable tbody').append($('tr', addRecord));
+					//レコードの保存ができなかった
+					} else {
+						//レコードの保存が出来なかった旨を伝達する
+						alert(COUNDNT_INSERT_SELLCOMMODITY_PERMIT_MESSAGE + permitData.user_name + ' 会員番号 : ' + permitData.user_key);
+					}
 				});
 			}
 
+			//連番を振る
+			commonFuncs.insertSequenceNo('.sellCommodityPermitInfoTable', '.No');
+			
 			//数量、価格、使用ポイント、合計金額列をテキストボックスに置き換える
 			//商品キー列は隠しinputに置き換える
 			replaceSellCommodityPermitInputs(commonFuncs);
-			
+
 			//合計金額列を編集不可にする
 			$('input[name="pay_price"]').attr('readonly', 'readonly');
-			
+
 			//タブのインスタンスを取得する
 			var tabInstance = $('#adminTab')[0].instance;
 			//タブが切り替わっても元々あったコンテンツを取得し直さない様に一時設定する
@@ -1554,13 +1574,13 @@ function creaetSellCommodityPermitRecord(record) {
 	//返却用のDOMを作成する
 	var retDom =
 		//行の連番
-		$('<table><tr><td>' + seqNum
+		$('<table><tr><td class="No">' 
 				//ユーザ名
 				+ '</td><td style="" colspan="">' + record.user_name
 				//獲得ポイント
 				+ '</td><td style="" colspan="">' + record.get_point
 				//商品キー
-				+ '</td><td class="commodity_key" style="display : none" colspan="">' + COMMODITY_NOT_SELECTED_KEY
+				+ '</td><td class="commodity_key" style="display : none" colspan=""><input type="hidden" name="commodity_key" value="' + COMMODITY_NOT_SELECTED_KEY + '">'
 				//ユーザID
 				+ '</td><td style="" colspan="">' + record.user_key
 				//商品名 未選択状態で
@@ -1573,7 +1593,9 @@ function creaetSellCommodityPermitRecord(record) {
 				+ '</td><td class="use_point" style="" colspan="">' + 0
 				//合計金額
 				+ '</td><td class="pay_price" style="" colspan="">' + 0
-				+ '</td></tr></table>');		
+				+ '</td><td class="commodity_sell_key" style="" colspan="">' + ''
+				+ '</td></tr></table>');	
+
 	//作成したDOMを返す
 	return retDom;
 }
@@ -1587,7 +1609,7 @@ function creaetSellCommodityPermitRecord(record) {
  * 作成日:2016.03.19
  */
 function creaetSellCommodityPermitData(record) {
-	//返却用のDOMを作成する
+	//返却用のオブジェクトを作成する
 	var obj =
 		{
 			//列の内訳 連番 ユーザ名 所持ポイント 商品ID ユーザID 商品名 数量 単価 使用ポイント 支払額

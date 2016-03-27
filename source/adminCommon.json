@@ -116,10 +116,13 @@
 		}
 	},
 	"permitLessonContainCommodity": {
-		"db_setQuery": "CALL insertSellCommodity('sell_number' ,'pay_cash' ,'commodity_use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key', 'get_point');"
+		"db_setQuery": "CALL p_update_approval_purchase('commodity_sell_key', 'sell_number' ,'pay_cash' ,'use_point' ,'commodity_key', 1);"
+	},
+	"getCommoditySellId" : {
+		"db_getQuery" : "SELECT id FROM commodity_sell AS commodity_sell_key ORDER BY create_datetime DESC LIMIT 1;"
 	},
 	"permitLessonUpdate": {
-		"db_setQuery": "CALL doLecturePermit('user_classwork_cost', 'get_point', 'classwork_use_point', 'late_time', 'pay_price', 'user_classwork_key'); CALL updateLecturePermitPoints('get_point' ,'use_point', 'user_key');"
+		"db_setQuery": "CALL p_update_approval_lesson('user_classwork_cost', 'classwork_use_point', 'get_point', 'pay_price', 'user_key', 'user_classwork_key');"
 	},
 	"getPoinRate": {
 		"db_getQuery": "CALL getPointRate(@result,'lesson_key'); SELECT @result AS 'result';",
@@ -202,10 +205,12 @@
 		"date": {
 			"value": ""
 		},
+		"db_getQuery" : "SELECT '' AS no, user_name, user_inf.get_point AS get_point, commodity_key, user_key, content, selling_price, sell_number, commodity_sell.use_point, pay_cash + commodity_sell.get_point AS pay_price, commodity_sell.id AS commodity_sell_key FROM commodity_sell INNER JOIN user_inf ON commodity_sell.user_key = user_inf.id INNER JOIN commodity_inf ON commodity_sell.commodity_key = commodity_inf.id WHERE purchase_status like 0;",
 		"config": {
 			"columns": {
 				"no": {
-					"columnName": "No."
+					"columnName": "No",
+					"className" : "No"
 				},
 				"user_name": {
 					"columnName": "名前"
@@ -236,11 +241,32 @@
 					"columnName": "個数"
 					,"className" : "sell_number"
 				},
-				"price": {
+				"selling_price": {
 					"columnName": "単価"
 					,"className" : "price"
+				},
+				"commodity_sell_key" : {
+					"style" : "display : none;"
 				}
 			}
+		}
+	},
+	"insertSellCommodityRecord" : {
+		"db_setQuery" : "CALL p_insert_approval_purchase('sell_number', 'pay_cash', 'use_point', 'user_key', 'purchase_status', @result); SELECT @result AS message;",
+		"sell_number":{
+			"value" : "1"
+		},
+		"pay_cash" : {
+			"value" : "0"
+		},
+		"use_point" : {
+			"value" : "0"
+		},
+		"user_key" : {
+			"value" : ""
+		},
+		"purchase_status" : {
+			"value" : "0"
 		}
 	},
 	"commodityPlusPoint": {
@@ -366,7 +392,7 @@
 		"value": ""
 	},
 	"updateLecturePermit": {
-		"db_setQuery": "UPDATE user_classwork SET user_classwork_cost = 'user_classwork_cost' ,use_point = 'use_point',late_time = 'late_time',update_datetime = NOW() WHERE user_key = 'user_key'; INSERT INTO commodity_sell( sell_datetime , sell_number , pay_cash , use_point ,content ,user_key ,school_key ,commodity_key ,create_datetime ) VALUES (NOW() ,'sell_number' ,'pay_cash' ,'use_point' ,'content' ,'user_key' ,'school_key' ,'commodity_key' ,NOW()); ",
+		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'user_classwork_key');",
 		"user_classwork_cost": {
 			"value": ""
 		},
@@ -540,11 +566,11 @@
 			"value": "検索"
 		}
 	},
-	"updatePermitListLesson": {
-		"db_setQuery": "CALL updateLecturePermitListClasswork('user_classwork_cost', 'use_point', 'id', 'diff_point', 'user_key');"
-	},
 	"updateSellCommodityPermitList": {
-		"db_setQuery": "CALL updateLecturePermitListCommodity('user_classwork_cost', 'commodity_key', 'use_point', 'id', 'diff_point', 'user_key');"
+		"db_setQuery": "CALL p_update_approval_list_purchase('sell_number', 'pay_cash', 'use_point', 'commodity_sell_key', 'user_key', 'diff_point');"
+	},
+	"updatePermitListLesson": {
+		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'user_classwork_key');"
 	},
 	"searchUserList": {
 		"searchName": {
