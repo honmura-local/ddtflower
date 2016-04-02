@@ -399,7 +399,7 @@ function memberReserveListDialog(dialog){
 									//ダイアログ用データ
 									data:{
 										//単なるメッセージのダイアログなのでコールバックなし
-						    			callback : commonFuncs.motionless		
+						    			callback : commonFuncs.removeCurrentDialog		
 						    			//ダイアログのメッセージ
 						    			,message:parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]			
 									},

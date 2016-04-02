@@ -2455,12 +2455,26 @@ this.defaultClassworkCostColumns = [
 	 * 引数  :なし
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
-	 * 作成日:2016.03.27
+	 * 作成日:2016.04.02
 	 */
 	this.removeCanceButton = function(){
 		//キャンセルボタンを消す
 		$('.ui-button', $(DOT + UI_DIALOG).filter(':last')).filter(':last').remove();
 	}
+	
+	/* 
+	 * 関数名:removeCurrentDialog
+	 * 概要  :先頭に表示されているダイアログを消す
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.02
+	 */
+	this.removeCurrentDialog = function(){
+		//先頭のダイアログをを消す
+		$('.dialog').filter(':last')[0].instance.destroy();
+	}
+	
 	
 //ここまでクラス定義領域
 }
