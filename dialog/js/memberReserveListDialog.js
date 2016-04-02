@@ -389,8 +389,41 @@ function memberReserveListDialog(dialog){
 				//予約中授業のセレクトメニューを「全て」に戻す
 				$('.selectThemebox').val('全て');
 				
+				//openイベントはsetArgumentObjでセットしておく
+				var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,
+						//オブジェクトを結合して引数として渡す
+						$.extend({}, true
+								//デフォルトの入力オブジェクトを用意する
+								,commonFuncs.getDefaultArgumentObject()
+								,{
+									//ダイアログ用データ
+									data:{
+										//単なるメッセージのダイアログなのでコールバックなし
+						    			callback : commonFuncs.motionless		
+						    			//ダイアログのメッセージ
+						    			,message:parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]			
+									},
+									//ダイアログ設定データ
+									config : {
+										//open時のコールバック
+										open://基本的にopen時はdispContentsが実行されるようにする
+											function(){
+											//dispContentsをコールしてダイアログの内容を作る
+											commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
+											//いいえボタンを消す
+											commonFuncs.removeCanceButton();
+										}
+										,modal : true
+									}
+								}
+						)
+				);
+				
+				//openイベントのコールバック関数をセットする
+				confirmDialog.run();	//ダイアログを開く
+				
 				//予約、キャンセルに応じた通知のアラートを出す
-				alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
+				//alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
 				break;	//switchを抜ける
 		default:break;	//switchを抜ける
 		}

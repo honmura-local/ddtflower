@@ -2443,6 +2443,25 @@ this.defaultClassworkCostColumns = [
 			$(this).text(i + 1);	//連番を振る
 		});
 	}
+	
+	//何もしない関数
+	this.motionless = function(){
+		
+	}
+
+	/* 
+	 * 関数名:removeCanceButton
+	 * 概要  :現在表示されているダイアログのキャンセルボタンを消し、はいだけ選択するようにする
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.03.27
+	 */
+	this.removeCanceButton = function(){
+		//キャンセルボタンを消す
+		$('.ui-button', $(DOT + UI_DIALOG).filter(':last')).filter(':last').remove();
+	}
+	
 //ここまでクラス定義領域
 }
 
