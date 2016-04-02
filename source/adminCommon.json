@@ -72,6 +72,7 @@
 		"class": "eachDayReservedInfoTableOutsideArea"
 	},
 	"eachDayReservedInfoTable": {
+		"class" : "eachDayReservedInfoTable commonTable",
 		"db_getQuery": "CALL getEachDayLessonList(@result, 'lesson_date'); SELECT @result AS 'result';",
 		"replace_query": "CALL getEachDayLessonList(@result, 'lesson_date'); SELECT @result AS 'result';",
 		"lesson_date": {
@@ -137,6 +138,7 @@
 		}
 	},
 	"doLecturePermitInfoTable": {
+		"class" : "doLecturePermitInfoTable commonTable",
 		"db_getQuery": "CALL getLecturePermit(@result); SELECT @result AS 'result';",
 		"date": {
 			"value": ""
@@ -201,7 +203,7 @@
 		}
 	},
 	"sellCommodityPermitInfoTable": {
-		"class": "sellCommodityPermitInfoTable",
+		"class": "sellCommodityPermitInfoTable commonTable",
 		"date": {
 			"value": ""
 		},
@@ -428,6 +430,7 @@
 		"class": "sellCommodityPermitListInfoTableOutsideArea"
 	},
 	"lecturePermitListInfoTable": {
+		"class" : "lecturePermitListInfoTable commonTable",
 		"db_getQuery": "CALL getLecturePermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
 		"fromDate": {
 			"value": ""
@@ -482,6 +485,7 @@
 		}
 	},
 	"sellCommodityPermitListInfoTable": {
+		"class" : "sellCommodityPermitListInfoTable commonTable",
 		"db_getQuery": "CALL getSellCommodityPermitInfoList(@result, 'fromDate', 'toDate'); SELECT @result AS 'result';",
 		"fromDate": {
 			"value": ""
@@ -698,6 +702,7 @@
 		"class": "userListTableOutside"
 	},
 	"userListInfoTable": {
+		"class" : "userListInfoTable commonTable",
 		"db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id, mail_address FROM user_inf",
 		"queryForDoLecturePermit": "SELECT DISTINCT user_name,pre_paid,user_inf.get_point,DATE(user_inf.update_datetime) AS update_date,user_inf.id,mail_address FROM user_inf INNER JOIN user_classwork ON user_inf.id = user_classwork.user_key WHERE user_classwork.user_work_status = 2;",
 		"config": {
@@ -879,6 +884,7 @@
 		"class": "mailMagaTableOutside"
 	},
 	"mailMagaTable": {
+		"class" : "mailMagaTable commonTable",
 		"db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine ORDER BY send_datetime DESC ",
 		"config": {
 			"columns": {

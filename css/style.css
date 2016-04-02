@@ -1461,3 +1461,23 @@ form[target^="jquery_upload"]{
 	    min-width: 320px;  /* 画面を一定サイズ以上縮小しない。 */
 	}
 }
+
+/* 
+ * セレクタ:.commonTable
+ * 概要   :テーブルの共通レイアウトクラス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.02
+ */
+.commonTable {
+	
+}
+
+/* 
+ * セレクタ:.commonTable tr
+ * 概要   :テーブルの共通レイアウトクラス 行
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.02
+ */
+.commonTable tr{
+	height : 25px;	/* 高さを共通して設定する */
+}

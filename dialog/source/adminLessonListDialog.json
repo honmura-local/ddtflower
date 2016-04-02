@@ -3,6 +3,7 @@
         "class":"tableArea"
     },
     "lessonTable":{
+    	"class" : "lessonTable commonTable",
         "db_getQuery":"CALL getAdminLessonList(@result, 'lessonDate'); SELECT @result AS 'result';",
         "lessonDate":{
             "value":""

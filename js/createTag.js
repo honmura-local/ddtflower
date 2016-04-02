@@ -26,6 +26,7 @@ function createTag(){
 	
 	this.DOM_THEAD = '<thead></thead>';	//theadタグ
 	this.TAG_THEAD = 'thead';			//theadタグのセレクタ
+	this.ATTR_CLASS = 'class';			//クラス属性
 	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
@@ -1004,6 +1005,12 @@ function createTag(){
 		var colNameNode = null;
 		//何度も使うため、テーブルのjQueryオブジェクトを生成して変数に格納しておく
 		var $table = $(domNode);
+		
+		//テーブルにクラス設定のノードがあれば
+		if(mapNode.class) {
+			//クラスを付与する
+			$table.attr(this.ATTR_CLASS, mapNode.class);
+		}
 		
 		//例外発生の恐れがある(レコード0時)ため、try-catchで例外処理を行う
 		try{
