@@ -24,6 +24,9 @@ function createTag(){
 	this.reservedDialog = {};	
 	this.dateText = null;		//日付による記事絞込時の日付。nullでなければ絞込を行う
 	
+	this.DOM_THEAD = '<thead></thead>';	//theadタグ
+	this.TAG_THEAD = 'thead';			//theadタグのセレクタ
+	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
 	 * 概要  :JSONファイルを取得して返す。
@@ -1012,10 +1015,6 @@ function createTag(){
 			startIndex = 0;		//記事の表示開始インデックスを算出する
 			endCount = mapNodeArrayLength; 	//記事の表示終了インデックスを算出する。
 			
-			//デバッグ用
-			//pageNum = 10;
-			//displayPage = 3;
-			
 			//ページ番号、表示記事数が引数にあったら
 			if(pageNum !== void(0) && displayPage !== void(0)){
 				//表示する記事と記事数を指定するための値を算出する
@@ -1059,6 +1058,9 @@ function createTag(){
 					.attr(STR_COLSPAN, this.getColspan(config, column));
 				}
 			}
+
+			//テーブルに見出し行の領域を確保する
+			$table.prepend(this.DOM_THEAD);
 			
 			//配列のオブジェクト数分のdomNodeを作成する。最初から1行分のDOMが用意されているので、カウンターを1から開始する
 			//@mod 2015.0730 T.Masuda 表示指定した記事数分だけ複製するように変更しました。
@@ -1074,7 +1076,7 @@ function createTag(){
 			//表示する記事数分ループする
 			for(var i = startIndex; i < endCount; i++){
 				//i番目の行を取得してjQueryオブジェクトに変換し、変数に格納する
-				var $row = $table.children().eq(0).children().eq(rowCounter++);
+				var $row = $table.children().eq(1).children().eq(rowCounter++);
 				var j = 0;	//オブジェクト用ループ内でのカウンターを用意する
 				//テーブルの行に相当するオブジェクトを、テーブルに相当する配列から取得する
 				var mapObject = mapNodeArray[i];
@@ -1090,7 +1092,7 @@ function createTag(){
 			}
 			
 			//colNameNodeを行の先頭に配置する
-			$table.prepend(colNameNode);
+			$(this.TAG_THEAD, $table).append(colNameNode);
 		//例外処理ブロック
 		} catch(e){
 			//そのまま終了させるために握りつぶす

@@ -326,19 +326,19 @@ label,
  * 作成者 :T.Yamamoto
  * 作成日 :2015.06.30
  */
-.lessonTable tr:nth-of-type(1),
-.reservedLessonTable tr:nth-of-type(1),
-.finishedLessonTable tr:nth-of-type(1),
-.infoTable tr:nth-of-type(1),
-.eachDayReservedInfoTable tr:nth-of-type(1),
-.doLecturePermitInfoTable tr:nth-of-type(1),
-.sellCommodityPermitInfoTable tr:nth-of-type(1),
-.lecturePermitListInfoTable tr:nth-of-type(1),
-.sellCommodityPermitListInfoTable tr:nth-of-type(1),
-.userListInfoTable tr:nth-of-type(1),
-.mailMagaTable tr:nth-of-type(1),
-.myBlogListTable tr:nth-of-type(1),
-.adminLessonDetailTable tr:nth-of-type(1) {
+.lessonTable thead tr:nth-of-type(1),
+.reservedLessonTable thead tr:nth-of-type(1),
+.finishedLessonTable thead tr:nth-of-type(1),
+.infoTable thead tr:nth-of-type(1),
+.eachDayReservedInfoTable thead tr:nth-of-type(1),
+.doLecturePermitInfoTable thead tr:nth-of-type(1),
+.sellCommodityPermitInfoTable thead tr:nth-of-type(1),
+.lecturePermitListInfoTable thead tr:nth-of-type(1),
+.sellCommodityPermitListInfoTable thead tr:nth-of-type(1),
+.userListInfoTable thead tr:nth-of-type(1),
+.mailMagaTable thead tr:nth-of-type(1),
+.myBlogListTable thead tr:nth-of-type(1),
+.adminLessonDetailTable thead tr:nth-of-type(1) {
 	background: #F0F3F5;	/* 行の背景を水色っぽくする */
 }
 
@@ -1257,4 +1257,130 @@ label,
 	#container .banner:nth-of-type(6) {
 		margin-left: 3px;
 	}
+}
+
+/* 管理者画面 商品購入承認タブテーブル */
+.sellCommodityPermitInfoTable {
+    width : 800px;			/* 固定幅に設定する */
+    table-layout : fixed;	/* 固定幅を有効にする */
+}
+
+/* 管理者画面 商品購入承認タブテーブル 行種別ごとの親タグ*/
+.sellCommodityPermitInfoTable thead, .sellCommodityPermitInfoTable tbody {
+    display: block;	/* 固定サイズにするためにブロック要素にする */
+}
+
+/* 管理者画面 商品購入承認タブテーブル データ行親タグ*/
+.sellCommodityPermitInfoTable tbody {
+    overflow-y : scroll;	/* 縦スクロールするようにする */
+    height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
+}
+
+/* 管理者画面 商品購入承認タブテーブル セル */
+.sellCommodityPermitInfoTable td {
+    table-layout : fixed;	/* 固定幅を有効にする */
+}
+
+/* No列 */
+.sellCommodityPermitInfoTable tr td:first-child {
+    width: 20px;
+}
+
+/* 名前列 */
+.sellCommodityPermitInfoTable tr td:nth-child(2) {
+    width: 90px;
+}
+
+/* 所持ポイント列 */
+.sellCommodityPermitInfoTable tr td:nth-child(3) {
+    width: 80px;
+}
+
+/* 会員番号列 */
+.sellCommodityPermitInfoTable tr td:nth-child(5) {
+    width: 55px;
+}
+
+/* 商品名列 */
+.sellCommodityPermitInfoTable tr td:nth-child(6) {
+    width: 175px;
+}
+
+/* 単価列 */
+.sellCommodityPermitInfoTable tr td:nth-child(7) {
+    width: 80px;
+}
+
+/* 個数列 */
+.sellCommodityPermitInfoTable tr td:nth-child(8) {
+    width: 80px;
+}
+
+/* 使用ポイント列 */
+.sellCommodityPermitInfoTable tr td:nth-child(9) {
+    width: 80px;
+}
+
+/* 合計列 */
+.sellCommodityPermitInfoTable tr td:nth-child(10) {
+    width: 79px;
+}
+
+
+/* 受講承認テーブル */
+/* 管理者画面 受講購入承認タブテーブル */
+.doLecturePermitInfoTable {
+    width : 800px;			/* 固定幅に設定する */
+    table-layout : fixed;	/* 固定幅を有効にする */
+}
+
+/* 管理者画面 受講購入承認タブテーブル 行種別ごとの親タグ*/
+.doLecturePermitInfoTable thead, .doLecturePermitInfoTable tbody {
+    display: block;	/* 固定サイズにするためにブロック要素にする */
+}
+
+/* 管理者画面 受講購入承認タブテーブル データ行親タグ*/
+.doLecturePermitInfoTable tbody {
+    overflow-y : scroll;	/* 縦スクロールするようにする */
+    height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
+}
+
+/* 管理者画面 受講購入承認タブテーブル セル */
+.doLecturePermitInfoTable td {
+    table-layout : fixed;	/* 固定幅を有効にする */
+}
+
+/* No列 */
+.doLecturePermitInfoTable tr td:first-child {
+    width: 20px;
+}
+
+/* 名前列 */
+.doLecturePermitInfoTable tr td:nth-child(2) {
+    width: 90px;
+}
+
+/* 単価列 */
+.doLecturePermitInfoTable tr td:nth-child(7) {
+    width: 140px;
+}
+
+/* 個数列 */
+.doLecturePermitInfoTable tr td:nth-child(12) {
+    width: 60px;
+}
+
+/* 使用ポイント列 */
+.doLecturePermitInfoTable tr td:nth-child(13) {
+    width: 140px;
+}
+
+/* 合計列 */
+.doLecturePermitInfoTable tr td:nth-child(14) {
+    width: 148px;
+}
+
+/* 合計列 */
+.doLecturePermitInfoTable tr td:nth-child(15) {
+    width: 150px;
 }
