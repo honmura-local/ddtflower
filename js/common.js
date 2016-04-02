@@ -657,7 +657,7 @@ this.defaultClassworkCostColumns = [
 		// 終了時間を表示する
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(3).text(end_time);
 		//ユーザステータスを表示する
-		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(6).text(userStatus);
+		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(8).text(userStatus);
 	};
 
 
