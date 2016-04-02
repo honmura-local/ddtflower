@@ -1093,6 +1093,18 @@ form[target^="jquery_upload"]{
 	display:none;
 }
 
+/* 
+ * セレクタ:.importantButton
+ * 概要   :重要なボタン。承認ボタン等
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.02
+ */
+.importantButton {
+	/* 赤字白抜きレイアウトにする */
+	background : RED!important;
+	color : WHITE!important;
+}
+
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px) {
     

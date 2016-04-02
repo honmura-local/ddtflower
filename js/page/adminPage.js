@@ -576,7 +576,7 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 					);
 					sendReplaceArray.diff_point = diffPoint;
 					//受講承認一覧データを更新する
-					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updateSellCommodityPermitList', 'updatePermitListLesson');
+					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.commodity_key), 'updateSellCommodityPermitList', 'updatePermitListLesson');
 				//カウンターをインクリメントする
 				counter++;
 			});
@@ -1121,7 +1121,7 @@ function permitSellCommodity() {
 					// DBを更新するための値を取得するために置換する連想配列を取得する
 					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, 'sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
 					//商品が未選択であれば
-					if(sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY) {
+					if(sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_1 || sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_2) {
 						//エラー扱いにするため例外を投げる。対象の行のお客様の名前を挙げる
 						throw new Error(MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION + sendReplaceArray.user_name);
 					}
@@ -1276,7 +1276,7 @@ function afterReloadSellCommodityPermitListInfoTable() {
 	sellCommodityPermitList.setSelectboxText(sellCommodityPermitList.json.selectCommodityInf[TABLE_DATA_KEY], sellCommodityPermitList.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
 	sellCommodityPermitList.setTableTextboxValuefromDB(sellCommodityPermitList.json['sellCommodityPermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
-	
+
 	//セレクトメニューが生成されていたら
 	if($('.contentSelect').length){
 		//セレクトボックスのvalueを画面に表示されている値にする
@@ -1580,7 +1580,7 @@ function creaetSellCommodityPermitRecord(record) {
 				//獲得ポイント
 				+ '</td><td style="" colspan="">' + record.get_point
 				//商品キー
-				+ '</td><td class="commodity_key" style="display : none" colspan=""><input type="hidden" name="commodity_key" value="' + COMMODITY_NOT_SELECTED_KEY + '">'
+				+ '</td><td class="commodity_key" style="display : none" colspan=""><input type="hidden" name="commodity_key" value="' + COMMODITY_NOT_SELECTED_KEY_2 + '">'
 				//ユーザID
 				+ '</td><td style="" colspan="">' + record.user_key
 				//商品名 未選択状態で
@@ -1615,7 +1615,7 @@ function creaetSellCommodityPermitData(record) {
 			//列の内訳 連番 ユーザ名 所持ポイント 商品ID ユーザID 商品名 数量 単価 使用ポイント 支払額
 			'user_name' : record.user_name
 			,'get_point' : record.get_point
-			,'commodity_key' : COMMODITY_NOT_SELECTED_KEY
+			,'commodity_key' : COMMODITY_NOT_SELECTED_KEY_2
 			,'user_key' : record.user_key
 			,'content' : COMMODITY_NOT_SELECTED
 			,'sell_number' : DEFAULT_COMMODITY_SELL_NUMBER

@@ -942,8 +942,9 @@ SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE 			 = '.doLecturePermitInfoTable';					//�
 DUMMY_LECTUREPERMIT_DATA = {time_table_key: "", lesson_date: "", order_students: "", lesson_key: "", start_time: "", end_time: "", user_name: "", stage_no: "", level_no: "", user_classwork_key: "", user_key: "", get_point: "", lesson_name: "", use_point: "", user_classwork_cost: "", school_key: ""};
 //未選択の商品名
 COMMODITY_NOT_SELECTED = '-未選択-';
-//未選択の商品のキー
-COMMODITY_NOT_SELECTED_KEY = -1;
+//未選択の商品のキー 使いそうにないキーを2つ用意
+COMMODITY_NOT_SELECTED_KEY_1 = -1;
+COMMODITY_NOT_SELECTED_KEY_2 = 999999;
 //デフォルトの商品購入数
 DEFAULT_COMMODITY_SELL_NUMBER = 1;
 MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION = '以下の生徒の商品が未選択です。\n';

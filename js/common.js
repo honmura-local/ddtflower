@@ -2315,11 +2315,12 @@ this.defaultClassworkCostColumns = [
 		$select.append($('<option></option>').addClass('contentOption').text(COMMODITY_NOT_SELECTED).attr({
 			value : COMMODITY_NOT_SELECTED
 			,'data-price' : 0
-			,'data-commodity_Key' : COMMODITY_NOT_SELECTED_KEY
+			,'data-commodity_Key' : COMMODITY_NOT_SELECTED_KEY_2
 		}));
 
 		//未選択の商品データをリストを追加する
-		commodityList[COMMODITY_NOT_SELECTED_KEY] = COMMODITY_NOT_SELECTED;
+		commodityList[COMMODITY_NOT_SELECTED_KEY_1] = COMMODITY_NOT_SELECTED;
+		commodityList[COMMODITY_NOT_SELECTED_KEY_2] = COMMODITY_NOT_SELECTED;
 		
 		//商品データを走査する
 		for (var i = 0; i < commodityNum; i++) {

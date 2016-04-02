@@ -116,7 +116,7 @@
 		}
 	},
 	"permitLessonContainCommodity": {
-		"db_setQuery": "CALL p_update_approval_purchase('commodity_sell_key', 'sell_number' ,'pay_cash' ,'use_point' ,'commodity_key', 1);"
+		"db_setQuery": "CALL p_update_approval_purchase('commodity_sell_key', 'sell_number' ,'pay_cash' ,'use_point' ,'commodity_key', 1, @result);"
 	},
 	"getCommoditySellId" : {
 		"db_getQuery" : "SELECT id FROM commodity_sell AS commodity_sell_key ORDER BY create_datetime DESC LIMIT 1;"
@@ -412,12 +412,12 @@
 		"value": "追加"
 	},
 	"doLecturePermitButton": {
-		"class": "doLecturePermit normalButton",
+		"class": "doLecturePermit normalButton importantButton",
 		"type": "button",
 		"value": "承認"
 	},
 	"sellCommodityPermitButton": {
-		"class": "sellCommodityPermitButton normalButton",
+		"class": "sellCommodityPermitButton normalButton importantButton",
 		"type": "button",
 		"value": "承認"
 	},
@@ -536,7 +536,7 @@
 		}
 	},
 	"contentSelect": {
-		"name": "content",
+		"name": "commodity_key",
 		"contentOption": []
 	},
 	"permitListSearch": {
@@ -567,7 +567,7 @@
 		}
 	},
 	"updateSellCommodityPermitList": {
-		"db_setQuery": "CALL p_update_approval_list_purchase('sell_number', 'pay_cash', 'use_point', 'commodity_sell_key', 'user_key', 'diff_point');"
+		"db_setQuery": "CALL p_update_approval_list_purchase('sell_number', 'pay_price', 'use_point', 'id', 'user_key', 'diff_point', 'commodity_key', @result);"
 	},
 	"updatePermitListLesson": {
 		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'user_classwork_key');"
@@ -818,8 +818,8 @@
 	"replaceTextboxUsePoint": {
 		"type": "number",
 		"name": "use_point",
-		"data-diff_point": "",
-		"data-base_point": ""
+		"data-diff_point": "0",
+		"data-base_point": "0"
 	},
 	"mailMagaAndAnnounce": {
 		"class": "mailMagaAndAnnounce tabPanel",
