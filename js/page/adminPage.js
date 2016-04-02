@@ -1649,3 +1649,20 @@ function createRecordFromDom(record){
 	
 	return dataObj;	//作成したデータを返す
 }
+
+
+/*
+ * 関数名:doubleClickToLogin
+ * 引数  :string targetParent : コールバック登録対象の祖先要素
+ * 戻り値:なし
+ * 概要  :指定した要素の子孫のユーザデータを持つtrをダブルクリックして、対象ユーザでログインするイベントコールバック登録
+ * 作成日:2016.04.02
+ * 作成者:T.Masuda
+ */
+function doubleClickToLogin (targetParent){
+	//対象の子孫の行データをダブルクリックしたら
+	$(targetParent).on('doubletap','tbody tr',function(event){
+		//対象のユーザでログインする
+		loginInsteadOfMember($('.id', this).text());
+	});
+}
