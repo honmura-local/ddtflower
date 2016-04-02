@@ -1259,28 +1259,41 @@ label,
 	}
 }
 
-/* 管理者画面 商品購入承認タブテーブル */
-.sellCommodityPermitInfoTable {
+/* スクロールテーブルの基本レイアウト */
+.sellCommodityPermitInfoTable
+,.doLecturePermitInfoTable
+,.lecturePermitListInfoTable
+,.sellCommodityPermitListInfoTable 
+{
     width : 800px;			/* 固定幅に設定する */
     table-layout : fixed;	/* 固定幅を有効にする */
 }
 
-/* 管理者画面 商品購入承認タブテーブル 行種別ごとの親タグ*/
-.sellCommodityPermitInfoTable thead, .sellCommodityPermitInfoTable tbody {
+/* スクロールテーブルの行データ親タグ 基本レイアウト */
+.sellCommodityPermitInfoTable thead
+,.sellCommodityPermitInfoTable tbody 
+,.doLecturePermitInfoTable thead
+,.doLecturePermitInfoTable tbody 
+,.lecturePermitListInfoTable thead
+,.lecturePermitListInfoTable tbody 
+,.sellCommodityPermitListInfoTable thead
+,.sellCommodityPermitListInfoTable tbody 
+{
     display: block;	/* 固定サイズにするためにブロック要素にする */
 }
 
-/* 管理者画面 商品購入承認タブテーブル データ行親タグ*/
-.sellCommodityPermitInfoTable tbody {
+/* スクロールテーブルのデータ行親タグ 基本レイアウト*/
+.sellCommodityPermitInfoTable tbody 
+,.doLecturePermitInfoTable tbody 
+,.lecturePermitListInfoTable tbody 
+,.sellCommodityPermitListInfoTable tbody 
+{
     overflow-y : scroll;	/* 縦スクロールするようにする */
     height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
 }
 
-/* 管理者画面 商品購入承認タブテーブル セル */
-.sellCommodityPermitInfoTable td {
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
 
+/* 管理者画面 商品購入承認タブテーブル */
 /* No列 */
 .sellCommodityPermitInfoTable tr td:first-child {
     width: 20px;
@@ -1328,28 +1341,6 @@ label,
 
 
 /* 受講承認テーブル */
-/* 管理者画面 受講購入承認タブテーブル */
-.doLecturePermitInfoTable {
-    width : 800px;			/* 固定幅に設定する */
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
-
-/* 管理者画面 受講購入承認タブテーブル 行種別ごとの親タグ*/
-.doLecturePermitInfoTable thead, .doLecturePermitInfoTable tbody {
-    display: block;	/* 固定サイズにするためにブロック要素にする */
-}
-
-/* 管理者画面 受講購入承認タブテーブル データ行親タグ*/
-.doLecturePermitInfoTable tbody {
-    overflow-y : scroll;	/* 縦スクロールするようにする */
-    height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
-}
-
-/* 管理者画面 受講購入承認タブテーブル セル */
-.doLecturePermitInfoTable td {
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
-
 /* No列 */
 .doLecturePermitInfoTable tr td:first-child {
     width: 20px;
@@ -1384,3 +1375,89 @@ label,
 .doLecturePermitInfoTable tr td:nth-child(15) {
     width: 150px;
 }
+
+/* 受講承認一覧 */
+/* 管理者画面 受講承認一覧タブテーブル */
+/* No列 */
+.lecturePermitListInfoTable tr td:first-child {
+    width: 26px;
+}
+
+/* 名前列 */
+.lecturePermitListInfoTable tr td:nth-child(2) {
+    width: 215px;
+}
+
+/* 名前列 */
+.lecturePermitListInfoTable tr td:nth-child(3) {
+    width: 215px;
+}
+
+/* 単価列 */
+.lecturePermitListInfoTable tr td:nth-child(4) {
+    width: 150px;
+}
+
+/* 個数列 */
+.lecturePermitListInfoTable tr td:nth-child(5) {
+    width: 150px;
+}
+
+/* 使用ポイント列 */
+.lecturePermitListInfoTable tr td:nth-child(13) {
+    width: 140px;
+}
+
+/* 合計列 */
+.lecturePermitListInfoTable tr td:nth-child(14) {
+    width: 148px;
+}
+
+/* 合計列 */
+.lecturePermitListInfoTable tr td:nth-child(15) {
+    width: 150px;
+}
+
+/* 商品購入承認一覧テーブル */
+/* 商品購入承認一覧 */
+/* 管理者画面 商品購入承認一覧タブテーブル */
+/* No列 */
+.sellCommodityPermitListInfoTable tr td:first-child {
+    width: 26px;
+}
+
+/* 名前列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(2) {
+    width: 215px;
+}
+
+/* 名前列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(3) {
+    width: 215px;
+}
+
+/* 単価列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(4) {
+    width: 150px;
+}
+
+/* 個数列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(5) {
+    width: 150px;
+}
+
+/* 使用ポイント列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(13) {
+    width: 140px;
+}
+
+/* 合計列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(14) {
+    width: 148px;
+}
+
+/* 合計列 */
+.sellCommodityPermitListInfoTable tr td:nth-child(15) {
+    width: 150px;
+}
+
