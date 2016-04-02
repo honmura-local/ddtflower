@@ -55,6 +55,7 @@
 		}
 	},
 	"dateSelect": {
+		"class" : "dateSelect cf",
 		"dateHeadLabel": {
 			"text": "日付指定:"
 		},
