@@ -166,13 +166,13 @@ function adminLessonListDialog(dialog){
 			returnStatusObj[CLICKED_ROW] = index;
 			
 			this.openDialog(URL_ADMIN_LESSON_DETAIL_DIALOG);	//授業詳細ダイアログを開く
-			//選択なし、または2行以上選択されていたら
-			} else {
-				//警告を出す
-				alert(MESSAGE_NEED_SELECT_RECORD);
-			}
+		//選択なし、または2行以上選択されていたら
+		} else {
+			//警告を出す
+			alert(MESSAGE_NEED_SELECT_RECORD);
+		}
 	}
-	
+
 	/* 関数名:callbackCreateNew
 	 * 概要　:削除ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
 	 * 引数　:なし
@@ -182,8 +182,18 @@ function adminLessonListDialog(dialog){
 	 */
 	this.callbackDelete = function(){
 		this.dialogClass.setPushedButtonState(DELETE);
+		console.log(this.dialog);
+		//対象がなければ
+		if($('.selectRecord', this.dialog).length == 0) {
+			//警告を出す
+			alert(MESSAGE_CHOOSE_TARGET);
+			return false;	//処理を行わない
+		}
+		
+		//ダイアログを呼び出して確認を取った上で削除を行う
+		askExecuteDelete('指定したレコードを削除しますか?', "deleteRecords('.lessonTable', '.selectRecord', $('.lessonTable').closest('.dialog')[0].dialogBuilder.create_tag.json.lessonDeleteQuery, null, $('.lessonTable').closest('.dialog')[0].dialogBuilder.create_tag.json.lessonTable.tableData, null)");
 	}
-
+	
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
 	 * 引数　:なし
@@ -224,6 +234,7 @@ function adminLessonListDialog(dialog){
 				break;	//switchを抜ける
 			//削除ボタン
 			case DELETE:
+				//オブジェクトを作る必要なし
 				break;	//switchを抜ける
 			//授業一覧テーブルの行がクリックされた
 			default:

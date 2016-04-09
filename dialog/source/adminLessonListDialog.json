@@ -69,7 +69,8 @@
                     "style":"display:none;"
                 },
                 "classwork_key":{
-                    "style":"display:none;"
+                    "style":"display:none;",
+                    "className" : "id"
                 },
                 "classroom":{
                     "style":"display:none;"
@@ -94,5 +95,8 @@
             "△=残りわずか",
             "✕=満席"
         ]
+    },
+    "lessonDeleteQuery" : {
+    	"db_setQuery" : "CALL `p_delete_classwork`('id', @result); SELECT @result AS `result`;"
     }
 }

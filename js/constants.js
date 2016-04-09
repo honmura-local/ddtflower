@@ -963,3 +963,5 @@ TEXT_EDIT								= '編集';
 TEXT_DELETE								= '削除';
 //1行だけ選択するように要求する警告
 MESSAGE_NEED_SELECT_RECORD				= '1行選択してください。';
+//1行以上選択するように要求する警告
+MESSAGE_NEED_SELECT_MORE_1_RECORD		= '1行以上選択してください。';
