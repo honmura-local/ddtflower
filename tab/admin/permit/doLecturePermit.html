@@ -26,6 +26,10 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
+			//受講承認のボタンを追加する
+			create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+			//受講承認待ちデータの削除のボタンを追加する
+			create_tag.outputTag('deletePermitRecordButton', 'normalButton', '#doLecturePermit');
 			//ユーザ追加のボタンを追加する
 			create_tag.outputTag('addUserRecordButton', 'normalButton', '#doLecturePermit');
 			
@@ -51,11 +55,11 @@
 				$('.doLecturePermitInfoTable tr:last').remove();
 			}
 
-			//受講承認のボタン
-			create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
-
+			
 			//承認ボタンクリックでデータを更新する
-			loopUpdatePermitLesson();			
+			loopUpdatePermitLesson();
+			//削除ボタンを押すと選択したレコードを削除する
+			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No')");
 
 			var $activePanel = $('#permitTab .tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える

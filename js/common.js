@@ -2475,6 +2475,49 @@ this.defaultClassworkCostColumns = [
 		$('.dialog').filter(':last')[0].instance.destroy();
 	}
 	
+	/* 
+	 * 関数名:sendSimpleQuery
+	 * 概要  :指定した先にオブジェクトを送信する。特にひねりなくJSONをPHPに送信することを想定
+	 * 引数  :Object sendObj : 送信するJSON
+	 *      :String key : 送信するキーデータ。基本的に使わないと思われる 
+	 *      :String url : 送信先 
+	 * 返却値  :boolean : 成否結果
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.09
+	 */
+	this.sendSimpleQuery = function(sendObj, key, url){
+		//送信成否のboolean
+		var isSuccess = false;
+		
+		//Ajax通信を行う
+		$.ajax({
+			'url' : url
+			,dataType : 'json'	//JSON形式のデータを送受信する
+			,async : false	//同期通信
+			,cache : false	//通信結果をキャッシュしない
+			,method : 'POST'	//POSTメソッドでリクエストを送信する
+			//送信データを設定する
+			,data : {json : JSON.stringify(sendObj), 'key' : key}
+			//通信成功時のコールバック
+			,success : function(json, status){
+				for (objKey in json) {
+					//更新の成功件数0でなかった場合は(現状2016-04-09時点では対象のkeyはmessage。何でも対応できるように1つめのキーを対象にした)
+					if(!json[objKey] == "0") {
+						isSuccess = true;
+					}
+					
+					break;	//一回処理したら終わり
+				}
+			} 
+			//通信エラー時のコールバック
+			,error : function(xhr, status, error){
+				//特に何もせず、そのままで失敗扱い
+			}
+		});
+		
+		return isSuccess;	//結果を返す
+	}
+	
 	
 //ここまでクラス定義領域
 }

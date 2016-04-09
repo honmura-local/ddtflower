@@ -951,4 +951,5 @@ MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION = '以下の生徒の商品が未選択�
 //商品購入履歴レコードINSERT失敗メッセージ
 COUNDNT_INSERT_SELLCOMMODITY_PERMIT_MESSAGE = '以下の生徒の商品購入履歴レコードを作成できませんでした。\n';
 
-
+//処理対象がないという警告
+MESSAGE_CHOOSE_TARGET					= '処理対象を選択してください。';

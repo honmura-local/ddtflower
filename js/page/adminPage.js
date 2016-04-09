@@ -1666,3 +1666,149 @@ function doubleClickToLogin (targetParent){
 		loginInsteadOfMember($('.id', this).text());
 	});
 }
+
+/*
+ * 関数名:deleteRecords
+ * 引数  :string targetTable : コールバック登録対象の祖先要素
+ *      :string targetClass : コールバック登録対象の祖先要素
+ *      :Object queryObj    : 削除用クエリが入ったオブジェクト
+ *      :function callback  : 処理後のコールバック
+ *      :Array createTagData : createTagの処理対象テーブルデータ
+ *      :String noColumn    : 連番列名
+ * 戻り値:なし
+ * 概要  :指定した行データをDBレコード共に削除する
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function deleteRecords (targetTable, targetClass, queryObj, callback, createTagData, noColumn){
+	var processedRecords = 0;	//処理済みレコード数のカウント
+
+	//承認済みとなって削除するべきデータのインデックスの配列
+	var deleteList = [];
+	var resultMessage = '';	//処理結果を伝えるメッセージ
+	
+	//削除失敗時に例外で以降の処理を中断させるため、try-catch構文を使う
+	try {
+		//対象のテーブルの行を走査する
+		$('tr', $(targetTable)).each(function(i){
+			//対象の行であれば
+			if($(this).attr('class') && $(targetClass, $(targetTable)).index(this) != -1) {
+				var isSuccess = true;	//処理成否結果。DBアクセスがない場合はずっとtrue
+				
+				if(queryObj) {
+					
+					//送信用のオブジェクトを生成する
+					var sendObj = {
+							//クエリ
+							db_setQuery : queryObj[KEY_DB_SETQUERY]
+					//削除対象のID。行データから抽出する
+					,id : { value : $(this).children('.id').text()}
+					};
+					
+					//レコード削除のクエリを発行する
+					isSuccess = commonFuncs.sendSimpleQuery(sendObj, EMPTY_STRING, URL_SAVE_JSON_DATA_PHP);
+				}
+				
+				//成功したら
+				if (isSuccess) {
+					//削除に成功した行を削除する
+					$(this).remove();
+					//承認を終えたデータのインデックスをリストに追加する
+					deleteList.push(i);
+				//失敗したら
+				} else {
+					//対象のレコードの会員名の取得を試行する
+					var userName = $(this).children('.user_name').text();
+					//エラーメッセージを作成する。名前が取得できた場合は名前を載せる
+					var errorMessage = commonFuncs.checkEmpty(userName) ? 'このレコードの削除に失敗しました。処理を中断します。 : ' + userName : 'レコードの削除に失敗しました。処理を中断します。';
+					//処理を中断する
+					throw new Error(errorMessage);
+				}
+				
+				processedRecords++;	//処理済み数をカウントアップする
+			
+			}
+		});
+	//例外発生時
+	} catch (e) {
+		//エラーメッセージをセットする
+		resultMessage = e + '\n' + processedRecords + '件のレコードを削除しました。';
+	//最後の処理
+	} finally {
+		//コールバックが指定されていたら
+		if(callback){
+			//処理後のコールバックを実行する
+			callback();
+		}
+		
+		//連番列が入力されていれば
+		if(noColumn) {
+			//連番を振り直す
+			commonFuncs.insertSequenceNo(targetTable, noColumn);
+		}
+		
+		//処理対象のレコードがcreateTagと連動したデータであったら
+		if(createTagData){
+			//削除済みのデータを削除する
+			for (var i = 0; i < deleteList.length; i++) {
+				//テーブル用JSONをクリアする
+				createTagData.splice(deleteList[i] - i, 1);
+			}
+		}
+	}
+	
+	//エラーメッセージがセットされていなければ処理結果メッセージを処理件数を伝える内容にする
+	resultMessage = resultMessage == EMPTY_STRING ? processedRecords + '件のレコードを削除が完了しました。' : resultMessage;
+	//処理結果を通知する
+	alert(resultMessage);
+}
+
+/*
+ * 関数名:askExecuteDelete
+ * 引数  :string message : ダイアログに出すメッセージ
+ *      :function func : 削除の関数
+ * 戻り値:なし
+ * 概要  :削除実行前にダイアログを出して実行するかの確認を取る
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function askExecuteDelete (message, func){
+	//設定オブジェクトを作る
+	var settingObj = commonFuncs.getDefaultArgumentObject();
+	//オブジェクトにメッセージ、コールバック関数をセットする
+	settingObj.data.message = message;
+	//無名関数として引数の関数eval関数にかけるコードをコールバックにセットする
+	settingObj.data.callback = function(){ eval(func);};
+	
+	//確認ダイアログのクラスインスタンスを生成する
+	var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,settingObj);
+	
+	//openイベントのコールバック関数をセットする
+	confirmDialog.run();	//ダイアログを開く	
+}
+
+/*
+ * 関数名:executeDeleteRecord
+ * 引数  :string or Element target: クリックイベント登録先の要素
+ *      :string message : ダイアログに出すメッセージ
+ *      :string targetRecord : 処理対象のレコードのセレクタ
+ *      :function func : 削除の関数
+ * 戻り値:なし
+ * 概要  :指定した要素をクリックしてレコード削除を行う
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function executeDeleteRecord (target, message, targetRecord, func){
+	//対象をクリックしたら
+	$(target).on(CLICK, function(){
+		//対象がなければ
+		if($(targetRecord).length == 0) {
+			//警告を出す
+			alert(MESSAGE_CHOOSE_TARGET);
+			return false;	//処理を行わない
+		}
+		
+		//ダイアログを呼び出して確認を取った上で削除を行う
+		askExecuteDelete(message, func);
+	});
+}

@@ -175,17 +175,6 @@
 /* スクロールボタン領域終わり */
 
 /* 
- * セレクタ :.addUserRecordButton
- * 概要   :承認タブ追加ボタン
- * 作成者 :T.Masuda
- * 作成日 :2016.03.19
- */
-.addUserRecordButton {
-	float : right;	/* 右に寄せる */
-	margin : 5px;	/* 全体的に間隔を取る */
-}
-
-/* 
  * セレクタ :#lecturePermit .tab
  * 概要   :受講承認、タブ領域
  * 作成者 :T.Yamamoto
@@ -237,6 +226,19 @@
  */
 .accordionContent .contentSelect {
 	width: 100%;			/* 幅を100%にして備品名が入るところまでを入れる */
+}
+
+
+/* 
+ * セレクタ :#doLecturePermit .normalButton,#sellCommodityPermit .normalButton
+ * 概要   :承認画面 各ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.09
+ */
+#doLecturePermit .normalButton,
+#sellCommodityPermit .normalButton {
+	float : right;	/* ボタンを右に寄せる */
+	margin : 5px;	/* ボタンそれぞれにmarginを持たせて間を取る */
 }
 
 /* 

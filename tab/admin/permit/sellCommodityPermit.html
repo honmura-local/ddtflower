@@ -26,6 +26,10 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
+			//商品販売承認のボタンを追加する
+			create_tag.outputTag('sellCommodityPermitButton', 'normalButton', '#sellCommodityPermit');
+			//商品販売承認待ちデータの削除のボタンを追加する
+			create_tag.outputTag('deletePermitRecordButton', 'normalButton', '#sellCommodityPermit');
 			//ユーザ追加のボタンを追加する
 			create_tag.outputTag('addUserRecordButton', 'normalButton', '#sellCommodityPermit');
 
@@ -51,8 +55,6 @@
 				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '#sellCommodityPermit');
 			}
 			
-			//商品販売承認のボタンを追加する
-			create_tag.outputTag('sellCommodityPermitButton', 'normalButton', '#sellCommodityPermit');
 			//商品選択のセレクトボックスを作るためのデータを取得しておく
 			create_tag.getJsonFile('php/GetJSONArray.php', create_tag.json['selectCommodityInf'], 'selectCommodityInf');
 			
@@ -70,6 +72,9 @@
 			//イベントコールバック登録
 			//承認ボタンクリックで商品販売情報を登録する
 			permitSellCommodity();
+			//削除ボタンを押すと選択したレコードを削除する
+			executeDeleteRecord($('#sellCommodityPermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.sellCommodityPermitInfoTable .selectRecord', "deleteRecords('.sellCommodityPermitInfoTable', '.selectRecord', $('#sellCommodityPermit')[0].create_tag.json.deleteSellCommodityPermitRecordQuery, null, $('#sellCommodityPermit')[0].create_tag.json.sellCommodityPermitInfoTable.tableData, '.No')");
+			
 			commonFuncs.calcPayPrice('.sellCommodityPermitInfoTable');
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 			toggleClassClickElement('tr', 'selectRecord', '.sellCommodityPermitInfoTable');
