@@ -157,7 +157,6 @@
  * 作成日 :2015.06.19
  */
 .searchButton {
-	float: right;			/* 右側に回り込みする */
 }
 /* 日付選択領域終わり */
 
@@ -238,6 +237,37 @@
  */
 .accordionContent .contentSelect {
 	width: 100%;			/* 幅を100%にして備品名が入るところまでを入れる */
+}
+
+/* 
+ * セレクタ :.fromTextbox, .toTextbox
+ * 概要   :日時範囲検索テキストボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.09
+ */
+.fromTextbox, .toTextbox {
+    width: 125px;	/* 規定の幅を指定する。極力余白が出ない幅にする */
+}
+
+/* 
+ * セレクタ :.permitListSearch
+ * 概要   :承認一覧画面 検索フォーム領域
+ * 作成者 :T.Masuda	
+ * 作成日 :2016.04.09
+ */
+.permitListSearch {
+    display: inline;	/* インライン要素にして幅を内部の要素に合わせて自動調整するようにする */
+}
+
+/* 
+ * セレクタ :.lecturePermitListInfoTable .user_name,.sellCommodityPermitListInfoTable .user_name
+ * 概要   :承認一覧画面 リスト 名前列
+ * 作成者 :T.Masuda	
+ * 作成日 :2016.04.09
+ */
+.lecturePermitListInfoTable .user_name,
+.sellCommodityPermitListInfoTable .user_name {
+	min-width : 90px;	/* 名前列の幅を最低限確保する */
 }
 
 /* 
@@ -684,17 +714,6 @@ ul.mailSendContent {
 		padding: 5px .5em ;			/* 要素の幅を5px広げる */
 	}
 
-	/* 受講者一覧の検索領域 */
-	/* 
-	 * セレクタ :.fromArea, .toArea
-	 * 概要   :受講者一覧のfromとtoの領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.30
-	 */
-	.fromArea, .toArea {
-		width: 70%;				/* 幅を70%で設定する */
-	}
-
 	/* 
 	 * セレクタ :.mailMagaContentSearchLabel
 	 * 概要   :検索領域のラベルとテキストボックス領域
@@ -717,7 +736,7 @@ ul.mailSendContent {
 }
 
 /* スマホ用微調整 */
-@media(max-width:400px){
+@media(max-width:415px){
 
 	/* 受講承認領域 */
 	/* 
@@ -729,7 +748,92 @@ ul.mailSendContent {
 	.accordionContent input {
 		width: 32px;			/* 幅を4桁の数字が入るぐらいの幅にする */
 	}
-	/* 受講承認領域 */
+
+	/* 
+	 * セレクタ :.permitListSearch
+	 * 概要   :承認一覧 検索領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.09
+	 */
+	.permitListSearch {
+	    display: block;	/* 更新ボタンと必ず横並びにならないようにする */
+	    margin-bottom : 5px; /* 下にあるボタンと最低限間隔を取る */
+	}
+	
+	/* 
+	 * セレクタ :.permitListSearch .searchButton
+	 * 概要   :承認一覧 検索ボタン
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.09
+	 */
+	.permitListSearch .searchButton {
+		float : right; /* 右に寄せる */
+		margin-bottom : 10px;	/* 下に来るボタンと間隔を取る */
+	}
+	
+	/* 
+	 * セレクタ :.permitListUpdateButton
+	 * 概要   :承認一覧 更新ボタン
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.09
+	 */
+	.permitListUpdateButton {
+		float : right;	/* スマホレイアウト時には右に寄せる */
+		margin-bottom : 10px;	/* 直下に来る一覧と間隔を取る */
+		clear : both;			/* 上のボタンの横に回り込まない様にする */
+	}
+
+	.searchInputArea {
+	    float: left;
+	    width: 205px;
+	}	
+
+	/* 
+	 * セレクタ :.fromArea, .toArea
+	 * 概要   :受講者一覧のfromとtoの領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.09
+	 */
+	.fromArea, .toArea {
+		width: 100%;			/* 幅を親要素の幅に合わせる */
+	}
+	
+	/* 
+	 * セレクタ :.sellCommodityPermitListInfoTable .contentSelect
+	 * 概要   :承認一覧 商品選択のセレクトメニュー
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.09
+	 */
+	.sellCommodityPermitListInfoTable .contentSelect {
+	    width: 120px;
+	}
+
+	/* 
+	 * セレクタ :.lecturePermitListInfoTable .user_name,.sellCommodityPermitListInfoTable .user_name
+	 * 概要   :承認一覧画面 リスト 名前列
+	 * 作成者 :T.Masuda	
+	 * 作成日 :2016.04.09
+	 */
+	.lecturePermitListInfoTable .user_name,
+	.sellCommodityPermitListInfoTable .user_name {
+		min-width : 70px;	/* 名前列の幅を最低限確保する */
+		max-width : 90px	/* 最大幅をセットする */
+	}
+	
+	/* 
+	 * セレクタ :.lecturePermitListInfoTable .user_name,.sellCommodityPermitListInfoTable .user_name
+	 * 概要   :承認一覧画面 リスト テキストボックス
+	 * 作成者 :T.Masuda	
+	 * 作成日 :2016.04.09
+	 */
+	.lecturePermitListInfoTable .cost input,
+	.lecturePermitListInfoTable .use_point input,
+	.sellCommodityPermitListInfoTable .cost input, 
+	.sellCommodityPermitListInfoTable .use_point input {
+		width : 50px;	/* 最低限の幅を取る */
+	}
+	
+	/* 受講承認領域終わり */
 
 	/* 会員一覧の検索領域 */
 
