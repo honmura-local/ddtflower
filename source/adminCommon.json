@@ -395,7 +395,6 @@
 		"value": ""
 	},
 	"updateLecturePermit": {
-		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'user_classwork_key');",
 		"user_classwork_cost": {
 			"value": ""
 		},
@@ -575,7 +574,7 @@
 		"db_setQuery": "CALL p_update_approval_list_purchase('sell_number', 'pay_price', 'use_point', 'id', 'user_key', 'diff_point', 'commodity_key', @result);"
 	},
 	"updatePermitListLesson": {
-		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'user_classwork_key');"
+		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'id', @result); SELECT @result AS result;"
 	},
 	"searchUserList": {
 		"searchName": {

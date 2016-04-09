@@ -46,7 +46,7 @@
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 			//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-			loopUpdatePermitLessonList('#lecturePermitList .normalButton', SELECTOR_LECTUREPERMITLIST_TAB, 'lecturePermitListRecord', LECTURE_PERMIT_LIST_INFO_TABLE, '#permitList');
+			loopUpdatePermitLessonList('#lecturePermitList .normalButton', SELECTOR_LECTUREPERMITLIST_TAB, '.lecturePermitListInfoTable tbody tr', LECTURE_PERMIT_LIST_INFO_TABLE, '#permitList');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える

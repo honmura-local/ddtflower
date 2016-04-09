@@ -459,7 +459,7 @@ function loopUpdatePermitLesson() {
 				//選択されているものだけを更新するように条件設定する
 				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1) {
 						// DBを更新するための値を取得するために置換する連想配列を取得する
-						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, 'doLecturePermitInfoTable tr:not(:first):eq(' + $('doLecturePermitInfoTable tr:not(:first)').index(this) + ')');
+						var sendReplaceArray = create_tag.getSendReplaceArray('doLecturePermitInfoTable', counter, '.doLecturePermitInfoTable tr:not(:first):eq(' + $('doLecturePermitInfoTable tr:not(:first)').index(this) + ')');
 						//取得した値が不正かどうかをチェックする
 						VALIDATOR.validate(validateSettings, sendReplaceArray);
 						
@@ -564,7 +564,7 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$(DOT + rowSelector).each(function() {
+			$(rowSelector).each(function() {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
 					var diffPoint = $('input[name="use_point"]', this).attr('data-diff_point');	// 元の値からの増減値
 					var sendReplaceArray = 
@@ -731,7 +731,7 @@ function afterReloadPermitListInfoTable() {
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 	lecturePermitList.setSelectboxText(lecturePermitList.json.selectCommodityInf[TABLE_DATA_KEY], lecturePermitList.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	lecturePermitList.setTableTextboxValuefromDB(lecturePermitList.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	lecturePermitList.setTableTextboxValuefromDB(lecturePermitList.json['lecturePermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable, '.lecturePermitListInfoTable');
 	
 	//セレクトメニューが生成されていたら
 	if($('.contentSelect').length){
@@ -1119,7 +1119,7 @@ function permitSellCommodity() {
 				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1){
 					
 					// DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, 'sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
+					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, '.sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
 					//商品が未選択であれば
 					if(sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_1 || sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_2) {
 						//エラー扱いにするため例外を投げる。対象の行のお客様の名前を挙げる
@@ -1275,16 +1275,16 @@ function afterReloadSellCommodityPermitListInfoTable() {
 	//受講承認のアコーディオンの備品名にセレクトボックスの値をDBから取り出した値で追加する
 	sellCommodityPermitList.setSelectboxText(sellCommodityPermitList.json.selectCommodityInf[TABLE_DATA_KEY], sellCommodityPermitList.json.accordionContent.contentCell.contentSelect.contentOption, 'commodity_name');
 	//受講承認一覧テーブルのテキストボックスにDBから読込んだ値をデフォルトで入れる
-	sellCommodityPermitList.setTableTextboxValuefromDB(sellCommodityPermitList.json['sellCommodityPermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable);
+	sellCommodityPermitList.setTableTextboxValuefromDB(sellCommodityPermitList.json['sellCommodityPermitListInfoTable'][TABLE_DATA_KEY], create_tag.setInputValueToLecturePermitListInfoTable, '.sellCommodityPermitListInfoTable');
 
-	//セレクトメニューが生成されていたら
-	if($('.contentSelect').length){
+	//テーブルにデータがあれば
+	if($('.sellCommodityPermitListInfoTable tbody tr').length){
 		//セレクトボックスのvalueを画面に表示されている値にする
 		sellCommodityPermitList.setSelectboxValue('.contentSelect', LECTURE_PERMIT_LIST_INFO_TABLE, 'commodity_key', sellCommodityPermitList.json.selectCommodityInf[TABLE_DATA_KEY]);
 		//備品販売IDを格納するための隠しフォームを各行にセットする
 		sellCommodityPermitList.outputTag('commoditySellId','commoditySellId', '.appendSelectbox');
 		//備品セレクトボックスを規定のものにする
-		setSelectedCommodity(sellCommodityPermitList, null, SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, '.sellCommodityPermitListRecord');
+		setSelectedCommodity(sellCommodityPermitList, null, SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, '.sellCommodityPermitListInfoTable tbody tr');
 	}
 	
 	//置換済みテキストボックスに数値入力のみできるようにする

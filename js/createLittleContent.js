@@ -1344,23 +1344,24 @@ function createLittleContents(){
 	 * 関数名:setInputValueToLecturePermitListInfoTable
 	 * 概要  :受講者一覧テーブルのテキストボックスにデフォルトで値を入れる。
 	 		使い方はsetTableTextboxValuefromDB関数で引数として呼ばれるときのみ使う
-	 * 引数  :なし
+	 * 引数  :Object recordData : レコードのデータ
+	 *      :String targetParent : 処理対象行の一意な祖先要素セレクタ
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.11
 	 */
-	this.setInputValueToLecturePermitListInfoTable = function(recordData) {
+	this.setInputValueToLecturePermitListInfoTable = function(recordData, targetParent) {
 		//DBから取得した料金の値を取得する
 		resultValueCost = recordData['cost'];
 		//DBから取得した使用ptの値を取得する
 		resultValueUsePoint = recordData['use_point'];
 		//テーブルの料金のテキストボックスに対してデフォルトでDBから読込んだ値を入れる
-		$('[name=user_classwork_cost]').eq(counter).attr({
+		$('[name=user_classwork_cost]', $(targetParent)).eq(counter).attr({
 				value : resultValueCost,
 				min   : 0
 			});
 		//テーブルの料金の使用ptに対してデフォルトでDBから読込んだ値を入れる
-		$('.replaceTextboxUsePointCell [name=use_point]').eq(counter).attr({
+		$('.replaceTextboxUsePointCell [name=use_point]', $(targetParent)).eq(counter).attr({
 				value : resultValueUsePoint,
 				min   : 0
 			});
@@ -1369,7 +1370,7 @@ function createLittleContents(){
 			//DBから取得した日備品の値を取得する
 			resultValueCommodityName = recordData['content'];
 			//備品名セレクトボックスにデフォルト値をDBから読込んだ値で設定する。
-			$('.lecturePermitListInfoTable tr:eq(' + rowNumber + ') [name="content"]').val(resultValueCommodityName);
+			$('tr:eq(' + rowNumber + ') [name="content"]', $(targetParent)).val(resultValueCommodityName);
 		}
 	}
 	
@@ -1378,11 +1379,12 @@ function createLittleContents(){
 	 * 概要 :テーブルのテキストボックスにDBから読込んだ値をデフォルトでセットする
 	 * 引数 :tableArray:DBから読込んだテーブルのデータが入っている連想配列:例(受講者一覧テーブル) json.LecturePermitListInfoTable.table
 			:setTablefunc:テーブルのテキストボックスに値をセットするための関数
+			:targetParent:処理対象行の一意の祖先要素
 	 * 返却値  :なし
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.07.11
 	 */
-	this.setTableTextboxValuefromDB = function(tableArray, setTablefunc) {
+	this.setTableTextboxValuefromDB = function(tableArray, setTablefunc, targetParent) {
 		//DBから読込んだ値を取り出すためにカウンターを初期値0で作る
 		counter = 0;
 		//テーブルに値をセットするために行番号を初期値1で作る(0は見出しであるため、1から数え始める)
@@ -1392,7 +1394,7 @@ function createLittleContents(){
 			//DBから読込んだ値を取り出すためにループのカウンターに対応した行の値を指定する
 			recordData = tableArray[counter];
 			//テキストボックスにDBから読込んだ値を入れる
-			setTablefunc(recordData);
+			setTablefunc(recordData, targetParent);
 			//行番号をインクリメントする
 			rowNumber++;
 			//カウンタ変数をインクリメントする
@@ -1850,7 +1852,7 @@ function createLittleContents(){
 		var resultTableArray = this.json[tableClassName][TABLE_DATA_KEY][rowNumber];
 		try{
 			//ユーザが入力した値をDBのクエリに対応したkey名で連想配列で取得する
-			var inputDataArray = commonFuncs.getInputData(DOT + inputDataSelector, addAttr);
+			var inputDataArray = commonFuncs.getInputData(inputDataSelector, addAttr);
 			delete inputDataArray.columnCheckbox;	//チェックボックス列から取得したデータは空なので削除する
 			
 			//取得した連想配列を結合する
