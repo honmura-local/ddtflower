@@ -2732,6 +2732,7 @@ CREATE PROCEDURE p_update_approval_list_purchase (
     ,IN in_commodity_sell_key INT
     ,IN in_user_key INT
     ,IN in_diff_point INT
+    ,IN in_commodity_key INT
     ,OUT result INT
 )
 BEGIN
@@ -2757,6 +2758,7 @@ SET
     pay_cash = in_pay_cash
     ,use_point = in_use_point
     ,update_datetime = NOW()
+    ,commodity_key = in_commodity_key
 WHERE
     id = in_commodity_sell_key;
 
@@ -3039,7 +3041,7 @@ SET
     sell_number = in_sell_number
     ,pay_cash = in_pay_cash
     ,use_point = in_use_point
-    ,commodity_key = last_purchase_id
+    ,commodity_key = in_commodity_key
     ,purchase_status = in_purchase_status
     ,update_datetime = NOW()
 WHERE
