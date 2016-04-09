@@ -288,6 +288,8 @@ CREATE_NEW									= 3;	//新規作成
 CONFIRM										= 4;	//確認
 CLOSE_BUTTON								= 5;	//閉じる
 LOGIN_NUM									= 6;	//ログインボタン
+EDIT										= 7;	//編集ボタン
+DELETE										= 8;	//削除ボタン
 
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
@@ -953,3 +955,11 @@ COUNDNT_INSERT_SELLCOMMODITY_PERMIT_MESSAGE = '以下の生徒の商品購入履
 
 //処理対象がないという警告
 MESSAGE_CHOOSE_TARGET					= '処理対象を選択してください。';
+//tbody内trタグ
+SELECTOR_TBODY_TR						= 'tbody tr';
+//編集の文字。主にボタン用
+TEXT_EDIT								= '編集';
+//削除の文字。主にボタン用
+TEXT_DELETE								= '削除';
+//1行だけ選択するように要求する警告
+MESSAGE_NEED_SELECT_RECORD				= '1行選択してください。';

@@ -318,6 +318,43 @@ function baseDialog(dialog){
 	                         }
 	                 ];
 	
+	//デフォルトの新規作成ボタン・編集ボタン・削除ボタン設定用配列
+	this.createNew_edit_delete = [
+	                  {	
+	                	  //新規作成ボタン
+	                	  text:TEXT_BUTTON_NEW,
+	                	  //クリック時のコールバック関数を設定する
+	                	  click:
+	                		  //コールバック関数
+	                		  function(){
+	                		  //更新ボタンの処理を行う
+	                		  this.dialogBuilder.callbackCreateNew();
+	                	  }
+	                  },
+	                  {	
+	                	  //編集ボタン
+	                	  text:TEXT_EDIT,
+	                	  //クリック時のコールバック関数を設定する
+	                	  click:
+	                		  //コールバック関数
+	                		  function(){
+	                		  //更新ボタンの処理を行う
+	                		  this.dialogBuilder.callbackEdit();
+	                	  }
+	                  },
+	                  {	
+	                	  //削除ボタン
+	                	  text:TEXT_DELETE,
+	                	  //クリック時のコールバック関数を設定する
+	                	  click:
+	                		  //コールバック関数
+	                		  function(){
+	                		  //削除ボタンの処理を行う
+	                		  this.dialogBuilder.callbackDelete();
+	                	  }
+	                  }
+	                  ];
+	
 	//送信の確認・リセットボタンの配列
 	this.confirm_reset = [
 	                   {
@@ -487,6 +524,28 @@ function baseDialog(dialog){
 	 */
 	this.callbackCreateNew = function(){
 		this.dialogClass.setPushedButtonState(CREATE_NEW);
+	}
+	
+	/* 関数名:callbackEdit
+	 * 概要　:編集ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2016.0409
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackEdit = function(){
+		this.dialogClass.setPushedButtonState(EDIT);
+	}
+	
+	/* 関数名:callbackCreateNew
+	 * 概要　:削除ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 作成日　:2016.0409
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackDelete = function(){
+		this.dialogClass.setPushedButtonState(DELETE);
 	}
 	
 	/* 関数名:setCallbackRowClick

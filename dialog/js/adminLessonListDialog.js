@@ -113,13 +113,12 @@ function adminLessonListDialog(dialog){
 	 */
 	this.setConfig = function(){
 		//新規に授業を作成するためのボタンを作る
-		this.setDialogButtons(this.createNew);
+		this.setDialogButtons(this.createNew_edit_delete);
 		//ダイアログの位置を修正する
 		this.setDialogPosition(POSITION_CENTER_TOP);
 		//授業データがない(授業名、校舎名がないことが基準)行を表示しない
 		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td.lesson_name:empty, td.school_name:empty").hide();
 	}
-
 
 	/* 関数名:setCallback
 	 * 概要　:ダイアログのイベントコールバックを設定する
@@ -129,8 +128,8 @@ function adminLessonListDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.setCallback = function(){
-		//テーブルの行をクリックイベントに対し授業詳細ダイアログを開くコールバック関数を登録する
-		this.setCallbackRowClick();
+		//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+		toggleClassClickElement('tr', 'selectRecord', '.lessonTable');
 	}
 
 	/* 関数名:callbackCreateNew
@@ -146,41 +145,44 @@ function adminLessonListDialog(dialog){
 		this.openDialog(URL_ADMIN_LESSON_CREATE_DIALOG);	//授業新規作成ダイアログを開く
 	}
 
-	/* 関数名:setCallbackRowClick
-	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数を設定する
+	/* 関数名:callbackEdit
+	 * 概要　:編集ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:015.08.22
+	 * 作成日　:2016.0409
 	 * 作成者　:T.Masuda
 	 */
-	this.setCallbackRowClick = function() {
-		//当クラスインスタンスをイベントコールバック内で使える用に変数に格納する
-		var thisElem = this;	
-		//ダイアログの内のテーブルの行をクリックしたときのコールバック関数をセットする
-		$(STR_TR, this.dialog).on(CLICK, function(){
-			//行番号を引数にコールバック関数を呼び出す
-			thisElem.callbackRowClick($(this).parent().children().index(this));
-		});
-	};
-
-	/* 関数名:callbackRowClick
-	 * 概要　:テーブルの行をクリックした時のイベントのコールバック関数
-	 * 引数　:int rowIndex:行番号
+	this.callbackEdit = function(){
+		this.dialogClass.setPushedButtonState(EDIT);
+		//選択されている行を取得する
+		var $selectedRecord = $(SELECTOR_TBODY_TR, $(this.dialog)).filter('.selectRecord');
+		//1行選択されていたら
+		if ($selectedRecord.length == 1){
+			//次のダイアログに渡すオブジェクトを準備する
+			var returnStatusObj = this[DIALOG_CLASS].getReturnStatusObject();
+			//選択した行のインデックスを取得する
+			var index = $(SELECTOR_TBODY_TR, $(this.dialog)).index($selectedRecord);			
+			//取得したオブジェクトにクリックした行の番号をセットする
+			returnStatusObj[CLICKED_ROW] = index;
+			
+			this.openDialog(URL_ADMIN_LESSON_DETAIL_DIALOG);	//授業詳細ダイアログを開く
+			//選択なし、または2行以上選択されていたら
+			} else {
+				//警告を出す
+				alert(MESSAGE_NEED_SELECT_RECORD);
+			}
+	}
+	
+	/* 関数名:callbackCreateNew
+	 * 概要　:削除ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
+	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:015.08.22
+	 * 作成日　:2016.0409
 	 * 作成者　:T.Masuda
 	 */
-	this.callbackRowClick = function(rowIndex) {
-		//ダイアログの状態を表すオブジェクトを取得する
-		var returnStatusObj = this[DIALOG_CLASS].getReturnStatusObject();
-		//取得したオブジェクトにクリックした行の番号をセットする
-		returnStatusObj[CLICKED_ROW] = rowIndex;
-		//ボタンが押されたときの状態の値を設定する。
-		this[DIALOG_CLASS].setPushedButtonState(EDIT_LESSON);
-		
-		this.openDialog(URL_ADMIN_LESSON_DETAIL_DIALOG);	//授業詳細ダイアログを開く
-	};
-
+	this.callbackDelete = function(){
+		this.dialogClass.setPushedButtonState(DELETE);
+	}
 
 	/* 関数名:setArgumentObj
 	 * 概要　:ダイアログに渡すオブジェクトを生成する
@@ -194,7 +196,6 @@ function adminLessonListDialog(dialog){
 		var argumentObj = commonFuncs.createCloneObject(this[DIALOG_CLASS].getArgumentObject());
 		//returnObjに格納された押されたボタンの値を取得する
 		var pushedButtonState = this[DIALOG_CLASS].getPushedButtonState();
-		
 		//イベントコールバックの起点となったものを判別する
 		switch(pushedButtonState){
 			//新規作成ボタンが押された
@@ -207,17 +208,25 @@ function adminLessonListDialog(dialog){
 						{parentDialogBuilder:this, callback:this.newLessonEntry}
 				);
 				break;	//switchを抜ける
+			//編集ボタン
+			case EDIT:
+				//選択されている行を取得する
+				var $selectedRecord = $(SELECTOR_TBODY_TR, $(this.dialog)).filter('.selectRecord');
+				//当該行の順番を調べる
+				var index = $(SELECTOR_TBODY_TR, $(this.dialog)).index($selectedRecord);
+				//既存の授業のデータを取得してまとめる
+				$.extend(true,
+						argumentObj.data, //このダイアログに渡されたインプット用データ
+						//行データ
+						this.create_tag.json.lessonTable.tableData[index],
+						{parentDialogBuilder:this}	//当クラスインスタンス
+				);
+				break;	//switchを抜ける
+			//削除ボタン
+			case DELETE:
+				break;	//switchを抜ける
 			//授業一覧テーブルの行がクリックされた
 			default:
-				//クリックした行番号を取得するため、returnObjのreturnStatusObjを取得する
-				var returnStatusObj = this[DIALOG_CLASS].getReturnStatusObject();
-				//既存の授業のデータを取得してまとめる
-				$.extend(true, 
-							argumentObj.data, //このダイアログに渡されたインプット用データ
-							//行データ
-							this.create_tag.json.lessonTable.tableData[returnStatusObj[CLICKED_ROW] - 1], 
-							{parentDialogBuilder:this}	//当クラスインスタンス
-				);
 				break;	//switchを抜ける
 		}
 
