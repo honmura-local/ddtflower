@@ -603,6 +603,17 @@ ul.mailSendContent {
 }
 
 /* 
+ * セレクタ :#mailMagaAndAnnounce .normalButton
+ * 概要   :メルマガタブの汎用ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.10
+ */
+#mailMagaAndAnnounce .normalButton {
+	margin : 5px;	/* 一律でmarginを設定する */
+}
+
+
+/* 
  * セレクタ :.messageTitleLabel
  * 概要   :送信するメッセージのタイトルのラベル領域
  * 作成者 :T.Yamamoto
@@ -639,7 +650,7 @@ ul.mailSendContent {
  * 作成日 :2015.07.09
  */
 .mailMagaContentSearchLabel {
-	width: 60%;		/* 幅を60%にする */
+	width: auto;		/* 幅を60%にする */
 }
 
 /* 
@@ -649,7 +660,7 @@ ul.mailSendContent {
  * 作成日 :2015.07.09
  */
 .mailMagaContentSearchTextbox {
-	width: 88%;		/* 幅を80%にする */
+	width: 200px;		/* 幅を80%にする */
 }
 
 /* 
@@ -765,7 +776,7 @@ ul.mailSendContent {
 	 * 作成日 :2015.07.09
 	 */
 	.mailMagaContentSearchLabel {
-		width: 77%;		/* 幅を77%にする */
+		width: auto;		/* 幅を77%にする */
 	}
 
 	/* 
@@ -775,7 +786,7 @@ ul.mailSendContent {
 	 * 作成日 :2015.07.09
 	 */
 	.mailMagaContentSearchTextbox {
-		width: 80%;		/* 幅を80%にする */
+		width: 110px;		/* 幅を50%にする */
 	}
 }
 
@@ -934,6 +945,27 @@ ul.mailSendContent {
 	 */
 	.messageTitleLabel {
 		width: 19%;			/* 幅を19%にする */
+	}
+	
+	/* 
+	 * セレクタ :.mailMagaContentSearchTextbox
+	 * 概要   :検索領域のテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	.mailMagaContentSearchTextbox {
+		width: 200px;		/* 幅を50%にする */
+	}
+	
+	/* 
+	 * セレクタ :#mailMagaAndAnnounce .buttonArea
+	 * 概要   :メルマガの新規ボタン、削除ボタン領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.10
+	 */
+	#mailMagaAndAnnounce .buttonArea {
+	    float: right;	/* スマホレイアウト時には段組み解除となっているため右に寄せる */
+	    width: auto;	/* 幅を中身に合わせる */
 	}
 	/* メルマガ・アナウンス画面領域終わり */
 }

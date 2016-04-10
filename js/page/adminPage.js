@@ -812,7 +812,7 @@ function setSelectedCommodity(create_tag, showMaxNum, targetTable, targetRowClas
  */
 function afterReloadMailMagaTable() {
 	//メルマガの内容列に対して150文字以上の内容は画面には表示しないようにする。テキストボックスにはすべての値が反映される
-	cutString('.mailMagaContent', '150');
+	//cutString('.mailMagaContent', '150');
 	//メルマガテーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 	commonFuncs.setTableRecordClass('mailMagaTable', 'targetMailMagazine');
 }
@@ -1858,3 +1858,16 @@ function setPopupSearchDialog (target){
 		popupSearchDialog();	//検索ダイアログを表示する
 	});
 }
+
+/*
+ * 関数名:deleteAfterReloadMailMagaTable
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :メルマガの削除実行後の処理関数
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function deleteAfterReloadMailMagaTable(){
+	//テーブルをリロードする
+	$('#mailMagaAndAnnounce')[0].create_tag.loadTableData('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable', '$("#mailMagaAndAnnounce")[0].');
+} 

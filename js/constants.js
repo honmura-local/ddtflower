@@ -1009,4 +1009,13 @@ SELECTOR_SEARCH_USER_LIST_CURRENT		= '.searchUserList:visible:last';
 SELECTOR_INPUT_BUTTON					= 'input[type="button"]';
 //ユーザ検索のテキスト
 TEXT_USER_SEARCH						= 'ユーザ検索';
+//メルマガダイアログのパス
+PATH_MAILMAGA_DIALOG					= 'dialog/mailMagaDialog.html';
+//メルマガダイアログのJSファイルパス
+PATH_MAILMAGA_DIALOG_JS					= 'dialog/js/mailMagaDialog.js';
+//メルマガダイアログのJSONファイルパス
+PATH_MAILMAGA_DIALOG_JSON				= 'dialog/source/mailMagaDialog.json';
+//メルマガダイアログのHTMLファイルパス
+PATH_MAILMAGA_DIALOG_HTML				= 'dialog/template/mailMagaDialog.html';
+
 
