@@ -1017,5 +1017,9 @@ PATH_MAILMAGA_DIALOG_JS					= 'dialog/js/mailMagaDialog.js';
 PATH_MAILMAGA_DIALOG_JSON				= 'dialog/source/mailMagaDialog.json';
 //メルマガダイアログのHTMLファイルパス
 PATH_MAILMAGA_DIALOG_HTML				= 'dialog/template/mailMagaDialog.html';
-
-
+//メルマガ編集ダイアログのタイトル
+TEXT_MAIL_MAGA_DIALOG					= 'メルマガ編集';
+//メルマガタブ
+SELECTOR_MAIL_MAGA_TAB					= '#mailMagaAndAnnounce';
+//メルマガテーブルのキー
+KEY_MAIL_MAGA_TABLE						= 'mailMagaTable';

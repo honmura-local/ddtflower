@@ -6,6 +6,16 @@
  * パス :/js/page/adminPage.js
  */
 
+//テーブル用入力値セッティング
+var tableArgSettings ={};
+//メルマガテーブル
+tableArgSettings.mailMaga = {
+		//startPage→表示する1個目のページャの数値。1や0 displayPageMax : ページャの一度に表示する数の最大
+		//displayPage : 表示するページ pageNum : 一度に表示する記事数
+		startPage : 1, displayPageMax : 4, displayPage : 1, pageNum  : 15
+}
+
+
 /* 
  * 関数名:clickEvent
  * 概要  :クリックイベントを登録する
@@ -979,15 +989,15 @@ function setMailMagaSendContent() {
 /* 
  * 関数名:mailMagaSendConfirm
  * 概要  :メルマガ送信の内容を取得して、メルマガ送信ダイアログを作る
- * 引数  :なし
+ * 引数  :String target : イベントコールバック登録対象(基本的にボタン)のセレクタ
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.09.12
  */
-function mailMagaSendConfirm() {
+function mailMagaSendConfirm(target) {
 	
 	//送信ボタンがクリックされたときにメール送信イベントを開始する
-	$(STR_BODY).on(CLICK, '.messageButtonArea .sendButton', function() {
+	$(target).on(CLICK, function() {
 
 		//タイトル、または本文が空であれば
 		if(!commonFuncs.checkEmpty($('.messageTitleTextbox').val()) 
@@ -1000,7 +1010,7 @@ function mailMagaSendConfirm() {
 		//ダイアログ用オブジェクトを作る
 		var dialogObj = commonFuncs.createBasicComfirmDialogObject(sendMailMaga, '送信確認', '入力した内容を送信します。');
 		//インプットデータ用オブジェクトにメルマガ・アナウンスタブのcreateTagをセットする
-		dialogObj.data.create_tag = $('#mailMagaAndAnnounce')[0].create_tag;
+		dialogObj.data.create_tag = $('.dialog:has(.mailMagaAndAnnounceArea)')[0].dialogBuilder.create_tag;
 		//メルマガ送信ダイアログを作る
 		var mailmagazineSendDialog = new dialogEx('dialog/confirmDialog.html', dialogObj);
 		mailmagazineSendDialog.run();	//ダイアログを表示する
@@ -1046,7 +1056,13 @@ function sendMailMaga() {
 					//送信結果を伝える
 					alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
 					//メルマガテーブルをリフレッシュする
-					create_tag.loadTableData('mailMagaTable', 1, 4, 1, 15, '.mailMagaTableOutside', 'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+					$(SELECTOR_MAIL_MAGA_TAB)[0].create_tag.loadTableData(
+							KEY_MAIL_MAGA_TABLE, tableArgSettings.mailMaga.startPage, 
+							tableArgSettings.mailMaga.displayPageMax, tableArgSettings.mailMaga.displayPage, 
+							tableArgSettings.mailMaga.pageNum, '.mailMagaTableOutside',
+							'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+					//ダイアログを閉じる
+					$('.dialog:has(.mailMagaAndAnnounceArea)')[0].instance.destroy();
 				}
 				//通信失敗時
 				,error:function(xhr, status, error){
@@ -1844,9 +1860,6 @@ function popupSearchDialog (){
 /*
  * 関数名:setPopupSearchDialog
  * 引数  :string or Element target: クリックイベント登録先の要素
- *      :string message : ダイアログに出すメッセージ
- *      :string targetRecord : 処理対象のレコードのセレクタ
- *      :function func : 削除の関数
  * 戻り値:なし
  * 概要  :検索ダイアログを表示する関数をボタン等の要素のクリックコールバックに登録する
  * 作成日:2016.04.09
@@ -1871,3 +1884,37 @@ function deleteAfterReloadMailMagaTable(){
 	//テーブルをリロードする
 	$('#mailMagaAndAnnounce')[0].create_tag.loadTableData('mailMagaTable', 1, 4, 1, MAILMAGA_TABLE_SHOW_NUMBER, '.mailMagaTableOutside', 'afterReloadMailMagaTable', '$("#mailMagaAndAnnounce")[0].');
 } 
+
+/*
+ * 関数名:popupMailMagaDialog
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :メルマガ編集ダイアログを表示する
+ * 作成日:2016.04.10
+ * 作成者:T.Masuda
+ */
+function popupMailMagaDialog (){
+	//ダイアログ作成用のオブジェクトのひな形を生成する
+	var argumentObj = commonFuncs.getDefaultArgumentObject();
+	//タイトルを設定する
+	argumentObj.config.title = TEXT_MAIL_MAGA_DIALOG;
+	//メルマガ編集ダイアログのクラスインスタンスを生成する
+	var mailMagaDialog = new dialogEx(PATH_MAILMAGA_DIALOG, argumentObj);
+	//メルマガ編集ダイアログを表示する
+	mailMagaDialog.run();
+}
+
+/*
+ * 関数名:setPopupMailMagaDialog
+ * 引数  :string target: クリックイベント登録先の要素
+ * 戻り値:なし
+ * 概要  :メルマガ編集を表示する関数をボタン等の要素のクリックコールバックに登録する
+ * 作成日:2016.04.10
+ * 作成者:T.Masuda
+ */
+function setPopupMailMagaDialog (target){
+	//対象をクリックしたら
+	$(target).on(CLICK, function(){
+		popupMailMagaDialog();	//メルマガ編集ダイアログを表示する
+	});
+}
