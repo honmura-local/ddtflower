@@ -616,30 +616,39 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
  * 関数名:userListSearch
  * 概要  :管理者 会員一覧の検索機能を有効にする
  * 引数  :なし
- * 返却値  :なし
+ * 返却値  :String targetPage : 対象となる画面のセレクタ。createTagの参照を持っている要素である必要あり
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Yamamoto
+ * 変更日:2016.04.10
+ * 内容　:イベントコールバック登録を除去しました。
  */
-function userListSearch() {
-//検索ボタンをクリックしたときにテーブルの内容を更新する
-	$(STR_BODY).on(CLICK, '.searchUserButton', function() {
-		//当該タブのcreateTagを取得する
-		var userListCreateTag = $('#userList')[0].create_tag;
+function userListSearch(targetPage) {
+		//当該画面のcreateTagを取得する
+		var userListCreateTag = $(targetPage)[0].create_tag;
 		//クエリのデフォルトを取得する
 		var defaultQuery = userListCreateTag.json.userListInfoTable.db_getQuery;
 		//クエリを変数に入れてクエリ発行の準備をする
-		var sendQuery = {db_getQuery:new adminUserSearcher($.extend(true, {}, userListCreateTag.json.userListInfoTable)).execute()}
+		var sendQuery = {db_getQuery:new adminUserSearcher($.extend(true, {}, userListCreateTag.json.userListInfoTable)).execute(SELECTOR_SEARCH_USER_LIST_CURRENT)}
 		userListCreateTag.json.userListInfoTable.tableData = [];	//データを消しておく
 		//会員一覧のデータを取り出す
-		userListCreateTag.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, 'userListInfoTable');
+		userListCreateTag.getJsonFile(URL_GET_JSON_ARRAY_PHP, sendQuery, KEY_USER_INFO_LIST_TABLE);
 		//クエリをデフォルトに戻す
 		userListCreateTag.json.userListInfoTable.db_getQuery = defaultQuery;
-		//取得した値が0の時のテーブルを作らない
-//		if(userListCreateTag.json.userListInfoTable[TABLE_DATA_KEY].length != 0) {
+
+		//1件以上取得できていれば
+		if(userListCreateTag.json[KEY_USER_INFO_LIST_TABLE].tableData.length){
 			//ページング機能付きでユーザ情報一覧テーブルを作る
-			userListCreateTag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', "afterReloadUserListInfoTable", "$('#userList')[0].");
-//		}
-	});
+			userListCreateTag.outputNumberingTag(KEY_USER_INFO_LIST_TABLE, 1, 4, 1, 15, SELECTOR_USER_LIST_TABLE_OUTSIDE, FUNC_AFTER_RELOAD_USER_LIST_INFO_TABLE, JQUERY_OBJECT_FRONT + targetPage + JQUERY_OBJECT_REAR_0INDEX);
+		//0件ならヘッダー行だけ出力する
+		} else {
+			//ダミーデータを入れる
+			userListCreateTag.json[KEY_USER_INFO_LIST_TABLE].tableData[0] = {user_name: "", pre_paid: "", get_point:"",id:"",mail_address:"",pre_paid:"",update_date:"",user_name:""};
+			//ページング機能付きでユーザ情報一覧テーブルを作る
+			userListCreateTag.outputNumberingTag(KEY_USER_INFO_LIST_TABLE, 1, 4, 1, 15, SELECTOR_USER_LIST_TABLE_OUTSIDE, FUNC_AFTER_RELOAD_USER_LIST_INFO_TABLE, JQUERY_OBJECT_FRONT + targetPage + JQUERY_OBJECT_REAR_0INDEX);
+			//ダミー行を削除する
+			$(SELECTOR_TBODY_TR, $(SELECTOR_USER_INFO_LIST_TABLE)).remove();
+		}
 }
 
 /* 
@@ -1810,5 +1819,42 @@ function executeDeleteRecord (target, message, targetRecord, func){
 		
 		//ダイアログを呼び出して確認を取った上で削除を行う
 		askExecuteDelete(message, func);
+	});
+}
+
+/*
+ * 関数名:popupSearchDialog
+ * 引数  :string or Element target: クリックイベント登録先の要素
+ * 戻り値:なし
+ * 概要  :検索ダイアログを表示する
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function popupSearchDialog (){
+	//ダイアログ作成用のオブジェクトのひな形を生成する
+	var argumentObj = commonFuncs.getDefaultArgumentObject();
+	//タイトルを設定する
+	argumentObj.config.title = TEXT_USER_SEARCH;
+	//検索用ダイアログのクラスインスタンスを生成する
+	var searchDialog = new dialogEx(PATH_USER_SEARCH_DIALOG, argumentObj);
+	//ユーザ検索ダイアログを表示する
+	searchDialog.run();
+}
+
+/*
+ * 関数名:setPopupSearchDialog
+ * 引数  :string or Element target: クリックイベント登録先の要素
+ *      :string message : ダイアログに出すメッセージ
+ *      :string targetRecord : 処理対象のレコードのセレクタ
+ *      :function func : 削除の関数
+ * 戻り値:なし
+ * 概要  :検索ダイアログを表示する関数をボタン等の要素のクリックコールバックに登録する
+ * 作成日:2016.04.09
+ * 作成者:T.Masuda
+ */
+function setPopupSearchDialog (target){
+	//対象をクリックしたら
+	$(target).on(CLICK, function(){
+		popupSearchDialog();	//検索ダイアログを表示する
 	});
 }

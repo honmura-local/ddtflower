@@ -144,9 +144,11 @@ var adminUserSearcher = function(userListInfoTable) {
 	
 	// 検索用テキスト全体をぶん回して「data-col_name」属性の値が
 	// adminUserSearchConditionsに対応していればクエリ生成メソッドが呼ばれる。
-	this.execute = function() {
+	this.execute = function(form) {
+		//親要素が指定してあったらセレクタに追記する
+		var target = form ? form + " .adminUserSearch" : ".adminUserSearch";
 		result = baseQuery;	// 呼ばれるたびに結果は初期化
-		$(".adminUserSearch").each(function(){
+		$(target).each(function(){
 			var col_name = $(this).data("col_name");
 			var value = $(this).val();
 			if(col_name in adminUserSearchConditions) {

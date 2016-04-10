@@ -24,8 +24,11 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
-			// ユーザ検索テキストボックス
+			// ユーザ検索テキストボックスの領域を作る
 			create_tag.outputTag('searchUserList', 'searchUserList', '#userList');
+			// ユーザ検索フォームのダイアログを表示するボタンを作る
+			commonFuncs.putSearchButton('#userList', 'showUserSearchListDialogButton searchIconButton')
+			
 			//ユーザ一覧ページングの一番外側となる領域を作る
 			create_tag.outputTag('userListPagingArea', 'divArea', '#userList');
 			//ページングのテーブルを作るためにテーブルの外側となるdivを作る
@@ -50,13 +53,14 @@
 			create_tag.outputNumberingTag('userListInfoTable', 1, 4, 1, 15, '.userListTableOutside', 'afterReloadUserListInfoTable', "$('#userList')[0].");
 			//会員一覧タブのボタン群れ
 			create_tag.outputTag('userListButtons', 'userListButtons', '#userList');
-			//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-			commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 			toggleClassClickElement('tr', 'selectRecord', '.userListTableOutside');
-			//検索ボタンをクリックしたときにテーブルの内容を更新する
-			userListSearch();
-
+			
+			//検索ボタンを押すと検索ダイアログを開く
+			setPopupSearchDialog('#userList .showUserSearchListDialogButton');
+			//検索フォームフォーカス時エンターキー押下で検索を行う様にする
+			commonFuncs.enterKeyCallFunction('.adminUserSearch', '#adminTab .searchUserList', 'userListSearch("#userList");');
+			
 			//他画面から飛んできていたら
 			if (commonFuncs.checkEmpty(beforePanel)) {
 				//ユーザ選択決定用ボタンを表示する

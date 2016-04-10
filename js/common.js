@@ -2518,8 +2518,53 @@ this.defaultClassworkCostColumns = [
 		return isSuccess;	//結果を返す
 	}
 	
+	/* 
+	 * 関数名:putSearchButton
+	 * 概要  :検索ボタンを追加する
+	 * 引数  :String target : 追加先セレクタ
+	 *      :String className : ボタンに設定するクラス
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.09
+	 */
+	this.putSearchButton = function(target, className){
+		//ボタンを生成し、クラスを設定する
+		var $button = $(HTML_BUTTON).addClass(className);
+		//jQuery UIのボタンにする
+		$button.button({
+			text : false	//テキストなし
+			//サーチアイコンを設定する
+			,icons : {primary : JQUERYUI_ICON_SEARCH}
+		});	
+
+		//指定した場所にボタンを配置する
+		$(target).append($button);
+	}
+
+	 /* 
+	  * 関数名:enterKeyCallFunction
+	  * 概要  :指定したテキストボックスをフォーカスしている最中にエンターキーを押すと
+	  *      :指定した関数をコールするようにする
+	  * 引数  :String enterTarget:エンターキーを押したときに対象となるセレクター名
+	  *       String targetElder:テキストボックスの祖先要素
+	  *       String func:コールする関数。evalによる遅延評価を行うので文字列で渡す
+	  * 返却値  :なし
+	  * 作成者:T.Masuda
+	  * 作成日:2016.04.10
+	 * 変更者:T.Masuda
+	  */
+	 this.enterKeyCallFunction = function(enterTarget, targetElder, func) {
+	 	//指定した対象フォーカス時のキー押下イベントコールバックを登録する
+	 	$(targetElder).on(EVENT_KEYPRESS, enterTarget, function (e) {
+	 		//エンターボタンが押された時の処理
+	 		if (e.which == NUM_ENTER_KEY) {
+	 			//関数をコールする
+	 			eval(func);
+	 		}
+	 	});
+	 }
 	
-//ここまでクラス定義領域
+	//ここまでクラス定義領域
 }
 
 //どこでも当暮らすインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する

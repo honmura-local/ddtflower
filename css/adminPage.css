@@ -433,7 +433,7 @@
  */
 .searchUserArea {
 	width: 32%;			/* PCでは3つのラベルテキストボックスを入れたいので32%にする */
-	text-align: center;	/* テキストを中央揃えにする */
+	text-align: left;	/* テキストを中央揃えにする */
 	margin-bottom: 5px;	/* 下に5pxの余白をとる */
 }
 
@@ -444,7 +444,8 @@
  * 作成日 :2015.07.29
  */
 .searchLabel {
-	width: 32%;			/* テキストボックスのスペースを広めにとるためにラベルを32%(最小値)に設定する */
+	width: 40%;			/* テキストボックスのスペースを広めにとるためにラベルを40%に設定する */
+	font-size: 14px;
 }
 
 /* 
@@ -454,7 +455,7 @@
  * 作成日 :2015.07.29
  */
 .searchUserArea input[type="text"] {
-	width: 64%;			/* テキストボックスのスペースを広めにとるため64%(最大値)に設定する */
+	width: 50%;			/* テキストボックスのスペースを広めにとるため50%に設定する */
 }
 
 /* 
@@ -525,6 +526,47 @@ ul.mailSendContent {
 	height: 200px;			/* 高さを200pxにする */
 }
 
+/* 
+ * セレクタ :.dialog .searchUserList
+ * 概要   :ユーザ検索ダイアログ フォーム領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.dialog .searchUserList {
+    width: 280px;	/* 固定幅を設定する。iPhoneで使いやすいサイズを想定 */
+}
+
+/* 
+ * セレクタ :.dialog .searchUserList .searchUserArea
+ * 概要   :ユーザ検索ダイアログ フォーム領域 ラベルとテキストボックスのセット
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.dialog .searchUserList .searchUserArea {
+    width: 100%;		/* 幅を一杯にとり、1項目1行とする */
+    font-size: 14px;	/* 適切なフォントサイズを取る */
+}
+
+/* 
+ * セレクタ :.showUserSearchListDialogButton
+ * 概要   :ユーザ検索ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.showUserSearchListDialogButton {
+    float: right;	/* 右に寄せる */
+    margin: 5px;	/* 全体的にmarginを取る */
+}
+
+/* 
+ * セレクタ :.showUserSearchListDialogButton
+ * 概要   :検索ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.searchIconButton {
+    height: 30px;	/* 高さを指定する */
+}
 /* 受講者一覧の検索領域 */
 /* 
  * セレクタ :.fromArea, .toArea
@@ -740,6 +782,38 @@ ul.mailSendContent {
 /* スマホ用微調整 */
 @media(max-width:415px){
 
+	/* ユーザ一覧 */
+	/* 
+	 * セレクタ :#adminTab .searchLabel
+	 * 概要   :ユーザ検索フォーム フォーム領域 ラベル
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.10
+	 */
+	#adminTab .searchLabel {
+	    width: 100%;		/* 幅が足りなくなってくるので段組みをやめる */
+	}
+	
+	/* 
+	 * セレクタ :.dialog .searchLabel
+	 * 概要   :ユーザ検索ダイアログ フォーム領域 ラベル
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.10
+	 */
+	.dialog .searchLabel {
+	    width: 100%;		/* 幅を十分に取る */
+	}
+	
+	/* 
+	 * セレクタ :.searchUserArea input[type="text"]
+	 * 概要   :会員一覧検索のテキストボックス領域
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.29
+	 */
+	.searchUserArea input[type="text"]
+	,.searchUserArea input[type="date"] {
+		width: 80%;			/* 段組みをやめたので大きめに幅を取る */
+	}
+	
 	/* 受講承認領域 */
 	/* 
 	 * セレクタ :.accordionContent input

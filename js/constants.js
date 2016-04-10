@@ -965,3 +965,48 @@ TEXT_DELETE								= '削除';
 MESSAGE_NEED_SELECT_RECORD				= '1行選択してください。';
 //1行以上選択するように要求する警告
 MESSAGE_NEED_SELECT_MORE_1_RECORD		= '1行以上選択してください。';
+//ボタンタグサンプル
+HTML_BUTTON								= '<button type="button"></button>';
+//jquery uiのサーチアイコン
+JQUERYUI_ICON_SEARCH					= 'ui-icon-search';
+//ユーザ検索用ダイアログのパス
+PATH_USER_SEARCH_DIALOG					= 'dialog/userSearchDialog.html';
+//ユーザ検索用ダイアログのJSファイル
+USER_SEARCH_DIALOG_JS					= 'dialog/js/userSearchDialog.js';
+//ユーザ検索用ダイアログのHTMLファイル
+USER_SEARCH_DIALOG_HTML					= 'dialog/template/userSearchDialog.html';
+//ユーザ検索用ダイアログのJSONファイル
+USER_SEARCH_DIALOG_JSON					= 'dialog/source/userSearchDialog.json';
+//ユーザ検索フォームのキー
+KEY_USER_SEARCH_FORM					= 'searchUserList';
+//ユーザ一覧テーブルのキー
+KEY_USER_INFO_LIST_TABLE				= 'userListInfoTable';
+//ユーザ一覧テーブルのセレクタ
+SELECTOR_USER_INFO_LIST_TABLE			= '.userListInfoTable';
+//ユーザ一覧テーブルの格納領域のセレクタ
+SELECTOR_USER_LIST_TABLE_OUTSIDE		= '.userListTableOutside';
+//ユーザ一覧テーブルリロード後処理関数名
+FUNC_AFTER_RELOAD_USER_LIST_INFO_TABLE	= 'afterReloadUserListInfoTable';
+//name属性を指定するセレクタの前後の文字列
+ATTR_EQUAL_NAME_FRONT					= '[name="';
+ATTR_EQUAL_NAME_REAR					= '"]';
+//ユーザ一覧タブ内の検索フォームのセレクタ
+SELECTOR_SEARCH_USER_LIST_INF_ADMINTAB	= '#adminTab .searchUserList';
+//エンターキーの識別番号
+NUM_ENTER_KEY							= 13;
+//キーが押されたイベント
+EVENT_KEYPRESS							= 'keypress';
+
+//jQueryオブジェクト前後の文字列。
+JQUERY_OBJECT_FRONT						= "$('";
+//0番目の要素の場合
+JQUERY_OBJECT_REAR_0INDEX				= "')[0].";
+//typeがbuttonではない要素のセレクタ。inputからbuttonを除外する場合に使う
+SELECTOR_NOT_BUTTON_TYPE				= ':not([type="button"])';
+//有効なユーザ検索フォーム
+SELECTOR_SEARCH_USER_LIST_CURRENT		= '.searchUserList:visible:last';
+//inputによるボタンのセレクタ
+SELECTOR_INPUT_BUTTON					= 'input[type="button"]';
+//ユーザ検索のテキスト
+TEXT_USER_SEARCH						= 'ユーザ検索';
+
