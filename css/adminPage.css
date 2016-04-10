@@ -755,6 +755,28 @@ ul.mailSendContent {
 	width : 70px ;	/* 幅を固定にする */
 }
 
+/* 
+ * セレクタ :.messageInfo .NoLabel,.messageInfo .numberTextox,.sendmessageDate
+ * 概要   :メルマガ編集ダイアログの項目
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.messageInfo .NoLabel,
+.messageInfo .numberTextox,
+.sendmessageDate {
+	display : none;	/* 現状使わないので非表示 */
+}
+
+/* 
+ * セレクタ :.mailMagaAndAnnounceArea
+ * 概要   :メルマガ編集ダイアログ入力フォーム
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.mailMagaAndAnnounceArea {
+    width: 500px;	/* 幅を指定する */
+}
+
 /* メルマガ・アナウンス画面領域終わり */
 
 /* スマホ・タブレットレイアウト */
@@ -942,9 +964,12 @@ ul.mailSendContent {
 	 * 概要   :送信するメッセージのタイトルのラベル領域
 	 * 作成者 :T.Yamamoto
 	 * 作成日 :2015.07.09
+	 * 変更者 :T.Masuda
+	 * 変更日 :2016.04.10
+	 * 内容   :幅を増やして段組みを崩し、なおかつ幅が狭くても文字が改行しないように修正
 	 */
 	.messageTitleLabel {
-		width: 19%;			/* 幅を19%にする */
+		width: 100%;			/* 幅を100%にして段組みを崩す */
 	}
 	
 	/* 
@@ -967,5 +992,16 @@ ul.mailSendContent {
 	    float: right;	/* スマホレイアウト時には段組み解除となっているため右に寄せる */
 	    width: auto;	/* 幅を中身に合わせる */
 	}
+	
+	/* 
+	 * セレクタ :.mailMagaAndAnnounceArea
+	 * 概要   :メルマガ編集ダイアログ入力フォーム
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.10
+	 */
+	.mailMagaAndAnnounceArea {
+	    width: 270px;	/* 幅を指定する */
+	}
+	
 	/* メルマガ・アナウンス画面領域終わり */
 }

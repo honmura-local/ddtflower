@@ -1007,6 +1007,8 @@ SELECTOR_NOT_BUTTON_TYPE				= ':not([type="button"])';
 SELECTOR_SEARCH_USER_LIST_CURRENT		= '.searchUserList:visible:last';
 //inputによるボタンのセレクタ
 SELECTOR_INPUT_BUTTON					= 'input[type="button"]';
+//inputによるリセットボタンのセレクタ
+SELECTOR_INPUT_RESET					= 'input[type="reset"]';
 //ユーザ検索のテキスト
 TEXT_USER_SEARCH						= 'ユーザ検索';
 //メルマガダイアログのパス
