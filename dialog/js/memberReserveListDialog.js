@@ -349,7 +349,7 @@ function memberReserveListDialog(dialog){
 			//キャンセルのクエリをオブジェクトにセットする
 			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.cancelReservedData.db_setQuery;
 			//キャンセルがユーザか管理者かの判定の値をセットする
-			retObj.cancel_user = !this.create_tag.isAdminLoginToMemberPage() ? 0 : 1;
+			retObj.cancel_user = !this.create_tag.isAdminLoginToMemberPage() ? VALUE_USER_CANCEL : VALUE_ADMIN_CANCEL;
 			//キャンセル料をセットする
 			retObj.cancel_charge = dialogBuilder.create_tag.cancel_charge;
 			break;

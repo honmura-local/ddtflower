@@ -1922,6 +1922,13 @@ function popupMailMagaDialog (){
 function setPopupMailMagaDialog (target){
 	//対象をクリックしたら
 	$(target).on(CLICK, function(){
-		popupMailMagaDialog();	//メルマガ編集ダイアログを表示する
+		//選択されているメルマガが0個か1個の場合は
+		if($('#mailMagaAndAnnounce .selectRecord').length <= 1){
+			popupMailMagaDialog();	//メルマガ編集ダイアログを表示する
+		//それ以上選択している場合は
+		} else {
+			//新規の場合は1個までしか選べないという警告を出す
+			alert(MESSAGE_CHOOSE_A_MELMAGA);
+		}
 	});
 }

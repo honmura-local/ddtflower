@@ -1059,3 +1059,17 @@ LABEL_CLOSE_BUTTON						= '閉じる';
 SELECTOR_MAIL_SEND_DIALOG_MAIL_TO_AREA	= '.mailSendContent .mailToArea';
 //labelタグのセレクタ
 SELECTOR_LABEL_TAG						= 'label';
+//ユーザからの授業キャンセルを表す値
+VALUE_USER_CANCEL = 0;
+//管理者からの授業キャンセルを表す値
+VALUE_ADMIN_CANCEL =1;
+//メルマガの内容を流用する場合は1つだけ選択してくださいという内容の警告
+MESSAGE_CHOOSE_A_MELMAGA				= '既存のメルマガの内容を元に新規作成を行う場合は対象を1行選択してください。';
+//メルマガタブ
+SELECTOR_MAILMAGA_TAB					= '#mailMagaAndAnnounce';
+//メルマガテーブルのレコード
+MAILMAGA_TABLE_RECORDS					= '.mailMagaTable tbody tr';
+//メルマガテーブルに対する選択済みナンバリング
+SELECTOR_MAILMAGA_NUMBERING				= '.mailMagaPagingArea .numbering .select';
+//メルマガ編集フォームのセレクタ
+SELECTOR_MAILMAGA_EDIT_AREA				= '.mailMagaAndAnnounceArea';
