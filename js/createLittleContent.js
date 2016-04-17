@@ -1444,7 +1444,7 @@ function createLittleContents(){
 		//置換するkey名
 		replaceQueryKey:'lesson_date',
 		//テーブルのリロードが終わった時に行のクラス名を付ける処理とメルマガ内容列を指定文字数以内にする関数を呼び出す関数名を定義しておく
-		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, create_tag, EACH_DAY_RESERVED_INFO_TABLE_RECORD, 10)',
+		afterReloadFunc:'commonFuncs.tableReplaceAndSetClass(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, false, $("#dayReserver")[0].create_tag, EACH_DAY_RESERVED_INFO_TABLE_RECORD, 10)',
 		//検索結果がなかった時のエラーメッセージ
 		//検索結果がなかった時のエラーメッセージ
 		errorMessage:'この日の予約者はいません'

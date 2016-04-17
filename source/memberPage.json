@@ -642,7 +642,7 @@
 			"fromArea": {
 				"fromLabel": {
 					"class": "fromLabel inlineBlock",
-					"text": "From"
+					"text": ""
 				},
 				"finishedLessonFromDate": {
 					"type": "date",
@@ -652,7 +652,7 @@
 			"toArea": {
 				"toLabel": {
 					"class": "toLabel inlineBlock",
-					"text": "To"
+					"text": "〜"
 				},
 				"finishedLessonToDate": {
 					"type": "date",

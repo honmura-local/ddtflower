@@ -8,7 +8,9 @@
 			var $currentContent = $(CURRENT_WINDOW_MAIN)
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
-
+			//タブパネルのDOMにcreateTagへの参照を保存する
+			$('#dayReserver')[0].create_tag = create_tag;
+			
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
 			// 管理者ページ共通のパーツのJSONを取得する。
@@ -44,7 +46,7 @@
 			}
 			
 			//会員データをクリックして会員画面にログインできるようにする
-			loginMemberPageFromAdminPage('#dayReserver', '.targetEachDayLessonRecord', '.user_key');
+			loginMemberPageFromAdminPage('#dayReserver', SELECTOR_TBODY_TR, '.user_key');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える

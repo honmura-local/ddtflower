@@ -356,16 +356,16 @@ function baseDialog(dialog){
 	                  ];
 	
 	//送信の確認・リセットボタンの配列
-	this.confirm_reset = [
+	this.send_reset = [
 	                   {
-	                	   //確認ボタン
-	                	   text:TEXT_BUTTON_CONFIRM,
+	                	   //送信ボタン
+	                	   text:TEXT_BUTTON_SEND,
 	                	   //コールバック関数
                     		 click:
                       			 //コールバック関数
                       			 function(){
                       			 //更新ボタンの処理を行う
-                      			 this.dialogBuilder.callbackConfirm();
+                      			 this.dialogBuilder.callbackSend();
                       		 }
 	                   },
 	                   {
@@ -608,6 +608,18 @@ function baseDialog(dialog){
 	 */
 	this.callbackConfirm = function(){
 		this.dialogClass.setPushedButtonState(CONFIRM);
+	};
+	
+	/* 関数名:callbackConfirm
+	 * 概要　:ダイアログの確認ボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2016.04.17
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackSend = function(){
+		this.dialogClass.setPushedButtonState(SEND);
 	};
 	
 	/* 関数名:callbackCloseButton

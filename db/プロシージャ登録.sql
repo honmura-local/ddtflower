@@ -2654,6 +2654,8 @@ SELECT
     ,lesson_sub.level_no
     #受講状態
     ,user_classwork.user_work_status AS user_work_status
+    #ユーザID
+    ,user_inf.id AS user_key
 #データ取得元のテーブルを指定する
 FROM
     #授業時間帯情報テーブル

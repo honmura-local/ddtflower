@@ -89,12 +89,17 @@ function dateMovement(clickSelector, nowDateObject) {
 /* 
  * 関数名:updateDateMovement
  * 概要  :進退の領域をクリックしたときに日付を更新する
- * 引数  :なし
+ * 引数  :String clickSelector : クリックイベント対象のセレクタ
+ *      :Object nodDateObject : 日付型
+ *      :createLittleContents create_tag : createLittleContentsクラスインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Masuda
+ * 変更日:2016.04.17
+ * 内容  :create_tagを引数から指定するように変更しました
  */
-var updateDateMovement = function(clickSelector, nowDateObject) {
+var updateDateMovement = function(clickSelector, nowDateObject, create_tag) {
 	//日付を更新する
 	nowDateString = dateMovement(clickSelector, nowDateObject);
 	//jsonに日付の値を入れる
@@ -111,12 +116,15 @@ nowDateObject = new Date();
 /* 
  * 関数名:updateDateSearch
  * 概要  :日付検索をクリックした時の処理
- * 引数  :なし
+ * 引数  :createLittleContents create_tag : createLittleContentsクラスインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Masuda
+ * 変更日:2016.04.17
+ * 内容  :create_tagを引数から指定するように変更しました
  */
-var updateDateSearch = function () {
+var updateDateSearch = function (create_tag) {
 	//表示されている日付を更新するために検索する日付のデータを取得する。
 	var changeDate = $('.dateInput').val();
 	
@@ -143,9 +151,13 @@ var updateDateSearch = function () {
  * 関数名:nowDatePaging
  * 概要  :現在の日付からページング機能を実装する
  * 引数  :clickSelectorParent:クリックボタンのセレクター
+ *      :createLittleContents create_tag : createLittleContentsクラスインスタンス
  * 返却値  :なし
  * 作成者:T.Yamamoto
  * 作成日:2015.07.06
+ * 変更者:T.Masuda
+ * 変更日:2016.04.17
+ * 内容  :create_tagを引数から指定するように変更しました
  */
 function nowDatePaging(clickSelectorParent, creator) {
 	//現在時刻のオブジェクトを作る
@@ -160,7 +172,7 @@ function nowDatePaging(clickSelectorParent, creator) {
 	//clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
 	$(DOT + clickSelectorParent + ' a').click(function() {
 		//コールバック関数の処理を開始する
-		updateDateMovement(this, nowDateObject);
+		updateDateMovement(this, nowDateObject, creator);
 	});
 	//検索ボタンがクリックされた時に日付を更新する
 	$(DOT + 'dateSelect .searchButton').click(function() {
@@ -703,7 +715,7 @@ function jumpToMemberPage(clickTarget, user) {
  */
 function loginMemberPageFromAdminPage(eventBase, clickTarget, getTarget){
 	//対象の要素のクリックイベントコールバックを登録する
-	$(eventBase).on('click', clickTarget, function(e){
+	$(eventBase).on(CLICK, clickTarget, function(e){
 		var id = $(getTarget, this).text();	//対象からテキスト(ID)を取得する
 		loginInsteadOfMember(id);			//取得したIDで会員画面へのログインを行う
 	});
@@ -1128,12 +1140,12 @@ function permitSellCommodity() {
 
 		//validation用の設定オブジェクトを作る
 		//use_pointの未定義チェック
-		var validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isUndefined');
+		var validateSettings = VALIDATOR.getValidationSettingObject(KEY_USE_POINT, 'isUndefined');
 		//use_pointの数字チェック
-		validateSettings = VALIDATOR.getValidationSettingObject('use_point', 'isNumeric', validateSettings);
+		validateSettings = VALIDATOR.getValidationSettingObject(KEY_USE_POINT, 'isNumeric', validateSettings);
 		
 		//createTagを取得する
-		var scpc =$('#sellCommodityPermit')[0].create_tag;
+		var scpc =$(SELECTOR_SELL_COMMODITY_PERMIT_TAB)[0].create_tag;
 		var deleteList = [];
 		
 		//商品購入承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
@@ -1141,10 +1153,10 @@ function permitSellCommodity() {
 			//商品購入承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function(i) {
 				//選択済みレコードであれば
-				if(commonFuncs.checkEmpty($(this).attr('class')) && $(this).attr('class').indexOf('selectRecord') != -1){
+				if(commonFuncs.checkEmpty($(this).attr(CLASS)) && $(this).attr(CLASS).indexOf('selectRecord') != -1){
 					
 					// DBを更新するための値を取得するために置換する連想配列を取得する
-					var sendReplaceArray = scpc.getSendReplaceArray('sellCommodityPermitInfoTable', counter, '.sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
+					var sendReplaceArray = scpc.getSendReplaceArray(KEY_SELL_COMMODITY_PERMIT_INFO_TABLE, counter, '.sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
 					//商品が未選択であれば
 					if(sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_1 || sendReplaceArray.commodity_key == COMMODITY_NOT_SELECTED_KEY_2) {
 						//エラー扱いにするため例外を投げる。対象の行のお客様の名前を挙げる
@@ -1154,20 +1166,20 @@ function permitSellCommodity() {
 					//取得した値が不正かどうかをチェックする
 					VALIDATOR.validate(validateSettings, sendReplaceArray);
 					// ユーザの所持ポイント退避
-					var userGetPoint = sendReplaceArray['get_point'];
+					var userGetPoint = sendReplaceArray[KEY_GET_POINT];
 					//商品購入時のポイントレート
 					var commodityPointrate = 1;
 					// 商品代から加算ポイントを求める
 					var get_point = Math.ceil(Number(sendReplaceArray.pay_price) * commodityPointrate / 100);
-					sendReplaceArray['get_point'] = get_point;
+					sendReplaceArray[KEY_GET_POINT] = get_point;
 					// 支払い金額、使用ポイント計算(ポイントは授業料、備品代の双方に対して消費できる)
-					var usePoint = sendReplaceArray['use_point'];
+					var usePoint = sendReplaceArray[KEY_USE_POINT];
 					if (userGetPoint * 1 < usePoint * 1) {
 						throw new Error("使用ポイント(" + usePoint + ")が所持ポイント(" + userGetPoint + ")を超えています");
 					}
 					
 					//実際の支配額をセットする
-					sendReplaceArray['pay_cash'] = sendReplaceArray['pay_price'] - usePoint;
+					sendReplaceArray[KEY_PAY_CASH] = sendReplaceArray[KEY_PAY_PRICE] - usePoint;
 					
 					//商品購入承認データを更新する
 					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonContainCommodity');
@@ -1201,10 +1213,12 @@ function permitSellCommodity() {
 				//承認済みのデータを削除する
 				for (var i = 0; i < deleteList.length; i++) {
 					//テーブル用JSONをクリアする
-					create_tag.json['sellCommodityPermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
+					create_tag.json[KEY_SELL_COMMODITY_PERMIT_INFO_TABLE].tableData.splice(deleteList[i] - i, 1);
 				}
-			} 
+			}
 			
+		//連番を振り直す
+		commonFuncs.insertSequenceNo(SELECTOR_SELL_COMMODITY_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
 		}
 	});
 }

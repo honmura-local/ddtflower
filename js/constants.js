@@ -290,6 +290,7 @@ CLOSE_BUTTON								= 5;	//閉じる
 LOGIN_NUM									= 6;	//ログインボタン
 EDIT										= 7;	//編集ボタン
 DELETE										= 8;	//削除ボタン
+SEND										= 9;	//送信ボタン
 
 CONFIRM_DIALOG_WAIT							= 30;											//汎用確認ダイアログ関数終了後関数実行までの待ち時間
 ARGUMENT_OBJ								= 'argumentObj';								//dialogExクラスのインプット用オブジェクト名
@@ -680,8 +681,9 @@ KEY_MESSAGE 								= 'message';
 
 //baseDialog.js
 TEXT_BUTTON_NEW								= '新規作成';
-TEXT_BUTTON_CONFIRM 						= '確認';
+TEXT_BUTTON_SEND 							= '送信';
 TEXT_BUTTON_RESET							= 'リセット';
+TEXT_BUTTON_CONFIRM							= '確認';
 
 //errrMessaes 配列errorMessagesのエラーメッセージの配列インデックス番号
 ERROR_CONNECT_								= 0;	//接続失敗
@@ -701,14 +703,14 @@ PROCESSING_CANCEL							= 2;	//予約キャンセル操作を行う
 KEY_DB_SETQUERY 							= 'db_setQuery';
 KEY_DB_GETQUERY 							= 'db_getQuery';
 
-NUMBERING_START 								= 1; 	//ページングの最初の表示する値。1つ目のコンテンツからから表示
-NUMBERING_PAGE 									= 4; 	//ページング化される数。5ページ目から＞＞の記号になる
-NUMBERING_DEFAULT 								= 1;	//ページングは1ページ目から表示する
-NUMBERING_DISPLAY 								= 10;	//ページングの1つのページにつき、10件を表示するようにする
+NUMBERING_START 							= 1; 	//ページングの最初の表示する値。1つ目のコンテンツからから表示
+NUMBERING_PAGE 								= 4; 	//ページング化される数。5ページ目から＞＞の記号になる
+NUMBERING_DEFAULT 							= 1;	//ページングは1ページ目から表示する
+NUMBERING_DISPLAY 							= 10;	//ページングの1つのページにつき、10件を表示するようにする
 
 //会員ページトップ予約関連処理
-LESSON_RESERVE_TEXT								='ご希望の授業の予約が完了しました。';		//予約完了テキスト
-LESSON_CANCEL_TEXT 								='選択した授業の予約をキャンセルしました。';		//予約キャンセル処理
+MESSAGE_FAILED_LESSON_RESERVE_TEXT			= '選択したの授業の予約に失敗しました。\n時間を置いてお試しください。';		//予約失敗テキスト
+MESSAGE_FAILED_LESSON_CANCEL_TEXT 			= '選択した授業のキャンセルに失敗しました。\n時間を置いてお試しください。';	//予約キャンセル失敗テキスト
 
 //テーブルの最初の行を含まないセレクタ
 SEL_NO_TABLE_FIRST_ROW 							= ':not(:first)';
@@ -1027,3 +1029,32 @@ SELECTOR_MAIL_MAGA_TAB					= '#mailMagaAndAnnounce';
 KEY_MAIL_MAGA_TABLE						= 'mailMagaTable';
 //UNIXタイムスタンプの開始日付
 UNIX_TIMESTAMP_START_DATE				= '1900-01-01';
+//商品購入承認テーブルのキー
+KEY_SELL_COMMODITY_PERMIT_INFO_TABLE				= 'sellCommodityPermitInfoTable';
+//商品購入承認テーブルのセレクタ
+SELECTOR_SELL_COMMODITY_PERMIT_INFO_TABLE			= '.sellCommodityPermitInfoTable';
+//テーブルの連番列セレクタ
+SELECTOR_NO_COL										= '.No';
+//取得ポイントのキー
+KEY_GET_POINT							= 'get_point';
+//使用ポイントのキー
+KEY_USE_POINT							= 'use_point';
+//商品購入承認タブのセレクタ
+SELECTOR_SELL_COMMODITY_PERMIT_TAB		= '#sellCommodityPermit';
+//合計額のキー
+KEY_PAY_PRICE							= 'pay_price';
+//支払額のキー
+KEY_PAY_CASH							= 'pay_cash';
+//メールの送信に失敗したという旨のメッセージ
+MESSAGE_FALED_TO_SEND_MAIL					= 'メールの送信に失敗しました。\n時間を置いてお試しください。';
+//メールの送信に失敗したという旨のメッセージ
+MESSAGE_FALED_CREATE_NOTICE				= 'お知らせの登録に失敗しました。\n時間を置いてお試しください。';
+//送信結果ダイアログのタイトル用の文字列
+TITLE_SEND_RESULT						= '送信結果';
+//送信失敗ダイアログのタイトル用の文字列
+TITLE_SEND_FAILED						= '送信失敗';
+//閉じるボタンのラベル
+LABEL_CLOSE_BUTTON						= '閉じる';
+//メール送信ダイアログのメールアドレス欄
+SELECTOR_MAIL_SEND_DIALOG_MAIL_TO_AREA	= '.mailSendContent .mailToArea';
+

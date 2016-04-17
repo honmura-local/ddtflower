@@ -58,6 +58,7 @@ SELECT
 	,stage_inf.stage_no
 	,lesson_sub.level_no
     ,user_classwork.user_work_status AS user_work_status
+    ,user_inf.id AS user_key
 FROM
 	time_table_day
 INNER JOIN

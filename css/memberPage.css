@@ -405,8 +405,18 @@ label,
  * 作成日 :2016.04.10
  */
 .finishedLesson .fromArea, .finishedLesson .toArea {
-    margin: 5px;	/* 全方向適度にmarginを取る */
-    width : auto;	/* 子要素の幅に合わせる */
+    margin: 5px 0 5px;	/* 上下のみmarginを取る */
+    width : auto;		/* 子要素の幅に合わせる */
+}
+
+/* 
+ * セレクタ :.finishedLesson .searchButton
+ * 概要   :受講済みテーブルの絞込ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.17
+ */
+.finishedLesson .searchButton {
+	margin-left : 5px;	/* 左端との間に間隔を取る */
 }
 
 /* 

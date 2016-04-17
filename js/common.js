@@ -2463,6 +2463,19 @@ this.defaultClassworkCostColumns = [
 	}
 	
 	/* 
+	 * 関数名:removeCurrentDialogButtons
+	 * 概要  :現在表示されているダイアログのキャンセルボタンを消し、はいだけ選択するようにする
+	 * 引数  :なし
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.17
+	 */
+	this.removeCurrentDialogButtons = function(){
+		//ボタン領域を消す
+		$('.ui-dialog-buttonpane', $(DOT + UI_DIALOG).filter(':last')).filter(':last').remove();
+	}
+	
+	/* 
 	 * 関数名:removeCurrentDialog
 	 * 概要  :先頭に表示されているダイアログを消す
 	 * 引数  :なし

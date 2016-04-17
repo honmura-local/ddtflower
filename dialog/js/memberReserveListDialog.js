@@ -20,9 +20,9 @@ function memberReserveListDialog(dialog){
 	
 	//予約、キャンセルを行ったときのお知らせのテキストの配列
 	this.noticeMessages = [
-	                       	LESSON_RESERVE_TEXT,
-	                       	LESSON_RESERVE_TEXT,
-	                       	LESSON_CANCEL_TEXT
+	                       	MESSAGE_FAILED_LESSON_RESERVE_TEXT,
+	                       	MESSAGE_FAILED_LESSON_RESERVE_TEXT,
+	                       	MESSAGE_FAILED_LESSON_CANCEL_TEXT
 	                       ];
 	
 
@@ -379,51 +379,54 @@ function memberReserveListDialog(dialog){
 				//親ダイアログでDB更新用JSONをまとめる
 				var sendObject = parentDialogBuilder.updateJson(this.dialogBuilder);
 				//クエリを発行してキャンセル処理を行う
-				parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
-				console.log(sendObject);
+				var sendResult = parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
-				
+
 				//予約中授業テーブルをリロードして予約状況を最新にする
 				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
 				//予約中授業のセレクトメニューを「全て」に戻す
 				$('.selectThemebox').val('全て');
+
+				console.log(sendResult.message);
+				//DBの更新に失敗していたら
+				if(!parseInt(sendResult.message)) {
 				
-				//openイベントはsetArgumentObjでセットしておく
-				var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,
-						//オブジェクトを結合して引数として渡す
-						$.extend({}, true
-								//デフォルトの入力オブジェクトを用意する
-								,commonFuncs.getDefaultArgumentObject()
-								,{
-									//ダイアログ用データ
-									data:{
-										//単なるメッセージのダイアログなのでコールバックなし
-						    			callback : commonFuncs.removeCurrentDialog		
-						    			//ダイアログのメッセージ
-						    			,message:parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]			
-									},
-									//ダイアログ設定データ
-									config : {
-										//open時のコールバック
-										open://基本的にopen時はdispContentsが実行されるようにする
-											function(){
-											//dispContentsをコールしてダイアログの内容を作る
-											commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
-											//いいえボタンを消す
-											commonFuncs.removeCanceButton();
+					//openイベントはsetArgumentObjでセットしておく
+					var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,
+							//オブジェクトを結合して引数として渡す
+							$.extend({}, true
+									//デフォルトの入力オブジェクトを用意する
+									,commonFuncs.getDefaultArgumentObject()
+									,{
+										//ダイアログ用データ
+										data:{
+											//単なるメッセージのダイアログなのでコールバックなし
+							    			callback : commonFuncs.removeCurrentDialog		
+							    			//ダイアログのメッセージ
+							    			,message:parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]			
+										},
+										//ダイアログ設定データ
+										config : {
+											//open時のコールバック
+											open://基本的にopen時はdispContentsが実行されるようにする
+												function(){
+												//dispContentsをコールしてダイアログの内容を作る
+												commonFuncs.setCallbackToEventObject(this, 'dialogBuilder', 'dispContents');
+												//ボタンを消す
+												commonFuncs.removeCurrentDialogButtons();
+											}
+											//モーダル表示にする
+											,modal : true
 										}
-										,modal : true
 									}
-								}
-						)
-				);
+							)
+					);
+					
+					//openイベントのコールバック関数をセットする
+					confirmDialog.run();	//ダイアログを開く
+				};
 				
-				//openイベントのコールバック関数をセットする
-				confirmDialog.run();	//ダイアログを開く
-				
-				//予約、キャンセルに応じた通知のアラートを出す
-				//alert(parentDialogBuilder.noticeMessages[parentDialogBuilder.manipulation]);
 				break;	//switchを抜ける
 		default:break;	//switchを抜ける
 		}
