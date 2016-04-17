@@ -1025,3 +1025,5 @@ TEXT_MAIL_MAGA_DIALOG					= 'メルマガ編集';
 SELECTOR_MAIL_MAGA_TAB					= '#mailMagaAndAnnounce';
 //メルマガテーブルのキー
 KEY_MAIL_MAGA_TABLE						= 'mailMagaTable';
+//UNIXタイムスタンプの開始日付
+UNIX_TIMESTAMP_START_DATE				= '1900-01-01';

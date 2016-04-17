@@ -2563,7 +2563,25 @@ this.defaultClassworkCostColumns = [
 	 		}
 	 	});
 	 }
-	
+
+	 /* 
+	  * 関数名:getTodayDateString
+	  * 概要  :今日の日付の文字列を返す
+	  * 引数  :なし
+	  * 返却値  :なし
+	  * 作成者:T.Masuda
+	  * 作成日:2016.04.10
+	  */
+	this.getTodayDateString = function(){
+		//今日の日付の文字列を取得する。
+		//2つの日付型を作る
+		var today = new Date();
+		//2つ目は1つめを使って本日の日付を入力して生成する
+		var date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+		
+		return date.toString();	//日付を文字列にして返す
+	}
+	 
 	//ここまでクラス定義領域
 }
 

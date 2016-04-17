@@ -399,6 +399,17 @@ label,
 }
 
 /* 
+ * セレクタ :.finishedLesson .fromArea, .finishedLesson .toArea
+ * 概要   :受講済みテーブルの日付入力欄領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.10
+ */
+.finishedLesson .fromArea, .finishedLesson .toArea {
+    margin: 5px;	/* 全方向適度にmarginを取る */
+    width : auto;	/* 子要素の幅に合わせる */
+}
+
+/* 
  * セレクタ :.replaceTextboxTypeNumber
  * 概要   :テーブルの数字を入力するテキストボックス
  * 作成者 :T.Yamamoto

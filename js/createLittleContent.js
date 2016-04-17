@@ -1531,6 +1531,17 @@ function createLittleContents(){
 	this.replaceTableQuery = function(queryArrayKey) {
 		//テーブルのクエリを置換するための値をセレクタから取得する
 		var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
+		
+		//取得する授業の日時の範囲を取得する
+		var fromDate = $('.finishedLessonFromDate').val();
+		var toDate = $('.finishedLessonToDate').val();
+		//日付が入力されていたら
+		if(commonFuncs.checkEmpty(fromDate) && commonFuncs.checkEmpty(toDate)) {
+			//それぞれの日付をJSONにセットする
+			this.json[queryArrayKey].fromDate.value = $('.finishedLessonFromDate').val();
+			this.json[queryArrayKey].toDate.value = $('.finishedLessonToDate').val();
+		}
+		
 		//置換するものが「全て」以外であれば置換する
 		if (replaceValue != '全て') {
 			//テーブルのクエリを置換するためのkey名を取得する

@@ -44,17 +44,31 @@
 	create_tag.outputTag('finishedLesson', 'tabInContent', $('.tabContentArea', $currentContent));
 	//受講済み授業の絞り込み領域を作る
 	create_tag.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
+	//受講済み授業の絞り込み領域を作る
+	create_tag.outputTag('lessonListSearch', 'lessonListSearch', '#finishedLesson');
 	//受講済みテーブルページングの一番外側となる領域を作る
 	create_tag.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
 	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
 	create_tag.outputTag('finishedLessonTableOutside', 'divArea', '.finishedLessonPagingArea');
 	// ナンバリング領域を作る
 	create_tag.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
+	
+	//デフォルトの時間をセットする
+	//UNIX時間の最初から
+	create_tag.json.finishedLessonTable.fromDate.value = UNIX_TIMESTAMP_START_DATE;
+	//本日
+	create_tag.json.finishedLessonTable.toDate.value = commonFuncs.getTodayDateString;
+	
 	//受講済み授業一覧のデータを取り出して一覧テーブルを作成して表示する
 	create_tag.loadTableData('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging', "$('#finishedLesson')[0].");
 	
 	//授業の絞り込み機能を実装する
 	setConfigFinishedLesson();
+	//ボタンの見た目を良くする
+	$('input[type="button"], button', $('#finishedLesson')).button();
+	
+	//絞込ボタンの機能を有効にする
+	addExecuteFinishedLessonSearchEvent('.searchButton');
 	
 </script>
 </body>
