@@ -46,7 +46,6 @@
 			} else {
 				//ダミーのデータを用意する
 				create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY][0] = DUMMY_LECTUREPERMIT_DATA;
-				console.log(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY]);
 				//受講承認タブのリストテーブル
 				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
 				//ダミーデータを削除する
@@ -59,7 +58,7 @@
 			//承認ボタンクリックでデータを更新する
 			loopUpdatePermitLesson();
 			//削除ボタンを押すと選択したレコードを削除する
-			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No')");
+			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No');commonFuncs.toggleScrollY('.doLecturePermitInfoTable');");
 
 			var $activePanel = $('#permitTab .tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
@@ -82,6 +81,9 @@
 			
 			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
 			moveToUserList('doLecturePermit', '#doLecturePermit .addUserRecordButton');
+			//テーブルのスクロールを修正する
+			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
+			
 			</script>
 	</body>
 </html>

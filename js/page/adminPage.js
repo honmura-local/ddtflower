@@ -569,8 +569,12 @@ function loopUpdatePermitLesson() {
 					//テーブル用JSONをクリアする
 					create_tag.json['doLecturePermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
 				}
-			} 
+			}
 			
+			//スクロールバーが不要なら消す
+			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
+			//連番を振り直す
+			commonFuncs.insertSequenceNo(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
 		}
 	});
 }
@@ -1012,13 +1016,8 @@ function mailMagaSendConfirm(target) {
 			return;		//処理を終える
 		}
 		
-		//ダイアログ用オブジェクトを作る
-		var dialogObj = commonFuncs.createBasicComfirmDialogObject(sendMailMaga, '送信確認', '入力した内容を送信します。');
-		//インプットデータ用オブジェクトにメルマガ・アナウンスタブのcreateTagをセットする
-		dialogObj.data.create_tag = $('.dialog:has(.mailMagaAndAnnounceArea)')[0].dialogBuilder.create_tag;
-		//メルマガ送信ダイアログを作る
-		var mailmagazineSendDialog = new dialogEx('dialog/confirmDialog.html', dialogObj);
-		mailmagazineSendDialog.run();	//ダイアログを表示する
+		//メルマガを送信する
+		sendMailMaga();
 	});
 }
 
@@ -1032,56 +1031,52 @@ function mailMagaSendConfirm(target) {
  */
 function sendMailMaga() {
 
-	//はいボタンが押されていたら
-	if(this.instance.getPushedButtonState() == YES){
-		
-		//メルマガタブのcreateTagを取得する
-		var create_tag = this.instance.getArgumentDataObject().create_tag;
-		//メルマガを送信するための値をテキストボックスから取得する
-		var data = commonFuncs.getInputData('.mailMagaAndAnnounceArea');
-		var sendObject = {									//送信するデータのオブジェクト
-				//DB保存用クエリ
-				db_setQuery : create_tag.json.insertMailMagazine.db_setQuery
-				,subject:data.magazine_title	//タイトル
-				,content:data.magazine_content	//本文
-				,type :data.magazine_type		//メルマガの種別
-				,school_key : data.school_key	//校舎キー
-		}
-
-		//DBにメルマガの内容を保存する。成功していれば送信処理に移る
-		if (new baseDialog().sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject)) {
-			$.ajax({					//PHPにメール用データを渡すAjax通信
-				url:SEND_MAILMAGA_PHP			//PHPのURLを設定する
-				,data:sendObject	//送信データのオブジェクト
-				,dataType:"json"	//JSON形式でデータをもらう
-				,type:"POST"		//POSTメソッドでHTTP通信する
-				,async : false		//同期通信を行う
-				,cache : false		//通信結果をキャッシュしない
-				,success:function(json){		//通信成功時
-					//送信結果を伝える
-					alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
-					//メルマガテーブルをリフレッシュする
-					$(SELECTOR_MAIL_MAGA_TAB)[0].create_tag.loadTableData(
-							KEY_MAIL_MAGA_TABLE, tableArgSettings.mailMaga.startPage, 
-							tableArgSettings.mailMaga.displayPageMax, tableArgSettings.mailMaga.displayPage, 
-							tableArgSettings.mailMaga.pageNum, '.mailMagaTableOutside',
-							'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
-					//ダイアログを閉じる
-					$('.dialog:has(.mailMagaAndAnnounceArea)')[0].instance.destroy();
-				}
-				//通信失敗時
-				,error:function(xhr, status, error){
-					//送信失敗と再操作要求の旨を伝える
-					alert(SEND_MAILMAGA_FAIL_HALF);
-				}
-			});
-		//DBへの保存失敗時
-		} else {
-			//失敗の旨を伝える
-			alert(SEND_MAILMAGA_FAIL_ALL);
-		}
-		
+	//メルマガダイアログのcreateTagを取得する
+	var create_tag = $('.dialog:has(.mailMagaAndAnnounceArea)')[0].dialogBuilder.create_tag;
+	//メルマガを送信するための値をテキストボックスから取得する
+	var data = commonFuncs.getInputData('.mailMagaAndAnnounceArea');
+	var sendObject = {									//送信するデータのオブジェクト
+			//DB保存用クエリ
+			db_setQuery : create_tag.json.insertMailMagazine.db_setQuery
+			,subject:data.magazine_title	//タイトル
+			,content:data.magazine_content	//本文
+			,type :data.magazine_type		//メルマガの種別
+			,school_key : data.school_key	//校舎キー
 	}
+
+	//DBにメルマガの内容を保存する。成功していれば送信処理に移る
+	if (new baseDialog().sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject)) {
+		$.ajax({					//PHPにメール用データを渡すAjax通信
+			url:SEND_MAILMAGA_PHP			//PHPのURLを設定する
+			,data:sendObject	//送信データのオブジェクト
+			,dataType:"json"	//JSON形式でデータをもらう
+			,type:"POST"		//POSTメソッドでHTTP通信する
+			,async : false		//同期通信を行う
+			,cache : false		//通信結果をキャッシュしない
+			,success:function(json){		//通信成功時
+				//送信結果を伝える
+				alert('メルマガの送信を行いました。\n送信結果は以下の通りになります。\n\n送信成功 : ' + json.sendCount + '件\n送信失敗 : ' + json.failCount + '件\nアドレスなし : ' + json.noAddressCount + '件');
+				//メルマガテーブルをリフレッシュする
+				$(SELECTOR_MAIL_MAGA_TAB)[0].create_tag.loadTableData(
+						KEY_MAIL_MAGA_TABLE, tableArgSettings.mailMaga.startPage, 
+						tableArgSettings.mailMaga.displayPageMax, tableArgSettings.mailMaga.displayPage, 
+						tableArgSettings.mailMaga.pageNum, '.mailMagaTableOutside',
+						'afterReloadMailMagaTable', "$('#mailMagaAndAnnounce')[0].");
+				//ダイアログを閉じる
+				$('.dialog:has(.mailMagaAndAnnounceArea)')[0].instance.destroy();
+			}
+			//通信失敗時
+			,error:function(xhr, status, error){
+				//送信失敗と再操作要求の旨を伝える
+				alert(SEND_MAILMAGA_FAIL_HALF);
+			}
+		});
+	//DBへの保存失敗時
+	} else {
+		//失敗の旨を伝える
+		alert(SEND_MAILMAGA_FAIL_ALL);
+	}
+	
 }
 
 /* 
@@ -1210,6 +1205,8 @@ function permitSellCommodity() {
 				}
 			}
 			
+		//テーブルのスクロールを修正する
+		commonFuncs.toggleScrollY('.sellCommodityPermitInfoTable');
 		//連番を振り直す
 		commonFuncs.insertSequenceNo(SELECTOR_SELL_COMMODITY_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
 		}
@@ -1418,6 +1415,12 @@ var backCallbacks = {
 			var tabInstance = $('#adminTab')[0].instance;
 			//タブが切り替わっても元々あったコンテンツを取得し直さない様に一時設定する
 			tabInstance.cache = true;
+			
+			//連番を振り直す
+			commonFuncs.insertSequenceNo(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
+			//スクロールバーが不要なら消す
+			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
+			
 			//元のタブに戻る
 			$('#adminTab').easytabs('select', '#lecturePermit')
 			//呼び出し画面情報を初期値に戻す
@@ -1468,6 +1471,8 @@ var backCallbacks = {
 
 			//合計金額列を編集不可にする
 			$('input[name="pay_price"]').attr('readonly', 'readonly');
+			//テーブルのスクロールを修正する
+			commonFuncs.toggleScrollY('.sellCommodityPermitInfoTable');
 
 			//タブのインスタンスを取得する
 			var tabInstance = $('#adminTab')[0].instance;
@@ -1510,12 +1515,10 @@ function replaceSellCommodityPermitInputs(common) {
  * 作成日:2016.03.19
  */
 function creaetLecturePermitRecord(record) {
-	//連番を取得する
-	var seqNum = $('.doLecturePermitInfoTable tr:not(:first)').length + 1;
 	//返却用のDOMを作成する
 	var retDom =
 			//行の連番
-			$('<table><tr><td>' + seqNum
+			$('<table><tr><td class="No">'
 			//開始〜終了時刻
 			+ TD_FROM_REAR + commonFuncs.allDateTime(record)
 			//受講人数
@@ -1810,7 +1813,7 @@ function askExecuteDelete (message, func){
 	//オブジェクトにメッセージ、コールバック関数をセットする
 	settingObj.data.message = message;
 	//無名関数として引数の関数eval関数にかけるコードをコールバックにセットする
-	settingObj.data.callback = function(){ eval(func);};
+	settingObj.data.callback = function(){ eval(func); this.instance.destroy();};
 	
 	//確認ダイアログのクラスインスタンスを生成する
 	var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,settingObj);

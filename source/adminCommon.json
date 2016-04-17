@@ -156,6 +156,7 @@
 				},
 				"time_table_key": {
 					"columnName": "No."
+					,"className" : "No"
 				},
 				"lesson_date": {
 					"columnName": "日時"

@@ -2685,6 +2685,32 @@ this.defaultClassworkCostColumns = [
 			}
 		});
 	}	
+
+	/* 
+	 * 関数名:toggleScrollY
+	 * 概要  :レコードの高さの総数に合わせてテーブルの上下スクロールバーの表示、非表示を切り替える
+	 * 引数  :String targetTable: 処理対象テーブル
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.17
+	 */
+	this.toggleScrollY = function(targetTable){
+		//処理対象のテーブルを取得する
+		var $targetTable = $(targetTable);
+		//1行当たりの高さを取得する
+		var aHeight = $('tbody tr:first', $targetTable).length ? $('tbody tr:first', $targetTable)[0].innerHeight : 0;
+		//tbody内の要素の高さを算出する
+		var tbodyHeight = aHeight * $('tbody tr', $targetTable).length;
+		//tbodyより行の高さが勝っていなければ
+		if($('tbody', $targetTable)[0].innerHeight >= tbodyHeight) {
+			//スクロールバーを消す
+			$('tbody', $targetTable).css('overflow-y', 'hidden');
+		//そうでなければ
+		} else {
+			//スクロールバーを表示する
+			$('tbody', $targetTable).css('overflow-y', 'scroll');
+		}
+	}
 	
 	//ここまでクラス定義領域
 }
