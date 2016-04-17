@@ -111,15 +111,17 @@ function userSearchDialog(dialog){
 			//ユーザ検索を行う
 			userListSearch(targetPage);
 			
+			//コピー先領域を取得する
+			$copyTarget = $(copyTarget);
 			//テキストボックスのコピー先の既存のテキストボックスを一掃する
-			$(copyTarget).empty();
+			$copyTarget.children(SELECTOR_LABEL_TAG).remove();
 			
 			//入力済みのテキストボックスをユーザ一覧タブ内の検索フォームにコピーする
 			$(SELECTOR_INPUT, thisElem.dialog).filter(SELECTOR_NOT_BUTTON_TYPE).each(function(i){
 				//テキストボックスに値が入っていたら
 				if (commonFuncs.checkEmpty($(this).val())){
 					//指定した先にテキストボックスとラベルをコピーする
-					$(copyTarget).append($(this).parent());
+					$copyTarget.append($(this).parent());
 				}
 			});
 

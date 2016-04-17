@@ -95,7 +95,7 @@
 			"class": "searchLessonPeriodTo searchUserArea",
 			"searchLessonPeriodToLabel": {
 				"class": "searchLabel inlineBlock",
-				"text": "期間(To)"
+				"text": "期間(To)  "
 			},
 			"searchLessonPeriodToTextbox": {
 				"class": "adminUserSearch",

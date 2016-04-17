@@ -1057,4 +1057,5 @@ TITLE_SEND_FAILED						= '送信失敗';
 LABEL_CLOSE_BUTTON						= '閉じる';
 //メール送信ダイアログのメールアドレス欄
 SELECTOR_MAIL_SEND_DIALOG_MAIL_TO_AREA	= '.mailSendContent .mailToArea';
-
+//labelタグのセレクタ
+SELECTOR_LABEL_TAG						= 'label';

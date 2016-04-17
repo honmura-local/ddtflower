@@ -9,7 +9,7 @@
 			
 			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
 			$('#userList')[0].create_tag = create_tag;	//createTagをDOMと結びつける
-			
+
 			// ユーザーページのパーツのテンプレートのJSONを取得する。
 			create_tag.getJsonFile('source/commonUser.json');
 			// 管理者ページ共通のパーツのJSONを取得する。
@@ -27,8 +27,8 @@
 			// ユーザ検索テキストボックスの領域を作る
 			create_tag.outputTag('searchUserList', 'searchUserList', '#userList');
 			// ユーザ検索フォームのダイアログを表示するボタンを作る
-			commonFuncs.putSearchButton('#userList', 'showUserSearchListDialogButton searchIconButton')
-			
+			commonFuncs.putSearchButton('#userList .searchUserList', 'showUserSearchListDialogButton searchIconButton')
+
 			//ユーザ一覧ページングの一番外側となる領域を作る
 			create_tag.outputTag('userListPagingArea', 'divArea', '#userList');
 			//ページングのテーブルを作るためにテーブルの外側となるdivを作る

@@ -432,7 +432,7 @@
  * 作成日 :2015.07.29
  */
 .searchUserArea {
-	width: 32%;			/* PCでは3つのラベルテキストボックスを入れたいので32%にする */
+	width: 31%;			/* PCでは3つのラベルテキストボックスを入れたいので31%にする */
 	text-align: left;	/* テキストを中央揃えにする */
 	margin-bottom: 5px;	/* 下に5pxの余白をとる */
 }
@@ -554,8 +554,8 @@ ul.mailSendContent {
  * 作成日 :2016.04.10
  */
 .showUserSearchListDialogButton {
-    float: right;	/* 右に寄せる */
-    margin: 5px;	/* 全体的にmarginを取る */
+    float: right;		/* 右に寄せる */
+    margin: 0 0 5px 0;	/* 下とだけ離す */
 }
 
 /* 
@@ -844,9 +844,19 @@ ul.mailSendContent {
 	 */
 	.searchUserArea input[type="text"]
 	,.searchUserArea input[type="date"] {
-		width: 80%;			/* 段組みをやめたので大きめに幅を取る */
+		width: 85%;			/* 段組みをやめたので大きめに幅を取る */
 	}
-	
+
+	/* 
+	 * セレクタ :.searchUserArea
+	 * 概要   :会員一覧検索の検索テキストボックス、ラベルを囲む領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.17
+	 */
+	.searchUserArea {
+		width: 29%;	/* 右端にあるボタンの領域確保のため幅を狭める */
+	}
+
 	/* 受講承認領域 */
 	/* 
 	 * セレクタ :.accordionContent input
