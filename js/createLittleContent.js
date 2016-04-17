@@ -2971,6 +2971,21 @@ function createLittleContents(){
 			//テーブルを作る
 			this.outputNumberingTag(tableKey, startPage, displayPageMax, displayPage, pageNum, target, callback, getCreateTag);
 		}
+
+		/*
+		 * 関数名:isAdminLoginToMemberPage
+		 * 概要  :会員画面へ管理者ログインしているかの判定を返す
+		 * 引数　:なし
+		 * 戻り値:boolean : 管理者ログインしているか
+		 * 作成日:2016.0417
+		 * 作成者:T.Masuda
+		 */
+		this.isAdminLoginToMemberPage = function(){
+			//ログイン情報が乗っているため、cookieを取得する
+			var cookies = commonFuncs.GetCookies();
+			//管理者ログイン用IDがcookieにセットされているかを判定して返す
+			return commonFuncs.checkEmpty(cookies.otherUserId);
+		}
 		
 }	//createLittleContentsクラスの終わり
 

@@ -78,6 +78,9 @@
 			commonFuncs.calcPayPrice('.sellCommodityPermitInfoTable');
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 			toggleClassClickElement('tr', 'selectRecord', '.sellCommodityPermitInfoTable');
+			//全選択ボタンを追加する
+			commonFuncs.addSelectAllBox('#sellCommodityPermit .addUserRecordButton', '全選択', false, '.sellCommodityPermitInfoTable', 'selectRecord', false);
+			
 			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
 			moveToUserList('sellCommodityPermit', '#sellCommodityPermit .addUserRecordButton');
 			

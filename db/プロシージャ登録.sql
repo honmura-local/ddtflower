@@ -200,6 +200,7 @@ CREATE PROCEDURE `cancel_classwork`(
     IN in_id int(11)
     ,in_classwork_key int(11)
     ,in_cancel_charge int(11)
+	,in_cancel_user tinyint(4)
 )
 #以降にストアドプロシージャの処理を記述する
 BEGIN
@@ -209,6 +210,8 @@ BEGIN
 DECLARE latest_timestamp VARCHAR(25);
 #更新レコードカウント用。同じくキャンセルが正しく行われたかを確認するためのもの
 DECLARE updated_count int(11); 
+#キャンセル要因をわけるための変数。ユーザからのキャンセルなら10、管理者からのキャンセルなら11が入る
+DECLARE cancel_status tinyint(4);
 
 #テーブル更新前の最新のタイムスタンプを取得し、UPDATE後に対象レコードのタイムスタンプと照らし合わせる
 #出力対象の列を指定する
@@ -221,6 +224,16 @@ FROM
 #取得したタイムスタンプを変数に保存する
 INTO latest_timestamp;
 
+#キャンセルユーザの値が0なら
+IF in_cancel_user = 0 THEN
+	#user_work_statusが10になるようにする
+	SET cancel_status = 10;
+#キャンセルユーザの値が1なら
+ELSE 
+	#user_work_statusが11になるようにする
+	SET cancel_status = 11;
+END IF;
+
 #対象の受講情報データをキャンセル状態にする
 #以下に指定したテーブルのレコードを更新する
 UPDATE
@@ -229,7 +242,7 @@ UPDATE
 #更新対象の列と値を指定する
 SET
     #受講キャンセル状態の値をセットする
-    user_work_status = 10
+    user_work_status = cancel_status
     #現在時刻を更新時刻としてセットする
     ,update_datetime = NOW()
 #検索条件を指定する

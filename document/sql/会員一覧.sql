@@ -181,6 +181,7 @@ SELECT DISTINCT
 	,DATE(user_inf.update_datetime) AS update_date
 	,user_inf.id
 	,mail_address
+	,user_status
 FROM 
 	user_inf 
 INNER JOIN 

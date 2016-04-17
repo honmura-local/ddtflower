@@ -126,6 +126,17 @@
 	padding: 5px 2em ;			/* 要素の幅を5px広げる */
 	cursor: pointer;		/* マウスオーバー時に指にする */
 }
+
+/* 
+ * セレクタ :.dateBelt button 
+ * 概要   :日ごと予約者一覧タブの日付選択のボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.17
+ */
+.dateBelt button {
+	background: oldlace;	/* ボタンの色をベージュがかった白色に変更する */
+}
+
 /* タイトルの日付領域終わり */
 
 /* 日付選択領域 */
@@ -239,6 +250,17 @@
 #sellCommodityPermit .normalButton {
 	float : right;	/* ボタンを右に寄せる */
 	margin : 5px;	/* ボタンそれぞれにmarginを持たせて間を取る */
+}
+
+/* 
+ * セレクタ :#permitTab .selectAllRow
+ * 概要   :承認画面 全選択ボタン領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.17
+ */
+#permitTab .selectAllRow {
+	margin-top : 25px;		/* 上marginを付けて隣り合うボタンたちと高さを合わせる */
+	display: inline-block;	/* spanタグ想定のため、marginを有効にするためinline-blockにする */
 }
 
 /* 

@@ -336,15 +336,20 @@ function memberReserveListDialog(dialog){
 		switch(this.manipulation){
 		//通常の予約
 		case PROCESSING_RESERVE:
+			//予約のクエリをオブジェクトにセットする
 			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.sendReservedData.db_setQuery;
 			break;
 		//再予約
 		case PROCESSING_RESERVE_AGAIN:
+			//再予約のクエリをオブジェクトにセットする
 			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.updateReservedData.db_setQuery;
 			break;
 		//キャンセル
 		case PROCESSING_CANCEL:
+			//キャンセルのクエリをオブジェクトにセットする
 			retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].json.cancelReservedData.db_setQuery;
+			//キャンセルがユーザか管理者かの判定の値をセットする
+			retObj.cancel_user = !this.create_tag.isAdminLoginToMemberPage() ? 0 : 1;
 			//キャンセル料をセットする
 			retObj.cancel_charge = dialogBuilder.create_tag.cancel_charge;
 			break;
@@ -353,7 +358,6 @@ function memberReserveListDialog(dialog){
 			break;
 		}
 
-//		retObj[KEY_DB_SETQUERY] = this[VAR_CREATE_TAG].sendReservedData;	//クエリを追加する
 		//ダイアログ専用クラスインスタンスがdialogExクラスインスタンスを通じてデータを取り出す
 		return retObj;
 	};
@@ -378,6 +382,7 @@ function memberReserveListDialog(dialog){
 				var parentDialogBuilder = data.parentDialogEx.dom.dialogBuilder;
 				//親ダイアログでDB更新用JSONをまとめる
 				var sendObject = parentDialogBuilder.updateJson(this.dialogBuilder);
+				console.log(sendObject);
 				//クエリを発行してキャンセル処理を行う
 				var sendResult = parentDialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 				$(parentDialogBuilder.dialog).empty();	//ダイアログの中を一旦空にする

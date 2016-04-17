@@ -58,14 +58,20 @@ function toggleClassClickElement (clickSelector, className, parentElem) {
  * 返却値  :nowDateString:進退した日付の結果
  * 作成者:T.Yamamoto
  * 作成日:2015.08.29
+ * 変更者:T.Masuda
+ * 変更日:2016.04.217
+ * 内容  :クリック対象の要素のクラス名が複数存在するケースに対応しました
  */
 function dateMovement(clickSelector, nowDateObject) {
 	//クリックされたクラス名を取得する
 	var className = $(clickSelector).attr('class');
+	//先頭のクラス名を取得する(クラス名が複数設定されている場合の対策。対象クラス名が先頭にあることが前提)
+	var classNameFirst = className.split(/\s/g)[0];
+	
 	//取得したクラスの名前によって処理を分ける
-	switch(className) {
+	switch(classNameFirst) {
 		//クリックされたのが2日前の時、日付を2日前にする
-		case 'twoDaysBefore':
+		case 'twoDayBefore':
 		nowDateObject.setDate(nowDateObject.getDate() - 2);
 		break;
 		//クリックされたのが1日前の時、日付を1日前にする
@@ -166,11 +172,8 @@ function nowDatePaging(clickSelectorParent, creator) {
 	var nowDateString = create_tag.getDateFormatDB(nowDateObject);
 	//日付をタイトルに入れる
 	$(DOT + clickSelectorParent + ' p').text(nowDateString);
-	//jsonに日付の値を入れる
-	//create_tag.json['eachDayReservedInfoTable']['lesson_date']['value'] = nowDateString;
-	//対象の要素がクリックされたときに日付を進退する
 	//clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
-	$(DOT + clickSelectorParent + ' a').click(function() {
+	$(DOT + clickSelectorParent + ' button').click(function() {
 		//コールバック関数の処理を開始する
 		updateDateMovement(this, nowDateObject, creator);
 	});
@@ -179,8 +182,28 @@ function nowDatePaging(clickSelectorParent, creator) {
 		//日付オブジェクトを更新する
 		nowDateObject = updateDateSearch(this);
 	});
-	//clickEvent(DOT + 'dateSelect .searchButton', updateDateSearch);
 }
+
+/* 
+ * 関数名:blushDayReserverDateButton
+ * 概要  :日ごと予約者画面の日付変更ボタンをリッチにする
+ * 引数  :なし
+ * 返却値  :なし
+ * 作成者:T.Masuda
+ * 作成日:2016.04.17
+ */
+function blushDayReserverDateButton() {
+	//各ボタンをjQuery UIのアイコンボタンに置き換える
+	//2日前ボタン
+	$('.twoDayBefore').button({ icons: {primary: "ui-icon-seek-prev"}, text : false});
+	//1日前ボタン
+	$('.oneDayBefore').button({ icons: {primary: "ui-icon-triangle-1-w"}, text : false});
+	//1日後ボタン
+	$('.oneDayAfter').button({ icons: {primary: "ui-icon-triangle-1-e"}, text : false});
+	//2日後ボタン
+	$('.twoDayAfter').button({ icons: {primary: "ui-icon-seek-next"}, text : false});
+}
+
 
 /* 
  * 関数名:setPermitListFromToDate
@@ -850,6 +873,8 @@ function afterReloadMailMagaTable() {
 function afterReloadUserListInfoTable() {
 	//会員一覧テーブルのクリック対象レコードに対してクラス属性を付けて識別をしやすくする
 	commonFuncs.setTableRecordClass('userListInfoTable', 'targetUser');
+	//ユーザ一覧の入会状況列をDB上の値から意味ある文字列に置き換える
+	commonFuncs.replaceColumnValue('.userListInfoTable .user_status', commonFuncs.userStatusList);
 }
 
 /* 
@@ -965,38 +990,6 @@ function mailMagaSearch() {
 	});
 }
 
-/* 
- * 関数名:setMailMagaSendContent
- * 概要  :メルマガのテーブルをクリックしたときにクリックされた行の内容を
- 		メルマガ送信のテキストボックスに入れる
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Yamamoto
- * 作成日:2015.09.12
- */
-function setMailMagaSendContent() {
-
-	//クリック対象となっているメルマガテーブルの行をクリックしたときにタイトルや内容を自動でセットするイベントを登録する
-	$('.mailMagaAndAnnounce').on(CLICK, '.targetMailMagazine', function() {
-
-		//メルマガ・アナウンスタブのcreateTagを取得する
-		var mailMagaAndAnnounce = $('#mailMagaAndAnnounce')[0].create_tag;
-		//クリックされたのが何番目の行であるかを取得し、メルマガのタイトルや内容を取り出すのに使う
-		var targetNumber = $('.targetMailMagazine').index(this);
-		
-		//ページャの番号を取得する
-		var pager = $('.mailMagaPagingArea .numbering .select').text();
-		//ページャの番号-1の値を取得する
-		var pageNum = commonFuncs.checkEmpty(pager) && !isNaN(pager)  ? parseInt(pager) - 1 : 0;
-		//JSON内での記事の番号を取得する
-		var targetNumberFix = pageNum * MAILMAGA_TABLE_SHOW_NUMBER + targetNumber;
-		
-		//取得した番号をもとにメルマガのタイトルや内容などの情報を取得し、連想配列に入れる
-		var targetInf = mailMagaAndAnnounce.json.mailMagaTable[TABLE_DATA_KEY][targetNumberFix];
-		//取得した連想配列をテキストボックスにセットする
-		commonFuncs.setObjectValue(targetInf, '.mailMagaAndAnnounceArea');
-	});
-}
 
 /* 
  * 関数名:mailMagaSendConfirm

@@ -38,20 +38,24 @@
 		"id": "userList"
 	},
 	"dateBelt": {
-		"twoDaysBefore": {
+		"twoDayBefore": {
 			"text": "<<"
+			,"type": "button"
 		},
 		"oneDayBefore": {
 			"text": "<"
+			,"type": "button"
 		},
 		"theDay": {
 			"text": ""
 		},
 		"oneDayAfter": {
 			"text": ">"
+			,"type": "button"
 		},
 		"twoDayAfter": {
 			"text": ">>"
+			,"type": "button"
 		}
 	},
 	"dateSelect": {
@@ -616,8 +620,8 @@
 	},
 	"userListInfoTable": {
 		"class": "userListInfoTable commonTable",
-		"db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id, mail_address FROM user_inf",
-		"queryForDoLecturePermit": "SELECT DISTINCT user_name,pre_paid,user_inf.get_point,DATE(user_inf.update_datetime) AS update_date,user_inf.id,mail_address FROM user_inf INNER JOIN user_classwork ON user_inf.id = user_classwork.user_key WHERE user_classwork.user_work_status = 2;",
+		"db_getQuery": "SELECT user_name, pre_paid, get_point, DATE(update_datetime) AS update_date, id, mail_address , user_status FROM user_inf",
+		"queryForDoLecturePermit": "SELECT DISTINCT user_name,pre_paid,user_inf.get_point,DATE(user_inf.update_datetime) AS update_date,user_inf.id,mail_address, user_status FROM user_inf INNER JOIN user_classwork ON user_inf.id = user_classwork.user_key WHERE user_classwork.user_work_status = 2;",
 		"config": {
 			"columns": {
 				"user_name": {
@@ -641,6 +645,10 @@
 				"mail_address": {
 					"className": "mail_address",
 					"style": "display:none"
+				},
+				"user_status" : {
+					"className" : "user_status",
+					"columnName" : "入会状況"
 				}
 			}
 		}

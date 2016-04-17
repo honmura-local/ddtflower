@@ -51,6 +51,8 @@
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
 			$('button, .searchButton, input[type="button"]', $activePanel).button();
+			// 日付前後のボタンをリッチなアイコンボタンに変える
+			blushDayReserverDateButton()
 			//検索ボックスのenterキーによる決定を有効にする
 			commonFuncs.enterKeyButtonClick('#dayReserver .dateInput', '#dayReserver .searchButton');
 			</script>

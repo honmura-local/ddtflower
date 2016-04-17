@@ -26,6 +26,15 @@ this.classworkStatuses = {
 		,6:"満席"
 };
 
+//入会状況
+this.userStatusList = {
+	0 : '入会'
+	,1 : '退会'
+	,2 : '体験'
+	,3 : '予備'
+	,99 : '予備'
+};
+
 //授業情報補足
 
 //ユーザ授業状況
@@ -2594,7 +2603,89 @@ this.defaultClassworkCostColumns = [
 		
 		return date.toString();	//日付を文字列にして返す
 	}
-	 
+
+	/* 
+	 * 関数名:replaceColumnValue
+	 * 概要  :指定した列を値に応じたリスト内の値で置き換える
+	 * 引数  :String target : 対象列
+	 *       :Object replaceList : 置き換える値のリスト。元々の列の値をキーに置き換える値を持つ
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.17
+	 */
+	this.replaceColumnValue = function(target, replaceList) {
+		$(target).each(function(){
+			//置き換える先となる要素を取得する
+			var $replaceTarget = $(this);
+			//値を置換する
+			$replaceTarget.text(replaceList[$replaceTarget.text()]);
+		});
+	}
+
+	/* 
+	 * 関数名:addSelectAllBox
+	 * 概要  :全選択チェックボックスを追加する。当パーツのクラス名は暫定的に固定にする
+	 * 引数  :String appendTarget : 追加先
+	 *       :String label : ラベル
+	 *       :boolean labelFront : ラベルを前に置くか(後ろに置くか)
+	 *       :String targetTable : 全選択対象となるテーブル 
+	 *       :String toggleClass : 選択状態を示すクラス名 
+	 *       :boolean doAppend : appendするか(falseならafter) 
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.17
+	 */
+	this.addSelectAllBox = function(appendTarget, label, labelFront, targetTable, toggleClass, doAppend) {
+		
+		//ラベルを除いて追加を行う要素を生成する
+		var $selectAllRowElem = $('<span></span>')
+				.addClass('selectAllRow')
+				.append(
+						$('<input type="checkbox">')
+						.addClass('selectAllRowCheckbox')
+				);
+		
+		//appendをする設定なら
+		if (doAppend) {
+			//チェックボックスとそれを囲む領域を指定した追加先に追加する。
+			$(appendTarget).append($selectAllRowElem);
+		//afterにする設定なら
+		} else {
+			//チェックボックスとそれを囲む領域を指定した追加先の後ろに追加する。
+			$(appendTarget).after($selectAllRowElem);
+		}
+		
+		//ラベルのDOMを生成する
+		var $label = $('<label></label>').addClass('selectAllRowLabel').text(label);
+		//全選択チェックボックスの領域を取得する。appendとafterで取得法が異なる
+		var $addedAreaParent = $(doAppend ? appendTarget : $(appendTarget).next());
+		$addedArea = doAppend ? $addedAreaParent.children('.selectAllRow') : $addedAreaParent;
+		
+		//ラベルを前に付けるなら
+		if(labelFront) {
+			//前に追加する関数をコールする
+			$addedArea.prepend($label);
+		//後ろなら
+		} else {
+			//後ろに追加する関数をコールする
+			$addedArea.append($label);
+		}
+		
+		//追加したチェックボックスにクリックのイベントコールバックを登録する		
+		$($addedArea).on(CLICK, '.selectAllRowCheckbox', function(){
+			
+			//対象チェックボックスのチェック状態を取得し、チェックが入っていたら
+			if($(this).prop('checked')) {
+				//対象に選択状態を付与する
+				$(SELECTOR_TBODY_TR, $(targetTable)).addClass(toggleClass);
+			//チェックが外れた
+			} else {
+				//対象から選択状態を解除する
+				$(SELECTOR_TBODY_TR, $(targetTable)).removeClass(toggleClass);
+			}
+		});
+	}	
+	
 	//ここまでクラス定義領域
 }
 

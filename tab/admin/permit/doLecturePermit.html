@@ -32,7 +32,7 @@
 			create_tag.outputTag('deletePermitRecordButton', 'normalButton', '#doLecturePermit');
 			//ユーザ追加のボタンを追加する
 			create_tag.outputTag('addUserRecordButton', 'normalButton', '#doLecturePermit');
-			
+
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
 			// 受講承認テーブル用のJSON配列を取得する
@@ -77,9 +77,11 @@
 
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
 			toggleClassClickElement('tr', 'selectRecord', '.doLecturePermitInfoTable');
+			//全選択ボタンを追加する
+			commonFuncs.addSelectAllBox('#doLecturePermit .addUserRecordButton', '全選択', false, '.doLecturePermitInfoTable', 'selectRecord', false);
+			
 			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
 			moveToUserList('doLecturePermit', '#doLecturePermit .addUserRecordButton');
-			
 			</script>
 	</body>
 </html>
