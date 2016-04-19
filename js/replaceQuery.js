@@ -137,7 +137,7 @@ var adminUserSearcher = function(userListInfoTable) {
 	// 条件をANDでつなげていく(最初だけWHERE)
 	var connectEach = function(query, condition) {
 		if(query == baseQuery) {
-			return connectConditions(query, condition, "WHERE");
+			return connectConditions(query, condition, baseQuery.indexOf("WHERE") != -1 ? "AND" : "WHERE");
 		}
 		return connectConditions(query, condition, "AND");
 	};
