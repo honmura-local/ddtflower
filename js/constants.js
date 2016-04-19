@@ -1073,3 +1073,8 @@ MAILMAGA_TABLE_RECORDS					= '.mailMagaTable tbody tr';
 SELECTOR_MAILMAGA_NUMBERING				= '.mailMagaPagingArea .numbering .select';
 //メルマガ編集フォームのセレクタ
 SELECTOR_MAILMAGA_EDIT_AREA				= '.mailMagaAndAnnounceArea';
+//カレンダー表示のディレイ
+CALENDAR_SHOW_DELAY						= 200;
+//基本の日付フォーマット
+DATEFORMAT_YYYY_MM_DD					= "yyyy-MM-dd";
+

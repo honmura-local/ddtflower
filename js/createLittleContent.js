@@ -3130,6 +3130,29 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			//ダイアログが開いたときのコールバック関数を指定する。
 			//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
 			reservedLessonListDialog.run();	//主処理を走らせる。
+			var thisElem = this;
+			//一旦日付のハイライトが消えるので付け直す
+			setTimeout(function(){thisElem.instance.changeExistLessonDate();}, 100);
+		},
+		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
+		beforeShowDay:function(date){
+			
+			//その月の1日以降の日付であれば
+			if(this.instance.monthDates.length > 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
+				//日付を文字列にして月の日付一覧に追加していく
+				this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
+			}
+			
+			//日付を無効にするということはないのでtrueを入れた配列を返す
+			return [true];
+		},
+		onChangeMonthYear : function(year, month, inst){
+			this.instance.monthDates = [];		//月の日付を初期化する
+			var thisElem = this;		//自身の要素を変数に保管する
+			//beforeShowDayが終わった後
+			setTimeout(function(){
+				thisElem.instance.changeExistLessonDate();
+			}, CALENDAR_SHOW_DELAY);
 		},
 		maxDate:this.dateRange,	//今日の日付を基準にクリック可能な期間を設定する。
 		minDate:1				//過去はクリックできなくする。
@@ -3159,7 +3182,31 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 		//ダイアログが開いたときのコールバック関数を指定する。
 		//callOpenDialog(現状はdispContents関数をコールするようになっている)をコールさせる
 		lessonListDialog.setCallbackOpen(commonFuncs.callOpenDialog);
+		lessonListDialog.setCallbackClose(function(){this.instance.destroy();$('.adminCalendar')[0].instance.changeExistLessonDate();});
 		lessonListDialog.run();	//主処理を走らせる。
+		var thisElem = this;
+		//一旦日付のハイライトが消えるので付け直す
+		setTimeout(function(){thisElem.instance.changeExistLessonDate();}, 100);
+	},
+	//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
+	beforeShowDay:function(date){
+		
+		//その月の1日以降の日付であれば
+		if(this.instance.monthDates.length > 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
+			//日付を文字列にして月の日付一覧に追加していく
+			this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
+		}
+		
+		//日付を無効にするということはないのでtrueを入れた配列を返す
+		return [true];
+	},
+	onChangeMonthYear : function(year, month, inst){
+		this.instance.monthDates = [];		//月の日付を初期化する
+		var thisElem = this;		//自身の要素を変数に保管する
+		//beforeShowDayが終わった後
+		setTimeout(function(){
+			thisElem.instance.changeExistLessonDate();
+		}, CALENDAR_SHOW_DELAY);
 	}
 }
 
@@ -3175,6 +3222,9 @@ function calendar(selector) {
 	//コンストラクタの引数をメンバに格納する
 	this.selector = selector;
 	this.calendarName = '';	//カレンダー名を設定する
+	//カレンダー自身のDOMを取得する
+	this.dom = selector ? $(selector)[0] : {};
+	this.dom.instance = this;	//クラスインスタンスへの参照をDOMにセットする
 	
 	this.calendarOptions = {};	//オプションをオブジェクトで記述する
 	
@@ -3403,6 +3453,40 @@ function calendar(selector) {
 		
 		return retBoo;	//retBooを返す。
 	}
+
+	/*
+	 * 関数名:changeExistLessonDate
+	 * 引数  :なし
+	 * 戻り値:なし
+	 * 概要  :授業がある日付をハイライトする
+	 * 作成日:2016.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.changeExistLessonDate = function(){
+		
+		//クエリの検索期間の値をセットする。内容は月の初めと最後の日付
+		this.create_tag.json.searchClassworkExist.fromDate.value = this.monthDates[0];
+		this.create_tag.json.searchClassworkExist.toDate.value = this.monthDates[this.monthDates.length - 1];
+		//授業を取得する
+		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json.searchClassworkExist, 'searchClassworkExist');
+		//存在する授業日付の数を取得する
+		var datesLength = this.create_tag.json.searchClassworkExist.tableData.length;
+		
+		//日付を走査する
+		for (var i = 0; i < datesLength; i++) {
+			//日付を切り出す
+			var dateStr = this.create_tag.json.searchClassworkExist.tableData[i].lesson_date.substr(8, 2);
+			//日付要素を走査する
+			$('td', this.dom).each(function(){
+				//その日に授業があれば
+				if($(this).children('a').text() == dateStr) {
+					//背景色を変更する
+					$(this).addClass('dateHasClass');
+					return;	//以降を走査する必要なしなのでここでbreakする
+				}
+			});
+		}
+	}
 	
 }
 
@@ -3466,7 +3550,8 @@ function memberCalendar(selector, dateRange, userId, create_tag) {
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.userId = userId;		//ユーザIDを保存する
-	this.create_tag = create_tag;			//createLittleContentsクラスのインスタンスを利用する
+	this.create_tag = create_tag;	//createLittleContentsクラスのインスタンスを利用する
+	this.monthDates = [];			//月の日付
 	
 	//クリック可能な最大日付までの日数をオブジェクトにセットする
 	calendarOptions[this.calendarName].maxDate = dateRange;
@@ -3496,7 +3581,8 @@ function adminCalendar(selector, dialog, create_tag) {
 	$calendar.dialog = dialog;		//ダイアログへの参照をDOMに保存する
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
-	this.create_tag = create_tag;			//createLittleContentsクラスのインスタンスを利用する
+	this.create_tag = create_tag;	//createLittleContentsクラスのインスタンスを利用する
+	this.monthDates = [];			//月に存在する日付
 	
 	//@mod 2015.0704 T.Masuda 引数にない変数を使おうとしているのでコメントアウトしました。
 	//this.dateRange = dateRange;	//クリック可能な日付の期間の引数をメンバに格納する

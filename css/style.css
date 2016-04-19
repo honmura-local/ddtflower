@@ -162,6 +162,16 @@ span,label,h1,h2,h3,h4,h5,th{
 }
 
 /* 
+ * セレクタ:.dateHasClass a
+ * 概要   :カレンダー内の授業のある日付
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.19
+ */
+.dateHasClass a{
+	background : lawngreen!important;	/* わかりやすい何かある色に変える */
+}
+
+/* 
  * セレクタ:button,input[type="submit"],input[type="button"],input[type="reset"]
  * 概要   :ボタン。
  * 作成者 :T.Masuda

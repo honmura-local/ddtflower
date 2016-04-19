@@ -389,13 +389,12 @@ function memberReserveListDialog(dialog){
 				parentDialogBuilder.dispContents();		//予約一覧ダイアログの中身を更新する
 
 				//予約中授業テーブルをリロードして予約状況を最新にする
-				data[VAR_CREATE_TAG].tableReload(RESERVED_LESSON_TABLE);
+				$('#alreadyReserved')[0].create_tag.tableReload(RESERVED_LESSON_TABLE);
 				//予約中授業のセレクトメニューを「全て」に戻す
 				$('.selectThemebox').val('全て');
 
-				console.log(sendResult.message);
 				//DBの更新に失敗していたら
-				if(!parseInt(sendResult.message)) {
+				if(parseInt(sendResult.message)) {
 				
 					//openイベントはsetArgumentObjでセットしておく
 					var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH,
@@ -430,7 +429,11 @@ function memberReserveListDialog(dialog){
 					
 					//openイベントのコールバック関数をセットする
 					confirmDialog.run();	//ダイアログを開く
-				};
+				//更新に成功していたら
+				} else {
+					//カレンダーの授業がある日付を更新する
+					$('.lessonCalendar:last')[0].instance.changeExistLessonDate();
+				}
 				
 				break;	//switchを抜ける
 		default:break;	//switchを抜ける

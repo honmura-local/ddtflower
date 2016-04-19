@@ -112,6 +112,8 @@
 <script src="js/canvasResize.js"></script>
 <!-- タッチ操作のライブラリ。 -->
 <script src="js/jquery.finger.js"></script>
+<!-- 日付型フォーマット関数のライブラリ。 -->
+<script src="js/date.js"></script>
 
 <!-- 各ページ共通の関数ファイルを読み込む -->
 <script src="js/page/commonPage.js"></script>
