@@ -2698,11 +2698,11 @@ this.defaultClassworkCostColumns = [
 		//処理対象のテーブルを取得する
 		var $targetTable = $(targetTable);
 		//1行当たりの高さを取得する
-		var aHeight = $('tbody tr:first', $targetTable).length ? $('tbody tr:first', $targetTable)[0].innerHeight : 0;
+		var aHeight = $('tbody tr:first', $targetTable).length ? $('tbody tr:first', $targetTable).height() : 0;
 		//tbody内の要素の高さを算出する
 		var tbodyHeight = aHeight * $('tbody tr', $targetTable).length;
 		//tbodyより行の高さが勝っていなければ
-		if($('tbody', $targetTable)[0].innerHeight >= tbodyHeight) {
+		if($('tbody', $targetTable).height() >= tbodyHeight) {
 			//スクロールバーを消す
 			$('tbody', $targetTable).css('overflow-y', 'hidden');
 		//そうでなければ

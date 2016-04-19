@@ -1388,8 +1388,10 @@ var backCallbacks = {
 					
 					//IDチェックを始める
 					for(var j = 0; j < idList.length + 1; j++) {
+						//IDが一致したら
 						if(idList[j] == dlpc.json.getAdditionalUserForLecturePermit.user_key.value){
-							//スルーする
+							//追加を行わない
+							break;
 						//どれにも当てはまらなければレコード追加
 						} else if(j == idList.length){
 							//DBからユーザに対応した受講承認データを取得する
@@ -1538,7 +1540,7 @@ function creaetLecturePermitRecord(record) {
 			//受講情報テーブルのID
 			+ TD_FROM_REAR_DISPLAY_NONE + record.user_classwork_key
 			//ユーザID
-			+ TD_FROM_REAR_DISPLAY_NONE + record.user_key
+			+ '</td><td class="user_key" style="display : none">' + record.user_key
 			//所持ポイント
 			+ TD_FROM_REAR+ record.get_point
 			//授業(コース)名
