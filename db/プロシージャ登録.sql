@@ -444,6 +444,8 @@ FROM
 WHERE
     #ユーザ情報とブログ記事が正しく紐づいたレコードのみ抽出する
     ub.user_key=uin.id
+    #公開されている記事のみ取得する
+    AND disclosure_range = 0
 #ソートを行う
 ORDER BY 
     #投稿日時が新しい順に並び替える

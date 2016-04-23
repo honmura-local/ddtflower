@@ -180,7 +180,7 @@ function nowDatePaging(clickSelectorParent, creator) {
 	//検索ボタンがクリックされた時に日付を更新する
 	$(DOT + 'dateSelect .searchButton').click(function() {
 		//日付オブジェクトを更新する
-		nowDateObject = updateDateSearch(this);
+		nowDateObject = updateDateSearch(creator);
 	});
 }
 

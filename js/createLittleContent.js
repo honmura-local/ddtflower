@@ -3478,8 +3478,12 @@ function calendar(selector) {
 			var dateStr = this.create_tag.json.searchClassworkExist.tableData[i].lesson_date.substr(8, 2);
 			//日付要素を走査する
 			$('td', this.dom).each(function(){
+				//カレンダーから日付を取得する
+				var calendarDate = $(this).children('a').text();
+				//日付が1桁なら0を詰める
+				calendarDate = calendarDate.length > 1? calendarDate : '0' + calendarDate;
 				//その日に授業があれば
-				if($(this).children('a').text() == dateStr) {
+				if(calendarDate == dateStr) {
 					//背景色を変更する
 					$(this).addClass('dateHasClass');
 					return;	//以降を走査する必要なしなのでここでbreakする
