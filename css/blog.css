@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+
 /* 
  * セレクタ:.blogArticles
  * 概要   :ブログの記事領域
@@ -165,12 +166,15 @@ table.blogTable tr td:first-child {
 }
 
 /* 
- * セレクタ:.blogTable tbody tr:first-child
+ * セレクタ:.blogTable thead tr:first-child
  * 概要   :ブログのテーブルの見出し行
  * 作成者 :T.Masuda
  * 作成日 :2015.08.02
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.23
+ * 概要   :crateTagTableの改修に対応しました
  */
-.blogTable tbody tr:first-child{
+.blogTable thead tr:first-child{
 	display:none;	/* 見出し行は見せない */
 }
 
