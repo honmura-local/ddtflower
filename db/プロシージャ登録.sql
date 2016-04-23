@@ -3231,6 +3231,8 @@ ELSE
     ROLLBACK;
 END IF;
 
+SELECT ROW_COUNT();
+
 END$$
 
 DROP PROCEDURE IF EXISTS p_delete_approval_purchase $$
