@@ -81,7 +81,7 @@ label,
 .selectTheme {
 	height : 20px;			/* 中の要素を高さ中心揃えにするので高さを明確に設定する */
 	display : inline-block;	/* 横に別の要素を並べることがあるのでinline-blockにする */
-	width : 130px;			/* 中の要素がabsoluteで判定がなくなってしまうことがあるため、固定幅にする */
+	width : 150px;			/* 中の要素がabsoluteで判定がなくなってしまうことがあるため、固定幅にする */
     margin-bottom: 5px;		/* 下と間隔を取る */
 }
 
@@ -1277,6 +1277,17 @@ label,
 /* スマホ用微調整 */
 @media(max-width:415px){
 
+	/*
+	 * セレクタ:input[type="date"]
+	 * 概要   :日付テキストボックス
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.30
+	 */
+	input[type="date"] {
+	    width: 115px;	/* 最低限の幅を取る */
+	}
+	
+	
 	/* 
 	 * セレクタ :.passLinkArea
 	 * 概要   :パスワード変更リンク領域
@@ -1348,6 +1359,16 @@ label,
 		margin-left : 2px;	/* 間隔を狭めて段が下がらない様にする */
 	}
 
+	/* 
+	 * セレクタ :.searchInputArea .toLabel
+	 * 概要   :〜のラベル
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.30
+	 */
+	.searchInputArea .toLabel {
+		font-size:10px;			/* 一行に並べるためには間隔が足りないので小さくする */
+		margin-top:7px;			/* 上marginを入れて中心に寄せる */
+	}
 
 	/* 
 	 * セレクタ :.updateButton

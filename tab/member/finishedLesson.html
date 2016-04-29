@@ -61,12 +61,11 @@
 	var todayStr = commonFuncs.getDateString(today);
 	//本日をセットする
 	create_tag.json.finishedLessonTable.toDate.value = todayStr;
-	//3ヶ月前の日付をセットする
-	today.setMonth(today.getMonth() - 3);
+	//1年前の日付をセットする
+	today.setYear(today.getFullYear() - 1);
 	//3ヶ月前の日付を文字列変換する
 	var threeMonthBeforeStr = commonFuncs.getDateString(today);
 	create_tag.json.finishedLessonTable.fromDate.value = threeMonthBeforeStr;
-	
 	//日付のテキストボックスに初期値をセットする
 	commonFuncs.setDateToFromToBox('.lessonListSearch:first', threeMonthBeforeStr, todayStr);
 	
