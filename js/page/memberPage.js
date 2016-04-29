@@ -101,8 +101,8 @@ function finshedLessonTableAfterPaging() {
  * 作成日:2015.07.30
  */
 function finshedLessonTableThemeSelect() {
-	//ページングがクリックされた時のイベントを登録する
-	$(STR_BODY).on(CHANGE, '#finishedLesson .selectThemebox', function() {
+	//絞り込みボタンがクリックされたとき
+	$('#finishedLesson').on(CLICK, '.filterButton', function() {
 		//受講済み授業一覧のcreateTagを取得する
 		var create_tag = $('#finishedLesson')[0].create_tag;
 		//テーブルを作るためのクエリを置換する

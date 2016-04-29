@@ -46,6 +46,8 @@
 	create_tag.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
 	//受講済み授業の絞り込み領域を作る
 	create_tag.outputTag('lessonListSearch', 'lessonListSearch', '#finishedLesson');
+	//絞り込みボタンを作る
+	create_tag.outputTag('filterButton', 'normalButton', '#finishedLesson');
 	//受講済みテーブルページングの一番外側となる領域を作る
 	create_tag.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
 	//ページングのテーブルを作るためにテーブルの外側となるdivを作る
@@ -54,22 +56,32 @@
 	create_tag.outputTag('numberingOuter', 'numberingOuter', '.finishedLessonPagingArea');
 	
 	//デフォルトの時間をセットする
-	//UNIX時間の最初から
-	create_tag.json.finishedLessonTable.fromDate.value = UNIX_TIMESTAMP_START_DATE;
-	//本日
-	create_tag.json.finishedLessonTable.toDate.value = commonFuncs.getTodayDateString;
+	var today = new Date();	//日付型を用意する
+	//本日の日付を文字列変換する
+	var todayStr = commonFuncs.getDateString(today);
+	//本日をセットする
+	create_tag.json.finishedLessonTable.toDate.value = todayStr;
+	//3ヶ月前の日付をセットする
+	today.setMonth(today.getMonth() - 3);
+	//3ヶ月前の日付を文字列変換する
+	var threeMonthBeforeStr = commonFuncs.getDateString(today);
+	create_tag.json.finishedLessonTable.fromDate.value = threeMonthBeforeStr;
+	
+	//日付のテキストボックスに初期値をセットする
+	commonFuncs.setDateToFromToBox('.lessonListSearch:first', threeMonthBeforeStr, todayStr);
 	
 	//受講済み授業一覧のデータを取り出して一覧テーブルを作成して表示する
 	create_tag.loadTableData('finishedLessonTable', NUMBERING_START, NUMBERING_PAGE, NUMBERING_DEFAULT, NUMBERING_DISPLAY, '.finishedLessonTableOutside', 'finshedLessonTableAfterPaging', "$('#finishedLesson')[0].");
 	
 	//授業の絞り込み機能を実装する
 	setConfigFinishedLesson();
-	//ボタンの見た目を良くする
-	$('input[type="button"], button', $('#finishedLesson')).button();
-	
+
 	//絞込ボタンの機能を有効にする
-	addExecuteFinishedLessonSearchEvent('.searchButton');
-	
+	addExecuteFinishedLessonSearchEvent('.filterButton');
+
+	//テーマ選択セレクトメニューのクリックでの全表示をオンにする
+	commonFuncs.setTogglePosition('#finishedLesson', '.selectThemebox', VALUE_ABSOLUTE, STR_AUTO);
+
 </script>
 </body>
 </html>

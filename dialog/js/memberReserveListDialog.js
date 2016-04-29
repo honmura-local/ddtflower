@@ -390,8 +390,6 @@ function memberReserveListDialog(dialog){
 
 				//予約中授業テーブルをリロードして予約状況を最新にする
 				$('#alreadyReserved')[0].create_tag.tableReload(RESERVED_LESSON_TABLE);
-				//予約中授業のセレクトメニューを「全て」に戻す
-				$('.selectThemebox').val('全て');
 
 				//DBの更新に失敗していたら
 				if(parseInt(sendResult.message)) {

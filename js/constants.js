@@ -1077,4 +1077,19 @@ SELECTOR_MAILMAGA_EDIT_AREA				= '.mailMagaAndAnnounceArea';
 CALENDAR_SHOW_DELAY						= 200;
 //基本の日付フォーマット
 DATEFORMAT_YYYY_MM_DD					= "yyyy-MM-dd";
-
+//?マーク
+CHAR_QUESTION							= '?';
+//focusイベント
+EVENT_FOCUS								= 'focus';
+//blurイベント
+EVENT_BLUR								= 'blur';
+//position : absolute用の設定値
+VALUE_ABSOLUTE							= 'absolute';
+//「全て」
+KEY_ALL_JP								= '全て';
+//','
+SIMBOLE_SINGLQUATE_COMMA				= '\',\'';
+//0の文字
+CHAR_ZERO								= '0';
+//日付テキストボックスのセレクタ
+SELECTOR_DATE_TEXTBOX					= 'input[type="date"]';

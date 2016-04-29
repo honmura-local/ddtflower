@@ -1531,6 +1531,9 @@ function createLittleContents(){
 	this.replaceTableQuery = function(queryArrayKey) {
 		//テーブルのクエリを置換するための値をセレクタから取得する
 		var replaceValue = $(replaceTableOption[queryArrayKey]['replaceValueDom']).val();
+
+		//全選択(何も選択されていない)なら「全て」、そうでなければテーマをひとまとめにして置換用変数にセットする
+		replaceValue = replaceValue != null && replaceValue.length? replaceValue.join(SIMBOLE_SINGLQUATE_COMMA) : KEY_ALL_JP;  
 		
 		//取得する授業の日時の範囲を取得する
 		var fromDate = $('.finishedLessonFromDate').val();
@@ -1543,7 +1546,7 @@ function createLittleContents(){
 		}
 		
 		//置換するものが「全て」以外であれば置換する
-		if (replaceValue != '全て') {
+		if (replaceValue != KEY_ALL_JP) {
 			//テーブルのクエリを置換するためのkey名を取得する
 			var replaceKey = replaceTableOption[queryArrayKey]['replaceQueryKey'];
 			//取得した値をjsonの反映させる
@@ -1573,7 +1576,7 @@ function createLittleContents(){
 	this.reloadTableTriggerEvent = function(eventSelector, eventName, reloadTableClassName) {
 		var thisElem = this;
 		//対象のボタンがクリックされた時テーブルをリロードするイベントを登録する
-		$(STR_BODY).on(eventName, eventSelector, function(){
+		$(eventSelector).on(eventName, function(){
 			//テーブルをリロードして最新のデータを表示する
 			thisElem.eventTableReload(reloadTableClassName);
 		});

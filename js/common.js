@@ -71,6 +71,9 @@ this.defaultClassworkCostColumns = [
 	,'default_flower_cost'
 ];
 
+//unix時間の重複回避用の数
+this.unixtimeIncrement = 0;
+
 //以上、授業一覧テーブル作成用のデータ
 
 	/* 
@@ -2712,6 +2715,95 @@ this.defaultClassworkCostColumns = [
 		}
 	}
 	
+	/* 
+	 * 関数名:getNowUnixTime
+	 * 概要  :現在のunix時間を取得する。通信キャッシュ回避でURLの末尾に重複しない時間をセットする時に使う
+	 * 引数  :なし
+	 * 返却値  :現在時刻のunix時間
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.17
+	 */
+	this.getNowUnixTime = function(){
+		//現在のunix時間を返す。通信時の時間の重複回避のためstaticフィールドの数値をインクリメントして足す
+		return Math.round( new Date().getTime() / 1000 + this.unixtimeIncrement++);
+	}
+
+	/* 
+	 * 関数名:setTogglePosition
+	 * 概要  :フォーカス時に指定したposition、高さを設定して、フォーカスが外れたら設定を無効にするようにする
+	 *       主にmultipleのセレクトメニューでフォーカス時に内容を全て出すようにするようにするときに使う
+	 * 引数  :
+	 * 返却値  :
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.30
+	 */
+	this.setTogglePosition = function(parent, target, position, height){
+		$(parent).on(EVENT_FOCUS, target, function(){
+			$(this).css({
+				height : height
+				,position : position
+			})
+		});
+
+		$(parent).on(EVENT_BLUR, target, function(){
+			$(this).css({
+				height : EMPTY_STRING
+				,position : EMPTY_STRING
+			})
+		});
+	}
+	
+
+	/* 
+	 * 関数名:getDateString
+	 * 概要  :Date型から日付の文字列を作成して返す
+	 * 引数  :Date date:日付型
+	 * 返却値  :String : 日付の文字列
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.30
+	 */
+	this.getDateString = function(date){
+		var retStr = EMPTY_STRING;
+		var year = date.getFullYear();
+		var month = date.getMonth() + 1;
+		var dateTime = date.getDate();
+		
+		//月が一桁なら
+		if (month / 10 < 1) {
+			//0を詰める
+			var month = CHAR_ZERO + month;
+		}
+		
+		//日にちが一桁なら
+		if (dateTime / 10 < 1) {
+			//0を詰める
+			var dateTime = CHAR_ZERO + dateTime;
+		}
+		
+		//日付の文字列を返す
+		return year + CHAR_HYPHEN + month + CHAR_HYPHEN + dateTime;
+	}
+
+	/* 
+	 * 関数名:setDateToFromToBox
+	 * 概要  :指定した要素内の先頭2つの日付テキストボックスに日付をセットする。
+	 *       主に期間指定を行うテキストボックスに値をセットするのに使う
+	 * 引数  :String target:処理対象のセレクタ
+	 *      :String from:fromの日付
+	 *      :String to:toの日付
+	 * 返却値  :String : 日付の文字列
+	 * 作成者:T.Masuda
+	 * 作成日:2016.04.30
+	 */	
+	this.setDateToFromToBox = function(target, from, to){
+		//処理対象となるテキストボックスを取得する
+		var $targetTextbox = $(SELECTOR_DATE_TEXTBOX, $(target));
+		//1つ目の日付テキストボックスに値を入れる
+		$targetTextbox.eq(0).val(from);
+		//2つ目の日付テキストボックスに値を入れる
+		$targetTextbox.eq(1).val(to);
+	}
+	
 	//ここまでクラス定義領域
 }
 
@@ -2769,3 +2861,4 @@ function sendArticleData(){
 	//ダイアログを破棄する
 	dialogClass.destroy();
 }	
+

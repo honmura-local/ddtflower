@@ -31,6 +31,18 @@
 	width : 100%;		/* 幅を親要素に合わせる */
 	display : table;	/* テーブル扱いにする。タブインデックスにvertical-alignを効かせるための処置 */
 }
+
+/* 
+ * セレクタ :#adminTab > .tabContentArea
+ * 概要   :管理者画面、タブ領域全体部分
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+#adminTab > .tabContentArea {
+    border : solid 1px #AAA;		/* グレーの枠で囲む */
+    border-top : none;				/* 上の罫線はなくし、アクティブのタブインデックスと繋がっているように見せる */
+}
+
 /* 
  * セレクタ :#adminTab .tab
  * 概要   :管理者画面、タブ領域
@@ -42,9 +54,9 @@
 	width: 20%;					/* 幅を20%にする */
 	display: table-cell;		/* テーブルセルとして扱う。vertical-alignを効かせるための処置 */
 	background: #ce6;			/* 背景を黄緑にする */
-	border: none;				/* 線をなくす */
-	border-radius: 0;			/* 角丸をなくす */
-	vertical-align: middle;		/* 縦位置を中心に合わせる */
+	border: 0.5px solid #AAA;	/* 線をで囲む */
+    border-radius: 10px 10px 0px 0px;	/* 角丸を付ける */
+    vertical-align: middle;		/* 縦位置を中心に合わせる */
 }
 
 /* 
@@ -57,7 +69,8 @@
 	padding-top: 0px;			/* 上向きに0px要素の幅を広げる */
 	position: static;			/* ポジションを静的にする */
 	font-weight: normal;		/* 文字の太さを普通にする */
-	background: #cedc3a;			/* 背景を薄い緑にする */
+	background: #FFF;			/* 背景を内部と繋がっているように見せる */
+	border-bottom: none;		/* アクティブタブの下線をなくす */
 }
 
 /* 
@@ -180,8 +193,8 @@
  */
 .returnTopPosition {
 	position: fixed;		/* 表示位置を固定にする */
-	right: 15px;			/* 右から15pxの場所に表示する */
-	bottom: 15px;			/* 下から15pxの場所に表示する */
+	right: 5px;				/* 右から5pxの場所に表示する */
+	bottom: 5px;			/* 下から5pxの場所に表示する */
 }
 /* スクロールボタン領域終わり */
 
@@ -192,9 +205,9 @@
  * 作成日 :2015.06.04
  */
 #lecturePermit .tab {
-	border: none;			/* 実線をなくす */
 	width: 50%;				/* 幅を50%にする */
 	display: inline-block;	/* インラインブロック要素にする */
+	box-sizing: border-box;	/* 線をサイズに含める */
 }
 
 /* 
@@ -847,7 +860,7 @@ ul.mailSendContent {
 	#adminTab .searchLabel {
 	    width: 100%;		/* 幅が足りなくなってくるので段組みをやめる */
 	}
-	
+
 	/* 
 	 * セレクタ :.dialog .searchLabel
 	 * 概要   :ユーザ検索ダイアログ フォーム領域 ラベル
@@ -924,9 +937,15 @@ ul.mailSendContent {
 		clear : both;			/* 上のボタンの横に回り込まない様にする */
 	}
 
+	/* 
+	 * セレクタ :.searchInputArea
+	 * 概要   :検索要素領域
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.04.30
+	 */
 	.searchInputArea {
-	    float: left;
-	    width: 205px;
+	    float: left;	/* 左に寄せる */
+	    width: 205px;	/* 幅を明確に指定する */
 	}	
 
 	/* 

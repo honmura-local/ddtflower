@@ -27,7 +27,11 @@
         }
     },
     "returnTopPosition":{
-    	"text":"トップ",
-    	"href":"#top"
+    	"href":"#top",
+    	"returnTopPositionImg":{
+	    	"alt":"トップ",
+   		 	"href":"#top",
+   	 		"src":"image/icon_to_top.png"
+    	}
     }
 }

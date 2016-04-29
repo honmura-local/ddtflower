@@ -53,7 +53,7 @@ function createTag(){
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
 			//jsonファイルのURLを指定する。
-			url: jsonPath,
+			url: jsonPath + CHAR_QUESTION + commonFuncs.getNowUnixTime(),
 			//取得するファイルの形式をJSONに指定する。
 			dataType: 'JSON',
 			//POSTメソッドでデータを送信する
@@ -121,7 +121,7 @@ function createTag(){
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
 			//jsonファイルのURLを指定する。
-			url: htmlPath,
+			url: htmlPath + CHAR_QUESTION + commonFuncs.getNowUnixTime(),
 			//取得するファイルの形式をJSONに指定する。
 			dataType: 'HTML',
 			//同期通信を行う。
@@ -925,7 +925,7 @@ function createTag(){
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
 			//jsonファイルのURLを指定する。
-			url: jsonPath,
+			url: jsonPath + CHAR_QUESTION + commonFuncs.getNowUnixTime(),
 			//取得するファイルの形式をJSONに指定する。
 			dataType: 'JSON',
 			//同期通信を行う。

@@ -139,7 +139,7 @@ input, select {
 /* ここまでclearfix */
 
 /* 各タグの基本設定 */
-/* 
+/*
  * セレクタ:span,label,h1,h2,h3,h4,h5
  * 概要   :見出しタグとラベルのタグ
  * 作成者 :T.Masuda
@@ -148,6 +148,46 @@ input, select {
 span,label,h1,h2,h3,h4,h5,th{
     font-weight: normal;   	 /* 個別に指定しなければフォントを太字にしない。 */
 	vertical-align: middle;	/* 高さを中心に合わせる */
+}
+
+/*
+ * セレクタ:input[type="date"]
+ * 概要   :日付テキストボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+input[type="date"] {
+    width: 120px;	/* 最低限の幅を取る */
+}
+
+/* 
+ * セレクタ:.inline
+ * 概要   :このクラスを持つ要素をインラインにする
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+.inline {
+	display: inline;	/* インライン要素にする */
+}
+
+/* 
+ * セレクタ:.block
+ * 概要   :このクラスを持つ要素をブロックにする
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+.block {
+	display : block;	/* ブロック要素にする */
+}
+
+/* 
+ * セレクタ:.floatLeft
+ * 概要   :このクラスを持つ要素を左に寄せる
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+.floatLeft {
+	float : left;	/* 左に寄せる */
 }
 
 /* 
@@ -651,7 +691,7 @@ footer{
  */
 .dialog .inputArea label {
 	display: inline-block;	/* インラインブロック要素に指定してテキストボックスと並べる。 */
-	width: 100px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
+	width: 90px;			/* 幅を100pxに指定し、文字数が違うラベル同士の幅を合わせる。 */
 }
 
 /* 
