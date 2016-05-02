@@ -3,45 +3,6 @@
 currentLocation = '';	//現在選択中のページの変数
 
 /*
- * イベント:ready
- * 引数   :なし
- * 戻り値 :なし
- * 概要   :ドキュメント読み込み後のイベント
- * 作成日 :2015.03.10
- * 作成者 :T.M
- */
-//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-//	$(document).on('click', 'a[href$=".html"][target!="_blank"]', function(event){
-//		//pushState対応ブラウザであれば
-//			//URLを引数にしてページを切り替える関数をコールする。
-//			callPage($(this).attr('href'));
-//		if(commonFuncs.isSupportPushState()){
-//			//通常の画面遷移をキャンセルする。		
-//			event.preventDefault();
-//		}
-//		
-//	});
-//
-//	/*
-//	 * イベント:ready
-//	 * 引数   :なし
-//	 * 戻り値 :なし
-//	 * 概要   :ドキュメント読み込み後のイベント。PHP版
-//	 * 作成日 :2015.05.13
-//	 * 作成者 :T.M
-//	 */
-//	// リンクをクリックした後のイベント。新規タブを開くリンクについては処理しない。
-//	$(document).on('click', 'a[href$=".php"][target!="_blank"]', function(event){
-//		//pushState対応ブラウザであれば
-//		//URLを引数にしてページを切り替える関数をコールする。
-//		callPage($(this).attr('href'));
-//		if(commonFuncs.isSupportPushState()){
-//			//通常の画面遷移をキャンセルする。		
-//			event.preventDefault();
-//		}
-//	});
-	
-/*
  * 関数名:overwrightContent(target, data)
  * 引数  :String target, Object state
  * 戻り値:なし
@@ -54,18 +15,10 @@ function overwrightContent(target, data){
 	//mainのタグを空にする。
 	$(target).empty();
 	//linkタグを収集する。
-//	var links = $(data).filter('link');
 	var links = $('link', data);
 	//コードが書かれているscriptタグを収集する。
-//	var scripts = $(data).filter('script:not(:empty)');
 	var scripts = $('script:not(:empty)', data);
 
-	//@add 2015.0604 T.Masuda MSL記事一覧があれば見えない状態にして配置するように変更しました。
-	//MSLの記事リストがあれば
-	if($('#mslongtail_1984,#mslongtail_1985', data).length){
-		//隠した上で現在表示しているHTMLの中に配置する
-		$('body').append($('#mslongtail_1984,#mslongtail_1985', data).hide());
-	}
 	//linkタグを展開する。
 	links.each(function(){
 		//headタグ内にlinkタグを順次追加していく。
@@ -77,22 +30,6 @@ function overwrightContent(target, data){
 		//mainのタグの中にscriptタグを展開し、JavaScriptのコードを順次実行する。
 		$(target).append($(this));
 	});
-	//@mod 2015.0604 T.Masuda MSL記事一覧の位置を変えるコードを各PHPに定義しました
-}
-
-/*
- * 関数名:overwriteMSLContent(target, data)
- * 引数  :String target, Object data
- * 戻り値:なし
- * 概要  :既存のコンテンツを消して、MSLのコンテンツを追加する。
- * 作成日:2015.05.13
- * 作成者:T.M
- */
-function overwriteMSLContent(target, data){
-	//mainのタグを空にする。
-	$(target).empty();
-	//mainのタグを上書きする。
-	$(target).replaceWith($('.main' ,data));
 }
 
 /*
@@ -125,16 +62,8 @@ function callPage(url, state){
 		async: false,
 		//通信成功時の処理
 		success:function(html){
-			//変更者:T.Yamamoto 指示者H.Kaneko 内容:jsonをnullにするとログインページの読み込みができないのでコメントにしました
-			//list.phpかdetail.phpであれば
-//			if(url.indexOf('list.php') != -1 || url.indexOf('detail.php') != -1){
-//				//MSLのコンテンツで既存のコンテンツを上書きする
-//				overwriteMSLContent('.main', html);
-//			//それ以外であれば
-//			} else {
-				//既存のコンテンツを上書きする。
-				overwrightContent('.main', html);
-//			}
+			//既存のコンテンツを上書きする。
+			overwrightContent('.main', html);
 			//カレントのURLを更新する。
 			currentLocation = url;
 
@@ -469,6 +398,7 @@ $(document).ajaxStop( function(){
 	commonFuncs.hideLoadingScreen();
 	//選択されたトップメニューの色を変える。
 	changeSelectedButtonColor('.topMenu li');
+	commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 });
 /* 以上、ローディング画面呼び出しのイベント登録。 */
 

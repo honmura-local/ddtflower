@@ -131,6 +131,35 @@ this.defaultClassworkCostColumns = [
 	,'default_flower_cost'
 ];
 
+//以下2個、setDataToNoticeContents関数で利用するデータのサンプル。現状そのまま使えます
+//トップページお知らせの記事データの構造サンプル
+this.sampleNoticeDataOrganizeKeyArray = [
+		"topicContentImage" //各要素のキー。sampleNoticeDataOrganizeSettingObjのキーとなる
+		,"topicContentDate"
+		,"topicContentUserName"
+		,"topicContentTitle"
+    ];
+
+//トップページお知らせの記事データの構造サンプル
+this.sampleNoticeDataOrganizeSettingObj = {
+	"topicContentImage": [
+		"img",   //列名
+	    "style"  //値セット先のキー
+	],
+	"topicContentDate": [
+		"date",
+	    "text"
+	],
+	"topicContentUserName": [
+		"user_name",
+	    "text"
+	],
+	"topicContentTitle": [
+		"title",
+	    "text"
+	]
+};
+
 //unix時間の重複回避用の数
 this.unixtimeIncrement = 0;
 
@@ -3017,6 +3046,62 @@ this.messageDialogDefaultOption = {
 			isBefore ? $(this).children(criteria).before($addTag) : $(this).children(criteria).after($addTag);
 		});
 		
+	}	
+
+	/* 
+	 * 関数名:setDBDataToNoticeContents
+	 * 概要  :トップページのお知らせウィンドウ用のデータをセットする
+	 * 引数  :String contentData:コンテンツのデータ
+	 *      :Array data:セットもとのデータ
+	 *      :Array targetKeys: コンテンツ内データのチェック対象となるキー
+	 *      :Object setKeys:セットデータとコンテンツデータのキーの対応表
+	 *      構成は以下
+	 *      {
+	 *          "contentName" : [
+	 *              "data内の列名"
+	 *              ,"データをセットする対象のキー名(例:text, style, src)"
+	 *          ]
+	 *      }
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.02
+	 */	
+	this.setDataToNoticeContents = function(contentData, data, targetKeys, setKeys) {
+		
+		var dataLength = data.length;	//データの数を取得する
+		//セット用データを走査する
+		for (var i = 0; i < dataLength; i++) {
+			var oneContent = {};	//記事1つ分を格納する変数を用意する
+			//記事データを走査する
+			for (key in contentData) {
+				//記事データなら
+				if(key.indexOf(i + 1) != -1) {
+					//取り出す
+					oneContent = contentData[key]
+					break;	//目的のものを取り出したので終える
+				}
+			}
+			
+			//コンテンツのデータを走査する
+			for (key in oneContent) {
+				//チェック対象のキーであれば
+				if ($.inArray(targetKeys(key)) != -1) {
+					//対象のコンテンツを取り出す
+					var content = oneContent[key];
+					//設定データを取り出す
+					var setData = setKeys[key];
+					//データ設定対象のキーで処理を分岐する
+					switch (setData[1]) {
+					    //styleで背景画像を指定している場合は、画像パスを記入する場所に置換でセットする
+						case 'style' : content[setData[1]] = content[setData[1]].replace('\'\'', '\'' + data[i][setData[0]] + '\'');
+							break;
+						//特に値の設定で特別な処理が必要ない場合は、そのまま追加する
+						default : content[setData[1]] = data[i][setData[0]];
+							break;
+					}
+				}
+			}
+		} 
 	}	
 	
 	//ここまでクラス定義領域
