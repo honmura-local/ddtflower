@@ -290,7 +290,8 @@ function baseDialog(dialog){
                               			 function(){
                               			 //更新ボタンの処理を行う
                               			 this.dialogBuilder.callbackYes();
-                              		 }
+                              		 },
+                              		 icons : {primary : "ui-icon-check"}
 	                         	},
 		                         {	//いいえボタン
 		                        	 text:TEXT_NO,
@@ -300,7 +301,8 @@ function baseDialog(dialog){
                               			 function(){
                               			 //更新ボタンの処理を行う
                               			 this.dialogBuilder.callbackNo();
-                              		 }
+                              		 },
+                              		 icons : {primary : "ui-icon-close"}
 		                         }
 	                         ];
 	
@@ -314,7 +316,8 @@ function baseDialog(dialog){
                           			 function(){
                           			 //更新ボタンの処理を行う
                           			 this.dialogBuilder.callbackCreateNew();
-                          		 }
+                          		 },
+                          		 icons : {primary : "ui-icon-plus"}
 	                         }
 	                 ];
 	
@@ -329,7 +332,8 @@ function baseDialog(dialog){
 	                		  function(){
 	                		  //更新ボタンの処理を行う
 	                		  this.dialogBuilder.callbackCreateNew();
-	                	  }
+                   		 },
+                  		 icons : {primary : "ui-icon-plus"}
 	                  },
 	                  {	
 	                	  //編集ボタン
@@ -340,7 +344,8 @@ function baseDialog(dialog){
 	                		  function(){
 	                		  //更新ボタンの処理を行う
 	                		  this.dialogBuilder.callbackEdit();
-	                	  }
+                   		 },
+                  		 icons : {primary : "ui-icon-pencil"}
 	                  },
 	                  {	
 	                	  //削除ボタン
@@ -351,7 +356,8 @@ function baseDialog(dialog){
 	                		  function(){
 	                		  //削除ボタンの処理を行う
 	                		  this.dialogBuilder.callbackDelete();
-	                	  }
+                   		 },
+                  		 icons : {primary : "ui-icon-close"}
 	                  }
 	                  ];
 	
@@ -366,7 +372,8 @@ function baseDialog(dialog){
                       			 function(){
                       			 //更新ボタンの処理を行う
                       			 this.dialogBuilder.callbackSend();
-                      		 }
+                      		 },
+                      		 icons : {primary : "ui-icon-signal-diag"}
 	                   },
 	                   {
 	                	   //リセットボタン
@@ -377,7 +384,8 @@ function baseDialog(dialog){
 	                  			 function(){
 	                  			 //更新ボタンの処理を行う
 	                  			 this.dialogBuilder.callbackReset();
-	                  		 }
+                      		 },
+                      		 icons : {primary : "ui-icon-trash"}
 	                   }
 	             ];
 	
@@ -392,7 +400,8 @@ function baseDialog(dialog){
                    			 function(){
                    			 //更新ボタンの処理を行う
                    			 this.dialogBuilder.callbackConfirm();
-                   		 }
+                  		 },
+                  		 icons : {primary : "ui-icon-check"}
 					},
 					{
 						//閉じるボタン
@@ -403,7 +412,8 @@ function baseDialog(dialog){
                   			 function(){
                   			 //更新ボタンの処理を行う
                   			 this.dialogBuilder.callbackCloseButton();
-                  		 }
+                  		 },
+                  		 icons : {primary : "ui-icon-close"}
 					}
 	           ];
 	
@@ -417,7 +427,8 @@ function baseDialog(dialog){
                 			 function(){
                 			 //更新ボタンの処理を行う
                 			 this.dialogBuilder.callbackUpdate();
-                		 }
+                  		 },
+                  		 icons : {primary : "ui-icon-refresh"}
 					},
 					{	//受講者一覧ボタン
 						text : TEXT_LESSON_STUDENTS_BUTTON,
@@ -427,7 +438,8 @@ function baseDialog(dialog){
 	               			 function(){
 	               			 //受講者一覧ボタンの処理を行う
 	               			 this.dialogBuilder.callbackStudents();
-	               		 }
+                  		 },
+                  		 icons : {primary : "ui-icon-note"}
 					}
 	];
 	
@@ -444,7 +456,8 @@ function baseDialog(dialog){
 		                			 function(){
 		                			 //ログインボタンの処理を行う
 		                			 this.dialogBuilder.callbackLogin();
-		                		 }
+                  		 },
+                  		 icons : {primary : "ui-icon-person"}
 					},
 					//閉じるボタン
 					{
@@ -456,7 +469,8 @@ function baseDialog(dialog){
                			 function(){
 		                	//閉じるボタンの処理を行う
 		                	this.dialogBuilder.callbackCloseButton();
-		                }
+                 		 },
+                  		 icons : {primary : "ui-icon-close"}
 					}
 	           ];
 	
@@ -472,7 +486,8 @@ function baseDialog(dialog){
 	                    		function(){
 	                    		//閉じるボタンの処理を行う
 	                    		this.dialogBuilder.callbackCloseButton();
-	                    	}
+	                 		 },
+	                  		 icons : {primary : "ui-icon-close"}
 	                    }
 	                    ];
 	

@@ -34,12 +34,15 @@
 			//メルマガ＆アナウンスタブのコンテンツ
 			//過去のメルマガを検索するための領域を作る
 			create_tag.outputTag('mailMagaSearchArea', 'mailMagaSearchArea', '#mailMagaAndAnnounce');
+			//検索ボタンを追加する
+			commonFuncs.putCommonButton('#mailMagaAndAnnounce .mailMagaSearchArea', 'mailMagaSearchButton', 'search', true, false, true, {}, false);
+
 			//以下のボタンを格納する領域を作る
 			create_tag.outputTag('buttonArea', 'buttonArea', '.mailMagaSearchArea');
-			//メルマガの新規作成ボタン、削除ボタンを作る
-			create_tag.outputTag('mailMagaCreateButton', 'normalButton', '.buttonArea');
-			create_tag.outputTag('mailMagaDeleteButton', 'normalButton', '.buttonArea');
-
+			//新規ボタン、削除ボタンを追加する
+			commonFuncs.putCommonButton('#mailMagaAndAnnounce .buttonArea', 'mailMagaCreateButton', 'createNew', true, false, true, {}, false);
+			commonFuncs.putCommonButton('#mailMagaAndAnnounce .buttonArea', 'mailMagaDeleteButton', 'delete', true, false, true, {}, false);
+			
 			//メルマガページングの一番外側となる領域を作る
 			create_tag.outputTag('mailMagaPagingArea', 'divArea', '#mailMagaAndAnnounce');
 			//ページングのテーブルを作るためにテーブルの外側となるdivを作る
@@ -67,8 +70,6 @@
 			commonFuncs.enterKeyButtonClick('.mailMagaContentSearchTextbox', '.mailMagaSearchButton');			
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
-			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"], input[type="reset"]', $activePanel).button();
 			</script>
 	</body>
 </html>

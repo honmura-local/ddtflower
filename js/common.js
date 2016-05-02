@@ -56,6 +56,23 @@ function common(){
 				src : SRC_SEND_BUTTON,
 				text : '送信'
 			},
+			update : {
+				src : SRC_UPDATE_BUTTON,
+				text : '更新'
+			},
+			confirm : {
+				src : SRC_CONFIRM_BUTTON,
+				text : '確認'
+			},
+			reset : {
+				//妥当なアイコンが見つかっていないため、削除アイコンを流用中
+				src : SRC_DELETE_BUTTON,
+				text : 'リセット'
+			},
+			permit : {
+				src : SRC_PERMIT_BUTTON,
+				text : '承認'
+			},
 			arrow_right_single : {
 				src : SRC_ARROW_RIGHT_SINGLE_BUTTON,
 				text : ''
@@ -2640,21 +2657,19 @@ this.messageDialogDefaultOption = {
 	}
 	
 	/* 
-	 * 関数名:putCommonButton
-	 * 概要  :ボタンを作成し、値をセットして追加する
-	 * 引数  :String target : 追加先セレクタ
-	 *      :String className : ボタンに設定するクラス
+	 * 関数名:makeCommonButton
+	 * 概要  :ボタンを作成し、値をセットして返す
+	 * 引数  :String className : ボタンに設定するクラス
 	 *      :String buttonType : ボタンのタイプの文字列
 	 *      :boolean enableImage : 画像を使うか
 	 *      :boolean enableText : テキストを使うか
 	 *      :boolean isImgFront : 画像をテキストの前に置くか後ろに置くか。trueで前
 	 *      :Object setting : 追加設定
-	 *      :boolean isPrepend : appendするかprependするか
-	 * 返却値  :なし
+	 * 返却値  :Element (jQueryのArray) : ボタン
 	 * 作成者:T.Masuda
-	 * 作成日:2016.04.09
+	 * 作成日:2016.05.02
 	 */
-	this.putCommonButton = function(target, className, buttonType, enableImage, enableText, isImgFront, setting, isPrepend){
+	this.makeCommonButton = function(className, buttonType, enableImage, enableText, isImgFront, setting){
 		//ボタンタイプの有効チェック
 		if(!this.COMMON_BUTTON_TYPE[buttonType]) {
 			//ボタンタイプが不正であると伝える
@@ -2664,7 +2679,7 @@ this.messageDialogDefaultOption = {
 		
 		//ボタンを生成し、クラスを設定する。画像タグもセットする
 		var $button = $(HTML_BUTTON).addClass(className).addClass(CLASS_COMMON_BUTTON);
-		
+
 		//ボタンのタイプをbuttonに指定する
 		$button.attr({type : BUTTON});	
 		//テキストを使う場合
@@ -2693,17 +2708,37 @@ this.messageDialogDefaultOption = {
 			}
 		}
 		
+		return $button;	//作成したボタンを返す
+	}
+	
+	/* 
+	 * 関数名:putCommonButton
+	 * 概要  :ボタンを作成し、値をセットして追加する
+	 * 引数  :String target : 追加先セレクタ
+	 *      :String className : ボタンに設定するクラス
+	 *      :String buttonType : ボタンのタイプの文字列
+	 *      :boolean enableImage : 画像を使うか
+	 *      :boolean enableText : テキストを使うか
+	 *      :boolean isImgFront : 画像をテキストの前に置くか後ろに置くか。trueで前
+	 *      :Object setting : 追加設定
+	 *      :boolean isPrepend : appendするかprependするか
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.01
+	 */
+	this.putCommonButton = function(target, className, buttonType, enableImage, enableText, isImgFront, setting, isPrepend){
+
 		//指定した要素内の前方に配置するか
 		if (isPrepend) {
 			//指定した場所にボタンを配置する
-			$(target).prepend($button);
+			$(target).prepend(this.makeCommonButton(className, buttonType, enableImage, enableText, isImgFront, setting));
 		//後方に配置するか
 		} else {
 			//指定した場所にボタンを配置する
-			$(target).append($button);
+			$(target).append(this.makeCommonButton(className, buttonType, enableImage, enableText, isImgFront, setting));
 		}
 	}
-
+	
 	 /* 
 	  * 関数名:enterKeyCallFunction
 	  * 概要  :指定したテキストボックスをフォーカスしている最中にエンターキーを押すと

@@ -52,10 +52,6 @@
 			"type": "date",
 			"name": "lesson_date",
 			"value": ""
-		},
-		"searchButton": {
-			"type": "button",
-			"value": "検索"
 		}
 	},
 	"eachDayReservedInfoTableOutsideArea": {
@@ -573,11 +569,6 @@
 					"name": "toSearach"
 				}
 			}
-		},
-		"searchButton": {
-			"type": "button",
-			"name": "search",
-			"value": "検索"
 		}
 	},
 	"updateSellCommodityPermitList": {
@@ -777,23 +768,9 @@
 				"type": "text",
 				"name": "magazine_content"
 			}
-		},
-		"mailMagaSearchButton": {
-			"type": "button",
-			"value": "検索"
 		}
 	},
 	"buttonArea": {},
-	"mailMagaCreateButton": {
-		"class": "mailMagaCreateButton normalButton",
-		"type": "button",
-		"value": "新規"
-	},
-	"mailMagaDeleteButton": {
-		"class": "mailMagaDeleteButton normalButton",
-		"type": "button",
-		"value": "削除"
-	},
 	"mailMagaPagingArea": {
 		"class": "mailMagaPagingArea"
 	},

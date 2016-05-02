@@ -27,11 +27,12 @@
 			create_tag.getDomFile('template/common.html');
 
 			//商品販売承認のボタンを追加する
-			create_tag.outputTag('sellCommodityPermitButton', 'normalButton', '#sellCommodityPermit');
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'sellCommodityPermitButton', 'permit', true, false, true, {}, false);
 			//商品販売承認待ちデータの削除のボタンを追加する
-			create_tag.outputTag('deletePermitRecordButton', 'normalButton', '#sellCommodityPermit');
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'deletePermitRecordButton', 'delete', true, false, true, {}, false);
 			//ユーザ追加のボタンを追加する
-			create_tag.outputTag('addUserRecordButton', 'normalButton', '#sellCommodityPermit');
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'addUserRecordButton', 'add', true, false, true, {}, false);
+			
 
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.sellCommodityPermitInfoTable.date.value = commonFuncs.getTodayDate();

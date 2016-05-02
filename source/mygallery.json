@@ -23,23 +23,11 @@
     	"class" : "galleryArea"
     },
     "myGalleryEditButtons": {
-        "createButton": {
-            "text": "新規"
-        },
-        "galleryUpdateButton": {
-            "text": "更新"
-        },
-        "deleteButton": {
-            "text": "削除"
-        },
         "uploader":{
         	"type":"file",
         	"id":"uploader",
         	"name":"uploader"
         },
-        "back": {
-            "text": "戻る"
-        }
     },
     "myGalleryNotice":{
     	"notice1":{

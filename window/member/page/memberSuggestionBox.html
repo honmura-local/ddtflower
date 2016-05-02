@@ -56,8 +56,9 @@
 					create_tag.outputTag('radioArea', 'radioArea', '.suggestionArea');
 					// 入力した内容を送信するボタンの領域を作る
 					create_tag.outputTag('buttonArea', 'buttonArea', '.suggestionArea');
-					//ボタンをjqueryのボタンにする
-					$('input[type="button"], input[type="reset"]').button();
+					commonFuncs.putCommonButton('.buttonArea', 'button1 fRight', 'send', true, false, true, {}, false);
+					commonFuncs.putCommonButton('.buttonArea', 'button2 fRight', 'reset', true, false, true, {"type" : "reset"}, false);
+					
 					//目安箱の送信ボタンを押したときのイベントコールバックを作成する
 					setSuggestionBoxSendEvent('.button1', '.labelTextbox[name="suggest_title"]', '.suggestion[name="suggest_content"]');
 					

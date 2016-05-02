@@ -73,15 +73,7 @@
 			}
 		},
 		"messageButtonArea": {
-			"class": "messageButtonArea fRight",
-			"sendButton": {
-				"type": "button",
-				"value": "送信"
-			},
-			"deleteButton": {
-				"type": "reset",
-				"value": "クリア"
-			}
+			"class": "messageButtonArea fRight"
 		}
 	},
 	"insertMailMagazine": {

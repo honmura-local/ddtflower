@@ -51,6 +51,10 @@ function mailMagaDialog(dialog){
 	this.dispContentsMain = function(){
 		//メルマガ入力フォームを作る
 		this[VAR_CREATE_TAG].outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', $(this.dialog));
+		//送信ボタンを追加する
+		commonFuncs.putCommonButton(CURRENT_DIALOG + ' sellCommodityPermitList .messageButtonArea', 'sendButton', 'send', true, false, true, {}, false);
+		//削除ボタンを追加する
+		commonFuncs.putCommonButton(CURRENT_DIALOG + ' sellCommodityPermitList .messageButtonArea', 'deleteButton', 'delete', true, false, true, {}, false);
 	}
 	
 	/* 関数名:setConfig

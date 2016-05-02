@@ -9,37 +9,37 @@
 		try{
 			commonFuncs = new common();						//汎用共通関数定義クラスインスタンスを生成する
 
-			var creator = new createLittleContents();		//createTagクラスのインスタンスを生成する
+			var create_tag = new createLittleContents();		//createTagクラスのインスタンスを生成する
 			
-			creator.getJsonFile('source/index.json');		// ファイルのデータをjsonを用いて持ってくる
-			creator.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
-			creator.getDomFile('template/common.html');		// 共通パーツのDOMを取得する。
-			creator.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
+			create_tag.getJsonFile('source/index.json');		// ファイルのデータをjsonを用いて持ってくる
+			create_tag.getJsonFile('source/commonJson.json');	// ファイルのデータをjsonを用いて持ってくる
+			create_tag.getDomFile('template/common.html');		// 共通パーツのDOMを取得する。
+			create_tag.getDomFile('template/toppage.html');	// トップページのパーツのDOMを取得する。
 			//ヘッダー内のタグが作成済みでなければ
 		
-			creator.createNormalHeaderContent();	//ヘッダー内のタグが作成済みでなければ作る。
+			create_tag.createNormalHeaderContent();	//ヘッダー内のタグが作成済みでなければ作る。
 		
-			creator.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
+			create_tag.outputTag('flowerBackground', 'createImage');	// トップページ背景を作る
 
 			//ログイン状態をチェックした上でDBにアクセスする
 			create_tag.doGuestLoginProcedure(function() {
-				creator.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicGallery, 'topicGallery');
-				creator.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicBlog, 'topicBlog');
+				create_tag.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicGallery, 'topicGallery');
+				create_tag.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicBlog, 'topicBlog');
 			});
 
 			//ギャラリー、ブログの新着記事情報をセットする
-			commonFuncs.setDataToNoticeContents = function(create_tag.json.topicGallery, create_tag.json.getTopicGallery.tableData, commonFuncs.sampleNoticeDataOrganizeKeyArray, commonFuncs.sampleNoticeDataOrganizeSettingObj);
-			commonFuncs.setDataToNoticeContents = function(create_tag.json.topicBlog, create_tag.json.getTopicBlog.tableData, commonFuncs.sampleNoticeDataOrganizeKeyArray, commonFuncs.sampleNoticeDataOrganizeSettingObj);
+			commonFuncs.setDataToNoticeContents(create_tag.json.topicGallery, create_tag.json.getTopicGallery.tableData, commonFuncs.sampleNoticeDataOrganizeKeyArray, commonFuncs.sampleNoticeDataOrganizeSettingObj);
+			commonFuncs.setDataToNoticeContents(create_tag.json.topicBlog, create_tag.json.getTopicBlog.tableData, commonFuncs.sampleNoticeDataOrganizeKeyArray, commonFuncs.sampleNoticeDataOrganizeSettingObj);
 			//各お知らせを表示するボタンを作る
-			creator.outputTag('topicShowCampaign','topicShow', '.flowerBackground');
-			creator.outputTag('topicShowGallery','topicShow', '.flowerBackground');
-			creator.outputTag('topicShowBlog','topicShow', '.flowerBackground');
+			create_tag.outputTag('topicShowCampaign','topicShow', '.flowerBackground');
+			create_tag.outputTag('topicShowGallery','topicShow', '.flowerBackground');
+			create_tag.outputTag('topicShowBlog','topicShow', '.flowerBackground');
 			//各お知らせを作る。
-			creator.outputTag('topicGallery','topic', '.flowerBackground');
-			creator.outputTag('topicCampaign','topic', '.flowerBackground');
-			creator.outputTag('topicBlog','topic', '.flowerBackground');
+			create_tag.outputTag('topicGallery','topic', '.flowerBackground');
+			create_tag.outputTag('topicCampaign','topic', '.flowerBackground');
+			create_tag.outputTag('topicBlog','topic', '.flowerBackground');
 			
-			creator.outputTag('footer');							// フッターを作る
+			create_tag.outputTag('footer');							// フッターを作る
 			
 			// トップメニューにマウスオーバーのフィルターを配置する。
 			functionFilter('.topMenu li');

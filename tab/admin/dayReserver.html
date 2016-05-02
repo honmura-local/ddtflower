@@ -37,6 +37,8 @@
 			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'twoDayBefore', 'arrow_left_double', true, false, true, {}, true);
 			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'oneDayAfter', 'arrow_right_single', true, false, true, {}, false);
 			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'twoDayAfter', 'arrow_right_double', true, false, true, {}, false);
+			//日付検索ボタンを作る
+			commonFuncs.putCommonButton('#dayReserver .dateSelect', 'searchButton', 'search', true, false, true, {}, false);
 			
 			//日ごと授業テーブルの外枠領域を作る
 			create_tag.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
@@ -53,7 +55,7 @@
 			
 			//会員データをクリックして会員画面にログインできるようにする
 			loginMemberPageFromAdminPage('#dayReserver', SELECTOR_TBODY_TR, '.user_key');
-			
+
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			//検索ボックスのenterキーによる決定を有効にする
 			commonFuncs.enterKeyButtonClick('#dayReserver .dateInput', '#dayReserver .searchButton');

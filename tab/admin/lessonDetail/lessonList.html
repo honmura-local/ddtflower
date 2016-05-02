@@ -1,5 +1,7 @@
 <html>
 	<body>
+		<!-- 当該タブ用クラスをインクルードする -->
+		<script src="js/page/adminLessonList.js"></script>
 		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
 		<script>
 			//カレントのウィンドウのDOMを取得する
@@ -62,8 +64,6 @@
 			commonFuncs.putCommonButton('#lessonList', 'deleteButton', 'delete', true, false, true, {onclick : 'lessonListFuncs.callbackDelete();'});
 			
 			</script>
-			<!-- 当該タブ用クラスをインクルードする -->
-			<script src="js/page/adminLessonList.js"></script>
 	</body>
 </html>
 

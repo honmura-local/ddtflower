@@ -2425,29 +2425,15 @@ function createLittleContents(){
 		$('.myBlogTable tr:not(:first)').each(function(){
 			var $row = $(this);	//行そのものへの参照を変数に入れておく
 			//編集ボタン用の列を走査する
-			$('.buttons', $row).each(function(){
-				//編集ボタン・削除ボタンを追加する
-				//編集ボタン
-				$(this).append($('<button></button>')
-							.attr({
-								type : 'submit', 
-								class : 'deleteButton', 
-								'data-role' : '2'
-								})
-								.text('削除'))
-						//削除ボタン
-						.append($('<button></button>')
-							.attr({
-								type : 'submit', 
-								class : 'editButton', 
-								'data-role' : '1'
-								})
-								.text('編集'));
-			});
+
+			//削除ボタン、編集ボタンを作る
+			var $deleteButton = commonFuncs.makeCommonButton('deleteButton', 'delete', true, false, true, {"type": "submit","data-role": "2"});
+			var $editButton = commonFuncs.makeCommonButton('editButton', 'edit', true, false, true, {"type": "submit","data-role": "1"});
+			
+			//作成したボタンを各行に追加する
+			$('.buttons', $row).append($deleteButton).append($editButton);
 		});
 		
-		//jQueryのリッチなボタンを配置する
-		$('.blogArticles .buttons button').button();
 	}
 	
 	/* 

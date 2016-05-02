@@ -27,12 +27,12 @@
 			create_tag.getDomFile('template/common.html');
 
 			//受講承認のボタンを追加する
-			create_tag.outputTag('doLecturePermitButton', 'normalButton', '#doLecturePermit');
+			commonFuncs.putCommonButton('#doLecturePermit', 'doLecturePermitButton', 'permit', true, false, true, {}, false);
 			//受講承認待ちデータの削除のボタンを追加する
-			create_tag.outputTag('deletePermitRecordButton', 'normalButton', '#doLecturePermit');
+			commonFuncs.putCommonButton('#doLecturePermit', 'deletePermitRecordButton', 'delete', true, false, true, {}, false);
 			//ユーザ追加のボタンを追加する
-			create_tag.outputTag('addUserRecordButton', 'normalButton', '#doLecturePermit');
-
+			commonFuncs.putCommonButton('#doLecturePermit', 'addUserRecordButton', 'add', true, false, true, {}, false);
+			
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
 			// 受講承認テーブル用のJSON配列を取得する

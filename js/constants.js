@@ -1121,6 +1121,13 @@ SRC_MAIL_BUTTON							= 'image/icon_mail.png';
 SRC_NOTICE_BUTTON						= 'image/icon_notice.png';
 //送信ボタンの画像ソースパス
 SRC_SEND_BUTTON							= 'image/icon_send.png';
+//更新ボタンの画像ソースパス
+SRC_UPDATE_BUTTON						= 'image/icon_update.png';
+//確認ボタンの画像ソースパス
+SRC_CONFIRM_BUTTON						= 'image/icon_confirm.png';
+//確認ボタンの画像ソースパス
+SRC_PERMIT_BUTTON						= 'image/icon_permit.png';
+
 
 //画像タグ
 HTML_IMG								= '<img src alt>';

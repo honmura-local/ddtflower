@@ -42,12 +42,14 @@
 	create_tag.json.finishedLessonTable.user_key.value = memberInfo;
 	// 受講済み授業のタブ内コンテンツを作る
 	create_tag.outputTag('finishedLesson', 'tabInContent', $('.tabContentArea', $currentContent));
+	
 	//受講済み授業の絞り込み領域を作る
 	create_tag.outputTag('selectTheme', 'selectTheme', '#finishedLesson');
 	//受講済み授業の絞り込み領域を作る
 	create_tag.outputTag('lessonListSearch', 'lessonListSearch', '#finishedLesson');
 	//絞り込みボタンを作る
-	create_tag.outputTag('filterButton', 'normalButton', '#finishedLesson');
+	commonFuncs.putCommonButton('#finishedLesson', 'filterButton', 'filter', true, false, true, {}, false);
+	
 	//受講済みテーブルページングの一番外側となる領域を作る
 	create_tag.outputTag('finishedLessonPagingArea', 'divArea', '#finishedLesson');
 	//ページングのテーブルを作るためにテーブルの外側となるdivを作る

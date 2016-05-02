@@ -34,20 +34,10 @@
         "blogEditImagesSectionImage": {
         	"name":"thumb1"
         },
-        "blogEditImagesSectionAddButton": {
-        	"text":"選択",
-        	"onclick":"",
-        	"type":"button"
-        },
         "blogEditImagesSectionImagePath":{
         	"name":"image_1",
         	"type":"hidden",
         	"value":""
-        },
-        "blogEditImagesSectionDeleteButton": {
-        	"text":"削除",
-        	"type":"button",
-        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_1\"],[name=\"thumb1\"]')"
         }
     },
     "blogEditImagesSection2": {
@@ -55,41 +45,21 @@
         "blogEditImagesSectionImage": {
         	"name":"thumb2"
         },
-        "blogEditImagesSectionAddButton": {
-        	"text":"選択",
-        	"onclick":"",
-        	"type":"button"
-        },
         "blogEditImagesSectionImagePath":{
         	"name":"image_2",
         	"type":"hidden",
         	"value":""
         },
-        "blogEditImagesSectionDeleteButton": {
-        	"text":"削除",
-        	"type":"button",
-        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_2\"],[name=\"thumb2\"]')"
-        }
     },
     "blogEditImagesSection3": {
     	"class":"blogEditImagesSection cf",
         "blogEditImagesSectionImage": {
         	"name":"thumb3"
         },
-        "blogEditImagesSectionAddButton": {
-        	"text":"選択",
-        	"onclick":"",
-        	"type":"button"
-        },
         "blogEditImagesSectionImagePath":{
         	"name":"image_3",
         	"type":"hidden",
         	"value":""
-        },
-        "blogEditImagesSectionDeleteButton": {
-        	"text":"削除",
-        	"type":"button",
-        	"onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_3\"],[name=\"thumb3\"]')"
         }
     },
     "blogEditText": {
@@ -131,21 +101,7 @@
     	}
     },
     "blogEditButtons": {
-     	"class":"blogEditButtons cf",
-        "blogEditButtonsOKButton": {
-        	"class":"blogEditButtonsOKButton",
-        	"type":"submit",
-        	"text":"　 OK 　",
-            "confirm":"true",
-            "value":"保存"
-        },
-        "blogEditButtonsCancelButton": {
-        	"class":"blogEditButtonsCancelButton back",
-        	"text":"キャンセル",
-        	"href":"adminblogmanagement.html",
-        	"onclick":"",
-        	"type":"button"
-        }
+     	"class":"blogEditButtons cf"
     },
     "insertMyBlog":{
         "db_setQuery":"CALL insertNewBlogArticle('user_key', 'blogTitle', 'blogContent', 'blogPublication', 'image_1', 'image_2', 'image_3')"

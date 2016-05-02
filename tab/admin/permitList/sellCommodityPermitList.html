@@ -29,8 +29,12 @@
 			
 			//受講承認一覧の検索領域を作る
 			create_tag.outputTag('permitListSearch', 'permitListSearch', '#sellCommodityPermitList');
-			//受講承認一覧のリスト更新ボタンを作る
-			create_tag.outputTag('sellCommodityPermitListUpdateButton', 'normalButton', '#sellCommodityPermitList .permitListSearch');
+			
+			//検索ボタンを追加する
+			commonFuncs.putCommonButton('#sellCommodityPermitList .permitListSearch', 'searchButton', 'search', true, false, true, {}, false);
+			//受講承認の更新ボタンを追加する
+			commonFuncs.putCommonButton('#sellCommodityPermitList .permitListSearch', 'sellCommodityPermitListUpdateButton', 'update', true, false, true, {}, false);
+			
 			//受講承認一覧で今月の初日から末日を検索するのをデフォルトにする
 			setPermitListFromToDate(SELLCOMMODITY_PERMIT_LIST_INFO_TABLE);
 			//受講承認一覧テーブル外枠を作る

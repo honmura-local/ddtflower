@@ -1,5 +1,7 @@
 <html>
 	<body>
+		<!-- 当該タブ用クラスをインクルードする -->
+		<script src="js/page/timetableList.js"></script>
 		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
 		<script>
 			//カレントのウィンドウのDOMを取得する
@@ -44,8 +46,6 @@
 			commonFuncs.putCommonButton('#timeTableList', 'updateButton', 'edit', true, false, true, {onclick : 'timetableListFuncs.callbackUpdate();'});
 			
 			</script>
-			<!-- 当該タブ用クラスをインクルードする -->
-			<script src="js/page/timetableList.js"></script>
 	</body>
 </html>
 

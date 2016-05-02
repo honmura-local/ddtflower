@@ -81,9 +81,11 @@
 					//datepickerによるカレンダーのクラスを作成する。
 					var mbCalendar = new myBlogCalendar('.calendar', create_tag, create_tag.json.myBlogTable[TABLE_DATA_KEY]);
 					mbCalendar.create();	//カレンダーを実際に作成する
-					//ボタンを作る
+					//ボタンの領域を作る
 					create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.blogLeftContent');
-	
+					//新規作成ボタンを作る
+					commonFuncs.putCommonButton('.myPageBlogButtons', 'createArticleButton myPageBlogButton myPageButton', 'createNew', true, false, true, {"type": "submit","data-role": "0","value": "記事作成"}, false);
+
 					create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 					//submitイベントを登録する。
 					$('form').validate(articleSubmitHandler);
