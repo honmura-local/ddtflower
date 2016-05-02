@@ -924,6 +924,9 @@ SELECTOR_HAS_ANYTHING = ':not(:has(*))';
 TAG_INPUT = '<input>';
 //inputタグのセレクタ
 SELECTOR_INPUT		= 'input';
+//inputタグ
+HTML_INPUT			= 'input';
+
 //最初の要素ではないというセレクタ。主に見出し行を除外したテーブルのレコードを指定するのに使う
 SELECTOR_NOT_FIRST	= ':not(:first)';
 //商品購入一覧タブのセレクタ
@@ -1093,3 +1096,61 @@ SIMBOLE_SINGLQUATE_COMMA				= '\',\'';
 CHAR_ZERO								= '0';
 //日付テキストボックスのセレクタ
 SELECTOR_DATE_TEXTBOX					= 'input[type="date"]';
+//授業新規作成ダイアログのタイトル
+TITLE_CREATE_LESSON						=  '授業作成';
+//授業編集ダイアログのタイトル
+TITLE_EDIT_LESSON						=  '授業編集';
+
+//検索ボタンの画像ソースパス
+SRC_SEARCH_BUTTON						= 'image/icon_search.png';
+//絞込ボタンの画像ソースパス
+SRC_FILTER_BUTTON						= 'image/icon_filter.png';
+//削除ボタンの画像ソースパス
+SRC_DELETE_BUTTON						= 'image/icon_delete.png';
+//追加ボタンの画像ソースパス
+SRC_ADD_BUTTON							= 'image/icon_add.png';
+//編集ボタンの画像ソースパス
+SRC_EDIT_BUTTON							= 'image/icon_edit.png';
+//キャンセルボタンの画像ソースパス
+SRC_CANCEL_BUTTON						= 'image/icon_cancel.png';
+//選択ボタンの画像ソースパス
+SRC_SELECT_BUTTON						= 'image/icon_select.png';
+//メールボタンの画像ソースパス
+SRC_MAIL_BUTTON							= 'image/icon_mail.png';
+//お知らせボタンの画像ソースパス
+SRC_NOTICE_BUTTON						= 'image/icon_notice.png';
+//送信ボタンの画像ソースパス
+SRC_SEND_BUTTON							= 'image/icon_send.png';
+
+//画像タグ
+HTML_IMG								= '<img src alt>';
+//画像タグのセレクタ
+SELECOR_IMG								= 'img';
+//ボタン作成関数のボタンのクラス名
+CLASS_COMMON_BUTTON						= 'commonButton';
+//共通ボタン作成時のボタンタイプ指定ミス時のメッセージ
+MESSAGE_INVALID_BUTTON_TYPE				= '指定したボタンのタイプは存在しません。 タイプ : ';
+//矢印ボタンの画像ソースパス
+SRC_ARROW_RIGHT_SINGLE_BUTTON			= 'image/icon_arrow_right_single.png';
+SRC_ARROW_LEFT_SINGLE_BUTTON			= 'image/icon_arrow_left_single.png';
+SRC_ARROW_RIGHT_DOUBLE_BUTTON			= 'image/icon_arrow_right_double.png';
+SRC_ARROW_LEFT_DOUBLE_BUTTON			= 'image/icon_arrow_left_double.png';
+
+//授業一覧タブのセレクタ
+LESSON_LIST_TAB							= '#lessonList';
+//授業時間帯一覧タブのセレクタ
+TIME_TABLE_LIST_TAB						= '#timeTableList';
+//授業時間帯一覧テーブルのキー
+KEY_TIME_TABLE_LIST_TABLE				= 'timetableListTable';
+
+//授業一覧タブのセレクタ
+SELECTOR_LESSON_LIST_TAB				= '#lessonList';
+
+//メッセージダイアログ用のHTML
+HTML_MESSAGE_DIALOG						= '<div class="messageDialog"></div>';
+//tdタグのhtml
+TAG_TD									= '<td></td>';
+//時間帯をあらわすクラス名
+CLASS_TIME_TABLE						= 'time_table';
+
+

@@ -58,7 +58,7 @@
 			//承認ボタンクリックでデータを更新する
 			loopUpdatePermitLesson();
 			//削除ボタンを押すと選択したレコードを削除する
-			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No');commonFuncs.toggleScrollY('.doLecturePermitInfoTable');");
+			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "if($(CURRENT_DIALOG_SELECTOR)[0].instance.getPushedButtonState() == YES) {deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No');}");
 
 			var $activePanel = $('#permitTab .tabPanel.active', $currentContent);	//現タブパネルを取得する
 			// ボタンの見た目をjqueryuiのものにしてデザインを整える
@@ -81,8 +81,6 @@
 			
 			//追加ボタンを押したらユーザ一覧画面へ遷移するようにする
 			moveToUserList('doLecturePermit', '#doLecturePermit .addUserRecordButton');
-			//テーブルのスクロールを修正する
-			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
 			
 			</script>
 	</body>

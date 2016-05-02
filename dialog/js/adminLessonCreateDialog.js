@@ -73,6 +73,20 @@ function adminLessonCreateDialog(dialog){
 		this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_CREATE_DIALOG_HTML);	//授業作成ダイアログ個別テンプレート
 	};
 	
+	/* 関数名:customizeJson
+	 * 概要　:constructionContentで取得したJSONの加工を行う。オーバーライドして定義されたし
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:2015.0815
+	 * 作成者　:T.Masuda
+	 */
+	this.customizeJson = function(){
+		console.log(this.dialogClass.getArgumentObject());
+		this.create_tag.json.lessonDate.text = this.dialogClass.getArgumentObject().config.title;
+		
+	};
+	
 	/* 関数名:dispContentsMain
 	 * 概要　:画面パーツ設定用関数のメイン部分作成担当関数
 	 * 引数　:createLittleContents creator:createLittleContentsクラスインスタンス
@@ -85,24 +99,21 @@ function adminLessonCreateDialog(dialog){
 	this.dispContentsMain = function(){
 		//授業データ入力領域を作る
 		this[VAR_CREATE_TAG].outputTag(LESSON_DATA, LESSON_DATA, this.dialog);
+		//授業編集領域の要素を取得する
+		var $targetArea = $(DOT + LESSON_DATA, this.dialog);
+		this[VAR_CREATE_TAG].outputTag('lessonDate', 'lessonDate', $targetArea);
 		//授業のテーマを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, $(DOT + LESSON_DATA, this.dialog));
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, $targetArea);
 		//授業の時間割を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_TIMETABLE, CLASS_LESSON_TIMETABLE, $(DOT + LESSON_DATA, this.dialog));
-		//授業の最少人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MIN_STUDENTS, CLASS_LESSON_MIN_STUDENTS, $(DOT + LESSON_DATA, this.dialog));
-		//授業の最大人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MAX_STUDENTS, CLASS_LESSON_MAX_STUDENTS, $(DOT + LESSON_DATA, this.dialog));
-		//時間帯の最少人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_TIME_MIN_STUDENTS, CLASS_TIME_MIN_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
-		//時間帯の最大人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_TIME_MAX_STUDENTS, CLASS_TIME_MAX_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_TIMETABLE, CLASS_LESSON_TIMETABLE, $targetArea);
+		//最大最小人数設定要素を作る
+		this[VAR_CREATE_TAG].outputTag('studentsArea', 'studentsArea', $targetArea);
 		//授業のステータスを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_STATUS, CLASS_LESSON_STATUS, $(DOT + LESSON_DATA, this.dialog));
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_STATUS, CLASS_LESSON_STATUS, $targetArea);
 		//授業の教室を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CLASSROOM, CLASS_LESSON_CLASSROOM, $(DOT + LESSON_DATA, this.dialog));
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_CLASSROOM, CLASS_LESSON_CLASSROOM, $targetArea);
 		//授業のメモを設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, $(DOT + LESSON_DATA, this.dialog));
+		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MEMO, CLASS_LESSON_MEMO, $targetArea);
 	}
 
 	/* 関数名:setConfig

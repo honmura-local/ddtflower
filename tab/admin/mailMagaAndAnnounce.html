@@ -59,7 +59,7 @@
 			//メルマガテーブルをクリックしたときにその内容をテキストボックスに反映させる
 			//setMailMagaSendContent();
 			//削除ボタンを押すと選択したレコードを削除する
-			executeDeleteRecord($('#mailMagaAndAnnounce .mailMagaDeleteButton'), '指定したレコードを削除しますか?', '.mailMagaTable .selectRecord', "deleteRecords('.mailMagaTable', '.selectRecord', $('#mailMagaAndAnnounce')[0].create_tag.json.deleteMailMagazine, deleteAfterReloadMailMagaTable);");
+			executeDeleteRecord($('#mailMagaAndAnnounce .mailMagaDeleteButton'), '指定したレコードを削除しますか?', '.mailMagaTable .selectRecord', "if($(CURRENT_DIALOG_SELECTOR)[0].instance.getPushedButtonState() == YES) {deleteRecords('.mailMagaTable', '.selectRecord', $('#mailMagaAndAnnounce')[0].create_tag.json.deleteMailMagazine, deleteAfterReloadMailMagaTable);}");
 			
 			//削除ボタンがクリックされたとき、テキストボックスの中身も空白にする
 			resetMailMageSendContent();

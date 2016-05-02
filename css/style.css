@@ -151,6 +151,26 @@ span,label,h1,h2,h3,h4,h5,th{
 }
 
 /*
+ * セレクタ:*
+ * 概要   :全要素共通の設定
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+* {
+	outline: none;	/* フォーカス時にアウトラインを出さない */
+}
+
+/*
+ * セレクタ:input,textarea,select
+ * 概要   :inputタグ、テキストエリア、selectタグ
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+input,textarea,select {
+    box-sizing : border-box;	/* 一律でサイズに指定に罫線を含むように設定する */
+}
+
+/*
  * セレクタ:input[type="date"]
  * 概要   :日付テキストボックス
  * 作成者 :T.Masuda
@@ -188,6 +208,64 @@ input[type="date"] {
  */
 .floatLeft {
 	float : left;	/* 左に寄せる */
+}
+
+/* 
+ * セレクタ:.scrollXAuto
+ * 概要   :内容が横にオーバーフローしたらスクロールするようにするクラス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.scrollXAuto {
+	overflow-x : auto;	/* 横にオーバーフローしたらスクロールさせる */
+}
+
+/* 
+ * セレクタ:.commonButton
+ * 概要   :ボタン作成関数で作ったボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton {
+    background: #EEE;		/* 背景色を薄いグレーにする */
+    border: 1px solid #AAA;	/* グレーの線で囲む */
+    border-radius: 5px;		/* 角丸にする */
+    box-sizing: border-box;	/* 罫線を幅計算に含める */
+    height : 30px;			/* デフォルトの高さを指定する。必要に応じて別セレクタで指定する */
+    margin : 2.5px;			/* デフォルトのマージンを指定する。必要に応じて別セレクタで指定する */
+}
+
+/* 
+ * セレクタ:.commonButton:hover
+ * 概要   :ボタン作成関数で作ったボタンがマウスオーバーされたとき
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton:hover {
+    background: #EFEEFE;		/* 薄いグレーをもっとうすくする */
+}
+
+/* 
+ * セレクタ:.commonButton:active
+ * 概要   :ボタン作成関数で作ったボタンが押された時
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton:active {
+    background: #FFE;		/* 更に薄いグレーにする */
+    position: relative;		/* 座標指定をするため相対位置を使う */
+    top : 2px;				/* 少し下にずらして押した感を出す */
+}
+
+/* 
+ * セレクタ:.commonButton > img
+ * 概要   :ボタン作成関数で作ったボタンの画像部分
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton > img {
+    height: 80%;				/* ボタンの高さを大きさの基準にする */
+    vertical-align : middle;	/* アイコン、テキストの高さを中心に揃える */
 }
 
 /* 

@@ -32,6 +32,12 @@
 			create_tag.outputTag('dateSelect', 'dateSelect', '#dayReserver');
 			//日付ページングを実装する
 			nowDatePaging('dateBelt', create_tag);
+			//日付送りの矢印ボタンを作る
+			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'oneDayBefore', 'arrow_left_single', true, false, true, {}, true);
+			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'twoDayBefore', 'arrow_left_double', true, false, true, {}, true);
+			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'oneDayAfter', 'arrow_right_single', true, false, true, {}, false);
+			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'twoDayAfter', 'arrow_right_double', true, false, true, {}, false);
+			
 			//日ごと授業テーブルの外枠領域を作る
 			create_tag.outputTag('eachDayReservedInfoTableOutsideArea', 'divArea', '#dayReserver');
 			//今日の日時の予約者をまず表示するため、今日の日付を取得してJSONにセットする
@@ -49,12 +55,10 @@
 			loginMemberPageFromAdminPage('#dayReserver', SELECTOR_TBODY_TR, '.user_key');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
-			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"]', $activePanel).button();
-			// 日付前後のボタンをリッチなアイコンボタンに変える
-			blushDayReserverDateButton()
 			//検索ボックスのenterキーによる決定を有効にする
 			commonFuncs.enterKeyButtonClick('#dayReserver .dateInput', '#dayReserver .searchButton');
+			//検索日付テキストボックスに初期値をセットする
+			$('.dateInput').val($('.theDay').text());
 			</script>
 	</body>
 </html>

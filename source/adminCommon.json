@@ -38,29 +38,14 @@
 		"id": "userList"
 	},
 	"dateBelt": {
-		"twoDayBefore": {
-			"text": "<<"
-			,"type": "button"
-		},
-		"oneDayBefore": {
-			"text": "<"
-			,"type": "button"
-		},
 		"theDay": {
 			"text": ""
-		},
-		"oneDayAfter": {
-			"text": ">"
-			,"type": "button"
-		},
-		"twoDayAfter": {
-			"text": ">>"
-			,"type": "button"
 		}
 	},
 	"dateSelect": {
 		"class": "dateSelect cf",
 		"dateHeadLabel": {
+			"class": "dateHeadLabel notApplySmartphoneFontsize",
 			"text": "日付指定:"
 		},
 		"dateInput": {
@@ -143,7 +128,7 @@
 		}
 	},
 	"doLecturePermitInfoTable": {
-		"class": "doLecturePermitInfoTable commonTable",
+		"class": "doLecturePermitInfoTable commonTable scrollXAuto",
 		"db_getQuery": "CALL getLecturePermit(@result); SELECT @result AS 'result';",
 		"date": {
 			"value": ""
@@ -155,15 +140,15 @@
 					"className": "permitCheckboxArea"
 				},
 				"time_table_key": {
-					"columnName": "No."
-					,"className" : "No"
+					"columnName": "No.",
+					"className": "No"
 				},
 				"lesson_date": {
 					"columnName": "日時"
 				},
 				"user_name": {
 					"columnName": "名前",
-					"className" : "user_name"
+					"className": "user_name"
 				},
 				"get_point": {
 					"columnName": "所持pt"
@@ -195,7 +180,7 @@
 				},
 				"user_classwork_key": {
 					"style": "display:none;",
-					"className" : "id"
+					"className": "id"
 				},
 				"order_students": {
 					"style": "display:none;"
@@ -210,11 +195,11 @@
 			}
 		}
 	},
-	"deleteLecturePermitRecordQuery" : {
-		"db_setQuery" : ""
+	"deleteLecturePermitRecordQuery": {
+		"db_setQuery": ""
 	},
 	"sellCommodityPermitInfoTable": {
-		"class": "sellCommodityPermitInfoTable commonTable",
+		"class": "sellCommodityPermitInfoTable commonTable scrollXAuto",
 		"date": {
 			"value": "CALL p_delete_approval_purchase('id', @result); SELECT @result AS result;"
 		},
@@ -227,7 +212,7 @@
 				},
 				"user_name": {
 					"columnName": "名前",
-					"className" : "user_name"
+					"className": "user_name"
 				},
 				"get_point": {
 					"columnName": "所持ポイント"
@@ -261,13 +246,13 @@
 				},
 				"commodity_sell_key": {
 					"style": "display : none;",
-					"className" : "id"
+					"className": "id"
 				}
 			}
 		}
 	},
-	"deleteSellCommodityPermitRecordQuery" : {
-		"db_setQuery" : "CALL p_delete_approval_purchase('id', @result); SELECT @result AS result;"
+	"deleteSellCommodityPermitRecordQuery": {
+		"db_setQuery": "CALL p_delete_approval_purchase('id', @result); SELECT @result AS result;"
 	},
 	"insertSellCommodityRecord": {
 		"db_setQuery": "CALL p_insert_approval_purchase('sell_number', 'pay_cash', 'use_point', 'user_key', 'purchase_status', @result); SELECT @result AS message;",
@@ -465,7 +450,7 @@
 				},
 				"user_name": {
 					"columnName": "名前",
-					"className" : "user_name"
+					"className": "user_name"
 				},
 				"lesson_name": {
 					"columnName": "内容"
@@ -521,7 +506,7 @@
 				},
 				"user_name": {
 					"columnName": "名前",
-					"className" : "user_name"
+					"className": "user_name"
 				},
 				"lesson_name": {
 					"columnName": "内容"
@@ -601,8 +586,7 @@
 	"updatePermitListLesson": {
 		"db_setQuery": "CALL p_update_approval_list_lesson('user_classwork_cost', 'use_point', 'diff_point', 'user_key', 'id', @result); SELECT @result AS result;"
 	},
-	"searchUserList": {
-	},
+	"searchUserList": {},
 	"lecturePermitListUpdateButton": {
 		"class": "normalButton permitListUpdateButton",
 		"type": "button",
@@ -647,9 +631,9 @@
 					"className": "mail_address",
 					"style": "display:none"
 				},
-				"user_status" : {
-					"className" : "user_status",
-					"columnName" : "入会状況"
+				"user_status": {
+					"className": "user_status",
+					"columnName": "入会状況"
 				}
 			}
 		}
@@ -799,8 +783,7 @@
 			"value": "検索"
 		}
 	},
-	"buttonArea" : {
-	},
+	"buttonArea": {},
 	"mailMagaCreateButton": {
 		"class": "mailMagaCreateButton normalButton",
 		"type": "button",
@@ -818,13 +801,13 @@
 		"class": "mailMagaTableOutside"
 	},
 	"mailMagaTable": {
-		"class": "mailMagaTable commonTable",
+		"class": "mailMagaTable commonTable scrollXAuto",
 		"db_getQuery": "SELECT id,school_key,send_datetime,magazine_type,magazine_title,magazine_content FROM mail_magazine ORDER BY send_datetime DESC ",
 		"config": {
 			"columns": {
 				"id": {
 					"columnName": "No.",
-					"className" : "id"
+					"className": "id"
 				},
 				"school_key": {
 					"columnName": "店舗名",
@@ -863,7 +846,7 @@
 			}
 		}
 	},
-	"deleteMailMagazine" : {
+	"deleteMailMagazine": {
 		"db_setQuery": "CALL p_delete_mail_magazine('id', @result); SELECT @result AS result;"
 	},
 	"getAdditionalUserForLecturePermit": {
@@ -872,13 +855,25 @@
 			"value": ""
 		}
 	},
-	"searchClassworkExist" : {
-		"db_getQuery" : "SELECT distinct lesson_date FROM `time_table_day` WHERE lesson_date >= 'fromDate' and lesson_date <= 'toDate';",
-		"fromDate" : {
-			"value" : ""
+	"searchClassworkExist": {
+		"db_getQuery": "SELECT distinct lesson_date FROM `time_table_day` WHERE lesson_date >= 'fromDate' and lesson_date <= 'toDate';",
+		"fromDate": {
+			"value": ""
 		},
-		"toDate" : {
-			"value" : ""
+		"toDate": {
+			"value": ""
+		}
+	},
+	"checkClassworkStatus": {
+		"db_getQuery": "CALL check_userworkstatus('user_key', 'fromDate', 'toDate', @result); SELECT @result AS result;",
+		"fromDate": {
+			"value": ""
+		},
+		"toDate": {
+			"value": ""
+		},
+		"user_key": {
+			"value": ""
 		}
 	}
 }

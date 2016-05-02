@@ -103,11 +103,6 @@
 				"type": "date",
 				"name": "toPeriod"
 			}
-		},
-		"searchUserButton": {
-			"class": "searchUserButton fRight",
-			"type": "button",
-			"value": "検索"
 		}
 	}
 }

@@ -98,5 +98,50 @@
     },
     "lessonDeleteQuery" : {
     	"db_setQuery" : "CALL `p_delete_classwork`('id', @result); SELECT @result AS `result`;"
+    },
+    "timeTableListOuter" : {
+    },
+    "timetableListTable":{
+    	"class" : "timetableListTable commonTable",
+        "db_getQuery":" CALL `p_select_timetable_day`('lessonDate', @result); SELECT @result AS `result`;",
+        "lessonDate":{
+            "value":""
+        },
+         "config": {
+            "columns": {
+                "start_time": {
+                    "style": "display:none;"
+                    ,"className" : "start_time"
+                },
+                "end_time": {
+                    "style": "display:none;"
+                    ,"className" : "end_time"
+                },
+                "max_students":{
+                    "columnName" : "最大人数"
+                    ,"className" : "max_students"
+                },
+                "min_students":{
+                    "columnName" : "最小人数"
+                    ,"className" : "min_students"
+                },
+                "time_table_day_key":{
+                    "style":"display:none;"
+                    ,"className" : "id"
+                }
+            }
+        }
+    },
+    "updateTimeTable" : {
+        "db_setQuery" : "CALL p_update_capacity_time_table_day('id', 'min_students', 'max_students', @result); SELECT @result AS result;",
+        "id" : {
+            "value" : ""
+        },
+        "min_students" : {
+            "value" : ""
+        },
+        "max_students" : {
+            "value" : ""
+        }
     }
 }

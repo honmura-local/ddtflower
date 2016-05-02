@@ -188,3 +188,37 @@ AND
 END$$
 
 DELIMITER ;
+
+DELIMITER $$
+-- 受講可能レッスン
+CREATE PROCEDURE check_userworkstatus(
+     OUT `result` TEXT
+	,IN in_user_key INT
+	,IN in_from_date VARCHAR(8)
+	,IN in_to_date VARCHAR(8)
+)
+BEGIN
+# ログインユーザの授業予約状況チェック用クエリ
+SELECT DISTINCT 
+	lesson_date
+	,user_work_status 
+FROM 
+	`user_classwork` 
+INNER JOIN 
+	classwork 
+ON 
+	user_classwork.classwork_key = classwork.id 
+INNER JOIN 
+	time_table_day 
+ON 
+	classwork.time_table_day_key = time_table_day.id 
+WHERE 
+	lesson_date >= in_from_date 
+AND 
+	lesson_date <= in_to_date 
+AND 
+	user_key = in_user_key;
+END$$
+
+DELIMITER ;
+

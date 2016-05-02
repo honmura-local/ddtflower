@@ -122,7 +122,7 @@ function memberReserveListDialog(dialog){
 		
 		//授業データを走査し、列データを追加していく
 		for(var i = 0; i < tableData.length; i++){
-			tableData[i].cost = replaceData.cost[i];
+			tableData[i].cost = replaceData.cost[i] ? replaceData.cost[i] : CHAR_HYPHEN;
 			tableData[i].start_and_end_time = replaceData.start_and_end_time[i];
 			tableData[i].rest = replaceData.rest[i];
 			tableData[i].lessonStatus = replaceData.lessonStatus[i];
@@ -207,8 +207,8 @@ function memberReserveListDialog(dialog){
 		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td:contains('✕')").css('background', '#EDEDED');
 		//料金欄が0の授業もグレーアウトする
 		$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).filter(function(){
-			//料金が0の行だけ抽出する
-			return parseInt($("td.cost", this).text()) <= 0? true : false;
+			//料金が-の行だけ抽出する
+			return parseInt($("td.cost", this).text()) <= CHAR_HYPHEN ? true : false;
 		}).css('background', '#EDEDED');
 	}
 	
@@ -261,7 +261,7 @@ function memberReserveListDialog(dialog){
 		//クリックした行の番号とデータを取得する。様々なところで使い回せるため、メンバに保存する
 		this.recordData = this.getClickTableRecordData(clicked, LESSON_TABLE, LESSON_TABLE_RECORD);
 		//無効な行(見出し)をクリックしていたら、または料金が0であれば
-		if(this.recordData.number < 0 || this.recordData.data.cost == 0){
+		if(this.recordData.number < 0 || this.recordData.data.cost == CHAR_HYPHEN){
 			return;	//何もせずに終える
 		}
 		

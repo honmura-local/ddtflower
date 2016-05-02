@@ -149,6 +149,9 @@ var updateDateSearch = function (create_tag) {
 	$(DOT + 'dateBelt p').text(changeDate)
 	//日ごと授業者一覧テーブルをリロードする
 	create_tag.eventTableReload('eachDayReservedInfoTable');
+	//検索日付テキストボックスに変更された日付をセットする
+	$('.dateInput').val($('.theDay').text());
+
 	//日付オブジェクトを更新する
 	return nowDateObject;
 }
@@ -571,8 +574,6 @@ function loopUpdatePermitLesson() {
 				}
 			}
 			
-			//スクロールバーが不要なら消す
-			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
 			//連番を振り直す
 			commonFuncs.insertSequenceNo(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
 		}
@@ -1205,8 +1206,6 @@ function permitSellCommodity() {
 				}
 			}
 			
-		//テーブルのスクロールを修正する
-		commonFuncs.toggleScrollY('.sellCommodityPermitInfoTable');
 		//連番を振り直す
 		commonFuncs.insertSequenceNo(SELECTOR_SELL_COMMODITY_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
 		}
@@ -1420,8 +1419,6 @@ var backCallbacks = {
 			
 			//連番を振り直す
 			commonFuncs.insertSequenceNo(SELECTOR_DO_LECTURE_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
-			//スクロールバーが不要なら消す
-			commonFuncs.toggleScrollY('.doLecturePermitInfoTable');
 			
 			//元のタブに戻る
 			$('#adminTab').easytabs('select', '#lecturePermit')
@@ -1473,8 +1470,6 @@ var backCallbacks = {
 
 			//合計金額列を編集不可にする
 			$('input[name="pay_price"]').attr('readonly', 'readonly');
-			//テーブルのスクロールを修正する
-			commonFuncs.toggleScrollY('.sellCommodityPermitInfoTable');
 
 			//タブのインスタンスを取得する
 			var tabInstance = $('#adminTab')[0].instance;
@@ -1937,3 +1932,21 @@ function setPopupMailMagaDialog (target){
 		}
 	});
 }
+
+/*
+ * 関数名:resizeMailMagaDialogTitleInput
+ * 引数  :なし
+ * 戻り値:なし
+ * 概要  :メルマガダイアログのタイトル編集テキストボックスをラベルサイズに合わせてリサイズする
+ * 作成日:2016.05.01
+ * 作成者:T.Masuda
+ */
+function resizeMailMagaDialogTitleInput() {
+	//ラベルの幅を取得する
+	var labelWidth = $(".messageTitleLabel").outerWidth(true);
+	//ラベルの親要素の幅を取得する
+	var parentWidth = $(".messageTitleLabel").parent().outerWidth(true);
+	//テキストボックスを持つ要素をリサイズする。それぞれの幅は四捨五入となっているため、念のため1px分引いておく
+	$(".messageTitleTextboxArea").width(parentWidth - labelWidth - 1);
+}
+

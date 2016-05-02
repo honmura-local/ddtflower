@@ -1,4 +1,4 @@
-SELECT 
+SELECT
 	user_classwork_cost
 	,user_classwork_cost_aj
 	,user_classwork.flower_cost AS flower_cost
@@ -78,4 +78,4 @@ ON
 LEFT JOIN
 	stage_inf AS uc_stage_inf
 ON
-	uc_stage_inf.id = user_classwork.stage_key
+	uc_stage_inf.id = user_classwork.stage_key;

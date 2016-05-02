@@ -56,7 +56,7 @@
     },
     "selectTheme": {
         "themeText": {
-            "class":"themeText inline",
+            "class":"themeText inline notApplySmartphoneFontsize",
             "text": "テーマ"
         },
         "selectThemebox": {
@@ -676,6 +676,18 @@
 		},
 		"toDate" : {
 			"value" : ""
+		}
+	},
+	"checkClassworkStatus" : {
+	    "db_getQuery" : "CALL check_userworkstatus('user_key', 'fromDate', 'toDate', @result); SELECT @result AS result;",
+		"fromDate" : {
+			"value" : ""
+		},
+		"toDate" : {
+			"value" : ""
+		},
+		"user_key": {
+			"value": ""
 		}
 	}
 }

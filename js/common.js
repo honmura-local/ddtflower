@@ -14,6 +14,66 @@
  */
 function common(){
 
+	//共通ボタン作成関数で扱うボタンのタイプ
+	this.COMMON_BUTTON_TYPE = {
+			search : {
+				src : SRC_SEARCH_BUTTON,
+				text : '検索'
+			},
+			filter : {
+				src : SRC_FILTER_BUTTON,
+				text : '絞込'
+			},
+			'delete' : {
+				src : SRC_DELETE_BUTTON,
+				text : '削除'
+			},
+			add : {
+				src : SRC_ADD_BUTTON,
+				text : '追加'
+			},
+			edit : {
+				src : SRC_EDIT_BUTTON,
+				text : '編集'
+			},
+			cancel : {
+				src : SRC_CANCEL_BUTTON,
+				text : 'キャンセル'
+			},
+			select : {
+				src : SRC_SELECT_BUTTON,
+				text : '選択'
+			},
+			mail : {
+				src : SRC_MAIL_BUTTON,
+				text : 'メール'
+			},
+			notice : {
+				src : SRC_NOTICE_BUTTON,
+				text : 'お知らせ'
+			},
+			send : {
+				src : SRC_SEND_BUTTON,
+				text : '送信'
+			},
+			arrow_right_single : {
+				src : SRC_ARROW_RIGHT_SINGLE_BUTTON,
+				text : ''
+			},
+			arrow_left_single : {
+				src : SRC_ARROW_LEFT_SINGLE_BUTTON,
+				text : ''
+			},
+			arrow_right_double : {
+				src : SRC_ARROW_RIGHT_DOUBLE_BUTTON,
+				text : ''
+			},
+			arrow_left_double : {
+				src : SRC_ARROW_LEFT_DOUBLE_BUTTON,
+				text : ''
+			}
+	};
+	
 //以下、授業一覧テーブル作成用のデータ
 //授業状況
 this.classworkStatuses = {
@@ -73,6 +133,18 @@ this.defaultClassworkCostColumns = [
 
 //unix時間の重複回避用の数
 this.unixtimeIncrement = 0;
+
+this.messageDialogDefaultOption = {
+		width : '300'	//幅を固定値にする
+		,modal : true	//モーダルダイアログにする
+		,close : function (dialog, ui){
+			//ダイアログの機能を無効にし、DOMを消去する
+			$(dialog).dialog('destroy');
+			$(dialog).parent().remove();
+		}
+		//閉じるボタン。
+		,buttons : [{text : '閉じる'}, function(dialog, ui){$(dialog).dialog('close');}]
+}
 
 //以上、授業一覧テーブル作成用のデータ
 
@@ -1793,11 +1865,6 @@ this.unixtimeIncrement = 0;
 					resultwork = result;		//通信結果から情報を取り出す
 					//送信完了と共に入力ダイアログを消す
 					alert(MESSAGE_SEND_SUCCESS_SIMPLE_NOTICE);	//送信完了のメッセージを出す
-					//目安箱メールを送信していたら
-					//if(parseInt(sendObject.suggestionRadio) == SUGGESTION_MAIL){
-						//目安箱テーブルに新たにデータを挿入する
-						//new baseDialog().sendQuery(PATH_SAVE_JSON_DATA_PHP, sendObject);
-					//}
 				}
 				//通信失敗時
 				,error:function(xhr, status, error){
@@ -2544,26 +2611,68 @@ this.unixtimeIncrement = 0;
 	}
 	
 	/* 
-	 * 関数名:putSearchButton
-	 * 概要  :検索ボタンを追加する
+	 * 関数名:putCommonButton
+	 * 概要  :ボタンを作成し、値をセットして追加する
 	 * 引数  :String target : 追加先セレクタ
 	 *      :String className : ボタンに設定するクラス
+	 *      :String buttonType : ボタンのタイプの文字列
+	 *      :boolean enableImage : 画像を使うか
+	 *      :boolean enableText : テキストを使うか
+	 *      :boolean isImgFront : 画像をテキストの前に置くか後ろに置くか。trueで前
+	 *      :Object setting : 追加設定
+	 *      :boolean isPrepend : appendするかprependするか
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2016.04.09
 	 */
-	this.putSearchButton = function(target, className){
-		//ボタンを生成し、クラスを設定する
-		var $button = $(HTML_BUTTON).addClass(className);
-		//jQuery UIのボタンにする
-		$button.button({
-			text : false	//テキストなし
-			//サーチアイコンを設定する
-			,icons : {primary : JQUERYUI_ICON_SEARCH}
-		});	
-
-		//指定した場所にボタンを配置する
-		$(target).append($button);
+	this.putCommonButton = function(target, className, buttonType, enableImage, enableText, isImgFront, setting, isPrepend){
+		//ボタンタイプの有効チェック
+		if(!this.COMMON_BUTTON_TYPE[buttonType]) {
+			//ボタンタイプが不正であると伝える
+			console.log(MESSAGE_INVALID_BUTTON_TYPE + buttonType);
+			return;	//ボタンを追加せずに終える
+		}
+		
+		//ボタンを生成し、クラスを設定する。画像タグもセットする
+		var $button = $(HTML_BUTTON).addClass(className).addClass(CLASS_COMMON_BUTTON);
+		
+		//ボタンのタイプをbuttonに指定する
+		$button.attr({type : BUTTON});	
+		//テキストを使う場合
+		if (enableText) {
+			$button.text(this.COMMON_BUTTON_TYPE[buttonType].text);	//テキストを追記する
+		}
+		//画像を使う場合
+		if (enableImage) {
+			//画像を前に配置する場合
+			if (isImgFront) {
+				//prependで画像タグと画像をセットする
+				$button.prepend($(HTML_IMG).attr({src : this.COMMON_BUTTON_TYPE[buttonType].src}));	
+				//後ろに配置する場合
+			} else {
+				//appendで画像タグと画像をセットする
+				$button.append($(HTML_IMG).attr({src : this.COMMON_BUTTON_TYPE[buttonType].src}));
+			}
+		}
+		
+		//追加設定がある場合
+		if (setting) {
+			//設定オブジェクトを走査して属性をセットしていく
+			for (key in setting) {
+				//キーを属性名にして値を設定していく
+				$button.attr(key, setting[key]);
+			}
+		}
+		
+		//指定した要素内の前方に配置するか
+		if (isPrepend) {
+			//指定した場所にボタンを配置する
+			$(target).prepend($button);
+		//後方に配置するか
+		} else {
+			//指定した場所にボタンを配置する
+			$(target).append($button);
+		}
 	}
 
 	 /* 
@@ -2803,6 +2912,112 @@ this.unixtimeIncrement = 0;
 		//2つ目の日付テキストボックスに値を入れる
 		$targetTextbox.eq(1).val(to);
 	}
+
+	/* 
+	 * 関数名:getLessonStatusClassByPriority
+	 * 概要  :予約状況の値に対応したクラス名を返す。主にカレンダーの日付を予約状況に合わせてハイライトする際に使う
+	 * 引数  :String userWorkStatus:予約状況の値
+	 * 返却値  :String : クラス名
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.01
+	 */	
+	this.getLessonStatusClassByPriority = function(userWorkStatus) {
+		
+		var retClassName = EMPTY_STRING;	//返却用の変数を用意する
+		
+		//ユーザ授業状況をチェックする
+		switch (parseInt(userWorkStatus)) {
+			//予約済み
+			case 0: retClassName = 'dateHasLesson';
+			        break;
+			//予約済み
+			case 1: retClassName = 'dateHasLesson' ;
+	                break;
+			//受付
+			case 2: retClassName = 'dateHasLesson' ;
+	                break;
+			//受講済み
+			case 3: retClassName =  'dateHasLesson';
+	                break;
+			//キャンセル(本人)
+			case 10: retClassName = 'dateCancelLesson';
+	                break;
+			//キャンセル(管理者)
+			case 11: retClassName = 'dateCancelLesson';
+	                break;
+			//中止
+			case 12: retClassName = 'dateStopLesson';
+	                break;
+	        //どれでもない(手をつけてない授業しかない)
+	        default: retClassName = 'dateHasClass';
+	                break;
+		};
+		
+		return retClassName;	//結果を返す
+	}
+	
+	/* 
+	 * 関数名:showMessageDialog
+	 * 概要  :シンプルにメッセージを出して消すのみの通知ダイアログを出す
+	 * 引数  :String title:ダイアログのタイトル
+	 *      :String message:メッセージ
+	 *      :Object addOption:追加オプション
+	 * 返却値  :String : クラス名
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.02
+	 */	
+	this.showMessageDialog = function(title, message, addOption) {
+		//ダイアログのDOMを生成する
+		var $messageDialog = $(HTML_MESSAGE_DIALOG);
+		//ダイアログにメッセージを書き込む
+		$messageDialog.text(message);
+		
+		//jQuery ui dialog形式でダイアログを表示する
+		$messageDialog.dialog($.extend({}
+			,true							//キーが被ったら後から追加したものでvalueを上書きしていく
+			//デフォルトのオプションを使う
+			,this.messageDialogDefaultOption
+			,{'title' : title}				//タイトルを設定する
+			, addOption ? addOption : {}	//追加オプションを設定していたら追記する
+		));
+	}
+	
+	/* 
+	 * 関数名:addTimeTableColumn
+	 * 概要  :テーブルに時間帯列を追加する
+	 * 引数  :String fromTarget:時間のfromとなる列名
+	 *      :String toTarget:時間のtoとなる列名
+	 *      :String or Elem targetTable:追加対象のテーブル
+	 *      :int substrPoint:時間の切り出しの尻の位置
+	 *      :String criteria :追加場所の基準となる列名
+	 *      :boolean isBefore :前に置くか、後ろに置くか
+	 * 返却値  :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.02
+	 */	
+	this.addTimeTableColumn = function(fromTarget, toTarget, targetTable, substrPoint, criteria, isBefore) {
+		
+		//対象のテーブルの行を走査する
+		$(STR_TR, $(targetTable)).each(function() {
+			var timetableStr = EMPTY_STRING;	//時間帯の文字列の変数を用意する
+			//現在の行がtbody内のものなら
+			if($(this).parent()[0].tagName.toLowerCase().indexOf('tbody') != -1) {
+				//時間帯の文字列を生成する。取得する時間の文字列はsubstrPointで指定した文字数までにする
+				timetableStr = $(this).children(fromTarget).text().substr(0, substrPoint) + SYMBOL_UNIT + $(this).children(toTarget).text().substr(0, substrPoint);
+			//thead内のものなら
+			} else {
+				//「時間帯」の文字列をセットする(見出し行用)
+				timetableStr = '時間帯';
+			}
+			
+			//時間帯列用のタグを作り、クラス、テキストをセットする
+			var $addTag = $(TAG_TD).addClass(CLASS_TIME_TABLE).text(timetableStr);
+			
+			//追加を行う場所を判断し、適当な位置へ作成したタグを追加する
+			isBefore ? $(this).children(criteria).before($addTag) : $(this).children(criteria).after($addTag);
+		});
+		
+	}	
 	
 	//ここまでクラス定義領域
 }

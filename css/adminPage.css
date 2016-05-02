@@ -28,7 +28,7 @@
  * 作成日 :2015.11.23
  */
 #adminTab > ul {
-	width : 100%;		/* 幅を親要素に合わせる */
+	width : 97.5%;		/* 幅を親要素に合わせる。ぴったりなりすぎないように多少マージン分として調整する */
 	display : table;	/* テーブル扱いにする。タブインデックスにvertical-alignを効かせるための処置 */
 }
 
@@ -147,7 +147,7 @@
  * 作成日 :2015.04.17
  */
 .dateBelt button {
-	background: oldlace;	/* ボタンの色をベージュがかった白色に変更する */
+	background: transparent;	/* ボタンの色を透過色にする */
 }
 
 /* タイトルの日付領域終わり */
@@ -389,7 +389,7 @@
  */
 .lessonData li label {
 	display: inline-block;	/* インラインブロック要素にする */
-	width: 30%;				/* 幅を30%で統一する */
+	width: 32%;				/* 幅を30%で統一する */
 }
 
 /* 
@@ -409,7 +409,7 @@
  * 作成日 :2015.06.30
  */
 .memoTextarea {
-	width: 65%;				/* 幅を65%にする */
+	width: 62%;				/* 幅を65%にする */
 	height: 60px;			/* 縦幅を60pxにする */
 }
 
@@ -583,24 +583,14 @@ ul.mailSendContent {
 }
 
 /* 
- * セレクタ :.showUserSearchListDialogButton
- * 概要   :ユーザ検索ボタン
+ * セレクタ :.searchIconButtons
+ * 概要   :検索、絞込ボタン
  * 作成者 :T.Masuda
  * 作成日 :2016.04.10
  */
-.showUserSearchListDialogButton {
-    float: right;		/* 右に寄せる */
-    margin: 0 0 5px 0;	/* 下とだけ離す */
-}
-
-/* 
- * セレクタ :.showUserSearchListDialogButton
- * 概要   :検索ボタン
- * 作成者 :T.Masuda
- * 作成日 :2016.04.10
- */
-.searchIconButton {
-    height: 30px;	/* 高さを指定する */
+.searchIconButtons {
+    float: right;			/* 右に寄せる */
+    margin: 0 5px 5px 0;	/* 右、下にmarginを持たせる */
 }
 /* 受講者一覧の検索領域 */
 /* 
@@ -655,7 +645,7 @@ ul.mailSendContent {
  * 作成日 :2015.07.09
  */
 .messageTitleLabel {
-	width: 15%;			/* 幅を15%にする */
+	margin-right: 5px;	/* テキストボックスとの間に間隔を取る */
 }
 
 /* 
@@ -1010,19 +1000,6 @@ ul.mailSendContent {
 		font-size: 12px;		/* フォントサイズを12pxにする */
 	}
 
-	/* 
-	 * セレクタ :.messageTitleLabel
-	 * 概要   :送信するメッセージのタイトルのラベル領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.07.09
-	 * 変更者 :T.Masuda
-	 * 変更日 :2016.04.10
-	 * 内容   :幅を増やして段組みを崩し、なおかつ幅が狭くても文字が改行しないように修正
-	 */
-	.messageTitleLabel {
-		width: 100%;			/* 幅を100%にして段組みを崩す */
-	}
-	
 	/* 
 	 * セレクタ :.mailMagaContentSearchTextbox
 	 * 概要   :検索領域のテキストボックス領域

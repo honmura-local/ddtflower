@@ -106,14 +106,7 @@ function adminLessonDetailDialog(dialog){
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の時間割を設定する領域を出力する
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_TIMETABLE, CLASS_LESSON_TIMETABLE, DOT + LESSON_DATA + SELECTOR_LAST);
-		//授業の最少人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MIN_STUDENTS, CLASS_LESSON_MIN_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
-		//授業の最大人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_MAX_STUDENTS, CLASS_LESSON_MAX_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
-		//時間帯の最少人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_TIME_MIN_STUDENTS, CLASS_TIME_MIN_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
-		//時間帯の最大人数を設定する領域を出力する
-		this[VAR_CREATE_TAG].outputTag(CLASS_TIME_MAX_STUDENTS, CLASS_TIME_MAX_STUDENTS, DOT + LESSON_DATA + SELECTOR_LAST);
+		this[VAR_CREATE_TAG].outputTag('studentsArea', 'studentsArea', $(DOT + LESSON_DATA, this.dialog));
 		//授業のステータスを設定する領域を出力する
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_STATUS, CLASS_LESSON_STATUS, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の教室を設定する領域を出力する

@@ -3140,12 +3140,14 @@ calendarOptions['member'] = {		//カレンダーを作る。
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
 			
-			//その月の1日以降の日付であれば
-			if(this.instance.monthDates.length > 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
-				//日付を文字列にして月の日付一覧に追加していく
-				this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
+			//その月の1日以降の日付であれば。その月以外の日付も入ってくることがあるのでその場合は弾く
+			if((this.instance.monthDates.length > 0)
+					|| comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
+					if(this.instance.monthDates.length == 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) >= this.instance.monthDates[this.instance.monthDates.length - 1].substr(8, 2)) {
+						//日付を文字列にして月の日付一覧に追加していく
+						this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
+					}
 			}
-			
 			//日付を無効にするということはないのでtrueを入れた配列を返す
 			return [true];
 		},
@@ -3470,28 +3472,64 @@ function calendar(selector) {
 		//クエリの検索期間の値をセットする。内容は月の初めと最後の日付
 		this.create_tag.json.searchClassworkExist.fromDate.value = this.monthDates[0];
 		this.create_tag.json.searchClassworkExist.toDate.value = this.monthDates[this.monthDates.length - 1];
+		this.create_tag.json.searchClassworkExist.tableData = [];
 		//授業を取得する
 		this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json.searchClassworkExist, 'searchClassworkExist');
 		//存在する授業日付の数を取得する
 		var datesLength = this.create_tag.json.searchClassworkExist.tableData.length;
-		
-		//日付を走査する
-		for (var i = 0; i < datesLength; i++) {
-			//日付を切り出す
-			var dateStr = this.create_tag.json.searchClassworkExist.tableData[i].lesson_date.substr(8, 2);
-			//日付要素を走査する
-			$('td', this.dom).each(function(){
-				//カレンダーから日付を取得する
-				var calendarDate = $(this).children('a').text();
-				//日付が1桁なら0を詰める
-				calendarDate = calendarDate.length > 1? calendarDate : '0' + calendarDate;
-				//その日に授業があれば
-				if(calendarDate == dateStr) {
-					//背景色を変更する
-					$(this).addClass('dateHasClass');
-					return;	//以降を走査する必要なしなのでここでbreakする
-				}
-			});
+
+		//授業があれば
+		if (datesLength) {
+			
+			//クエリの検索期間の値をセットする。内容は月の初めと最後の日付
+			this.create_tag.json.checkClassworkStatus.fromDate.value = this.monthDates[0];
+			this.create_tag.json.checkClassworkStatus.toDate.value = this.monthDates[this.monthDates.length - 1];
+			//ユーザIDをセットする
+			this.create_tag.json.checkClassworkStatus.user_key.value = this.userid;
+			this.create_tag.json.checkClassworkStatus.tableData = [];
+			
+			//ログインユーザの授業を取得する
+			this.create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, this.create_tag.json.checkClassworkStatus, 'checkClassworkStatus');
+			//授業データを取り出す
+			var lessonDetail = this.create_tag.json.checkClassworkStatus.tableData;
+			
+			//日付を走査する
+			for (var i = 0; i < datesLength; i++) {
+				
+				//日付の文字列を取得する
+				var dateStrAll = this.create_tag.json.searchClassworkExist.tableData[i].lesson_date;
+				//日を切り出す
+				var dateStr = dateStrAll.substr(8, 2);
+				//日付要素を走査する
+				$('td', this.dom).each(function(){
+					//カレンダーから日付を取得する
+					var calendarDate = $(this).children('a').text();
+					//日付が1桁なら0を詰める
+					calendarDate = calendarDate.length > 1? calendarDate : '0' + calendarDate;
+					//その日に授業があれば
+					if(calendarDate == dateStr) {
+						//予約状況を取得する
+						var userWorkStatus = 99;
+						//授業詳細をチェックする
+						for (var j = 0; j < lessonDetail.length; j++) {
+							//日付が一致したら
+							if (lessonDetail[j] == dateStrAll) {
+								//予約状況の値を取り出す
+								var recUserWorkStatus = lessonDetail[j].user_work_status;
+								//取得した予約状況の値が前より小さいなら
+								if (recUserWorkStatus < userWorkStatus) {
+									//現在の予約状態の値を更新する
+									userWorkStatus = recUserWorkStatus;
+								}
+							}
+						}
+						
+						//背景色を変更する
+						$(this).addClass(commonFuncs.getLessonStatusClassByPriority(userWorkStatus));
+						return;	//以降を走査する必要なしなのでここでbreakする
+					}
+				});
+			}
 		}
 	}
 	
@@ -3557,6 +3595,7 @@ function memberCalendar(selector, dateRange, userId, create_tag) {
 	$calendar.instance = this;		//カレンダーの要素にクラスインスタンスへの参照を持たせる
 	$calendar.calendar = this;		//クラスへの参照をカレンダーのタグにセットする
 	$calendar.userId = userId;		//ユーザIDを保存する
+	this.userId = userId;			//ユーザIDをクラスインスタンス内に保存する
 	this.create_tag = create_tag;	//createLittleContentsクラスのインスタンスを利用する
 	this.monthDates = [];			//月の日付
 	

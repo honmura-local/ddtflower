@@ -3293,8 +3293,8 @@ SELECT
     ,user_name
     #授業名(一覧出力後入る)
     ,'' AS lesson_name
-    #支払額
-    ,pay_cash AS cost
+    #購入額
+    ,pay_price AS cost
     #商品購入での使用ポイント
     ,commodity_sell.use_point AS use_point
     #ステージ番号(デフォルト値)
@@ -3431,6 +3431,159 @@ ELSE
     ROLLBACK;
 END IF;
 
+END$$
+
+-- 受講可能レッスンチェック
+CREATE PROCEDURE check_userworkstatus(
+     OUT `result` TEXT
+	,IN in_user_key INT
+	,IN in_from_date VARCHAR(8)
+	,IN in_to_date VARCHAR(8)
+)
+BEGIN
+# ログインユーザの授業予約状況チェック用クエリ
+SELECT DISTINCT 
+	lesson_date
+	,user_work_status 
+FROM 
+	`user_classwork` 
+INNER JOIN 
+	classwork 
+ON 
+	user_classwork.classwork_key = classwork.id 
+INNER JOIN 
+	time_table_day 
+ON 
+	classwork.time_table_day_key = time_table_day.id 
+WHERE 
+	lesson_date >= in_from_date 
+AND 
+	lesson_date <= in_to_date 
+AND 
+	user_key = in_user_key;
+END$$
+
+# 授業の最大人数、最小人数変更
+DROP PROCEDURE IF EXISTS p_update_capacity_classwork $$
+CREATE PROCEDURE p_update_capacity_classwork (
+    IN in_id INT
+    ,IN in_min_sutudents INT
+    ,IN in_max_students INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE updated_old DATETIME;
+DECLARE updated DATETIME;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    classwork
+INTO
+    updated_old;
+
+START TRANSACTION;
+
+UPDATE
+    classwork
+SET
+    min_students = in_min_sutudents
+	,max_students = in_max_students
+	,update_datetime = NOW()
+WHERE
+    id = in_id;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    classwork
+INTO
+    updated;
+
+IF updated > updated_old THEN
+    SELECT 1 INTO result;
+    COMMIT;
+ELSE
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+# 時間帯の最大人数、最小人数変更
+DROP PROCEDURE IF EXISTS p_update_capacity_time_table_day $$
+CREATE PROCEDURE p_update_capacity_time_table_day (
+    IN in_id INT
+    ,IN in_min_sutudents INT
+    ,IN in_max_students INT
+    ,OUT result INT
+)
+BEGIN
+
+DECLARE updated_old DATETIME;
+DECLARE updated DATETIME;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    time_table_day
+INTO
+    updated_old;
+
+START TRANSACTION;
+
+UPDATE
+    time_table_day
+SET
+    min_num = in_min_sutudents
+	,max_num = in_max_students
+	,update_datetime = NOW()
+WHERE
+    id = in_id;
+
+SELECT 
+    MAX(update_datetime)
+FROM
+    time_table_day
+INTO
+    updated;
+
+IF updated > updated_old THEN
+    SELECT 1 INTO result;
+    COMMIT;
+ELSE
+    SELECT 0 INTO result;
+    ROLLBACK;
+END IF;
+
+END$$
+
+# 授業更新プロシージャ
+DROP PROCEDURE IF EXISTS p_update_lesson_detail $$
+CREATE PROCEDURE p_update_lesson_detail (
+    IN in_max_students INT
+    ,IN in_min_students INT
+    ,IN in_classwork_status INT
+    ,IN in_classroom VARCHAR(100)
+    ,IN in_classwork_note TEXT
+    ,IN in_classwork_key INT
+    ,OUT result INT
+)
+# プロシージャ開始
+BEGIN
+	UPDATE 
+		classwork 
+	SET 
+		max_students = in_max_students 
+		,min_students = in_min_students
+		,classwork_status = in_classwork_status 
+		,classroom = in_classroom
+		,classwork_note = in_classwork_note 
+		,update_datetime = NOW() 
+	WHERE 
+		id = in_classwork_key
+	;
 END$$
 
 #区切り文字をセミコロンに戻す

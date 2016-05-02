@@ -144,6 +144,8 @@
 <script type="text/javascript" src="js/dialogExOptions.js"></script>
 <!-- ユーザのアクションに対応するイベントを定義したJSファイルを読み込む。 -->
 <script type="text/javascript" src="js/dailyClasses.js"></script>
+<!-- イベント管理マネージャクラスを読み込む。 -->
+<script type="text/javascript" src="js/eventHandleManager.js"></script>
 <script>
 	//トップページ用ウィンドウを準備する
 	windowElem = new windowEx(TOP_LOCATION, {config:{firstExec:true}});	//初回実行フラグオン

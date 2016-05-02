@@ -1,0 +1,70 @@
+<html>
+	<body>
+		<!-- 当タブの内容を作成するためのスクリプトを記述する -->
+		<script>
+			//カレントのウィンドウのDOMを取得する
+			var $currentWindow = $(CURRENT_WINDOW);
+			//カレントのウィンドウのコンテンツ領域を取得する
+			var $currentContent = $(CURRENT_WINDOW_MAIN)
+			
+			var create_tag = new createLittleContents();	//コンテンツ作成のためcreateTagを用意する
+
+			//当該画面用関数クラスインスタンスを用意する
+			var lessonListFuncs = new adminLessonList();
+			
+			//タブのDOMにcreateTagへの参照を保存する
+			$(LESSON_LIST_TAB)[0].create_tag = create_tag;
+
+			//管理者ページ 授業一覧ダイアログのjsonデータを取得する
+			this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_LIST_DIALOG_JSON);
+			//授業データをJSONにセットする
+			commonFuncs.setLessonDataToJSON(this[DIALOG_CLASS], this[VAR_CREATE_TAG]);
+			//予約できる授業のデータ一覧をDBから取得してテーブルを作る準備をする
+			this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_ARRAY_PHP, this[VAR_CREATE_TAG].json[LESSON_TABLE], LESSON_TABLE);
+
+			//DOMをクリアする
+			this[VAR_CREATE_TAG].dom = EMPTY_STRING;
+			//授業データ一覧ダイアログのテンプレートを取得する
+			this[VAR_CREATE_TAG].getDomFile(ADMIN_LESSON_LIST_DIALOG_HTML);
+
+			//授業のデータを取得する
+			var tableData = $.extend([], true, this[VAR_CREATE_TAG].json[LESSON_TABLE][TABLE_DATA_KEY]);
+			//テーブル置換用の時限データを取得する
+			var replaceData = commonFuncs.getRestAndReserveData(tableData);
+
+			//授業データを走査し、列データを追加していく
+			//※costはNaNになっているので追加しない。
+			for(var i = 0; i < tableData.length; i++){
+				tableData[i].start_and_end_time = replaceData.start_and_end_time[i];
+				tableData[i].rest = replaceData.rest[i];
+				tableData[i].lessonStatus = replaceData.lessonStatus[i];
+			}
+			
+			//授業一覧テーブルの外側の領域を作る
+			this[VAR_CREATE_TAG].outputTag(TABLE_OUTER, TABLE_OUTER, SELECTOR_LESSON_LIST_TAB);
+			//授業のデータ一覧テーブルを作る
+			this[VAR_CREATE_TAG].outputTagTable(LESSON_TABLE, LESSON_TABLE, $(SELECTOR_LESSON_LIST_TAB + SPACE + DOT+TABLE_OUTER, this.dialog));
+			
+			//ダイアログの位置を修正する
+			this.setDialogPosition(POSITION_CENTER_TOP);
+			//授業データがない(授業名、校舎名がないことが基準)行を表示しない
+			$(DOT + LESSON_TABLE + TAG_CHILD_TR, $(this.dialog)).has("td.lesson_name:empty, td.school_name:empty").hide();
+
+			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
+			toggleClassClickElement('tr', 'selectRecord', '.lessonTable');
+			
+			//レッスンのステータス領域を作る
+			this[VAR_CREATE_TAG].outputTag(EXPLAIN_FIRST, EXPLAIN_FIRST, SELECTOR_LESSON_LIST_TAB);
+			
+			//新規ボタン、編集ボタン、削除ボタンを作る。コールバックもここで登録しておく
+			commonFuncs.putCommonButton('#lessonList', 'createNewButton', 'createNew', true, false, true, {onclick : 'lessonListFuncs.callbackCreateNew();'});
+			commonFuncs.putCommonButton('#lessonList', 'editButton', 'edit', true, false, true, {onclick : 'lessonListFuncs.callbackEdit();'});
+			commonFuncs.putCommonButton('#lessonList', 'deleteButton', 'delete', true, false, true, {onclick : 'lessonListFuncs.callbackDelete();'});
+			
+			</script>
+			<!-- 当該タブ用クラスをインクルードする -->
+			<script src="js/page/adminLessonList.js"></script>
+	</body>
+</html>
+
+					

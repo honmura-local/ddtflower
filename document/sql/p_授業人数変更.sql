@@ -93,5 +93,48 @@ END IF;
 
 END$$
 
+# 時間帯一覧取得
+DROP PROCEDURE IF EXISTS p_select_timetable_day $$
+# 授業時間帯情報の変更に必要なデータを取り出す
+CREATE PROCEDURE p_select_timetable_day (
+    IN in_lesson_date VARCHAR(8)
+    ,OUT result text
+)
+# プロシージャ開始
+BEGIN
+
+# 以下の列を取得する
+SELECT
+    # ID
+    id
+    # 最小人数
+    ,time_table_day.min_num
+    # 最大人数
+    ,time_table_day.max_num
+    # 開始時間
+    ,start_time
+    # 終了時間
+    ,end_time
+以下のテーブルからデータを取得する
+FROM
+    # 授業時間帯テーブル
+    time_table_day
+# テーブルを結合する
+INNER JOIN
+    # 授業時間帯情報テーブル
+    timetable_inf
+# 以下の列を指定して結合する
+ON
+    # 各授業時間帯情報テーブルID
+    time_table_day.timetable_key = timetable_inf.id
+# 検索条件を指定する
+WHERE
+    # 指定した授業日時
+    lesson_date = in_lesson_date
+;
+# プロシージャを終了する
+END$$
+
 DELIMITER ;
-        
+
+ 

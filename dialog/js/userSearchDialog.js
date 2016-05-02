@@ -53,6 +53,8 @@ function userSearchDialog(dialog){
 	this.dispContentsMain = function(){
 		//検索フォームを作る
 		this[VAR_CREATE_TAG].outputTag(KEY_USER_SEARCH_FORM, KEY_USER_SEARCH_FORM, CURRENT_DIALOG);
+		//検索ボタンをセットする
+		commonFuncs.putCommonButton(CURRENT_DIALOG, 'searchUserButton fRight', 'search', true, false, true);
 	}
 	
 	/* 関数名:setConfig
@@ -69,7 +71,7 @@ function userSearchDialog(dialog){
 		//ボタンをjQueryUIのものにして見栄えを良くする
 		$(SELECTOR_INPUT_BUTTON, this.dialog).button();
 		//会員一覧の検索の中にあるテキストボックスにフォーカスしているときにエンターキー押下で検索ボタンを自動でクリックする
-		commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton');
+		commonFuncs.enterKeyButtonClick('.adminUserSearch', '.searchUserButton:last');
 		//ダイアログの位置を修正する
 		this.setDialogPosition(POSITION_CENTER_TOP);
 	}
@@ -87,7 +89,7 @@ function userSearchDialog(dialog){
 			//デフォルトのコールバック関数をセットする
 			this[DIALOG_CLASS].setCallbackCloseOnAfterOpen(this.callbackClose);
 			//ユーザ一覧検索関数をボタンにセットする
-			this.addClickSearchButtonEventCallback('.searchUserList .searchUserButton', '#userList', '#adminTab .searchUserList')
+			this.addClickSearchButtonEventCallback('.searchUserButton:last', '#userList', '#adminTab .searchUserList')
 		}
 	}
 

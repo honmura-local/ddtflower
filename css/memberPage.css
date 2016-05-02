@@ -1138,8 +1138,19 @@ label,
 	.memberInfo,
 	.outsideArea,
 	#container .userInf {
-		width: 97%;			/* 幅を90%にする */ 
-		margin: 5px auto;	/* 上下に5px余白をとり、左右は中央揃えにする */ 
+		width: 97%;			/* 幅を90%にする */
+		margin: 5px auto; 	/* 上下に5px余白をとり、左右は中央揃えにする */
+		margin: 0 auto;
+	}
+
+	/* 
+	 * セレクタ :.outsideArea
+	 * 概要   :管理者タブの最外部分
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.05.01
+	 */
+	.outsideArea {
+		margin : 0 auto;	/* 上下marginはいらないので削除する */
 	}
 
 	/* 
@@ -1263,12 +1274,12 @@ label,
 	 }
 	 
 	/* 
-	 * セレクタ :.themeText
-	 * 概要   :テーマの文字
+	 * セレクタ :.notApplySmartphoneFontsize
+	 * 概要   :スマホサイズの文字サイズを適用しないようにする
 	 * 作成者 :T.Masuda
 	 * 作成日 :2016.04.30
 	 */
-	.themeText {
+	.notApplySmartphoneFontsize {
 		font-size : 16px;	/* フォントをスマホ用サイズにしない */
 	}
 	 
@@ -1462,7 +1473,7 @@ label,
 
 /* 管理者画面 商品購入承認タブテーブル データ行親タグ*/
 .sellCommodityPermitInfoTable tbody {
-    overflow-y : scroll;	/* 縦スクロールするようにする */
+    overflow-y : auto;	/* フロー時に縦スクロールするようにする */
     height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
 }
 
@@ -1533,7 +1544,7 @@ label,
 
 /* 管理者画面 受講購入承認タブテーブル データ行親タグ*/
 .doLecturePermitInfoTable tbody {
-    overflow-y : scroll;	/* 縦スクロールするようにする */
+    overflow-y : auto;	/* フロー時に縦スクロールするようにする */
     height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
 }
 

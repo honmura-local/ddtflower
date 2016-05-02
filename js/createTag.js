@@ -27,6 +27,8 @@ function createTag(){
 	this.DOM_THEAD = '<thead></thead>';	//theadタグ
 	this.TAG_THEAD = 'thead';			//theadタグのセレクタ
 	this.ATTR_CLASS = 'class';			//クラス属性
+	//ファイル取得失敗のエラーメッセージ
+	this.MESSAGE_FAILED_TO_GET_FILE	= '通信に失敗しました。\n原因:ファイルが取得できませんでした。\nファイル名:';
 	
 	/*
 	 * 関数名:this.getJsonFile = function(jsonPath,map)
@@ -47,6 +49,8 @@ function createTag(){
 	this.getJsonFile = function(jsonPath, map, key){
 		//一時的に値を保存する変数tmpを宣言する。
 		var tmp;
+		//関数内でいつでもthisを参照できるように変数に格納する
+		var thisElem = this;
 		
 		//mapに何も入力されていなければ、空の連想配列を代入する。入力されていればJSON文字列に変換する
 		map = map === void(0) ? {json:""} : JSON.stringify(map);
@@ -78,8 +82,8 @@ function createTag(){
 			},
 			//通信失敗時の処理。
 			error:function(xhr, status, error){
-				//エラーのダイアログを出す。
-				alert('通信に失敗しました。');
+				//エラーのアラートを出す。
+				alert(thisElem.MESSAGE_FAILED_TO_GET_FILE + jsonPath);
 				throw error;
 			}
 		});
@@ -117,6 +121,8 @@ function createTag(){
 	this.getDomFile = function(htmlPath){
 		//一時的に値を保存する変数tmpを宣言する。
 		var tmp;
+		//関数内でいつでもthisを参照できるように変数に格納する
+		var thisElem = this;
 		
 		//Ajax通信でjsonファイルを取得する。
 		$.ajax({
@@ -135,8 +141,8 @@ function createTag(){
 			},
 			//通信失敗時の処理。
 			error:function(){
-				//エラーのダイアログを出す。
-				alert('通信に失敗しました。');
+				//エラーのアラートを出す。
+				alert(thisElem.MESSAGE_FAILED_TO_GET_FILE + htmlPath);
 			}
 		});
 		
