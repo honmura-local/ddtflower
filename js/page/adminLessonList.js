@@ -26,7 +26,7 @@ function adminLessonList() {
 	 */
 	this.callbackCreateNew = function(){
 		//ボタンが押されたときの状態の値を設定する。
-		this.pushedButtonState(CREATE_NEW);
+		this.pushedButtonState = CREATE_NEW;
 		this.openDialog(URL_ADMIN_LESSON_CREATE_DIALOG);	//授業新規作成ダイアログを開く
 	}
 
@@ -38,7 +38,7 @@ function adminLessonList() {
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackEdit = function(){
-		this.pushedButtonState(EDIT);
+		this.pushedButtonState = EDIT;
 		//選択されている行を取得する
 		var $selectedRecord = $(SELECTOR_TBODY_TR, $('#lessonList')).filter('.selectRecord');
 		//1行選択されていたら
@@ -66,16 +66,16 @@ function adminLessonList() {
 	 * 作成者　:T.Masuda
 	 */
 	this.callbackDelete = function(){
-		this.pushedButtonState(DELETE);
+		this.pushedButtonState = DELETE;
 		//対象がなければ
-		if($('#lessonList .selectRecord', this.dialog).length == 0) {
+		if($('.selectRecord', $(SELECTOR_ADMIN_LESSON_LIST_TABLE_AREA)).length == 0) {
 			//警告を出す
 			alert(MESSAGE_CHOOSE_TARGET);
 			return false;	//処理を行わない
 		}
 		
 		//ダイアログを呼び出して確認を取った上で削除を行う
-		askExecuteDelete('指定した授業を削除しますか?', "if($(CURRENT_DIALOG_SELECTOR)[0].instance.getPushedButtonState() == YES) {deleteRecords('.lessonTable', '.selectRecord', $('.lessonTable').closest('.dialog')[0].dialogBuilder.create_tag.json.lessonDeleteQuery, null, $('.lessonTable').closest('.dialog')[0].dialogBuilder.create_tag.json.lessonTable.tableData, null);}");
+		askExecuteDelete('指定した授業を削除しますか?', "if($(CURRENT_DIALOG_SELECTOR)[0].instance.getPushedButtonState() == YES) {deleteRecords('.lessonTable', '.selectRecord', $('.lessonTable').closest('.tabPanel')[0].create_tag.json.lessonDeleteQuery, null, $('.lessonTable').closest('.tabPanel')[0].create_tag.json.lessonTable.tableData, null);}");
 	}
 	
 	/* 関数名:setArgumentObj
@@ -86,6 +86,8 @@ function adminLessonList() {
 	 * 作成者　:T.Masuda
 	 */
 	this.setArgumentObj = function() {
+		//授業一覧タブのcreateTagを取得する
+		var create_tag = $(LESSON_LIST_TAB)[0].create_tag;
 		//当該ダイアログが生成されたときに渡されたインプット用データオブジェクトを取得する
 		var argumentObj = commonFuncs.createCloneObject($(CURRENT_DIALOG)[0].instance.getArgumentObject());
 		//イベントコールバックの起点となったものを判別する
@@ -95,9 +97,9 @@ function adminLessonList() {
 				//新規作成用のデータを取得してまとめる。また、close時のコールバック関数のポインタを渡す
 				$.extend(true, 
 						argumentObj.data, //このダイアログに渡されたインプット用データ
-						{tableData:this.create_tag.json.lessonTable.tableData}, //授業一覧テーブルの全行データ
+						{tableData:create_tag.json.lessonTable.tableData}, //授業一覧テーブルの全行データ
 						//ダイアログインスタンスと新規作成ダイアログのclose時コールバック関数
-						{parentDialogBuilder:$(CURRENT_DIALOG).dialogBuilder, callback:this.newLessonEntry}
+						{parentDialogBuilder:$(CURRENT_DIALOG)[0].dialogBuilder, callback:this.newLessonEntry}
 				);
 				//ダイアログのタイトルをセットする
 				argumentObj.config.title = TITLE_CREATE_LESSON;
@@ -113,8 +115,8 @@ function adminLessonList() {
 				$.extend(true,
 						argumentObj.data, //このダイアログに渡されたインプット用データ
 						//行データ
-						this.create_tag.json.lessonTable.tableData[index],
-						{parentDialogBuilder:$(CURRENT_DIALOG).dialogBuilder}	//ダイアログインスタンス
+						create_tag.json.lessonTable.tableData[index],
+						{parentDialogBuilder:$(CURRENT_DIALOG)[0].dialogBuilder}	//ダイアログインスタンス
 				);
 				//ダイアログのタイトルをセットする
 				argumentObj.config.title = TITLE_EDIT_LESSON;
@@ -131,7 +133,7 @@ function adminLessonList() {
 
 		return argumentObj;	//生成したオブジェクトを返す
 	}
-	
+
 }
 
 //継承の記述

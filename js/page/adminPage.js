@@ -168,7 +168,7 @@ var updateDateSearch = function (create_tag) {
  * 変更日:2016.04.17
  * 内容  :create_tagを引数から指定するように変更しました
  */
-function nowDatePaging(clickSelectorParent, creator) {
+function nowDatePaging(clickSelectorParent, create_tag) {
 	//現在時刻のオブジェクトを作る
 	var nowDateObject = new Date();
 	//日付の文字列を取得する
@@ -178,12 +178,14 @@ function nowDatePaging(clickSelectorParent, creator) {
 	//clickEvent(DOT + clickSelectorParent + ' a', updateDateMovement);
 	$(DOT + clickSelectorParent + ' button').click(function() {
 		//コールバック関数の処理を開始する
-		updateDateMovement(this, nowDateObject, creator);
+		updateDateMovement(this, nowDateObject, create_tag);
+		//検索日付テキストボックスの値を更新する
+		$('.dateInput').val($('.theDay').text());
 	});
 	//検索ボタンがクリックされた時に日付を更新する
 	$(DOT + 'dateSelect .searchButton').click(function() {
 		//日付オブジェクトを更新する
-		nowDateObject = updateDateSearch(creator);
+		nowDateObject = updateDateSearch(create_tag);
 	});
 }
 
@@ -270,9 +272,9 @@ function searchPermitListInfoTable(
 	//受講承認の検索ボタンをクリックした時のイベント
 	$(button).click(function(){
 		//検索初めの値を取得する
-		var fromDate = $('[name=fromSearach]').val();
+		var fromDate = $('[name=fromSearach]:visible').val();
 		//検索終わりの値を取得する
-		var toDate = $('[name=toSearach]').val();
+		var toDate = $('[name=toSearach]:visible').val();
 		
 		//不正な日付が入力されていたら
 		if(commonFuncs.isInvalidDate(new Date(fromDate)) 
@@ -280,7 +282,7 @@ function searchPermitListInfoTable(
 			alert('不正な日付が入力されています。');	//警告を出す
 			return;	//処理を終える
 		}
-		
+
 		//受講承認一覧のcreateTagを取得する
 		var searchCreateTag = $(createTagTarget)[0].create_tag;
 //		var lecturePermitList = $('#lecturePermitList')[0].create_tag;
@@ -445,7 +447,7 @@ function isBuyCommodity (sendReplaceArray) {
  * 関数名:permitDataUpdate
  * 概要  :受講承認テーブルの承認ボタンが押された時に1行ずつ値を取得して1行ずつDBの値を更新してする
  * 引数  :なし
- * 返却値  :なし
+ * 返却値  :int : 更新が成功したレコード数
  * 作成者:T.Yamamoto
  * 作成日:2015.07.17
  */
@@ -454,9 +456,11 @@ function permitDataUpdate(sendReplaceArray, boolRule, trueQueryKey, falseQueryKe
 	//クエリのデフォルトを取得してあとから元の戻せるようにする
 	var defaultQuery = sendQueryArray.db_setQuery;
 	//クエリを実行してテーブルの値1行ずつ更新していく
-	create_tag.setDBdata(sendQueryArray, sendReplaceArray, '');
+	var retNum = create_tag.setDBdata(sendQueryArray, sendReplaceArray, '');
 	//ループで実行するので置換データ連想配列を初期化する
 	sendQueryArray.db_setQuery = defaultQuery;
+	
+	return retNum;
 }
 
 /* 
@@ -538,7 +542,14 @@ function loopUpdatePermitLesson() {
 						sendReplaceArray['commodity_use_point'] = commodityUsePoint;
 						//備品代から加算ポイントを求める
 						//受講承認データを更新する
-						permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonUpdate', 'permitLessonUpdate');
+						var processedNum = permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonUpdate', 'permitLessonUpdate');
+						
+						//更新ができていなければ
+						if(!processedNum) {
+							//異常とし、例外を投げて以後の更新を中断する
+							throw new Error('以下のデータの更新に失敗しました。\n' + sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');
+						}
+						
 						//生徒さんの情報をリストに追加していく
 						processedList.push(sendReplaceArray.user_name + ' ' +sendReplaceArray.start_time + ' ' + sendReplaceArray.lesson_name + '\n');
 						
@@ -563,15 +574,12 @@ function loopUpdatePermitLesson() {
 		//必ず行う処理
 		} finally {
 
-			//1件でも処理していたら
-			if (counter > 0) {
-				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-				
-				//承認済みのデータを削除する
-				for (var i = 0; i < deleteList.length; i++) {
-					//テーブル用JSONをクリアする
-					create_tag.json['doLecturePermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
-				}
+			commonFuncs.showMessageDialog('受講承認', processedList.join(''));	//処理を行った生徒さんのリストを表示する
+
+			//承認済みのデータを削除する
+			for (var i = 0; i < deleteList.length; i++) {
+				//テーブル用JSONをクリアする
+				create_tag.json['doLecturePermitInfoTable'].tableData.splice(deleteList[i] - i, 1);
 			}
 			
 			//連番を振り直す
@@ -614,7 +622,7 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$(rowSelector).each(function() {
+			$(rowSelector).each(function(i) {
 					//DBを更新するための値を取得するために置換する連想配列を取得する
 					var diffPoint = $('input[name="use_point"]', this).attr('data-diff_point');	// 元の値からの増減値
 					var sendReplaceArray = 
@@ -626,17 +634,22 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 					);
 					sendReplaceArray.diff_point = diffPoint;
 					//受講承認一覧データを更新する
-					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.commodity_key), 'updateSellCommodityPermitList', 'updatePermitListLesson');
+					var processedNum = permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.commodity_key), 'updateSellCommodityPermitList', 'updatePermitListLesson');
+					
+					//更新ができていなければ
+					if(!processedNum) {
+						//エラーメッセージを作成する
+						var errorMes = '以下のデータの更新に失敗しました。\n' + (i + 1) + '行目 ' + sendReplaceArray.user_name + ' '+ (sendReplaceArray.lesson_name? sendReplaceArray.lesson_name : sendReplaceArray.content) + '\n';
+						//異常とし、例外を投げて以後の更新を中断する
+						throw new Error(errorMes);
+					}
+					
 				//カウンターをインクリメントする
 				counter++;
 			});
 		//例外処理
 		} catch(e){
-			//処理件数が0件であれば
-			if (counter == 0) {
-				processedList = [];		//序文を消す
-			}
-			//メッセージの先頭を追加する
+			//メッセージの先頭にエラーメッセージを追加する
 			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
 		//必ず行う処理
 		} finally {
@@ -648,7 +661,8 @@ function loopUpdatePermitLessonList(button, targetTab, rowSelector, targetTable,
 			
 			//処理件数を処理リストの末尾に追加する
 			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
-			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
+			//結果を表示する
+			commonFuncs.showMessageDialog('承認一覧', processedList.join(''));
 			
 			//受講承認一覧テーブルなら
 			if($('#lecturePermitList:visible').length > 0){
@@ -1121,7 +1135,7 @@ function permitSellCommodity() {
 		var processedList = new Array();
 		//序文を追加する
 		processedList.push(MESSAGE_RESULT_SELLCOMMODITYLECTUREPERMIT);
-		
+
 		//フォームの追加取得用オブジェクトを作る
 		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
 		commonFuncs.getAddAttrObject("use_point", "data-commodity_use_point", "commodity_use_point", addAttr);
@@ -1136,14 +1150,14 @@ function permitSellCommodity() {
 		//createTagを取得する
 		var scpc =$(SELECTOR_SELL_COMMODITY_PERMIT_TAB)[0].create_tag;
 		var deleteList = [];
-		
+
 		//商品購入承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
 		try{
 			//商品購入承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
 			$('.sellCommodityPermitInfoTable tr:not(:first)').each(function(i) {
 				//選択済みレコードであれば
 				if(commonFuncs.checkEmpty($(this).attr(CLASS)) && $(this).attr(CLASS).indexOf('selectRecord') != -1){
-					
+
 					// DBを更新するための値を取得するために置換する連想配列を取得する
 					var sendReplaceArray = scpc.getSendReplaceArray(KEY_SELL_COMMODITY_PERMIT_INFO_TABLE, counter, '.sellCommodityPermitInfoTable tr:not(:first):eq(' + counter + ')');
 					//商品が未選択であれば
@@ -1151,7 +1165,7 @@ function permitSellCommodity() {
 						//エラー扱いにするため例外を投げる。対象の行のお客様の名前を挙げる
 						throw new Error(MESSAGE_COMMODITY_NOT_SELECT_EXCEPTION + sendReplaceArray.user_name);
 					}
-					
+
 					//取得した値が不正かどうかをチェックする
 					VALIDATOR.validate(validateSettings, sendReplaceArray);
 					// ユーザの所持ポイント退避
@@ -1169,9 +1183,16 @@ function permitSellCommodity() {
 					
 					//実際の支配額をセットする
 					sendReplaceArray[KEY_PAY_CASH] = sendReplaceArray[KEY_PAY_PRICE] - usePoint;
-					
+
 					//商品購入承認データを更新する
-					permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonContainCommodity');
+					var processedNum = permitDataUpdate(sendReplaceArray, isBuyCommodity(sendReplaceArray), 'permitLessonContainCommodity', 'permitLessonContainCommodity');
+					
+					//更新ができていなければ
+					if(!processedNum) {
+						//異常とし、例外を投げて以後の更新を中断する
+						throw new Error('以下のデータの更新に失敗しました。\n' + sendReplaceArray.user_name + ' ' +sendReplaceArray.content + ' ' + sendReplaceArray.sell_number + '個 合計' +  sendReplaceArray.selling_price + '円\n');
+					}
+					
 					//生徒さんの情報をリストに追加していく
 					processedList.push(sendReplaceArray.user_name + ' ' + sendReplaceArray.content + ' ' + sendReplaceArray.sell_number + '個 ' + sendReplaceArray.pay_cash + '円' + '\n');	
 
@@ -1195,86 +1216,16 @@ function permitSellCommodity() {
 		//必ず行う処理
 		} finally {
 
-			//1件でも処理していたら
-			if (counter > 0) {
-				alert(processedList.join(''));	//処理を行った生徒さんのリストを表示する
-				
-				//承認済みのデータを削除する
-				for (var i = 0; i < deleteList.length; i++) {
-					//テーブル用JSONをクリアする
-					create_tag.json[KEY_SELL_COMMODITY_PERMIT_INFO_TABLE].tableData.splice(deleteList[i] - i, 1);
-				}
+			commonFuncs.showMessageDialog('商品購入承認', processedList.join(''));	//処理を行った生徒さんのリストを表示する
+			
+			//承認済みのデータを削除する
+			for (var i = 0; i < deleteList.length; i++) {
+				//テーブル用JSONをクリアする
+				create_tag.json[KEY_SELL_COMMODITY_PERMIT_INFO_TABLE].tableData.splice(deleteList[i] - i, 1);
 			}
 			
 		//連番を振り直す
 		commonFuncs.insertSequenceNo(SELECTOR_SELL_COMMODITY_PERMIT_INFO_TABLE, SELECTOR_NO_COL);
-		}
-	});
-}
-
-/* 
- * 関数名:loopUpdatesellCommodityList
- * 概要  :商品購入承認一覧のレコードを更新する
- * 引数  :なし
- * 返却値  :なし
- * 作成者:T.Masuda
- * 作成日:2016.03.19
- */
-function loopUpdatesellCommodityList() {
-	var thisElem = this;
-	//受講承認一覧の更新ボタンをクリックされた時にDBのデータを更新するイベントを登録する
-	$('#commodityPermitList .normalButton').on(CLICK, function(){
-		//受講承認一覧テーブルの行を1行ごとに更新するため、1行を特定するためにカウンタを作る
-		var counter = 0;
-		//受講承認を行った生徒の方のリストを作る
-		var processedList = new Array();
-		//クエリのキー
-		var queryKey = EMPTY_STRING;
-		//承認一覧のcreateTagを取得する
-		var create_tag = $(SELECTOR_PERMITLIST_TAB)[0].create_tag;
-		
-		//フォームの追加取得用オブジェクトを作る
-		var addAttr = commonFuncs.getAddAttrObject("use_point", "data-diff_point", "diff_point");
-		
-		//受講承認途中にエラーが出たらそこで打ち切るため、try-catchを利用する
-		try{
-			//受講承認一覧テーブルの対象となる行の数だけループしてデータを更新していく
-			$(SELECTOR_LECTUREPERMITLIST_RECORD).each(function() {
-					//DBを更新するための値を取得するために置換する連想配列を取得する
-					var diffPoint = $('input[name="use_point"]').eq(counter).attr('data-diff_point');	// 元の値からの増減値
-					var sendReplaceArray = 
-						create_tag.getSendReplaceArray(
-							SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, 
-							counter, 
-							'sellCommodityListRecord:eq(' + counter + ')',
-							 commonFuncs.checkEmpty(diffPoint) ? addAttr : null
-					);
-					//受講承認一覧データを更新する
-					permitDataUpdate(sendReplaceArray, commonFuncs.checkEmpty(sendReplaceArray.content), 'updatePermitListCommoditySell', 'updatePermitListLesson');
-				//カウンターをインクリメントする
-				counter++;
-			});
-		//例外処理
-		} catch(e){
-			//処理件数が0件であれば
-			if (counter == 0) {
-				processedList = [];		//序文を消す
-			}
-			//メッセージの先頭を追加する
-			processedList.unshift(ALERT_LECTUREPERMIT_PROCESS_ERROR + e.message + JS_EOL);
-		//必ず行う処理
-		} finally {
-			//createTagから検索日付をとりだす
-			var fromDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_FROM_DATE][VALUE];
-			var toDate = create_tag.json[LECTURE_PERMIT_LIST_INFO_TABLE][KEY_TO_DATE][VALUE];
-			//検索日付をオブジェクトにまとめる
-			var searchDate = {'fromDate' : fromDate, 'toDate' : toDate}
-			
-			//処理件数を処理リストの末尾に追加する
-			processedList.push(counter + NOTICE_RECORD_UPDATE_MESSAGE_AND_NUMBER);
-			alert(processedList.join(EMPTY_STRING));	//処理を行った生徒さんのリストを表示する
-			//テーブルをリロードする。
-			create_tag.loadTableData(LECTURE_PERMIT_LIST_INFO_TABLE, START_PAGE_NUM, LECTUREPERMITLIST_TABLE_NUMBERING_MAX, FIRST_DISPLAY_PAGE, LECTUREPERMITLIST_TABLE_MAX_ROWS, SELECTOR_LECTUREPERMITLIST_OUTSIDE, AFTER_RELOAD_LECTUREPERMITINFOLIST_FUNC, GET_LECTUREPERMITLIST_CREATE_TAG);
 		}
 	});
 }

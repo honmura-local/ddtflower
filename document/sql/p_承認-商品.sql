@@ -7,14 +7,15 @@ CREATE PROCEDURE p_update_approval_purchase (
     ,IN in_use_point INT
     ,IN in_commodity_key INT
     ,IN in_purchase_status INT
+    ,IN in_user_key INT
     ,OUT result INT
 )
 BEGIN
 
-DECLARE latest_timestamp int;
-DECLARE updated_timestamp int;
-DECLARE latest_timestamp_user VARCHAR(25);
-DECLARE updated_timestamp_user VARCHAR(25);
+DECLARE latest_timestamp DATETIME;
+DECLARE updated_timestamp DATETIME;
+DECLARE latest_timestamp_user DATETIME;
+DECLARE updated_timestamp_user DATETIME;
 
 SELECT 
     MAX(update_datetime)

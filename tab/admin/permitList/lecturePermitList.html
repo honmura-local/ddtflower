@@ -37,8 +37,6 @@
 			//受講承認の更新ボタンを追加する
 			commonFuncs.putCommonButton('#lecturePermitList .permitListSearch', 'lecturePermitListUpdateButton', 'update', true, false, true, {}, false);
 			
-			//受講承認一覧のリスト更新ボタンを作る
-			create_tag.outputTag('lecturePermitListUpdateButton', 'normalButton', '#lecturePermitList .permitListSearch');
 			//受講承認一覧テーブル外枠を作る
 			create_tag.outputTag('lecturePermitListInfoTableOutsideArea', 'divArea', '#lecturePermitList');
 			// ナンバリング領域を作る
@@ -52,11 +50,9 @@
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.lecturePermitListRecord', '.lecturePermitListRecord');
 			//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-			loopUpdatePermitLessonList('#lecturePermitList .normalButton', SELECTOR_LECTUREPERMITLIST_TAB, '.lecturePermitListInfoTable tbody tr', LECTURE_PERMIT_LIST_INFO_TABLE, '#permitList');
+			loopUpdatePermitLessonList('#lecturePermitList .lecturePermitListUpdateButton', SELECTOR_LECTUREPERMITLIST_TAB, '.lecturePermitListInfoTable tbody tr', LECTURE_PERMIT_LIST_INFO_TABLE, '#permitList');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
-			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"]', $activePanel).button();
 			
 			</script>
 	</body>

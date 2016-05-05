@@ -1,6 +1,16 @@
 @CHARSET "UTF-8";
 
 /* 
+ * セレクタ :.window[name="admin"] .main
+ * 概要   :ページ全体の囲む領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+.window[name="admin"] .main {
+	margin-top: 5px;	/* 上に少々空白をつける */
+}
+
+/* 
  * セレクタ :.adminHeader
  * 概要   :ヘッダのメニューそれぞれの項目の領域
  * 作成者 :T.Yamamoto
@@ -28,7 +38,7 @@
  * 作成日 :2015.11.23
  */
 #adminTab > ul {
-	width : 97.5%;		/* 幅を親要素に合わせる。ぴったりなりすぎないように多少マージン分として調整する */
+	width : 100%;		/* 幅を親要素に合わせる */
 	display : table;	/* テーブル扱いにする。タブインデックスにvertical-alignを効かせるための処置 */
 }
 
@@ -272,8 +282,20 @@
  * 作成日 :2016.04.17
  */
 #permitTab .selectAllRow {
-	margin-top : 25px;		/* 上marginを付けて隣り合うボタンたちと高さを合わせる */
+	margin-top : 10px;		/* 上marginを付けて隣り合うボタンたちと高さを合わせる */
+	margin-bottom : 5px;	/* 下marginでテーブルとの間隔を調整する */
 	display: inline-block;	/* spanタグ想定のため、marginを有効にするためinline-blockにする */
+	float : left;			/* 左に寄せる */
+}
+
+/* 
+ * セレクタ :.searchInputArea
+ * 概要   :検索要素領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.30
+ */
+.searchInputArea {
+    display: inline-block;	/* inline-blockにして横並べができるようにする */
 }
 
 /* 
@@ -293,7 +315,8 @@
  * 作成日 :2016.04.09
  */
 .permitListSearch {
-    display: inline;	/* インライン要素にして幅を内部の要素に合わせて自動調整するようにする */
+    display: inline-block;	/* インラインブロックにしてmargin、幅調整等が効くようにする */
+    margin: 5px 5px 0;		/* 下以外marginを取って適切な間隔を取る */
 }
 
 /* 
@@ -431,6 +454,26 @@
  */
 .memberClassListButton {
 	float: right;			/* 右側に回り込みする */
+}
+
+/* 
+ * セレクタ:.timetableListTable input[type="number"]
+ * 概要   :授業時間帯一覧の人数テキストボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2015.05.05
+ */
+.timetableListTable input[type="number"]{
+	width : 100%;	/* セルの幅に合わせる */
+}
+
+/* 
+ * セレクタ:td.time_table
+ * 概要   :授業時間帯列
+ * 作成者 :T.Masuda
+ * 作成日 :2015.05.05
+ */
+td.time_table {
+    white-space: pre;	/* 内容を改行せず表示する */
 }
 /* 管理者　授業詳細領域終わり */
 
@@ -592,6 +635,16 @@ ul.mailSendContent {
     float: right;			/* 右に寄せる */
     margin: 0 5px 5px 0;	/* 右、下にmarginを持たせる */
 }
+
+/* 
+ * セレクタ :.selectUser
+ * 概要   :選択ボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.05
+ */
+.selectUser {
+    margin-right: 55px;	/* TOPボタンと被るので右marginを設定する */
+}
 /* 受講者一覧の検索領域 */
 /* 
  * セレクタ :.fromArea, .toArea
@@ -600,19 +653,9 @@ ul.mailSendContent {
  * 作成日 :2015.06.30
  */
 .fromArea, .toArea {
-	margin-top: 5px;		/* 上から5pxの余白をとる */
-	width: 35%;				/* 幅を35%で設定する */
+	/* margin-top: 5px; */		/* 上から5pxの余白をとる */
 }
 
-/* 
- * セレクタ :.permitListSearch label span
- * 概要   :受講者一覧のラベルテキスト領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.30
- */
-.permitListSearch label span {
-	width: 31%;				/* 幅を12%にする */
-}
 
 /* 受講者一覧の検索領域終わり */
 
@@ -806,6 +849,17 @@ ul.mailSendContent {
 
 /* スマホ・タブレットレイアウト */
 @media(max-width:680px){
+	
+	/* 
+	 * セレクタ :#adminTab > ul
+	 * 概要   :管理者画面 タブインデックス枠
+	 * 作成者 :T.Masuda
+	 * 作成日 :2015.11.23
+	 */
+	#adminTab > ul {
+		width : 97.5%;		/* ぴったりなりすぎないように多少マージン分として調整する */
+	}
+	
 	/* 
 	 * セレクタ :.dateBelt a
 	 * 概要   :日ごと予約者一覧タブのタイトルの領域
@@ -905,14 +959,23 @@ ul.mailSendContent {
 	}
 	
 	/* 
-	 * セレクタ :.permitListSearch .searchButton
-	 * 概要   :承認一覧 検索ボタン
+	 * セレクタ :.permitListSearch .searchButton , .permitListSearch .sellCommodityPermitListUpdateButton
+	 * 概要   :承認一覧 検索ボタン、更新ボタン
 	 * 作成者 :T.Masuda
 	 * 作成日 :2016.04.09
 	 */
-	.permitListSearch .searchButton {
+	.permitListSearch .searchButton , .permitListSearch .sellCommodityPermitListUpdateButton, .permitListSearch .lecturePermitListUpdateButton {
 		float : right; /* 右に寄せる */
-		margin-bottom : 10px;	/* 下に来るボタンと間隔を取る */
+	}
+
+	/* 
+	 * セレクタ :.permitListSearch .lecturePermitListUpdateButton, .permitListSearch .sellCommodityPermitListUpdateButton
+	 * 概要   :承認一覧 更新ボタン
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.05.05
+	 */
+	.permitListSearch .lecturePermitListUpdateButton, .permitListSearch .sellCommodityPermitListUpdateButton {
+		margin : 5px 0 0;
 	}
 	
 	/* 
@@ -926,17 +989,6 @@ ul.mailSendContent {
 		margin-bottom : 10px;	/* 直下に来る一覧と間隔を取る */
 		clear : both;			/* 上のボタンの横に回り込まない様にする */
 	}
-
-	/* 
-	 * セレクタ :.searchInputArea
-	 * 概要   :検索要素領域
-	 * 作成者 :T.Masuda
-	 * 作成日 :2016.04.30
-	 */
-	.searchInputArea {
-	    float: left;	/* 左に寄せる */
-	    width: 205px;	/* 幅を明確に指定する */
-	}	
 
 	/* 
 	 * セレクタ :.fromArea, .toArea

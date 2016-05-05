@@ -85,6 +85,7 @@ INTO
 
 IF updated > updated_old THEN
     SELECT 1 INTO result;
+    SELECT ROW_COUNT();
     COMMIT;
 ELSE
     SELECT 0 INTO result;
@@ -97,7 +98,7 @@ END$$
 DROP PROCEDURE IF EXISTS p_select_timetable_day $$
 # 授業時間帯情報の変更に必要なデータを取り出す
 CREATE PROCEDURE p_select_timetable_day (
-    IN in_lesson_date VARCHAR(8)
+    IN in_lesson_date varchar(10)
     ,OUT result text
 )
 # プロシージャ開始
@@ -106,7 +107,7 @@ BEGIN
 # 以下の列を取得する
 SELECT
     # ID
-    id
+    time_table_day.id
     # 最小人数
     ,time_table_day.min_num
     # 最大人数
@@ -115,7 +116,7 @@ SELECT
     ,start_time
     # 終了時間
     ,end_time
-以下のテーブルからデータを取得する
+# 以下のテーブルからデータを取得する
 FROM
     # 授業時間帯テーブル
     time_table_day

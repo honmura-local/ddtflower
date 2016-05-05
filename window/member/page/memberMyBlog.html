@@ -76,7 +76,7 @@
 					//ユーザ自身のブログ記事のデータを取得して表示する				
 					create_tag.loadTableData('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages(\'.myBlogTable\');create_tag.setBlogEditButtons');
 					//記事の画像を拡大できるようにする。
-					creator.useZoomImage('blogImage');
+					create_tag.useZoomImage('blogImage');
 					
 					//datepickerによるカレンダーのクラスを作成する。
 					var mbCalendar = new myBlogCalendar('.calendar', create_tag, create_tag.json.myBlogTable[TABLE_DATA_KEY]);
@@ -84,7 +84,7 @@
 					//ボタンの領域を作る
 					create_tag.outputTag('myPageBlogButtons','myPageBlogButtons','.blogLeftContent');
 					//新規作成ボタンを作る
-					commonFuncs.putCommonButton('.myPageBlogButtons', 'createArticleButton myPageBlogButton myPageButton', 'createNew', true, false, true, {"type": "submit","data-role": "0","value": "記事作成"}, false);
+					commonFuncs.putCommonButton('.myPageBlogButtons', 'createArticleButton', 'createNew', true, true, true, {"type": "submit","data-role": "0","value": "記事作成"}, false);
 
 					create_tag.sendButtonRole($('form'));	//押されたsubmitボタンを検出する関数。
 					//submitイベントを登録する。

@@ -394,14 +394,16 @@ function baseDialog(dialog){
 					{	
 						//確認ボタン
 						text:TEXT_BUTTON_CONFIRM,
+						icons: {
+					        primary: "ui-icon-check"
+					    },
 						//確認ボタンのコールバック関数をセットする
                    		 click:
                    			 //コールバック関数
                    			 function(){
                    			 //更新ボタンの処理を行う
                    			 this.dialogBuilder.callbackConfirm();
-                  		 },
-                  		 icons : {primary : "ui-icon-check"}
+                  		 }
 					},
 					{
 						//閉じるボタン
@@ -416,6 +418,36 @@ function baseDialog(dialog){
                   		 icons : {primary : "ui-icon-close"}
 					}
 	           ];
+	
+	//送信・キャンセルボタンの配列
+	this.send_cancel = [
+	                       {	
+	                    	   //送信ボタン
+	                    	   text:TEXT_BUTTON_SEND,
+	                    	   icons: {
+	                    		   primary: "ui-icon-signal-diag"
+	                    	   },
+	                    	   //送信ボタンのコールバック関数をセットする
+	                    	   click:
+	                    		   //コールバック関数
+	                    		   function(){
+	                    		   //送信ボタンの処理を行う
+	                    		   this.dialogBuilder.callbackSend();
+	                    	   }
+	                       },
+	                       {
+	                    	   //キャンセルボタン
+	                    	   text:STR_CANCEL_JP,
+	                    	   //キャンセルボタンのコールバック関数をセットする
+	                    	   click:
+	                    		   //コールバック関数
+	                    		   function(){
+	                    		   //キャンセルボタンの処理を行う
+	                    		   this.dialogBuilder.callbackCancelButton();
+	                    	   },
+	                    	   icons : {primary : "ui-icon-close"}
+	                       }
+	                       ];
 	
 	//更新ボタンと受講者一覧ボタン
 	this.update_students = [
@@ -650,6 +682,19 @@ function baseDialog(dialog){
 		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
 	};
 
+	/* 関数名:callbackCancelButton
+	 * 概要　:ダイアログのキャンセルボタンを押したときのコールバック関数用関数
+	 * 引数　:なし
+	 * 返却値:なし
+	 * 設計者　:H.Kaneko
+	 * 作成日　:015.08.22
+	 * 作成者　:T.Masuda
+	 */
+	this.callbackCancelButton = function(){
+		this.dialogClass.setPushedButtonState(CANCEL);
+		$(this.dialog).dialog(CLOSE);		//ダイアログを閉じる
+	};
+	
 	/* 関数名:callbackReset
 	 * 概要　:ダイアログのリセットボタンを押したときのコールバック関数用関数
 	 * 引数　:なし

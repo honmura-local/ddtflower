@@ -77,7 +77,8 @@
 <!-- jQueryの本体を読み込む。 -->
 <script src="js/jquery-1.11.0.min.js"></script>
 <!-- jQueryUIを読み込む。 -->
-<script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script> -->
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- 共通関数クラスを読み込む。 -->
 <script src="js/common.js"></script>
 <!-- ユーティリティクラスのjsファイル。 -->
@@ -86,6 +87,8 @@
 <script src="js/flowersstylefix.js"></script>
 <!-- JSONとHTMLテンプレートから画面パーツを作るクラスのファイル -->
 <script type="text/javascript" src="js/createTag.js"></script>
+<!-- ログイン周りのjs -->
+<script type="text/javascript" src="js/login.js"></script>
 <!-- カルーセルのギャラリー生成プラグイン「Slick」の本体を読み込む。 -->
 <script type="text/javascript" src="js/slick.min.js" ></script>
 <!-- クリックした画像をピックアップ表示するためのjQueryプラグイン「fancybox」の本体を読み込む。 -->

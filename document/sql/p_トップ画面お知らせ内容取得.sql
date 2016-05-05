@@ -23,6 +23,8 @@ INNER JOIN
     user_inf
 ON
     user_blog.user_key = user_inf.id
+WHERE 
+	disclosure_range = 0
 ORDER BY
     post_timestamp DESC
 LIMIT 3;

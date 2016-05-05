@@ -15,8 +15,8 @@
 			$(TIME_TABLE_LIST_TAB)[0].create_tag = create_tag;
 			
 			//当該画面用関数クラスインスタンスを用意する
-			var timetableListFuncs = new adminLessonList();
-			
+			var timetableListFuncs = new timetableList();
+			console.log(timetableListFuncs);
 			//タブのDOMにcreateTagへの参照を保存する
 			$(LESSON_LIST_TAB)[0].create_tag = create_tag;
 
@@ -24,7 +24,7 @@
 			this[VAR_CREATE_TAG].getJsonFile(ADMIN_LESSON_LIST_DIALOG_JSON);
 			
 			//授業日時をJSONにセットする
-			this[VAR_CREATE_TAG].json[KEY_TIME_TABLE_LIST_TABLE].lesson_date.value = $(CURRENT_DIALOG)[0].instance.getArgumentDataObject().lesson_date;
+			this[VAR_CREATE_TAG].json[KEY_TIME_TABLE_LIST_TABLE].lessonDate.value = $(CURRENT_DIALOG)[0].instance.getArgumentDataObject().lessonDate.replace(/\//g, '-');
 			//授業時間帯のデータ一覧をDBから取得してテーブルを作る準備をする
 			this[VAR_CREATE_TAG].getJsonFile(URL_GET_JSON_ARRAY_PHP, this[VAR_CREATE_TAG].json[KEY_TIME_TABLE_LIST_TABLE], KEY_TIME_TABLE_LIST_TABLE);
 
@@ -34,16 +34,16 @@
 			//授業一覧テーブルの外側の領域を作る
 			this[VAR_CREATE_TAG].outputTag('timeTableListOuter', 'timeTableListOuter', TIME_TABLE_LIST_TAB);
 			//授業のデータ一覧テーブルを作る
-			this[VAR_CREATE_TAG].outputTagTable(KEY_TIME_TABLE_LIST_TABLE, LESSON_TABLE, $(TIME_TABLE_LIST_TAB + SPACE + 'timeTableListOuter'));
+			this[VAR_CREATE_TAG].outputTagTable(KEY_TIME_TABLE_LIST_TABLE, LESSON_TABLE, $(TIME_TABLE_LIST_TAB + SPACE + '.timeTableListOuter'));
 			
 			//テーブル内の置換を行い、編集項目項目をテキストボックスに置き換える
 			timetableListFuncs.replaceTable();
 			
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する
-			toggleClassClickElement('tr', 'selectRecord', '.lessonTable');
+			toggleClassClickElement(SELECTOR_TBODY_TR, 'selectRecord', SELECTOR_TIME_TABLE_LIST_TABLE);
 			
 			//更新ボタンを作る。コールバックもここで登録しておく
-			commonFuncs.putCommonButton('#timeTableList', 'updateButton', 'edit', true, false, true, {onclick : 'timetableListFuncs.callbackUpdate();'});
+			commonFuncs.putCommonButton('#timeTableList', 'updateButton', 'update', true, true, true, {onclick : 'timetableListFuncs.callbackUpdate();'});
 			
 			</script>
 	</body>

@@ -50,11 +50,9 @@
 			//受講承認の備品名セレクトボックスが変化したときに備品代が変わるイベントを登録する
 			setSellingPrice('.sellCommodityListRecord', '.sellCommodityListRecord');
 			//更新ボタンがクリックされたときにデータを更新するイベントを登録する
-			loopUpdatePermitLessonList('#sellCommodityPermitList .normalButton', SELECTOR_SELLCOMMODITYPERMITLIST_TAB, '.sellCommodityPermitListInfoTable tbody tr', SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, '#permitList');
+			loopUpdatePermitLessonList('#sellCommodityPermitList .sellCommodityPermitListUpdateButton', SELECTOR_SELLCOMMODITYPERMITLIST_TAB, '.sellCommodityPermitListInfoTable tbody tr', SELLCOMMODITY_PERMIT_LIST_INFO_TABLE, '#permitList');
 			
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
-			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"]', $activePanel).button();
 			
 			</script>
 	</body>

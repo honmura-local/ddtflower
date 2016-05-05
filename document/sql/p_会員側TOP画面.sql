@@ -192,10 +192,10 @@ DELIMITER ;
 DELIMITER $$
 -- 受講可能レッスン
 CREATE PROCEDURE check_userworkstatus(
-     OUT `result` TEXT
-	,IN in_user_key INT
-	,IN in_from_date VARCHAR(8)
-	,IN in_to_date VARCHAR(8)
+	IN in_user_key INT
+	,IN in_from_date varchar(10)
+	,IN in_to_date varchar(10)
+    ,OUT `result` TEXT
 )
 BEGIN
 # ログインユーザの授業予約状況チェック用クエリ

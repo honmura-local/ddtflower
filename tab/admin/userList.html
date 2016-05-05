@@ -59,15 +59,15 @@
 			//他画面から飛んできていなければ
 			if (!commonFuncs.checkEmpty(beforePanel)) {
 				// 送信ボタンを作る
-				commonFuncs.putCommonButton('#userList .userListButtons', 'createMail', 'mail', true, false, true);
+				commonFuncs.putCommonButton('#userList .userListButtons', 'createMail', 'mail', true, true, true);
 				// お知らせボタンを作る
-				commonFuncs.putCommonButton('#userList .userListButtons', 'announceButton', 'notice', true, false, true);
+				commonFuncs.putCommonButton('#userList .userListButtons', 'announceButton', 'notice', true, true, true);
 			//普通に読み込まれていたら
 			} else {
 				// 追加ボタンを作る
-				commonFuncs.putCommonButton('#userList .userListButtons', 'selectUser fRight', 'select', true, false, true, {"onclick": "returnFromUserList(this);", "data-buttontype": "0"});
+				commonFuncs.putCommonButton('#userList .userListButtons', 'selectUser fRight', 'select', true, true, true, {"onclick": "returnFromUserList(this);", "data-buttontype": "0"});
 				// キャンセルボタンを作る
-				commonFuncs.putCommonButton('#userList .userListButtons', 'cancelUser fRight', 'cancel', true, false, true, {"onclick": "returnFromUserList(this);","data-buttontype": "1"});
+				commonFuncs.putCommonButton('#userList .userListButtons', 'cancelUser fRight', 'cancel', true, true, true, {"onclick": "returnFromUserList(this);","data-buttontype": "1"});
 			}
 			
 			//会員一覧テーブルがクリックされた時にuserSelectクラスをがなければ追加しあるなら消去する

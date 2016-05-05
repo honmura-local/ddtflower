@@ -82,8 +82,8 @@ function adminLessonCreateDialog(dialog){
 	 * 作成者　:T.Masuda
 	 */
 	this.customizeJson = function(){
-		console.log(this.dialogClass.getArgumentObject());
-		this.create_tag.json.lessonDate.text = this.dialogClass.getArgumentObject().config.title;
+		//日付を日付欄にセットする
+		this.create_tag.json.lessonDate.text = this.dialogClass.getArgumentDataObject().dateJapanese;
 		
 	};
 	
@@ -188,7 +188,7 @@ function adminLessonCreateDialog(dialog){
 
 		//新しく授業データを作るために授業日を連想配列に入れる
 		var lessonData = {
-			lessonDate:data.lessonDate,			//受講日
+			lessonDate:data.lessonDate.replace(/\//g, '-'),			//受講日
 			time_table_day_key:timeTableDayKey 	//授業時限キー
 		};
 		
@@ -301,6 +301,7 @@ function adminLessonCreateDialog(dialog){
 	 * 作成者:T.Masuda
 	 */
 	this.afterCreateNewLesson = function(){
+		console.log(this.dialogClass.getArgumentDataObject());
 		//親ダイアログから渡された親ダイアログ操作用クラスインスタンスを取得し、親ダイアログのテーブルの内容を更新する
 		var parentDialogBuilder = this.dialogClass.getArgumentDataObject().parentDialogBuilder;
 		//親ダイアログの内容を一旦消去する

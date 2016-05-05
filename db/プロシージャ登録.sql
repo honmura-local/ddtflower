@@ -3035,14 +3035,15 @@ CREATE PROCEDURE p_update_approval_purchase (
     ,IN in_use_point INT
     ,IN in_commodity_key INT
     ,IN in_purchase_status INT
+    ,IN in_user_key INT
     ,OUT result INT
 )
 BEGIN
 
-DECLARE latest_timestamp int;
-DECLARE updated_timestamp int;
-DECLARE latest_timestamp_user VARCHAR(25);
-DECLARE updated_timestamp_user VARCHAR(25);
+DECLARE latest_timestamp DATETIME;
+DECLARE updated_timestamp DATETIME;
+DECLARE latest_timestamp_user DATETIME;
+DECLARE updated_timestamp_user DATETIME;
 
 SELECT 
     MAX(update_datetime)
@@ -3294,7 +3295,7 @@ SELECT
     #授業名(一覧出力後入る)
     ,'' AS lesson_name
     #購入額
-    ,pay_price AS cost
+    ,pay_cash AS cost
     #商品購入での使用ポイント
     ,commodity_sell.use_point AS use_point
     #ステージ番号(デフォルト値)
@@ -3433,12 +3434,13 @@ END IF;
 
 END$$
 
--- 受講可能レッスンチェック
+# 受講可能レッスンチェック
+DROP PROCEDURE IF EXISTS check_userworkstatus $$
 CREATE PROCEDURE check_userworkstatus(
-     OUT `result` TEXT
-	,IN in_user_key INT
-	,IN in_from_date VARCHAR(8)
-	,IN in_to_date VARCHAR(8)
+	IN in_user_key INT
+	,IN in_from_date varchar(10)
+	,IN in_to_date varchar(10)
+    ,OUT `result` TEXT
 )
 BEGIN
 # ログインユーザの授業予約状況チェック用クエリ
@@ -3551,6 +3553,7 @@ INTO
 
 IF updated > updated_old THEN
     SELECT 1 INTO result;
+    SELECT ROW_COUNT();
     COMMIT;
 ELSE
     SELECT 0 INTO result;
@@ -3584,6 +3587,7 @@ BEGIN
 	WHERE 
 		id = in_classwork_key
 	;
+	SELECT ROW_COUNT();
 END$$
 
 # お知らせ用ブログ記事取得
@@ -3607,6 +3611,8 @@ INNER JOIN
     user_inf
 ON
     user_blog.user_key = user_inf.id
+WHERE 
+	disclosure_range = 0
 ORDER BY
     post_timestamp DESC
 LIMIT 3;
@@ -3638,6 +3644,187 @@ ORDER BY
     update_timestamp DESC
 LIMIT 3;
 
+END$$
+
+# 授業時間帯作成プロシージャ
+DROP PROCEDURE IF EXISTS p_insert_time_table_day $$
+CREATE PROCEDURE p_insert_time_table_day (
+    IN in_timetable_key INT
+    ,IN in_lesson_date varchar(10)
+    ,IN in_max_num INT
+    ,IN in_min_num INT
+    ,OUT result INT
+)
+# プロシージャ開始
+BEGIN
+# レコードを以下のテーブルに新規追加する
+INSERT INTO 
+	# 授業時間帯テーブル
+	time_table_day
+	# 値を設定する列を指定する
+	( 
+	    # 最小人数
+		min_num 
+		# 最大人数
+		,max_num
+		# 授業時間帯情報テーブルのID
+		,timetable_key 
+		# 授業の日付
+		,lesson_date
+		# レコード作成日時
+		,create_datetime
+		# レコード更新日時
+		,update_datetime 
+	)
+# 以下の通りに値をセットする
+VALUES
+	( 
+	    # 各々引数の通りに値をセットする
+		in_min_num 
+		,in_max_num 
+		,in_timetable_key 
+		,in_lesson_date
+		# 作成日時、更新日時は現在時刻
+		,NOW() 
+		,NOW() 
+	);
+# プロシージャを終了する
+END$$
+
+# 時間帯作成と同時に授業作成するときに使うプロシージャ
+DROP PROCEDURE IF EXISTS p_insert_new_classwork $$
+CREATE PROCEDURE p_insert_new_classwork (
+	IN in_max_students INT
+	,IN in_min_students INT
+	,IN in_classwork_status INT 
+	,IN in_classroom VARCHAR(10)
+	,IN in_classwork_note TEXT
+    ,IN in_lesson_key VARCHAR(8)
+    ,IN in_timetable_key INT
+    ,OUT result INT
+)
+# プロシージャ開始
+BEGIN
+# レコードを以下のテーブルに新規追加する
+INSERT INTO 
+	classwork
+		( 
+			max_students 
+			,min_students 
+			,classwork_status 
+			,classroom 
+			,classwork_note 
+			,teacher_key 
+			,school_key 
+			,lesson_key 
+			,time_table_day_key 
+			,create_datetime 
+			,update_datetime
+			,order_students
+		) 
+	VALUES
+		(
+			in_max_students 
+			,in_min_students 
+			,in_classwork_status 
+			,in_classroom 
+			,in_classwork_note
+			,(select id from user_inf where authority = 10 limit 1)
+			,(SELECT school_key FROM timetable_inf WHERE id = in_timetable_key) 
+			,in_lesson_key 
+			,(SELECT id FROM time_table_day WHERE timetable_key = in_timetable_key order by create_datetime DESC LIMIT 1) ,NOW() ,NOW(), 0 )
+;
+END $$
+
+# 通常通り授業作成するときに使うプロシージャ
+DROP PROCEDURE IF EXISTS p_insert_normal_classwork $$
+CREATE PROCEDURE p_insert_normal_classwork (
+	IN in_max_students INT
+	,IN in_min_students INT
+	,IN in_classwork_status INT 
+	,IN in_classroom VARCHAR(10)
+	,IN in_classwork_note TEXT
+    ,IN in_lesson_key VARCHAR(8)
+    ,IN in_timetable_key INT
+    ,IN in_time_table_day_key INT
+    ,OUT result INT
+)
+# プロシージャ開始
+BEGIN
+# レコードを以下のテーブルに新規追加する
+INSERT INTO 
+	classwork
+	( 
+		max_students 
+		,min_students 
+		,classwork_status 
+		,classroom 
+		,classwork_note 
+		,teacher_key 
+		,school_key 
+		,lesson_key 
+		,time_table_day_key 
+		,create_datetime 
+		,update_datetime
+		,order_students
+	) 
+VALUES
+	(
+		in_max_students 
+		,in_min_students 
+		,in_classwork_status 
+		,in_classroom 
+		,classwork_note
+		,(select id from user_inf where authority = 10 limit 1)
+		,(SELECT school_key FROM timetable_inf WHERE id = in_timetable_key)
+		,in_lesson_key
+		,in_time_table_day_key
+		,NOW()
+		,NOW()
+		,0)
+;
+END$$
+
+# 時間帯一覧取得
+DROP PROCEDURE IF EXISTS p_select_timetable_day $$
+# 授業時間帯情報の変更に必要なデータを取り出す
+CREATE PROCEDURE p_select_timetable_day (
+    IN in_lesson_date varchar(10)
+    ,OUT result text
+)
+# プロシージャ開始
+BEGIN
+
+# 以下の列を取得する
+SELECT
+    # ID
+    time_table_day.id
+    # 最小人数
+    ,time_table_day.min_num
+    # 最大人数
+    ,time_table_day.max_num
+    # 開始時間
+    ,start_time
+    # 終了時間
+    ,end_time
+# 以下のテーブルからデータを取得する
+FROM
+    # 授業時間帯テーブル
+    time_table_day
+# テーブルを結合する
+INNER JOIN
+    # 授業時間帯情報テーブル
+    timetable_inf
+# 以下の列を指定して結合する
+ON
+    # 各授業時間帯情報テーブルID
+    time_table_day.timetable_key = timetable_inf.id
+# 検索条件を指定する
+WHERE
+    # 指定した授業日時
+    lesson_date = in_lesson_date
+;
+# プロシージャを終了する
 END$$
 
 #区切り文字をセミコロンに戻す

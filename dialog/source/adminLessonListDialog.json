@@ -117,15 +117,15 @@
                     "style": "display:none;"
                     ,"className" : "end_time"
                 },
-                "max_students":{
+                "max_num":{
                     "columnName" : "最大人数"
-                    ,"className" : "max_students"
+                    ,"className" : "max_num"
                 },
-                "min_students":{
+                "min_num":{
                     "columnName" : "最小人数"
-                    ,"className" : "min_students"
+                    ,"className" : "min_num"
                 },
-                "time_table_day_key":{
+                "id":{
                     "style":"display:none;"
                     ,"className" : "id"
                 }
@@ -133,7 +133,7 @@
         }
     },
     "updateTimeTable" : {
-        "db_setQuery" : "CALL p_update_capacity_time_table_day('id', 'min_students', 'max_students', @result); SELECT @result AS result;",
+        "db_setQuery" : "CALL p_update_capacity_time_table_day('id', 'min_num', 'max_num', @result); SELECT @result AS result;",
         "id" : {
             "value" : ""
         },

@@ -50,24 +50,24 @@
 				$('.blogEditImagesSectionImage').after(
 						commonFuncs.makeCommonButton(
 								'blogEditImagesSectionAddButton', 'select', true, false, true, {"onclick":"","type":"button"}));
-				$('.blogEditImagesSectionDeleteButton:eq(0)').after(
+				$('.blogEditImagesSectionAddButton:eq(0)').after(
 						commonFuncs.makeCommonButton(
 								'blogEditImagesSectionDeleteButton', 'delete', true, false, true
 								, {"text":"削除","type":"button","onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_1\"],[name=\"thumb1\"]')"})
 							);
-				$('.blogEditImagesSectionDeleteButton:eq(1)').after(
+				$('.blogEditImagesSectionAddButton:eq(1)').after(
 						commonFuncs.makeCommonButton(
 								'blogEditImagesSectionDeleteButton', 'delete', true, false, true, 
 								{"text":"削除","type":"button","onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_2\"],[name=\"thumb2\"]')"})
 							);
-				$('.blogEditImagesSectionDeleteButton:eq(2)').after(
+				$('.blogEditImagesSectionAddButton:eq(2)').after(
 						commonFuncs.makeCommonButton(
 								'blogEditImagesSectionDeleteButton', 'delete', true, false, true, 
 								{"text":"削除","type":"button","onclick":"chooseOKBeforeCallFunc('画像を削除しますか?','画像削除',create_tag.deleteSiblingSrc,this,'[name=\"image_3\"],[name=\"thumb3\"]')"})
 							);
 
-				commonFuncs.putCommonButton('.blogEditButtons', '.blogEditButtonsOKButton', 'edit', true, false, true, {"type":"submit","text":"　 OK 　","confirm":"true","value":"保存"}, false);
-				commonFuncs.putCommonButton('.blogEditButtons', '.blogEditButtonsCancelButton back', 'cancel', true, false, true, {"href":"adminblogmanagement.html","onclick":"","type":"button"}, false);
+				commonFuncs.putCommonButton('.blogEditButtons', '.blogEditButtonsOKButton', 'edit', true, true, true, {"type":"submit","text":"　 OK 　","confirm":"true","value":"保存"}, false);
+				commonFuncs.putCommonButton('.blogEditButtons', '.blogEditButtonsCancelButton back', 'cancel', true, true, true, {"href":"adminblogmanagement.html","onclick":"","type":"button"}, false);
 				
 				var disclosureRange = create_tag.json.myBlogContent.disclosure_range.text;
 				if(commonFuncs.checkEmpty(disclosureRange)){
@@ -79,7 +79,6 @@
 				$('[name=blogTitle]').val(create_tag.json.myBlogContent.title.text);
 				$('[name="blogContent"]').text(create_tag.json.myBlogContent.content.text);
 				
-				$('.main button, .main input:submit').button();
 				clickButtonToFile('.blogEditImagesSection', '.blogEditImagesSectionAddButton', '.blogEditImageUploader', create_tag.uploadImage, '.blogEditImagesSectionImage,.blogEditImagesSectionImagePath');
 				$('form').validate(articleCreateHandler);
 				addlogoutEvent('.logoutLink');

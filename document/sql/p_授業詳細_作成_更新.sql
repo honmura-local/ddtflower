@@ -5,7 +5,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS p_insert_time_table_day $$
 CREATE PROCEDURE p_insert_time_table_day (
     IN in_timetable_key INT
-    ,IN in_lesson_date VARCHAR(8)
+    ,IN in_lesson_date varchar(10)
     ,IN in_max_num INT
     ,IN in_min_num INT
     ,OUT result INT
@@ -37,7 +37,7 @@ VALUES
 	    # 各々引数の通りに値をセットする
 		in_min_num 
 		,in_max_num 
-		,in_time_table_key 
+		,in_timetable_key 
 		,in_lesson_date
 		# 作成日時、更新日時は現在時刻
 		,NOW() 

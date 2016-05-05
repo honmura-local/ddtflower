@@ -297,9 +297,9 @@ function postForm(form){
  */
 function chooseOKBeforeCallFunc(message, title, func, arg1, arg2, arg3){
 	//共通コンテンツのJSONを取得する。
-	creator.getJsonFile('source/commonJson.json');
+	create_tag.getJsonFile('source/commonJson.json');
 	// ダイアログの本体となるdivタグを生成する。
-	creator.outputTag('funcConfirmDialog', 'funcConfirmDialog', 'body');
+	create_tag.outputTag('funcConfirmDialog', 'funcConfirmDialog', 'body');
 	$('.funcConfirmDialog:last').text(message);	//ダイアログにテキストを書き込む。
 	// 生成したdivタグをjQuery UIのダイアログにする。
 	$('.funcConfirmDialog:last').dialog({
@@ -311,6 +311,7 @@ function chooseOKBeforeCallFunc(message, title, func, arg1, arg2, arg3){
 		closeOnEscape	: false,
 		//タイトルをつける。
 		title:title,
+		appendTo : $(CURRENT_WINDOW),
 		//ダイアログにクラスを設定する。
 		dialogClass		:'confirmDialog',
 		// モーダルダイアログとして生成する。
@@ -365,8 +366,10 @@ function changeSelectedButtonColor(filterTarget){
 	//一旦全てのactive,currentクラスを剥奪する。	
 	$(filterTarget).removeClass('active');
 	$(filterTarget).removeClass('current');
+	//カレントのurlを割り出す
+	var current = history.state ? history.state.url : TOPPAGE_NAME;
 	// 現在のページのボタンの枠に対して、currentクラスを付与する。
-	$(filterTarget, document).filter(':has(a[href$="' + currentLocation + '"])').addClass('current');
+	$(filterTarget).filter(':has(a[href$="' + current + '"])').addClass('current');
 }
 
 /*
@@ -398,7 +401,6 @@ $(document).ajaxStop( function(){
 	commonFuncs.hideLoadingScreen();
 	//選択されたトップメニューの色を変える。
 	changeSelectedButtonColor('.topMenu li');
-	commonFuncs.showCurrentWindow();	//最前部のウィンドウのみ表示する
 });
 /* 以上、ローディング画面呼び出しのイベント登録。 */
 
@@ -637,7 +639,7 @@ function addlogoutEvent(selector){
 			var cookieLimit = new Date();
 			//現在の日付にクッキーの生存時間を加算し、cookieLimitに追加する。
 			cookieLimit.setTime(0);
-			
+
 			//管理者画面から会員ページへログインしていなければ
 			if(!commonFuncs.checkEmpty(commonFuncs.GetCookies().otherUserId)){
 			//Ajax通信を行い、ログアウト処理を行う。

@@ -38,6 +38,7 @@ label,
 }
 
 .lessonTable,
+.timetableListTable,
 .reservedLessonTable,
 .finishedLessonTable,
 .adminLessonDetailTable,
@@ -79,10 +80,10 @@ label,
  * 作成日 :2016.04.30
  */
 .selectTheme {
-	height : 20px;			/* 中の要素を高さ中心揃えにするので高さを明確に設定する */
+	height : auto;			/* 内容に合わせた高さにする */
 	display : inline-block;	/* 横に別の要素を並べることがあるのでinline-blockにする */
-	width : 150px;			/* 中の要素がabsoluteで判定がなくなってしまうことがあるため、固定幅にする */
-    margin-bottom: 5px;		/* 下と間隔を取る */
+	width: 130px;			/* 中の要素がabsoluteで判定がなくなってしまうことがあるため、固定幅にする */
+	margin-bottom: 5px;		/* 下と間隔を取る */
 }
 
 /* 
@@ -100,19 +101,6 @@ label,
 .memberHeader p:nth-of-type(2),
 .fRight {
 	float: right;
-}
-
-/* 
- * セレクタ :#container .main
- * 概要   :ページ全体の囲む領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.26
- * 変更者 :T.Masuda
- * 変更日 :2015.08.02
- * 内容　 :ヘッダーとの高さ合わせのためのmargin-topを無効にしました。JSで対応しています。
- */
-#container .main {
-	/*margin-top: 5px;*/	/* 上空の余白が115pxであるのを5pxにする */
 }
 
 /* 
@@ -138,7 +126,7 @@ label,
  * 作成日 :2015.06.13
  */
 .memberHeader {
-	padding-top: 3px;		/* 要素の幅を上向きに3px広げる */
+	padding-top: 8px;		/* 要素の幅を上向きに8px広げる */
 }
 
 /* 
@@ -298,7 +286,7 @@ label,
  */
 .selectThemebox {
 	height:2em;				/* 高さを動的に変える */
-	min-width : 80px;		/* タッチしやすさを考えて最低限の幅を確保する */
+	width: 80px;		/* タッチしやすさを考えて最低限の幅を確保する */
 }
 /* 
  * セレクタ :.selectThemebox
@@ -343,7 +331,7 @@ label,
 }
 
 .searchInputArea input[type="date"], .searchInputArea span {
-    float: left;
+    display: inline-block;
 }
 
 /* 
@@ -353,6 +341,7 @@ label,
  * 作成日 :2015.06.08
  */
 .lessonTable,
+.timetableListTable,
 .reservedLessonTable,
 .finishedLessonTable,
 .infoTable,
@@ -379,6 +368,7 @@ label,
  * 作成日 :2015.06.30
  */
 .lessonTable tr:hover,
+.timetableListTable tr:hover,
 .reservedLessonTable tr:hover,
 .finishedLessonTable tr:hover,
 .infoTable tr:hover,
@@ -401,6 +391,7 @@ label,
  * 作成日 :2015.06.30
  */
 .lessonTable thead tr:nth-of-type(1),
+.timetableListTable thead tr:nth-of-type(1),
 .reservedLessonTable thead tr:nth-of-type(1),
 .finishedLessonTable thead tr:nth-of-type(1),
 .infoTable thead tr:nth-of-type(1),
@@ -423,6 +414,7 @@ label,
  * 作成日 :2015.06.08
  */
 .lessonTable td,
+.timetableListTable td,
 .reservedLessonTable td,
 .finishedLessonTable td,
 .infoTable td,
@@ -1357,7 +1349,6 @@ label,
 	 * 作成日 :2015.07.11
 	 */
 	.searchButton {
-		margin-top: 5px;	/* 上から5px余白を空ける */
 	}
 
 	/* 

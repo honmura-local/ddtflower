@@ -56,6 +56,10 @@ function common(){
 				src : SRC_SEND_BUTTON,
 				text : '送信'
 			},
+			createNew : {
+				src : SRC_CREATE_NEW_BUTTON,
+				text : '新規'
+			},
 			update : {
 				src : SRC_UPDATE_BUTTON,
 				text : '更新'
@@ -160,7 +164,7 @@ this.sampleNoticeDataOrganizeKeyArray = [
 //トップページお知らせの記事データの構造サンプル
 this.sampleNoticeDataOrganizeSettingObj = {
 	"topicContentImage": [
-		"img",   //列名
+		"image",   //列名
 	    "style"  //値セット先のキー
 	],
 	"topicContentDate": [
@@ -183,13 +187,21 @@ this.unixtimeIncrement = 0;
 this.messageDialogDefaultOption = {
 		width : '300'	//幅を固定値にする
 		,modal : true	//モーダルダイアログにする
-		,close : function (dialog, ui){
+		,close : function (dialog, ui){	//close時コールバック
 			//ダイアログの機能を無効にし、DOMを消去する
-			$(dialog).dialog('destroy');
-			$(dialog).parent().remove();
+			$(SELECTOR_CURRENT_MESSAGE_DOIALOG).dialog(DESTROY);
+			$(SELECTOR_CURRENT_MESSAGE_DOIALOG).parent().remove();
 		}
 		//閉じるボタン。
-		,buttons : [{text : '閉じる'}, function(dialog, ui){$(dialog).dialog('close');}]
+		,buttons : [
+		            {text : STR_CLOSE_JP
+		            //クリック時コールバック
+		            ,click : function(dialog, ui){
+		            		//ダイアログを閉じる
+		            		$(SELECTOR_CURRENT_MESSAGE_DOIALOG).dialog(CLOSE);
+		            	}
+		            }
+		    ]
 }
 
 //以上、授業一覧テーブル作成用のデータ
@@ -1816,6 +1828,8 @@ this.messageDialogDefaultOption = {
 	this.showCurrentWindow = function(){
 		$('.window').hide();		//全てのウィンドウを消す
 		$('.window:last').show();	//カレントのウィンドウのみ表示する
+		//画面のリサイズイベントをトリガーしてJSでリサイズする要素をリサイズする
+		$(window).trigger('resize');
 	}
 
 	/* 
@@ -2107,6 +2121,30 @@ this.messageDialogDefaultOption = {
 		$(tableName + ' tr:eq(' + rowNumber + ') td').eq(4).text(point);
 	};
 	
+	/*
+	 * 関数名:function checkIdentifier(fileName)
+	 * 引数  :String fileName:ファイル名。
+	 * 戻り値:boolean
+	 * 概要  :有効な拡張子かどうかをチェックする。
+	 * 作成日:2015.04.18
+	 * 作成者:T.M
+	 */
+	this.checkIdentifier = function(fileName){
+		var retBoo = false;	//返却するチェック結果を格納する変数を宣言、初期化する。
+		var listLength = VALID_IMAGE_IDENTIFIERS.length;	//有効な拡張子の配列の長さを取得する。
+		
+		//有効な拡張子のリストとfileNameを比較する
+		for(var i = 0; i < listLength; i++){
+			//有効な拡張子であったら
+			if(fileName.indexOf(VALID_IMAGE_IDENTIFIERS[i]) > -1 ){
+				retBoo = true;	//trueを返す
+				break;	//ループを抜ける
+			}
+		}
+		
+		return retBoo;	//判定結果を返す。
+	}
+	
 	/* 
 	 * 関数名:callMemberLessonValue
 	 * 概要  :ファイルの拡張子が画像ファイルか、空でないかをチェックする
@@ -2124,7 +2162,7 @@ this.messageDialogDefaultOption = {
 		if (!commonFuncs.checkEmpty(filePath)) {
 			retBoo = false;	//NG判定となる
 		//拡張子チェックを行う。画像の拡張子でなければはじく。
-		} else if(!checkIdentifier(filePath)){
+		} else if(!this.checkIdentifier(filePath)){
 			//有効なファイルを選んでもらうように警告を出す。
 			alert(invalidMessage);
 			retBoo = false;	//NG判定となる
@@ -2505,23 +2543,39 @@ this.messageDialogDefaultOption = {
 	 		 String || int value : 値
 	 		 String name : テキストボックスのname属性
 	 		 String type : テキストボックスのtype属性
+	 		 Object setting : 追加設定
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2016.03.20
 	 */
-	this.tdReplaceToTextbox = function(tableName, targetColumn, name, type) {
+	this.tdReplaceToTextbox = function(tableName, targetColumn, name, type, setting) {
 		//対象となる列を走査する
 		$(targetColumn, $(tableName)).filter(':not(:has("*"))').each(function(){
 			//tdタグ内の値を一時避難する
 			var tmpValue = $(this).text();
 			//対象のtdタグを一旦からにする
 			$(this).empty();
-			//対象のtdタグに様々設定を行ったテキストボックスを突っ込む
-			$(this).append($('<input>').attr({
+			
+			//追加するための要素を生成し、必須の属性を追加する
+			var $addElem = $('<input>').attr({
 				'name' : name
 				,'type' : type
 				,'value' : tmpValue
-			}));
+			});
+			
+			//追加設定がある場合
+			if (setting) {
+				//設定オブジェクトを走査して属性をセットしていく
+				for (key in setting) {
+					//キーを属性名にして値を設定していく
+					$addElem.attr(key, setting[key]);
+				}
+			}
+			
+			//対象のtdタグに様々設定を行ったテキストボックスを突っ込む
+			$(this).append($addElem);
+			
+
 		});
 	}
 	
@@ -2692,10 +2746,23 @@ this.messageDialogDefaultOption = {
 			if (isImgFront) {
 				//prependで画像タグと画像をセットする
 				$button.prepend($(HTML_IMG).attr({src : this.COMMON_BUTTON_TYPE[buttonType].src}));	
-				//後ろに配置する場合
+			//後ろに配置する場合
 			} else {
 				//appendで画像タグと画像をセットする
 				$button.append($(HTML_IMG).attr({src : this.COMMON_BUTTON_TYPE[buttonType].src}));
+			}
+		}
+		
+		//画像、テキスト両方使う場合
+		if (enableImage && enableText) {
+			//画像を前に配置する場合
+			if (isImgFront) {
+				//画像左側配置に適したレイアウト修正のクラスを追加する
+				$button.children('img').addClass('iconLeft');
+			//後ろに配置する場合
+			} else {
+				//画像右側配置に適したレイアウト修正のクラスを追加する
+				$button.children('img').addClass('iconRight');
 			}
 		}
 		
@@ -2806,7 +2873,7 @@ this.messageDialogDefaultOption = {
 	 *       :boolean labelFront : ラベルを前に置くか(後ろに置くか)
 	 *       :String targetTable : 全選択対象となるテーブル 
 	 *       :String toggleClass : 選択状態を示すクラス名 
-	 *       :boolean doAppend : appendするか(falseならafter) 
+	 *       :boolean doAppend   : appendするか(falseならafter) 
 	 * 返却値  :なし
 	 * 作成者:T.Masuda
 	 * 作成日:2016.04.17
@@ -2859,6 +2926,11 @@ this.messageDialogDefaultOption = {
 				//対象から選択状態を解除する
 				$(SELECTOR_TBODY_TR, $(targetTable)).removeClass(toggleClass);
 			}
+		});
+		//ラベルクリックでチェックボックスをクリックするようにする
+		$($addedArea).on(CLICK, '.selectAllRowLabel', function(){
+		    //チェックボックスをクリックしたことにする
+			$('.selectAllRowCheckbox', $($addedArea)).trigger(CLICK);
 		});
 	}	
 
@@ -3042,7 +3114,8 @@ this.messageDialogDefaultOption = {
 			//デフォルトのオプションを使う
 			,this.messageDialogDefaultOption
 			,{'title' : title}				//タイトルを設定する
-			, addOption ? addOption : {}	//追加オプションを設定していたら追記する
+			//追加オプションを設定していたら追記する。デフォルトでは追加先の入力だけしておく
+			, addOption ? addOption : {appendTo : $(CURRENT_WINDOW)}
 		));
 	}
 	
@@ -3120,24 +3193,44 @@ this.messageDialogDefaultOption = {
 			//コンテンツのデータを走査する
 			for (key in oneContent) {
 				//チェック対象のキーであれば
-				if ($.inArray(targetKeys(key)) != -1) {
+				if ($.inArray(key, targetKeys) != -1) {
 					//対象のコンテンツを取り出す
 					var content = oneContent[key];
 					//設定データを取り出す
 					var setData = setKeys[key];
 					//データ設定対象のキーで処理を分岐する
 					switch (setData[1]) {
-					    //styleで背景画像を指定している場合は、画像パスを記入する場所に置換でセットする
-						case 'style' : content[setData[1]] = content[setData[1]].replace('\'\'', '\'' + data[i][setData[0]] + '\'');
+					    //styleで背景画像を指定している場合は、画像パスを記入する場所に置換でセットする。画像がなければnoimage画像に差し替える
+						case 'style' : 
+							content[setData[1]] = content[setData[1]].replace('\'\'', '\'' + (data[i][setData[0]] && this.checkIdentifier(data[i][setData[0]]) ? data[i][setData[0]] : SRC_NO_IMAGE)  + '\'');
 							break;
 						//特に値の設定で特別な処理が必要ない場合は、そのまま追加する
-						default : content[setData[1]] = data[i][setData[0]];
+						default : 
+							content[setData[1]] = data[i][setData[0]];
 							break;
 					}
 				}
 			}
 		} 
 	}	
+
+	/* 
+	 * 関数名:sleepCallFunction
+	 * 概要  :指定時間スリープさせて関数をコールする
+	 * 引数  :String || function func:実行する関数。文字列で渡せばevalを行う
+	 *      :int sleepTime:スリープする時間。ミリ秒
+	 * 返却値 :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.05
+	 */	
+	this.sleepCallFunction = function(func, sleepTime) {
+		//遅延実行を行う
+		var end = setInterval(function() {
+			//関数をコールする
+			typeof func == 'string' ? eval(func) : func();
+			clearInterval(end);	//そのままだと当該関数がずっと実行されるので終わりを明記する
+		}, sleepTime);
+	}
 	
 	//ここまでクラス定義領域
 }
@@ -3183,7 +3276,7 @@ function sendArticleData(){
 		var result = this.dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
 		//データの保存に成功していれば
 		if(parseInt(result.message)){
-			alert(SEND_TO_SERVER_MESSAGE);					//メッセージを出す
+			alert(MESSAGE_SUCCESS_SAVE_ARTICLE);					//メッセージを出す
 			//マイブログページに戻る
 			$(CURRENT_WINDOW)[0].instance.callPage('window/member/page/memberMyBlog.html');
 		//失敗であれば

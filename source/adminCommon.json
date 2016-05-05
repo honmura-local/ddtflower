@@ -103,7 +103,7 @@
 		}
 	},
 	"permitLessonContainCommodity": {
-		"db_setQuery": "CALL p_update_approval_purchase('commodity_sell_key', 'sell_number' ,'pay_cash' ,'use_point' ,'commodity_key', 1, @result);"
+		"db_setQuery": "CALL p_update_approval_purchase('commodity_sell_key', 'sell_number' ,'pay_cash' ,'use_point' ,'commodity_key', '1', 'user_key', @result); SELECT @result AS result;"
 	},
 	"getCommoditySellId": {
 		"db_getQuery": "SELECT id FROM commodity_sell AS commodity_sell_key ORDER BY create_datetime DESC LIMIT 1;"
@@ -549,20 +549,15 @@
 	"permitListSearch": {
 		"class": "permitListSearch cf",
 		"searchInputArea": {
+			"class" : "searchInputArea cf",
 			"fromArea": {
-				"fromLabel": {
-					"class": "fromLabel inlineBlock",
-					"text": "検索 From"
-				},
 				"fromTextbox": {
 					"type": "date",
 					"name": "fromSearach"
-				}
-			},
-			"toArea": {
-				"toLabel": {
-					"class": "toLabel inlineBlock",
-					"text": "検索 To"
+				},
+				"fromToLabel": {
+					"class": "fromToLabel inlineBlock",
+					"text": "〜"
 				},
 				"toTextbox": {
 					"type": "date",

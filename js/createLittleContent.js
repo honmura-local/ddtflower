@@ -614,8 +614,8 @@ function createLittleContents(){
 	 * 作成者　　:T.Masuda
 	 */
 	this.setDoubleClickMyPhotoEdit = function(){
-		$ownerClass = this;	//自分自身の暮らすインスタンスを変数に保存
-		$('.myGalleryTable').on('doubletap','.myPhotoTitle,.myPhotoComment,.myPhotoPublication',function(event){
+		$ownerClass = this;	//自分自身のクラスインスタンスを変数に保存する
+		$('.galleryArea').on('doubletap','.myGalleryTable .myPhotoTitle, .myGalleryTable .myPhotoComment, .myGalleryTable .myPhotoPublication',function(event){
 			//タイトルを編集モードにする。
 			$ownerClass.startEditText(this);
 		});
@@ -678,7 +678,7 @@ function createLittleContents(){
     				thisElem.uploadUserPhoto(data);	//画像をアップロードする
     				//テーブルをクリアする
     				$('.myGalleryTable').empty();
-    				//メルマガのデータを取得して表示する
+    				//ギャラリーのデータをリロードする
 					thisElem.loadTableData('myGalleryTable', 1, 4, 1, MY_GALLERY_SHOW_PHOTO_NUM, '.galleryArea', 'create_tag.createMyGalleryImages');
     			}
     		});
@@ -1233,7 +1233,7 @@ function createLittleContents(){
 	 * 引数  :object sendQueryJsonArray: DBに接続するためにdb_setQueryを子に持つcreate_tagの連想配列
 	 		:object queryReplaceData: クエリの中で置換するデータが入った連想配列
 	 		:string successMessage: クエリが成功した時のメッセージ
-	 * 返却値  :なし
+	 * 返却値  :int :変更できた数 
 	 * 作成者:T.Yamamoto
 	 * 作成日:2015.06.27
 	 * 変更者:T.Masuda
@@ -1283,7 +1283,9 @@ function createLittleContents(){
 				if(successMessage != EMPTY_STRING) {
 					//更新した内容が1件以上の時更新成功メッセージを出す
 					if(retInt >= 1) {
-						alert(successMessage);	//更新成功のメッセージを出す
+						if (successMessage) {
+							alert(successMessage);	//更新成功のメッセージを出す
+						}
 					//更新失敗であれば
 					} else {
 						alert(STR_TRANSPORT_FAILD_MESSAGE);	//更新失敗のメッセージを出す
@@ -1295,7 +1297,7 @@ function createLittleContents(){
 				alert(MESSAGE_FAILED_CONNECT);
 			}
 		});
-		
+
 		return retInt;	//整数値を返す
 	}
 	
@@ -2329,7 +2331,7 @@ function createLittleContents(){
 					//全件失敗であれば
 					} else {
 						//更新ができなかった旨を伝える
-						alert('写真のデータの更新に失敗しました。時間をおいてお試しください。');
+						alert(MESSAGE_FAILED_TO_UPDATE_PHOTO);
 					}
 				}
 			}
@@ -2556,79 +2558,6 @@ function createLittleContents(){
 
 
 	/* 
-	 * 関数名:checkLogin()
-	 * 概要  :ログイン状態をチェックする。
-	 * 引数  :なし
-	 * 返却値  :なし
-	 * 作成者:T.M
-	 * 作成日:2015.02.18
-	 * 修正者:T.M
-	 * 修正日:2015.03.10
-	 * 変更　:ユーザー名が複数表示されてしまうバグへ対応しました。
-	 */
-	//※現状ではこの関数は必ずfalseを返します。
-	this.checkLogin = function(){
-		// ログインしているか否かの結果を返すための変数を用意する。
-		var result = false;
-		// クッキーを連想配列で取得する。
-		var cookies = GetCookies();
-		//ログイン中であれば	※空のcookieに対しては、IEは文字列"undefined"を返し、それ以外は空文字を返す。
-		if('user' in cookies && (cookies['user'] != "" && cookies['user'] != "undefined")){
-			// ログインボタンをログアウトボタンに差し替える。
-			$('.login').removeClass('login')
-						.addClass('logout')
-						.attr('src', 'image/icon(logout22-50).png');
-			//ログアウトボタンの下にユーザ名を表示する。
-			$('.logout')
-						// spanタグを追加する。
-						.after($('<span></span>')
-								// ユーザ名のクラスを設定する。
-								.addClass('userName')
-								//cookieからユーザ名を取り出し表示する。
-								.text(cookies['userName'] + '様')
-								)
-						// spanタグを追加する。
-						.after($('<span></span>')
-								// ユーザ名のクラスを設定する。
-								.addClass('welcome')
-								//cookieからユーザ名を取り出し表示する。
-								.text('ようこそ')
-								)
-						;
-			// ログアウトのイベントを定義する。
-			$(document).on('click', '.logout', function(){
-				// ユーザのクッキーを削除してログアウトする。
-				deleteCookie('user');
-				deleteCookie('userName');
-				//画面を更新する。
-	   		 	location.reload();
-			});
-			
-			// ログインしている状態であるという結果を変数に格納する。
-			result = true;
-		}
-		
-		// ログイン状態を返す。
-		return result;
-	}
-
-	/* 
-	 * 関数名:function getUserId()
-	 * 概要  :cookieからユーザIDを取得して返す。
-	 * 引数  :なし
-	 * 返却値  :String:ユーザIDの文字列。
-	 * 作成者:T.Masuda
-	 * 作成日:2015.04.16
-	 */
-//createTagクラスで定義してあるものを使った方が適切であるため無効にしました
-//	this.getUserId = function(){
-//		// クッキーを連想配列で取得する。
-//		var cookies = GetCookies();
-//		//ユーザIDを取得して返す。なければ空文字を返す。
-//		return 'userId' in cookies && cookies.userId != ''? cookies['userId']: '';
-//	}
-
-	/* 
 	 * 関数名:function checkLoginState()
 	 * 概要  :ログイン状態をチェックする。
 	 * 引数  :なし
@@ -2644,22 +2573,19 @@ function createLittleContents(){
 	 */
 	this.checkLoginState = function(){
 		// ログイン状態をチェックする。
-		//※現状ではこのcheckLogin関数は必ずfalseを返します。
-//		if(!(checkLogin())){
 		//イベントコールバック内でクラスインスタンスを参照するため、変数にクラスインスタンスを格納しておく
-			var thisElem = this;
-			//ログインボタンのイベントを設定する。
-			$(CLASS_LOGIN).on(CLICK, function(){
-				//遷移ページ振り分け処理(暫定です。理由は、画面遷移の条件がIDの番号になっているからです。ユーザ権限を見て転送URLを変えるべきです。20150801)
-				//グローバルなcreate_tagTagクラスインスタンスに会員ページログインのフラグが立っていたら(グローバルなcreateTagクラスインスタンスは廃止予定です)
-				var loginUrl = thisElem.json.accountHeader !== void(0)
-								&& thisElem.json.accountHeader.authority.text == ADMIN_AUTHORITY? 'window/admin/page/adminTop.html' :'window/member/page/memberTop.html';
-				// 会員ページ、または管理者ページへリンクする。
-				$(CURRENT_WINDOW)[0].instance.callPage(loginUrl, thisElem.json.accountHeader !== void(0)
-						//ログイン中でなければ画面遷移の履歴を作らない
-						&& commonFuncs.checkEmpty(thisElem.json.accountHeader.authority.text) ? null : 1 );
-			});
-//		}
+		var thisElem = this;
+		//ログインボタンのイベントを設定する。
+		$(CLASS_LOGIN).on(CLICK, function(){
+			var cookie = GetCookies();	//cookieを取得する
+			//ユーザの権限が管理者なら
+			var loginUrl = cookie.authority
+							&& cookie.authority == ADMIN_AUTHORITY? 'window/admin/page/adminTop.html' :'window/member/page/memberTop.html';
+			// 会員ページ、または管理者ページへリンクする。
+			$(CURRENT_WINDOW)[0].instance.callPage(loginUrl, thisElem.json.accountHeader !== void(0)
+					//ログイン中でなければ画面遷移の履歴を作らない
+					&& commonFuncs.checkEmpty(thisElem.json.accountHeader.authority.text) ? null : 1 );
+		});
 	}
 	
 
@@ -3122,23 +3048,17 @@ calendarOptions['member'] = {		//カレンダーを作る。
 			var thisElem = this;
 			//一旦日付のハイライトが消えるので付け直す
 			setTimeout(function(){thisElem.instance.changeExistLessonDate();}, 100);
+			this.instance.monthDates = [];	//monthDatesを初期化する
 		},
 		//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 		beforeShowDay:function(date){
-			
-			//その月の1日以降の日付であれば。その月以外の日付も入ってくることがあるのでその場合は弾く
-			if((this.instance.monthDates.length > 0)
-					|| comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
-					if(this.instance.monthDates.length == 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) >= this.instance.monthDates[this.instance.monthDates.length - 1].substr(8, 2)) {
-						//日付を文字列にして月の日付一覧に追加していく
-						this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
-					}
-			}
+			//その月の日付を配列にセットしていく
+			this.instance.setMonthDates(date);
 			//日付を無効にするということはないのでtrueを入れた配列を返す
 			return [true];
 		},
 		onChangeMonthYear : function(year, month, inst){
-			this.instance.monthDates = [];		//月の日付を初期化する
+			this.instance.monthDates = [];
 			var thisElem = this;		//自身の要素を変数に保管する
 			//beforeShowDayが終わった後
 			setTimeout(function(){
@@ -3181,12 +3101,8 @@ calendarOptions['admin'] = {		//カレンダーを作る。
 	},
 	//日付有効の設定を行う。配列を返し、添字が0の要素がtrueであれば日付が有効、falseなら無効になる
 	beforeShowDay:function(date){
-		
-		//その月の1日以降の日付であれば
-		if(this.instance.monthDates.length > 0 || comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
-			//日付を文字列にして月の日付一覧に追加していく
-			this.instance.monthDates.push(comDateFormat(date, DATEFORMAT_YYYY_MM_DD));
-		}
+		//その月の日付を配列にセットしていく
+		this.instance.setMonthDates(date);
 		
 		//日付を無効にするということはないのでtrueを入れた配列を返す
 		return [true];
@@ -3471,7 +3387,7 @@ function calendar(selector) {
 			this.create_tag.json.checkClassworkStatus.fromDate.value = this.monthDates[0];
 			this.create_tag.json.checkClassworkStatus.toDate.value = this.monthDates[this.monthDates.length - 1];
 			//ユーザIDをセットする
-			this.create_tag.json.checkClassworkStatus.user_key.value = this.userid;
+			this.create_tag.json.checkClassworkStatus.user_key.value = this.userId;
 			this.create_tag.json.checkClassworkStatus.tableData = [];
 			
 			//ログインユーザの授業を取得する
@@ -3499,7 +3415,7 @@ function calendar(selector) {
 						//授業詳細をチェックする
 						for (var j = 0; j < lessonDetail.length; j++) {
 							//日付が一致したら
-							if (lessonDetail[j] == dateStrAll) {
+							if (lessonDetail[j].lesson_date == dateStrAll) {
 								//予約状況の値を取り出す
 								var recUserWorkStatus = lessonDetail[j].user_work_status;
 								//取得した予約状況の値が前より小さいなら
@@ -3518,6 +3434,37 @@ function calendar(selector) {
 			}
 		}
 	}
+	
+	/*
+	 * 関数名:setMonthDates
+	 * 引数  :Date date :日付型
+	 * 戻り値:なし
+	 * 概要  :日付を月の配列にセットしていく。1日目からチェックしていき、別の月の日付が後から入ってきたら弾く
+	 * 作成日:2016.04.19
+	 * 作成者:T.Masuda
+	 */
+	this.setMonthDates = function(date) {
+		
+		//日付を文字列に変換する
+		var dateStr = comDateFormat(date, DATEFORMAT_YYYY_MM_DD);
+		//日付全体から日にち部分を切り出す
+		var dayStr = dateStr.substr(8, 2);
+		
+		//日付が1日なら
+		//	if (dayStr == '01' && $.inArray(this.instance.monthDates, dateStr) == -1) {
+		//this.monthDates = [];	//monthDatesを初期化する
+		//	}
+		
+		//その月の1日以降の日付であれば。その月以外の日付も入ってくることがあるのでその場合は弾く
+		if((this.monthDates.length > 0)
+				|| comDateFormat(date, DATEFORMAT_YYYY_MM_DD).substr(8, 2) == '01') {
+			if(this.monthDates.length == 0 || dayStr >= this.monthDates[this.monthDates.length - 1].substr(8, 2)) {
+				//日付を文字列にして月の日付一覧に追加していく
+				this.monthDates.push(dateStr);
+			}
+		}
+	}
+	
 	
 }
 

@@ -26,12 +26,12 @@
 			// 共通パーツのDOMを取得する
 			create_tag.getDomFile('template/common.html');
 
-			//受講承認のボタンを追加する
-			commonFuncs.putCommonButton('#doLecturePermit', 'doLecturePermitButton', 'permit', true, false, true, {}, false);
-			//受講承認待ちデータの削除のボタンを追加する
-			commonFuncs.putCommonButton('#doLecturePermit', 'deletePermitRecordButton', 'delete', true, false, true, {}, false);
 			//ユーザ追加のボタンを追加する
-			commonFuncs.putCommonButton('#doLecturePermit', 'addUserRecordButton', 'add', true, false, true, {}, false);
+			commonFuncs.putCommonButton('#doLecturePermit', 'addUserRecordButton fRight', 'add', true, true, true, {}, false);
+			//受講承認待ちデータの削除のボタンを追加する
+			commonFuncs.putCommonButton('#doLecturePermit', 'deletePermitRecordButton fRight', 'delete', true, true, true, {}, false);
+			//受講承認のボタンを追加する
+			commonFuncs.putCommonButton('#doLecturePermit', 'doLecturePermitButton fRight', 'permit', true, true, true, {}, false);
 			
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
@@ -61,8 +61,6 @@
 			executeDeleteRecord($('#doLecturePermit .deletePermitRecordButton'), '指定したレコードを削除しますか?', '.doLecturePermitInfoTable .selectRecord', "if($(CURRENT_DIALOG_SELECTOR)[0].instance.getPushedButtonState() == YES) {deleteRecords('.doLecturePermitInfoTable', '.selectRecord', null, null, $(DO_LECTUREPERMIT_TAB)[0].create_tag.json.doLecturePermitInfoTable.tableData, '.No');}");
 
 			var $activePanel = $('#permitTab .tabPanel.active', $currentContent);	//現タブパネルを取得する
-			// ボタンの見た目をjqueryuiのものにしてデザインを整える
-			$('button, .searchButton, input[type="button"]', $activePanel).button();
 
 			//使用ポイントのテキストボックスの設定を書く
 			var getPointSettings = {

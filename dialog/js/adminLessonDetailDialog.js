@@ -84,6 +84,8 @@ function adminLessonDetailDialog(dialog){
 	this.customizeJson = function(){
 		//親ダイアログから受け取ったデータを取得する
 		var data = this.dialogClass.getArgumentDataObject();
+		//日付を日付欄にセットする
+		this[VAR_CREATE_TAG].json.lessonDate.text = data.dateJapanese;
 		//受講する授業のテーマを入れる
 		this[VAR_CREATE_TAG].json.themeArea.themeDetailText.text = data[COLUMN_NAME_LESSON_NAME];
 		//受講する授業の時間割を入れる
@@ -102,6 +104,7 @@ function adminLessonDetailDialog(dialog){
 	this.dispContentsMain = function(dialogClass){
 		//授業データ入力領域を作る
 		this[VAR_CREATE_TAG].outputTag(LESSON_DATA, LESSON_DATA, this.dialog);
+		this[VAR_CREATE_TAG].outputTag('lessonDate', 'lessonDate', DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業のテーマを設定する領域を出力する
 		this[VAR_CREATE_TAG].outputTag(CLASS_LESSON_THEME, CLASS_LESSON_THEME, DOT + LESSON_DATA + SELECTOR_LAST);
 		//授業の時間割を設定する領域を出力する

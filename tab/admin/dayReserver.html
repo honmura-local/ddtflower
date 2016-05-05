@@ -30,8 +30,6 @@
 			create_tag.outputTag('dateBelt', 'dateBelt', '#dayReserver');
 			//日付選択パーツのセット
 			create_tag.outputTag('dateSelect', 'dateSelect', '#dayReserver');
-			//日付ページングを実装する
-			nowDatePaging('dateBelt', create_tag);
 			//日付送りの矢印ボタンを作る
 			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'oneDayBefore', 'arrow_left_single', true, false, true, {}, true);
 			commonFuncs.putCommonButton('#dayReserver .dateBelt', 'twoDayBefore', 'arrow_left_double', true, false, true, {}, true);
@@ -53,6 +51,8 @@
 				commonFuncs.dbDataTableValueReplace(EACH_DAY_RESERVED_INFO_TABLE, EACH_DAY_RESERVED_INFO_TABLE_REPLACE_FUNC, true, create_tag, 10);
 			}
 			
+			//日付ページングを実装する
+			nowDatePaging('dateBelt', create_tag);
 			//会員データをクリックして会員画面にログインできるようにする
 			loginMemberPageFromAdminPage('#dayReserver', SELECTOR_TBODY_TR, '.user_key');
 

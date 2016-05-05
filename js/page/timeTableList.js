@@ -22,31 +22,38 @@ function timetableList() {
 	 */
 	this.replaceTable = function(){
 		//時間帯列の作成を行う
-		commonFuncs.addTimeTableColumn('.start_time', '.end_time', 'timetableListTable', 4, '.id', true);
+		commonFuncs.addTimeTableColumn('.start_time', '.end_time', '.timetableListTable', 5, '.id', true);
 		//最小人数列の置換を行う
-		commonFuncs.tdReplaceToTextbox('timetableListTable', 'min_students', 'min_students', 'number');
+		commonFuncs.tdReplaceToTextbox('.timetableListTable tbody', '.min_num', 'min_num', 'number', {'min' : '0', 'max' : '100'});
 		//最大人数列の置換を行う
-		commonFuncs.tdReplaceToTextbox('timetableListTable', 'max_students', 'max_students', 'number');
+		commonFuncs.tdReplaceToTextbox('.timetableListTable tbody', '.max_num', 'max_num', 'number', {'min' : '0', 'max' : '100'});
 	}
 	
-	/* 関数名:callbackEdit
-	 * 概要　:編集ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
+	/* 関数名:callbackUpdate
+	 * 概要　:更新ボタンのコールバック関数(必ずオーバーライドで内容を定義されたし)
 	 * 引数　:なし
 	 * 返却値:なし
-	 * 作成日　:2016.0409
+	 * 作成日　:2016.0505
 	 * 作成者　:T.Masuda
 	 */
-	this.callbackEdit = function(){
+	this.callbackUpdate = function(){
 		//選択されている行を取得する
-		var $selectedRecord = $(SELECTOR_TBODY_TR, $(this.dialog)).filter('.selectRecord');
+		var $selectedRecord = $(STR_TR, $('.timetableListTable tbody')).filter('.selectRecord');
 		//1行以上選択されていたら
 		if ($selectedRecord.length > 0){
-			//選択されている行を取得する
-			var $selectedRecord = $(SELECTOR_TBODY_TR, $(TIME_TABLE_LIST_TAB)).filter('.selectRecord');
 			//レコードの更新を行う
 			this.updateRecords($selectedRecord);
+
+			//テーブルをリロードのため、タブのcreateTagを取得する
+			var create_tag = $(TIME_TABLE_LIST_TAB)[0].create_tag;
+			//テーブルデータをリセットする
+			create_tag.json[KEY_TIME_TABLE_LIST_TABLE].tableData = [];
+			//テーブルリロードのためデータを再取得する
+			create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json[KEY_TIME_TABLE_LIST_TABLE], KEY_TIME_TABLE_LIST_TABLE);
+			$(SELECTOR_TIME_TABLE_LIST_TABLE).remove();	//既存のテーブルを消す
 			//テーブルをリロードする
-			$(TIME_TABLE_LIST_TAB)[0].loadTableData('timetableListTable', 1, 1, 1, 1000, '.timetableListOuter');
+			create_tag.outputTagTable(KEY_TIME_TABLE_LIST_TABLE, LESSON_TABLE, $(TIME_TABLE_LIST_TAB + SPACE + '.timeTableListOuter'));
+			
 			//リロードしたテーブルの置換を行う
 			this.replaceTable();
 		//選択なしであれば
@@ -72,6 +79,8 @@ function timetableList() {
 		var resultMessage = EMPTY_STRING;
 		//each内でクラスインスタンスを使うため、変数に入れておく
 		var thisElem = this;
+		//処理予定数を取得する
+		var recordsLength = records.length;
 		
 		//UPDATE失敗時に例外処理を行う
 		try {
@@ -84,14 +93,17 @@ function timetableList() {
 				if(!parseInt(thisElem.sendQuery(URL_SAVE_JSON_DATA_PHP, sendData).message)) {
 					throw new Error(thisElem.makeErrorMessage(records, i));
 				}
+				
+				//全レコードの処理を終えたら
+				if (i == recordsLength -1) {
+					//処理終了を伝えるダイアログを出す
+					commonFuncs.showMessageDialog('授業時間帯更新完了', '授業時間帯の更新が完了しました。');
+				}
 			});
 		} catch (e) {
 			//エラーメッセージを通知する
 			alert(e);
 		}
-		
-		//処理終了を伝えるダイアログを出す
-		commonFuncs.showMessageDialog('授業時間帯更新完了', '授業時間帯の更新が完了しました。');
 	}
 
 	/* 関数名:makeErrorMessage
@@ -103,8 +115,6 @@ function timetableList() {
 	 * 作成者　:T.Masuda
 	 */
 	this.makeErrorMessage = function(records, successCount){
-		//エラーメッセージを作成していく
-		makeErrorMessage(records, successCount)
 		//更新成功した行を通知するため、更新した行の時間を改行しながら追記していくための変数を用意
 		var successUpdateRecordsTime = EMPTY_STRING;
 		//更新に成功した行を走査する
@@ -117,7 +127,7 @@ function timetableList() {
 		successUpdateRecordsTime = successUpdateRecordsTime != EMPTY_STRING ? '以下の時間帯の更新が完了しています。' + successUpdateRecordsTime : successUpdateRecordsTime; 
 		
 		//失敗した行の時間帯の文字列を取り出す。成功数が更新対象行のindexと一致するので流用する
-		var errorTargetName = $(records[successCount]).children('.startEndTime').text();
+		var errorTargetName = $(records[successCount]).children('.time_table').text();
 		//エラーを投げる
 		return errorTargetName + 'の更新に失敗しました。処理を中断いたします。\n' + successUpdateRecordsTime;
 	}
@@ -132,9 +142,10 @@ function timetableList() {
 	 */
 	this.setSendData = function(sendData, targetRecord){
 		//ID、最小人数、最大人数をレコードから取得してそれぞれ送信用データにセットしていく
-		sendData.value.id = $(targetRecord).children('.id').text();
-		sendData.value.min_students = $(targetRecord).children('.min_students').text();
-		sendData.value.max_students = $(targetRecord).children('.max_students').text();
+		sendData.id = $(targetRecord).children('.id').text();
+		
+		sendData.min_num = $('[name="min_num"]', targetRecord).val();
+		sendData.max_num = $('[name="max_num"]',targetRecord).val();
 	}
 
 }

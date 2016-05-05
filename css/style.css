@@ -139,16 +139,6 @@ input, select {
 /* ここまでclearfix */
 
 /* 各タグの基本設定 */
-/*
- * セレクタ:span,label,h1,h2,h3,h4,h5
- * 概要   :見出しタグとラベルのタグ
- * 作成者 :T.Masuda
- * 作成日 :2015.04.18
- */
-span,label,h1,h2,h3,h4,h5,th{
-    font-weight: normal;   	 /* 個別に指定しなければフォントを太字にしない。 */
-	vertical-align: middle;	/* 高さを中心に合わせる */
-}
 
 /*
  * セレクタ:*
@@ -158,6 +148,17 @@ span,label,h1,h2,h3,h4,h5,th{
  */
 * {
 	outline: none;	/* フォーカス時にアウトラインを出さない */
+}
+
+/*
+ * セレクタ:span,label,h1,h2,h3,h4,h5
+ * 概要   :見出しタグとラベルのタグ
+ * 作成者 :T.Masuda
+ * 作成日 :2015.04.18
+ */
+span,label,h1,h2,h3,h4,h5,th{
+    font-weight: normal;   	 /* 個別に指定しなければフォントを太字にしない。 */
+	vertical-align: middle;	/* 高さを中心に合わせる */
 }
 
 /*
@@ -171,6 +172,34 @@ input,textarea,select {
 }
 
 /*
+ * セレクタ:input[type="text"]
+ *        ,input[type="date"]
+ *        ,input[type="number"]
+ *        ,input[type="password"]
+ *        ,input[type="search"]
+ *        ,input[type="tel"]
+ *        ,input[type="email"]
+ *        ,input[type="url"]
+ *        ,input[type="range"]
+ *        ,input[type="color"]
+ * 概要   :テキストボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+input[type="text"]
+,input[type="date"]
+,input[type="number"]
+,input[type="password"]
+,input[type="search"]
+,input[type="tel"]
+,input[type="email"]
+,input[type="url"]
+,input[type="range"]
+,input[type="color"] {
+	height : 30px;	/* デフォルトの高さを指定する。ボタンのサイズと合わせておくことが望ましい */
+}
+
+/*
  * セレクタ:input[type="date"]
  * 概要   :日付テキストボックス
  * 作成者 :T.Masuda
@@ -178,6 +207,26 @@ input,textarea,select {
  */
 input[type="date"] {
     width: 120px;	/* 最低限の幅を取る */
+}
+
+/*
+ * セレクタ:input[type="number"]
+ * 概要   :数値テキストボックス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.05
+ */
+input[type="number"] {
+	text-align : right;	/* 数値は右寄せにする */
+}
+
+/* 
+ * セレクタ:.fixedTable
+ * 概要   :テーブルで固定幅を利用するためのCSSを追加するクラス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.05
+ */
+.fixedTable {
+	table-layout : fixed;	/* 固定幅を利用できるようにする */
 }
 
 /* 
@@ -222,12 +271,25 @@ input[type="date"] {
 
 /* 
  * セレクタ:.window
- * 概要   :ウィンドウのクラス
+ * 概要   :個々のウィンドウ
  * 作成者 :T.Masuda
- * 作成日 :2016.05.02
+ * 作成日 :2015.09.21
  */
 .window {
-	display : none;	/* 初期状態では非表示にしておき、全部のロードが終わったときに表示する */
+	position: absolute;	/* 絶対位置を指定する */
+	top:0px;			/* 画面上上から0pxの位置に固定する */
+	display:none; 		/* 初期状態では非表示にしておき、全部のロードが終わったときに表示する */
+}
+
+
+/* 
+ * セレクタ:.ui-button.ui-widget.ui-corner-all
+ * 概要   :jquery uiのボタン
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+.ui-button.ui-widget.ui-corner-all {
+    font-size: 14px;	/* デフォルトのサイズが大きいので小さく + デフォルト値設定 */
 }
 
 /* 
@@ -242,7 +304,7 @@ input[type="date"] {
     border-radius: 5px;		/* 角丸にする */
     box-sizing: border-box;	/* 罫線を幅計算に含める */
     height : 30px;			/* デフォルトの高さを指定する。必要に応じて別セレクタで指定する */
-    margin : 2.5px;			/* デフォルトのマージンを指定する。必要に応じて別セレクタで指定する */
+    margin : 0 2.5px;		/* デフォルトのマージンを指定する。必要に応じて別セレクタで指定する */
 }
 
 /* 
@@ -267,15 +329,46 @@ input[type="date"] {
     top : 2px;				/* 少し下にずらして押した感を出す */
 }
 
-/* 
+/*
  * セレクタ:.commonButton > img
  * 概要   :ボタン作成関数で作ったボタンの画像部分
  * 作成者 :T.Masuda
  * 作成日 :2016.05.01
  */
 .commonButton > img {
-    height: 80%;				/* ボタンの高さを大きさの基準にする */
-    vertical-align : middle;	/* アイコン、テキストの高さを中心に揃える */
+    height: 84%;				/* ボタンの高さを大きさの基準にする */
+    vertical-align : sub;		/* アイコン、テキストの高さを中心に揃える */
+}
+
+/* 
+ * セレクタ:.commonButton > img.iconRight
+ * 概要   :ボタン作成関数で作ったボタンの画像部分。画像が右よりのとき
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton > img.iconRight {
+	margin-left : 0.1em;	/* 左に間を空ける */
+}
+
+/* 
+ * セレクタ:.commonButton > img.iconLeft
+ * 概要   :ボタン作成関数で作ったボタンの画像部分。画像が左よりのとき
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.01
+ */
+.commonButton > img.iconLeft {
+	margin-right : 0.1em;	/* 右に間を空ける */
+}
+
+/* 
+ * セレクタ:.messageDialog
+ * 概要   :メッセージダイアログ。jQuery UIのCSSが適用されるので独自に設定し直す
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.05
+ */
+.messageDialog {
+    white-space: pre-wrap;	/* 改行を有効にする */
+    font-size: 16px;		/* jQuery UIでデフォルトの書式が設定されているので設定し直す */
 }
 
 /* 
@@ -296,7 +389,37 @@ input[type="date"] {
  * 作成日 :2016.04.19
  */
 .dateHasClass a{
-	background : lawngreen!important;	/* わかりやすい何かある色に変える */
+	background : lawngreen!important;	/* 明るい緑にする */
+}
+
+/* 
+ * セレクタ:.dateHasLesson a
+ * 概要   :カレンダー内の予約した授業のある日付
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+.dateHasLesson a{
+	background : LightCyan!important;	/* 薄い水色にする */
+}
+
+/* 
+ * セレクタ:.dateCancelLesson a
+ * 概要   :カレンダー内のキャンセルした授業のある日付
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+.dateCancelLesson a{
+	background : Yellow!important;	/* 黄色くする */
+}
+
+/* 
+ * セレクタ:.dateStopLesson a
+ * 概要   :カレンダー内の中止した授業のある日付
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.03
+ */
+.dateStopLesson a{
+	background : OrangeRed!important;	/* 紅くする */
 }
 
 /* 
@@ -335,7 +458,6 @@ button.ui-button-text-only span.ui-button-text {
 #container{
     width: 100%;            /* 横幅を画面一杯に広げる */
     background: inherit;    /* bodyの背景色を継承する。 */
-    overflow: hidden;
 }
 
 /* ヘッダー領域。 */
@@ -684,7 +806,7 @@ button.ui-button-text-only span.ui-button-text {
  */
 .main{
     width		: 800px;      		/* コンテンツ幅を800pxにする。 */
-    margin		: 5px auto 0 auto;  /* 横位置を中心に寄せる。 */
+    margin		: 0 auto 0 auto;  /* 横位置を中心に寄せる。 */
     background	: inherit;    		/* containerの背景色を継承する。 */
     position	: relative; 		/* 相対位置の要素にする。 */
     z-index		: 0;				/* 重なり順の優先順位を低くする。 */
@@ -1217,18 +1339,6 @@ form[target^="jquery_upload"]{
 .blogLeftContent .calendar{
 	width: 95%;		/* ブログページ用の幅を設定する */
 	float: none;
-}
-
-/* 
- * セレクタ:.window
- * 概要   :個々のウィンドウ
- * 作成者 :T.Masuda
- * 作成日 :2015.09.21
- */
-.window{
-	position: absolute;
-	top:0px;
-	display:none;
 }
 
 /* 

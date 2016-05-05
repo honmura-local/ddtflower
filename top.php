@@ -23,8 +23,8 @@
 
 			//ログイン状態をチェックした上でDBにアクセスする
 			create_tag.doGuestLoginProcedure(function() {
-				create_tag.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicGallery, 'topicGallery');
-				create_tag.getJsonFile(URL_SAVE_JSON_DATA_PHP, create_tag.json.topicBlog, 'topicBlog');
+				create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json.getTopicGallery, 'getTopicGallery');
+				create_tag.getJsonFile(URL_GET_JSON_ARRAY_PHP, create_tag.json.getTopicBlog, 'getTopicBlog');
 			});
 
 			//ギャラリー、ブログの新着記事情報をセットする
