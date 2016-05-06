@@ -5,6 +5,7 @@
         }
     },
     "memberInfo":{
+        "class" : "memberInfo cf",
         "userInf":{
             "class":"userInf outsideArea cf"
         }

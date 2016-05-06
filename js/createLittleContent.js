@@ -2429,8 +2429,8 @@ function createLittleContents(){
 			//編集ボタン用の列を走査する
 
 			//削除ボタン、編集ボタンを作る
-			var $deleteButton = commonFuncs.makeCommonButton('deleteButton', 'delete', true, false, true, {"type": "submit","data-role": "2"});
-			var $editButton = commonFuncs.makeCommonButton('editButton', 'edit', true, false, true, {"type": "submit","data-role": "1"});
+			var $deleteButton = commonFuncs.makeCommonButton('deleteButton', 'delete', true, true, true, {"type": "submit","data-role": "2"});
+			var $editButton = commonFuncs.makeCommonButton('editButton', 'edit', true, true, true, {"type": "submit","data-role": "1"});
 			
 			//作成したボタンを各行に追加する
 			$('.buttons', $row).append($deleteButton).append($editButton);
@@ -3836,14 +3836,17 @@ var articleCreateHandler = $.extend({}, true, showAlert, {
 	//成功時のコールバック
 	submitHandler : function(form, event){
 	
-		//ダイアログのインプットデータのオブジェクトを作成する。close時のコールバック関数、タイトル、ダイアログのメッセージを引数で渡す
-		var argumentObj = commonFuncs.createBasicComfirmDialogObject(sendArticleData, SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
-		//記事編集ページのcreateTagをダイアログに渡す
-		argumentObj.data.create_tag = create_tag;
-		//確認ダイアログクラスインスタンスを生成する
-		var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH, argumentObj);
-		//openイベントのコールバック関数をセットする
-		confirmDialog.run();	//ダイアログを開く
+		//記事を作成する、または更新する
+		sendArticleData(articleNumber, $('.blogEdit')[0].create_tag);
+		
+//		//ダイアログのインプットデータのオブジェクトを作成する。close時のコールバック関数、タイトル、ダイアログのメッセージを引数で渡す
+//		var argumentObj = commonFuncs.createBasicComfirmDialogObject(sendArticleData(), SAVE_ARTICLE_BEFORE_CONFIRM_TITLE, SAVE_ARTICLE_BEFORE_CONFIRM_MESSAGE);
+//		//記事編集ページのcreateTagをダイアログに渡す
+//		argumentObj.data.create_tag = create_tag;
+//		//確認ダイアログクラスインスタンスを生成する
+//		var confirmDialog = new dialogEx(CONFIRM_DIALOG_PATH, argumentObj);
+//		//openイベントのコールバック関数をセットする
+//		confirmDialog.run();	//ダイアログを開く
 		
 		return false;	//元々のsubmitイベントコールバックをキャンセルする
 	}

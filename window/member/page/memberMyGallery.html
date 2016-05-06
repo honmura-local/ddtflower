@@ -53,9 +53,9 @@
 					// ギャラリー編集用のボタンを作る。
 					create_tag.outputTag('myGalleryEditButtons', 'myGalleryEditButtons', $currentContent);
 					//新規、更新、削除ボタンを作成する
-					commonFuncs.putCommonButton('.myGalleryEditButtons', 'createButton', 'createNew', true, false, true, {}, false);
-					commonFuncs.putCommonButton('.myGalleryEditButtons', 'galleryUpdateButton', 'update', true, false, true, {}, false);
-					commonFuncs.putCommonButton('.myGalleryEditButtons', 'deleteButton', 'delete', true, false, true, {}, false);
+					commonFuncs.putCommonButton('.myGalleryEditButtons', 'createButton', 'createNew', true, true, true, {}, false);
+					commonFuncs.putCommonButton('.myGalleryEditButtons', 'galleryUpdateButton', 'update', true, true, true, {}, false);
+					commonFuncs.putCommonButton('.myGalleryEditButtons', 'deleteButton', 'delete', true, true, true, {}, false);
 
 					//ギャラリーのちょっとした説明を付け足す。
 					create_tag.outputTag('myGalleryNotice', 'myGalleryNotice', '.myGalleryEditButtons');
@@ -76,7 +76,10 @@
 					
 					//ユーザ自身のブログ記事を取得して表示する
 					create_tag.loadTableData('myGalleryTable', 1, 4, 1, MYGALLERY_SHOW_NUMBER, '.galleryArea', 'create_tag.createMyGalleryImages');
-	
+					
+					//記事がなかった場合、メッセージを出す
+					commonFuncs.checkNoArticle('.myGalleryTable', MESSAGE_NO_ARTICLE);
+					
 					//ギャラリーの画像を拡大できるようにする。
 					create_tag.useZoomImage('myPhotoImage');
 					//新規ボタンをクリックしたらアップロードするボタンを押すイベントを登録する。

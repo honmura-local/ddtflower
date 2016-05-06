@@ -160,6 +160,26 @@
 	background: transparent;	/* ボタンの色を透過色にする */
 }
 
+/* 
+ * セレクタ :.dateBelt button:hover
+ * 概要   :日ごと予約者一覧タブの日付選択のボタンマウスオーバー時
+ * 作成者 :T.Masuda
+ * 作成日 :2015.05.05
+ */
+.dateBelt button:hover {
+	background: transparent;	/* ボタンの色を透過色にする */
+}
+
+/* 
+ * セレクタ :.dateBelt button:active
+ * 概要   :日ごと予約者一覧タブの日付選択のボタンアクティブ時
+ * 作成者 :T.Masuda
+ * 作成日 :2015.05.05
+ */
+.dateBelt button:active {
+	background: transparent;	/* ボタンの色を透過色にする */
+}
+
 /* タイトルの日付領域終わり */
 
 /* 日付選択領域 */
@@ -349,6 +369,26 @@
  */
 .records {
 	margin: 0 1em;			/* 左右に1文字分の余白をとる */
+}
+
+/* 
+ * セレクタ:#userList .searchUserList
+ * 概要   :ユーザ一覧 検索領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.06
+ */
+#userList .searchUserList {
+    padding-left: 5px;	/* 左に適切な空白を付ける */
+}
+
+/* 
+ * セレクタ:#userList .numberingOuter
+ * 概要   :ユーザ一覧ナンバリング領域
+ * 作成者 :T.Masuda
+ * 作成日 :2016.04.07
+ */
+#userList .numberingOuter {
+    margin-bottom: 5px;	/* 下に来るボタンと間隔を取る */
 }
 
 /* 管理者　カレンダー領域 */
@@ -637,12 +677,12 @@ ul.mailSendContent {
 }
 
 /* 
- * セレクタ :.selectUser
- * 概要   :選択ボタン
+ * セレクタ :.cancelUser
+ * 概要   :ユーザキャンセルボタン
  * 作成者 :T.Masuda
  * 作成日 :2016.05.05
  */
-.selectUser {
+.cancelUser {
     margin-right: 55px;	/* TOPボタンと被るので右marginを設定する */
 }
 /* 受講者一覧の検索領域 */
@@ -722,6 +762,17 @@ ul.mailSendContent {
 }
 
 /* 
+ * セレクタ :.mailMagaSearchArea *
+ * 概要   :検索領域の全要素
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.05
+ */
+.mailMagaSearchArea * {
+    vertical-align: baseline;	/* 高さを中心に揃える */
+}
+
+
+/* 
  * セレクタ :.mailMagaContentSearchTextbox
  * 概要   :検索領域のテキストボックス領域
  * 作成者 :T.Yamamoto
@@ -732,12 +783,12 @@ ul.mailSendContent {
 }
 
 /* 
- * セレクタ :.mailMagaAndAnnounce input[type="text"], .mailMagaAndAnnounce select
- * 概要   :メルマガ＆アナウンスの中のテキストボックス領域とセレクトボックス領域
+ * セレクタ :.mailMagaAndAnnounce select
+ * 概要   :メルマガ＆アナウンスの中のセレクトボックス領域
  * 作成者 :T.Yamamoto
  * 作成日 :2015.07.09
  */
-.mailMagaAndAnnounce input[type="text"], .mailMagaAndAnnounce select {
+.mailMagaAndAnnounce select {
 	margin-right: 1em;		/* 右に1文字分の余白をとる */
 }
 
@@ -804,12 +855,23 @@ ul.mailSendContent {
 }
 
 /* 
- * セレクタ :.sellCommodityPermitInfoTable td
- * 概要   :商品購入テーブルのセル
+ * セレクタ :.doLecturePermitInfoTable tbody, .sellCommodityPermitInfoTable tbody
+ * 概要   :受講承認、商品購入テーブルのデータ行領域
  * 作成者 :T.Masuda
- * 作成日 :2016.03.26
+ * 作成日 :2016.05.06
  */
-.sellCommodityPermitInfoTable td {
+.doLecturePermitInfoTable tbody, .sellCommodityPermitInfoTable tbody {
+    overflow-y : auto;	/* フロー時に縦スクロールするようにする */
+    height : 400px;		/* 高さを固定にすることでスクロールを有効にする */
+}
+
+/* 
+ * セレクタ :.doLecturePermitInfoTable td, .sellCommodityPermitInfoTable td
+ * 概要   :受講承認、商品購入テーブルのセル
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.06
+ */
+.doLecturePermitInfoTable td, .sellCommodityPermitInfoTable td {
 	white-space : pre;	/* 改行が起こらないようにする */
 }
 
@@ -871,6 +933,16 @@ ul.mailSendContent {
 	}
 
 	/* 
+	 * セレクタ :.mailMagaSearchArea . schoolNameLabel, .mailMagaSearchArea .typeLabel
+	 * 概要   :メルマガ検索領域のスマホレイアウト時に1段目に来るラベル
+	 * 作成者 :T.Masuda
+	 * 作成日 :2016.05.05
+	 */
+	.mailMagaSearchArea .schoolNameLabel, .mailMagaSearchArea .typeLabel {
+	    margin-bottom : 2.5px;  /* 下にmarginを挿入し、selectメニューと高さを合わせる */
+	}
+
+	/* 
 	 * セレクタ :.mailMagaContentSearchLabel
 	 * 概要   :検索領域のラベルとテキストボックス領域
 	 * 作成者 :T.Yamamoto
@@ -878,6 +950,7 @@ ul.mailSendContent {
 	 */
 	.mailMagaContentSearchLabel {
 		width: auto;		/* 幅を77%にする */
+		margin-bottom: 5px;	/* ボタン群と段が変わったときに間隔が必要になるのでつける */
 	}
 
 	/* 
@@ -1053,6 +1126,17 @@ ul.mailSendContent {
 	}
 
 	/* 
+	 * セレクタ :.mailMagaAndAnnounce select
+	 * 概要   :メルマガタブ内セレクトボックス
+	 * 作成者 :T.Yamamoto
+	 * 作成日 :2015.07.09
+	 */
+	.mailMagaAndAnnounce select {
+		margin-bottom : 5px;	/* 下marginを独自につけないと間隔がおかしくなるのでつける */
+	}
+
+
+	/* 
 	 * セレクタ :.mailMagaContentSearchTextbox
 	 * 概要   :検索領域のテキストボックス領域
 	 * 作成者 :T.Yamamoto
@@ -1069,8 +1153,9 @@ ul.mailSendContent {
 	 * 作成日 :2016.04.10
 	 */
 	#mailMagaAndAnnounce .buttonArea {
-	    float: right;	/* スマホレイアウト時には段組み解除となっているため右に寄せる */
-	    width: auto;	/* 幅を中身に合わせる */
+	    float: right;		/* スマホレイアウト時には段組み解除となっているため右に寄せる */
+	    width: auto;		/* 幅を中身に合わせる */
+	    margin-bottom: 5px;	/* 一覧とくっつくので下marginを入れる */
 	}
 	
 	/* 

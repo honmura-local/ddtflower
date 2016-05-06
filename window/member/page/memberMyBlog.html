@@ -75,6 +75,9 @@
 					
 					//ユーザ自身のブログ記事のデータを取得して表示する				
 					create_tag.loadTableData('myBlogTable', 1, 4, 1, 2, '.blogArticles', 'create_tag.createMyBlogImages(\'.myBlogTable\');create_tag.setBlogEditButtons');
+					//記事がなかった場合、メッセージを出す
+					commonFuncs.checkNoArticle('.myBlogTable', MESSAGE_NO_ARTICLE);
+					
 					//記事の画像を拡大できるようにする。
 					create_tag.useZoomImage('blogImage');
 					

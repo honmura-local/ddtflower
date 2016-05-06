@@ -52,9 +52,9 @@ function mailMagaDialog(dialog){
 		//メルマガ入力フォームを作る
 		this[VAR_CREATE_TAG].outputTag('mailMagaAndAnnounceArea', 'mailMagaAndAnnounceArea', $(this.dialog));
 		//送信ボタンを追加する
-		commonFuncs.putCommonButton(CURRENT_DIALOG + ' sellCommodityPermitList .messageButtonArea', 'sendButton', 'send', true, false, true, {}, false);
+		commonFuncs.putCommonButton(CURRENT_DIALOG + ' .messageButtonArea', 'sendButton', 'send', true, true, true, {}, false);
 		//削除ボタンを追加する
-		commonFuncs.putCommonButton(CURRENT_DIALOG + ' sellCommodityPermitList .messageButtonArea', 'deleteButton', 'delete', true, false, true, {}, false);
+		commonFuncs.putCommonButton(CURRENT_DIALOG + ' .messageButtonArea', 'deleteButton', 'reset', true, true, true, {}, false);
 	}
 	
 	/* 関数名:setConfig

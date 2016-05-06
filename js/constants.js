@@ -1164,6 +1164,10 @@ SRC_CONFIRM_BUTTON = 'image/icon_confirm.png';
 SRC_PERMIT_BUTTON = 'image/icon_permit.png';
 // 画像なし用画像ソースパス
 SRC_NO_IMAGE = 'image/no_image.png';
+//鍵ボタンの画像ソースパス
+SRC_KEY_BUTTON = 'image/icon_key.png';
+//パスワード変更ボタンの画像ソースパス
+SRC_PASSWORD_CHANGE_BUTTON = 'image/icon_key.png';
 
 // 画像タグ
 HTML_IMG = '<img src alt>';
@@ -1205,4 +1209,14 @@ SELECTOR_CURRENT_MESSAGE_DOIALOG = '.messageDialog:last';
 MESSAGE_FAILED_TO_UPDATE_PHOTO = '変更部分がなかったため記事の更新を行いませんでした。記事の内容を変更した後に更新を行ってください。';
 
 // 管理者画面 授業一覧の領域のセレクタ
-SELECTOR_ADMIN_LESSON_LIST_TABLE_AREA = '#lessonList .tableArea';
+SELECTOR_ADMIN_LESSON_LIST_TABLE_AREA	= '#lessonList .tableArea';
+//段落タグ
+HTML_PARAGRAPH							= '<p></p>';
+//記事未作成時の表示
+MESSAGE_NO_ARTICLE						= '記事が作成されていません。\n新規ボタンから新しく記事を作成するとここに記事が表示されます。';
+//THEADタグのセレクタ
+SELECTOR_THEAD							= 'thead';
+//TBODYタグのセレクタ
+SELECTOR_TBODY							= 'tbody';
+//ブログの記事編集時に変更がない警告
+MESSAGE_BLOG_NOT_MODIFIED				= '記事に変更点がないため保存を行いませんでした。\n記事を変更した後に編集ボタンを押してください。';

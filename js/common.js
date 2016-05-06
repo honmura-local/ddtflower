@@ -77,6 +77,14 @@ function common(){
 				src : SRC_PERMIT_BUTTON,
 				text : '承認'
 			},
+			key : {
+				src : SRC_KEY_BUTTON,
+				text : ''
+			},
+			password_change : {
+				src : SRC_PASSWORD_CHANGE_BUTTON,
+				text : 'パスワード変更'
+			},
 			arrow_right_single : {
 				src : SRC_ARROW_RIGHT_SINGLE_BUTTON,
 				text : ''
@@ -3231,62 +3239,30 @@ this.messageDialogDefaultOption = {
 			clearInterval(end);	//そのままだと当該関数がずっと実行されるので終わりを明記する
 		}, sleepTime);
 	}
+
+	/* 
+	 * 関数名:checkNoArticle
+	 * 概要  :テーブル内の行があるかチェックする。なければメッセージをテーブルに表示する
+	 * 引数  :String || Element targetTable:チェック対象のテーブル
+	 *      :String message:行がないときに表示するメッセージ
+	 * 返却値 :なし
+	 * 作成者:T.Masuda
+	 * 作成日:2016.05.06
+	 */	
+	this.checkNoArticle = function (targetTable, message){
+		//記事が何もなければ
+		if(!$(SELECTOR_THEAD, $(targetTable)).length) {
+			//空の記事を削除する
+			$(SELECTOR_TBODY, $(targetTable)).remove();
+			//代わりのメッセージを挿入する
+			$(targetTable).append($(HTML_PARAGRAPH).text(message).addClass('noArticle'));
+		}
+	}
+	
 	
 	//ここまでクラス定義領域
 }
 
 //どこでも当暮らすインスタンスを使えるように、共通関数クラスインスタンスをこの場(当JSファイル読み込みの最後)で生成する
 commonFuncs = new common();
-
-/*
- * 関数名:sendArticleData
- * 引数   :なし
- * 戻り値 :なし
- * 概要   :記事を投稿する
- * 作成日 :2015.11.07
- * 作成者 :T.M
- */
-function sendArticleData(){
-	
-	//ダイアログのクラスインスタンスを取得する。
-	var dialogClass = $(this)[0].instance;				//ダイアログのクラスインスタンスを取得する
-
-	//はいボタンが押されていたら
-	if(dialogClass.getPushedButtonState() == YES){
-		var data = dialogClass.getArgumentDataObject();		//インプット用データを取得する
-		
-		//フォームデータを取得する
-		var sendObject = commonFuncs.createFormObject('.blogEdit');
-		//ユーザIDをオブジェクトにセットする
-		sendObject.user_key = data.create_tag.getUserId();
-		//記事IDをオブジェクトにセットする
-		sendObject.id = articleNumber;
-		
-		//新規作成であれば
-		if(articleNumber == 0){
-			//INSERT用クエリをセットする
-			sendObject.db_setQuery = data.create_tag.json.insertMyBlog.db_setQuery;
-		//編集であれば
-		} else {
-			//UPDATE用クエリをセットする
-			sendObject.db_setQuery = data.create_tag.json.updateMyBlog.db_setQuery;
-		}
-		
-		//データを送信する
-		var result = this.dialogBuilder.sendQuery(URL_SAVE_JSON_DATA_PHP, sendObject);
-		//データの保存に成功していれば
-		if(parseInt(result.message)){
-			alert(MESSAGE_SUCCESS_SAVE_ARTICLE);					//メッセージを出す
-			//マイブログページに戻る
-			$(CURRENT_WINDOW)[0].instance.callPage('window/member/page/memberMyBlog.html');
-		//失敗であれば
-		} else {
-			//その旨を伝える
-			alert('記事の保存に失敗しました。時間をおいてお試しください。');
-		}
-	}
-	
-	//ダイアログを破棄する
-	dialogClass.destroy();
-}	
 

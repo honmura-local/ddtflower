@@ -719,6 +719,7 @@ function userListSearch(targetPage) {
  * 関数名:jumpToMemberPage
  * 概要  :管理者 会員一覧で選択されているユーザの会員ページに接続する
  * 引数  :String || Element clickTarget : クリックイベントの対象
+ * 　　  :String || Element targetParent : クリックイベントの対象の一意な祖先要素
  * 　　  :String user : 選択中ユーザのセレクタ
  * 返却値  :なし
  * 作成者:T.Yamamoto
@@ -727,9 +728,9 @@ function userListSearch(targetPage) {
  * 変更日:2015.11.01
  * 内容　:セレクタが固定になっていたため調整しました
  */
-function jumpToMemberPage(clickTarget, user) {
+function jumpToMemberPage(clickTarget, targetParent, user) {
 	//詳細設定ボタンがクリックされたときになり代わりログインを行うかアラートを表示するかのイベントを登録する
-	$(STR_BODY).on(CLICK, clickTarget, function(){
+	$(targetParent).on(CLICK, clickTarget, function(){
 		//選択されているユーザの数を変数に入れ、なり代わりログインで選択されている人が1人であるかを判定するのに使う
 		var selected = $(user).length;
 		//詳細設定ボタンがクリックされた時に選択されている会員の人数が一人の時だけなりかわりログイン処理を行うイベントを登録する

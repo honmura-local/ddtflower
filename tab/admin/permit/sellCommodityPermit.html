@@ -27,12 +27,13 @@
 			create_tag.getDomFile('template/common.html');
 
 			//ユーザ追加のボタンを追加する
-			commonFuncs.putCommonButton('#sellCommodityPermit', 'addUserRecordButton fRight', 'add', true, false, true, {}, false);
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'addUserRecordButton fRight', 'add', true, true, true, {}, false);
 			//商品販売承認待ちデータの削除のボタンを追加する
-			commonFuncs.putCommonButton('#sellCommodityPermit', 'deletePermitRecordButton fRight', 'delete', true, false, true, {}, false);
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'deletePermitRecordButton fRight', 'delete', true, true, true, {}, false);
 			//商品販売承認のボタンを追加する
-			commonFuncs.putCommonButton('#sellCommodityPermit', 'sellCommodityPermitButton fRight', 'permit', true, false, true, {}, false);
-			
+			commonFuncs.putCommonButton('#sellCommodityPermit', 'sellCommodityPermitButton fRight', 'permit', true, true, true, {}, false);
+			//テーブルの外側領域を作る
+			create_tag.outputTag('sellCommodityPermitInfoTableOutSideArea','tableOutsideArea', '#sellCommodityPermit');		// タイトル領域を作る
 
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.sellCommodityPermitInfoTable.date.value = commonFuncs.getTodayDate();
@@ -45,7 +46,7 @@
 				                                      					{'no' : 0, 'user_name' : '', 'get_point' : 0, 'commodity_key' :0, 'user_key' : 0, 'content' : "", 'sell_number' : 0, 'price' : 0, 'use_point' : 0, 'pay_price' : 0}
 					];
 				//商品販売テーブルを一旦出力する
-				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '#sellCommodityPermit');
+				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '.sellCommodityPermitInfoTableOutSideArea');
 				//ダミー行を削除する
 				$('.sellCommodityPermitInfoTable tr:not(:first)').remove();
 				//ダミー行データをクリアする
@@ -53,7 +54,7 @@
 			//取得していれば
 			} else {
 				//商品販売テーブルを出力する。
-				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '#sellCommodityPermit');
+				create_tag.outputTagTable('sellCommodityPermitInfoTable', 'sellCommodityPermitInfoTable', '.sellCommodityPermitInfoTableOutSideArea');
 			}
 			
 			//商品選択のセレクトボックスを作るためのデータを取得しておく

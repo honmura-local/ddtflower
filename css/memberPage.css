@@ -285,7 +285,7 @@ label,
  * 内容  :高さを変更しました
  */
 .selectThemebox {
-	height:2em;				/* 高さを動的に変える */
+	height: 30px;				/* 高さを動的に変える */
 	width: 80px;		/* タッチしやすさを考えて最低限の幅を確保する */
 }
 /* 
@@ -315,7 +315,9 @@ label,
  */
 .selectThemebox.multipleSelect option {
     font-size: 14px;	/* ラベルに合わせたフォントサイズにする */
-    height: 1.5em;		/* 高さをフォントサイズ基準にする */
+    height: 14px;		/* 高さをフォントサイズ基準にする */
+    padding: 5px 0;		/* paddingでテキストボックスと同じサイズに調整する */
+    text-indent: 0.3em;	/* インデントをつける */
 } 
 /* セレクトボックス領域終わり */
 
@@ -356,9 +358,9 @@ label,
 .adminLessonDetailTable {
 	border: 1px solid #999;		/* 少しグレー目の線で囲む */
 	font-size: 12px;			/* フォントサイズを14pxにする */
-	margin: 5px 0;				/* 上下5pxの余白をとる */
-	width: 100%;				/* 幅を100%にする */
+	width: 99.5%;				/* 幅を100%にする */
 	box-sizing: border-box;		/* 大きさの計算を罫線込みにする */
+	margin: 0 auto;
 }
 
 /* 
@@ -588,7 +590,7 @@ label,
  */
 .memberInfo {
 	width: 90%;			/* 幅を90%にする */
-	margin: 0 auto;		/* 中央揃えにする */
+	margin: 0 auto 5px;		/* 中央揃えにする。下端に余白を付ける */
 }
 
 /* 
@@ -603,27 +605,7 @@ label,
 /* 会員情報領域終わり */
 
 /* 更新ボタン領域 */
-/* 
- * セレクタ :.updaeButon
- * 概要   :更新ボタン領域
- * 作成者 :T.Yamamoto
- * 作成日 :2015.06.11
- */
-.updateButton {
-	display: block;		/* ブロック要素として扱う */
-	margin-left: auto;	/* 左からの余白を自動にする */
-	/*margin-top: 5%;*/	/* 右から5%余白を空ける */
-}
 
-/* 
- * セレクタ :.passwordUpdate
- * 概要   :パスワード更新ボタン
- * 作成者 :T.Yamamoto
- * 作成日 :2015.07.10
- */
-.passwordUpdate {
-	margin-right: 1em;		/* 右に1文字分の余白をとる */
-}
 /* 更新ボタン領域終わり */
 
 /* 予約確認ダイアログ領域 */
@@ -800,22 +782,6 @@ label,
 }
 
 /* 
- * セレクタ : .filterButton
- * 概要   :絞り込みボタン
- * 作成者 :T.Masuda
- * 作成日 :2016.04.30
- */
- .filterButton {
-	height: 24px;				/* 高さを周囲の要素に合わせる */
-    padding: 0.1em 0.3em 0.1em;	/* ボタンのpaddingを調整する */
-    border: solid 1px #666;		/* 枠線を設定する */
-    border-radius: 3px;			/* 角丸にする */
-    box-sizing: border-box;		/* 罫線を幅計算に入れる */
-    background: #EEE;			/* 背景色を薄いグレーにする */
-    outline: none;				/* 青枠を消す */
-}
-
-/* 
  * セレクタ :#alreadyReserved .filterButton
  * 概要   :予約済み一覧内絞り込みボタン。絞り込みボタンは場合によって様々な場所にセットされるため、個別にカスタマイズする
  * 作成者 :T.Masuda
@@ -864,8 +830,6 @@ label,
  * 作成日 :2015.06.17
  */
 .passLinkArea {
-	margin-right: 1em;		/* 右に1文字分の余白をとる */
-	line-height: 35px;		/* 行間を35pxにする */
 }
 /* パスワードリンク領域終わり */
 
@@ -1051,6 +1015,20 @@ label,
 
 /* 目安箱領域 */
 
+/* 管理者　授業詳細領域 */
+/* 
+ * セレクタ:.mailButtonArea
+ * 概要   :ボタン領域
+ * 作成者 :T.Yamamoto
+ * 作成日 :2015.06.30
+ */
+.mailButtonArea {
+	width: auto;			/* 幅を内容に合わせる */
+	display : inline-block;	/* インラインブロックにして横並べに対応する */
+	float: right;			/* 右に寄せる */
+	margin-bottom: 5px;		/* 画面下と間隔をとる */
+}
+
 /* 
  * セレクタ :.textareaLabel
  * 概要   :目安箱お問い合わせ内容領域
@@ -1059,7 +1037,7 @@ label,
  */
 .textareaLabel {
 	width: 99%;			/* 幅を99%にする */
-	margin-top: 10px;	/* 上から10px余白をとる */
+	margin: 10px 0 5px;	/* 上下妥当な間隔を取る */
 }
 
 /* 
@@ -1132,7 +1110,6 @@ label,
 	#container .userInf {
 		width: 97%;			/* 幅を90%にする */
 		margin: 5px auto; 	/* 上下に5px余白をとり、左右は中央揃えにする */
-		margin: 0 auto;
 	}
 
 	/* 
@@ -1292,16 +1269,6 @@ label,
 	
 	
 	/* 
-	 * セレクタ :.passLinkArea
-	 * 概要   :パスワード変更リンク領域
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.17
-	 */
-	.passLinkArea {
-		line-height: 54px;		/* 行間を35pxにする */
-	}
-
-	/* 
 	 * セレクタ :.passArea, .topLinkArea
 	 * 概要   :パスワード領域とトップページリンク領域
 	 * 作成者 :T.Yamamoto
@@ -1373,16 +1340,6 @@ label,
 	}
 
 	/* 
-	 * セレクタ :.updateButton
-	 * 概要   :更新ボタン
-	 * 作成者 :T.Yamamoto
-	 * 作成日 :2015.06.09
-	 */
-	.updateButton {
-		margin: 10px 0 5px auto;/* 上に10px、下に5pxの余白をとり、右寄せにする */
-	}
-
-	/* 
 	 * セレクタ :.accordionDetail li
 	 * 概要   :アコーディオンそれぞれの行の領域
 	 * 作成者 :T.Yamamoto
@@ -1451,130 +1408,3 @@ label,
 	}
 }
 
-/* 管理者画面 商品購入承認タブテーブル */
-.sellCommodityPermitInfoTable {
-    width : 100%;			/* 親の幅に合わせるように設定する */
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
-
-/* 管理者画面 商品購入承認タブテーブル 行種別ごとの親タグ*/
-.sellCommodityPermitInfoTable thead, .sellCommodityPermitInfoTable tbody {
-    display: block;	/* 固定サイズにするためにブロック要素にする */
-}
-
-/* 管理者画面 商品購入承認タブテーブル データ行親タグ*/
-.sellCommodityPermitInfoTable tbody {
-    overflow-y : auto;	/* フロー時に縦スクロールするようにする */
-    height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
-}
-
-/* 管理者画面 商品購入承認タブテーブル セル */
-.sellCommodityPermitInfoTable td {
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
-
-/* No列 */
-.sellCommodityPermitInfoTable tr td:first-child {
-    width: 20px;
-}
-
-/* 名前列 */
-.sellCommodityPermitInfoTable tr td:nth-child(2) {
-    width: 90px;
-}
-
-/* 所持ポイント列 */
-.sellCommodityPermitInfoTable tr td:nth-child(3) {
-    width: 80px;
-}
-
-/* 会員番号列 */
-.sellCommodityPermitInfoTable tr td:nth-child(5) {
-    width: 55px;
-}
-
-/* 商品名列 */
-.sellCommodityPermitInfoTable tr td:nth-child(6) {
-    width: 175px;
-}
-
-/* 単価列 */
-.sellCommodityPermitInfoTable tr td:nth-child(7) {
-    width: 80px;
-}
-
-/* 個数列 */
-.sellCommodityPermitInfoTable tr td:nth-child(8) {
-    width: 80px;
-}
-
-/* 使用ポイント列 */
-.sellCommodityPermitInfoTable tr td:nth-child(9) {
-    width: 80px;
-}
-
-/* 合計列 */
-.sellCommodityPermitInfoTable tr td:nth-child(10) {
-    width: 79px;
-}
-
-
-/* 受講承認テーブル */
-/* 管理者画面 受講購入承認タブテーブル */
-.doLecturePermitInfoTable {
-    width : 100%;			/* 固定幅に設定する */
-    table-layout : auto;	/* 固定幅を有効にする */
-    overflow-x: scroll;
-}
-
-/* 管理者画面 受講購入承認タブテーブル 行種別ごとの親タグ*/
-.doLecturePermitInfoTable thead, .doLecturePermitInfoTable tbody {
-    display: block;	/* 固定サイズにするためにブロック要素にする */
-    width : auto;
-}
-
-/* 管理者画面 受講購入承認タブテーブル データ行親タグ*/
-.doLecturePermitInfoTable tbody {
-    overflow-y : auto;	/* フロー時に縦スクロールするようにする */
-    height : 400px;			/* 高さを固定にすることでスクロールを有効にする */
-}
-
-/* 管理者画面 受講購入承認タブテーブル セル */
-.doLecturePermitInfoTable td {
-    table-layout : fixed;	/* 固定幅を有効にする */
-}
-
-/* No列 */
-.doLecturePermitInfoTable tr td:first-child {
-    width: 20px;
-}
-
-/* 名前列 */
-.doLecturePermitInfoTable tr td:nth-child(2) {
-    width: 90px;
-}
-
-/* 単価列 */
-.doLecturePermitInfoTable tr td:nth-child(7) {
-    width: 140px;
-}
-
-/* 個数列 */
-.doLecturePermitInfoTable tr td:nth-child(12) {
-    width: 60px;
-}
-
-/* 使用ポイント列 */
-.doLecturePermitInfoTable tr td:nth-child(13) {
-    width: 140px;
-}
-
-/* 合計列 */
-.doLecturePermitInfoTable tr td:nth-child(14) {
-    width: 148px;
-}
-
-/* 合計列 */
-.doLecturePermitInfoTable tr td:nth-child(15) {
-    width: 150px;
-}

@@ -91,7 +91,11 @@ function loginDialog(dialog){
 	this.setConfig = function(){
 		//ログイン・閉じるボタンを配置する
 		this.setDialogButtons(this.login_close);
-		$('.window[name="usuall"]').show();	//通常画面を見える様にする
+		
+		//通常画面を見せたほうがいいときは(通常画面からログインダイアログを開いた時)
+		if ($('.window[name!="usuall"]').length && $('.window[name!="usuall"]').height() <= 10) {
+			$('.window[name="usuall"]').show();	//通常画面を見える様にする
+		}
 	}
 
 	/* 関数名:callbackClose

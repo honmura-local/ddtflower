@@ -123,6 +123,9 @@
 			"value": ""
 		}
 	},
+	"doLecturePermitTableInfoTableOutSideArea" : {
+	    "class" : "doLecturePermitTableInfoTableOutSideArea tableScrollXParent"
+	},
 	"doLecturePermitInfoTable": {
 		"class": "doLecturePermitInfoTable commonTable scrollXAuto",
 		"db_getQuery": "CALL getLecturePermit(@result); SELECT @result AS 'result';",
@@ -193,6 +196,9 @@
 	},
 	"deleteLecturePermitRecordQuery": {
 		"db_setQuery": ""
+	},
+	"sellCommodityPermitInfoTableOutSideArea" : {
+	    "class" : "sellCommodityPermitInfoTableOutSideArea tableScrollXParent"
 	},
 	"sellCommodityPermitInfoTable": {
 		"class": "sellCommodityPermitInfoTable commonTable scrollXAuto",
@@ -770,7 +776,7 @@
 		"class": "mailMagaPagingArea"
 	},
 	"mailMagaTableOutside": {
-		"class": "mailMagaTableOutside"
+		"class": "mailMagaTableOutside tableScrollXParent"
 	},
 	"mailMagaTable": {
 		"class": "mailMagaTable commonTable scrollXAuto",

@@ -97,14 +97,11 @@
 					//「メルマガ受信設定」の項目を作成する
 					create_tag.outputTag('mailMagaSetting', 'mailMagaSetting', '.userInf');
 	
-					// 更新ボタン領域を作る
-					commonFuncs.putCommonButton('.memberInfo', 'updateButton', 'update', true, false, true, {}, false);
-					
-					// パスワード変更リンクを作る
-					create_tag.outputTag('passLinkArea', 'passLinkArea', '.memberInfo');
-					//パスワード変更リンクの見た目をボタン風にする。左に鍵アイコン、右にテキストというレイアウト	
-					$('.passLinkArea').button({text : true, icons : {primary : 'ui-icon-key'}});
-					
+					// パスワード変更(パスワード変更画面へ行く)ボタンを作る
+					commonFuncs.putCommonButton('.memberInfo', 'passLinkArea fRight', 'password_change', true, true, true, {onclick : '$(CURRENT_WINDOW)[0].instance.callPage("window/member/page/memberPassword.html");'}, false);
+					// 更新ボタンを作る
+					commonFuncs.putCommonButton('.memberInfo', 'updateButton fRight', 'update', true, true, true, {}, false);
+										
 					// 生年月日のテキストボックスにフォーカスするとカレンダーを表示する
 					//clickCalendar('birthday_date');
 					//テキストボックスなどのvalue属性にDBから読込んだ値を入れる

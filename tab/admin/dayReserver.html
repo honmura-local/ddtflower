@@ -54,7 +54,7 @@
 			//日付ページングを実装する
 			nowDatePaging('dateBelt', create_tag);
 			//会員データをクリックして会員画面にログインできるようにする
-			loginMemberPageFromAdminPage('#dayReserver', SELECTOR_TBODY_TR, '.user_key');
+			loginMemberPageFromAdminPage('.eachDayReservedInfoTableOutsideArea', SELECTOR_TBODY_TR, '.user_key');
 
 			var $activePanel = $('.tabPanel.active', $currentContent);	//現タブパネルを取得する
 			//検索ボックスのenterキーによる決定を有効にする

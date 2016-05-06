@@ -450,6 +450,45 @@ button.ui-button-text-only span.ui-button-text {
 }
 
 /* 
+ * セレクタ:.noArticle
+ * 概要   :ブログ、ギャラリーの記事がなかったときの表示
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.06
+ */
+.noArticle {
+    margin: 0 10px;			/* 通常の記事同様、ぴったりくっつかないようにする */
+    padding: 5px;			/* 内容の文字もぴったりくっつかないようにする */
+    border: solid 1px #CCC;	/* 枠で囲んだメッセージにする */
+    font-size : 16px;		/* ブログ記事はフォントサイズの指定があるので影響を受けない様にここでも設定する */
+}
+
+/* 
+ * セレクタ:.tableScrollXParent
+ * 概要   :内容を横スクロールさせるテーブルの親要素に付けるクラス
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.06
+ */
+.tableScrollXParent {
+    overflow-x: auto;		/* 中身が溢れたらスクロールする */
+    width: 99.5%;			/* テーブルに依らない幅を持たせる */
+    border: 1px solid #AAA;	/* 独自に罫線を持たせる */
+    margin: 0 auto;			/* 中央に寄せる */
+}
+
+/* 
+ * セレクタ:.tableScrollXParent table.scrollXAuto
+ * 概要   :内容を横スクロールさせるテーブル
+ * 作成者 :T.Masuda
+ * 作成日 :2016.05.06
+ */
+.tableScrollXParent table.scrollXAuto {
+	/* 左右罫線を消す */
+    border-left: none;	
+    border-right: none;
+    width : 100%;	/* 外枠一杯に幅を広げる */
+}
+
+/* 
  * セレクタ:#container
  * 概要   :画面の幅に合わせて伸縮する、最上階層のdivタグ
  * 作成者 :T.Masuda

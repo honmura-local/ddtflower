@@ -16,6 +16,7 @@
 		"type": "file"
 	},
 	"blogEdit": {
+	    "class" : "blogEdit cf",
 		"name": "blogEdit",
 		"method": "post",
 		"action": ",memberMyBlog.html",

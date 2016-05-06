@@ -32,6 +32,8 @@
 			commonFuncs.putCommonButton('#doLecturePermit', 'deletePermitRecordButton fRight', 'delete', true, true, true, {}, false);
 			//受講承認のボタンを追加する
 			commonFuncs.putCommonButton('#doLecturePermit', 'doLecturePermitButton fRight', 'permit', true, true, true, {}, false);
+			//テーブルの外側領域を作る
+			create_tag.outputTag('doLecturePermitTableInfoTableOutSideArea','tableOutsideArea', '#doLecturePermit');		// タイトル領域を作る
 			
 			//今日の日付を取得し、データ検索の対象の日時としてJSONにセットする
 			create_tag.json.doLecturePermitInfoTable.date.value = commonFuncs.getTodayDate();
@@ -40,14 +42,14 @@
 			//データがあればテーブルを追加する
 			if(create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY].length != 0) {
 				//受講承認タブのリストテーブル
-				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '.doLecturePermitTableInfoTableOutSideArea');
 				//受講承認のテーブルを置換する
 				commonFuncs.dbDataTableReplaceExecute(DOT + DO_LECTURE_PERMIT_INFO_TABLE, create_tag.json[DO_LECTURE_PERMIT_INFO_TABLE][TABLE_DATA_KEY], DO_LECTURE_PERMIT_INFO_TABLE_REPLACE_FUNC);
 			} else {
 				//ダミーのデータを用意する
 				create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY][0] = DUMMY_LECTUREPERMIT_DATA;
 				//受講承認タブのリストテーブル
-				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '#doLecturePermit');
+				create_tag.outputTagTable('doLecturePermitInfoTable', 'doLecturePermitInfoTable', '.doLecturePermitTableInfoTableOutSideArea');
 				//ダミーデータを削除する
 				create_tag.json.doLecturePermitInfoTable[TABLE_DATA_KEY] = [];
 				//ダミーの行を削除する
